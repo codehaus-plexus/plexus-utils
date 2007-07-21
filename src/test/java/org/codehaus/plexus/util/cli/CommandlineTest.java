@@ -330,25 +330,6 @@ public class CommandlineTest
         fail( "can't find JAVA_HOME=/usr/jdk1.5" );
     }
 
-    public void testEnvironmentWitSystemEnvironment()
-        throws Exception
-    {
-        String javaHome = System.getProperty( "JAVA_HOME" );
-        Commandline cmd = new Commandline();
-        cmd.addSystemEnvironment();
-        String[] environmentVariables = cmd.getEnvironmentVariables();
-
-        for ( int i = 0, size = environmentVariables.length; i < size; i++ )
-        {
-            if ( ( "JAVA_HOME=" + javaHome ).equals( environmentVariables[i] ) )
-            {
-                return;
-            }
-        }
-
-        fail( "can't find JAVA_HOME=" + javaHome );
-    }
-
     /**
      * Test an executable with a quote in its path
      *
@@ -357,7 +338,8 @@ public class CommandlineTest
     public void testQuotedPath()
         throws Exception
     {
-        File dir = new File( "target/quotedpath'test" );
+        File dir = new File( System.getProperty( "basedir" ), "target/quotedpath'test" );
+
         dir.mkdirs();
 
         // Create a script file
