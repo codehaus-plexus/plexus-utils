@@ -8,12 +8,21 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>plexus-utils</artifactId>
   <name>Plexus Common Utilities</name>
-  <version>1.5.2-SNAPSHOT</version>
+  <version>1.5.2</version>
   <url>http://plexus.codehaus.org/plexus-utils</url>
   <issueManagement>
     <system>JIRA</system>
     <url>http://jira.codehaus.org/browse/PLXUTILS</url>
   </issueManagement>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-interpolation</artifactId>
+      <version>1.0</version>
+    </dependency>
+  </dependencies>
+  
   <build>
     <plugins>
       <plugin>
@@ -59,12 +68,37 @@
           </systemProperties>
         </configuration>
       </plugin>
+        <plugin>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>1.0.1</version>
+          <executions>
+            <execution>
+              <id>shade</id>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <artifactSet>
+                  <includes>
+                    <include>org.codehaus.plexus:plexus-interpolation</include>
+                  </includes>
+                </artifactSet>
+                <relocations>
+                  <relocation>
+                    <pattern>org.codehaus.plexus.interpolation</pattern>
+                  </relocation>
+                </relocations>
+                <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
     </plugins>
   </build>
   <scm>
-    <connection>scm:svn:http://svn.codehaus.org/plexus/plexus-utils/trunk/</connection>
-    <developerConnection>scm:svn:https://svn.codehaus.org/plexus/plexus-utils/trunk</developerConnection>
-    <url>http://fisheye.codehaus.org/browse/plexus/plexus-utils/trunk/</url>
+    <connection>scm:svn:http://svn.codehaus.org/plexus/plexus-utils/tags/plexus-utils-1.5.2</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/plexus/plexus-utils/tags/plexus-utils-1.5.2</developerConnection>
+    <url>http://fisheye.codehaus.org/browse/plexus/plexus-utils/tags/plexus-utils-1.5.2</url>
   </scm>
   <reporting>
     <plugins>
