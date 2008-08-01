@@ -612,7 +612,7 @@ public class FileUtils
     {
         File file = new File( dir );
 
-        if ( Os.isFamily( "windows" ) )
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             if ( !isValidWindowsFileName( file ) )
             {
@@ -1262,18 +1262,18 @@ public class FileUtils
     public static void forceDelete( final File file )
         throws IOException
     {
-        if ( !( file.exists() || file.getAbsoluteFile().exists() || file.getCanonicalFile().exists() ) )
-        {
-            return;
-        }
-
         if ( file.isDirectory() )
         {
             deleteDirectory( file );
         }
         else
         {
-            if ( !deleteFile( file ) )
+            /*
+             * NOTE: Always try to delete the file even if it appears to be non-existent. This will ensure that a
+             * symlink whose target does not exist is deleted, too.
+             */
+            boolean filePresent = file.getCanonicalFile().exists();
+            if ( !deleteFile( file ) && filePresent )
             {
                 final String message = "File " + file + " unable to be deleted.";
                 throw new IOException( message );
@@ -1406,7 +1406,7 @@ public class FileUtils
     public static void forceMkdir( final File file )
         throws IOException
     {
-        if ( Os.isFamily( "windows" ) )
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             if ( !isValidWindowsFileName( file ) )
             {
@@ -1576,7 +1576,7 @@ public class FileUtils
      * @param excludes  the excludes pattern, comma separated
      * @return a list of File objects
      * @throws IOException
-     * @see getFileNames( File, String, String, boolean )
+     * @see #getFileNames( File, String, String, boolean )
      */
     public static List getFiles( File directory, String includes, String excludes )
         throws IOException
@@ -1593,7 +1593,7 @@ public class FileUtils
      * @param includeBasedir true to include the base dir in each file
      * @return a list of File objects
      * @throws IOException
-     * @see getFileNames( File, String, String, boolean )
+     * @see #getFileNames( File, String, String, boolean )
      */
     public static List getFiles( File directory, String includes, String excludes, boolean includeBasedir )
         throws IOException
@@ -2092,12 +2092,12 @@ public class FileUtils
      * @param f not null file
      * @return <code>false</code> if the file path contains any of forbidden Windows characters,
      * <code>true</code> if the Os is not Windows or if the file path respect the Windows constraints.
-     * @see #INVALID_CHARACTERS_FOR_WINDOWS_FILE
+     * @see #INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME
      * @since 1.5.2
      */
     public static boolean isValidWindowsFileName( File f )
     {
-        if ( Os.isFamily( "windows" ) )
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             if ( StringUtils.indexOfAny( f.getName(), INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME ) != -1 )
             {

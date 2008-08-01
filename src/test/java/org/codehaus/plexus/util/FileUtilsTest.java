@@ -177,7 +177,7 @@ public final class FileUtilsTest
         FileUtils.mkdir( dir.getAbsolutePath() );
         dir.deleteOnExit();
 
-        if ( Os.isFamily( "windows" ) )
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             try
             {
@@ -306,7 +306,7 @@ public final class FileUtilsTest
         FileUtils.forceMkdir( testFile );
         assertTrue( "Directory was not created.", testFile.exists() );
 
-        if ( Os.isFamily( "windows" ) )
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             try
             {
@@ -1223,7 +1223,7 @@ public final class FileUtilsTest
         File f = new File( "c:\test" );
         assertTrue( FileUtils.isValidWindowsFileName( f ) );
 
-        if ( Os.isFamily( "windows" ) )
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             f = new File( "c:\test\bla:bla" );
             assertFalse( FileUtils.isValidWindowsFileName( f ) );
@@ -1240,5 +1240,67 @@ public final class FileUtilsTest
             f = new File( "c:\test\bla*bla" );
             assertFalse( FileUtils.isValidWindowsFileName( f ) );
         }
+    }
+
+    public void testDeleteDirectoryWithValidFileSymlink()
+        throws Exception
+    {
+        File symlinkTarget = new File( getTestDirectory(), "fileSymlinkTarget" );
+        createFile( symlinkTarget, 1 );
+        File symlink = new File( getTestDirectory(), "fileSymlink" );
+        createSymlink( symlink, symlinkTarget );
+        try
+        {
+            FileUtils.deleteDirectory( getTestDirectory() );
+        }
+        finally
+        {
+            /*
+             * Ensure to cleanup problematic symlink or "mvn clean" will fail
+             */
+            symlink.delete();
+        }
+        assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
+    }
+
+    public void testDeleteDirectoryWithValidDirSymlink()
+        throws Exception
+    {
+        File symlinkTarget = new File( getTestDirectory(), "dirSymlinkTarget" );
+        symlinkTarget.mkdir();
+        File symlink = new File( getTestDirectory(), "dirSymlink" );
+        createSymlink( symlink, symlinkTarget );
+        try
+        {
+            FileUtils.deleteDirectory( getTestDirectory() );
+        }
+        finally
+        {
+            /*
+             * Ensure to cleanup problematic symlink or "mvn clean" will fail
+             */
+            symlink.delete();
+        }
+        assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
+    }
+
+    public void testDeleteDirectoryWithDanglingSymlink()
+        throws Exception
+    {
+        File symlinkTarget = new File( getTestDirectory(), "missingSymlinkTarget" );
+        File symlink = new File( getTestDirectory(), "danglingSymlink" );
+        createSymlink( symlink, symlinkTarget );
+        try
+        {
+            FileUtils.deleteDirectory( getTestDirectory() );
+        }
+        finally
+        {
+            /*
+             * Ensure to cleanup problematic symlink or "mvn clean" will fail
+             */
+            symlink.delete();
+        }
+        assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
     }
 }

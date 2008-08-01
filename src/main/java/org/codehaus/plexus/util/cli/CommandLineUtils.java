@@ -78,7 +78,7 @@ public abstract class CommandLineUtils
 
         public void consumeLine( String line )
         {
-            string.append( line + ls );
+            string.append( line ).append( ls );
         }
 
         public String getOutput()
@@ -166,7 +166,7 @@ public abstract class CommandLineUtils
             {
                 synchronized ( inputFeeder )
                 {
-                    if ( !inputFeeder.isDone() )
+                    while ( !inputFeeder.isDone() )
                     {
                         inputFeeder.wait();
                     }
@@ -175,7 +175,7 @@ public abstract class CommandLineUtils
 
             synchronized ( outputPumper )
             {
-                if ( !outputPumper.isDone() )
+                while ( !outputPumper.isDone() )
                 {
                     outputPumper.wait();
                 }
@@ -183,7 +183,7 @@ public abstract class CommandLineUtils
 
             synchronized ( errorPumper )
             {
-                if ( !errorPumper.isDone() )
+                while ( !errorPumper.isDone() )
                 {
                     errorPumper.wait();
                 }
@@ -211,10 +211,19 @@ public abstract class CommandLineUtils
         }
     }
 
+    /**
+     * Gets the shell environment variables for this process. Note that the returned mapping from variable names to
+     * values will always be case-sensitive regardless of the platform, i.e. <code>getSystemEnvVars().get("path")</code>
+     * and <code>getSystemEnvVars().get("PATH")</code> will in general return different values. However, on platforms
+     * with case-insensitive environment variables like Windows, all variable names will be normalized to upper case.
+     * 
+     * @return The shell environment variables, can be empty but never <code>null</code>.
+     * @throws IOException If the environment variables could not be queried from the shell.
+     */
     public static Properties getSystemEnvVars()
         throws IOException
     {
-        return getSystemEnvVars( true );
+        return getSystemEnvVars( !Os.isFamily( Os.FAMILY_WINDOWS ) );
     }
 
     /**
@@ -287,8 +296,8 @@ public abstract class CommandLineUtils
     }
 
     /**
-     * Kill a process launched by executeCommandLine methods
-     * Doesn't work correctly on windows, only the cmd process will be destroy but not the sub process (<a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4770092">Bug ID 4770092</a>)
+     * Kill a process launched by executeCommandLine methods.
+     * Doesn't work correctly on windows, only the cmd process will be destroy but not the sub process (<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4770092">Bug ID 4770092</a>)
      *
      * @param pid The pid of command return by Commandline.getPid()
      */
