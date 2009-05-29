@@ -93,18 +93,44 @@ public class MXParserTest
         MXParser parser = new MXParser();
 
         String input = "<root>&myentity;</root>";
+        parser.setInput( new StringReader( input ) );
+        parser.defineEntityReplacementText( "myentity", "replacement" );
+        assertEquals( XmlPullParser.START_TAG, parser.next() );
+        assertEquals( XmlPullParser.TEXT, parser.next() );
+        assertEquals( "replacement", parser.getText() );
+        assertEquals( XmlPullParser.END_TAG, parser.next() );
 
+        parser = new MXParser();
+        input = "<root>&myCustom;</root>";
+        parser.setInput( new StringReader( input ) );
+        parser.defineEntityReplacementText( "fo", "&#65;" );
+        parser.defineEntityReplacementText( "myCustom", "&fo;" );
+        assertEquals( XmlPullParser.START_TAG, parser.next() );
+        assertEquals( XmlPullParser.TEXT, parser.next() );
+        assertEquals( "&#65;", parser.getText() );
+        assertEquals( XmlPullParser.END_TAG, parser.next() );
+    }
+
+    public void testUnicodeEntities()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        String input = "<root>&#x1d7ed;</root>";
         parser.setInput( new StringReader( input ) );
 
-        parser.defineEntityReplacementText( "myentity", "replacement" );
+        assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+        assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+        assertEquals( "\uD835\uDFED", parser.getText() );
+        assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
 
-        assertEquals( XmlPullParser.START_TAG, parser.next() );
+        parser = new MXParser();
+        input = "<root>&#x159;</root>";
+        parser.setInput( new StringReader( input ) );
 
-        assertEquals( XmlPullParser.TEXT, parser.next() );
-
-        assertEquals( "replacement", parser.getText() );
-
-        assertEquals( XmlPullParser.END_TAG, parser.next() );
+        assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+        assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+        assertEquals( "\u0159", parser.getText() );
+        assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
     public void testProcessingInstruction()

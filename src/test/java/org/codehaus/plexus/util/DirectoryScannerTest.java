@@ -115,6 +115,8 @@ public class DirectoryScannerTest
     public void testAntExcludesOverrideIncludes()
         throws IOException
     {
+        printTestHeader();
+        
         File dir = new File( testDir, "regex-dir" );
         dir.mkdirs();
 
@@ -128,8 +130,8 @@ public class DirectoryScannerTest
 
         DirectoryScanner ds = new DirectoryScanner();
 
-        String[] includes = { "**/target/**/*" };
-        String[] excludes = { "target/**/*" };
+        String[] includes = { "**/target/*" };
+        String[] excludes = { "target/*" };
 
         // This doesn't work, since excluded patterns refine included ones, meaning they operate on
         // the list of paths that passed the included patterns, and can override them.
@@ -141,55 +143,14 @@ public class DirectoryScannerTest
         ds.setBasedir( dir );
         ds.scan();
 
-        String[] files = ds.getIncludedFiles();
-        Arrays.sort( files );
-
-        List failedToExclude = new ArrayList();
-        for ( int i = 0; i < excludedPaths.length; i++ )
-        {
-            if ( Arrays.binarySearch( files, excludedPaths[i] ) > -1 )
-            {
-                failedToExclude.add( excludedPaths[i] );
-            }
-        }
-
-        List failedToInclude = new ArrayList();
-        for ( int i = 0; i < includedPaths.length; i++ )
-        {
-            if ( Arrays.binarySearch( files, includedPaths[i] ) < 0 )
-            {
-                failedToInclude.add( includedPaths[i] );
-            }
-        }
-
-        StringBuffer buffer = new StringBuffer();
-        if ( !failedToExclude.isEmpty() )
-        {
-            buffer.append( "Should NOT have included:\n" ).append(
-                                                                   StringUtils.join( failedToExclude.iterator(),
-                                                                                     "\n\t- " ) );
-        }
-
-        if ( !failedToInclude.isEmpty() )
-        {
-            if ( buffer.length() > 0 )
-            {
-                buffer.append( "\n\n" );
-            }
-
-            buffer.append( "Should have included:\n" )
-                  .append( StringUtils.join( failedToInclude.iterator(), "\n\t- " ) );
-        }
-
-        if ( buffer.length() > 0 )
-        {
-            fail( buffer.toString() );
-        }
+        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
     public void testAntExcludesOverrideIncludesWithExplicitAntPrefix()
         throws IOException
     {
+        printTestHeader();
+        
         File dir = new File( testDir, "regex-dir" );
         dir.mkdirs();
 
@@ -217,55 +178,14 @@ public class DirectoryScannerTest
         ds.setBasedir( dir );
         ds.scan();
 
-        String[] files = ds.getIncludedFiles();
-        Arrays.sort( files );
-
-        List failedToExclude = new ArrayList();
-        for ( int i = 0; i < excludedPaths.length; i++ )
-        {
-            if ( Arrays.binarySearch( files, excludedPaths[i] ) > -1 )
-            {
-                failedToExclude.add( excludedPaths[i] );
-            }
-        }
-
-        List failedToInclude = new ArrayList();
-        for ( int i = 0; i < includedPaths.length; i++ )
-        {
-            if ( Arrays.binarySearch( files, includedPaths[i] ) < 0 )
-            {
-                failedToInclude.add( includedPaths[i] );
-            }
-        }
-
-        StringBuffer buffer = new StringBuffer();
-        if ( !failedToExclude.isEmpty() )
-        {
-            buffer.append( "Should NOT have included:\n" ).append(
-                                                                   StringUtils.join( failedToExclude.iterator(),
-                                                                                     "\n\t- " ) );
-        }
-
-        if ( !failedToInclude.isEmpty() )
-        {
-            if ( buffer.length() > 0 )
-            {
-                buffer.append( "\n\n" );
-            }
-
-            buffer.append( "Should have included:\n" )
-                  .append( StringUtils.join( failedToInclude.iterator(), "\n\t- " ) );
-        }
-
-        if ( buffer.length() > 0 )
-        {
-            fail( buffer.toString() );
-        }
+        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
     public void testRegexIncludeWithExcludedPrefixDirs()
         throws IOException
     {
+        printTestHeader();
+        
         File dir = new File( testDir, "regex-dir" );
         dir.mkdirs();
 
@@ -278,70 +198,33 @@ public class DirectoryScannerTest
         createFiles( dir, includedPaths );
 
         String regex = ".+/target.*";
-        System.out.println( "Testing src/main/resources/target/foo.txt: "
-            + ( "src/main/resources/target/foo.txt".matches( regex ) ) );
-        System.out.println( "Testing src/main/foo.txt: " + ( "src/main/foo.txt".matches( regex ) ) );
 
         DirectoryScanner ds = new DirectoryScanner();
 
         String includeExpr = SelectorUtils.REGEX_HANDLER_PREFIX + regex + SelectorUtils.PATTERN_HANDLER_SUFFIX;
-        System.out.println( "Including expression:\n" + includeExpr );
 
         String[] includes = { includeExpr };
         ds.setIncludes( includes );
         ds.setBasedir( dir );
         ds.scan();
 
-        String[] files = ds.getIncludedFiles();
-        Arrays.sort( files );
-
-        List failedToExclude = new ArrayList();
-        for ( int i = 0; i < excludedPaths.length; i++ )
-        {
-            if ( Arrays.binarySearch( files, excludedPaths[i] ) > -1 )
-            {
-                failedToExclude.add( excludedPaths[i] );
-            }
-        }
-
-        List failedToInclude = new ArrayList();
-        for ( int i = 0; i < includedPaths.length; i++ )
-        {
-            if ( Arrays.binarySearch( files, includedPaths[i] ) < 0 )
-            {
-                failedToInclude.add( includedPaths[i] );
-            }
-        }
-
-        StringBuffer buffer = new StringBuffer();
-        if ( !failedToExclude.isEmpty() )
-        {
-            buffer.append( "Should NOT have included:\n" ).append(
-                                                                   StringUtils.join( failedToExclude.iterator(),
-                                                                                     "\n\t- " ) );
-        }
-
-        if ( !failedToInclude.isEmpty() )
-        {
-            if ( buffer.length() > 0 )
-            {
-                buffer.append( "\n\n" );
-            }
-
-            buffer.append( "Should have included:\n" )
-                  .append( StringUtils.join( failedToInclude.iterator(), "\n\t- " ) );
-        }
-
-        if ( buffer.length() > 0 )
-        {
-            fail( buffer.toString() );
-        }
+        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
     public void testRegexExcludeWithNegativeLookahead()
         throws IOException
     {
+        printTestHeader();
+        
         File dir = new File( testDir, "regex-dir" );
+        try
+        {
+            FileUtils.deleteDirectory( dir );
+        }
+        catch ( IOException e )
+        {
+        }
+        
         dir.mkdirs();
 
         String[] excludedPaths = { "target/foo.txt" };
@@ -353,27 +236,41 @@ public class DirectoryScannerTest
         createFiles( dir, includedPaths );
 
         String regex = "(?!.*src/).*target.*";
-        System.out.println( "Testing src/main/resources/target/foo.txt: "
-            + ( "src/main/resources/target/foo.txt".matches( regex ) ) );
-        System.out.println( "Testing target/foo.txt: " + ( "target/foo.txt".matches( regex ) ) );
-
+        
         DirectoryScanner ds = new DirectoryScanner();
 
         String excludeExpr = SelectorUtils.REGEX_HANDLER_PREFIX + regex + SelectorUtils.PATTERN_HANDLER_SUFFIX;
-        System.out.println( "Excluding expression:\n" + excludeExpr );
 
         String[] excludes = { excludeExpr };
         ds.setExcludes( excludes );
         ds.setBasedir( dir );
         ds.scan();
 
-        String[] files = ds.getIncludedFiles();
+        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+    }
+    
+    private void printTestHeader()
+    {
+        StackTraceElement ste = new Throwable().getStackTrace()[1];
+        System.out.println( "Test: " + ste.getMethodName() );
+    }
+
+    private void assertInclusionsAndExclusions( String[] files, String[] excludedPaths, String[] includedPaths )
+    {
         Arrays.sort( files );
+        
+        System.out.println( "Included files: " );
+        for ( int i = 0; i < files.length; i++ )
+        {
+            System.out.println( files[i] );
+        }
 
         List failedToExclude = new ArrayList();
         for ( int i = 0; i < excludedPaths.length; i++ )
         {
-            if ( Arrays.binarySearch( files, excludedPaths[i] ) > -1 )
+            String alt = excludedPaths[i].replace( '/', '\\' );
+            System.out.println( "Searching for exclusion as: " + excludedPaths[i] + "\nor: " + alt );
+            if ( Arrays.binarySearch( files, excludedPaths[i] ) > -1 || Arrays.binarySearch( files, alt ) > -1)
             {
                 failedToExclude.add( excludedPaths[i] );
             }
@@ -382,7 +279,9 @@ public class DirectoryScannerTest
         List failedToInclude = new ArrayList();
         for ( int i = 0; i < includedPaths.length; i++ )
         {
-            if ( Arrays.binarySearch( files, includedPaths[i] ) < 0 )
+            String alt = includedPaths[i].replace( '/', '\\' );
+            System.out.println( "Searching for inclusion as: " + includedPaths[i] + "\nor: " + alt );
+            if ( Arrays.binarySearch( files, includedPaths[i] ) < 0 && Arrays.binarySearch( files, alt ) < 0 )
             {
                 failedToInclude.add( includedPaths[i] );
             }

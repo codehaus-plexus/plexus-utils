@@ -57,6 +57,7 @@ package org.codehaus.plexus.util;
 import java.io.File;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * <p>This is a utility class used by selectors and DirectoryScanner. The
@@ -159,24 +160,27 @@ public final class SelectorUtils
                     pattern.substring( ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length() );
             }
 
-            return matchAntPathPatternStart( pattern, str, isCaseSensitive );
+            String altStr = str.replace( '\\', '/' );
+            
+            return matchAntPathPatternStart( pattern, str, File.separator, isCaseSensitive )
+                || matchAntPathPatternStart( pattern, altStr, "/", isCaseSensitive );
         }
     }
     
-    public static boolean matchAntPathPatternStart( String pattern, String str, boolean isCaseSensitive )
+    private static boolean matchAntPathPatternStart( String pattern, String str, String separator, boolean isCaseSensitive )
     {
         // When str starts with a File.separator, pattern has to start with a
         // File.separator.
         // When pattern starts with a File.separator, str has to start with a
         // File.separator.
-        if ( str.startsWith( File.separator ) !=
-            pattern.startsWith( File.separator ) )
+        if ( str.startsWith( separator ) !=
+            pattern.startsWith( separator ) )
         {
             return false;
         }
 
-        Vector patDirs = tokenizePath( pattern );
-        Vector strDirs = tokenizePath( str );
+        Vector patDirs = tokenizePath( pattern, separator );
+        Vector strDirs = tokenizePath( str, separator );
 
         int patIdxStart = 0;
         int patIdxEnd = patDirs.size() - 1;
@@ -253,8 +257,13 @@ public final class SelectorUtils
         if ( pattern.length() > ( REGEX_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1 )
             && pattern.startsWith( REGEX_HANDLER_PREFIX ) && pattern.endsWith( PATTERN_HANDLER_SUFFIX ) )
         {
-            return str.matches( pattern.substring( REGEX_HANDLER_PREFIX.length(), pattern.length()
-                - PATTERN_HANDLER_SUFFIX.length() ) );
+            pattern = pattern.substring( REGEX_HANDLER_PREFIX.length(), pattern.length()
+                                         - PATTERN_HANDLER_SUFFIX.length() );
+
+            String pat = pattern.replaceAll( "/", "[\\\\\\\\/]" );
+            pat = pat.replaceAll( "\\\\\\\\", "[\\\\\\\\/]" );
+            
+            return str.matches( pat );
         }
         else
         {
@@ -265,24 +274,27 @@ public final class SelectorUtils
                     pattern.substring( ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length() );
             }
 
-            return matchAntPathPattern( pattern, str, isCaseSensitive );
+            String altStr = str.replace( '\\', '/' );
+            
+            return matchAntPathPattern( pattern, str, File.separator, isCaseSensitive )
+                || matchAntPathPattern( pattern, altStr, "/", isCaseSensitive );
         }
     }
-    
-    public static boolean matchAntPathPattern( String pattern, String str, boolean isCaseSensitive )
+
+    private static boolean matchAntPathPattern( String pattern, String str, String separator, boolean isCaseSensitive )
     {
         // When str starts with a File.separator, pattern has to start with a
         // File.separator.
         // When pattern starts with a File.separator, str has to start with a
         // File.separator.
-        if ( str.startsWith( File.separator ) !=
-            pattern.startsWith( File.separator ) )
+        if ( str.startsWith( separator ) !=
+            pattern.startsWith( separator ) )
         {
             return false;
         }
 
-        Vector patDirs = tokenizePath( pattern );
-        Vector strDirs = tokenizePath( str );
+        Vector patDirs = tokenizePath( pattern, separator );
+        Vector strDirs = tokenizePath( str, separator );
 
         int patIdxStart = 0;
         int patIdxEnd = patDirs.size() - 1;
@@ -648,8 +660,13 @@ public final class SelectorUtils
      */
     public static Vector tokenizePath( String path )
     {
+        return tokenizePath( path, File.separator );
+    }
+    
+    public static Vector tokenizePath( String path, String separator )
+    {
         Vector ret = new Vector();
-        StringTokenizer st = new StringTokenizer( path, File.separator );
+        StringTokenizer st = new StringTokenizer( path, separator );
         while ( st.hasMoreTokens() )
         {
             ret.addElement( st.nextToken() );
