@@ -16,63 +16,142 @@ package org.codehaus.plexus.util.introspection;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.StringUtils;
-
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+
+import org.codehaus.plexus.util.StringUtils;
 
 /**
- * <p>Using simple dotted expressions to extract the values from an Object instance,
- * For example we might want to extract a value like: <code>project.build.sourceDirectory</code></p>
- *
- * <p>The implementation supports indexed, nested and mapped properties similar to the JSP way.</p>
- *
+ * <p>
+ * Using simple dotted expressions to extract the values from an Object instance, For example we might want to extract a
+ * value like: <code>project.build.sourceDirectory</code>
+ * </p>
+ * <p>
+ * The implementation supports indexed, nested and mapped properties similar to the JSP way.
+ * </p>
+ * 
  * @author <a href="mailto:jason@maven.org">Jason van Zyl </a>
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @version $Id$
- * @see <a href="http://struts.apache.org/1.x/struts-taglib/indexedprops.html">http://struts.apache.org/1.x/struts-taglib/indexedprops.html</a>
+ * @see <a
+ *      href="http://struts.apache.org/1.x/struts-taglib/indexedprops.html">http://struts.apache.org/1.x/struts-taglib/indexedprops.html</a>
  */
 public class ReflectionValueExtractor
 {
-    private static final Class[] CLASS_ARGS = new Class[0];
+    private static final Class<?>[] CLASS_ARGS = new Class[0];
 
     private static final Object[] OBJECT_ARGS = new Object[0];
 
     /**
-     * Use a WeakHashMap here, so the keys (Class objects) can be garbage collected.
-     * This approach prevents permgen space overflows due to retention of discarded
-     * classloaders.
+     * Use a WeakHashMap here, so the keys (Class objects) can be garbage collected. This approach prevents permgen
+     * space overflows due to retention of discarded classloaders.
      */
-    private static final Map<Class, WeakReference<ClassMap>> classMaps = new WeakHashMap<Class, WeakReference<ClassMap>>();
+    private static final Map<Class<?>, WeakReference<ClassMap>> classMaps =
+        new WeakHashMap<Class<?>, WeakReference<ClassMap>>();
 
-    /**
-     * Indexed properties pattern, ie <code>(\\w+)\\[(\\d+)\\]</code>
-     */
-    private static final Pattern INDEXED_PROPS = Pattern.compile( "(\\w+)\\[(\\d+)\\]" );
+    static final int EOF = -1;
 
-    /**
-     * Indexed properties pattern, ie <code>(\\w+)\\((.+)\\)</code>
-     */
-    private static final Pattern MAPPED_PROPS = Pattern.compile( "(\\w+)\\((.+)\\)" );
+    static final char PROPERTY_START = '.';
+
+    static final char INDEXED_START = '[';
+
+    static final char INDEXED_END = ']';
+
+    static final char MAPPED_START = '(';
+
+    static final char MAPPED_END = ')';
+
+    static class Tokenizer
+    {
+        final String expression;
+
+        int idx;
+
+        public Tokenizer( String expression )
+        {
+            this.expression = expression;
+        }
+
+        public int peekChar()
+        {
+            return idx < expression.length() ? expression.charAt( idx ) : EOF;
+        }
+
+        public int skipChar()
+        {
+            return idx < expression.length() ? expression.charAt( idx++ ) : EOF;
+        }
+
+        public String nextToken( char delimiter )
+        {
+            int start = idx;
+
+            while ( idx < expression.length() && delimiter != expression.charAt( idx ) )
+            {
+                idx++;
+            }
+
+            // delimiter MUST be present
+            if ( idx <= start || idx >= expression.length() )
+            {
+                return null;
+            }
+
+            return expression.substring( start, idx++ );
+        }
+
+        public String nextPropertyName()
+        {
+            final int start = idx;
+
+            while ( idx < expression.length() && Character.isJavaIdentifierPart( expression.charAt( idx ) ) )
+            {
+                idx++;
+            }
+
+            // property name does not require delimiter
+            if ( idx <= start || idx > expression.length() )
+            {
+                return null;
+            }
+
+            return expression.substring( start, idx );
+        }
+
+        public int getPosition()
+        {
+            return idx < expression.length() ? idx : EOF;
+        }
+
+        // to make tokenizer look pretty in debugger
+        @Override
+        public String toString()
+        {
+            return idx < expression.length() ? expression.substring( idx ) : "<EOF>";
+        }
+    }
 
     private ReflectionValueExtractor()
     {
     }
 
     /**
-     * <p>The implementation supports indexed, nested and mapped properties.</p>
-     *
+     * <p>
+     * The implementation supports indexed, nested and mapped properties.
+     * </p>
      * <ul>
      * <li>nested properties should be defined by a dot, i.e. "user.address.street"</li>
      * <li>indexed properties (java.util.List or array instance) should be contains <code>(\\w+)\\[(\\d+)\\]</code>
      * pattern, i.e. "user.addresses[1].street"</li>
-     * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e. "user.addresses(myAddress).street"</li>
+     * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e.
+     * "user.addresses(myAddress).street"</li>
      * <ul>
-     *
+     * 
      * @param expression not null expression
      * @param root not null object
      * @return the object defined by the expression
@@ -85,30 +164,26 @@ public class ReflectionValueExtractor
     }
 
     /**
-     * <p>The implementation supports indexed, nested and mapped properties.</p>
-     *
+     * <p>
+     * The implementation supports indexed, nested and mapped properties.
+     * </p>
      * <ul>
      * <li>nested properties should be defined by a dot, i.e. "user.address.street"</li>
      * <li>indexed properties (java.util.List or array instance) should be contains <code>(\\w+)\\[(\\d+)\\]</code>
      * pattern, i.e. "user.addresses[1].street"</li>
-     * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e. "user.addresses(myAddress).street"</li>
+     * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e.
+     * "user.addresses(myAddress).street"</li>
      * <ul>
-     *
+     * 
      * @param expression not null expression
      * @param root not null object
      * @return the object defined by the expression
      * @throws Exception if any
      */
     // TODO: don't throw Exception
-    public static Object evaluate( String expression, Object root, boolean trimRootToken )
+    public static Object evaluate( final String expression, final Object root, final boolean trimRootToken )
         throws Exception
     {
-        // if the root token refers to the supplied root object parameter, remove it.
-        if ( trimRootToken )
-        {
-            expression = expression.substring( expression.indexOf( '.' ) + 1 );
-        }
-
         Object value = root;
 
         // ----------------------------------------------------------------------
@@ -116,131 +191,166 @@ public class ReflectionValueExtractor
         // MavenProject instance.
         // ----------------------------------------------------------------------
 
-        StringTokenizer parser = new StringTokenizer( expression, "." );
-
-        while ( parser.hasMoreTokens() )
+        if ( StringUtils.isEmpty( expression ) || !Character.isJavaIdentifierStart( expression.charAt( 0 ) ) )
         {
-            // if we have nothing, stop now
-            if ( value == null )
+            return null;
+        }
+
+        final Tokenizer tokenizer;
+        if ( trimRootToken )
+        {
+            tokenizer = new Tokenizer( expression );
+            tokenizer.nextPropertyName();
+        }
+        else
+        {
+            tokenizer = new Tokenizer( "." + expression );
+        }
+
+        int propertyPosition = tokenizer.getPosition();
+        while ( value != null && tokenizer.peekChar() != EOF )
+        {
+            switch ( tokenizer.skipChar() )
             {
-                return null;
-            }
-
-            String token = parser.nextToken();
-
-            ClassMap classMap = getClassMap( value.getClass() );
-
-            Method method;
-            Object[] localParams = OBJECT_ARGS;
-
-            // do we have an indexed property?
-            Matcher matcher = INDEXED_PROPS.matcher( token );
-            if ( matcher.find() )
-            {
-                String methodBase = StringUtils.capitalizeFirstLetter( matcher.group( 1 ) );
-                String methodName = "get" + methodBase;
-                method = classMap.findMethod( methodName, CLASS_ARGS );
-                value = method.invoke( value, OBJECT_ARGS );
-                classMap = getClassMap( value.getClass() );
-
-                if ( classMap.getCachedClass().isArray() )
-                {
-                    value = Arrays.asList( (Object[]) value );
-                    classMap = getClassMap( value.getClass() );
-                }
-
-                if ( value instanceof List )
-                {
-                    // use get method on List interface
-                    localParams = new Object[1];
-                    localParams[0] = Integer.valueOf( matcher.group( 2 ) );
-                    method = classMap.findMethod( "get", localParams );
-                }
-                else
-                {
-                    throw new Exception( "The token '" + token
-                        + "' refers to a java.util.List or an array, but the value seems is an instance of '"
-                        + value.getClass() + "'." );
-                }
-            }
-            else
-            {
-                // do we have a mapped property?
-                matcher = MAPPED_PROPS.matcher( token );
-                if ( matcher.find() )
-                {
-                    String methodBase = StringUtils.capitalizeFirstLetter( matcher.group( 1 ) );
-                    String methodName = "get" + methodBase;
-                    method = classMap.findMethod( methodName, CLASS_ARGS );
-                    value = method.invoke( value, OBJECT_ARGS );
-                    classMap = getClassMap( value.getClass() );
-
-                    if ( value instanceof Map )
-                    {
-                        // use get method on List interface
-                        localParams = new Object[1];
-                        localParams[0] = matcher.group( 2 );
-                        method = classMap.findMethod( "get", localParams );
-                    }
-                    else
-                    {
-                        throw new Exception( "The token '" + token
-                            + "' refers to a java.util.Map, but the value seems is an instance of '"
-                            + value.getClass() + "'." );
-                    }
-                }
-                else
-                {
-                    String methodBase = StringUtils.capitalizeFirstLetter( token );
-                    String methodName = "get" + methodBase;
-                    method = classMap.findMethod( methodName, CLASS_ARGS );
-
-                    if ( method == null )
-                    {
-                        // perhaps this is a boolean property??
-                        methodName = "is" + methodBase;
-
-                        method = classMap.findMethod( methodName, CLASS_ARGS );
-                    }
-                }
-            }
-
-            if ( method == null )
-            {
-                return null;
-            }
-
-            try
-            {
-                value = method.invoke( value, localParams );
-            }
-            catch ( InvocationTargetException e )
-            {
-                // catch array index issues gracefully, otherwise release
-                if ( e.getCause() instanceof IndexOutOfBoundsException )
-                {
+                case INDEXED_START:
+                    value =
+                        getIndexedValue( expression, propertyPosition, tokenizer.getPosition(), value,
+                                         tokenizer.nextToken( INDEXED_END ) );
+                    break;
+                case MAPPED_START:
+                    value =
+                        getMappedValue( expression, propertyPosition, tokenizer.getPosition(), value,
+                                        tokenizer.nextToken( MAPPED_END ) );
+                    break;
+                case PROPERTY_START:
+                    propertyPosition = tokenizer.getPosition();
+                    value = getPropertyValue( value, tokenizer.nextPropertyName() );
+                    break;
+                default:
+                    // could not parse expression
                     return null;
-                }
-
-                throw e;
             }
         }
 
         return value;
     }
 
-    private static ClassMap getClassMap( Class clazz )
+    private static Object getMappedValue( final String expression, final int from, final int to, final Object value,
+                                          final String key )
+        throws Exception
+    {
+        if ( value == null || key == null )
+        {
+            return null;
+        }
+
+        if ( value instanceof Map )
+        {
+            Object[] localParams = new Object[] { key };
+            ClassMap classMap = getClassMap( value.getClass() );
+            Method method = classMap.findMethod( "get", localParams );
+            return method.invoke( value, localParams );
+        }
+
+        final String message =
+            String.format( "The token '%s' at position '%d' refers to a java.util.Map, but the value seems is an instance of '%s'",
+                           expression.subSequence( from, to ), from, value.getClass() );
+
+        throw new Exception( message );
+    }
+
+    private static Object getIndexedValue( final String expression, final int from, final int to, final Object value,
+                                           final String indexStr )
+        throws Exception
+    {
+        try
+        {
+            int index = Integer.parseInt( indexStr );
+
+            if ( value.getClass().isArray() )
+            {
+                return Array.get( value, index );
+            }
+
+            if ( value instanceof List )
+            {
+                ClassMap classMap = getClassMap( value.getClass() );
+                // use get method on List interface
+                Object[] localParams = new Object[] { index };
+                Method method = classMap.findMethod( "get", localParams );
+                return method.invoke( value, localParams );
+            }
+        }
+        catch ( NumberFormatException e )
+        {
+            return null;
+        }
+        catch ( InvocationTargetException e )
+        {
+            // catch array index issues gracefully, otherwise release
+            if ( e.getCause() instanceof IndexOutOfBoundsException )
+            {
+                return null;
+            }
+
+            throw e;
+        }
+
+        final String message =
+            String.format( "The token '%s' at position '%d' refers to a java.util.List or an array, but the value seems is an instance of '%s'",
+                           expression.subSequence( from, to ), from, value.getClass() );
+
+        throw new Exception( message );
+    }
+
+    private static Object getPropertyValue( Object value, String property )
+        throws Exception
+    {
+        if ( value == null || property == null )
+        {
+            return null;
+        }
+
+        ClassMap classMap = getClassMap( value.getClass() );
+        String methodBase = StringUtils.capitalizeFirstLetter( property );
+        String methodName = "get" + methodBase;
+        Method method = classMap.findMethod( methodName, CLASS_ARGS );
+
+        if ( method == null )
+        {
+            // perhaps this is a boolean property??
+            methodName = "is" + methodBase;
+
+            method = classMap.findMethod( methodName, CLASS_ARGS );
+        }
+
+        if ( method == null )
+        {
+            return null;
+        }
+
+        try
+        {
+            return method.invoke( value, OBJECT_ARGS );
+        }
+        catch ( InvocationTargetException e )
+        {
+            throw e;
+        }
+    }
+
+    private static ClassMap getClassMap( Class<?> clazz )
     {
 
-        WeakReference<ClassMap> softRef = classMaps.get( clazz);
+        WeakReference<ClassMap> softRef = classMaps.get( clazz );
 
         ClassMap classMap;
 
-        if ( softRef == null || (classMap = softRef.get() ) == null)
+        if ( softRef == null || ( classMap = softRef.get() ) == null )
         {
             classMap = new ClassMap( clazz );
 
-            classMaps.put( clazz, new WeakReference<ClassMap>(classMap) );
+            classMaps.put( clazz, new WeakReference<ClassMap>( classMap ) );
         }
 
         return classMap;

@@ -16,14 +16,14 @@ package org.codehaus.plexus.util.introspection;
  * limitations under the License.
  */
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
+
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
 /**
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
@@ -40,9 +40,9 @@ public class ReflectionValueExtractorTest
         super.setUp();
 
         Dependency dependency1 = new Dependency();
-        dependency1.setArtifactId("dep1");
+        dependency1.setArtifactId( "dep1" );
         Dependency dependency2 = new Dependency();
-        dependency2.setArtifactId("dep2");
+        dependency2.setArtifactId( "dep2" );
 
         project = new Project();
         project.setModelVersion( "4.0.0" );
@@ -95,39 +95,39 @@ public class ReflectionValueExtractorTest
         // ----------------------------------------------------------------------
 
         // List
-        Dependency dependency = (Dependency)ReflectionValueExtractor.evaluate( "project.dependencies[0]", project );
+        Dependency dependency = (Dependency) ReflectionValueExtractor.evaluate( "project.dependencies[0]", project );
 
         Assert.assertNotNull( dependency );
 
-        Assert.assertTrue( "dep1".equals(dependency.getArtifactId()) );
+        Assert.assertTrue( "dep1".equals( dependency.getArtifactId() ) );
 
-        String artifactId = (String)ReflectionValueExtractor.evaluate( "project.dependencies[1].artifactId", project );
+        String artifactId = (String) ReflectionValueExtractor.evaluate( "project.dependencies[1].artifactId", project );
 
-        Assert.assertTrue( "dep2".equals(artifactId) );
+        Assert.assertTrue( "dep2".equals( artifactId ) );
 
         // Array
 
-        dependency = (Dependency)ReflectionValueExtractor.evaluate( "project.dependenciesAsArray[0]", project );
+        dependency = (Dependency) ReflectionValueExtractor.evaluate( "project.dependenciesAsArray[0]", project );
 
         Assert.assertNotNull( dependency );
 
-        Assert.assertTrue( "dep1".equals(dependency.getArtifactId()) );
+        Assert.assertTrue( "dep1".equals( dependency.getArtifactId() ) );
 
-        artifactId = (String)ReflectionValueExtractor.evaluate( "project.dependenciesAsArray[1].artifactId", project );
+        artifactId = (String) ReflectionValueExtractor.evaluate( "project.dependenciesAsArray[1].artifactId", project );
 
-        Assert.assertTrue( "dep2".equals(artifactId) );
+        Assert.assertTrue( "dep2".equals( artifactId ) );
 
         // Map
 
-        dependency = (Dependency)ReflectionValueExtractor.evaluate( "project.dependenciesAsMap(dep1)", project );
+        dependency = (Dependency) ReflectionValueExtractor.evaluate( "project.dependenciesAsMap(dep1)", project );
 
         Assert.assertNotNull( dependency );
 
-        Assert.assertTrue( "dep1".equals(dependency.getArtifactId()) );
+        Assert.assertTrue( "dep1".equals( dependency.getArtifactId() ) );
 
-        artifactId = (String)ReflectionValueExtractor.evaluate( "project.dependenciesAsMap(dep2).artifactId", project );
+        artifactId = (String) ReflectionValueExtractor.evaluate( "project.dependenciesAsMap(dep2).artifactId", project );
 
-        Assert.assertTrue( "dep2".equals(artifactId) );
+        Assert.assertTrue( "dep2".equals( artifactId ) );
 
         // ----------------------------------------------------------------------
         // Build
@@ -144,6 +144,112 @@ public class ReflectionValueExtractorTest
         Assert.assertNull( ReflectionValueExtractor.evaluate( "project.foo", project ) );
         Assert.assertNull( ReflectionValueExtractor.evaluate( "project.dependencies[10]", project ) );
         Assert.assertNull( ReflectionValueExtractor.evaluate( "project.dependencies[0].foo", project ) );
+    }
+
+    public void testMappedDottedKey()
+        throws Exception
+    {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put( "a.b", "a.b-value" );
+
+        Assert.assertEquals( "a.b-value", ReflectionValueExtractor.evaluate( "h.value(a.b)", new ValueHolder( map ) ) );
+    }
+
+    public void testIndexedMapped()
+        throws Exception
+    {
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put( "a", "a-value" );
+        List<Object> list = new ArrayList<Object>();
+        list.add( map );
+
+        Assert.assertEquals( "a-value", ReflectionValueExtractor.evaluate( "h.value[0](a)", new ValueHolder( list ) ) );
+    }
+
+    public void testMappedIndexed()
+        throws Exception
+    {
+        List<Object> list = new ArrayList<Object>();
+        list.add( "a-value" );
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put( "a", list );
+        Assert.assertEquals( "a-value", ReflectionValueExtractor.evaluate( "h.value(a)[0]", new ValueHolder( map ) ) );
+    }
+
+    public void testMappedMissingDot()
+        throws Exception
+    {
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put( "a", new ValueHolder( "a-value" ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value(a)value", new ValueHolder( map ) ) );
+    }
+
+    public void testIndexedMissingDot()
+        throws Exception
+    {
+        List<Object> list = new ArrayList<Object>();
+        list.add( new ValueHolder( "a-value" ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value[0]value", new ValueHolder( list ) ) );
+    }
+
+    public void testDotDot()
+        throws Exception
+    {
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h..value", new ValueHolder( "value" ) ) );
+    }
+
+    public void testBadIndexedSyntax()
+        throws Exception
+    {
+        List<Object> list = new ArrayList<Object>();
+        list.add( "a-value" );
+        Object value = new ValueHolder( list );
+
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value[", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value[]", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value[a]", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value[0", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value[0)", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value[-1]", value ) );
+    }
+
+    public void testBadMappedSyntax()
+        throws Exception
+    {
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put( "a", "a-value" );
+        Object value = new ValueHolder( map );
+
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value(", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value()", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value(a", value ) );
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "h.value(a]", value ) );
+    }
+
+    public void testIllegalIndexedType()
+        throws Exception
+    {
+        try
+        {
+            ReflectionValueExtractor.evaluate( "h.value[1]", new ValueHolder( "string" ) );
+        }
+        catch ( Exception e )
+        {
+            // TODO assert exception message
+        }
+    }
+
+    public void testIllegalMappedType()
+        throws Exception
+    {
+        try
+        {
+            ReflectionValueExtractor.evaluate( "h.value(key)", new ValueHolder( "string" ) );
+        }
+        catch ( Exception e )
+        {
+            // TODO assert exception message
+        }
     }
 
     public static class Project
@@ -246,15 +352,15 @@ public class ReflectionValueExtractorTest
 
         public Dependency[] getDependenciesAsArray()
         {
-            return (Dependency[]) getDependencies().toArray( new Dependency[0]);
+            return (Dependency[]) getDependencies().toArray( new Dependency[0] );
         }
 
         public Map getDependenciesAsMap()
         {
             Map ret = new HashMap();
-            for ( Iterator it = getDependencies().iterator(); it.hasNext();)
+            for ( Iterator it = getDependencies().iterator(); it.hasNext(); )
             {
-                Dependency dep = (Dependency)it.next();
+                Dependency dep = (Dependency) it.next();
                 ret.put( dep.getArtifactId(), dep );
             }
             return ret;
@@ -275,7 +381,7 @@ public class ReflectionValueExtractorTest
             return artifactId;
         }
 
-        public void setArtifactId(String id)
+        public void setArtifactId( String id )
         {
             artifactId = id;
         }
@@ -293,6 +399,21 @@ public class ReflectionValueExtractorTest
         public String getConnection()
         {
             return connection;
+        }
+    }
+
+    public static class ValueHolder
+    {
+        private final Object value;
+
+        public ValueHolder( Object value )
+        {
+            this.value = value;
+        }
+
+        public Object getValue()
+        {
+            return value;
         }
     }
 }
