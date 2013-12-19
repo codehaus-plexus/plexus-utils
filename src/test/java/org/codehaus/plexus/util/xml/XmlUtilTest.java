@@ -19,6 +19,7 @@ package org.codehaus.plexus.util.xml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -51,7 +52,19 @@ public class XmlUtilTest
         }
         return basedir;
     }    
-    
+
+    private File getTestOutputFile( String relPath )
+        throws IOException
+    {
+        final File file = new File( getBasedir(), relPath );
+        final File parentFile = file.getParentFile();
+        if ( !parentFile.isDirectory() && !parentFile.mkdirs() )
+        {
+            throw new IOException( "Could not create test directory " + parentFile );
+        }
+        return file;
+    }
+
     /** {@inheritDoc} */
     protected void setUp()
         throws Exception
@@ -77,7 +90,7 @@ public class XmlUtilTest
         try
         {
             is = new FileInputStream( testDocument );
-            os = new FileOutputStream( new File( getBasedir(), "target/test/prettyFormatTestDocumentOutputStream.xml" ) );
+            os = new FileOutputStream( getTestOutputFile( "target/test/prettyFormatTestDocumentOutputStream.xml" ) );
 
             assertNotNull( is );
             assertNotNull( os );
@@ -102,7 +115,7 @@ public class XmlUtilTest
         try
         {
             reader = ReaderFactory.newXmlReader( testDocument );
-            writer = WriterFactory.newXmlWriter( new File( getBasedir(), "target/test/prettyFormatTestDocumentWriter.xml" ) );
+            writer = WriterFactory.newXmlWriter( getTestOutputFile( "target/test/prettyFormatTestDocumentWriter.xml" ) );
 
             assertNotNull( reader );
             assertNotNull( writer );
@@ -157,7 +170,7 @@ public class XmlUtilTest
         try
         {
             reader = ReaderFactory.newXmlReader( testDocument );
-            writer = WriterFactory.newXmlWriter( new File( getBasedir(), "target/test/prettyFormatTestXdocWriter.xml" ) );
+            writer = WriterFactory.newXmlWriter( getTestOutputFile( "target/test/prettyFormatTestXdocWriter.xml" ) );
 
             assertNotNull( reader );
             assertNotNull( writer );
