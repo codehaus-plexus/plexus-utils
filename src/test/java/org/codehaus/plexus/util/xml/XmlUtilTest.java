@@ -41,8 +41,17 @@ import org.codehaus.plexus.util.WriterFactory;
 public class XmlUtilTest
     extends TestCase
 {
-    private static final File basedir = new File( new File( "" ).getAbsolutePath() );
+    private String basedir;
 
+    public final String getBasedir()
+    {
+        if ( null == basedir )
+        {
+            basedir = System.getProperty( "basedir", new File( "" ).getAbsolutePath() );
+        }
+        return basedir;
+    }    
+    
     /** {@inheritDoc} */
     protected void setUp()
         throws Exception
@@ -60,7 +69,7 @@ public class XmlUtilTest
     public void testPrettyFormatInputStreamOutputStream()
         throws Exception
     {
-        File testDocument = new File( basedir, "src/test/resources/testDocument.xhtml" );
+        File testDocument = new File( getBasedir(), "src/test/resources/testDocument.xhtml" );
         assertTrue( testDocument.exists() );
 
         InputStream is = null;
@@ -68,7 +77,7 @@ public class XmlUtilTest
         try
         {
             is = new FileInputStream( testDocument );
-            os = new FileOutputStream( new File( basedir, "target/test/prettyFormatTestDocumentOutputStream.xml" ) );
+            os = new FileOutputStream( new File( getBasedir(), "target/test/prettyFormatTestDocumentOutputStream.xml" ) );
 
             assertNotNull( is );
             assertNotNull( os );
@@ -85,7 +94,7 @@ public class XmlUtilTest
     public void testPrettyFormatReaderWriter()
         throws Exception
     {
-        File testDocument = new File( basedir, "src/test/resources/testDocument.xhtml" );
+        File testDocument = new File( getBasedir(), "src/test/resources/testDocument.xhtml" );
         assertTrue( testDocument.exists() );
 
         Reader reader = null;
@@ -93,7 +102,7 @@ public class XmlUtilTest
         try
         {
             reader = ReaderFactory.newXmlReader( testDocument );
-            writer = WriterFactory.newXmlWriter( new File( basedir, "target/test/prettyFormatTestDocumentWriter.xml" ) );
+            writer = WriterFactory.newXmlWriter( new File( getBasedir(), "target/test/prettyFormatTestDocumentWriter.xml" ) );
 
             assertNotNull( reader );
             assertNotNull( writer );
@@ -110,7 +119,7 @@ public class XmlUtilTest
     public void testPrettyFormatString()
         throws Exception
     {
-        File testDocument = new File( basedir, "src/test/resources/testDocument.xhtml" );
+        File testDocument = new File( getBasedir(), "src/test/resources/testDocument.xhtml" );
         assertTrue( testDocument.exists() );
 
         Reader reader = null;
@@ -140,7 +149,7 @@ public class XmlUtilTest
     public void testPrettyFormatReaderWriter2()
         throws Exception
     {
-        File testDocument = new File( basedir, "src/test/resources/test.xdoc.xhtml" );
+        File testDocument = new File( getBasedir(), "src/test/resources/test.xdoc.xhtml" );
         assertTrue( testDocument.exists() );
 
         Reader reader = null;
@@ -148,7 +157,7 @@ public class XmlUtilTest
         try
         {
             reader = ReaderFactory.newXmlReader( testDocument );
-            writer = WriterFactory.newXmlWriter( new File( basedir, "target/test/prettyFormatTestXdocWriter.xml" ) );
+            writer = WriterFactory.newXmlWriter( new File( getBasedir(), "target/test/prettyFormatTestXdocWriter.xml" ) );
 
             assertNotNull( reader );
             assertNotNull( writer );
@@ -160,5 +169,5 @@ public class XmlUtilTest
             IOUtil.close( reader );
             IOUtil.close( writer );
         }
-    }
+    }   
 }
