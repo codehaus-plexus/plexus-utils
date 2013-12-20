@@ -69,10 +69,6 @@ limitations under the License.
           </systemProperties>
         </configuration>
       </plugin>
-      <!--
-      
-      This should not be Java7 while Maven still officially supports 1.6
-      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -93,7 +89,14 @@ limitations under the License.
           </execution>
         </executions>
       </plugin>
-      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
