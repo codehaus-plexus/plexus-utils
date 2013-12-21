@@ -55,6 +55,11 @@ public class ReflectionValueExtractorTest
         project.addDependency( dependency1 );
         project.addDependency( dependency2 );
         project.setBuild( new Build() );
+        
+        // Build up an artifactMap
+        project.addArtifact( new Artifact("g0","a0","v0","e0","c0") );
+        project.addArtifact( new Artifact("g1","a1","v1","e1","c1") );        
+        project.addArtifact( new Artifact("g2","a2","v2","e2","c2") );
     }
 
     public void testValueExtraction()
@@ -252,6 +257,73 @@ public class ReflectionValueExtractorTest
         }
     }
 
+    public void testArtifactMap()
+        throws Exception
+    {
+        assertEquals( "g0", ((Artifact) ReflectionValueExtractor.evaluate( "project.artifactMap(g0:a0:c0)", project )).getGroupId() );
+        assertEquals( "a1", ((Artifact) ReflectionValueExtractor.evaluate( "project.artifactMap(g1:a1:c1)", project )).getArtifactId() );
+        assertEquals( "c2", ((Artifact) ReflectionValueExtractor.evaluate( "project.artifactMap(g2:a2:c2)", project )).getClassifier() );
+    }
+    
+    public static class Artifact
+    {
+        private String groupId;
+        private String artifactId;
+        private String version;
+        private String extension;
+        private String classifier;
+        
+        public Artifact( String groupId, String artifactId, String version, String extension, String classifier )
+        {
+            this.groupId = groupId;
+            this.artifactId = artifactId;
+            this.version = version;
+            this.extension = extension;
+            this.classifier = classifier;
+        }
+        
+        public String getGroupId()
+        {
+            return groupId;
+        }
+        public void setGroupId( String groupId )
+        {
+            this.groupId = groupId;
+        }
+        public String getArtifactId()
+        {
+            return artifactId;
+        }
+        public void setArtifactId( String artifactId )
+        {
+            this.artifactId = artifactId;
+        }
+        public String getVersion()
+        {
+            return version;
+        }
+        public void setVersion( String version )
+        {
+            this.version = version;
+        }
+        public String getExtension()
+        {
+            return extension;
+        }
+        public void setExtension( String extension )
+        {
+            this.extension = extension;
+        }
+        public String getClassifier()
+        {
+            return classifier;
+        }
+        public void setClassifier( String classifier )
+        {
+            this.classifier = classifier;
+        }
+    }
+    
     public static class Project
     {
         private String modelVersion;
@@ -270,6 +342,8 @@ public class ReflectionValueExtractorTest
 
         private String version;
 
+        private Map<String,Artifact> artifactMap = new HashMap<String,Artifact>();
+        
         public void setModelVersion( String modelVersion )
         {
             this.modelVersion = modelVersion;
@@ -365,6 +439,17 @@ public class ReflectionValueExtractorTest
             }
             return ret;
         }
+        
+        // ${project.artifactMap(g:a:v)}
+        public void addArtifact(Artifact a) 
+        {   
+            artifactMap.put( a.getGroupId() + ":" + a.getArtifactId() + ":" + a.getClassifier(), a );
+        }
+        
+        public Map<String,Artifact> getArtifactMap()
+        {
+            return artifactMap;
+        }        
     }
 
     public static class Build
