@@ -257,6 +257,12 @@ public class ReflectionValueExtractorTest
         }
     }
 
+    public void testTrimRootToken()
+        throws Exception
+    {
+        Assert.assertNull( ReflectionValueExtractor.evaluate( "project", project, true ) );
+    }
+
     public void testArtifactMap()
         throws Exception
     {

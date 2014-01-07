@@ -201,6 +201,10 @@ public class ReflectionValueExtractor
         {
             tokenizer = new Tokenizer( expression );
             tokenizer.nextPropertyName();
+            if ( tokenizer.getPosition() == EOF )
+            {
+                return null;
+            }
         }
         else
         {
