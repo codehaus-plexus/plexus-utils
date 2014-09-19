@@ -67,11 +67,11 @@ public class Xpp3DomWriterTest
         buf.append( LS );
         if ( escape )
         {
-            buf.append( "    <el7>element7" + LS + "&amp;&quot;&apos;&lt;&gt;</el7>" );
+            buf.append( "    <el7>element7" ).append( LS ).append( "&amp;&quot;&apos;&lt;&gt;</el7>" );
         }
         else
         {
-            buf.append( "    <el7>element7"+ LS + "&\"\'<></el7>" );
+            buf.append( "    <el7>element7" ).append( LS ).append( "&\"\'<></el7>" );
         }
         buf.append( LS );
         buf.append( "  </el6>" );
