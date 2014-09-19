@@ -29,7 +29,7 @@ public class CollectionUtilsTest
 {
     public void testMergeMaps()
     {
-        Map dominantMap = new HashMap();
+        Map<String,String> dominantMap = new HashMap<String,String>();
         dominantMap.put( "a", "a" );
         dominantMap.put( "b", "b" );
         dominantMap.put( "c", "c" );
@@ -37,7 +37,7 @@ public class CollectionUtilsTest
         dominantMap.put( "e", "e" );
         dominantMap.put( "f", "f" );
 
-        Map recessiveMap = new HashMap();
+        Map<String,String> recessiveMap = new HashMap<String,String>();
         recessiveMap.put( "a", "invalid" );
         recessiveMap.put( "b", "invalid" );
         recessiveMap.put( "c", "invalid" );
@@ -45,7 +45,7 @@ public class CollectionUtilsTest
         recessiveMap.put( "y", "y" );
         recessiveMap.put( "z", "z" );
 
-        Map result = CollectionUtils.mergeMaps( dominantMap, recessiveMap );
+        Map<String, String> result = CollectionUtils.mergeMaps( dominantMap, recessiveMap );
 
         // We should have 9 elements
         assertEquals( 9, result.keySet().size() );
@@ -65,14 +65,14 @@ public class CollectionUtilsTest
     public void testMergeMapArray()
     {
         // Test empty array of Maps
-        Map result0 = CollectionUtils.mergeMaps( new Map[]
+        Map<String, String> result0 = CollectionUtils.mergeMaps( new Map[]
         {
         } );
 
         assertNull( result0 );
 
         // Test with an array with a single element.
-        Map map1 = new HashMap();
+        Map<String, String>  map1 = new HashMap<String, String> ();
         map1.put( "a", "a" );
 
         Map result1 = CollectionUtils.mergeMaps( new Map[]
@@ -83,11 +83,11 @@ public class CollectionUtilsTest
         assertEquals( "a", result1.get( "a" ) );
 
         // Test with an array with two elements.
-        Map map2 = new HashMap();
+        Map<String, String>  map2 = new HashMap<String, String> ();
         map2.put( "a", "aa" );
         map2.put( "b", "bb" );
 
-        Map result2 = CollectionUtils.mergeMaps( new Map[]
+        Map<String, String>  result2 = CollectionUtils.mergeMaps( new Map[]
         {
             map1,
             map2
@@ -97,7 +97,7 @@ public class CollectionUtilsTest
         assertEquals( "bb", result2.get( "b" ) );
 
         // Now swap the dominant order.
-        Map result3 = CollectionUtils.mergeMaps( new Map[]
+        Map<String, String>  result3 = CollectionUtils.mergeMaps( new Map[]
         {
             map2,
             map1
@@ -107,7 +107,7 @@ public class CollectionUtilsTest
         assertEquals( "bb", result3.get( "b" ) );
 
         // Test with an array with three elements.
-        Map map3 = new HashMap();
+        Map<String, String>  map3 = new HashMap<String, String> ();
         map3.put( "a", "aaa" );
         map3.put( "b", "bbb" );
         map3.put( "c", "ccc" );

@@ -47,7 +47,7 @@ public final class ReflectionUtilsTest
     public void testComplexVariableAccess()
         throws IllegalAccessException
     {
-        Map map = (Map)ReflectionUtils.getVariablesAndValuesIncludingSuperclasses( testClass );
+        Map<String,Object> map = ReflectionUtils.getVariablesAndValuesIncludingSuperclasses( testClass );
 
         Map myMap = (Map)map.get( "myMap" );
 
@@ -82,7 +82,7 @@ public final class ReflectionUtilsTest
     {
         private String myString = "woohoo";
         private String mySettableString;
-        private Map myMap = new HashMap();
+        private Map<String,String> myMap = new HashMap<String,String>();
 
         public ReflectionUtilsTestClass()
         {

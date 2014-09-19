@@ -438,9 +438,9 @@ public class ReflectionValueExtractorTest
         public Map getDependenciesAsMap()
         {
             Map ret = new HashMap();
-            for ( Iterator it = getDependencies().iterator(); it.hasNext(); )
+            for ( Object o : getDependencies() )
             {
-                Dependency dep = (Dependency) it.next();
+                Dependency dep = (Dependency) o;
                 ret.put( dep.getArtifactId(), dep );
             }
             return ret;

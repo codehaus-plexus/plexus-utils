@@ -28,11 +28,11 @@ import java.util.Map;
 public class TopologicalSorter
 {
 
-    private final static Integer NOT_VISTITED = new Integer( 0 );
+    private final static Integer NOT_VISTITED = 0;
 
-    private final static Integer VISITING = new Integer( 1 );
+    private final static Integer VISITING = 1;
 
-    private final static Integer VISITED = new Integer( 2 );
+    private final static Integer VISITED = 2;
 
     /**
      * @param graph

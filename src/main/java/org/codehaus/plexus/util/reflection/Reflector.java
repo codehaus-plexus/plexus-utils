@@ -382,9 +382,9 @@ public final class Reflector
 
         key.append( "(" );
 
-        for ( int i = 0, len = params.length; i < len; i++ )
+        for ( Class param : params )
         {
-            key.append( params[i].getName() );
+            key.append( param.getName() );
             key.append( "," );
         }
 
@@ -408,9 +408,9 @@ public final class Reflector
                 @SuppressWarnings( { "unchecked" } )
                 Constructor<T>[] cands = (Constructor<T>[]) targetClass.getConstructors();
 
-                for ( int i = 0, len = cands.length; i < len; i++ )
+                for ( Constructor<T> cand : cands )
                 {
-                    Class[] types = cands[i].getParameterTypes();
+                    Class[] types = cand.getParameterTypes();
 
                     if ( params.length != types.length )
                     {
@@ -426,7 +426,7 @@ public final class Reflector
                     }
 
                     // we got it, so store it!
-                    constructor = cands[i];
+                    constructor = cand;
                     constructorMap.put( paramKey, constructor );
                 }
             }
@@ -550,9 +550,9 @@ public final class Reflector
 
         key.append( "(" );
 
-        for ( int i = 0, len = params.length; i < len; i++ )
+        for ( Class param : params )
         {
-            key.append( params[i].getName() );
+            key.append( param.getName() );
             key.append( "," );
         }
 
@@ -570,16 +570,16 @@ public final class Reflector
             {
                 Method[] cands = targetClass.getMethods();
 
-                for ( int i = 0, len = cands.length; i < len; i++ )
+                for ( Method cand : cands )
                 {
-                    String name = cands[i].getName();
+                    String name = cand.getName();
 
                     if ( !methodName.equals( name ) )
                     {
                         continue;
                     }
 
-                    Class[] types = cands[i].getParameterTypes();
+                    Class[] types = cand.getParameterTypes();
 
                     if ( params.length != types.length )
                     {
@@ -595,7 +595,7 @@ public final class Reflector
                     }
 
                     // we got it, so store it!
-                    method = cands[i];
+                    method = cand;
                     methodMap.put( paramKey, method );
                 }
             }

@@ -114,11 +114,11 @@ public class Commandline
      */
     protected static final String WINDOWS = "Windows";
 
-    protected Vector arguments = new Vector();
+    protected Vector<Arg> arguments = new Vector<Arg>();
 
     //protected Vector envVars = new Vector();
     // synchronized added to preserve synchronize of Vector class
-    protected Map envVars = Collections.synchronizedMap( new LinkedHashMap() );
+    protected Map<String,String> envVars = Collections.synchronizedMap( new LinkedHashMap<String,String>() );
 
     private long pid = -1;
 
@@ -435,9 +435,9 @@ public class Commandline
 
     public void addArguments( String[] line )
     {
-        for ( int i = 0; i < line.length; i++ )
+        for ( String aLine : line )
         {
-            createArgument().setValue( line[i] );
+            createArgument().setValue( aLine );
         }
     }
 
@@ -458,9 +458,9 @@ public class Commandline
     {
         Properties systemEnvVars = CommandLineUtils.getSystemEnvVars();
 
-        for ( Iterator i = systemEnvVars.keySet().iterator(); i.hasNext(); )
+        for ( Object o : systemEnvVars.keySet() )
         {
-            String key = (String) i.next();
+            String key = (String) o;
             if ( !envVars.containsKey( key ) )
             {
                 addEnvironment( key, systemEnvVars.getProperty( key ) );
@@ -484,9 +484,9 @@ public class Commandline
         }
         String[] environmentVars = new String[envVars.size()];
         int i = 0;
-        for ( Iterator iterator = envVars.keySet().iterator(); iterator.hasNext(); )
+        for ( Object o : envVars.keySet() )
         {
-            String name = (String) iterator.next();
+            String name = (String) o;
             String value = (String) envVars.get( name );
             environmentVars[i] = name + "=" + value;
             i++;
@@ -538,9 +538,9 @@ public class Commandline
             String[] s = arg.getParts();
             if ( s != null )
             {
-                for ( int j = 0; j < s.length; j++ )
+                for ( String value : s )
                 {
-                    result.addElement( s[j] );
+                    result.addElement( value );
                 }
             }
         }

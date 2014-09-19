@@ -168,7 +168,7 @@ public class CommandlineTest
             File f = new File( "test.txt" );
             cmd.createArgument().setFile( f );
             String fileName = f.getAbsolutePath();
-            if ( fileName.indexOf( " " ) >= 0 )
+            if ( fileName.contains( " " ) )
             {
                 fileName = "\"" + fileName + "\"";
             }
@@ -354,9 +354,9 @@ public class CommandlineTest
         cmd.addEnvironment( "JAVA_HOME", "/usr/jdk1.5" );
         String[] environmentVariables = cmd.getEnvironmentVariables();
 
-        for ( int i = 0, size = environmentVariables.length; i < size; i++ )
+        for ( String environmentVariable : environmentVariables )
         {
-            if ( "JAVA_HOME=/usr/jdk1.5".equals( environmentVariables[i] ) )
+            if ( "JAVA_HOME=/usr/jdk1.5".equals( environmentVariable ) )
             {
                 return;
             }

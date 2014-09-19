@@ -112,9 +112,8 @@ public class Xpp3Dom
         setValue( src.getValue() );
 
         String[] attributeNames = src.getAttributeNames();
-        for ( int i = 0; i < attributeNames.length; i++ )
+        for ( String attributeName : attributeNames )
         {
-            String attributeName = attributeNames[i];
             setAttribute( attributeName, src.getAttribute( attributeName ) );
         }
 
@@ -233,9 +232,9 @@ public class Xpp3Dom
             ArrayList<Xpp3Dom> children = new ArrayList<Xpp3Dom>();
             int size = childList.size();
 
-            for ( int i = 0; i < size; i++ )
+            for ( Xpp3Dom aChildList : childList )
             {
-                Xpp3Dom configuration = (Xpp3Dom) childList.get( i );
+                Xpp3Dom configuration = (Xpp3Dom) aChildList;
                 if ( name.equals( configuration.getName() ) )
                 {
                     children.add( configuration );
@@ -360,10 +359,8 @@ public class Xpp3Dom
             }
 
             String[] recessiveAttrs = recessive.getAttributeNames();
-            for ( int i = 0; i < recessiveAttrs.length; i++ )
+            for ( String attr : recessiveAttrs )
             {
-                String attr = recessiveAttrs[i];
-
                 if ( isEmpty( dominant.getAttribute( attr ) ) )
                 {
                     dominant.setAttribute( attr, recessive.getAttribute( attr ) );
@@ -376,7 +373,7 @@ public class Xpp3Dom
 
                 if ( childMergeOverride != null )
                 {
-                    mergeChildren = childMergeOverride.booleanValue();
+                    mergeChildren = childMergeOverride;
                 }
                 else
                 {
@@ -401,9 +398,9 @@ public class Xpp3Dom
                     }
 
                     // now, re-add these children so they'll be appended to the recessive list.
-                    for ( int i = 0; i < dominantChildren.length; i++ )
+                    for ( Xpp3Dom aDominantChildren : dominantChildren )
                     {
-                        dominant.addChild( dominantChildren[i] );
+                        dominant.addChild( aDominantChildren );
                     }
                 }
                 else

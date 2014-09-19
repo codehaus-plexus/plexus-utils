@@ -655,9 +655,9 @@ public final class FileUtilsTest
             { { "filename.ext", "ext" }, { "README", "" }, { "domain.dot.com", "com" }, { "image.jpeg", "jpeg" },
                 { "folder" + File.separator + "image.jpeg", "jpeg" }, { "folder" + File.separator + "README", "" } };
 
-        for ( int i = 0; i < tests.length; i++ )
+        for ( String[] test : tests )
         {
-            assertEquals( tests[i][1], FileUtils.getExtension( tests[i][0] ) );
+            assertEquals( test[1], FileUtils.getExtension( test[0] ) );
             //assertEquals(tests[i][1], FileUtils.extension(tests[i][0]));
         }
     }
@@ -674,9 +674,9 @@ public final class FileUtilsTest
             { "" + sep + "tmp" + sep + "foo.bar" + sep + "README", "" },
             { "C:" + sep + "temp" + sep + "foo.bar" + sep + "README", "" }, { ".." + sep + "filename.ext", "ext" },
             { "blabla", "" } };
-        for ( int i = 0; i < testsWithPaths.length; i++ )
+        for ( String[] testsWithPath : testsWithPaths )
         {
-            assertEquals( testsWithPaths[i][1], FileUtils.getExtension( testsWithPaths[i][0] ) );
+            assertEquals( testsWithPath[1], FileUtils.getExtension( testsWithPath[0] ) );
             //assertEquals(testsWithPaths[i][1], FileUtils.extension(testsWithPaths[i][0]));
         }
     }
@@ -686,9 +686,9 @@ public final class FileUtilsTest
         final String[][] tests = { { "filename.ext", "filename" }, { "first.second.third.ext", "first.second.third" },
             { "README", "README" }, { "domain.dot.com", "domain.dot" }, { "image.jpeg", "image" } };
 
-        for ( int i = 0; i < tests.length; i++ )
+        for ( String[] test : tests )
         {
-            assertEquals( tests[i][1], FileUtils.removeExtension( tests[i][0] ) );
+            assertEquals( test[1], FileUtils.removeExtension( test[0] ) );
             //assertEquals(tests[i][1], FileUtils.basename(tests[i][0]));
         }
     }
@@ -712,9 +712,9 @@ public final class FileUtilsTest
                     "C:" + sep + "temp" + sep + "foo.bar" + sep + "README" },
                 { ".." + sep + "filename.ext", ".." + sep + "filename" } };
 
-        for ( int i = 0; i < testsWithPaths.length; i++ )
+        for ( String[] testsWithPath : testsWithPaths )
         {
-            assertEquals( testsWithPaths[i][1], FileUtils.removeExtension( testsWithPaths[i][0] ) );
+            assertEquals( testsWithPath[1], FileUtils.removeExtension( testsWithPath[0] ) );
             //assertEquals(testsWithPaths[i][1], FileUtils.basename(testsWithPaths[i][0]));
         }
     }
@@ -1316,9 +1316,8 @@ public final class FileUtilsTest
         File[] childs = destination.listFiles();
         assertEquals( 2, childs.length );
 
-        for ( int i = 0, size = childs.length; i < size; i++ )
+        for ( File current : childs )
         {
-            File current = childs[i];
             if ( current.getName().endsWith( "empty-dir" ) || current.getName().endsWith( "dir1" ) )
             {
                 if ( current.getName().endsWith( "dir1" ) )

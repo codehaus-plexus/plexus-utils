@@ -79,8 +79,7 @@ import java.util.Map;
  * no substitution is made; the token text is passed through unaltered.</li>
  * </ul>
  * @see LineOrientedInterpolatingReader
- * @see org.codehaus.plexus.interpolation
- */
+s */
 public class InterpolationFilterReader
     extends FilterReader
 {
@@ -94,7 +93,7 @@ public class InterpolationFilterReader
     private int previousIndex = -1;
 
     /** Hashtable to hold the replacee-replacer pairs (String to String). */
-    private Map variables = new HashMap();
+    private Map<Object,Object> variables = new HashMap<Object,Object>();
 
     /** Character marking the beginning of a token. */
     private String beginToken;
@@ -123,7 +122,7 @@ public class InterpolationFilterReader
      * @param beginToken an interpolation target begins with this.
      * @param endToken  an interpolation target ends with this.
      */
-    public InterpolationFilterReader( Reader in, Map variables, String beginToken, String endToken )
+    public InterpolationFilterReader( Reader in, Map<Object, Object> variables, String beginToken, String endToken )
     {
         super( in );
 
@@ -142,7 +141,7 @@ public class InterpolationFilterReader
      * @param in a Reader to be wrapped for interpolation.
      * @param variables name/value pairs to be interpolated into the character stream.
      */
-    public InterpolationFilterReader( Reader in, Map variables )
+    public InterpolationFilterReader( Reader in, Map<Object, Object> variables )
     {
         this( in, variables, DEFAULT_BEGIN_TOKEN, DEFAULT_END_TOKEN );
     }

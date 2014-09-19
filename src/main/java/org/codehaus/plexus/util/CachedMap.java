@@ -126,9 +126,9 @@ public final class CachedMap implements Map {
             _backingFastMap = null;
             _backingMap = backingMap;
             _keysMap = new FastMap(backingMap.size());
-            for (Iterator i= backingMap.keySet().iterator(); i.hasNext();) {
-                Object key = i.next();
-                _keysMap.put(key, key);
+            for ( Object key : backingMap.keySet() )
+            {
+                _keysMap.put( key, key );
             }
         }
     }
@@ -165,9 +165,9 @@ public final class CachedMap implements Map {
 
         if (_keysMap != null) {
             // Re-populates keys from backing map.
-            for (Iterator i= _backingMap.keySet().iterator(); i.hasNext();) {
-                Object key = i.next();
-                _keysMap.put(key, key);
+            for ( Object key : _backingMap.keySet() )
+            {
+                _keysMap.put( key, key );
             }
         }
     }

@@ -67,7 +67,7 @@ public class XmlStreamReaderTest
         checkXmlContent( xml, encoding, null );
     }
 
-    private static void checkXmlContent( String xml, String encoding, byte[] bom )
+    private static void checkXmlContent( String xml, String encoding, byte... bom )
     throws IOException
     {
         byte[] xmlContent = xml.getBytes( encoding );
@@ -96,13 +96,13 @@ public class XmlStreamReaderTest
         checkXmlStreamReader( text, encoding, encoding, null );
     }
 
-    private static void checkXmlStreamReader( String text, String encoding, byte[] bom  )
+    private static void checkXmlStreamReader( String text, String encoding, byte... bom  )
     throws IOException
     {
         checkXmlStreamReader( text, encoding, encoding, bom );
     }
 
-    private static void checkXmlStreamReader( String text, String encoding, String effectiveEncoding, byte[] bom )
+    private static void checkXmlStreamReader( String text, String encoding, String effectiveEncoding, byte... bom )
     throws IOException
     {
         String xml = createXmlContent( text, encoding );

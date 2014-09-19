@@ -37,9 +37,9 @@ public class SerializerXMLWriter
 
     private final String namespace;
 
-    private final Stack elements = new Stack();
+    private final Stack<String> elements = new Stack<String>();
 
-    private List exceptions;
+    private List<Exception> exceptions;
 
     public SerializerXMLWriter( String namespace, XmlSerializer serializer )
     {
@@ -115,14 +115,14 @@ public class SerializerXMLWriter
     {
         if ( exceptions == null )
         {
-            exceptions = new ArrayList();
+            exceptions = new ArrayList<Exception>();
         }
         exceptions.add( e );
     }
 
-    public List getExceptions()
+    public List<Exception> getExceptions()
     {
-        return exceptions == null ? Collections.EMPTY_LIST : exceptions;
+        return exceptions == null ? Collections.<Exception>emptyList() : exceptions;
     }
 
 }

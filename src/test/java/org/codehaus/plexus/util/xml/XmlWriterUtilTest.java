@@ -125,7 +125,7 @@ public class XmlWriterUtilTest
     {
         XmlWriterUtil.writeCommentLineBreak( xmlWriter );
         writer.close();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append( "<!-- ====================================================================== -->" ).append( XmlWriterUtil.LS );
         assertEquals( output.toString(), sb.toString() );
         assertTrue( output.toString().length() == XmlWriterUtil.DEFAULT_COLUMN_LINE - 1 + XmlWriterUtil.LS.length() );
@@ -343,7 +343,7 @@ public class XmlWriterUtilTest
 
         XmlWriterUtil.writeCommentText( xmlWriter, "hello", 2, 4 );
         writer.close();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append( XmlWriterUtil.LS );
         sb.append( indent ).append( "<!-- ====================================================================== -->" )
             .append( XmlWriterUtil.LS );
@@ -369,7 +369,7 @@ public class XmlWriterUtilTest
 
         XmlWriterUtil.writeCommentText( xmlWriter, "hello", 2, 4, 50 );
         writer.close();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append( XmlWriterUtil.LS );
         sb.append( indent ).append( "<!-- ======================================== -->" ).append( XmlWriterUtil.LS );
         sb.append( indent ).append( "<!-- hello                                    -->" ).append( XmlWriterUtil.LS );
@@ -390,7 +390,7 @@ public class XmlWriterUtilTest
     {
         XmlWriterUtil.writeComment( xmlWriter, null );
         writer.close();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append( "<!-- null                                                                   -->" ).append( XmlWriterUtil.LS );
         assertEquals( output.toString(), sb.toString() );
     }
@@ -405,7 +405,7 @@ public class XmlWriterUtilTest
     {
         XmlWriterUtil.writeComment( xmlWriter, "This is a short text" );
         writer.close();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append( "<!-- This is a short text                                                   -->" ).append( XmlWriterUtil.LS );
         assertEquals( output.toString(), sb.toString() );
     }
@@ -422,7 +422,7 @@ public class XmlWriterUtilTest
             + "Based on the concept of a project object model (POM), Maven can manage a project's build, reporting "
             + "and documentation from a central piece of information." );
         writer.close();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append( "<!-- Maven is a software project management and comprehension tool. Based   -->" ).append( XmlWriterUtil.LS );
         sb.append( "<!-- on the concept of a project object model (POM), Maven can manage a     -->" ).append( XmlWriterUtil.LS );
         sb.append( "<!-- project's build, reporting and documentation from a central piece of   -->" ).append( XmlWriterUtil.LS );

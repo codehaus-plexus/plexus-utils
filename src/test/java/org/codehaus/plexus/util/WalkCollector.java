@@ -23,7 +23,7 @@ import java.util.List;
 class WalkCollector
     implements DirectoryWalkListener
 {
-    public List steps;
+    public List<File> steps;
 
     public File startingDir;
 
@@ -37,7 +37,7 @@ class WalkCollector
 
     public WalkCollector()
     {
-        steps = new ArrayList();
+        steps = new ArrayList<File>();
         startCount = 0;
         finishCount = 0;
         percentageLow = 0;

@@ -214,7 +214,7 @@ public class PathTool
         }
 
         // This traps urls like http://
-        if ( link.indexOf( ":" ) >= 0 )
+        if ( link.contains( ":" ) )
         {
             return link;
         }

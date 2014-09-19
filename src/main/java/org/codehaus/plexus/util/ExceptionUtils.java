@@ -118,9 +118,9 @@ public class ExceptionUtils
     {
         if ( methodName != null && methodName.length() > 0 )
         {
-            List list = new ArrayList( Arrays.asList( CAUSE_METHOD_NAMES ) );
+            List<String> list = new ArrayList<String>( Arrays.asList( CAUSE_METHOD_NAMES ) );
             list.add( methodName );
-            CAUSE_METHOD_NAMES = (String[]) list.toArray( new String[list.size()] );
+            CAUSE_METHOD_NAMES = list.toArray( new String[list.size()] );
         }
     }
 
@@ -171,9 +171,9 @@ public class ExceptionUtils
         Throwable cause = getCauseUsingWellKnownTypes( throwable );
         if ( cause == null )
         {
-            for ( int i = 0; i < methodNames.length; i++ )
+            for ( String methodName : methodNames )
             {
-                cause = getCauseUsingMethodName( throwable, methodNames[i] );
+                cause = getCauseUsingMethodName( throwable, methodName );
                 if ( cause != null )
                 {
                     break;
@@ -342,13 +342,13 @@ public class ExceptionUtils
      */
     public static Throwable[] getThrowables( Throwable throwable )
     {
-        List list = new ArrayList();
+        List<Throwable> list = new ArrayList<Throwable>();
         while ( throwable != null )
         {
             list.add( throwable );
-            throwable = ExceptionUtils.getCause( throwable );
+            throwable = getCause( throwable );
         }
-        return (Throwable[]) list.toArray( new Throwable[list.size()] );
+        return list.toArray( new Throwable[list.size()] );
     }
 
     /**
@@ -413,9 +413,9 @@ public class ExceptionUtils
     public static void printRootCauseStackTrace( Throwable t, PrintStream stream )
     {
         String trace[] = getRootCauseStackTrace( t );
-        for ( int i = 0; i < trace.length; i++ )
+        for ( String aTrace : trace )
         {
-            stream.println( trace[i] );
+            stream.println( aTrace );
         }
         stream.flush();
     }
@@ -435,9 +435,9 @@ public class ExceptionUtils
     public static void printRootCauseStackTrace( Throwable t, PrintWriter writer )
     {
         String trace[] = getRootCauseStackTrace( t );
-        for ( int i = 0; i < trace.length; i++ )
+        for ( String aTrace : trace )
         {
-            writer.println( trace[i] );
+            writer.println( aTrace );
         }
         writer.flush();
     }
@@ -450,19 +450,19 @@ public class ExceptionUtils
      */
     public static String[] getRootCauseStackTrace( Throwable t )
     {
-        Throwable throwables[] = getThrowables( t );
+        Throwable[] throwables = getThrowables( t );
         int count = throwables.length;
-        ArrayList frames = new ArrayList();
-        List nextTrace = getStackFrameList( throwables[count - 1] );
+        ArrayList<String> frames = new ArrayList<String>();
+        List<String> nextTrace = getStackFrameList( throwables[count - 1] );
         for ( int i = count; --i >= 0; )
         {
-            List trace = nextTrace;
+            List<String> trace = nextTrace;
             if ( i != 0 )
             {
                 nextTrace = getStackFrameList( throwables[i - 1] );
                 removeCommonFrames( trace, nextTrace );
             }
-            if ( i == count - 1 )
+            if ( i == ( count - 1 ) )
             {
                 frames.add( throwables[i].toString() );
             }
@@ -470,12 +470,12 @@ public class ExceptionUtils
             {
                 frames.add( WRAPPED_MARKER + throwables[i].toString() );
             }
-            for ( int j = 0; j < trace.size(); j++ )
+            for ( String aTrace : trace )
             {
-                frames.add( trace.get( j ) );
+                frames.add( aTrace );
             }
         }
-        return (String[]) frames.toArray( new String[0] );
+        return frames.toArray( new String[frames.size()] );
     }
 
     /**
@@ -484,7 +484,7 @@ public class ExceptionUtils
      * @param causeFrames   stack trace of a cause throwable
      * @param wrapperFrames stack trace of a wrapper throwable
      */
-    private static void removeCommonFrames( List causeFrames, List wrapperFrames )
+    private static void removeCommonFrames( List<String> causeFrames, List<String> wrapperFrames )
     {
         int causeFrameIndex = causeFrames.size() - 1;
         int wrapperFrameIndex = wrapperFrames.size() - 1;
@@ -492,8 +492,8 @@ public class ExceptionUtils
         {
             // Remove the frame from the cause trace if it is the same
             // as in the wrapper trace
-            String causeFrame = (String) causeFrames.get( causeFrameIndex );
-            String wrapperFrame = (String) wrapperFrames.get( wrapperFrameIndex );
+            String causeFrame = causeFrames.get( causeFrameIndex );
+            String wrapperFrame = wrapperFrames.get( wrapperFrameIndex );
             if ( causeFrame.equals( wrapperFrame ) )
             {
                 causeFrames.remove( causeFrameIndex );
@@ -530,10 +530,10 @@ public class ExceptionUtils
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter( sw, true );
         Throwable[] ts = getThrowables( t );
-        for ( int i = 0; i < ts.length; i++ )
+        for ( Throwable t1 : ts )
         {
-            ts[i].printStackTrace( pw );
-            if ( isNestedThrowable( ts[i] ) )
+            t1.printStackTrace( pw );
+            if ( isNestedThrowable( t1 ) )
             {
                 break;
             }
@@ -563,12 +563,11 @@ public class ExceptionUtils
             return true;
         }
 
-        int sz = CAUSE_METHOD_NAMES.length;
-        for ( int i = 0; i < sz; i++ )
+        for ( String CAUSE_METHOD_NAME : CAUSE_METHOD_NAMES )
         {
             try
             {
-                Method method = throwable.getClass().getMethod( CAUSE_METHOD_NAMES[i], null );
+                Method method = throwable.getClass().getMethod( CAUSE_METHOD_NAME, null );
                 if ( method != null )
                 {
                     return true;
@@ -639,12 +638,12 @@ public class ExceptionUtils
      * @param t is any throwable
      * @return List of stack frames
      */
-    static List getStackFrameList( Throwable t )
+    static List<String> getStackFrameList( Throwable t )
     {
         String stackTrace = getStackTrace( t );
         String linebreak = System.getProperty( "line.separator" );
         StringTokenizer frames = new StringTokenizer( stackTrace, linebreak );
-        List list = new LinkedList();
+        List<String> list = new LinkedList<String>();
         boolean traceStarted = false;
         while ( frames.hasMoreTokens() )
         {

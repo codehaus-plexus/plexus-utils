@@ -37,7 +37,7 @@ public class PrettyPrintXMLWriter
 
     private PrintWriter writer;
 
-    private LinkedList elementStack = new LinkedList();
+    private LinkedList<String> elementStack = new LinkedList<String>();
 
     private boolean tagInProgress;
 
@@ -499,7 +499,7 @@ public class PrettyPrintXMLWriter
     /**
      * @return the current elementStack;
      */
-    protected LinkedList getElementStack()
+    protected LinkedList<String> getElementStack()
     {
         return elementStack;
     }

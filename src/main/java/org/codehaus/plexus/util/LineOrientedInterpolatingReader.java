@@ -223,9 +223,9 @@ public class LineOrientedInterpolatingReader
 
         if(rawLine != null)
         {
-            Set expressions = parseForExpressions( rawLine );
+            Set<String> expressions = parseForExpressions( rawLine );
 
-            Map evaluatedExpressions = evaluateExpressions( expressions );
+            Map<String, Object> evaluatedExpressions = evaluateExpressions( expressions );
 
             String interpolated = replaceWithInterpolatedValues( rawLine, evaluatedExpressions );
 
@@ -288,7 +288,7 @@ public class LineOrientedInterpolatingReader
         }
     }
 
-    private String replaceWithInterpolatedValues( String rawLine, Map evaluatedExpressions )
+    private String replaceWithInterpolatedValues( String rawLine, Map<String, Object> evaluatedExpressions )
     {
         String result = rawLine;
 
@@ -306,7 +306,7 @@ public class LineOrientedInterpolatingReader
         return result;
     }
 
-    private Map evaluateExpressions( Set expressions )
+    private Map<String, Object> evaluateExpressions( Set<String> expressions )
     {
         Map<String, Object> evaluated = new TreeMap<String,Object>();
 
@@ -352,7 +352,7 @@ public class LineOrientedInterpolatingReader
         return evaluated;
     }
 
-    private Set parseForExpressions( String rawLine )
+    private Set<String> parseForExpressions( String rawLine )
     {
         Set<String> expressions = new HashSet<String>();
 

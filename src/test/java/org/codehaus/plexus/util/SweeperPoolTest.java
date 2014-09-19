@@ -189,7 +189,7 @@ public class SweeperPoolTest extends TestCase
 
     class TestObjectPool extends SweeperPool
     {
-        private Vector disposedObjects = new Vector();
+        private Vector<Object> disposedObjects = new Vector<Object>();
 
         public TestObjectPool(
             int maxSize,
@@ -214,7 +214,7 @@ public class SweeperPoolTest extends TestCase
             disposedObjects.add( obj );
         }
 
-        public Vector testGetDisposedObjects()
+        public Vector<Object> testGetDisposedObjects()
         {
             return disposedObjects;
         }

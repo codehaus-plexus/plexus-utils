@@ -107,7 +107,7 @@ public class MethodMap
     public Method find(String methodName, Object[] args)
         throws AmbiguousException
     {
-        List methodList = get(methodName);
+        List<Method> methodList = get(methodName);
 
         if (methodList == null)
         {
@@ -141,7 +141,7 @@ public class MethodMap
     }
 
 
-    private static Method getMostSpecific(List methods, Class[] classes)
+    private static Method getMostSpecific(List<Method> methods, Class[] classes)
         throws AmbiguousException
     {
         LinkedList<Method> applicables = getApplicables(methods, classes);
@@ -278,7 +278,7 @@ public class MethodMap
      * formal and actual arguments matches, and argument types are assignable
      * to formal types through a method invocation conversion).
      */
-    private static LinkedList<Method> getApplicables(List methods, Class[] classes)
+    private static LinkedList<Method> getApplicables(List<Method> methods, Class[] classes)
     {
         LinkedList<Method> list = new LinkedList<Method>();
 

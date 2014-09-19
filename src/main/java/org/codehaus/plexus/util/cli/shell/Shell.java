@@ -176,7 +176,7 @@ public class Shell
                 sb.append( getExecutable() );
             }
         }
-        for ( int i = 0; i < arguments.length; i++ )
+        for ( String argument : arguments )
         {
             if ( sb.length() > 0 )
             {
@@ -185,11 +185,11 @@ public class Shell
 
             if ( isQuotedArgumentsEnabled() )
             {
-                sb.append( quoteOneItem( arguments[i], false ) );
+                sb.append( quoteOneItem( argument, false ) );
             }
             else
             {
-                sb.append( arguments[i] );
+                sb.append( argument );
             }
         }
 

@@ -77,7 +77,7 @@ public class BourneShellTest
 
         String[] args = { "\'some arg with spaces\'" };
 
-        List shellCommandLine = sh.getShellCommandLine( args );
+        List<String> shellCommandLine = sh.getShellCommandLine( args );
 
         String cli = StringUtils.join( shellCommandLine.iterator(), " " );
         System.out.println( cli );
@@ -93,7 +93,7 @@ public class BourneShellTest
 
         String[] args = { "some arg with spaces" };
 
-        List shellCommandLine = sh.getShellCommandLine( args );
+        List<String> shellCommandLine = sh.getShellCommandLine( args );
 
         String cli = StringUtils.join( shellCommandLine.iterator(), " " );
         System.out.println( cli );
@@ -109,7 +109,7 @@ public class BourneShellTest
 
         String[] args = { "arg'withquote" };
 
-        List shellCommandLine = sh.getShellCommandLine( args );
+        List<String> shellCommandLine = sh.getShellCommandLine( args );
 
         String cli = StringUtils.join( shellCommandLine.iterator(), " " );
         System.out.println( cli );
@@ -128,7 +128,7 @@ public class BourneShellTest
 
         String[] args = { ";some&argwithunix$chars" };
 
-        List shellCommandLine = sh.getShellCommandLine( args );
+        List<String> shellCommandLine = sh.getShellCommandLine( args );
 
         String cli = StringUtils.join( shellCommandLine.iterator(), " " );
         System.out.println( cli );

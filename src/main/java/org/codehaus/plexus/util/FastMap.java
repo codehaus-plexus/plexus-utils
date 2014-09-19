@@ -269,9 +269,10 @@ public class FastMap implements Map, Cloneable, Serializable {
      *         the specified map contains <code>null</code> keys.
      */
     public void putAll(Map map) {
-        for (Iterator i = map.entrySet().iterator(); i.hasNext(); ) {
-            Map.Entry e = (Map.Entry) i.next();
-            addEntry(e.getKey(), e.getValue());
+        for ( Object o : map.entrySet() )
+        {
+            Entry e = (Entry) o;
+            addEntry( e.getKey(), e.getValue() );
         }
     }
 

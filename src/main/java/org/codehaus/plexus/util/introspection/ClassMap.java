@@ -52,9 +52,9 @@ public class ClassMap
      * Cache of Methods, or CACHE_MISS, keyed by method
      * name and actual arguments used to find it.
      */
-    private Map methodCache = new Hashtable();
+    private Map<String, Object> methodCache = new Hashtable<String, Object>();
 
-    private MethodMap methodMap = new MethodMap();
+    private final MethodMap methodMap = new MethodMap();
 
     /**
      * Standard constructor
@@ -151,10 +151,8 @@ public class ClassMap
          * map and cache them
          */
 
-        for ( int i = 0; i < methods.length; i++ )
+        for ( Method method : methods )
         {
-            Method method = methods[i];
-
             /*
              *  now get the 'public method', the method declared by a
              *  public interface or class. (because the actual implementing
@@ -491,9 +489,9 @@ public class ClassMap
 
         Class[] interfaces = clazz.getInterfaces();
 
-        for ( int i = 0; i < interfaces.length; ++i )
+        for ( Class anInterface : interfaces )
         {
-            Method interfaceMethod = getPublicMethod( interfaces[i], name, paramTypes );
+            Method interfaceMethod = getPublicMethod( anInterface, name, paramTypes );
 
             if ( interfaceMethod != null )
             {

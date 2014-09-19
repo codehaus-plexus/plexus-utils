@@ -45,7 +45,7 @@ public class SweeperPool
     private int triggerSize;
 
     /** Holds the pooled objects */
-    private ArrayList pooledObjects;
+    private ArrayList<Object> pooledObjects;
 
     /** Flag indicating this pool is shuting down */
     private boolean shuttingDown = false;
@@ -187,9 +187,9 @@ public class SweeperPool
             // and we don't want to throw a ConcurrentModificationException
             Object[] objects = pooledObjects.toArray();
 
-            for ( int i = 0; i < objects.length; i++ )
+            for ( Object object : objects )
             {
-                objectDisposed( objects[i] );
+                objectDisposed( object );
             }
 
             pooledObjects.clear();

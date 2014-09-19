@@ -614,9 +614,9 @@ public class FileUtils
             return new String[0];
         }
 
-        for ( int i = 0; i < unknownFiles.length; ++i )
+        for ( String unknownFile : unknownFiles )
         {
-            String currentFileName = directory + System.getProperty( "file.separator" ) + unknownFiles[i];
+            String currentFileName = directory + System.getProperty( "file.separator" ) + unknownFile;
             File currentFile = new File( currentFileName );
 
             if ( currentFile.isDirectory() )
@@ -657,9 +657,9 @@ public class FileUtils
      */
     private static List<String> blendFilesToVector( List<String> v, String[] files )
     {
-        for ( int i = 0; i < files.length; ++i )
+        for ( String file : files )
         {
-            v.add( files[i] );
+            v.add( file );
         }
 
         return v;
@@ -681,9 +681,9 @@ public class FileUtils
         //ok.. now that we have the "extension" go through the current know
         //excepted extensions and determine if this one is OK.
 
-        for ( int i = 0; i < extensions.length; ++i )
+        for ( String extension1 : extensions )
         {
-            if ( extensions[i].equals( extension ) )
+            if ( extension1.equals( extension ) )
             {
                 return true;
             }
@@ -1521,9 +1521,8 @@ public class FileUtils
         IOException exception = null;
 
         final File[] files = directory.listFiles();
-        for ( int i = 0; i < files.length; i++ )
+        for ( final File file : files )
         {
-            final File file = files[i];
             try
             {
                 forceDeleteOnExit( file );
@@ -1666,9 +1665,8 @@ public class FileUtils
             return;
         }
 
-        for ( int i = 0; i < files.length; i++ )
+        for ( final File file : files )
         {
-            final File file = files[i];
             try
             {
                 forceDelete( file );
@@ -1719,10 +1717,8 @@ public class FileUtils
         long size = 0;
 
         final File[] files = directory.listFiles();
-        for ( int i = 0; i < files.length; i++ )
+        for ( final File file : files )
         {
-            final File file = files[i];
-
             if ( file.isDirectory() )
             {
                 size += sizeOfDirectory( file );
@@ -1892,15 +1888,15 @@ public class FileUtils
         {
             String[] files = scanner.getIncludedFiles();
 
-            for ( int i = 0; i < files.length; i++ )
+            for ( String file : files )
             {
                 if ( includeBasedir )
                 {
-                    list.add( directory + FileUtils.FS + files[i] );
+                    list.add( directory + FileUtils.FS + file );
                 }
                 else
                 {
-                    list.add( files[i] );
+                    list.add( file );
                 }
             }
         }
@@ -1909,15 +1905,15 @@ public class FileUtils
         {
             String[] directories = scanner.getIncludedDirectories();
 
-            for ( int i = 0; i < directories.length; i++ )
+            for ( String directory1 : directories )
             {
                 if ( includeBasedir )
                 {
-                    list.add( directory + FileUtils.FS + directories[i] );
+                    list.add( directory + FileUtils.FS + directory1 );
                 }
                 else
                 {
-                    list.add( directories[i] );
+                    list.add( directory1 );
                 }
             }
         }
@@ -2107,10 +2103,8 @@ public class FileUtils
 
         String sourcePath = sourceDirectory.getAbsolutePath();
 
-        for ( int i = 0; i < files.length; i++ )
+        for ( File file : files )
         {
-            File file = files[i];
-
             if ( file.equals( rootDestinationDirectory ) )
             {
                 // We don't copy the destination directory in itself
@@ -2296,9 +2290,8 @@ public class FileUtils
                 }
 
                 Reader reader = fileReader;
-                for ( int i = 0; i < wrappers.length; i++ )
+                for ( FilterWrapper wrapper : wrappers )
                 {
-                    FilterWrapper wrapper = wrappers[i];
                     reader = wrapper.getReader( reader );
                 }
 

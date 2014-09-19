@@ -1336,10 +1336,13 @@ public class MXParser
                     }
                     //assert usePC == true;
                     // write into PC replacement text - do merge for replacement text!!!!
-                    for (int i = 0; i < resolvedEntity.length; i++)
+                    for ( char aResolvedEntity : resolvedEntity )
                     {
-                        if(pcEnd >= pc.length) ensurePC(pcEnd);
-                        pc[pcEnd++] = resolvedEntity[ i ];
+                        if ( pcEnd >= pc.length )
+                        {
+                            ensurePC( pcEnd );
+                        }
+                        pc[pcEnd++] = aResolvedEntity;
 
                     }
                     hadCharData = true;
@@ -2090,10 +2093,13 @@ public class MXParser
                         this, null);
                 }
                 // write into PC replacement text - do merge for replacement text!!!!
-                for (int i = 0; i < resolvedEntity.length; i++)
+                for ( char aResolvedEntity : resolvedEntity )
                 {
-                    if(pcEnd >= pc.length) ensurePC(pcEnd);
-                    pc[pcEnd++] = resolvedEntity[ i ];
+                    if ( pcEnd >= pc.length )
+                    {
+                        ensurePC( pcEnd );
+                    }
+                    pc[pcEnd++] = aResolvedEntity;
                 }
             } else if(ch == '\t' || ch == '\n' || ch == '\r') {
                 // do attribute value normalization
@@ -2729,11 +2735,11 @@ public class MXParser
             if(ch == 'y') {
                 ch = requireInput(ch, YES);
                 //Boolean standalone = new Boolean(true);
-                xmlDeclStandalone = Boolean.valueOf(true);
+                xmlDeclStandalone = true;
             } else if(ch == 'n') {
                 ch = requireInput(ch, NO);
                 //Boolean standalone = new Boolean(false);
-                xmlDeclStandalone = Boolean.valueOf(false);
+                xmlDeclStandalone = false;
             } else {
                 throw new XmlPullParserException(
                     "expected 'yes' or 'no' after standalone and not "
@@ -3119,12 +3125,13 @@ public class MXParser
     protected char requireInput(char ch, char[] input)
         throws XmlPullParserException, IOException
     {
-        for (int i = 0; i < input.length; i++)
+        for ( char anInput : input )
         {
-            if(ch != input[i]) {
+            if ( ch != anInput )
+            {
                 throw new XmlPullParserException(
-                    "expected "+printable(input[i])+" in "+new String(input)
-                        +" and not "+printable(ch), this, null);
+                    "expected " + printable( anInput ) + " in " + new String( input ) + " and not " + printable( ch ),
+                    this, null );
             }
             ch = more();
         }

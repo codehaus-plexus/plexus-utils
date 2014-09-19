@@ -186,10 +186,10 @@ public final class ReflectionUtils
      * @param object the object to generate the list of fields from
      * @return map containing the fields and their values
      */
-    public static Map getVariablesAndValuesIncludingSuperclasses( Object object )
+    public static Map<String,Object> getVariablesAndValuesIncludingSuperclasses( Object object )
         throws IllegalAccessException
     {
-        HashMap map = new HashMap();
+        Map<String,Object> map = new HashMap<String,Object>();
 
         gatherVariablesAndValuesIncludingSuperclasses( object, map );
 
@@ -214,7 +214,7 @@ public final class ReflectionUtils
      * @param object the object to generate the list of fields from
      * @param map to populate
      */
-    private static void gatherVariablesAndValuesIncludingSuperclasses( Object object, Map map )
+    private static void gatherVariablesAndValuesIncludingSuperclasses( Object object, Map<String,Object> map )
         throws IllegalAccessException
     {
 
@@ -224,10 +224,8 @@ public final class ReflectionUtils
 
         AccessibleObject.setAccessible( fields, true);
 
-        for (int i = 0; i < fields.length; ++i)
+        for ( Field field : fields )
         {
-            Field field = fields[i];
-
             map.put( field.getName(), field.get( object ) );
 
         }

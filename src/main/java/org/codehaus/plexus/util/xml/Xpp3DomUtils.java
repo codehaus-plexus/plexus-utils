@@ -129,10 +129,8 @@ public class Xpp3DomUtils
             }
 
             String[] recessiveAttrs = recessive.getAttributeNames();
-            for ( int i = 0; i < recessiveAttrs.length; i++ )
+            for ( String attr : recessiveAttrs )
             {
-                String attr = recessiveAttrs[i];
-
                 if ( isEmpty( dominant.getAttribute( attr ) ) )
                 {
                     dominant.setAttribute( attr, recessive.getAttribute( attr ) );
@@ -143,7 +141,7 @@ public class Xpp3DomUtils
 
             if ( childMergeOverride != null )
             {
-                mergeChildren = childMergeOverride.booleanValue();
+                mergeChildren = childMergeOverride;
             }
             else
             {
@@ -156,9 +154,8 @@ public class Xpp3DomUtils
             }
 
             Xpp3Dom[] children = recessive.getChildren();
-            for ( int i = 0; i < children.length; i++ )
+            for ( Xpp3Dom child : children )
             {
-                Xpp3Dom child = children[i];
                 Xpp3Dom childDom = dominant.getChild( child.getName() );
                 if ( mergeChildren && childDom != null )
                 {

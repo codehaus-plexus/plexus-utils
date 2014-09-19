@@ -381,7 +381,7 @@ public class MXSerializer implements XmlSerializer {
         if(standalone != null) {
             out.write(" standalone=");
             out.write(attributeUseApostrophe ? '\'' : '"');
-            if(standalone.booleanValue()) {
+            if( standalone ) {
                 out.write("yes");
             } else {
                 out.write("no");

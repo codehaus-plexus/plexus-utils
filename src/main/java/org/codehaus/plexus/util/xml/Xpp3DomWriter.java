@@ -44,15 +44,14 @@ public class Xpp3DomWriter
         // TODO: move to XMLWriter?
         xmlWriter.startElement( dom.getName() );
         String[] attributeNames = dom.getAttributeNames();
-        for ( int i = 0; i < attributeNames.length; i++ )
+        for ( String attributeName : attributeNames )
         {
-            String attributeName = attributeNames[i];
             xmlWriter.addAttribute( attributeName, dom.getAttribute( attributeName ) );
         }
         Xpp3Dom[] children = dom.getChildren();
-        for ( int i = 0; i < children.length; i++ )
+        for ( Xpp3Dom aChildren : children )
         {
-            write( xmlWriter, children[i], escape );
+            write( xmlWriter, aChildren, escape );
         }
 
         String value = dom.getValue();

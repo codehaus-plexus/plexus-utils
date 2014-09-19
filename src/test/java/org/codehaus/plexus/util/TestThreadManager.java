@@ -36,12 +36,12 @@ public class TestThreadManager
     //~ Instance fields ----------------------------------------------------------------------------
 
     /** Test threads which have completed running */
-    private Collection runThreads = new Vector();
+    private Collection<AbstractTestThread> runThreads = new Vector<AbstractTestThread>();
     /** Test threads still needing to be run, or are currently running*/
-    private Collection toRunThreads = new Vector();
+    private Collection<AbstractTestThread> toRunThreads = new Vector<AbstractTestThread>();
     private Logger logger = null;
     /** Any test threads which failed */
-    private Vector failedThreads = new Vector();
+    private Vector<AbstractTestThread> failedThreads = new Vector<AbstractTestThread>();
 
     /**The object to notify when all the test threads have complleted. Clients use this
      * to lock on (wait) while waiting for the tests to complete*/
@@ -72,11 +72,9 @@ public class TestThreadManager
         //and modify the toRunThreads vector and hence
         //cause a Concurrent ModificationException on an
         //iterator
-        Object[] threads = toRunThreads.toArray();
-        for ( int i = 0; i < threads.length; i++ )
+        for ( AbstractTestThread toRunThread : toRunThreads )
         {
-            //System.out.println("Starting thread " + i +" ..." );
-            ( (AbstractTestThread) threads[i] ).start();
+            toRunThread.start();
         }
     }
 
@@ -99,12 +97,7 @@ public class TestThreadManager
 
     public boolean hasFailedThreads()
     {
-        if ( failedThreads.isEmpty() )
-        {
-            return false;
-        }
-        else
-            return true;
+        return !failedThreads.isEmpty();
     }
 
     /**
@@ -185,10 +178,9 @@ public class TestThreadManager
     public void reset()
     {
         toRunThreads.clear();
-        Iterator iter = runThreads.iterator();
-        while ( iter.hasNext() )
+        for ( Object runThread : runThreads )
         {
-            AbstractTestThread test = (AbstractTestThread) iter.next();
+            AbstractTestThread test = (AbstractTestThread) runThread;
             test.reset();
             registerThread( test );
         }

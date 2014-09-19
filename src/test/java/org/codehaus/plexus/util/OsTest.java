@@ -33,12 +33,12 @@ public class OsTest
 
     public void testOs()
     {
-        Iterator iter = Os.getValidFamilies().iterator();
+        Iterator<String> iter = Os.getValidFamilies().iterator();
         String currentFamily = null;
         String notCurrentFamily = null;
         while ( iter.hasNext() && ( currentFamily == null || notCurrentFamily == null ) )
         {
-            String fam = (String) iter.next();
+            String fam = iter.next();
             if ( Os.isFamily( fam ) )
             {
                 currentFamily = fam;

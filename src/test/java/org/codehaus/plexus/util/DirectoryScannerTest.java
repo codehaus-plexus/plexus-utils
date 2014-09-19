@@ -118,7 +118,7 @@ public class DirectoryScannerTest
         String includes = "scanner1.dat,scanner2.dat,scanner3.dat,scanner4.dat,scanner5.dat";
         String excludes = "scanner1.dat,scanner2.dat";
 
-        List fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
+        List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
 
         assertEquals( "Wrong number of results.", 3, fileNames.size() );
         assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
@@ -136,7 +136,7 @@ public class DirectoryScannerTest
 
         String excludes = "scanner1.dat,\n  \n,scanner2.dat  \n\r,,";
 
-        List fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
+        List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
 
         assertEquals( "Wrong number of results.", 3, fileNames.size() );
         assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
@@ -359,35 +359,35 @@ public class DirectoryScannerTest
         System.out.println( "Test: " + ste.getMethodName() );
     }
 
-    private void assertInclusionsAndExclusions( String[] files, String[] excludedPaths, String[] includedPaths )
+    private void assertInclusionsAndExclusions( String[] files, String[] excludedPaths, String... includedPaths )
     {
         Arrays.sort( files );
 
         System.out.println( "Included files: " );
-        for ( int i = 0; i < files.length; i++ )
+        for ( String file : files )
         {
-            System.out.println( files[i] );
+            System.out.println( file );
         }
 
-        List failedToExclude = new ArrayList();
-        for ( int i = 0; i < excludedPaths.length; i++ )
+        List<String> failedToExclude = new ArrayList<String>();
+        for ( String excludedPath : excludedPaths )
         {
-            String alt = excludedPaths[i].replace( '/', '\\' );
-            System.out.println( "Searching for exclusion as: " + excludedPaths[i] + "\nor: " + alt );
-            if ( Arrays.binarySearch( files, excludedPaths[i] ) > -1 || Arrays.binarySearch( files, alt ) > -1 )
+            String alt = excludedPath.replace( '/', '\\' );
+            System.out.println( "Searching for exclusion as: " + excludedPath + "\nor: " + alt );
+            if ( Arrays.binarySearch( files, excludedPath ) > -1 || Arrays.binarySearch( files, alt ) > -1 )
             {
-                failedToExclude.add( excludedPaths[i] );
+                failedToExclude.add( excludedPath );
             }
         }
 
-        List failedToInclude = new ArrayList();
-        for ( int i = 0; i < includedPaths.length; i++ )
+        List<String> failedToInclude = new ArrayList<String>();
+        for ( String includedPath : includedPaths )
         {
-            String alt = includedPaths[i].replace( '/', '\\' );
-            System.out.println( "Searching for inclusion as: " + includedPaths[i] + "\nor: " + alt );
-            if ( Arrays.binarySearch( files, includedPaths[i] ) < 0 && Arrays.binarySearch( files, alt ) < 0 )
+            String alt = includedPath.replace( '/', '\\' );
+            System.out.println( "Searching for inclusion as: " + includedPath + "\nor: " + alt );
+            if ( Arrays.binarySearch( files, includedPath ) < 0 && Arrays.binarySearch( files, alt ) < 0 )
             {
-                failedToInclude.add( includedPaths[i] );
+                failedToInclude.add( includedPath );
             }
         }
 
@@ -416,12 +416,12 @@ public class DirectoryScannerTest
         }
     }
 
-    private void createFiles( File dir, String[] paths )
+    private void createFiles( File dir, String... paths )
         throws IOException
     {
-        for ( int i = 0; i < paths.length; i++ )
+        for ( String path1 : paths )
         {
-            String path = paths[i].replace( '/', File.separatorChar ).replace( '\\', File.separatorChar );
+            String path = path1.replace( '/', File.separatorChar ).replace( '\\', File.separatorChar );
             File file = new File( dir, path );
 
             if ( path.endsWith( File.separator ) )

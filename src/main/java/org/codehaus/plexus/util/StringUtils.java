@@ -2146,11 +2146,11 @@ public class StringUtils
 
             String value = obj.toString();
 
-            text = StringUtils.replace( text, "${" + key + "}", value );
+            text = replace( text, "${" + key + "}", value );
 
-            if ( key.indexOf( " " ) == -1 )
+            if ( !key.contains( " " ) )
             {
-                text = StringUtils.replace( text, "$" + key, value );
+                text = replace( text, "$" + key, value );
             }
         }
         return text;
@@ -2545,6 +2545,6 @@ public class StringUtils
         {
             return false;
         }
-        return str.indexOf( searchStr ) >= 0;
+        return str.contains( searchStr );
     }
 }
