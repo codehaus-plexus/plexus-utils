@@ -50,7 +50,7 @@ import java.util.Set;
  * @author  <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle</a>
  * @version 5.3, October 31 2003
  */
-public class FastMap implements Map, Cloneable, Serializable {
+public class FastMap<K,V> implements Map<K,V>, Cloneable, Serializable {
 
     /**
      * Holds the map's hash table.
@@ -204,8 +204,8 @@ public class FastMap implements Map, Cloneable, Serializable {
      *         or <code>null</code> if there is no mapping for the key.
      * @throws NullPointerException if key is <code>null</code>.
      */
-    public Object get(Object key) {
-        EntryImpl entry = _entries[keyHash(key) & _mask];
+    public V get(Object key) {
+        EntryImpl<K,V> entry = _entries[keyHash(key) & _mask];
         while (entry != null) {
             if (key.equals(entry._key) ) {
                 return entry._value;
@@ -268,11 +268,10 @@ public class FastMap implements Map, Cloneable, Serializable {
      * @throws NullPointerException the specified map is <code>null</code>, or
      *         the specified map contains <code>null</code> keys.
      */
-    public void putAll(Map map) {
-        for ( Object o : map.entrySet() )
+    public void putAll(Map<? extends K, ? extends V> map) {
+        for ( Entry<? extends K, ? extends V> entry : map.entrySet() )
         {
-            Entry e = (Entry) o;
-            addEntry( e.getKey(), e.getValue() );
+            addEntry( entry.getKey(), entry.getValue() );
         }
     }
 
@@ -286,11 +285,11 @@ public class FastMap implements Map, Cloneable, Serializable {
      *         previously associated <code>null</code> with the specified key.
      * @throws NullPointerException if the key is <code>null</code>.
      */
-    public Object remove(Object key) {
-        EntryImpl entry = _entries[keyHash(key) & _mask];
+    public V remove(Object key) {
+        EntryImpl<K,V> entry = _entries[keyHash(key) & _mask];
         while (entry != null) {
             if (key.equals(entry._key) ) {
-                Object prevValue = entry._value; 
+                V prevValue = entry._value;
                 removeEntry(entry);
                 return prevValue;
             }
@@ -820,17 +819,17 @@ public class FastMap implements Map, Cloneable, Serializable {
     /**
      * This class represents a {@link FastMap} entry.
      */
-    private static final class EntryImpl implements Map.Entry {
+    private static final class EntryImpl<K,V> implements Map.Entry<K,V> {
 
         /**
          * Holds the entry key (null when in pool).
          */
-        private Object _key;
+        private K _key;
         
         /**
          * Holds the entry value (null when in pool).
          */
-        private Object _value;
+        private V _value;
 
         /**
          * Holds the bucket index (undefined when in pool). 
@@ -863,7 +862,7 @@ public class FastMap implements Map, Cloneable, Serializable {
          * 
          * @return the entry's key.
          */
-        public Object getKey() {
+        public K getKey() {
             return _key;
         }
 
@@ -872,7 +871,7 @@ public class FastMap implements Map, Cloneable, Serializable {
          * 
          * @return the entry's value.
          */
-        public Object getValue() {
+        public V getValue() {
             return _value;
          }
 
@@ -882,8 +881,8 @@ public class FastMap implements Map, Cloneable, Serializable {
          * @param value the new value.
          * @return the previous value.
          */
-        public Object setValue(Object value) {            
-            Object old = _value;
+        public V setValue(V value) {
+            V old = _value;
             _value = value;
             return old;
         } 

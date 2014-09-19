@@ -36,7 +36,7 @@ public final class Reflector
 
     private static final String GET_INSTANCE_METHOD_NAME = "getInstance";
 
-    private HashMap classMaps = new HashMap();
+    private Map<String,  Map<String, Map<String, Method>>> classMaps = new HashMap<String,  Map<String, Map<String, Method>>>();
 
     /** Ensure no instances of Reflector are created...this is a utility. */
     public Reflector()
@@ -644,11 +644,11 @@ public final class Reflector
 
         synchronized ( className.intern() )
         {
-            Map<String, Map<String, Method>> classMethods = (Map<String, Map<String, Method>>) classMaps.get( className );
+            Map<String, Map<String, Method>> classMethods = classMaps.get( className );
 
             if ( classMethods == null )
             {
-                classMethods = new HashMap();
+                classMethods = new HashMap<String, Map<String, Method>>();
                 methodMap = new HashMap<String, Method>();
                 classMethods.put( methodName, methodMap );
                 classMaps.put( className, classMethods );

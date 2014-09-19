@@ -60,7 +60,7 @@ public class TestThreadManager
     /**
      * @return
      */
-    public Collection getRunThreads()
+    public Collection<AbstractTestThread> getRunThreads()
     {
         return runThreads;
     }
@@ -78,7 +78,7 @@ public class TestThreadManager
         }
     }
 
-    public Collection getFailedTests()
+    public Collection<AbstractTestThread> getFailedTests()
     {
         return failedThreads;
     }
@@ -113,7 +113,7 @@ public class TestThreadManager
     /**
      * @return
      */
-    public Collection getToRunThreads()
+    public Collection<AbstractTestThread> getToRunThreads()
     {
         return toRunThreads;
     }

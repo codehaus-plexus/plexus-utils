@@ -531,10 +531,10 @@ public class Commandline
      */
     public String[] getArguments()
     {
-        Vector result = new Vector( arguments.size() * 2 );
+        Vector<String> result = new Vector<String>( arguments.size() * 2 );
         for ( int i = 0; i < arguments.size(); i++ )
         {
-            Argument arg = (Argument) arguments.elementAt( i );
+            Arg arg = arguments.elementAt( i );
             String[] s = arg.getParts();
             if ( s != null )
             {

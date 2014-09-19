@@ -621,13 +621,12 @@ public class ExceptionUtils
     {
         String linebreak = System.getProperty( "line.separator" );
         StringTokenizer frames = new StringTokenizer( stackTrace, linebreak );
-        List list = new LinkedList();
+        List<String> list = new LinkedList<String>();
         while ( frames.hasMoreTokens() )
         {
             list.add( frames.nextToken() );
         }
-        return (String[]) list.toArray( new String[]{
-        } );
+        return list.toArray( new String[list.size()]);
     }
 
     /**

@@ -117,7 +117,7 @@ public class DirectoryWalker
 
     private int baseDirOffset;
 
-    private Stack dirStack;
+    private Stack<DirectoryWalker.DirStackEntry> dirStack;
 
     private List<String> excludes;
 
@@ -165,7 +165,7 @@ public class DirectoryWalker
 
     private void fireStep( File file )
     {
-        DirStackEntry dsEntry = (DirStackEntry) dirStack.peek();
+        DirStackEntry dsEntry = dirStack.peek();
         int percentage = dsEntry.getPercentage();
         for ( Object listener1 : listeners )
         {
@@ -346,7 +346,7 @@ public class DirectoryWalker
             return;
         }
 
-        DirStackEntry curStackEntry = new DirStackEntry( dir, files.length );
+        DirectoryWalker.DirStackEntry curStackEntry = new DirectoryWalker.DirStackEntry( dir, files.length );
         if ( dirStack.isEmpty() )
         {
             curStackEntry.percentageOffset = 0;
@@ -354,7 +354,7 @@ public class DirectoryWalker
         }
         else
         {
-            DirStackEntry previousStackEntry = (DirStackEntry) dirStack.peek();
+            DirectoryWalker.DirStackEntry previousStackEntry = (DirectoryWalker.DirStackEntry) dirStack.peek();
             curStackEntry.percentageOffset = previousStackEntry.getNextPercentageOffset();
             curStackEntry.percentageSize = previousStackEntry.getNextPercentageSize();
         }
@@ -400,15 +400,14 @@ public class DirectoryWalker
     /**
      * @param entries The excludes to set.
      */
-    public void setExcludes( List entries )
+    public void setExcludes( List<String> entries )
     {
         excludes.clear();
         if ( entries != null )
         {
-            for ( Object entry : entries )
+            for ( String entry : entries )
             {
-                String pattern = (String) entry;
-                excludes.add( fixPattern( pattern ) );
+                excludes.add( fixPattern( entry ) );
             }
         }
     }

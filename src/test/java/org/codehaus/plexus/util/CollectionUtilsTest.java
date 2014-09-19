@@ -62,6 +62,7 @@ public class CollectionUtilsTest
         assertEquals( "z", result.get( "z" ) );
     }
 
+    @SuppressWarnings( "unchecked" )
     public void testMergeMapArray()
     {
         // Test empty array of Maps
@@ -75,7 +76,7 @@ public class CollectionUtilsTest
         Map<String, String>  map1 = new HashMap<String, String> ();
         map1.put( "a", "a" );
 
-        Map result1 = CollectionUtils.mergeMaps( new Map[]
+        Map<String, String> result1 = CollectionUtils.mergeMaps( new Map[]
         {
             map1
         } );
@@ -112,7 +113,7 @@ public class CollectionUtilsTest
         map3.put( "b", "bbb" );
         map3.put( "c", "ccc" );
 
-        Map result4 = CollectionUtils.mergeMaps( new Map[]
+        Map<String, String> result4 = CollectionUtils.mergeMaps( new Map[]
         {
             map1,
             map2,
@@ -124,7 +125,7 @@ public class CollectionUtilsTest
         assertEquals( "ccc", result4.get( "c" ) );
 
         // Now swap the dominant order.
-        Map result5 = CollectionUtils.mergeMaps( new Map[]
+        Map<String, String> result5 = CollectionUtils.mergeMaps( new Map[]
         {
             map3,
             map2,
@@ -200,13 +201,13 @@ public class CollectionUtilsTest
 
     public void testIteratorToListWithAPopulatedList()
     {
-        List original = new ArrayList();
+        List<String> original = new ArrayList<String>();
 
         original.add( "en" );
         original.add( "to" );
         original.add( "tre" );
 
-        List copy = CollectionUtils.iteratorToList( original.iterator() );
+        List<String> copy = CollectionUtils.iteratorToList( original.iterator() );
 
         assertNotNull( copy );
 
@@ -219,9 +220,9 @@ public class CollectionUtilsTest
 
     public void testIteratorToListWithAEmptyList()
     {
-        List original = new ArrayList();
+        List<String> original = new ArrayList<String>();
 
-        List copy = CollectionUtils.iteratorToList( original.iterator() );
+        List<String> copy = CollectionUtils.iteratorToList( original.iterator() );
 
         assertNotNull( copy );
 

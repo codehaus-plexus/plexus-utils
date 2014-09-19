@@ -169,9 +169,9 @@ public class MethodMap
             Class[] appArgs = app.getParameterTypes();
             boolean lessSpecific = false;
 
-            for ( Iterator maximal = maximals.iterator(); !lessSpecific && maximal.hasNext(); )
+            for ( Iterator<Method> maximal = maximals.iterator(); !lessSpecific && maximal.hasNext(); )
             {
-                Method max = (Method) maximal.next();
+                Method max = maximal.next();
 
                 switch ( moreSpecific( appArgs, max.getParameterTypes() ) )
                 {
