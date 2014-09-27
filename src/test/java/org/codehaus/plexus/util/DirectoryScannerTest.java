@@ -144,6 +144,59 @@ public class DirectoryScannerTest
         assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
     }
 
+    public void testFollowSymlinksFalse()
+    {
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
+        ds.setFollowSymlinks( false );
+        ds.scan();
+        List<String> included = Arrays.asList( ds.getIncludedFiles() );
+        assertAlwaysIncluded( included );
+        assertEquals( 9, included.size() );
+        List<String> includedDirs = Arrays.asList( ds.getIncludedDirectories() );
+        assertTrue( includedDirs.contains( "" ) ); // w00t !
+        assertTrue( includedDirs.contains( "aRegularDir" ) );
+        assertTrue( includedDirs.contains( "symDir" ) );
+        assertTrue( includedDirs.contains( "symLinkToDirOnTheOutside" ) );
+        assertTrue( includedDirs.contains( "targetDir" ) );
+        assertEquals( 5, includedDirs.size() );
+    }
+
+    private void assertAlwaysIncluded( List<String> included )
+    {
+        assertTrue( included.contains( "aRegularDir/aRegularFile.txt" ) );
+        assertTrue( included.contains( "targetDir/targetFile.txt" ) );
+        assertTrue( included.contains( "fileR.txt" ) );
+        assertTrue( included.contains( "fileW.txt" ) );
+        assertTrue( included.contains( "fileX.txt" ) );
+        assertTrue( included.contains( "symR" ) );
+        assertTrue( included.contains( "symW" ) );
+        assertTrue( included.contains( "symX" ) );
+        assertTrue( included.contains( "symLinkToFileOnTheOutside" ) );
+    }
+
+    public void testFollowSymlinks()
+    {
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
+        ds.setFollowSymlinks( true );
+        ds.scan();
+        List<String> included = Arrays.asList( ds.getIncludedFiles() );
+        assertAlwaysIncluded( included );
+        assertTrue( included.contains( "symDir/targetFile.txt" ) );
+        assertTrue( included.contains( "symLinkToDirOnTheOutside/FileInDirOnTheOutside.txt" ) );
+        assertEquals( 11, included.size() );
+
+        List<String> includedDirs = Arrays.asList( ds.getIncludedDirectories() );
+        assertTrue( includedDirs.contains( "" ) ); // w00t !
+        assertTrue( includedDirs.contains( "aRegularDir" ) );
+        assertTrue( includedDirs.contains( "symDir" ) );
+        assertTrue( includedDirs.contains( "symLinkToDirOnTheOutside" ) );
+        assertTrue( includedDirs.contains( "targetDir" ) );
+        assertEquals( 5, includedDirs.size() );
+    }
+
+
     private void createTestDirectories()
         throws IOException
     {

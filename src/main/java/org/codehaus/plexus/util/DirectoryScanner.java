@@ -447,7 +447,7 @@ public class DirectoryScanner
             {
                 try
                 {
-                    if ( isSymbolicLink( dir, newfile ) )
+                    if ( isParentSymbolicLink( dir, newfile ) )
                     {
                         String name = vpath + newfile;
                         File file = new File( dir, newfile );
@@ -729,7 +729,34 @@ public class DirectoryScanner
     {
         if ( Java7Detector.isJava7() )
         {
-            return Java7FileUtil.isSymLink( new File( parent, name ) );
+            return Java7FileUtil.isSymLink( parent );
+        }
+        File resolvedParent = new File( parent.getCanonicalPath() );
+        File toTest = new File( resolvedParent, name );
+        return !toTest.getAbsolutePath().equals( toTest.getCanonicalPath() );
+    }
+
+    /**
+     * Checks whether the parent of this file is a symbolic link.
+     * <p/>
+     *
+     * <p> For java versions prior to 7 It doesn't really test for
+     * symbolic links but whether the
+     * canonical and absolute paths of the file are identical - this
+     * may lead to false positives on some platforms.</p>
+     *
+     * @param parent the parent directory of the file to test
+     * @param name   the name of the file to test.
+     * @return true if it's a symbolic link
+     * @throws java.io.IOException .
+     * @since Ant 1.5
+     */
+    public boolean isParentSymbolicLink( File parent, String name )
+        throws IOException
+    {
+        if ( Java7Detector.isJava7() )
+        {
+            return Java7FileUtil.isSymLink( parent );
         }
         File resolvedParent = new File( parent.getCanonicalPath() );
         File toTest = new File( resolvedParent, name );
