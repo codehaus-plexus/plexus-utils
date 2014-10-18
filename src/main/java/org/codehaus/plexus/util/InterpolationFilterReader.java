@@ -93,7 +93,7 @@ public class InterpolationFilterReader
     private int previousIndex = -1;
 
     /** Hashtable to hold the replacee-replacer pairs (String to String). */
-    private Map<Object,Object> variables = new HashMap<Object,Object>();
+    private Map<?,Object> variables = new HashMap<Object,Object>();
 
     /** Character marking the beginning of a token. */
     private String beginToken;
@@ -122,7 +122,7 @@ public class InterpolationFilterReader
      * @param beginToken an interpolation target begins with this.
      * @param endToken  an interpolation target ends with this.
      */
-    public InterpolationFilterReader( Reader in, Map<Object, Object> variables, String beginToken, String endToken )
+    public InterpolationFilterReader( Reader in, Map<?, Object> variables, String beginToken, String endToken )
     {
         super( in );
 
@@ -141,7 +141,7 @@ public class InterpolationFilterReader
      * @param in a Reader to be wrapped for interpolation.
      * @param variables name/value pairs to be interpolated into the character stream.
      */
-    public InterpolationFilterReader( Reader in, Map<Object, Object> variables )
+    public InterpolationFilterReader( Reader in, Map<String, Object> variables )
     {
         this( in, variables, DEFAULT_BEGIN_TOKEN, DEFAULT_END_TOKEN );
     }
