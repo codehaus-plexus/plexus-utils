@@ -181,7 +181,7 @@ public class ReflectionValueExtractor
      * @throws Exception if any
      */
     // TODO: don't throw Exception
-    public static Object evaluate( final String expression, final Object root, final boolean trimRootToken )
+    public static Object evaluate(  String expression, final Object root, final boolean trimRootToken )
         throws Exception
     {
         Object value = root;
@@ -196,8 +196,10 @@ public class ReflectionValueExtractor
             return null;
         }
 
+       boolean hasDots = expression.indexOf( PROPERTY_START ) >= 0;
+
         final Tokenizer tokenizer;
-        if ( trimRootToken )
+        if ( trimRootToken && hasDots )
         {
             tokenizer = new Tokenizer( expression );
             tokenizer.nextPropertyName();
