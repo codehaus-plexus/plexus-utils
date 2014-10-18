@@ -24,6 +24,7 @@ import java.util.Map;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.apache.maven.plugin.testing.stubs.MavenProjectStub;
 
 /**
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
@@ -506,5 +507,33 @@ public class ReflectionValueExtractorTest
         {
             return value;
         }
+    }
+
+    public void testRVE_Break()
+        throws Exception
+    {
+        class MyClass {
+            String description;
+
+            public String getDescription()
+            {
+                return description;
+            }
+
+            public void setDescription( String description )
+            {
+                this.description = description;
+            }
+        }
+        // setup data
+        MavenProjectStub project = new MavenProjectStub(  );
+
+        // set dummy value
+        project.setDescription( "c:\\\\org\\apache\\test" );
+
+        MyClass mc = new MyClass();
+        mc.setDescription(  "c:\\\\org\\apache\\test" );
+        Object evalued  = ReflectionValueExtractor.evaluate( "description", project );
+        assertNotNull( evalued);
     }
 }
