@@ -729,7 +729,7 @@ public class DirectoryScanner
     {
         if ( Java7Detector.isJava7() )
         {
-            return Java7FileUtil.isSymLink( parent );
+            return NioFiles.isSymbolicLink( parent );
         }
         File resolvedParent = new File( parent.getCanonicalPath() );
         File toTest = new File( resolvedParent, name );
@@ -756,7 +756,7 @@ public class DirectoryScanner
     {
         if ( Java7Detector.isJava7() )
         {
-            return Java7FileUtil.isSymLink( parent );
+            return NioFiles.isSymbolicLink( parent );
         }
         File resolvedParent = new File( parent.getCanonicalPath() );
         File toTest = new File( resolvedParent, name );

@@ -530,7 +530,20 @@ public class FileUtils
     public static void fileDelete( String fileName )
     {
         File file = new File( fileName );
-        file.delete();
+        if (Java7Detector.isJava7())
+        {
+            try
+            {
+                NioFiles.deleteIfExists(file);
+            }
+            catch ( IOException e )
+            {
+                throw new RuntimeException( e );
+            }
+        } else
+        {
+            file.delete();
+        }
     }
 
     /**
@@ -1046,11 +1059,18 @@ public class FileUtils
             return;
         }
         mkdirsFor( destination );
-        doCopyFile( source, destination );
+        if (Java7Detector.isJava7())
+        {
+            NioFiles.copy( source, destination );
+        }
+        else
+        {
+            doCopyFile( source, destination );
+        }
 
         if ( source.length() != destination.length() )
         {
-            final String message = "Failed to copy full contents from " + source + " to " + destination;
+            String message = "Failed to copy full contents from " + source + " to " + destination;
             throw new IOException( message );
         }
     }
@@ -1445,7 +1465,7 @@ public class FileUtils
                 Thread.sleep( 10 );
                 return file.delete();
             }
-            catch ( InterruptedException ex )
+            catch ( InterruptedException ignore )
             {
                 return file.delete();
             }

@@ -415,6 +415,7 @@ public final class FileUtilsTest
         // Place source
         File source = new File( getTestDirectory(), "copy1.txt" );
         FileUtils.copyFile( testFile1, source );
+        source.setLastModified( System.currentTimeMillis() );
 
         // Copy will occur when source is newer
         assertTrue( "Failed copy. Target file should have been updated.",
