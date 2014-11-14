@@ -1028,6 +1028,28 @@ public class FileUtils
         copyFileIfModified( source, new File( destinationDirectory, source.getName() ) );
     }
 
+    /**
+     * Creates a number of directories, as delivered from DirectoryScanner
+     * @param sourceBase The basedir used for the directory scan
+     * @param dirs The getIncludedDirs from the dirscanner
+     * @param destination The base dir of the output structure
+     */
+    public static void mkDirs(  final File sourceBase, String[] dirs,  final File destination )
+        throws IOException
+    {
+        for ( String dir : dirs )
+        {
+            File src = new File( sourceBase, dir);
+            File dst = new File( destination, dir);
+            if (Java7Detector.isJava7() && NioFiles.isSymbolicLink( src )){
+                File target = NioFiles.readSymbolicLink( src );
+                NioFiles.createSymbolicLink( dst, target );
+            } else {
+                dst.mkdirs();
+            }
+        }
+    }
+
 
     /**
      * Copy file from source to destination. The directories up to <code>destination</code> will be
