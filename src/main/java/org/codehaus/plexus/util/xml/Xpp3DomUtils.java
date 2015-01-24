@@ -42,6 +42,13 @@ public class Xpp3DomUtils
     public static final String SELF_COMBINATION_OVERRIDE = "override";
 
     public static final String SELF_COMBINATION_MERGE = "merge";
+    
+    /**
+     * In case of complex XML structures, combining can be done based on id.
+     * 
+     * @since 3.0.22
+     */
+    public static final String ID_COMBINATION_MODE_ATTRIBUTE = "combine.id";
 
     /**
      * This default mode for combining a DOM node during merge means that where element names
@@ -71,7 +78,7 @@ public class Xpp3DomUtils
      * 1. if the recessive DOM is null, there is nothing to do...return.
      *
      * 2. Determine whether the dominant node will suppress the recessive one (flag=mergeSelf).
-     *
+     * 
      *    A. retrieve the 'combine.self' attribute on the dominant node, and try to match against 'override'...
      *       if it matches 'override', then set mergeSelf == false...the dominant node suppresses the recessive
      *       one completely.
@@ -99,10 +106,13 @@ public class Xpp3DomUtils
      *
      *    D. Iterate through the recessive children, and:
      *
-     *       i.   if mergeChildren == true and there is a corresponding dominant child (matched by element name),
+     *       i.   if 'combine.id' is set and there is a corresponding dominant child (matched by value of 'combine.id'),
+     *            merge the two.
+     *            
+     *       ii.  if mergeChildren == true and there is a corresponding dominant child (matched by element name),
      *            merge the two.
      *
-     *       ii.  otherwise, add the recessive child as a new child on the dominant root node.
+     *       iii. otherwise, add the recessive child as a new child on the dominant root node.
      */
     private static void mergeIntoXpp3Dom( Xpp3Dom dominant, Xpp3Dom recessive, Boolean childMergeOverride )
     {
@@ -115,7 +125,7 @@ public class Xpp3DomUtils
         boolean mergeSelf = true;
 
         String selfMergeMode = dominant.getAttribute( SELF_COMBINATION_MODE_ATTRIBUTE );
-
+        
         if ( isNotEmpty( selfMergeMode ) && SELF_COMBINATION_OVERRIDE.equals( selfMergeMode ) )
         {
             mergeSelf = false;
@@ -154,16 +164,35 @@ public class Xpp3DomUtils
             }
 
             Xpp3Dom[] children = recessive.getChildren();
-            for ( Xpp3Dom child : children )
+            for ( Xpp3Dom recessiveChild : children )
             {
-                Xpp3Dom childDom = dominant.getChild( child.getName() );
-                if ( mergeChildren && childDom != null )
+                String idValue = recessiveChild.getAttribute( ID_COMBINATION_MODE_ATTRIBUTE );
+
+                Xpp3Dom childDom = null;
+                if ( isNotEmpty( idValue ) )
                 {
-                    mergeIntoXpp3Dom( childDom, child, childMergeOverride );
+                    for ( Xpp3Dom dominantChild : dominant.getChildren() )
+                    {
+                        if ( idValue.equals( dominantChild.getAttribute( ID_COMBINATION_MODE_ATTRIBUTE ) ) )
+                        {
+                            childDom = dominantChild;
+                            // we have a match, so don't append but merge
+                            mergeChildren = true;
+                        }
+                    }
                 }
                 else
                 {
-                    dominant.addChild( new Xpp3Dom( child ) );
+                    childDom = dominant.getChild( recessiveChild.getName() );
+                }
+                
+                if ( mergeChildren && childDom != null )
+                {
+                    mergeIntoXpp3Dom( childDom, recessiveChild, childMergeOverride );
+                }
+                else
+                {
+                    dominant.addChild( new Xpp3Dom( recessiveChild ) );
                 }
             }
         }
