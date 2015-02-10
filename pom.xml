@@ -35,9 +35,9 @@ limitations under the License.
   <url>http://plexus.codehaus.org/plexus-utils</url>
 
   <scm>
-    <connection>scm:git:git@github.com:sonatype/plexus-utils.git</connection>
-    <developerConnection>scm:git:git@github.com:sonatype/plexus-utils.git</developerConnection>
-    <url>http://github.com/sonatype/plexus-utils</url>
+    <connection>scm:git:git@github.com:codehaus-plexus/plexus-compiler.git</connection>
+    <developerConnection>scm:git:git@github.com:codehaus-plexus/plexus-compiler.git</developerConnection>
+    <url>http://github.com/codehaus-plexus/plexus-utils</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
