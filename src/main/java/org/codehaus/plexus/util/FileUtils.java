@@ -1081,14 +1081,8 @@ public class FileUtils
             return;
         }
         mkdirsFor( destination );
-        if (Java7Detector.isJava7())
-        {
-            NioFiles.copy( source, destination );
-        }
-        else
-        {
-            doCopyFile( source, destination );
-        }
+
+        doCopyFile( source, destination );
 
         if ( source.length() != destination.length() )
         {
