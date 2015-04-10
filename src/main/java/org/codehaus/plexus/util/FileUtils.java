@@ -529,21 +529,7 @@ public class FileUtils
      */
     public static void fileDelete( String fileName )
     {
-        File file = new File( fileName );
-        if (Java7Detector.isJava7())
-        {
-            try
-            {
-                NioFiles.deleteIfExists(file);
-            }
-            catch ( IOException e )
-            {
-                throw new RuntimeException( e );
-            }
-        } else
-        {
-            file.delete();
-        }
+        FileUtilsMv.fileDelete( fileName );
     }
 
     /**
@@ -1037,17 +1023,7 @@ public class FileUtils
     public static void mkDirs(  final File sourceBase, String[] dirs,  final File destination )
         throws IOException
     {
-        for ( String dir : dirs )
-        {
-            File src = new File( sourceBase, dir);
-            File dst = new File( destination, dir);
-            if (Java7Detector.isJava7() && NioFiles.isSymbolicLink( src )){
-                File target = NioFiles.readSymbolicLink( src );
-                NioFiles.createSymbolicLink( dst, target );
-            } else {
-                dst.mkdirs();
-            }
-        }
+        FileUtilsMv.mkDirs( sourceBase, dirs, destination );
     }
 
 

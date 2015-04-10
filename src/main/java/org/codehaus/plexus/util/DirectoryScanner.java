@@ -148,7 +148,7 @@ import java.util.Vector;
  * @author <a href="mailto:levylambert@tiscali-dsl.de">Antoine Levy-Lambert</a>
  */
 public class DirectoryScanner
-    extends AbstractScanner
+    extends AbstractDirectoryScannerMv
 {
 
     /**
@@ -709,57 +709,5 @@ public class DirectoryScanner
         String[] directories = new String[dirsDeselected.size()];
         dirsDeselected.copyInto( directories );
         return directories;
-    }
-
-    /**
-     * Checks whether a given file is a symbolic link.
-     * <p/>
-     * <p>It doesn't really test for symbolic links but whether the
-     * canonical and absolute paths of the file are identical - this
-     * may lead to false positives on some platforms.</p>
-     *
-     * @param parent the parent directory of the file to test
-     * @param name   the name of the file to test.
-     * @return true if it's a symbolic link
-     * @throws java.io.IOException .
-     * @since Ant 1.5
-     */
-    public boolean isSymbolicLink( File parent, String name )
-        throws IOException
-    {
-        if ( Java7Detector.isJava7() )
-        {
-            return NioFiles.isSymbolicLink( parent );
-        }
-        File resolvedParent = new File( parent.getCanonicalPath() );
-        File toTest = new File( resolvedParent, name );
-        return !toTest.getAbsolutePath().equals( toTest.getCanonicalPath() );
-    }
-
-    /**
-     * Checks whether the parent of this file is a symbolic link.
-     * <p/>
-     *
-     * <p> For java versions prior to 7 It doesn't really test for
-     * symbolic links but whether the
-     * canonical and absolute paths of the file are identical - this
-     * may lead to false positives on some platforms.</p>
-     *
-     * @param parent the parent directory of the file to test
-     * @param name   the name of the file to test.
-     * @return true if it's a symbolic link
-     * @throws java.io.IOException .
-     * @since Ant 1.5
-     */
-    public boolean isParentSymbolicLink( File parent, String name )
-        throws IOException
-    {
-        if ( Java7Detector.isJava7() )
-        {
-            return NioFiles.isSymbolicLink( parent );
-        }
-        File resolvedParent = new File( parent.getCanonicalPath() );
-        File toTest = new File( resolvedParent, name );
-        return !toTest.getAbsolutePath().equals( toTest.getCanonicalPath() );
     }
 }
