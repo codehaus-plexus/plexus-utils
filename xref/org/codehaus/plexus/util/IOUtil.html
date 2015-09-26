@@ -1,0 +1,849 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>IOUtil xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../apidocs/org/codehaus/plexus/util/IOUtil.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.codehaus.plexus.util;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment">/* ====================================================================</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> * The Apache Software License, Version 1.1</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> * Copyright (c) 2001 The Apache Software Foundation.  All rights</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> * reserved.</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> * modification, are permitted provided that the following conditions</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> * are met:</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> * 1. Redistributions of source code must retain the above copyright</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> *    notice, this list of conditions and the following disclaimer.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_comment"> * 2. Redistributions in binary form must reproduce the above copyright</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_comment"> *    notice, this list of conditions and the following disclaimer in</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_comment"> *    the documentation and/or other materials provided with the</em>
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_comment"> *    distribution.</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_comment"> * 3. The end-user documentation included with the redistribution,</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_comment"> *    if any, must include the following acknowledgment:</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_comment"> *       "This product includes software developed by the</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_comment"> *        Apache Software Foundation (<a href="http://www.codehaus.org/)." target="alexandria_uri">http://www.codehaus.org/).</a>"</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_comment"> *    Alternately, this acknowledgment may appear in the software itself,</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_comment"> *    if and wherever such third-party acknowledgments normally appear.</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_comment"> * 4. The names "Apache" and "Apache Software Foundation" and</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_comment"> *    "Apache Turbine" must not be used to endorse or promote products</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_comment"> *    derived from this software without prior written permission. For</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_comment"> *    written permission, please contact codehaus@codehaus.org.</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_comment"> * 5. Products derived from this software may not be called "Apache",</em>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_comment"> *    "Apache Turbine", nor may "Apache" appear in their name, without</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_comment"> *    prior written permission of the Apache Software Foundation.</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_comment"> * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_comment"> * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_comment"> * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_comment"> * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_comment"> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_comment"> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_comment"> * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_comment"> * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_comment"> * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_comment"> * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_comment"> * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_comment"> * SUCH DAMAGE.</em>
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_comment"> * ====================================================================</em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_comment"> * This software consists of voluntary contributions made by many</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_comment"> * individuals on behalf of the Apache Software Foundation.  For more</em>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_comment"> * information on the Apache Software Foundation, please see</em>
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_comment"> * &lt;<a href="http://www.codehaus.org/&gt;" target="alexandria_uri">http://www.codehaus.org/&gt;</a>.</em>
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_comment"> */</em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  <strong class="jxr_keyword">import</strong> java.io.BufferedInputStream;
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <strong class="jxr_keyword">import</strong> java.io.BufferedOutputStream;
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  <strong class="jxr_keyword">import</strong> java.io.ByteArrayInputStream;
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <strong class="jxr_keyword">import</strong> java.io.ByteArrayOutputStream;
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  <strong class="jxr_keyword">import</strong> java.io.InputStreamReader;
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <strong class="jxr_keyword">import</strong> java.io.OutputStream;
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  <strong class="jxr_keyword">import</strong> java.io.OutputStreamWriter;
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <strong class="jxr_keyword">import</strong> java.io.Reader;
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  <strong class="jxr_keyword">import</strong> java.io.StringReader;
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <strong class="jxr_keyword">import</strong> java.io.StringWriter;
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <strong class="jxr_keyword">import</strong> java.io.Writer;
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <strong class="jxr_keyword">import</strong> java.nio.channels.Channel;
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment"> * General IO Stream manipulation.</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment"> * This class provides static utility methods for input/output operations, particularly buffered</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment"> * copying between sources (&lt;code&gt;InputStream&lt;/code&gt;, &lt;code&gt;Reader&lt;/code&gt;, &lt;code&gt;String&lt;/code&gt; and</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;byte[]&lt;/code&gt;) and destinations (&lt;code&gt;OutputStream&lt;/code&gt;, &lt;code&gt;Writer&lt;/code&gt;,</em>
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;String&lt;/code&gt; and &lt;code&gt;byte[]&lt;/code&gt;).</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Unless otherwise noted, these &lt;code&gt;copy&lt;/code&gt; methods do &lt;em&gt;not&lt;/em&gt; flush or close the</em>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment"> * streams. Often, doing so would require making non-portable assumptions about the streams' origin</em>
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment"> * and further use. This means that both streams' &lt;code&gt;close()&lt;/code&gt; methods must be called after</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment"> * copying. if one omits this step, then the stream resources (sockets, file descriptors) are</em>
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment"> * released when the associated Stream is garbage-collected. It is not a good idea to rely on this</em>
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment"> * mechanism. For a good overview of the distinction between "memory management" and "resource</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment"> * management", see &lt;a href="<a href="http://www.unixreview.com/articles/1998/9804/9804ja/ja.htm" target="alexandria_uri">http://www.unixreview.com/articles/1998/9804/9804ja/ja.htm</a>"&gt;this</em>
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment"> * UnixReview article&lt;/a&gt;&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;For each &lt;code&gt;copy&lt;/code&gt; method, a variant is provided that allows the caller to specify the</em>
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment"> * buffer size (the default is 4k). As the buffer size can have a fairly large impact on speed, this</em>
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment"> * may be worth tweaking. Often "large buffer -&amp;gt; faster" does not hold, even for large data</em>
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment"> * transfers.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;For byte-to-char methods, a &lt;code&gt;copy&lt;/code&gt; variant allows the encoding to be selected</em>
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  <em class="jxr_javadoccomment"> * (otherwise the platform default is used).&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;The &lt;code&gt;copy&lt;/code&gt; methods use an internal buffer when copying. It is therefore advisable</em>
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment"> * &lt;em&gt;not&lt;/em&gt; to deliberately wrap the stream arguments to the &lt;code&gt;copy&lt;/code&gt; methods in</em>
+<a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment"> * &lt;code&gt;Buffered*&lt;/code&gt; streams. For example, don't do the</em>
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment"> * following:&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L102" href="#L102">102</a> <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L103" href="#L103">103</a> <em class="jxr_javadoccomment"> * &lt;code&gt;copy( new BufferedInputStream( in ), new BufferedOutputStream( out ) );&lt;/code&gt;</em>
+<a class="jxr_linenumber" name="L104" href="#L104">104</a> <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L105" href="#L105">105</a> <em class="jxr_javadoccomment"> * &lt;p&gt;The rationale is as follows:&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L107" href="#L107">107</a> <em class="jxr_javadoccomment"> * &lt;p&gt;Imagine that an InputStream's read() is a very expensive operation, which would usually suggest</em>
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> <em class="jxr_javadoccomment"> * wrapping in a BufferedInputStream. The BufferedInputStream works by issuing infrequent</em>
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment"> * {@link java.io.InputStream#read(byte[] b, int off, int len)} requests on the underlying InputStream, to</em>
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment"> * fill an internal buffer, from which further &lt;code&gt;read&lt;/code&gt; requests can inexpensively get</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment"> * their data (until the buffer runs out).&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment"> * &lt;p&gt;However, the &lt;code&gt;copy&lt;/code&gt; methods do the same thing, keeping an internal buffer,</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment"> * populated by {@link InputStream#read(byte[] b, int off, int len)} requests. Having two buffers</em>
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment"> * (or three if the destination stream is also buffered) is pointless, and the unnecessary buffer</em>
+<a class="jxr_linenumber" name="L115" href="#L115">115</a> <em class="jxr_javadoccomment"> * management hurts performance slightly (about 3%, according to some simple experiments).&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L116" href="#L116">116</a> <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L117" href="#L117">117</a> <em class="jxr_javadoccomment"> * @author &lt;a href="<a href="mailto:peter@codehaus.org" target="alexandria_uri">mailto:peter@codehaus.org</a>"&gt;Peter Donald&lt;/a&gt;</em>
+<a class="jxr_linenumber" name="L118" href="#L118">118</a> <em class="jxr_javadoccomment"> * @author &lt;a href="<a href="mailto:jefft@codehaus.org" target="alexandria_uri">mailto:jefft@codehaus.org</a>"&gt;Jeff Turner&lt;/a&gt;</em>
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> <em class="jxr_javadoccomment"> * @version $Id$</em>
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> <em class="jxr_javadoccomment"> * @since 4.0</em>
+<a class="jxr_linenumber" name="L121" href="#L121">121</a> <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L122" href="#L122">122</a> 
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> <em class="jxr_comment"> * Behold, intrepid explorers; a map of this class:</em>
+<a class="jxr_linenumber" name="L125" href="#L125">125</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> <em class="jxr_comment"> *       Method      Input               Output          Dependency</em>
+<a class="jxr_linenumber" name="L127" href="#L127">127</a> <em class="jxr_comment"> *       ------      -----               ------          -------</em>
+<a class="jxr_linenumber" name="L128" href="#L128">128</a> <em class="jxr_comment"> * 1     copy        InputStream         OutputStream    (primitive)</em>
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> <em class="jxr_comment"> * 2     copy        Reader              Writer          (primitive)</em>
+<a class="jxr_linenumber" name="L130" href="#L130">130</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> <em class="jxr_comment"> * 3     copy        InputStream         Writer          2</em>
+<a class="jxr_linenumber" name="L132" href="#L132">132</a> <em class="jxr_comment"> * 4     toString    InputStream         String          3</em>
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> <em class="jxr_comment"> * 5     toByteArray InputStream         byte[]          1</em>
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L135" href="#L135">135</a> <em class="jxr_comment"> * 6     copy        Reader              OutputStream    2</em>
+<a class="jxr_linenumber" name="L136" href="#L136">136</a> <em class="jxr_comment"> * 7     toString    Reader              String          2</em>
+<a class="jxr_linenumber" name="L137" href="#L137">137</a> <em class="jxr_comment"> * 8     toByteArray Reader              byte[]          6</em>
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L139" href="#L139">139</a> <em class="jxr_comment"> * 9     copy        String              OutputStream    2</em>
+<a class="jxr_linenumber" name="L140" href="#L140">140</a> <em class="jxr_comment"> * 10    copy        String              Writer          (trivial)</em>
+<a class="jxr_linenumber" name="L141" href="#L141">141</a> <em class="jxr_comment"> * 11    toByteArray String              byte[]          9</em>
+<a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_comment"> * 12    copy        byte[]              Writer          3</em>
+<a class="jxr_linenumber" name="L144" href="#L144">144</a> <em class="jxr_comment"> * 13    toString    byte[]              String          12</em>
+<a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_comment"> * 14    copy        byte[]              OutputStream    (trivial)</em>
+<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_comment"> * Note that only the first two methods shuffle bytes; the rest use these two, or (if possible) copy</em>
+<a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_comment"> * using native Java copy methods. As there are method variants to specify buffer size and encoding,</em>
+<a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_comment"> * each row may correspond to up to 4 methods.</em>
+<a class="jxr_linenumber" name="L151" href="#L151">151</a> <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L152" href="#L152">152</a> <em class="jxr_comment"> */</em>
+<a class="jxr_linenumber" name="L153" href="#L153">153</a> 
+<a class="jxr_linenumber" name="L154" href="#L154">154</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/codehaus/plexus/util/IOUtil.html">IOUtil</a>
+<a class="jxr_linenumber" name="L155" href="#L155">155</a> {
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> DEFAULT_BUFFER_SIZE = 1024 * 16;
+<a class="jxr_linenumber" name="L157" href="#L157">157</a> 
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L159" href="#L159">159</a> <em class="jxr_javadoccomment">     * Private constructor to prevent instantiation.</em>
+<a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../org/codehaus/plexus/util/IOUtil.html">IOUtil</a>()
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>     {
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>     }
+<a class="jxr_linenumber" name="L164" href="#L164">164</a> 
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     <em class="jxr_comment">// Core copy methods</em>
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L168" href="#L168">168</a> 
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L170" href="#L170">170</a> <em class="jxr_javadoccomment">     * Copy bytes from an &lt;code&gt;InputStream&lt;/code&gt; to an &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L171" href="#L171">171</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> OutputStream output )
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>     {
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         copy( input, output, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>     }
+<a class="jxr_linenumber" name="L177" href="#L177">177</a> 
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L179" href="#L179">179</a> <em class="jxr_javadoccomment">     * Copy bytes from an &lt;code&gt;InputStream&lt;/code&gt; to an &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L180" href="#L180">180</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L181" href="#L181">181</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> InputStream input,
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>                              <strong class="jxr_keyword">final</strong> OutputStream output,
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>                              <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>     {
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>         <strong class="jxr_keyword">final</strong> byte[] buffer = <strong class="jxr_keyword">new</strong> byte[bufferSize];
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>         <strong class="jxr_keyword">int</strong> n = 0;
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <strong class="jxr_keyword">while</strong> ( -1 != ( n = input.read( buffer ) ) )
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>         {
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>             output.write( buffer, 0, n );
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         }
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>     }
+<a class="jxr_linenumber" name="L194" href="#L194">194</a> 
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     * Copy chars from a &lt;code&gt;Reader&lt;/code&gt; to a &lt;code&gt;Writer&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> Reader input, <strong class="jxr_keyword">final</strong> Writer output )
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>     {
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>         copy( input, output, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>     }
+<a class="jxr_linenumber" name="L203" href="#L203">203</a> 
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L205" href="#L205">205</a> <em class="jxr_javadoccomment">     * Copy chars from a &lt;code&gt;Reader&lt;/code&gt; to a &lt;code&gt;Writer&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L206" href="#L206">206</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L207" href="#L207">207</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> Reader input, <strong class="jxr_keyword">final</strong> Writer output, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>     {
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">char</strong>[] buffer = <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">char</strong>[bufferSize];
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         <strong class="jxr_keyword">int</strong> n = 0;
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         <strong class="jxr_keyword">while</strong> ( -1 != ( n = input.read( buffer ) ) )
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>         {
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>             output.write( buffer, 0, n );
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>         }
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>         output.flush();
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>     }
+<a class="jxr_linenumber" name="L219" href="#L219">219</a> 
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>     <em class="jxr_comment">// Derived copy methods</em>
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>     <em class="jxr_comment">// InputStream -&gt; *</em>
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L224" href="#L224">224</a> 
+<a class="jxr_linenumber" name="L225" href="#L225">225</a> 
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>     <em class="jxr_comment">// InputStream -&gt; Writer</em>
+<a class="jxr_linenumber" name="L228" href="#L228">228</a> 
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L230" href="#L230">230</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from an &lt;code&gt;InputStream&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L232" href="#L232">232</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L233" href="#L233">233</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> Writer output )
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>     {
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>         copy( input, output, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>     }
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> 
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L241" href="#L241">241</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from an &lt;code&gt;InputStream&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L242" href="#L242">242</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L243" href="#L243">243</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L244" href="#L244">244</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L245" href="#L245">245</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> Writer output, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>     {
+<a class="jxr_linenumber" name="L249" href="#L249">249</a>         <strong class="jxr_keyword">final</strong> InputStreamReader in = <strong class="jxr_keyword">new</strong> InputStreamReader( input );
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         copy( in, output, bufferSize );
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>     }
+<a class="jxr_linenumber" name="L252" href="#L252">252</a> 
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L254" href="#L254">254</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from an &lt;code&gt;InputStream&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;, using the specified encoding.</em>
+<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">     * &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">     * Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L259" href="#L259">259</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> Writer output, <strong class="jxr_keyword">final</strong> String encoding )
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>     {
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>         <strong class="jxr_keyword">final</strong> InputStreamReader in = <strong class="jxr_keyword">new</strong> InputStreamReader( input, encoding );
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>         copy( in, output );
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>     }
+<a class="jxr_linenumber" name="L266" href="#L266">266</a> 
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L268" href="#L268">268</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from an &lt;code&gt;InputStream&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L269" href="#L269">269</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;, using the specified encoding.</em>
+<a class="jxr_linenumber" name="L270" href="#L270">270</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L271" href="#L271">271</a> <em class="jxr_javadoccomment">     *        &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L272" href="#L272">272</a> <em class="jxr_javadoccomment">     *        Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> InputStream input,
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>                              <strong class="jxr_keyword">final</strong> Writer output,
+<a class="jxr_linenumber" name="L277" href="#L277">277</a>                              <strong class="jxr_keyword">final</strong> String encoding,
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>                              <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L279" href="#L279">279</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>     {
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>         <strong class="jxr_keyword">final</strong> InputStreamReader in = <strong class="jxr_keyword">new</strong> InputStreamReader( input, encoding );
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>         copy( in, output, bufferSize );
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>     }
+<a class="jxr_linenumber" name="L284" href="#L284">284</a> 
+<a class="jxr_linenumber" name="L285" href="#L285">285</a> 
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L287" href="#L287">287</a>     <em class="jxr_comment">// InputStream -&gt; String</em>
+<a class="jxr_linenumber" name="L288" href="#L288">288</a> 
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L290" href="#L290">290</a> <em class="jxr_javadoccomment">     * Get the contents of an &lt;code&gt;InputStream&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L291" href="#L291">291</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L292" href="#L292">292</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L293" href="#L293">293</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> InputStream input )
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>     {
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>         <strong class="jxr_keyword">return</strong> toString( input, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>     }
+<a class="jxr_linenumber" name="L298" href="#L298">298</a> 
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L300" href="#L300">300</a> <em class="jxr_javadoccomment">     * Get the contents of an &lt;code&gt;InputStream&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L301" href="#L301">301</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L302" href="#L302">302</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L304" href="#L304">304</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L306" href="#L306">306</a>     {
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>         <strong class="jxr_keyword">final</strong> StringWriter sw = <strong class="jxr_keyword">new</strong> StringWriter();
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>         copy( input, sw, bufferSize );
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>         <strong class="jxr_keyword">return</strong> sw.toString();
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>     }
+<a class="jxr_linenumber" name="L311" href="#L311">311</a> 
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L313" href="#L313">313</a> <em class="jxr_javadoccomment">     * Get the contents of an &lt;code&gt;InputStream&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L314" href="#L314">314</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L315" href="#L315">315</a> <em class="jxr_javadoccomment">     *    &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L316" href="#L316">316</a> <em class="jxr_javadoccomment">     *    Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L317" href="#L317">317</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> String encoding )
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>     {
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>         <strong class="jxr_keyword">return</strong> toString( input, encoding, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>     }
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> 
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L325" href="#L325">325</a> <em class="jxr_javadoccomment">     * Get the contents of an &lt;code&gt;InputStream&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L326" href="#L326">326</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L327" href="#L327">327</a> <em class="jxr_javadoccomment">     *   &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L328" href="#L328">328</a> <em class="jxr_javadoccomment">     *   Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L329" href="#L329">329</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> InputStream input,
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>                                    <strong class="jxr_keyword">final</strong> String encoding,
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>                                    <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>     {
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>         <strong class="jxr_keyword">final</strong> StringWriter sw = <strong class="jxr_keyword">new</strong> StringWriter();
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>         copy( input, sw, encoding, bufferSize );
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>         <strong class="jxr_keyword">return</strong> sw.toString();
+<a class="jxr_linenumber" name="L339" href="#L339">339</a>     }
+<a class="jxr_linenumber" name="L340" href="#L340">340</a> 
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>     <em class="jxr_comment">// InputStream -&gt; byte[]</em>
+<a class="jxr_linenumber" name="L343" href="#L343">343</a> 
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L345" href="#L345">345</a> <em class="jxr_javadoccomment">     * Get the contents of an &lt;code&gt;InputStream&lt;/code&gt; as a &lt;code&gt;byte[]&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L346" href="#L346">346</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> byte[] toByteArray( <strong class="jxr_keyword">final</strong> InputStream input )
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L349" href="#L349">349</a>     {
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>         <strong class="jxr_keyword">return</strong> toByteArray( input, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>     }
+<a class="jxr_linenumber" name="L352" href="#L352">352</a> 
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L354" href="#L354">354</a> <em class="jxr_javadoccomment">     * Get the contents of an &lt;code&gt;InputStream&lt;/code&gt; as a &lt;code&gt;byte[]&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L355" href="#L355">355</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L356" href="#L356">356</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> byte[] toByteArray( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L359" href="#L359">359</a>     {
+<a class="jxr_linenumber" name="L360" href="#L360">360</a>         <strong class="jxr_keyword">final</strong> ByteArrayOutputStream output = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>         copy( input, output, bufferSize );
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>         <strong class="jxr_keyword">return</strong> output.toByteArray();
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>     }
+<a class="jxr_linenumber" name="L364" href="#L364">364</a> 
+<a class="jxr_linenumber" name="L365" href="#L365">365</a> 
+<a class="jxr_linenumber" name="L366" href="#L366">366</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L367" href="#L367">367</a>     <em class="jxr_comment">// Derived copy methods</em>
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>     <em class="jxr_comment">// Reader -&gt; *</em>
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L370" href="#L370">370</a> 
+<a class="jxr_linenumber" name="L371" href="#L371">371</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>     <em class="jxr_comment">// Reader -&gt; OutputStream</em>
+<a class="jxr_linenumber" name="L373" href="#L373">373</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L374" href="#L374">374</a> <em class="jxr_javadoccomment">     * Serialize chars from a &lt;code&gt;Reader&lt;/code&gt; to bytes on an &lt;code&gt;OutputStream&lt;/code&gt;, and</em>
+<a class="jxr_linenumber" name="L375" href="#L375">375</a> <em class="jxr_javadoccomment">     * flush the &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L376" href="#L376">376</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L377" href="#L377">377</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> Reader input, <strong class="jxr_keyword">final</strong> OutputStream output )
+<a class="jxr_linenumber" name="L378" href="#L378">378</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>     {
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>         copy( input, output, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L381" href="#L381">381</a>     }
+<a class="jxr_linenumber" name="L382" href="#L382">382</a> 
+<a class="jxr_linenumber" name="L383" href="#L383">383</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L384" href="#L384">384</a> <em class="jxr_javadoccomment">     * Serialize chars from a &lt;code&gt;Reader&lt;/code&gt; to bytes on an &lt;code&gt;OutputStream&lt;/code&gt;, and</em>
+<a class="jxr_linenumber" name="L385" href="#L385">385</a> <em class="jxr_javadoccomment">     * flush the &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L386" href="#L386">386</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L387" href="#L387">387</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L388" href="#L388">388</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> Reader input, <strong class="jxr_keyword">final</strong> OutputStream output, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>     {
+<a class="jxr_linenumber" name="L391" href="#L391">391</a>         <strong class="jxr_keyword">final</strong> OutputStreamWriter out = <strong class="jxr_keyword">new</strong> OutputStreamWriter( output );
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>         copy( input, out, bufferSize );
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>         <em class="jxr_comment">// NOTE: Unless anyone is planning on rewriting OutputStreamWriter, we have to flush</em>
+<a class="jxr_linenumber" name="L394" href="#L394">394</a>         <em class="jxr_comment">// here.</em>
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>         out.flush();
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>     }
+<a class="jxr_linenumber" name="L397" href="#L397">397</a> 
+<a class="jxr_linenumber" name="L398" href="#L398">398</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>     <em class="jxr_comment">// Reader -&gt; String</em>
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L401" href="#L401">401</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;Reader&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L402" href="#L402">402</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> Reader input )
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>     {
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>         <strong class="jxr_keyword">return</strong> toString( input, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L407" href="#L407">407</a>     }
+<a class="jxr_linenumber" name="L408" href="#L408">408</a> 
+<a class="jxr_linenumber" name="L409" href="#L409">409</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L410" href="#L410">410</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;Reader&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L411" href="#L411">411</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L412" href="#L412">412</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L413" href="#L413">413</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> Reader input, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L415" href="#L415">415</a>     {
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>         <strong class="jxr_keyword">final</strong> StringWriter sw = <strong class="jxr_keyword">new</strong> StringWriter();
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>         copy( input, sw, bufferSize );
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>         <strong class="jxr_keyword">return</strong> sw.toString();
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>     }
+<a class="jxr_linenumber" name="L420" href="#L420">420</a> 
+<a class="jxr_linenumber" name="L421" href="#L421">421</a> 
+<a class="jxr_linenumber" name="L422" href="#L422">422</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>     <em class="jxr_comment">// Reader -&gt; byte[]</em>
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L425" href="#L425">425</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;Reader&lt;/code&gt; as a &lt;code&gt;byte[]&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L426" href="#L426">426</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L427" href="#L427">427</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> byte[] toByteArray( <strong class="jxr_keyword">final</strong> Reader input )
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>     {
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>         <strong class="jxr_keyword">return</strong> toByteArray( input, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>     }
+<a class="jxr_linenumber" name="L432" href="#L432">432</a> 
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L434" href="#L434">434</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;Reader&lt;/code&gt; as a &lt;code&gt;byte[]&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L435" href="#L435">435</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L436" href="#L436">436</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L437" href="#L437">437</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> byte[] toByteArray( <strong class="jxr_keyword">final</strong> Reader input, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L438" href="#L438">438</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L439" href="#L439">439</a>     {
+<a class="jxr_linenumber" name="L440" href="#L440">440</a>         ByteArrayOutputStream output = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
+<a class="jxr_linenumber" name="L441" href="#L441">441</a>         copy( input, output, bufferSize );
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>         <strong class="jxr_keyword">return</strong> output.toByteArray();
+<a class="jxr_linenumber" name="L443" href="#L443">443</a>     }
+<a class="jxr_linenumber" name="L444" href="#L444">444</a> 
+<a class="jxr_linenumber" name="L445" href="#L445">445</a> 
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>     <em class="jxr_comment">// Derived copy methods</em>
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>     <em class="jxr_comment">// String -&gt; *</em>
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L450" href="#L450">450</a> 
+<a class="jxr_linenumber" name="L451" href="#L451">451</a> 
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>     <em class="jxr_comment">// String -&gt; OutputStream</em>
+<a class="jxr_linenumber" name="L454" href="#L454">454</a> 
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L456" href="#L456">456</a> <em class="jxr_javadoccomment">     * Serialize chars from a &lt;code&gt;String&lt;/code&gt; to bytes on an &lt;code&gt;OutputStream&lt;/code&gt;, and</em>
+<a class="jxr_linenumber" name="L457" href="#L457">457</a> <em class="jxr_javadoccomment">     * flush the &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> String input, <strong class="jxr_keyword">final</strong> OutputStream output )
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>     {
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>         copy( input, output, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>     }
+<a class="jxr_linenumber" name="L464" href="#L464">464</a> 
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L466" href="#L466">466</a> <em class="jxr_javadoccomment">     * Serialize chars from a &lt;code&gt;String&lt;/code&gt; to bytes on an &lt;code&gt;OutputStream&lt;/code&gt;, and</em>
+<a class="jxr_linenumber" name="L467" href="#L467">467</a> <em class="jxr_javadoccomment">     * flush the &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L468" href="#L468">468</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L469" href="#L469">469</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> String input, <strong class="jxr_keyword">final</strong> OutputStream output, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>     {
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>         <strong class="jxr_keyword">final</strong> StringReader in = <strong class="jxr_keyword">new</strong> StringReader( input );
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>         <strong class="jxr_keyword">final</strong> OutputStreamWriter out = <strong class="jxr_keyword">new</strong> OutputStreamWriter( output );
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>         copy( in, out, bufferSize );
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>         <em class="jxr_comment">// NOTE: Unless anyone is planning on rewriting OutputStreamWriter, we have to flush</em>
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>         <em class="jxr_comment">// here.</em>
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>         out.flush();
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>     }
+<a class="jxr_linenumber" name="L480" href="#L480">480</a> 
+<a class="jxr_linenumber" name="L481" href="#L481">481</a> 
+<a class="jxr_linenumber" name="L482" href="#L482">482</a> 
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>     <em class="jxr_comment">// String -&gt; Writer</em>
+<a class="jxr_linenumber" name="L485" href="#L485">485</a> 
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L487" href="#L487">487</a> <em class="jxr_javadoccomment">     * Copy chars from a &lt;code&gt;String&lt;/code&gt; to a &lt;code&gt;Writer&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L488" href="#L488">488</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> String input, <strong class="jxr_keyword">final</strong> Writer output )
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>     {
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>         output.write( input );
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>     }
+<a class="jxr_linenumber" name="L494" href="#L494">494</a> 
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L496" href="#L496">496</a> <em class="jxr_javadoccomment">     * Copy bytes from an &lt;code&gt;InputStream&lt;/code&gt; to an</em>
+<a class="jxr_linenumber" name="L497" href="#L497">497</a> <em class="jxr_javadoccomment">     * &lt;code&gt;OutputStream&lt;/code&gt;, with buffering.</em>
+<a class="jxr_linenumber" name="L498" href="#L498">498</a> <em class="jxr_javadoccomment">     * This is equivalent to passing a</em>
+<a class="jxr_linenumber" name="L499" href="#L499">499</a> <em class="jxr_javadoccomment">     * {@link java.io.BufferedInputStream} and</em>
+<a class="jxr_linenumber" name="L500" href="#L500">500</a> <em class="jxr_javadoccomment">     * {@link java.io.BufferedOutputStream} to {@link #copy(InputStream, OutputStream)},</em>
+<a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     * and flushing the output stream afterwards. The streams are not closed</em>
+<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     * after the copy.</em>
+<a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     * @deprecated Buffering streams is actively harmful! See the class description as to why. Use</em>
+<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     * {@link #copy(InputStream, OutputStream)} instead.</em>
+<a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L506" href="#L506">506</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> bufferedCopy( <strong class="jxr_keyword">final</strong> InputStream input, <strong class="jxr_keyword">final</strong> OutputStream output )
+<a class="jxr_linenumber" name="L507" href="#L507">507</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L508" href="#L508">508</a>     {
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>         <strong class="jxr_keyword">final</strong> BufferedInputStream in = <strong class="jxr_keyword">new</strong> BufferedInputStream( input );
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>         <strong class="jxr_keyword">final</strong> BufferedOutputStream out = <strong class="jxr_keyword">new</strong> BufferedOutputStream( output );
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>         copy( in, out );
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>         out.flush();
+<a class="jxr_linenumber" name="L513" href="#L513">513</a>     }
+<a class="jxr_linenumber" name="L514" href="#L514">514</a> 
+<a class="jxr_linenumber" name="L515" href="#L515">515</a> 
+<a class="jxr_linenumber" name="L516" href="#L516">516</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L517" href="#L517">517</a>     <em class="jxr_comment">// String -&gt; byte[]</em>
+<a class="jxr_linenumber" name="L518" href="#L518">518</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L519" href="#L519">519</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;String&lt;/code&gt; as a &lt;code&gt;byte[]&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L520" href="#L520">520</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> byte[] toByteArray( <strong class="jxr_keyword">final</strong> String input )
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L523" href="#L523">523</a>     {
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>         <strong class="jxr_keyword">return</strong> toByteArray( input, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>     }
+<a class="jxr_linenumber" name="L526" href="#L526">526</a> 
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L528" href="#L528">528</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;String&lt;/code&gt; as a &lt;code&gt;byte[]&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L529" href="#L529">529</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L530" href="#L530">530</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L531" href="#L531">531</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> byte[] toByteArray( <strong class="jxr_keyword">final</strong> String input, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L532" href="#L532">532</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>     {
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>         ByteArrayOutputStream output = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
+<a class="jxr_linenumber" name="L535" href="#L535">535</a>         copy( input, output, bufferSize );
+<a class="jxr_linenumber" name="L536" href="#L536">536</a>         <strong class="jxr_keyword">return</strong> output.toByteArray();
+<a class="jxr_linenumber" name="L537" href="#L537">537</a>     }
+<a class="jxr_linenumber" name="L538" href="#L538">538</a> 
+<a class="jxr_linenumber" name="L539" href="#L539">539</a> 
+<a class="jxr_linenumber" name="L540" href="#L540">540</a> 
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L542" href="#L542">542</a>     <em class="jxr_comment">// Derived copy methods</em>
+<a class="jxr_linenumber" name="L543" href="#L543">543</a>     <em class="jxr_comment">// byte[] -&gt; *</em>
+<a class="jxr_linenumber" name="L544" href="#L544">544</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L545" href="#L545">545</a> 
+<a class="jxr_linenumber" name="L546" href="#L546">546</a> 
+<a class="jxr_linenumber" name="L547" href="#L547">547</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>     <em class="jxr_comment">// byte[] -&gt; Writer</em>
+<a class="jxr_linenumber" name="L549" href="#L549">549</a> 
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L551" href="#L551">551</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from a &lt;code&gt;byte[]&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L552" href="#L552">552</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L553" href="#L553">553</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L554" href="#L554">554</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L555" href="#L555">555</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> byte[] input, <strong class="jxr_keyword">final</strong> Writer output )
+<a class="jxr_linenumber" name="L556" href="#L556">556</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L557" href="#L557">557</a>     {
+<a class="jxr_linenumber" name="L558" href="#L558">558</a>         copy( input, output, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L559" href="#L559">559</a>     }
+<a class="jxr_linenumber" name="L560" href="#L560">560</a> 
+<a class="jxr_linenumber" name="L561" href="#L561">561</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L562" href="#L562">562</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from a &lt;code&gt;byte[]&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L563" href="#L563">563</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L564" href="#L564">564</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L565" href="#L565">565</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L566" href="#L566">566</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L567" href="#L567">567</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> byte[] input, <strong class="jxr_keyword">final</strong> Writer output, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L568" href="#L568">568</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L569" href="#L569">569</a>     {
+<a class="jxr_linenumber" name="L570" href="#L570">570</a>         <strong class="jxr_keyword">final</strong> ByteArrayInputStream in = <strong class="jxr_keyword">new</strong> ByteArrayInputStream( input );
+<a class="jxr_linenumber" name="L571" href="#L571">571</a>         copy( in, output, bufferSize );
+<a class="jxr_linenumber" name="L572" href="#L572">572</a>     }
+<a class="jxr_linenumber" name="L573" href="#L573">573</a> 
+<a class="jxr_linenumber" name="L574" href="#L574">574</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L575" href="#L575">575</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from a &lt;code&gt;byte[]&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L576" href="#L576">576</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;, using the specified encoding.</em>
+<a class="jxr_linenumber" name="L577" href="#L577">577</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L578" href="#L578">578</a> <em class="jxr_javadoccomment">     * &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L579" href="#L579">579</a> <em class="jxr_javadoccomment">     * Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L580" href="#L580">580</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L581" href="#L581">581</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> byte[] input, <strong class="jxr_keyword">final</strong> Writer output, <strong class="jxr_keyword">final</strong> String encoding )
+<a class="jxr_linenumber" name="L582" href="#L582">582</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L583" href="#L583">583</a>     {
+<a class="jxr_linenumber" name="L584" href="#L584">584</a>         <strong class="jxr_keyword">final</strong> ByteArrayInputStream in = <strong class="jxr_keyword">new</strong> ByteArrayInputStream( input );
+<a class="jxr_linenumber" name="L585" href="#L585">585</a>         copy( in, output, encoding );
+<a class="jxr_linenumber" name="L586" href="#L586">586</a>     }
+<a class="jxr_linenumber" name="L587" href="#L587">587</a> 
+<a class="jxr_linenumber" name="L588" href="#L588">588</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L589" href="#L589">589</a> <em class="jxr_javadoccomment">     * Copy and convert bytes from a &lt;code&gt;byte[]&lt;/code&gt; to chars on a</em>
+<a class="jxr_linenumber" name="L590" href="#L590">590</a> <em class="jxr_javadoccomment">     * &lt;code&gt;Writer&lt;/code&gt;, using the specified encoding.</em>
+<a class="jxr_linenumber" name="L591" href="#L591">591</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L592" href="#L592">592</a> <em class="jxr_javadoccomment">     *        &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L593" href="#L593">593</a> <em class="jxr_javadoccomment">     *        Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L594" href="#L594">594</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L595" href="#L595">595</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L596" href="#L596">596</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> byte[] input,
+<a class="jxr_linenumber" name="L597" href="#L597">597</a>                              <strong class="jxr_keyword">final</strong> Writer output,
+<a class="jxr_linenumber" name="L598" href="#L598">598</a>                              <strong class="jxr_keyword">final</strong> String encoding,
+<a class="jxr_linenumber" name="L599" href="#L599">599</a>                              <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L600" href="#L600">600</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L601" href="#L601">601</a>     {
+<a class="jxr_linenumber" name="L602" href="#L602">602</a>         <strong class="jxr_keyword">final</strong> ByteArrayInputStream in = <strong class="jxr_keyword">new</strong> ByteArrayInputStream( input );
+<a class="jxr_linenumber" name="L603" href="#L603">603</a>         copy( in, output, encoding, bufferSize );
+<a class="jxr_linenumber" name="L604" href="#L604">604</a>     }
+<a class="jxr_linenumber" name="L605" href="#L605">605</a> 
+<a class="jxr_linenumber" name="L606" href="#L606">606</a> 
+<a class="jxr_linenumber" name="L607" href="#L607">607</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L608" href="#L608">608</a>     <em class="jxr_comment">// byte[] -&gt; String</em>
+<a class="jxr_linenumber" name="L609" href="#L609">609</a> 
+<a class="jxr_linenumber" name="L610" href="#L610">610</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L611" href="#L611">611</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;byte[]&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L612" href="#L612">612</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L613" href="#L613">613</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L614" href="#L614">614</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> byte[] input )
+<a class="jxr_linenumber" name="L615" href="#L615">615</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L616" href="#L616">616</a>     {
+<a class="jxr_linenumber" name="L617" href="#L617">617</a>         <strong class="jxr_keyword">return</strong> toString( input, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L618" href="#L618">618</a>     }
+<a class="jxr_linenumber" name="L619" href="#L619">619</a> 
+<a class="jxr_linenumber" name="L620" href="#L620">620</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L621" href="#L621">621</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;byte[]&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L622" href="#L622">622</a> <em class="jxr_javadoccomment">     * The platform's default encoding is used for the byte-to-char conversion.</em>
+<a class="jxr_linenumber" name="L623" href="#L623">623</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L624" href="#L624">624</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L625" href="#L625">625</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> byte[] input, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L626" href="#L626">626</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L627" href="#L627">627</a>     {
+<a class="jxr_linenumber" name="L628" href="#L628">628</a>         <strong class="jxr_keyword">final</strong> StringWriter sw = <strong class="jxr_keyword">new</strong> StringWriter();
+<a class="jxr_linenumber" name="L629" href="#L629">629</a>         copy( input, sw, bufferSize );
+<a class="jxr_linenumber" name="L630" href="#L630">630</a>         <strong class="jxr_keyword">return</strong> sw.toString();
+<a class="jxr_linenumber" name="L631" href="#L631">631</a>     }
+<a class="jxr_linenumber" name="L632" href="#L632">632</a> 
+<a class="jxr_linenumber" name="L633" href="#L633">633</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L634" href="#L634">634</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;byte[]&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L635" href="#L635">635</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L636" href="#L636">636</a> <em class="jxr_javadoccomment">     *    &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L637" href="#L637">637</a> <em class="jxr_javadoccomment">     *    Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L638" href="#L638">638</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L639" href="#L639">639</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> byte[] input, <strong class="jxr_keyword">final</strong> String encoding )
+<a class="jxr_linenumber" name="L640" href="#L640">640</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L641" href="#L641">641</a>     {
+<a class="jxr_linenumber" name="L642" href="#L642">642</a>         <strong class="jxr_keyword">return</strong> toString( input, encoding, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L643" href="#L643">643</a>     }
+<a class="jxr_linenumber" name="L644" href="#L644">644</a> 
+<a class="jxr_linenumber" name="L645" href="#L645">645</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L646" href="#L646">646</a> <em class="jxr_javadoccomment">     * Get the contents of a &lt;code&gt;byte[]&lt;/code&gt; as a String.</em>
+<a class="jxr_linenumber" name="L647" href="#L647">647</a> <em class="jxr_javadoccomment">     * @param encoding The name of a supported character encoding. See the</em>
+<a class="jxr_linenumber" name="L648" href="#L648">648</a> <em class="jxr_javadoccomment">     *   &lt;a href="<a href="http://www.iana.org/assignments/character-sets" target="alexandria_uri">http://www.iana.org/assignments/character-sets</a>"&gt;IANA</em>
+<a class="jxr_linenumber" name="L649" href="#L649">649</a> <em class="jxr_javadoccomment">     *   Charset Registry&lt;/a&gt; for a list of valid encoding types.</em>
+<a class="jxr_linenumber" name="L650" href="#L650">650</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L651" href="#L651">651</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L652" href="#L652">652</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString( <strong class="jxr_keyword">final</strong> byte[] input,
+<a class="jxr_linenumber" name="L653" href="#L653">653</a>                                    <strong class="jxr_keyword">final</strong> String encoding,
+<a class="jxr_linenumber" name="L654" href="#L654">654</a>                                    <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L655" href="#L655">655</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L656" href="#L656">656</a>     {
+<a class="jxr_linenumber" name="L657" href="#L657">657</a>         <strong class="jxr_keyword">final</strong> StringWriter sw = <strong class="jxr_keyword">new</strong> StringWriter();
+<a class="jxr_linenumber" name="L658" href="#L658">658</a>         copy( input, sw, encoding, bufferSize );
+<a class="jxr_linenumber" name="L659" href="#L659">659</a>         <strong class="jxr_keyword">return</strong> sw.toString();
+<a class="jxr_linenumber" name="L660" href="#L660">660</a>     }
+<a class="jxr_linenumber" name="L661" href="#L661">661</a> 
+<a class="jxr_linenumber" name="L662" href="#L662">662</a> 
+<a class="jxr_linenumber" name="L663" href="#L663">663</a>     <em class="jxr_comment">///////////////////////////////////////////////////////////////</em>
+<a class="jxr_linenumber" name="L664" href="#L664">664</a>     <em class="jxr_comment">// byte[] -&gt; OutputStream</em>
+<a class="jxr_linenumber" name="L665" href="#L665">665</a> 
+<a class="jxr_linenumber" name="L666" href="#L666">666</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L667" href="#L667">667</a> <em class="jxr_javadoccomment">     * Copy bytes from a &lt;code&gt;byte[]&lt;/code&gt; to an &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L668" href="#L668">668</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L669" href="#L669">669</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> byte[] input, <strong class="jxr_keyword">final</strong> OutputStream output )
+<a class="jxr_linenumber" name="L670" href="#L670">670</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L671" href="#L671">671</a>     {
+<a class="jxr_linenumber" name="L672" href="#L672">672</a>         copy( input, output, DEFAULT_BUFFER_SIZE );
+<a class="jxr_linenumber" name="L673" href="#L673">673</a>     }
+<a class="jxr_linenumber" name="L674" href="#L674">674</a> 
+<a class="jxr_linenumber" name="L675" href="#L675">675</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L676" href="#L676">676</a> <em class="jxr_javadoccomment">     * Copy bytes from a &lt;code&gt;byte[]&lt;/code&gt; to an &lt;code&gt;OutputStream&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L677" href="#L677">677</a> <em class="jxr_javadoccomment">     * @param bufferSize Size of internal buffer to use.</em>
+<a class="jxr_linenumber" name="L678" href="#L678">678</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L679" href="#L679">679</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> copy( <strong class="jxr_keyword">final</strong> byte[] input,
+<a class="jxr_linenumber" name="L680" href="#L680">680</a>                              <strong class="jxr_keyword">final</strong> OutputStream output,
+<a class="jxr_linenumber" name="L681" href="#L681">681</a>                              <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> bufferSize )
+<a class="jxr_linenumber" name="L682" href="#L682">682</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L683" href="#L683">683</a>     {
+<a class="jxr_linenumber" name="L684" href="#L684">684</a>         output.write( input );
+<a class="jxr_linenumber" name="L685" href="#L685">685</a>     }
+<a class="jxr_linenumber" name="L686" href="#L686">686</a> 
+<a class="jxr_linenumber" name="L687" href="#L687">687</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L688" href="#L688">688</a> <em class="jxr_javadoccomment">     * Compare the contents of two Streams to determine if they are equal or not.</em>
+<a class="jxr_linenumber" name="L689" href="#L689">689</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L690" href="#L690">690</a> <em class="jxr_javadoccomment">     * @param input1 the first stream</em>
+<a class="jxr_linenumber" name="L691" href="#L691">691</a> <em class="jxr_javadoccomment">     * @param input2 the second stream</em>
+<a class="jxr_linenumber" name="L692" href="#L692">692</a> <em class="jxr_javadoccomment">     * @return true if the content of the streams are equal or they both don't exist, false otherwise</em>
+<a class="jxr_linenumber" name="L693" href="#L693">693</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L694" href="#L694">694</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> contentEquals( <strong class="jxr_keyword">final</strong> InputStream input1,
+<a class="jxr_linenumber" name="L695" href="#L695">695</a>                                          <strong class="jxr_keyword">final</strong> InputStream input2 )
+<a class="jxr_linenumber" name="L696" href="#L696">696</a>         <strong class="jxr_keyword">throws</strong> IOException
+<a class="jxr_linenumber" name="L697" href="#L697">697</a>     {
+<a class="jxr_linenumber" name="L698" href="#L698">698</a>         <strong class="jxr_keyword">final</strong> InputStream bufferedInput1 = <strong class="jxr_keyword">new</strong> BufferedInputStream( input1 );
+<a class="jxr_linenumber" name="L699" href="#L699">699</a>         <strong class="jxr_keyword">final</strong> InputStream bufferedInput2 = <strong class="jxr_keyword">new</strong> BufferedInputStream( input2 );
+<a class="jxr_linenumber" name="L700" href="#L700">700</a> 
+<a class="jxr_linenumber" name="L701" href="#L701">701</a>         <strong class="jxr_keyword">int</strong> ch = bufferedInput1.read();
+<a class="jxr_linenumber" name="L702" href="#L702">702</a>         <strong class="jxr_keyword">while</strong> ( -1 != ch )
+<a class="jxr_linenumber" name="L703" href="#L703">703</a>         {
+<a class="jxr_linenumber" name="L704" href="#L704">704</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> ch2 = bufferedInput2.read();
+<a class="jxr_linenumber" name="L705" href="#L705">705</a>             <strong class="jxr_keyword">if</strong> ( ch != ch2 )
+<a class="jxr_linenumber" name="L706" href="#L706">706</a>             {
+<a class="jxr_linenumber" name="L707" href="#L707">707</a>                 <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="L708" href="#L708">708</a>             }
+<a class="jxr_linenumber" name="L709" href="#L709">709</a>             ch = bufferedInput1.read();
+<a class="jxr_linenumber" name="L710" href="#L710">710</a>         }
+<a class="jxr_linenumber" name="L711" href="#L711">711</a> 
+<a class="jxr_linenumber" name="L712" href="#L712">712</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> ch2 = bufferedInput2.read();
+<a class="jxr_linenumber" name="L713" href="#L713">713</a>         <strong class="jxr_keyword">if</strong> ( -1 != ch2 )
+<a class="jxr_linenumber" name="L714" href="#L714">714</a>         {
+<a class="jxr_linenumber" name="L715" href="#L715">715</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="L716" href="#L716">716</a>         }
+<a class="jxr_linenumber" name="L717" href="#L717">717</a>         <strong class="jxr_keyword">else</strong>
+<a class="jxr_linenumber" name="L718" href="#L718">718</a>         {
+<a class="jxr_linenumber" name="L719" href="#L719">719</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L720" href="#L720">720</a>         }
+<a class="jxr_linenumber" name="L721" href="#L721">721</a>     }
+<a class="jxr_linenumber" name="L722" href="#L722">722</a> 
+<a class="jxr_linenumber" name="L723" href="#L723">723</a>     <em class="jxr_comment">// ----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="L724" href="#L724">724</a>     <em class="jxr_comment">// closeXXX()</em>
+<a class="jxr_linenumber" name="L725" href="#L725">725</a>     <em class="jxr_comment">// ----------------------------------------------------------------------</em>
+<a class="jxr_linenumber" name="L726" href="#L726">726</a> 
+<a class="jxr_linenumber" name="L727" href="#L727">727</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L728" href="#L728">728</a> <em class="jxr_javadoccomment">     * Closes the input stream. The input stream can be null and any IOException's will be swallowed.</em>
+<a class="jxr_linenumber" name="L729" href="#L729">729</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L730" href="#L730">730</a> <em class="jxr_javadoccomment">     * @param inputStream The stream to close.</em>
+<a class="jxr_linenumber" name="L731" href="#L731">731</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L732" href="#L732">732</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> close( InputStream inputStream )
+<a class="jxr_linenumber" name="L733" href="#L733">733</a>     {
+<a class="jxr_linenumber" name="L734" href="#L734">734</a>         <strong class="jxr_keyword">if</strong> ( inputStream == <strong class="jxr_keyword">null</strong> )
+<a class="jxr_linenumber" name="L735" href="#L735">735</a>         {
+<a class="jxr_linenumber" name="L736" href="#L736">736</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L737" href="#L737">737</a>         }
+<a class="jxr_linenumber" name="L738" href="#L738">738</a> 
+<a class="jxr_linenumber" name="L739" href="#L739">739</a>         <strong class="jxr_keyword">try</strong>
+<a class="jxr_linenumber" name="L740" href="#L740">740</a>         {
+<a class="jxr_linenumber" name="L741" href="#L741">741</a>             inputStream.close();
+<a class="jxr_linenumber" name="L742" href="#L742">742</a>         }
+<a class="jxr_linenumber" name="L743" href="#L743">743</a>         <strong class="jxr_keyword">catch</strong>( IOException ex )
+<a class="jxr_linenumber" name="L744" href="#L744">744</a>         {
+<a class="jxr_linenumber" name="L745" href="#L745">745</a>             <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L746" href="#L746">746</a>         }
+<a class="jxr_linenumber" name="L747" href="#L747">747</a>     }
+<a class="jxr_linenumber" name="L748" href="#L748">748</a> 
+<a class="jxr_linenumber" name="L749" href="#L749">749</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L750" href="#L750">750</a> <em class="jxr_javadoccomment">     * Closes a channel. Channel can be null and any IOException's will be swallowed.</em>
+<a class="jxr_linenumber" name="L751" href="#L751">751</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L752" href="#L752">752</a> <em class="jxr_javadoccomment">     * @param channel The stream to close.</em>
+<a class="jxr_linenumber" name="L753" href="#L753">753</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L754" href="#L754">754</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> close( Channel channel )
+<a class="jxr_linenumber" name="L755" href="#L755">755</a>     {
+<a class="jxr_linenumber" name="L756" href="#L756">756</a>         <strong class="jxr_keyword">if</strong> ( channel == <strong class="jxr_keyword">null</strong> )
+<a class="jxr_linenumber" name="L757" href="#L757">757</a>         {
+<a class="jxr_linenumber" name="L758" href="#L758">758</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L759" href="#L759">759</a>         }
+<a class="jxr_linenumber" name="L760" href="#L760">760</a> 
+<a class="jxr_linenumber" name="L761" href="#L761">761</a>         <strong class="jxr_keyword">try</strong>
+<a class="jxr_linenumber" name="L762" href="#L762">762</a>         {
+<a class="jxr_linenumber" name="L763" href="#L763">763</a>             channel.close();
+<a class="jxr_linenumber" name="L764" href="#L764">764</a>         }
+<a class="jxr_linenumber" name="L765" href="#L765">765</a>         <strong class="jxr_keyword">catch</strong>( IOException ex )
+<a class="jxr_linenumber" name="L766" href="#L766">766</a>         {
+<a class="jxr_linenumber" name="L767" href="#L767">767</a>             <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L768" href="#L768">768</a>         }
+<a class="jxr_linenumber" name="L769" href="#L769">769</a>     }
+<a class="jxr_linenumber" name="L770" href="#L770">770</a> 
+<a class="jxr_linenumber" name="L771" href="#L771">771</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L772" href="#L772">772</a> <em class="jxr_javadoccomment">     * Closes the output stream. The output stream can be null and any IOException's will be swallowed.</em>
+<a class="jxr_linenumber" name="L773" href="#L773">773</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L774" href="#L774">774</a> <em class="jxr_javadoccomment">     * @param outputStream The stream to close.</em>
+<a class="jxr_linenumber" name="L775" href="#L775">775</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L776" href="#L776">776</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> close( OutputStream outputStream )
+<a class="jxr_linenumber" name="L777" href="#L777">777</a>     {
+<a class="jxr_linenumber" name="L778" href="#L778">778</a>         <strong class="jxr_keyword">if</strong> ( outputStream == <strong class="jxr_keyword">null</strong> )
+<a class="jxr_linenumber" name="L779" href="#L779">779</a>         {
+<a class="jxr_linenumber" name="L780" href="#L780">780</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L781" href="#L781">781</a>         }
+<a class="jxr_linenumber" name="L782" href="#L782">782</a> 
+<a class="jxr_linenumber" name="L783" href="#L783">783</a>         <strong class="jxr_keyword">try</strong>
+<a class="jxr_linenumber" name="L784" href="#L784">784</a>         {
+<a class="jxr_linenumber" name="L785" href="#L785">785</a>             outputStream.close();
+<a class="jxr_linenumber" name="L786" href="#L786">786</a>         }
+<a class="jxr_linenumber" name="L787" href="#L787">787</a>         <strong class="jxr_keyword">catch</strong>( IOException ex )
+<a class="jxr_linenumber" name="L788" href="#L788">788</a>         {
+<a class="jxr_linenumber" name="L789" href="#L789">789</a>             <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L790" href="#L790">790</a>         }
+<a class="jxr_linenumber" name="L791" href="#L791">791</a>     }
+<a class="jxr_linenumber" name="L792" href="#L792">792</a> 
+<a class="jxr_linenumber" name="L793" href="#L793">793</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L794" href="#L794">794</a> <em class="jxr_javadoccomment">     * Closes the reader. The reader can be null and any IOException's will be swallowed.</em>
+<a class="jxr_linenumber" name="L795" href="#L795">795</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L796" href="#L796">796</a> <em class="jxr_javadoccomment">     * @param reader The reader to close.</em>
+<a class="jxr_linenumber" name="L797" href="#L797">797</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L798" href="#L798">798</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> close( Reader reader )
+<a class="jxr_linenumber" name="L799" href="#L799">799</a>     {
+<a class="jxr_linenumber" name="L800" href="#L800">800</a>         <strong class="jxr_keyword">if</strong> ( reader == <strong class="jxr_keyword">null</strong> )
+<a class="jxr_linenumber" name="L801" href="#L801">801</a>         {
+<a class="jxr_linenumber" name="L802" href="#L802">802</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L803" href="#L803">803</a>         }
+<a class="jxr_linenumber" name="L804" href="#L804">804</a> 
+<a class="jxr_linenumber" name="L805" href="#L805">805</a>         <strong class="jxr_keyword">try</strong>
+<a class="jxr_linenumber" name="L806" href="#L806">806</a>         {
+<a class="jxr_linenumber" name="L807" href="#L807">807</a>             reader.close();
+<a class="jxr_linenumber" name="L808" href="#L808">808</a>         }
+<a class="jxr_linenumber" name="L809" href="#L809">809</a>         <strong class="jxr_keyword">catch</strong>( IOException ex )
+<a class="jxr_linenumber" name="L810" href="#L810">810</a>         {
+<a class="jxr_linenumber" name="L811" href="#L811">811</a>             <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L812" href="#L812">812</a>         }
+<a class="jxr_linenumber" name="L813" href="#L813">813</a>     }
+<a class="jxr_linenumber" name="L814" href="#L814">814</a> 
+<a class="jxr_linenumber" name="L815" href="#L815">815</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L816" href="#L816">816</a> <em class="jxr_javadoccomment">     * Closes the writer. The writer can be null and any IOException's will be swallowed.</em>
+<a class="jxr_linenumber" name="L817" href="#L817">817</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L818" href="#L818">818</a> <em class="jxr_javadoccomment">     * @param writer The writer to close.</em>
+<a class="jxr_linenumber" name="L819" href="#L819">819</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L820" href="#L820">820</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> close( Writer writer )
+<a class="jxr_linenumber" name="L821" href="#L821">821</a>     {
+<a class="jxr_linenumber" name="L822" href="#L822">822</a>         <strong class="jxr_keyword">if</strong> ( writer == <strong class="jxr_keyword">null</strong> )
+<a class="jxr_linenumber" name="L823" href="#L823">823</a>         {
+<a class="jxr_linenumber" name="L824" href="#L824">824</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L825" href="#L825">825</a>         }
+<a class="jxr_linenumber" name="L826" href="#L826">826</a> 
+<a class="jxr_linenumber" name="L827" href="#L827">827</a>         <strong class="jxr_keyword">try</strong>
+<a class="jxr_linenumber" name="L828" href="#L828">828</a>         {
+<a class="jxr_linenumber" name="L829" href="#L829">829</a>             writer.close();
+<a class="jxr_linenumber" name="L830" href="#L830">830</a>         }
+<a class="jxr_linenumber" name="L831" href="#L831">831</a>         <strong class="jxr_keyword">catch</strong>( IOException ex )
+<a class="jxr_linenumber" name="L832" href="#L832">832</a>         {
+<a class="jxr_linenumber" name="L833" href="#L833">833</a>             <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L834" href="#L834">834</a>         }
+<a class="jxr_linenumber" name="L835" href="#L835">835</a>     }
+<a class="jxr_linenumber" name="L836" href="#L836">836</a> }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2001&#x2013;2015 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+</body>
+</html>
