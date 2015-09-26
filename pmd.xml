@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.2.5" timestamp="2015-09-26T22:17:34.972">
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/Base64.java">
+<violation beginline="312" endline="324" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="Base64" method="encodeBase64" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="363" endline="370" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="Base64" method="encodeBase64" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/CachedMap.java">
+<violation beginline="9" endline="9" begincolumn="1" endcolumn="26" rule="UnusedImports" ruleset="Import Statement Rules" package="org.codehaus.plexus.util" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.Iterator'
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/CollectionUtils.java">
+<violation beginline="244" endline="246" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="CollectionUtils" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="247" endline="249" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="CollectionUtils" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/ExceptionUtils.java">
+<violation beginline="253" endline="255" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingMethodName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="256" endline="258" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingMethodName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="266" endline="268" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingMethodName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="269" endline="271" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingMethodName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="272" endline="274" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingMethodName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="294" endline="296" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingFieldName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="297" endline="299" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingFieldName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="307" endline="309" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingFieldName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="310" endline="312" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="getCauseUsingFieldName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="576" endline="578" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="isNestedThrowable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="579" endline="581" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="isNestedThrowable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="592" endline="594" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="isNestedThrowable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="595" endline="597" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="ExceptionUtils" method="isNestedThrowable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/Expand.java">
+<violation beginline="135" endline="137" begincolumn="17" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="Expand" method="expandFile" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="197" endline="199" begincolumn="25" endcolumn="25" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="Expand" method="extractFile" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/FileUtils.java">
+<violation beginline="1366" endline="1369" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="FileUtils" method="resolveFile" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="1407" endline="1410" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="FileUtils" method="resolveFile" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="1593" endline="1598" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="FileUtils" method="forceMkdir" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/IOUtil.java">
+<violation beginline="743" endline="746" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="IOUtil" method="close" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="765" endline="768" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="IOUtil" method="close" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="787" endline="790" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="IOUtil" method="close" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="809" endline="812" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="IOUtil" method="close" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="831" endline="834" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="IOUtil" method="close" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/NioFiles.java">
+<violation beginline="56" endline="56" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="60" endline="60" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="64" endline="64" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="69" endline="69" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="73" endline="73" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="77" endline="77" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="82" endline="82" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="86" endline="86" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+<violation beginline="90" endline="90" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
+Do not start a literal by 0 unless it's an octal value
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/PropertyUtils.java">
+<violation beginline="43" endline="46" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="57" endline="60" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="79" endline="82" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="92" endline="95" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/SelectorUtils.java">
+<violation beginline="791" endline="795" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="SelectorUtils" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/StringUtils.java">
+<violation beginline="290" endline="290" begincolumn="13" endcolumn="14" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util" class="StringUtils" method="indexOfAny" variable="sz" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'sz'.
+</violation>
+<violation beginline="1055" endline="1058" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="StringUtils" method="chop" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/TypeFormat.java">
+<violation beginline="806" endline="826" begincolumn="26" endcolumn="5" rule="UnnecessaryFinalModifier" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="TypeFormat" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryFinalModifier" priority="3">
+Unnecessary final modifier in final class
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/cli/CommandLineUtils.java">
+<violation beginline="21" endline="21" begincolumn="1" endcolumn="32" rule="UnusedImports" ruleset="Import Statement Rules" package="org.codehaus.plexus.util.cli" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.lang.reflect.Method'
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/cli/Commandline.java">
+<violation beginline="70" endline="70" begincolumn="1" endcolumn="26" rule="UnusedImports" ruleset="Import Statement Rules" package="org.codehaus.plexus.util.cli" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.Iterator'
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/cli/ShutdownHookUtils.java">
+<violation beginline="38" endline="40" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.cli" class="ShutdownHookUtils" method="addShutDownHook" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="41" endline="43" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.cli" class="ShutdownHookUtils" method="addShutDownHook" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="54" endline="56" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.cli" class="ShutdownHookUtils" method="removeShutdownHook" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="57" endline="59" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.cli" class="ShutdownHookUtils" method="removeShutdownHook" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/cli/StreamFeeder.java">
+<violation beginline="58" endline="61" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.cli" class="StreamFeeder" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="89" endline="92" begincolumn="17" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.cli" class="StreamFeeder" method="close" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="106" endline="109" begincolumn="17" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.cli" class="StreamFeeder" method="close" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/introspection/ClassMap.java">
+<violation beginline="142" endline="142" begincolumn="22" endcolumn="30" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.introspection" class="ClassMap" method="populateMethodCache" variable="methodKey" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'methodKey'.
+</violation>
+<violation beginline="346" endline="352" begincolumn="17" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util.introspection" class="ClassMap" method="getAccessibleMethods" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/xml/XmlReader.java">
+<violation beginline="396" endline="409" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml" class="XmlReader" method="doLenientDetection" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="456" endline="464" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml" class="XmlReader" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'lenient'.
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/xml/Xpp3Dom.java">
+<violation beginline="233" endline="233" begincolumn="17" endcolumn="20" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml" class="Xpp3Dom" method="getChildren" variable="size" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'size'.
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/xml/pull/MXParser.java">
+<violation beginline="1198" endline="1201" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="nextImpl" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="1800" endline="1800" begincolumn="16" endcolumn="19" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parseStartTag" variable="name" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'name'.
+</violation>
+<violation beginline="1969" endline="1971" begincolumn="25" endcolumn="80" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parseAttribute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="1989" endline="1989" begincolumn="16" endcolumn="21" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parseAttribute" variable="prefix" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'prefix'.
+</violation>
+<violation beginline="2502" endline="2527" begincolumn="29" endcolumn="29" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parsePI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="2733" endline="2733" begincolumn="17" endcolumn="31" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parseXmlDeclWithVersion" variable="standaloneStart" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'standaloneStart'.
+</violation>
+<violation beginline="2880" endline="2890" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parseCDSect" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="2881" endline="2889" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parseCDSect" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="2956" endline="2958" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="parseCDSect" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="3288" endline="3288" begincolumn="24" endcolumn="57" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="toCodePoint" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+Avoid unused private methods such as 'toCodePoint(char,char)'.
+</violation>
+<violation beginline="3300" endline="3300" begincolumn="28" endcolumn="53" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml.pull" class="MXParser" method="isHighSurrogate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+Avoid unused private methods such as 'isHighSurrogate(char)'.
+</violation>
+</file>
+<file name="/home/herve/projets/maven/plexus/plexus-utils/src/main/java/org/codehaus/plexus/util/xml/pull/MXSerializer.java">
+<violation beginline="368" endline="368" begincolumn="14" endcolumn="17" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml.pull" class="MXSerializer" method="startDocument" variable="apos" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'apos'.
+</violation>
+<violation beginline="946" endline="955" begincolumn="58" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXSerializer" method="writeElementContent" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+Avoid empty if statements
+</violation>
+<violation beginline="1023" endline="1035" begincolumn="58" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="org.codehaus.plexus.util.xml.pull" class="MXSerializer" method="writeElementContent" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+Avoid empty if statements
+</violation>
+<violation beginline="1067" endline="1067" begincolumn="14" endcolumn="15" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="org.codehaus.plexus.util.xml.pull" class="MXSerializer" method="printable" variable="ch" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'ch'.
+</violation>
+</file>
+</pmd>

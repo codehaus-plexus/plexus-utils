@@ -28,7 +28,7 @@
           <div id="banner">
         <div class="pull-left">
                                                   <a href="../" id="bannerLeft">
-                                                                                                <img src="../images/plexus-logo.png"  alt="Plexus"/>
+                                                                                                <img src="../images/plexus-logo-trans.png"  alt="Plexus"/>
                 </a>
                       </div>
         <div class="pull-right">  </div>
@@ -106,7 +106,7 @@
           <span class="icon-chevron-right"></span>
         Project Information</a>
                   </li>
-                                                                                                                                                                                                                                                                
+                                                                                                                                                                      
       <li>
   
                           <a href="project-reports.html" title="Project Reports">
@@ -130,6 +130,13 @@
                     
       <li>
   
+                          <a href="xref-test/index.html" title="Test Source Xref">
+          <span class="none"></span>
+        Test Source Xref</a>
+            </li>
+                    
+      <li>
+  
                           <a href="xref/index.html" title="Source Xref">
           <span class="none"></span>
         Source Xref</a>
@@ -137,57 +144,15 @@
                     
       <li>
   
-                          <a href="xref-test/index.html" title="Test Source Xref">
+                          <a href="pmd.html" title="PMD Report">
           <span class="none"></span>
-        Test Source Xref</a>
+        PMD Report</a>
             </li>
                     
       <li class="active">
   
-            <a href="#"><span class="none"></span>CPD</a>
+            <a href="#"><span class="none"></span>CPD Report</a>
           </li>
-                    
-      <li>
-  
-                          <a href="pmd.html" title="PMD">
-          <span class="none"></span>
-        PMD</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="surefire-report.html" title="Surefire Report">
-          <span class="none"></span>
-        Surefire Report</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="checkstyle.html" title="Checkstyle">
-          <span class="none"></span>
-        Checkstyle</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="taglist.html" title="Tag List">
-          <span class="none"></span>
-        Tag List</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="apidocs/index.html" title="JavaDocs">
-          <span class="none"></span>
-        JavaDocs</a>
-            </li>
-                    
-      <li>
-  
-                          <a href="testapidocs/index.html" title="Test JavaDocs">
-          <span class="none"></span>
-        Test JavaDocs</a>
-            </li>
               </ul>
         </li>
                               <li class="nav-header">Plexus Projects</li>
@@ -356,7 +321,7 @@
                                   
             <div class="section">
 <h2><a name="CPD_Results"></a>CPD Results</h2>
-<p>The following document contains the results of PMD's  <a class="externalLink" href="http://pmd.sourceforge.net/cpd.html">CPD</a> 5.1.2.</p></div>
+<p>The following document contains the results of PMD's  <a class="externalLink" href="http://pmd.sourceforge.net/cpd.html">CPD</a> 4.2.5.</p></div>
 <div class="section">
 <h2><a name="Duplications"></a>Duplications</h2>
 <table border="0" class="table table-striped">
@@ -365,63 +330,64 @@
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1520">1520</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#1520">1520</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1630">1630</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#1630">1630</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
-<pre>                        &quot;expected start tag name and not &quot;+printable(ch), this, null);
-                }
-            } else if(isS(ch)) {
-                gotS = true;
-                if(normalizeIgnorableWS) {
-                    if(ch == '\r') {
-                        normalizedCR = true;
-                        //posEnd = pos -1;
-                        //joinPC();
-                        // posEnd is already set
-                        if(!usePC) {
-                            posEnd = pos -1;
-                            if(posEnd &gt; posStart) {
-                                joinPC();
+<pre>                                &quot;in epilog expected ignorable content and not &quot;+printable(ch),
+                                this, null);
+                        }
+                    } else if(isS(ch)) {
+                        gotS = true;
+                        if(normalizeIgnorableWS) {
+                            if(ch == '\r') {
+                                normalizedCR = true;
+                                //posEnd = pos -1;
+                                //joinPC();
+                                // posEnd is already set
+                                if(!usePC) {
+                                    posEnd = pos -1;
+                                    if(posEnd &gt; posStart) {
+                                        joinPC();
+                                    } else {
+                                        usePC = true;
+                                        pcStart = pcEnd = 0;
+                                    }
+                                }
+                                //assert usePC == true;
+                                if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                                pc[pcEnd++] = '\n';
+                            } else if(ch == '\n') {
+                                if(!normalizedCR &amp;&amp; usePC) {
+                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                                    pc[pcEnd++] = '\n';
+                                }
+                                normalizedCR = false;
                             } else {
-                                usePC = true;
-                                pcStart = pcEnd = 0;
+                                if(usePC) {
+                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                                    pc[pcEnd++] = ch;
+                                }
+                                normalizedCR = false;
                             }
                         }
-                        //assert usePC == true;
-                        if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                        pc[pcEnd++] = '\n';
-                    } else if(ch == '\n') {
-                        if(!normalizedCR &amp;&amp; usePC) {
-                            if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                            pc[pcEnd++] = '\n';
-                        }
-                        normalizedCR = false;
                     } else {
-                        if(usePC) {
-                            if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                            pc[pcEnd++] = ch;
-                        }
-                        normalizedCR = false;
-                    }
-                }
-            } else {
-                throw new XmlPullParserException(</pre></div></td></tr></table>
+                        throw new XmlPullParserException(</pre></div></td></tr></table>
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>File</th>
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2411">2411</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2411">2411</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2530">2530</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2530">2530</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
-<pre>                    seenDash = false;
+<pre>                    seenQ = false;
                 }
                 if(normalizeIgnorableWS) {
                     if(ch == '\r') {
@@ -461,67 +427,56 @@
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1524">1524</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#1524">1524</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1635">1635</a></td></tr>
-<tr class="b">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2413">2413</a></td></tr>
-<tr class="a">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2806">2806</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2806">2806</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
-<pre>                if(normalizeIgnorableWS) {
-                    if(ch == '\r') {
-                        normalizedCR = true;
-                        //posEnd = pos -1;
-                        //joinPC();
-                        // posEnd is already set
-                        if(!usePC) {
-                            posEnd = pos -1;
-                            if(posEnd &gt; posStart) {
-                                joinPC();
-                            } else {
-                                usePC = true;
-                                pcStart = pcEnd = 0;
-                            }
+<pre>            if(normalizeIgnorableWS) {
+                if(ch == '\r') {
+                    normalizedCR = true;
+                    //posEnd = pos -1;
+                    //joinPC();
+                    // posEnd is alreadys set
+                    if(!usePC) {
+                        posEnd = pos -1;
+                        if(posEnd &gt; posStart) {
+                            joinPC();
+                        } else {
+                            usePC = true;
+                            pcStart = pcEnd = 0;
                         }
-                        //assert usePC == true;
+                    }
+                    //assert usePC == true;
+                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                    pc[pcEnd++] = '\n';
+                } else if(ch == '\n') {
+                    if(!normalizedCR &amp;&amp; usePC) {
                         if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
                         pc[pcEnd++] = '\n';
-                    } else if(ch == '\n') {
-                        if(!normalizedCR &amp;&amp; usePC) {
-                            if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                            pc[pcEnd++] = '\n';
-                        }
-                        normalizedCR = false;
-                    } else {
-                        if(usePC) {
-                            if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                            pc[pcEnd++] = ch;
-                        }
-                        normalizedCR = false;
                     }
+                    normalizedCR = false;
+                } else {
+                    if(usePC) {
+                        if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                        pc[pcEnd++] = ch;
+                    }
+                    normalizedCR = false;
                 }
-            } else {</pre></div></td></tr></table>
+            }
+
+        }</pre></div></td></tr></table>
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>File</th>
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1524">1524</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#1524">1524</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1635">1635</a></td></tr>
-<tr class="b">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2532">2532</a></td></tr>
-<tr class="a">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2806">2806</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2532">2532</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
 <pre>                if(normalizeIgnorableWS) {
@@ -529,7 +484,7 @@
                         normalizedCR = true;
                         //posEnd = pos -1;
                         //joinPC();
-                        // posEnd is already set
+                        // posEnd is alreadys set
                         if(!usePC) {
                             posEnd = pos -1;
                             if(posEnd &gt; posStart) {
@@ -562,10 +517,10 @@
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2421">2421</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2421">2421</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2924">2924</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2924">2924</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
 <pre>                            if(posEnd &gt; posStart) {
@@ -593,7 +548,6 @@
                     }
                 }
             }
-
         } catch(EOFException ex) {
             // detect EOF and create meaningful error ...
             throw new XmlPullParserException(</pre></div></td></tr></table>
@@ -603,93 +557,51 @@
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1396">1396</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#1399">1399</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2922">2922</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2540">2540</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
-<pre>                                posEnd = pos -1;
-                                // posEnd is already set
-                                if(!usePC) {
-                                    if(posEnd &gt; posStart) {
-                                        joinPC();
-                                    } else {
-                                        usePC = true;
-                                        pcStart = pcEnd = 0;
-                                    }
-                                }
-                                //assert usePC == true;
-                                if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                pc[pcEnd++] = '\n';
-                            } else if(ch == '\n') {
-                                //   if(!usePC) {  joinPC(); } else { if(pcEnd &gt;= pc.length) ensurePC(); }
-                                if(!normalizedCR &amp;&amp; usePC) {
-                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                    pc[pcEnd++] = '\n';
-                                }
-                                normalizedCR = false;
+<pre>                            if(posEnd &gt; posStart) {
+                                joinPC();
                             } else {
-                                if(usePC) {
-                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                    pc[pcEnd++] = ch;
-                                }
-                                normalizedCR = false;
-                            }
-                        }</pre></div></td></tr></table>
-<table border="0" class="table table-striped">
-<tr class="a">
-<th>File</th>
-<th>Line</th></tr>
-<tr class="b">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1399">1399</a></td></tr>
-<tr class="a">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2540">2540</a></td></tr>
-<tr class="b"><td colspan='2'>
-<div>
-<pre>                                    if(posEnd &gt; posStart) {
-                                        joinPC();
-                                    } else {
-                                        usePC = true;
-                                        pcStart = pcEnd = 0;
-                                    }
-                                }
-                                //assert usePC == true;
-                                if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                pc[pcEnd++] = '\n';
-                            } else if(ch == '\n') {
-                                //   if(!usePC) {  joinPC(); } else { if(pcEnd &gt;= pc.length) ensurePC(); }
-                                if(!normalizedCR &amp;&amp; usePC) {
-                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                    pc[pcEnd++] = '\n';
-                                }
-                                normalizedCR = false;
-                            } else {
-                                if(usePC) {
-                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                    pc[pcEnd++] = ch;
-                                }
-                                normalizedCR = false;
+                                usePC = true;
+                                pcStart = pcEnd = 0;
                             }
                         }
-
-                        ch = more();
-                    } while(ch != '&lt;' &amp;&amp; ch != '&amp;');</pre></div></td></tr></table>
+                        //assert usePC == true;
+                        if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                        pc[pcEnd++] = '\n';
+                    } else if(ch == '\n') {
+                        if(!normalizedCR &amp;&amp; usePC) {
+                            if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                            pc[pcEnd++] = '\n';
+                        }
+                        normalizedCR = false;
+                    } else {
+                        if(usePC) {
+                            if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
+                            pc[pcEnd++] = ch;
+                        }
+                        normalizedCR = false;
+                    }
+                }
+                ch = more();
+            }</pre></div></td></tr></table>
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>File</th>
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/TypeFormat.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/TypeFormat.html#L134">134</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/TypeFormat.html#134">134</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/TypeFormat.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/TypeFormat.html#L190">190</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/TypeFormat.html#190">190</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
-<pre>            int limit = (isNegative) ? Short.MIN_VALUE : -Short.MAX_VALUE;
+<pre>            int limit = (isNegative) ? Integer.MIN_VALUE : -Integer.MAX_VALUE;
             int multmin = limit / radix;
             int length = chars.length();
             int i = (isNegative || (chars.charAt(0) == '+')) ? 1 : 0;
@@ -701,29 +613,23 @@
                     throw new NumberFormatException(
                         &quot;For input characters: \&quot;&quot; + chars.toString() + &quot;\&quot;&quot;);
                 }
-                // Accumulates negatively.
+                // Accumulates negatively to avoid surprises near MAX_VALUE
                 result = tmp - digit;
                 if (++i &gt;= length) {
                     break;
                 }
             }
-            return (short) (isNegative ? result : -result);</pre></div></td></tr></table>
+            return isNegative ? result : -result;</pre></div></td></tr></table>
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>File</th>
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1532">1532</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#1643">1643</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1643">1643</a></td></tr>
-<tr class="b">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2814">2814</a></td></tr>
-<tr class="a">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2924">2924</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2924">2924</a></td></tr>
 <tr class="b"><td colspan='2'>
 <div>
 <pre>                            if(posEnd &gt; posStart) {
@@ -750,64 +656,18 @@
                         normalizedCR = false;
                     }
                 }
-            } else {</pre></div></td></tr></table>
+            }</pre></div></td></tr></table>
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>File</th>
 <th>Line</th></tr>
 <tr class="b">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1399">1399</a></td></tr>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#1399">1399</a></td></tr>
 <tr class="a">
 <td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1532">1532</a></td></tr>
-<tr class="b">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L1643">1643</a></td></tr>
-<tr class="a">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2421">2421</a></td></tr>
-<tr class="b">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2814">2814</a></td></tr>
-<tr class="a"><td colspan='2'>
-<div>
-<pre>                                    if(posEnd &gt; posStart) {
-                                        joinPC();
-                                    } else {
-                                        usePC = true;
-                                        pcStart = pcEnd = 0;
-                                    }
-                                }
-                                //assert usePC == true;
-                                if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                pc[pcEnd++] = '\n';
-                            } else if(ch == '\n') {
-                                //   if(!usePC) {  joinPC(); } else { if(pcEnd &gt;= pc.length) ensurePC(); }
-                                if(!normalizedCR &amp;&amp; usePC) {
-                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                    pc[pcEnd++] = '\n';
-                                }
-                                normalizedCR = false;
-                            } else {
-                                if(usePC) {
-                                    if(pcEnd &gt;= pc.length) ensurePC(pcEnd);
-                                    pc[pcEnd++] = ch;
-                                }
-                                normalizedCR = false;
-                            }
-                        }</pre></div></td></tr></table>
-<table border="0" class="table table-striped">
-<tr class="b">
-<th>File</th>
-<th>Line</th></tr>
-<tr class="a">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2540">2540</a></td></tr>
-<tr class="b">
-<td>org/codehaus/plexus/util/xml/pull/MXParser.java</td>
-<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#L2924">2924</a></td></tr>
-<tr class="a"><td colspan='2'>
+<td><a href="./xref/org/codehaus/plexus/util/xml/pull/MXParser.html#2814">2814</a></td></tr>
+<tr class="b"><td colspan='2'>
 <div>
 <pre>                            if(posEnd &gt; posStart) {
                                 joinPC();
