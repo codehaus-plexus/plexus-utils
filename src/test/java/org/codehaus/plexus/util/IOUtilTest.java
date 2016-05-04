@@ -127,7 +127,7 @@ public final class IOUtilTest
 
         try
         {
-            while ( -1 != n0 )
+            while ( 0 <= n0 )
             {
                 n0 = is0.read( buf0 );
                 n1 = is1.read( buf1 );

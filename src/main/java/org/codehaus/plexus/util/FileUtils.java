@@ -389,10 +389,12 @@ public class FileUtils
             }
             int count;
             char[] b = new char[512];
-            while ( ( count = reader.read( b ) ) > 0 )  // blocking read
+            while ( ( count = reader.read( b ) ) >= 0 )  // blocking read
             {
                 buf.append( b, 0, count );
             }
+            reader.close();
+            reader = null;
         }
         finally
         {
@@ -439,6 +441,8 @@ public class FileUtils
             {
                 out.write( data.getBytes() );
             }
+            out.close();
+            out = null;
         }
         finally
         {
@@ -515,6 +519,8 @@ public class FileUtils
                 writer = new OutputStreamWriter( out );
             }
             writer.write( data );
+            writer.close();
+            writer = null;
         }
         finally
         {
@@ -761,18 +767,23 @@ public class FileUtils
 
         InputStream input1 = null;
         InputStream input2 = null;
+        boolean equals = false;
         try
         {
             input1 = new FileInputStream( file1 );
             input2 = new FileInputStream( file2 );
-            return IOUtil.contentEquals( input1, input2 );
-
+            equals = IOUtil.contentEquals( input1, input2 );
+            input1.close();
+            input1 = null;
+            input2.close();
+            input2 = null;
         }
         finally
         {
             IOUtil.close( input1 );
             IOUtil.close( input2 );
         }
+        return equals;
     }
 
     /**
@@ -813,11 +824,11 @@ public class FileUtils
     public static URL[] toURLs( final File[] files )
         throws IOException
     {
-        final URL[] urls = new URL[files.length];
+        final URL[] urls = new URL[ files.length ];
 
         for ( int i = 0; i < urls.length; i++ )
         {
-            urls[i] = files[i].toURL();
+            urls[i] = files[i].toURI().toURL();
         }
 
         return urls;
@@ -1112,6 +1123,14 @@ public class FileUtils
                 count = size - pos > FILE_COPY_BUFFER_SIZE ? FILE_COPY_BUFFER_SIZE : size - pos;
                 pos += output.transferFrom( input, pos, count );
             }
+            output.close();
+            output = null;
+            fos.close();
+            fos = null;
+            input.close();
+            input = null;
+            fis.close();
+            fis = null;
         }
         finally
         {
@@ -1197,6 +1216,10 @@ public class FileUtils
             input = source.getInputStream();
             output = new FileOutputStream( destination );
             IOUtil.copy( input, output );
+            output.close();
+            output = null;
+            input.close();
+            input = null;
         }
         finally
         {
@@ -2332,6 +2355,10 @@ public class FileUtils
                 }
 
                 IOUtil.copy( reader, fileWriter );
+                fileWriter.close();
+                fileWriter = null;
+                fileReader.close();
+                fileReader = null;
             }
             finally
             {

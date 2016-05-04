@@ -186,7 +186,7 @@ public final class IOUtil
     {
         final byte[] buffer = new byte[bufferSize];
         int n = 0;
-        while ( -1 != ( n = input.read( buffer ) ) )
+        while ( 0 <= ( n = input.read( buffer ) ) )
         {
             output.write( buffer, 0, n );
         }
@@ -210,7 +210,7 @@ public final class IOUtil
     {
         final char[] buffer = new char[bufferSize];
         int n = 0;
-        while ( -1 != ( n = input.read( buffer ) ) )
+        while ( 0 <= ( n = input.read( buffer ) ) )
         {
             output.write( buffer, 0, n );
         }
@@ -699,7 +699,7 @@ public final class IOUtil
         final InputStream bufferedInput2 = new BufferedInputStream( input2 );
 
         int ch = bufferedInput1.read();
-        while ( -1 != ch )
+        while ( 0 <= ch )
         {
             final int ch2 = bufferedInput2.read();
             if ( ch != ch2 )
@@ -710,7 +710,7 @@ public final class IOUtil
         }
 
         final int ch2 = bufferedInput2.read();
-        if ( -1 != ch2 )
+        if ( 0 <= ch2 )
         {
             return false;
         }
