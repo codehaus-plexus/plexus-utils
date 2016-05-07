@@ -186,6 +186,16 @@ public class XmlWriterUtil
             comment = "null";
         }
 
+        while ( comment.contains( "<!--" ) )
+        {
+            comment = comment.replace( "<!--", "" );
+        }
+
+        while ( comment.contains( "-->" ) )
+        {
+            comment = comment.replace( "-->", "" );
+        }
+
         if ( indent < 0 )
         {
             indent = 0;
