@@ -2385,26 +2385,31 @@ public class FileUtils
     public static List<String> loadFile( File file )
         throws IOException
     {
-        List<String> lines = new ArrayList<String>();
-
-        if ( file.exists() )
+        final List<String> lines = new ArrayList<String>();
+        BufferedReader reader = null;
+        try
         {
-            BufferedReader reader = new BufferedReader( new FileReader( file ) );
-
-            String line = reader.readLine();
-
-            while ( line != null )
+            if ( file.exists() )
             {
-                line = line.trim();
+                reader = new BufferedReader( new FileReader( file ) );
 
-                if ( !line.startsWith( "#" ) && line.length() != 0 )
+                for ( String line = reader.readLine(); line != null; line = reader.readLine() )
                 {
-                    lines.add( line );
-                }
-                line = reader.readLine();
-            }
+                    line = line.trim();
 
-            reader.close();
+                    if ( !line.startsWith( "#" ) && line.length() != 0 )
+                    {
+                        lines.add( line );
+                    }
+                }
+
+                reader.close();
+                reader = null;
+            }
+        }
+        finally
+        {
+            IOUtil.close( reader );
         }
 
         return lines;

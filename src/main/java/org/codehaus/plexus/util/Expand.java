@@ -76,6 +76,7 @@ import java.util.zip.ZipInputStream;
  */
 public class Expand
 {
+
     private File dest;//req
 
     private File source;// req
@@ -99,7 +100,7 @@ public class Expand
     /**
      * Description of the Method
      */
-    protected void expandFile( File srcF, File dir )
+    protected void expandFile( final File srcF, final File dir )
         throws Exception
     {
         ZipInputStream zis = null;
@@ -107,55 +108,37 @@ public class Expand
         {
             // code from WarExpand
             zis = new ZipInputStream( new FileInputStream( srcF ) );
-            ZipEntry ze = null;
 
-            while ( ( ze = zis.getNextEntry() ) != null )
+            for ( ZipEntry ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry() )
             {
-                extractFile( srcF,
-                             dir, zis,
-                             ze.getName(),
-                             new Date( ze.getTime() ),
-                             ze.isDirectory() );
+                extractFile( srcF, dir, zis, ze.getName(), new Date( ze.getTime() ), ze.isDirectory() );
             }
 
             //log("expand complete", Project.MSG_VERBOSE);
+            zis.close();
+            zis = null;
         }
         catch ( IOException ioe )
         {
-            throw new Exception("Error while expanding " + srcF.getPath(), ioe);
+            throw new Exception( "Error while expanding " + srcF.getPath(), ioe );
         }
         finally
         {
-            if ( zis != null )
-            {
-                try
-                {
-                    zis.close();
-                }
-                catch ( IOException e )
-                {
-                }
-            }
+            IOUtil.close( zis );
         }
     }
 
     /**
      * Description of the Method
      */
-    protected void extractFile( File srcF,
-                                File dir,
-                                InputStream compressedInputStream,
-                                String entryName,
-                                Date entryDate,
-                                boolean isDirectory )
+    protected void extractFile( File srcF, File dir, InputStream compressedInputStream, String entryName,
+                                Date entryDate, boolean isDirectory )
         throws Exception
     {
         File f = FileUtils.resolveFile( dir, entryName );
         try
         {
-            if ( !overwrite && f.exists()
-                &&
-                f.lastModified() >= entryDate.getTime() )
+            if ( !overwrite && f.exists() && f.lastModified() >= entryDate.getTime() )
             {
                 return;
             }
@@ -170,34 +153,22 @@ public class Expand
             }
             else
             {
-                byte[] buffer = new byte[1024];
-                int length = 0;
+                byte[] buffer = new byte[ 65536 ];
                 FileOutputStream fos = null;
                 try
                 {
                     fos = new FileOutputStream( f );
 
-                    while ( ( length =
-                        compressedInputStream.read( buffer ) ) >= 0 )
-                    {
-                        fos.write( buffer, 0, length );
-                    }
+                    for ( int length = compressedInputStream.read( buffer );
+                          length >= 0;
+                          fos.write( buffer, 0, length ), length = compressedInputStream.read( buffer ) );
 
                     fos.close();
                     fos = null;
                 }
                 finally
                 {
-                    if ( fos != null )
-                    {
-                        try
-                        {
-                            fos.close();
-                        }
-                        catch ( IOException e )
-                        {
-                        }
-                    }
+                    IOUtil.close( fos );
                 }
             }
 
@@ -239,4 +210,5 @@ public class Expand
     {
         overwrite = b;
     }
+
 }

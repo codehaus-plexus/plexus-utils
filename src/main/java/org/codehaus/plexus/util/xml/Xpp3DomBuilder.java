@@ -49,13 +49,16 @@ public class Xpp3DomBuilder
     public static Xpp3Dom build( InputStream is, String encoding, boolean trim )
         throws XmlPullParserException, IOException
     {
-        XmlPullParser parser = new MXParser();
-
-        parser.setInput( is, encoding );
-
         try
         {
-            return build( parser, trim );
+            final XmlPullParser parser = new MXParser();
+            parser.setInput( is, encoding );
+
+            final Xpp3Dom xpp3Dom = build( parser, trim );
+            is.close();
+            is = null;
+
+            return xpp3Dom;
         }
         finally
         {
@@ -66,13 +69,16 @@ public class Xpp3DomBuilder
     public static Xpp3Dom build( Reader reader, boolean trim )
         throws XmlPullParserException, IOException
     {
-        XmlPullParser parser = new MXParser();
-
-        parser.setInput( reader );
-
         try
         {
-            return build( parser, trim );
+            final XmlPullParser parser = new MXParser();
+            parser.setInput( reader );
+
+            final Xpp3Dom xpp3Dom = build( parser, trim );
+            reader.close();
+            reader = null;
+
+            return xpp3Dom;
         }
         finally
         {

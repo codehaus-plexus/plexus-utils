@@ -34,67 +34,47 @@ import java.net.URL;
 public class PropertyUtils
 {
 
-    public static Properties loadProperties( URL url )
+    public static Properties loadProperties( final URL url ) throws IOException
     {
-        try
+        if ( url == null )
         {
-            return loadProperties( url.openStream() );
-        }
-        catch ( Exception e )
-        {
-            // ignore
+            throw new NullPointerException( "url" );
         }
 
-        return null;
+        return loadProperties( url.openStream() );
     }
 
-    public static Properties loadProperties( File file )
+    public static Properties loadProperties( final File file ) throws IOException
     {
-        try
+        if ( file == null )
         {
-            return loadProperties( new FileInputStream( file ) );
-        }
-        catch ( Exception e )
-        {
-            // ignore
+            throw new NullPointerException( "file" );
         }
 
-        return null;
+        return loadProperties( new FileInputStream( file ) );
     }
 
-    public static Properties loadProperties( InputStream is )
+    public static Properties loadProperties( final InputStream is ) throws IOException
     {
+        InputStream in = is;
         try
         {
-            Properties properties = new Properties();
+            final Properties properties = new Properties();
 
             // Make sure the properties stream is valid
-            if ( is != null )
+            if ( in != null )
             {
-                properties.load( is );
+                properties.load( in );
+                in.close();
+                in = null;
             }
 
             return properties;
         }
-        catch ( IOException e )
-        {
-            // ignore
-        }
         finally
         {
-            try
-            {
-                if ( is != null )
-                {
-                    is.close();
-                }
-            }
-            catch ( IOException e )
-            {
-                // ignore
-            }
+            IOUtil.close( in );
         }
-
-        return null;
     }
+
 }

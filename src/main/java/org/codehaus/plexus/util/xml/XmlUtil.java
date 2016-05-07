@@ -72,7 +72,8 @@ public class XmlUtil
             XmlPullParser parser = new MXParser();
             parser.setInput( reader );
             parser.nextToken();
-
+            reader.close();
+            reader = null;
             return true;
         }
         catch ( Exception e )
@@ -221,20 +222,26 @@ public class XmlUtil
         }
 
         Reader reader = null;
-
-        Writer out = new OutputStreamWriter( os );
-        PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter( out );
-        xmlWriter.setLineIndenter( StringUtils.repeat( " ", indentSize ) );
-        xmlWriter.setLineSeparator( lineSeparator );
-
-        XmlPullParser parser = new MXParser();
+        Writer writer = null;
         try
         {
             reader = ReaderFactory.newXmlReader( is );
+            writer = new OutputStreamWriter( os );
 
+            final PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter( writer );
+            xmlWriter.setLineIndenter( StringUtils.repeat( " ", indentSize ) );
+            xmlWriter.setLineSeparator( lineSeparator );
+
+            final XmlPullParser parser = new MXParser();
             parser.setInput( reader );
 
             prettyFormatInternal( parser, xmlWriter );
+
+            writer.close();
+            writer = null;
+
+            reader.close();
+            reader = null;
         }
         catch ( XmlPullParserException e )
         {
@@ -242,8 +249,8 @@ public class XmlUtil
         }
         finally
         {
+            IOUtil.close( writer );
             IOUtil.close( reader );
-            IOUtil.close( out );
         }
     }
 
