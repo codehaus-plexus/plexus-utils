@@ -136,6 +136,12 @@ public class Expand
         throws Exception
     {
         File f = FileUtils.resolveFile( dir, entryName );
+
+        if ( !f.getAbsolutePath().startsWith( dir.getAbsolutePath() ) )
+        {
+            throw new IOException( "Entry '" + entryName + "' outside the target directory." );
+        }
+
         try
         {
             if ( !overwrite && f.exists() && f.lastModified() >= entryDate.getTime() )
