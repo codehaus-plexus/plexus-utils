@@ -18,6 +18,8 @@ package org.codehaus.plexus.util;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Scan a directory tree for files, with specified inclusions and exclusions.
@@ -262,11 +264,15 @@ public abstract class AbstractScanner
         }
         else
         {
-            this.includes = new String[includes.length];
-            for ( int i = 0; i < includes.length; i++ )
+            final List<String> list = new ArrayList<String>( includes.length );
+            for ( String include : includes )
             {
-                this.includes[i] = normalizePattern( includes[i] );
+                if ( include != null )
+                {
+                    list.add( normalizePattern( include ) );
+                }
             }
+            this.includes = list.toArray( new String[ list.size() ] );
         }
     }
 
@@ -290,11 +296,15 @@ public abstract class AbstractScanner
         }
         else
         {
-            this.excludes = new String[excludes.length];
-            for ( int i = 0; i < excludes.length; i++ )
+            final List<String> list = new ArrayList<String>( excludes.length );
+            for ( String exclude : excludes )
             {
-                this.excludes[i] = normalizePattern( excludes[i] );
+                if ( exclude != null )
+                {
+                    list.add( normalizePattern( exclude ) );
+                }
             }
+            this.excludes = list.toArray( new String[ list.size() ] );
         }
     }
 
