@@ -314,7 +314,11 @@ public class Os
                 }
                 else if ( family.equalsIgnoreCase( FAMILY_DOS ) )
                 {
-                    isFamily = PATH_SEP.equals( ";" ) && !isFamily( FAMILY_NETWARE );
+                    isFamily = PATH_SEP.equals( ";" )
+                                   && !isFamily( FAMILY_NETWARE )
+                                   && !isFamily( FAMILY_WINDOWS )
+                                   && !isFamily( FAMILY_WIN9X );
+
                 }
                 else if ( family.equalsIgnoreCase( FAMILY_MAC ) )
                 {
