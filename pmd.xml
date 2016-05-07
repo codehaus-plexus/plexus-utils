@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2016-05-07T18:38:59.228">
+<pmd version="4.2.5" timestamp="2016-05-08T00:33:26.383">
 <file name="/home/schulte/Sources/github.com/plexus-utils/src/main/java/org/codehaus/plexus/util/Base64.java">
 <violation beginline="312" endline="324" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="Base64" method="encodeBase64" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
@@ -62,14 +62,6 @@ Avoid empty catch blocks
 Avoid empty catch blocks
 </violation>
 </file>
-<file name="/home/schulte/Sources/github.com/plexus-utils/src/main/java/org/codehaus/plexus/util/Expand.java">
-<violation beginline="135" endline="137" begincolumn="17" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="Expand" method="expandFile" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
-</violation>
-<violation beginline="197" endline="199" begincolumn="25" endcolumn="25" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="Expand" method="extractFile" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
-</violation>
-</file>
 <file name="/home/schulte/Sources/github.com/plexus-utils/src/main/java/org/codehaus/plexus/util/FileUtils.java">
 <violation beginline="1389" endline="1392" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="FileUtils" method="resolveFile" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
@@ -125,20 +117,6 @@ Do not start a literal by 0 unless it's an octal value
 </violation>
 <violation beginline="90" endline="90" begincolumn="23" endcolumn="26" rule="AvoidUsingOctalValues" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="NioFiles" method="getPermissions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidUsingOctalValues" priority="3">
 Do not start a literal by 0 unless it's an octal value
-</violation>
-</file>
-<file name="/home/schulte/Sources/github.com/plexus-utils/src/main/java/org/codehaus/plexus/util/PropertyUtils.java">
-<violation beginline="43" endline="46" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
-</violation>
-<violation beginline="57" endline="60" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
-</violation>
-<violation beginline="79" endline="82" begincolumn="9" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
-</violation>
-<violation beginline="92" endline="95" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.codehaus.plexus.util" class="PropertyUtils" method="loadProperties" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
 </violation>
 </file>
 <file name="/home/schulte/Sources/github.com/plexus-utils/src/main/java/org/codehaus/plexus/util/SelectorUtils.java">

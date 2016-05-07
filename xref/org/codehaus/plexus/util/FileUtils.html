@@ -2395,60 +2395,65 @@
 <a class="jxr_linenumber" name="2385" href="#2385">2385</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> List&lt;String&gt; loadFile( File file )
 <a class="jxr_linenumber" name="2386" href="#2386">2386</a>         <strong class="jxr_keyword">throws</strong> IOException
 <a class="jxr_linenumber" name="2387" href="#2387">2387</a>     {
-<a class="jxr_linenumber" name="2388" href="#2388">2388</a>         List&lt;String&gt; lines = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="2389" href="#2389">2389</a> 
-<a class="jxr_linenumber" name="2390" href="#2390">2390</a>         <strong class="jxr_keyword">if</strong> ( file.exists() )
+<a class="jxr_linenumber" name="2388" href="#2388">2388</a>         <strong class="jxr_keyword">final</strong> List&lt;String&gt; lines = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="2389" href="#2389">2389</a>         BufferedReader reader = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="2390" href="#2390">2390</a>         <strong class="jxr_keyword">try</strong>
 <a class="jxr_linenumber" name="2391" href="#2391">2391</a>         {
-<a class="jxr_linenumber" name="2392" href="#2392">2392</a>             BufferedReader reader = <strong class="jxr_keyword">new</strong> BufferedReader( <strong class="jxr_keyword">new</strong> FileReader( file ) );
-<a class="jxr_linenumber" name="2393" href="#2393">2393</a> 
-<a class="jxr_linenumber" name="2394" href="#2394">2394</a>             String line = reader.readLine();
+<a class="jxr_linenumber" name="2392" href="#2392">2392</a>             <strong class="jxr_keyword">if</strong> ( file.exists() )
+<a class="jxr_linenumber" name="2393" href="#2393">2393</a>             {
+<a class="jxr_linenumber" name="2394" href="#2394">2394</a>                 reader = <strong class="jxr_keyword">new</strong> BufferedReader( <strong class="jxr_keyword">new</strong> FileReader( file ) );
 <a class="jxr_linenumber" name="2395" href="#2395">2395</a> 
-<a class="jxr_linenumber" name="2396" href="#2396">2396</a>             <strong class="jxr_keyword">while</strong> ( line != <strong class="jxr_keyword">null</strong> )
-<a class="jxr_linenumber" name="2397" href="#2397">2397</a>             {
-<a class="jxr_linenumber" name="2398" href="#2398">2398</a>                 line = line.trim();
+<a class="jxr_linenumber" name="2396" href="#2396">2396</a>                 <strong class="jxr_keyword">for</strong> ( String line = reader.readLine(); line != <strong class="jxr_keyword">null</strong>; line = reader.readLine() )
+<a class="jxr_linenumber" name="2397" href="#2397">2397</a>                 {
+<a class="jxr_linenumber" name="2398" href="#2398">2398</a>                     line = line.trim();
 <a class="jxr_linenumber" name="2399" href="#2399">2399</a> 
-<a class="jxr_linenumber" name="2400" href="#2400">2400</a>                 <strong class="jxr_keyword">if</strong> ( !line.startsWith( <span class="jxr_string">"#"</span> ) &amp;&amp; line.length() != 0 )
-<a class="jxr_linenumber" name="2401" href="#2401">2401</a>                 {
-<a class="jxr_linenumber" name="2402" href="#2402">2402</a>                     lines.add( line );
-<a class="jxr_linenumber" name="2403" href="#2403">2403</a>                 }
-<a class="jxr_linenumber" name="2404" href="#2404">2404</a>                 line = reader.readLine();
-<a class="jxr_linenumber" name="2405" href="#2405">2405</a>             }
-<a class="jxr_linenumber" name="2406" href="#2406">2406</a> 
-<a class="jxr_linenumber" name="2407" href="#2407">2407</a>             reader.close();
-<a class="jxr_linenumber" name="2408" href="#2408">2408</a>         }
-<a class="jxr_linenumber" name="2409" href="#2409">2409</a> 
-<a class="jxr_linenumber" name="2410" href="#2410">2410</a>         <strong class="jxr_keyword">return</strong> lines;
-<a class="jxr_linenumber" name="2411" href="#2411">2411</a>     }
-<a class="jxr_linenumber" name="2412" href="#2412">2412</a> 
-<a class="jxr_linenumber" name="2413" href="#2413">2413</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="2414" href="#2414">2414</a> <em class="jxr_javadoccomment">     * For Windows OS, check if the file name contains any of the following characters:</em>
-<a class="jxr_linenumber" name="2415" href="#2415">2415</a> <em class="jxr_javadoccomment">     * &lt;code&gt;":", "*", "?", "\&quot;", "&lt;", "&gt;", "|"&lt;/code&gt;</em>
-<a class="jxr_linenumber" name="2416" href="#2416">2416</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="2417" href="#2417">2417</a> <em class="jxr_javadoccomment">     * @param f not null file</em>
-<a class="jxr_linenumber" name="2418" href="#2418">2418</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;false&lt;/code&gt; if the file path contains any of forbidden Windows characters,</em>
-<a class="jxr_linenumber" name="2419" href="#2419">2419</a> <em class="jxr_javadoccomment">     *         &lt;code&gt;true&lt;/code&gt; if the Os is not Windows or if the file path respect the Windows constraints.</em>
-<a class="jxr_linenumber" name="2420" href="#2420">2420</a> <em class="jxr_javadoccomment">     * @see #INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME</em>
-<a class="jxr_linenumber" name="2421" href="#2421">2421</a> <em class="jxr_javadoccomment">     * @since 1.5.2</em>
-<a class="jxr_linenumber" name="2422" href="#2422">2422</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="2423" href="#2423">2423</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isValidWindowsFileName( File f )
-<a class="jxr_linenumber" name="2424" href="#2424">2424</a>     {
-<a class="jxr_linenumber" name="2425" href="#2425">2425</a>         <strong class="jxr_keyword">if</strong> ( Os.isFamily( Os.FAMILY_WINDOWS ) )
-<a class="jxr_linenumber" name="2426" href="#2426">2426</a>         {
-<a class="jxr_linenumber" name="2427" href="#2427">2427</a>             <strong class="jxr_keyword">if</strong> ( StringUtils.indexOfAny( f.getName(), INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME ) != -1 )
-<a class="jxr_linenumber" name="2428" href="#2428">2428</a>             {
-<a class="jxr_linenumber" name="2429" href="#2429">2429</a>                 <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="2430" href="#2430">2430</a>             }
-<a class="jxr_linenumber" name="2431" href="#2431">2431</a> 
-<a class="jxr_linenumber" name="2432" href="#2432">2432</a>             File parentFile = f.getParentFile();
-<a class="jxr_linenumber" name="2433" href="#2433">2433</a>             <strong class="jxr_keyword">if</strong> ( parentFile != <strong class="jxr_keyword">null</strong> )
-<a class="jxr_linenumber" name="2434" href="#2434">2434</a>             {
-<a class="jxr_linenumber" name="2435" href="#2435">2435</a>                 <strong class="jxr_keyword">return</strong> isValidWindowsFileName( parentFile );
-<a class="jxr_linenumber" name="2436" href="#2436">2436</a>             }
-<a class="jxr_linenumber" name="2437" href="#2437">2437</a>         }
-<a class="jxr_linenumber" name="2438" href="#2438">2438</a> 
-<a class="jxr_linenumber" name="2439" href="#2439">2439</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="2440" href="#2440">2440</a>     }
-<a class="jxr_linenumber" name="2441" href="#2441">2441</a> }
+<a class="jxr_linenumber" name="2400" href="#2400">2400</a>                     <strong class="jxr_keyword">if</strong> ( !line.startsWith( <span class="jxr_string">"#"</span> ) &amp;&amp; line.length() != 0 )
+<a class="jxr_linenumber" name="2401" href="#2401">2401</a>                     {
+<a class="jxr_linenumber" name="2402" href="#2402">2402</a>                         lines.add( line );
+<a class="jxr_linenumber" name="2403" href="#2403">2403</a>                     }
+<a class="jxr_linenumber" name="2404" href="#2404">2404</a>                 }
+<a class="jxr_linenumber" name="2405" href="#2405">2405</a> 
+<a class="jxr_linenumber" name="2406" href="#2406">2406</a>                 reader.close();
+<a class="jxr_linenumber" name="2407" href="#2407">2407</a>                 reader = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="2408" href="#2408">2408</a>             }
+<a class="jxr_linenumber" name="2409" href="#2409">2409</a>         }
+<a class="jxr_linenumber" name="2410" href="#2410">2410</a>         <strong class="jxr_keyword">finally</strong>
+<a class="jxr_linenumber" name="2411" href="#2411">2411</a>         {
+<a class="jxr_linenumber" name="2412" href="#2412">2412</a>             IOUtil.close( reader );
+<a class="jxr_linenumber" name="2413" href="#2413">2413</a>         }
+<a class="jxr_linenumber" name="2414" href="#2414">2414</a> 
+<a class="jxr_linenumber" name="2415" href="#2415">2415</a>         <strong class="jxr_keyword">return</strong> lines;
+<a class="jxr_linenumber" name="2416" href="#2416">2416</a>     }
+<a class="jxr_linenumber" name="2417" href="#2417">2417</a> 
+<a class="jxr_linenumber" name="2418" href="#2418">2418</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="2419" href="#2419">2419</a> <em class="jxr_javadoccomment">     * For Windows OS, check if the file name contains any of the following characters:</em>
+<a class="jxr_linenumber" name="2420" href="#2420">2420</a> <em class="jxr_javadoccomment">     * &lt;code&gt;":", "*", "?", "\&quot;", "&lt;", "&gt;", "|"&lt;/code&gt;</em>
+<a class="jxr_linenumber" name="2421" href="#2421">2421</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="2422" href="#2422">2422</a> <em class="jxr_javadoccomment">     * @param f not null file</em>
+<a class="jxr_linenumber" name="2423" href="#2423">2423</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;false&lt;/code&gt; if the file path contains any of forbidden Windows characters,</em>
+<a class="jxr_linenumber" name="2424" href="#2424">2424</a> <em class="jxr_javadoccomment">     *         &lt;code&gt;true&lt;/code&gt; if the Os is not Windows or if the file path respect the Windows constraints.</em>
+<a class="jxr_linenumber" name="2425" href="#2425">2425</a> <em class="jxr_javadoccomment">     * @see #INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME</em>
+<a class="jxr_linenumber" name="2426" href="#2426">2426</a> <em class="jxr_javadoccomment">     * @since 1.5.2</em>
+<a class="jxr_linenumber" name="2427" href="#2427">2427</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="2428" href="#2428">2428</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isValidWindowsFileName( File f )
+<a class="jxr_linenumber" name="2429" href="#2429">2429</a>     {
+<a class="jxr_linenumber" name="2430" href="#2430">2430</a>         <strong class="jxr_keyword">if</strong> ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+<a class="jxr_linenumber" name="2431" href="#2431">2431</a>         {
+<a class="jxr_linenumber" name="2432" href="#2432">2432</a>             <strong class="jxr_keyword">if</strong> ( StringUtils.indexOfAny( f.getName(), INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME ) != -1 )
+<a class="jxr_linenumber" name="2433" href="#2433">2433</a>             {
+<a class="jxr_linenumber" name="2434" href="#2434">2434</a>                 <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="2435" href="#2435">2435</a>             }
+<a class="jxr_linenumber" name="2436" href="#2436">2436</a> 
+<a class="jxr_linenumber" name="2437" href="#2437">2437</a>             File parentFile = f.getParentFile();
+<a class="jxr_linenumber" name="2438" href="#2438">2438</a>             <strong class="jxr_keyword">if</strong> ( parentFile != <strong class="jxr_keyword">null</strong> )
+<a class="jxr_linenumber" name="2439" href="#2439">2439</a>             {
+<a class="jxr_linenumber" name="2440" href="#2440">2440</a>                 <strong class="jxr_keyword">return</strong> isValidWindowsFileName( parentFile );
+<a class="jxr_linenumber" name="2441" href="#2441">2441</a>             }
+<a class="jxr_linenumber" name="2442" href="#2442">2442</a>         }
+<a class="jxr_linenumber" name="2443" href="#2443">2443</a> 
+<a class="jxr_linenumber" name="2444" href="#2444">2444</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="2445" href="#2445">2445</a>     }
+<a class="jxr_linenumber" name="2446" href="#2446">2446</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
