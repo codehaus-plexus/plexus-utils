@@ -6,7 +6,7 @@ Plexus-Utils
 
 The current master is now at https://github.com/codehaus-plexus/plexus-utils
 
-For publishing the site do the following:
+For publishing [the site](https://codehaus-plexus.github.io/plexus-utils/) do the following:
 
 ```
 mvn -Preporting verify site site:stage scm-publish:publish-scm
