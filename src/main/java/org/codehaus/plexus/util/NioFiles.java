@@ -120,10 +120,11 @@ public class NioFiles
         throws IOException
     {
         Path link = symlink.toPath();
-        if ( !Files.exists( link, LinkOption.NOFOLLOW_LINKS ) )
+        if ( Files.exists( link, LinkOption.NOFOLLOW_LINKS ) )
         {
-            link = Files.createSymbolicLink( link, target.toPath() );
+            Files.delete( link );
         }
+        link = Files.createSymbolicLink( link, target.toPath() );
         return link.toFile();
     }
 
