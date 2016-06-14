@@ -1107,9 +1107,13 @@ public class FileUtils
     {
         // offload to operating system if supported
         if ( Java7Detector.isJava7() )
+        {
             doCopyFileUsingNewIO( source, destination );
+        }
         else
+        {
             doCopyFileUsingLegacyIO( source, destination );
+        }
     }
 
     private static void doCopyFileUsingLegacyIO( File source, File destination )
