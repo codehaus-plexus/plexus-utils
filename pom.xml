@@ -50,6 +50,10 @@ limitations under the License.
     </site>
   </distributionManagement>
 
+  <properties>
+    <javaVersion>6</javaVersion>
+  </properties>
+
   <dependencies>
       <dependency>
         <groupId>org.apache.maven.shared</groupId>
