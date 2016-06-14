@@ -1105,6 +1105,16 @@ public class FileUtils
     private static void doCopyFile( File source, File destination )
         throws IOException
     {
+        // offload to operating system if supported
+        if ( Java7Detector.isJava7() )
+            doCopyFileUsingNewIO( source, destination );
+        else
+            doCopyFileUsingLegacyIO( source, destination );
+    }
+
+    private static void doCopyFileUsingLegacyIO( File source, File destination )
+        throws IOException
+    {
         FileInputStream fis = null;
         FileOutputStream fos = null;
         FileChannel input = null;
@@ -1139,6 +1149,12 @@ public class FileUtils
             IOUtil.close( input );
             IOUtil.close( fis );
         }
+    }
+
+    private static void doCopyFileUsingNewIO( File source, File destination )
+        throws IOException
+    {
+        NioFiles.copy( source, destination );
     }
 
     /**
