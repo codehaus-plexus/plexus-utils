@@ -6,9 +6,10 @@ jdk:
 # No need for preliminary install step.
 install: true
 #
-# Run all integration tests.
+# Run all integration tests and SonarQube GitHub integration only if Pull-Request (and if Java 8 runner).
 script: 
   - "mvn --show-version --errors --batch-mode clean verify"
+  - if [[ $(echo $JAVA_HOME | grep 8) && -n TRAVIS_PULL_REQUEST && $TRAVIS_PULL_REQUEST != "false" && -n $SONAR_TOKEN && -n $GITHUB_TOKEN ]]; then mvn --batch-mode --errors --show-version sonar:sonar -Dsonar.analysis.mode=preview -Dsonar.host.url=https://sonarqube.com -Dsonar.login=$SONAR_TOKEN -Dsonar.github.oauth=$GITHUB_TOKEN -Dsonar.github.pullRequest=$TRAVIS_PULL_REQUEST -Dsonar.github.repository=$TRAVIS_REPO_SLUG; fi
 #
 cache:
     directories:
