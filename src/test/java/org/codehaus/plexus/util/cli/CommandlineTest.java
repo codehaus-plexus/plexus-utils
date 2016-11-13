@@ -461,7 +461,13 @@ public class CommandlineTest
             throw new IOException( java.getAbsolutePath() + " doesn't exist" );
         }
 
-        createAndCallScript( dir, java.getAbsolutePath() + " -version" );
+        String javaBinStr = java.getAbsolutePath();
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) && javaBinStr.contains( " " ) )
+        {
+            javaBinStr = "\"" + javaBinStr + "\"";
+        }
+
+        createAndCallScript( dir, javaBinStr + " -version" );
     }
 
     public void testDollarSignInArgumentPath()
@@ -515,7 +521,7 @@ public class CommandlineTest
         {
             throw new IOException( java.getAbsolutePath() + " doesn't exist" );
         }
-        
+
         Commandline cli = new Commandline();
         cli.setExecutable( java.getAbsolutePath() );
         cli.createArg().setLine( "-version" );
@@ -529,9 +535,9 @@ public class CommandlineTest
         {
             // it works
         }
-        
+
     }
-    
+
     /**
      * Make the file executable for Unix box.
      *
