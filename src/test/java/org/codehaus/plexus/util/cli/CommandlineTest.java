@@ -461,7 +461,13 @@ public class CommandlineTest
             throw new IOException( java.getAbsolutePath() + " doesn't exist" );
         }
 
-        createAndCallScript( dir, java.getAbsolutePath() + " -version" );
+        String javaBinStr = java.getAbsolutePath();
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) && javaBinStr.contains( " " ))
+        {
+            javaBinStr = "\"" + javaBinStr + "\"";
+        }
+        
+        createAndCallScript( dir, javaBinStr + " -version" );
     }
 
     public void testDollarSignInArgumentPath()
