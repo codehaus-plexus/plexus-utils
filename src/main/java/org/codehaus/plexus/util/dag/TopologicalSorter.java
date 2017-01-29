@@ -61,7 +61,7 @@ public class TopologicalSorter
         final List<String> retValue = new LinkedList<String>();
         final Map<Vertex, Integer> vertexStateMap = new HashMap<Vertex, Integer>();
 
-        for ( Vertex vertex : graph.getVerticies() )
+        for ( Vertex vertex : graph.getVertices() )
         {
             if ( isNotVisited( vertex, vertexStateMap ) )
             {

@@ -45,7 +45,7 @@ public class DAG implements Cloneable, Serializable
     private Map<String, Vertex> vertexMap = new HashMap<String, Vertex>();
 
     /**
-     * Contain list of all verticies
+     * Conatin list of all vertices
      */
     private List<Vertex> vertexList = new ArrayList<Vertex>();
 
@@ -68,11 +68,19 @@ public class DAG implements Cloneable, Serializable
     /**
      * @return
      */
-    public List<Vertex> getVerticies()
+    public List<Vertex> getVertices()
     {
         return vertexList;
     }
 
+    /**
+     * @deprecated instead use {@link #getVertices()}
+     */
+    @Deprecated
+    public List<Vertex> getVerticies()
+    {
+        return getVertices();
+    }
 
     public Set<String> getLabels()
     {

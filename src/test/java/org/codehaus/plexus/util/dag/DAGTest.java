@@ -36,19 +36,19 @@ public class DAGTest
 
         dag.addVertex( "a" );
 
-        assertEquals( 1, dag.getVerticies().size() );
+        assertEquals( 1, dag.getVertices().size() );
 
         assertEquals( "a", dag.getVertex( "a" ).getLabel() );
 
         dag.addVertex( "a" );
 
-        assertEquals( 1, dag.getVerticies().size() );
+        assertEquals( 1, dag.getVertices().size() );
 
         assertEquals( "a", dag.getVertex( "a" ).getLabel() );
 
         dag.addVertex( "b" );
 
-        assertEquals( 2, dag.getVerticies().size() );
+        assertEquals( 2, dag.getVertices().size() );
 
         assertFalse( dag.hasEdge( "a", "b" ) );
 
@@ -74,7 +74,7 @@ public class DAGTest
 
         dag.addEdge( "c", "d" );
 
-        assertEquals( 4, dag.getVerticies().size() );
+        assertEquals( 4, dag.getVertices().size() );
 
         final Vertex c = dag.getVertex( "c" );
 
