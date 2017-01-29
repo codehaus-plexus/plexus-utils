@@ -38,13 +38,13 @@ public class CycleDetector
 
     public static List<String> hasCycle( final DAG graph )
     {
-        final List<Vertex> verticies = graph.getVerticies();
+        final List<Vertex> vertices = graph.getVertices();
 
         final Map<Vertex, Integer> vertexStateMap = new HashMap<Vertex, Integer>();
 
         List<String> retValue = null;
 
-        for ( Vertex vertex : verticies )
+        for ( Vertex vertex : vertices )
         {
             if ( isNotVisited( vertex, vertexStateMap ) )
             {
