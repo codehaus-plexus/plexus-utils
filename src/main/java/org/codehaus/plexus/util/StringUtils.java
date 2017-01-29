@@ -17,11 +17,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.codehaus.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -389,7 +389,7 @@ public class StringUtils
      *  count back from the end of the string by this many characters
      * @param end the position to end at (exclusive), negative means
      *  count back from the end of the String by this many characters
-     * @return substring from start position to end positon
+     * @return substring from start position to end position
      */
     public static String substring( String str, int start, int end )
     {
@@ -557,7 +557,7 @@ public class StringUtils
      * <p>Splits the provided text into a array, based on a given separator.</p>
      *
      * <p>The separator is not included in the returned String array. The
-     * maximum number of splits to perfom can be controlled. A <code>null</code>
+     * maximum number of splits to perform can be controlled. A <code>null</code>
      * separator will cause parsing to be on whitespace.</p>
      *
      * <p>This is useful for quickly splitting a String directly into
@@ -717,7 +717,7 @@ public class StringUtils
     }
 
     /**
-     * <p>Replace all occurances of a char within another char.</p>
+     * <p>Replace all occurrences of a char within another char.</p>
      *
      * <p>A <code>null</code> reference passed to this method is a no-op.</p>
      *
@@ -766,7 +766,7 @@ public class StringUtils
     }
 
     /**
-     * <p>Replace all occurances of a String within another String.</p>
+     * <p>Replace all occurrences of a String within another String.</p>
      *
      * <p>A <code>null</code> reference passed to this method is a no-op.</p>
      *
@@ -1104,7 +1104,7 @@ public class StringUtils
     public static String escape( String str )
     {
         // improved with code from  cybertiger@cyberiantiger.org
-        // unicode from him, and defaul for < 32's.
+        // unicode from him, and default for < 32's.
         int sz = str.length();
         StringBuilder buffer = new StringBuilder( 2 * sz );
         for ( int i = 0; i < sz; i++ )
@@ -1703,7 +1703,7 @@ public class StringUtils
      *
      * @param str the String to check
      * @param sub the substring to count
-     * @return the number of occurances, 0 if the String is <code>null</code>
+     * @return the number of occurrences, 0 if the String is <code>null</code>
      * @throws NullPointerException if sub is <code>null</code>
      */
     public static int countMatches( String str, String sub )

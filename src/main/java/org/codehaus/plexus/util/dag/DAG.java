@@ -45,7 +45,7 @@ public class DAG implements Cloneable, Serializable
     private Map<String, Vertex> vertexMap = new HashMap<String, Vertex>();
 
     /**
-     * Conatin list of all verticies
+     * Contain list of all verticies
      */
     private List<Vertex> vertexList = new ArrayList<Vertex>();
 
@@ -84,18 +84,18 @@ public class DAG implements Cloneable, Serializable
     // ------------------------------------------------------------
 
     /**
-     * Adds vertex to DAG. If vertex of given label alredy exist in DAG
+     * Adds vertex to DAG. If vertex of given label already exist in DAG
      * no vertex is added
      *
-     * @param label The lable of the Vertex
-     * @return New vertex if vertext of given label was not presenst in the DAG
-     *         or exising vertex if vertex of given labale was alredy added to DAG
+     * @param label The label of the Vertex
+     * @return New vertex if vertex of given label was not present in the DAG
+     *         or existing vertex if vertex of given label was already added to DAG
      */
     public Vertex addVertex( final String label )
     {
         Vertex retValue = null;
 
-        // check if vertex is alredy in DAG
+        // check if vertex is already in DAG
         if ( vertexMap.containsKey( label ) )
         {
             retValue = vertexMap.get( label );
@@ -233,7 +233,7 @@ public class DAG implements Cloneable, Serializable
     /**
      * Return the list of labels of successor in order decided by topological sort
      *
-     * @param label The label of the vertex whose predessors are serched
+     * @param label The label of the vertex whose predecessors are searched
      *
      * @return The list of labels. Returned list contains also
      *         the label passed as parameter to this method. This label should

@@ -490,14 +490,14 @@ public class MXParser
             //}
             roundtripSupported = state;
         } else {
-            throw new XmlPullParserException("unsupporte feature "+name);
+            throw new XmlPullParserException("unsupported feature "+name);
         }
     }
 
     /** Unknown properties are <string>always</strong> returned as false */
     public boolean getFeature(String name)
     {
-        if(name == null) throw new IllegalArgumentException("feature name should not be nulll");
+        if(name == null) throw new IllegalArgumentException("feature name should not be null");
         if(FEATURE_PROCESS_NAMESPACES.equals(name)) {
             return processNamespaces;
             //        } else if(FEATURE_REPORT_NAMESPACE_ATTRIBUTES.equals(name)) {
@@ -529,7 +529,7 @@ public class MXParser
 
     public Object getProperty(String name)
     {
-        if(name == null) throw new IllegalArgumentException("property name should not be nulll");
+        if(name == null) throw new IllegalArgumentException("property name should not be null");
         if(PROPERTY_XMLDECL_VERSION.equals(name)) {
             return xmlDeclVersion;
         } else if(PROPERTY_XMLDECL_STANDALONE.equals(name)) {
@@ -627,7 +627,7 @@ public class MXParser
         //int maxDepth = eventType == END_TAG ? this.depth + 1 : this.depth;
         //if(depth < 0 || depth > maxDepth) throw new IllegalArgumentException(
         if(depth < 0 || depth > this.depth) throw new IllegalArgumentException(
-                "napespace count mayt be for depth 0.."+this.depth+" not "+depth);
+                "namespace count may be for depth 0.."+this.depth+" not "+depth);
         return elNamespaceCount[ depth ];
     }
 
@@ -653,7 +653,7 @@ public class MXParser
             return namespaceUri[ pos ];
         } else {
             throw new XmlPullParserException(
-                "position "+pos+" exceedded number of available namespaces "+namespaceEnd);
+                "position "+pos+" exceeded number of available namespaces "+namespaceEnd);
         }
     }
 
@@ -1012,8 +1012,8 @@ public class MXParser
         if(processNamespaces == false && namespace != null) {
             throw new XmlPullParserException(
                 "processing namespaces must be enabled on parser (or factory)"+
-                    " to have possible namespaces delcared on elements"
-                    +(" (postion:"+ getPositionDescription())+")");
+                    " to have possible namespaces declared on elements"
+                    +(" (position:"+ getPositionDescription())+")");
         }
         if (type != getEventType()
                 || (namespace != null && !namespace.equals (getNamespace()))
@@ -1034,14 +1034,14 @@ public class MXParser
                           ? " and" : "")
                     +(namespace != null && getNamespace() != null && !namespace.equals (getNamespace())
                           ? " namespace '"+getNamespace()+"'" : "")
-                    +(" (postion:"+ getPositionDescription())+")");
+                    +(" (position:"+ getPositionDescription())+")");
         }
     }
 
 
     /**
-     * Skip sub tree that is currently porser positioned on.
-     * <br>NOTE: parser must be on START_TAG and when funtion returns
+     * Skip sub tree that is currently parser positioned on.
+     * <br>NOTE: parser must be on START_TAG and when function returns
      * parser will be positioned on corresponding END_TAG
      */
     public void skipSubTree()
@@ -1299,10 +1299,10 @@ public class MXParser
                         throw new XmlPullParserException(
                             "unexpected character in markup "+printable(ch), this, null);
                     }
-                    // do content comapctation if it makes sense!!!!
+                    // do content compaction if it makes sense!!!!
 
                 } else if(ch == '&') {
-                    // work on ENTITTY
+                    // work on ENTITY
                     //posEnd = pos - 1;
                     if(tokenize && hadCharData) {
                         seenAmpersand = true;
@@ -1884,7 +1884,7 @@ public class MXParser
 
             //TODO
             //[ WFC: Unique Att Spec ]
-            // check namespaced attribute uniqueness contraint!!!
+            // check namespaced attribute uniqueness constraint!!!
 
             for (int i = 1; i < attributeCount; i++)
             {
@@ -1897,7 +1897,7 @@ public class MXParser
                                            && attributeName[j].equals(attributeName[i])) )
 
                       ) {
-                        // prepare data for nice error messgae?
+                        // prepare data for nice error message?
                         String attr1 = attributeName[j];
                         if(attributeUri[j] != null) attr1 = attributeUri[j]+":"+attr1;
                         String attr2 = attributeName[i];
@@ -1912,7 +1912,7 @@ public class MXParser
         } else { // ! processNamespaces
 
             //[ WFC: Unique Att Spec ]
-            // check raw attribute uniqueness contraint!!!
+            // check raw attribute uniqueness constraint!!!
             for (int i = 1; i < attributeCount; i++)
             {
                 for (int j = 0; j < i; j++)
@@ -1923,7 +1923,7 @@ public class MXParser
                                     && attributeName[j].equals(attributeName[i])) )
 
                       ) {
-                        // prepare data for nice error messgae?
+                        // prepare data for nice error message?
                         final String attr1 = attributeName[j];
                         final String attr2 = attributeName[i];
                         throw new XmlPullParserException(
@@ -2332,7 +2332,7 @@ public class MXParser
         }
     }
 
-    protected char[] lookuEntityReplacement(int entitNameLen)
+    protected char[] lookuEntityReplacement(int entityNameLen)
         throws XmlPullParserException, IOException
 
     {
@@ -2341,9 +2341,9 @@ public class MXParser
             LOOP:
             for (int i = entityEnd - 1; i >= 0; --i)
             {
-                if(hash == entityNameHash[ i ] && entitNameLen == entityNameBuf[ i ].length) {
+                if(hash == entityNameHash[ i ] && entityNameLen == entityNameBuf[ i ].length) {
                     final char[] entityBuf = entityNameBuf[ i ];
-                    for (int j = 0; j < entitNameLen; j++)
+                    for (int j = 0; j < entityNameLen; j++)
                     {
                         if(buf[posStart + j] != entityBuf[j]) continue LOOP;
                     }
@@ -2355,7 +2355,7 @@ public class MXParser
             entityRefName = newString(buf, posStart, posEnd - posStart);
             for (int i = entityEnd - 1; i >= 0; --i)
             {
-                // take advantage that interning for newStirng is enforced
+                // take advantage that interning for newString is enforced
                 if(entityRefName == entityName[ i ]) {
                     if(tokenize) text = entityReplacement[ i ];
                     return entityReplacementBuf[ i ];
@@ -2506,7 +2506,7 @@ public class MXParser
                             {
                                 if(piTargetStart > 3) {  //<?xml is allowed as first characters in input ...
                                     throw new XmlPullParserException(
-                                        "processing instruction can not have PITarget with reserveld xml name",
+                                        "processing instruction can not have PITarget with reserved xml name",
                                         this, null);
                                 } else {
                                     if(buf[piTargetStart] != 'x'
@@ -2645,7 +2645,7 @@ public class MXParser
         }
         final int versionEnd = pos - 1;
         parseXmlDeclWithVersion(versionStart, versionEnd);
-        preventBufferCompaction = false; // allow again buffer commpaction - pos MAY chnage
+        preventBufferCompaction = false; // allow again buffer compaction - pos MAY change
     }
     //protected String xmlDeclVersion;
 
@@ -2977,7 +2977,7 @@ public class MXParser
             } else if(!compact) {
                 //freeSpace
                 if(bufStart < buf.length / 2) {
-                    // less then half buffer available forcompactin --> expand instead!!!
+                    // less then half buffer available for compacting --> expand instead!!!
                     expand = true;
                 } else {
                     // at least half of buffer can be reclaimed --> worthwhile effort!!!
@@ -3021,7 +3021,7 @@ public class MXParser
                         +" pos="+pos+" posStart="+posStart+" posEnd="+posEnd
                         +" buf first 100 chars:"+new String(buf, 0, bufEnd < 100 ? bufEnd : 100));
         }
-        // at least one charcter must be read or error
+        // at least one character must be read or error
         final int len = buf.length - bufEnd > READ_CHUNK_SIZE ? READ_CHUNK_SIZE : buf.length - bufEnd;
         final int ret = reader.read(buf, bufEnd, len);
         if(ret > 0) {
@@ -3078,7 +3078,7 @@ public class MXParser
     protected char more() throws IOException, XmlPullParserException {
         if(pos >= bufEnd) {
             fillBuf();
-            // this return value should be ignonored as it is used in epilog parsing ...
+            // this return value should be ignored as it is used in epilog parsing ...
             if(reachedEnd) return (char)-1;
         }
         final char ch = buf[pos++];
@@ -3208,7 +3208,7 @@ public class MXParser
         //        //[#x202A-#x218F]
         //        if(ch < '\u202A') return false;
         //        if(ch <= '\u218F') return true;
-        //        // added pairts [#x2800-#xD7FF] | [#xE000-#xFDCF] | [#xFDE0-#xFFEF] | [#x10000-#x10FFFF]
+        //        // added parts [#x2800-#xD7FF] | [#xE000-#xFDCF] | [#xFDE0-#xFFEF] | [#x10000-#x10FFFF]
         //        if(ch < '\u2800') return false;
         //        if(ch <= '\uFFEF') return true;
         //        return false;
@@ -3238,7 +3238,7 @@ public class MXParser
         //        //[#x202A-#x218F]
         //        else if(ch < '\u202A') return false;
         //        else if(ch <= '\u218F') return true;
-        //        // added pairts [#x2800-#xD7FF] | [#xE000-#xFDCF] | [#xFDE0-#xFFEF] | [#x10000-#x10FFFF]
+        //        // added parts [#x2800-#xD7FF] | [#xE000-#xFDCF] | [#xFDE0-#xFFEF] | [#x10000-#x10FFFF]
         //        else if(ch < '\u2800') return false;
         //        else if(ch <= '\uFFEF') return true;
         //else return false;

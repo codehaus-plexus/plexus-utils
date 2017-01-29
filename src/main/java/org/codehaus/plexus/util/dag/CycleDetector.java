@@ -29,7 +29,7 @@ import java.util.Map;
 public class CycleDetector
 {
 
-    private final static Integer NOT_VISTITED = 0;
+    private final static Integer NOT_VISITED = 0;
 
     private final static Integer VISITING = 1;
 
@@ -114,7 +114,7 @@ public class CycleDetector
     {
         final Integer state = vertexStateMap.get( vertex );
 
-        return ( state == null ) || NOT_VISTITED.equals( state );
+        return ( state == null ) || NOT_VISITED.equals( state );
     }
 
     /**

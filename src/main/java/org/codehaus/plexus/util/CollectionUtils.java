@@ -185,7 +185,7 @@ public class CollectionUtils
     /**
      * Returns a {@link Map} mapping each unique element in
      * the given {@link Collection} to an {@link Integer}
-     * representing the number of occurances of that element
+     * representing the number of occurrences of that element
      * in the {@link Collection}.
      * An entry that maps to <tt>null</tt> indicates that the
      * element does not appear in the given {@link Collection}.

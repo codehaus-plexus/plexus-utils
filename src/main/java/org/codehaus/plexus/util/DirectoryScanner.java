@@ -17,11 +17,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.codehaus.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "Ant" and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -467,7 +467,7 @@ public class DirectoryScanner
                 }
                 catch ( IOException ioe )
                 {
-                    String msg = "IOException caught while checking " + "for links, couldn't get cannonical path!";
+                    String msg = "IOException caught while checking " + "for links, couldn't get canonical path!";
                     // will be caught and redirected to Ant's logging system
                     System.err.println( msg );
                     noLinks.add( newfile );

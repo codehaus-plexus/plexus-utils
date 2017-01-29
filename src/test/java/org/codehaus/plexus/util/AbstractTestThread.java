@@ -40,7 +40,7 @@ public abstract class AbstractTestThread implements Runnable
     /** The registry to notify on completion */
     private TestThreadManager registry;
 
-    /** The error thrown when running the test. Not neccesarily a test failuer as some tests
+    /** The error thrown when running the test. Not necessarily a test failure as some tests
      * may test for an exception */
     private Throwable error;
 
