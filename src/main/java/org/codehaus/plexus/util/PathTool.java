@@ -245,7 +245,7 @@ public class PathTool
     }
 
     /**
-     * This method can calculate the relative path between two pathes on a web site.
+     * This method can calculate the relative path between two paths on a web site.
      * <br/>
      * <pre>
      * PathTool.getRelativeWebPath( null, null )                                          = ""
@@ -279,7 +279,7 @@ public class PathTool
     }
 
     /**
-     * This method can calculate the relative path between two pathes on a file system.
+     * This method can calculate the relative path between two paths on a file system.
      * <br/>
      * <pre>
      * PathTool.getRelativeFilePath( null, null )                                   = ""

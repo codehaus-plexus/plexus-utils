@@ -43,7 +43,7 @@ public class TestThreadManager
     /** Any test threads which failed */
     private Vector<AbstractTestThread> failedThreads = new Vector<AbstractTestThread>();
 
-    /**The object to notify when all the test threads have complleted. Clients use this
+    /**The object to notify when all the test threads have completed. Clients use this
      * to lock on (wait) while waiting for the tests to complete*/
     private Object notify = null;
 
@@ -151,7 +151,7 @@ public class TestThreadManager
     }
 
     /**
-     * Overide this to add your own stuff. Called after
+     * Override this to add your own stuff. Called after
      * <code>registerThread(Object)</code>
      *
      * @param thread DOCUMENT ME!

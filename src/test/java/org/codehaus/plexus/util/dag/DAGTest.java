@@ -132,7 +132,7 @@ public class DAGTest
     }
 
 
-    public void testGetPredessors()
+    public void testGetPredecessors()
         throws CycleDetectedException
     {
         final DAG dag = new DAG();

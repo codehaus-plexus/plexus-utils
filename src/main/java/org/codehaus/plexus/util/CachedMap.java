@@ -96,7 +96,7 @@ public final class CachedMap implements Map {
 
     /**
      * Creates a cached map backed by the specified map and having the specified
-     * cache size. In order to maitain cache veracity, it is critical
+     * cache size. In order to maintain cache veracity, it is critical
      * that <b>all</b> update to the backing map is accomplished through the
      * {@link CachedMap} instance; otherwise {@link #flush} has to be called.
      *

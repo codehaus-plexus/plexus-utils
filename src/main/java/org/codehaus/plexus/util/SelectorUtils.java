@@ -17,11 +17,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.codehaus.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "Ant" and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -843,7 +843,7 @@ public final class SelectorUtils
     /**
      * "Flattens" a string by removing all whitespace (space, tab, linefeed,
      * carriage return, and formfeed). This uses StringTokenizer and the
-     * default set of tokens as documented in the single arguement constructor.
+     * default set of tokens as documented in the single argument constructor.
      *
      * @param input a String to remove all whitespace.
      * @return a String that has had all whitespace removed.

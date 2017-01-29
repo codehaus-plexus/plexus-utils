@@ -34,7 +34,7 @@ import java.util.regex.Matcher;
 import java.text.MessageFormat;
 
 /**
- * Character stream that handles (or at least attemtps to) all the necessary Voodo to figure out the charset encoding of
+ * Character stream that handles (or at least attempts to) all the necessary Voodo to figure out the charset encoding of
  * the XML document within the stream.
  * <p>
  * IMPORTANT: This class is not related in any way to the org.xml.sax.XMLReader. This one IS a character stream.

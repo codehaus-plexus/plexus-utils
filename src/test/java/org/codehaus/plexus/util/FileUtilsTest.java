@@ -431,15 +431,15 @@ public final class FileUtilsTest
         File source = new File( getTestDirectory() + "copy1.txt" );
         FileUtils.copyFile( testFile1, source );
 
-        // Make sure desintation is newer
+        // Make sure destination is newer
         reallySleep( 1000 );
 
         // Place destination
-        File desintation = new File( getTestDirectory(), "/temp/copy1.txt" );
-        FileUtils.copyFile( testFile1, desintation );
+        File destination = new File( getTestDirectory(), "/temp/copy1.txt" );
+        FileUtils.copyFile( testFile1, destination );
 
-        // Copy will occur when desintation is newer
-        assertFalse( "Source file should not have been copied.", FileUtils.copyFileIfModified( source, desintation ) );
+        // Copy will occur when destination is newer
+        assertFalse( "Source file should not have been copied.", FileUtils.copyFileIfModified( source, destination ) );
     }
 
     // forceDelete
@@ -720,7 +720,7 @@ public final class FileUtilsTest
         }
     }
 
-    public void testCopyDirectoryStructureWithAEmptyDirectoryStruture()
+    public void testCopyDirectoryStructureWithAEmptyDirectoryStructure()
         throws Exception
     {
         File from = new File( getTestDirectory(), "from" );

@@ -374,7 +374,7 @@ public interface XmlPullParser {
      * the DOCDECL event type is reported by nextToken()
      * and ignored by next().
      *
-     * If this featue is activated, then the document declaration
+     * If this feature is activated, then the document declaration
      * must be processed by the parser.
      *
      * <p><strong>Please note:</strong> If the document type declaration
@@ -391,7 +391,7 @@ public interface XmlPullParser {
 
     /**
      * If this feature is activated, all validation errors as
-     * defined in the XML 1.0 sepcification are reported.
+     * defined in the XML 1.0 specification are reported.
      * This implies that FEATURE_PROCESS_DOCDECL is true and both, the
      * internal and external document type declaration will be processed.
      * <p><strong>Please Note:</strong> This feature can not be changed
@@ -411,7 +411,7 @@ public interface XmlPullParser {
      * <p>Example: call setFeature(FEATURE_PROCESS_NAMESPACES, true) in order
      * to switch on namespace processing. The initial settings correspond
      * to the properties requested from the XML Pull Parser factory.
-     * If none were requested, all feautures are deactivated by default.
+     * If none were requested, all features are deactivated by default.
      *
      * @exception XmlPullParserException If the feature is not supported or can not be set
      * @exception IllegalArgumentException If string with the feature name is null
@@ -478,7 +478,7 @@ public interface XmlPullParser {
      *  input encoding following XML 1.0 specification (see below).
      *  If encoding detection is supported then following feature
      *  <a href="http://xmlpull.org/v1/doc/features.html#detect-encoding">http://xmlpull.org/v1/doc/features.html#detect-encoding</a>
-     *  MUST be true amd otherwise it must be false
+     *  MUST be true and otherwise it must be false
      *
      * @param inputStream contains a raw byte input stream of possibly
      *     unknown encoding (when inputEncoding is null).
@@ -493,7 +493,7 @@ public interface XmlPullParser {
      * If setInput(InputStream, inputEncoding) was called with an inputEncoding
      * value other than null, this value must be returned
      * from this method. Otherwise, if inputEncoding is null and
-     * the parser suppports the encoding detection feature
+     * the parser supports the encoding detection feature
      * (http://xmlpull.org/v1/doc/features.html#detect-encoding),
      * it must return the detected encoding.
      * If setInput(Reader) was called, null is returned.
@@ -517,7 +517,7 @@ public interface XmlPullParser {
      *
      * <p><b>Please notes:</b> The given value is used literally as replacement text
      * and it corresponds to declaring entity in DTD that has all special characters
-     * escaped: left angle bracket is replaced with &amp;lt;, ampersnad with &amp;amp;
+     * escaped: left angle bracket is replaced with &amp;lt;, ampersand with &amp;amp;
      * and so on.
      *
      * <p><b>Note:</b> The given value is the literal replacement text and must not
@@ -563,7 +563,7 @@ public interface XmlPullParser {
     int getNamespaceCount(int depth) throws XmlPullParserException;
 
     /**
-     * Returns the namespace prefixe for the given position
+     * Returns the namespace prefix for the given position
      * in the namespace stack.
      * Default namespace declaration (xmlns='...') will have null as prefix.
      * If the given index is out of range, an exception is thrown.
@@ -604,7 +604,7 @@ public interface XmlPullParser {
      * </pre>
      *
      * <p><strong>Please note:</strong> parser implementations
-     * may provide more efifcient lookup, e.g. using a Hashtable.
+     * may provide more efficient lookup, e.g. using a Hashtable.
      * The 'xml' prefix is bound to "http://www.w3.org/XML/1998/namespace", as
      * defined in the
      * <a href="http://www.w3.org/TR/REC-xml-names/#ns-using">Namespaces in XML</a>
@@ -816,7 +816,7 @@ public interface XmlPullParser {
      *
      * @param index zero based index of attribute
      * @return attribute namespace,
-     *   empty string ("") is returned  if namesapces processing is not enabled or
+     *   empty string ("") is returned  if namespaces processing is not enabled or
      *   namespaces processing is enabled but attribute has no namespace (it has no prefix).
      */
     String getAttributeNamespace (int index);
@@ -914,8 +914,8 @@ public interface XmlPullParser {
     /**
      * Get next parsing event - element content wil be coalesced and only one
      * TEXT event must be returned for whole element content
-     * (comments and processing instructions will be ignored and emtity references
-     * must be expanded or exception mus be thrown if entity reerence can not be exapnded).
+     * (comments and processing instructions will be ignored and entity references
+     * must be expanded or exception mus be thrown if entity reference can not be expanded).
      * If element content is empty (content is "") then no TEXT event will be reported.
      *
      * <p><b>NOTE:</b> empty element (such as &lt;tag/>) will be reported
@@ -943,7 +943,7 @@ public interface XmlPullParser {
      * <a href="http://xmlpull.org/v1/doc/features.html#xml-roundtrip">FEATURE_XML_ROUNDTRIP</a>
      * (identified by URI: http://xmlpull.org/v1/doc/features.html#xml-roundtrip)
      * is enabled it is possible to do XML document round trip ie. reproduce
-     * exectly on output the XML input using getText():
+     * exactly on output the XML input using getText():
      * returned content is always unnormalized (exactly as in input).
      * Otherwise returned content is end-of-line normalized as described
      * <a href="http://www.w3.org/TR/REC-xml#sec-line-ends">XML 1.0 End-of-Line Handling</a>
@@ -962,8 +962,8 @@ public interface XmlPullParser {
      *  <br>Note: that element content may be delivered in multiple consecutive TEXT events.
      * <dt>IGNORABLE_WHITESPACE<dd>return characters that are determined to be ignorable white
      * space. If the FEATURE_XML_ROUNDTRIP is enabled all whitespace content outside root
-     * element will always reported as IGNORABLE_WHITESPACE otherise rteporting is optional.
-     *  <br>Note: that element content may be delevered in multiple consecutive IGNORABLE_WHITESPACE events.
+     * element will always reported as IGNORABLE_WHITESPACE otherwise reporting is optional.
+     *  <br>Note: that element content may be delivered in multiple consecutive IGNORABLE_WHITESPACE events.
      * <dt>CDSECT<dd>
      * return text <em>inside</em> CDATA
      *  (ex. 'fo&lt;o' from &lt;!CDATA[fo&lt;o]]>)
@@ -1001,7 +1001,7 @@ public interface XmlPullParser {
      * </dd>
      * </dl>
      *
-     * <p><strong>NOTE:</strong> there is no gurantee that there will only one TEXT or
+     * <p><strong>NOTE:</strong> there is no guarantee that there will only one TEXT or
      * IGNORABLE_WHITESPACE event from nextToken() as parser may chose to deliver element content in
      * multiple tokens (dividing element content into chunks)
      *
