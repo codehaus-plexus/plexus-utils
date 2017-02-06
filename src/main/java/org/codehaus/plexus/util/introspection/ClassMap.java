@@ -262,7 +262,7 @@ public class ClassMap
      * Retrieves public methods for a class. In case the class is not
      * public, retrieves methods with same signature as its public methods
      * from public superclasses and interfaces (if they exist). Basically
-     * upcasts every method to the nearest acccessible method.
+     * upcasts every method to the nearest accessible method.
      */
     private static Method[] getAccessibleMethods( Class clazz )
     {

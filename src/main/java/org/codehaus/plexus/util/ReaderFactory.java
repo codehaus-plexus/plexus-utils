@@ -133,7 +133,7 @@ public class ReaderFactory
     }
 
     /**
-     * Create a new Reader with default plaform encoding.
+     * Create a new Reader with default platform encoding.
      *
      * @param in not null input stream.
      * @return a reader instance for the input stream using the default platform charset.
@@ -145,7 +145,7 @@ public class ReaderFactory
     }
 
     /**
-     * Create a new Reader with default plaform encoding.
+     * Create a new Reader with default platform encoding.
      *
      * @param file not null file.
      * @return a reader instance for the input file using the default platform charset.
@@ -159,7 +159,7 @@ public class ReaderFactory
     }
 
     /**
-     * Create a new Reader with default plaform encoding.
+     * Create a new Reader with default platform encoding.
      *
      * @param url not null url.
      * @return a reader instance for the input url using the default platform charset.

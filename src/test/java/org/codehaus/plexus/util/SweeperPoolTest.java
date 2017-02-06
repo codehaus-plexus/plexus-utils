@@ -92,7 +92,7 @@ public class SweeperPoolTest extends TestCase
         assertEquals( "Expected pool to contain 2 objects", 2, pool.getSize() );
         pool.put( o3 );
         assertEquals(
-            "Expected pool to contain only a maximuim of 2 objects.",
+            "Expected pool to contain only a maximum of 2 objects.",
             2,
             pool.getSize() );
         assertEquals(
@@ -111,7 +111,7 @@ public class SweeperPoolTest extends TestCase
             "Expected pool size to be 0 after removing 2 objects",
             0,
             pool.getSize() );
-        assertNotSame( "Expected returned objects to be differnet", tmp, tmp2 );
+        assertNotSame( "Expected returned objects to be different", tmp, tmp2 );
 
     }
 
@@ -135,7 +135,7 @@ public class SweeperPoolTest extends TestCase
         pool.put( o2 );
         pool.put( o3 );
         pool.put( o4 );
-        //give the seeper some time to run
+        //give the sweeper some time to run
         synchronized ( this )
         {
             try
@@ -154,7 +154,7 @@ public class SweeperPoolTest extends TestCase
             1,
             pool.getSize() );
         assertEquals(
-            "Expected 3 diposed objects",
+            "Expected 3 disposed objects",
             3,
             pool.testGetDisposedObjects().size() );
 

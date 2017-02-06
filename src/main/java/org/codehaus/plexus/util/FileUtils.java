@@ -901,7 +901,7 @@ public class FileUtils
      * </pre>
      *
      * @param filepath          the path of the file
-     * @param fileSeparatorChar the file separator character like <b>/</b> on Unix plateforms.
+     * @param fileSeparatorChar the file separator character like <b>/</b> on Unix platforms.
      * @return the filename minus path
      */
     public static String removePath( final String filepath, final char fileSeparatorChar )
@@ -941,7 +941,7 @@ public class FileUtils
      * </pre>
      *
      * @param filepath          the filepath
-     * @param fileSeparatorChar the file separator character like <b>/</b> on Unix plateforms.
+     * @param fileSeparatorChar the file separator character like <b>/</b> on Unix platforms.
      * @return the filename minus path
      */
     public static String getPath( final String filepath, final char fileSeparatorChar )
@@ -2019,7 +2019,7 @@ public class FileUtils
      * @param sourceDirectory      the source dir
      * @param destinationDirectory the target dir
      * @param includes             include pattern
-     * @param excludes             exlucde pattern
+     * @param excludes             exclude pattern
      * @throws IOException if any
      * @see #getFiles(File, String, String)
      */
@@ -2052,7 +2052,7 @@ public class FileUtils
      * @param sourceDirectory      the source dir
      * @param destinationDirectory the target dir
      * @param includes             include pattern
-     * @param excludes             exlucde pattern
+     * @param excludes             exclude pattern
      * @throws IOException if any
      * @since 1.5.7
      */
@@ -2338,7 +2338,7 @@ public class FileUtils
      * @param encoding  the file output encoding (only if wrappers is not empty)
      * @param wrappers  array of {@link FilterWrapper}
      * @param overwrite if true and f wrappers is null or empty, the file will be copy
-     *                  enven if to.lastModified() < from.lastModified()
+     *                  even if to.lastModified() < from.lastModified()
      * @throws IOException if an IO error occurs during copying or filtering
      * @since 1.5.2
      */

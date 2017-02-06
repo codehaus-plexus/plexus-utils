@@ -34,7 +34,7 @@ public class SweeperPool
     /** Sweeps the pool periodically to trim it's size */
     private transient Sweeper sweeper;
 
-    /** Absolute maxiumuim size of the pool.*/
+    /** Absolute maximum size of the pool.*/
     private transient int maxSize;
 
     /** The size the pool gets trimmed down to */
@@ -61,7 +61,7 @@ public class SweeperPool
      * the sweeper runs. If the pool size is greater or equal than this value then
      * the pool is trimmed to <code>minSize</code>.</lie>
      * <li><code>maxSize</code> - if the pool has reached this size, any objects added
-     * are immediatley disposed. If the pool is this size when the sweeper runs, then
+     * are immediately disposed. If the pool is this size when the sweeper runs, then
      * the pool is also trimmed to <code>minSize</code> irrespective of the triggerSize.
      * </li>
      * <li><code>sweepInterval</code> - how often the sweeper runs. Is actually the
@@ -150,7 +150,7 @@ public class SweeperPool
 
     /**
      * Return the number of pooled objects. This is never
-     * greater than t maximuim size of the pool
+     * greater than t maximum size of the pool
      *
      * @return the number of pooled objects
      */
@@ -176,7 +176,7 @@ public class SweeperPool
             }
             catch ( InterruptedException e )
             {
-                System.err.println( "Unexpected execption occurred: " );
+                System.err.println( "Unexpected exceptionexception occurred: " );
                 e.printStackTrace();
             }
         }
@@ -290,7 +290,7 @@ public class SweeperPool
         }
 
         /**
-         * Run the seeper.
+         * Run the sweeper.
          *
          * @see java.lang.Runnable#run()
          */

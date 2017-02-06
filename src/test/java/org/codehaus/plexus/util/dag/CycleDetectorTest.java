@@ -193,19 +193,19 @@ public class CycleDetectorTest extends TestCase
 
             assertEquals( "Cycle contains 'b'", "b", ( String ) cycle.get( 4 ) );
 
-            assertTrue( "Edge exixst", dag5.hasEdge( "a", "b" ) );
+            assertTrue( "Edge exists", dag5.hasEdge( "a", "b" ) );
 
-            assertTrue( "Edge exixst", dag5.hasEdge( "b", "c" ) );
+            assertTrue( "Edge exists", dag5.hasEdge( "b", "c" ) );
 
-            assertTrue( "Edge exixst", dag5.hasEdge( "b", "f" ) );
+            assertTrue( "Edge exists", dag5.hasEdge( "b", "f" ) );
 
-            assertTrue( "Edge exixst", dag5.hasEdge( "f", "g" ) );
+            assertTrue( "Edge exists", dag5.hasEdge( "f", "g" ) );
 
-            assertTrue( "Edge exixst", dag5.hasEdge( "g", "h" ) );
+            assertTrue( "Edge exists", dag5.hasEdge( "g", "h" ) );
 
-            assertTrue( "Edge exixst", dag5.hasEdge( "c", "d" ) );
+            assertTrue( "Edge exists", dag5.hasEdge( "c", "d" ) );
 
-            assertTrue( "Edge exixst", dag5.hasEdge( "d", "e" ) );
+            assertTrue( "Edge exists", dag5.hasEdge( "d", "e" ) );
 
             assertFalse( dag5.hasEdge( "e", "b" ) );
         }

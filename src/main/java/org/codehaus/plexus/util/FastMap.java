@@ -663,7 +663,7 @@ public class FastMap<K,V> implements Map<K,V>, Cloneable, Serializable {
             entry = new EntryImpl();
         }
         
-        // Setup entry paramters.
+        // Setup entry parameters.
         entry._key = key;
         entry._value = value;
         int index = keyHash(key) & _mask;

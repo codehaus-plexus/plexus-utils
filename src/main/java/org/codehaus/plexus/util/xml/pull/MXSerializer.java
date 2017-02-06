@@ -245,19 +245,19 @@ public class MXSerializer implements XmlSerializer {
     protected int indentationJump;
     protected char[] indentationBuf;
     protected int maxIndentLevel;
-    protected boolean writeLineSepartor; //should end-of-line be written
+    protected boolean writeLineSeparator; //should end-of-line be written
     protected boolean writeIndentation; // is indentation used?
 
     /**
      * For maximum efficiency when writing indents the required output is pre-computed
-     * This is internal function that recomputes buffer after user requested chnages.
+     * This is internal function that recomputes buffer after user requested changes.
      */
     protected void rebuildIndentationBuf() {
         if(doIndent == false) return;
         final int maxIndent = 65; //hardcoded maximum indentation size in characters
         int bufSize = 0;
         offsetNewLine = 0;
-        if(writeLineSepartor) {
+        if(writeLineSeparator) {
             offsetNewLine = lineSeparator.length();
             bufSize += offsetNewLine;
         }
@@ -271,7 +271,7 @@ public class MXSerializer implements XmlSerializer {
             indentationBuf = new char[bufSize + 8];
         }
         int bufPos = 0;
-        if(writeLineSepartor) {
+        if(writeLineSeparator) {
             for (int i = 0; i < lineSeparator.length(); i++)
             {
                 indentationBuf[ bufPos++ ] = lineSeparator.charAt(i);
@@ -290,7 +290,7 @@ public class MXSerializer implements XmlSerializer {
 
     // if(doIndent) writeIndent();
     protected void writeIndent() throws IOException {
-        final int start = writeLineSepartor ? 0 : offsetNewLine;
+        final int start = writeLineSeparator ? 0 : offsetNewLine;
         final int level = (depth > maxIndentLevel) ? maxIndentLevel : depth;
         out.write( indentationBuf, start, (level * indentationJump) + offsetNewLine);
     }
@@ -310,10 +310,10 @@ public class MXSerializer implements XmlSerializer {
         } else {
             throw new IllegalStateException("unsupported property "+name);
         }
-        writeLineSepartor = lineSeparator != null && lineSeparator.length() > 0;
+        writeLineSeparator = lineSeparator != null && lineSeparator.length() > 0;
         writeIndentation = indentationString != null && indentationString.length() > 0;
         // optimize - do not write when nothing to write ...
-        doIndent = indentationString != null && (writeLineSepartor || writeIndentation);
+        doIndent = indentationString != null && (writeLineSeparator || writeIndentation);
         //NOTE: when indentationString == null there is no indentation
         //      (even though writeLineSeparator may be true ...)
         rebuildIndentationBuf();
@@ -394,7 +394,7 @@ public class MXSerializer implements XmlSerializer {
             //          }
         }
         out.write("?>");
-        if(writeLineSepartor) {
+        if(writeLineSeparator) {
             out.write(lineSeparator);
         }
     }
@@ -405,7 +405,7 @@ public class MXSerializer implements XmlSerializer {
         while(depth > 0) {
             endTag(elNamespace[ depth ], elName[ depth ]);
         }
-        if(writeLineSepartor) {
+        if(writeLineSeparator) {
             out.write(lineSeparator);
         }
         //assert depth == 0;
@@ -759,7 +759,7 @@ public class MXSerializer implements XmlSerializer {
             if(doIndent && seenTag) { writeIndent(); }
             out.write("</");
             if(namespace != null && namespace.length() > 0) {
-                //TODO prefix should be alredy known from matching start tag ...
+                //TODO prefix should be already known from matching start tag ...
                 final String prefix = lookupOrDeclarePrefix( namespace );
                 //assert( prefix != null);
                 if(prefix.length() > 0) {

@@ -24,9 +24,9 @@ public class XmlPullParserException extends Exception {
     }
 
     /*
-    public XmlPullParserException(String s, Throwable thrwble) {
+    public XmlPullParserException(String s, Throwable throwable) {
         super(s);
-        this.detail = thrwble;
+        this.detail = throwable;
         }
 
     public XmlPullParserException(String s, int row, int column) {
