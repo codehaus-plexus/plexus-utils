@@ -139,7 +139,7 @@ public class Commandline
      * Create a new command line object.
      * Shell is autodetected from operating system
      *
-     * Shell usage is only desirable when generating code for remote execution.
+     * For Linux, shell usage is only desirable when generating code for remote execution.
      *
      * @param toProcess
      */
@@ -170,7 +170,7 @@ public class Commandline
      * Create a new command line object.
      * Shell is autodetected from operating system
      *
-     * Shell usage is only desirable when generating code for remote execution.
+     * For Linux, shell usage is only desirable when generating code for remote execution.
      */
     public Commandline( Shell shell )
     {
@@ -417,7 +417,7 @@ public class Commandline
     /**
      * Return an executable name, quoted for shell use.
      *
-     * Shell usage is only desirable when generating code for remote execution.
+     * For Linux, shell usage is only desirable when generating code for remote execution.
      *
      * @return Executable to be run, quoted for shell interpretation
      */
@@ -487,7 +487,7 @@ public class Commandline
         for ( Object o : envVars.keySet() )
         {
             String name = (String) o;
-            String value = (String) envVars.get( name );
+            String value = envVars.get( name );
             environmentVars[i] = name + "=" + value;
             i++;
         }
@@ -495,10 +495,16 @@ public class Commandline
     }
 
     /**
-     * Returns the executable and all defined arguments.
+     * Returns the executable and all defined arguments.<br/>
+     * For Windows Family, {@link Commandline#getShellCommandline()} is returned
      */
     public String[] getCommandline()
     {
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+        {
+            return getShellCommandline();
+        }
+        
         final String[] args = getArguments();
         String executable = getLiteralExecutable();
 
@@ -515,7 +521,7 @@ public class Commandline
     /**
      * Returns the shell, executable and all defined arguments.
      *
-     * Shell usage is only desirable when generating code for remote execution.
+     * For Linux, shell usage is only desirable when generating code for remote execution.
      */
     public String[] getShellCommandline()
     {
@@ -703,7 +709,7 @@ public class Commandline
     /**
      * Allows to set the shell to be used in this command line.
      *
-     * Shell usage is only desirable when generating code for remote execution.
+     * For Linux, shell usage is only desirable when generating code for remote execution.
      *
      * @param shell
      * @since 1.2
@@ -716,7 +722,7 @@ public class Commandline
     /**
      * Get the shell to be used in this command line.
      *
-     * Shell usage is only desirable when generating code for remote execution.
+     * For Linux, shell usage is only desirable when generating code for remote execution.
      * @since 1.2
      */
     public Shell getShell()

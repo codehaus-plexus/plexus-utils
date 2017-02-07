@@ -88,6 +88,29 @@ public class CommandlineTest
         }
     }
 
+    public void testExecuteBinaryOnPath()
+    {
+        try
+        {
+            // Maven binary on PATH is required for this test
+            Commandline cmd = new Commandline();
+            cmd.setWorkingDirectory( baseDir );
+            cmd.setExecutable( "mvn" );
+            assertEquals( "mvn", cmd.getShell().getOriginalExecutable() );
+            cmd.createArg().setValue( "-version" );
+            Process process = cmd.execute();
+            String out = IOUtil.toString( process.getInputStream() );
+            assertTrue( out.contains( "Apache Maven" ) );
+            assertTrue( out.contains( "Maven home:" ) );
+            assertTrue( out.contains( "Java version:" ) );
+            assertTrue( out.contains( "Java home:" ) );
+        }
+        catch ( Exception e )
+        {
+            fail( "Maven binary seems not on the PATH: " + e.getMessage() );
+        }
+    }    
+    
     public void testExecute()
     {
         try
@@ -99,21 +122,8 @@ public class CommandlineTest
             assertEquals( "echo", cmd.getShell().getOriginalExecutable() );
             cmd.createArgument().setValue( "Hello" );
 
-            StringWriter swriter = new StringWriter();
             Process process = cmd.execute();
-
-            Reader reader = new InputStreamReader( process.getInputStream() );
-
-            char[] chars = new char[16];
-            int read = -1;
-            while ( ( read = reader.read( chars ) ) > -1 )
-            {
-                swriter.write( chars, 0, read );
-            }
-
-            String output = swriter.toString().trim();
-
-            assertEquals( "Hello", output );
+            assertEquals( "Hello", IOUtil.toString( process.getInputStream() ).trim() );
         }
         catch ( Exception e )
         {
@@ -248,7 +258,7 @@ public class CommandlineTest
         String expectedShellCmd = "'/bin/echo' 'hello world'";
         if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
-            expectedShellCmd = "\\bin\\echo \'hello world\'";
+            expectedShellCmd = "'\\bin\\echo' \'hello world\'";
         }
         assertEquals( expectedShellCmd, shellCommandline[2] );
     }
@@ -307,7 +317,7 @@ public class CommandlineTest
         String expectedShellCmd = "'/bin/echo' ''\"'\"'hello world'\"'\"''";
         if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
-            expectedShellCmd = "\\bin\\echo \'hello world\'";
+            expectedShellCmd = expectedShellCmd.replace( "/bin/echo", "\\bin\\echo" );
         }
         assertEquals( expectedShellCmd, shellCommandline[2] );
     }
@@ -330,7 +340,7 @@ public class CommandlineTest
 
         if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
-            assertEquals( "\\usr\\bin a b", shellCommandline[2] );
+            assertEquals( "'\\usr\\bin' 'a' 'b'", shellCommandline[2] );
         }
         else
         {
