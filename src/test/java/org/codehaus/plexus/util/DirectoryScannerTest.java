@@ -196,7 +196,6 @@ public class DirectoryScannerTest
         assertEquals( 5, includedDirs.size() );
     }
 
-
     private void createTestDirectories()
         throws IOException
     {

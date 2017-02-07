@@ -487,7 +487,7 @@ public class Commandline
         for ( Object o : envVars.keySet() )
         {
             String name = (String) o;
-            String value = (String) envVars.get( name );
+            String value = envVars.get( name );
             environmentVars[i] = name + "=" + value;
             i++;
         }
@@ -495,10 +495,16 @@ public class Commandline
     }
 
     /**
-     * Returns the executable and all defined arguments.
+     * Returns the executable and all defined arguments.<br/>
+     * For Windows Family, {@link Commandline#getShellCommandline()} is returned
      */
     public String[] getCommandline()
     {
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+        {
+            return getShellCommandline();
+        }
+
         final String[] args = getArguments();
         String executable = getLiteralExecutable();
 
