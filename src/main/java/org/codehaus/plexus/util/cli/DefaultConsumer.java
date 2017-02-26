@@ -16,6 +16,8 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
+import java.io.IOException;
+
 /**
  * @author <a href="mailto:evenisse@apache.org">Emmanuel Venisse</a>
  * @version $Id$
@@ -23,8 +25,15 @@ package org.codehaus.plexus.util.cli;
 public class DefaultConsumer
     implements StreamConsumer
 {
-    public void consumeLine( String line )
+
+    public void consumeLine( String line ) throws IOException
     {
         System.out.println( line );
+
+        if ( System.out.checkError() )
+        {
+            throw new IOException( String.format( "Failure printing line '%s' to stdout.", line ) );
+        }
     }
+
 }

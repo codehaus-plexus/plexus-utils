@@ -18,12 +18,12 @@ package org.codehaus.plexus.util.cli;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
 import org.codehaus.plexus.util.Os;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -33,9 +33,16 @@ import org.codehaus.plexus.util.StringUtils;
  */
 public abstract class CommandLineUtils
 {
+
+    /**
+     * A {@code StreamConsumer} providing consumed lines as a {@code String}.
+     *
+     * @see #getOutput()
+     */
     public static class StringStreamConsumer
         implements StreamConsumer
     {
+
         private StringBuffer string = new StringBuffer();
 
         private String ls = System.getProperty( "line.separator" );
@@ -49,24 +56,18 @@ public abstract class CommandLineUtils
         {
             return string.toString();
         }
+
     }
 
-    private static class ProcessHook extends Thread {
-        private final Process process;
+    /**
+     * Number of milliseconds per second.
+     */
+    private static final long MILLIS_PER_SECOND = 1000L;
 
-        private ProcessHook( Process process )
-        {
-            super("CommandlineUtils process shutdown hook");
-            this.process = process;
-            this.setContextClassLoader(  null );
-        }
-
-        public void run()
-        {
-            process.destroy();
-        }
-    }
-
+    /**
+     * Number of nanoseconds per second.
+     */
+    private static final long NANOS_PER_SECOND = 1000000000L;
 
     public static int executeCommandLine( Commandline cl, StreamConsumer systemOut, StreamConsumer systemErr )
         throws CommandLineException
@@ -120,10 +121,11 @@ public abstract class CommandLineUtils
      * @throws CommandLineException or CommandLineTimeOutException if time out occurs
      * @noinspection ThrowableResultOfMethodCallIgnored
      */
-    public static CommandLineCallable executeCommandLineAsCallable( final Commandline cl, final InputStream systemIn,
-                                                                  final StreamConsumer systemOut,
-                                                                  final StreamConsumer systemErr,
-                                                                  final int timeoutInSeconds )
+    public static CommandLineCallable executeCommandLineAsCallable( final Commandline cl,
+                                                                    final InputStream systemIn,
+                                                                    final StreamConsumer systemOut,
+                                                                    final StreamConsumer systemErr,
+                                                                    final int timeoutInSeconds )
         throws CommandLineException
     {
         if ( cl == null )
@@ -133,33 +135,48 @@ public abstract class CommandLineUtils
 
         final Process p = cl.execute();
 
-        final StreamFeeder inputFeeder = systemIn != null ?
-             new StreamFeeder( systemIn, p.getOutputStream() ) : null;
-
-        final StreamPumper outputPumper = new StreamPumper( p.getInputStream(), systemOut );
-
-        final StreamPumper errorPumper = new StreamPumper( p.getErrorStream(), systemErr );
-
-        if ( inputFeeder != null )
+        final Thread processHook = new Thread()
         {
-            inputFeeder.start();
-        }
 
-        outputPumper.start();
+            {
+                this.setName( "CommandLineUtils process shutdown hook" );
+                this.setContextClassLoader( null );
+            }
 
-        errorPumper.start();
+            @Override
+            public void run()
+            {
+                p.destroy();
+            }
 
-        final ProcessHook processHook = new ProcessHook( p );
+        };
 
         ShutdownHookUtils.addShutDownHook( processHook );
 
         return new CommandLineCallable()
         {
+
             public Integer call()
                 throws CommandLineException
             {
+                StreamFeeder inputFeeder = null;
+                StreamPumper outputPumper = null;
+                StreamPumper errorPumper = null;
+                boolean success = false;
                 try
                 {
+                    if ( systemIn != null )
+                    {
+                        inputFeeder = new StreamFeeder( systemIn, p.getOutputStream() );
+                        inputFeeder.start();
+                    }
+
+                    outputPumper = new StreamPumper( p.getInputStream(), systemOut );
+                    outputPumper.start();
+
+                    errorPumper = new StreamPumper( p.getErrorStream(), systemErr );
+                    errorPumper.start();
+
                     int returnValue;
                     if ( timeoutInSeconds <= 0 )
                     {
@@ -167,74 +184,166 @@ public abstract class CommandLineUtils
                     }
                     else
                     {
-                        long now = System.currentTimeMillis();
-                        long timeoutInMillis = 1000L * timeoutInSeconds;
-                        long finish = now + timeoutInMillis;
-                        while ( isAlive( p ) && ( System.currentTimeMillis() < finish ) )
+                        final long now = System.nanoTime();
+                        final long timeout = now + NANOS_PER_SECOND * timeoutInSeconds;
+
+                        while ( isAlive( p ) && ( System.nanoTime() < timeout ) )
                         {
-                            Thread.sleep( 10 );
+                            // The timeout is specified in seconds. Therefore we must not sleep longer than one second
+                            // but we should sleep as long as possible to reduce the number of iterations performed.
+                            Thread.sleep( MILLIS_PER_SECOND - 1L );
                         }
+
                         if ( isAlive( p ) )
                         {
-                            throw new InterruptedException( "Process timeout out after " + timeoutInSeconds + " seconds" );
+                            throw new InterruptedException( String.format( "Process timed out after %d seconds.",
+                                                                           timeoutInSeconds ) );
                         }
+
                         returnValue = p.exitValue();
                     }
 
-                    waitForAllPumpers( inputFeeder, outputPumper, errorPumper );
-
-                    if ( outputPumper.getException() != null )
+// TODO Find out if waitUntilDone needs to be called using a try-finally construct. The method may throw an
+//      InterruptedException so that calls to waitUntilDone may be skipped.
+//                    try
+//                    {
+//                        if ( inputFeeder != null )
+//                        {
+//                            inputFeeder.waitUntilDone();
+//                        }
+//                    }
+//                    finally
+//                    {
+//                        try
+//                        {
+//                            outputPumper.waitUntilDone();
+//                        }
+//                        finally
+//                        {
+//                            errorPumper.waitUntilDone();
+//                        }
+//                    }
+                    if ( inputFeeder != null )
                     {
-                        throw new CommandLineException( "Error inside systemOut parser", outputPumper.getException() );
+                        inputFeeder.waitUntilDone();
                     }
 
-                    if ( errorPumper.getException() != null )
+                    outputPumper.waitUntilDone();
+                    errorPumper.waitUntilDone();
+
+                    if ( inputFeeder != null )
                     {
-                        throw new CommandLineException( "Error inside systemErr parser", errorPumper.getException() );
+                        inputFeeder.close();
+                        handleException( inputFeeder, "stdin" );
                     }
 
+                    outputPumper.close();
+                    handleException( outputPumper, "stdout" );
+
+                    errorPumper.close();
+                    handleException( errorPumper, "stderr" );
+
+                    success = true;
                     return returnValue;
                 }
                 catch ( InterruptedException ex )
+                {
+                    throw new CommandLineTimeOutException( "Error while executing external command, process killed.",
+                                                           ex );
+
+                }
+                finally
                 {
                     if ( inputFeeder != null )
                     {
                         inputFeeder.disable();
                     }
-                    outputPumper.disable();
-                    errorPumper.disable();
-                    throw new CommandLineTimeOutException( "Error while executing external command, process killed.", ex );
-                }
-                finally
-                {
-                    ShutdownHookUtils.removeShutdownHook( processHook );
-
-                    processHook.run();
-
-                    if ( inputFeeder != null )
+                    if ( outputPumper != null )
                     {
-                        inputFeeder.close();
+                        outputPumper.disable();
+                    }
+                    if ( errorPumper != null )
+                    {
+                        errorPumper.disable();
                     }
 
-                    outputPumper.close();
+                    try
+                    {
+                        ShutdownHookUtils.removeShutdownHook( processHook );
+                        processHook.run();
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            if ( inputFeeder != null )
+                            {
+                                inputFeeder.close();
 
-                    errorPumper.close();
+                                if ( success )
+                                {
+                                    success = false;
+                                    handleException( inputFeeder, "stdin" );
+                                    success = true; // Only reached when no exception has been thrown.
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            try
+                            {
+                                if ( outputPumper != null )
+                                {
+                                    outputPumper.close();
+
+                                    if ( success )
+                                    {
+                                        success = false;
+                                        handleException( outputPumper, "stdout" );
+                                        success = true; // Only reached when no exception has been thrown.
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                if ( errorPumper != null )
+                                {
+                                    errorPumper.close();
+
+                                    if ( success )
+                                    {
+                                        handleException( errorPumper, "stderr" );
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
         };
     }
 
-    private static void waitForAllPumpers( StreamFeeder inputFeeder, StreamPumper outputPumper,
-                                           StreamPumper errorPumper )
-        throws InterruptedException
+    private static void handleException( final StreamPumper streamPumper, final String streamName )
+        throws CommandLineException
     {
-        if ( inputFeeder != null )
+        if ( streamPumper.getException() != null )
         {
-            inputFeeder.waitUntilDone();
-        }
+            throw new CommandLineException( String.format( "Failure processing %s.", streamName ),
+                                            streamPumper.getException() );
 
-        outputPumper.waitUntilDone();
-        errorPumper.waitUntilDone();
+        }
+    }
+
+    private static void handleException( final StreamFeeder streamFeeder, final String streamName )
+        throws CommandLineException
+    {
+        if ( streamFeeder.getException() != null )
+        {
+            throw new CommandLineException( String.format( "Failure processing %s.", streamName ),
+                                            streamFeeder.getException() );
+
+        }
     }
 
     /**

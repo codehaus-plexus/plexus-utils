@@ -70,8 +70,6 @@ package org.codehaus.plexus.util.cli;
  * ====================================================================
  */
 
-import org.codehaus.plexus.util.IOUtil;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -117,22 +115,26 @@ public class StreamPumper
 
     public StreamPumper( InputStream in, PrintWriter writer, StreamConsumer consumer )
     {
+        super();
         this.in = new BufferedReader( new InputStreamReader( in ), SIZE );
         this.out = writer;
         this.consumer = consumer;
     }
 
+    @Override
     public void run()
     {
+        boolean outError = out != null ? out.checkError() : false;
+
         try
         {
             for ( String line = in.readLine(); line != null; line = in.readLine() )
             {
                 try
                 {
-                    if ( exception == null )
+                    if ( exception == null && consumer != null && !isDisabled() )
                     {
-                        consumeLine( line );
+                        consumer.consumeLine( line );
                     }
                 }
                 catch ( Exception t )
@@ -140,11 +142,26 @@ public class StreamPumper
                     exception = t;
                 }
 
-                if ( out != null )
+                if ( out != null && !outError )
                 {
                     out.println( line );
 
                     out.flush();
+
+                    if ( out.checkError() )
+                    {
+                        outError = true;
+
+                        try
+                        {
+                            // Thrown to fill in stack trace elements.
+                            throw new IOException( String.format( "Failure printing line '%s'.", line ) );
+                        }
+                        catch ( final IOException e )
+                        {
+                            exception = e;
+                        }
+                    }
                 }
             }
         }
@@ -154,7 +171,17 @@ public class StreamPumper
         }
         finally
         {
-            IOUtil.close( in );
+            try
+            {
+                in.close();
+            }
+            catch ( final IOException e2 )
+            {
+                if ( exception == null )
+                {
+                    exception = e2;
+                }
+            }
 
             synchronized ( this )
             {
@@ -170,24 +197,45 @@ public class StreamPumper
         if ( out != null )
         {
             out.flush();
+
+            if ( out.checkError() && exception == null )
+            {
+                try
+                {
+                    // Thrown to fill in stack trace elements.
+                    throw new IOException( "Failure flushing output." );
+                }
+                catch ( final IOException e )
+                {
+                    exception = e;
+                }
+            }
         }
     }
 
     public void close()
     {
-        IOUtil.close( out );
+        if ( out != null )
+        {
+            out.close();
+
+            if ( out.checkError() && exception == null )
+            {
+                try
+                {
+                    // Thrown to fill in stack trace elements.
+                    throw new IOException( "Failure closing output." );
+                }
+                catch ( final IOException e )
+                {
+                    exception = e;
+                }
+            }
+        }
     }
 
     public Exception getException()
     {
         return exception;
-    }
-
-    private void consumeLine( String line )
-    {
-        if ( consumer != null && !isDisabled() )
-        {
-            consumer.consumeLine( line );
-        }
     }
 }

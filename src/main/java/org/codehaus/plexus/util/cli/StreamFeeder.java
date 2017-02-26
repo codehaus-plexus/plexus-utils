@@ -26,29 +26,29 @@ import java.io.OutputStream;
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
  * @version $Id$
  */
-public class StreamFeeder extends AbstractStreamHandler {
+public class StreamFeeder extends AbstractStreamHandler
+{
+
     private InputStream input;
 
     private OutputStream output;
 
+    private volatile Throwable exception = null;
 
     /**
      * Create a new StreamFeeder
      *
-     * @param input  Stream to read from
+     * @param input Stream to read from
      * @param output Stream to write to
      */
     public StreamFeeder( InputStream input, OutputStream output )
     {
+        super();
         this.input = input;
-
         this.output = output;
     }
 
-    // ----------------------------------------------------------------------
-    // Runnable implementation
-    // ----------------------------------------------------------------------
-
+    @Override
     public void run()
     {
         try
@@ -57,7 +57,10 @@ public class StreamFeeder extends AbstractStreamHandler {
         }
         catch ( Throwable ex )
         {
-            // Catched everything so the streams will be closed and flagged as done.
+            if ( exception == null )
+            {
+                exception = ex;
+            }
         }
         finally
         {
@@ -72,10 +75,6 @@ public class StreamFeeder extends AbstractStreamHandler {
         }
     }
 
-    // ----------------------------------------------------------------------
-    //
-    // ----------------------------------------------------------------------
-
     public void close()
     {
         if ( input != null )
@@ -88,7 +87,10 @@ public class StreamFeeder extends AbstractStreamHandler {
                 }
                 catch ( IOException ex )
                 {
-                    // ignore
+                    if ( exception == null )
+                    {
+                        exception = ex;
+                    }
                 }
 
                 input = null;
@@ -105,7 +107,10 @@ public class StreamFeeder extends AbstractStreamHandler {
                 }
                 catch ( IOException ex )
                 {
-                    // ignore
+                    if ( exception == null )
+                    {
+                        exception = ex;
+                    }
                 }
 
                 output = null;
@@ -113,26 +118,37 @@ public class StreamFeeder extends AbstractStreamHandler {
         }
     }
 
-    // ----------------------------------------------------------------------
-    //
-    // ----------------------------------------------------------------------
+    /**
+     * @since 3.1.0
+     */
+    public Throwable getException()
+    {
+        return exception;
+    }
 
     private void feed()
         throws IOException
     {
+        boolean flush = false;
         int data = input.read();
 
         while ( !isDone() && data != -1 )
         {
             synchronized ( output )
             {
-                if ( !isDisabled())
+                if ( !isDisabled() )
                 {
                     output.write( data );
+                    flush = true;
                 }
 
                 data = input.read();
             }
+        }
+
+        if ( flush )
+        {
+            output.flush();
         }
     }
 

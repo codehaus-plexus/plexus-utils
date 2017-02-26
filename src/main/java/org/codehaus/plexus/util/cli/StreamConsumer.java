@@ -53,6 +53,8 @@ package org.codehaus.plexus.util.cli;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ********************************************************************************/
 
+import java.io.IOException;
+
 /**
  * Works in concert with the StreamPumper class to
  * allow implementations to gain access to the lines being
@@ -69,6 +71,8 @@ public interface StreamConsumer
 {
     /**
      * Called when the StreamPumper pumps a line from the Stream.
+     * @param line The line to be consumed.
+     * @throws IOException if consuming {@code line} fails.
      */
-    public void consumeLine( String line );
+    public void consumeLine( String line ) throws IOException;
 }
