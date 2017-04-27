@@ -2469,7 +2469,7 @@ public class MXParser
         if(tokenize) posStart = pos;
         final int curLine = lineNumber;
         final int curColumn = columnNumber;
-        int piTargetStart = pos + bufAbsoluteStart;
+        int piTargetStart = pos;
         int piTargetEnd = -1;
         final boolean normalizeIgnorableWS = tokenize == true && roundtripSupported == false;
         boolean normalizedCR = false;
@@ -2495,7 +2495,7 @@ public class MXParser
                     seenQ = false;
                 } else {
                     if(piTargetEnd == -1 && isS(ch)) {
-                        piTargetEnd = pos - 1 + bufAbsoluteStart;
+                        piTargetEnd = pos - 1;
 
                         // [17] PITarget ::= Name - (('X' | 'x') ('M' | 'm') ('L' | 'l'))
                         if((piTargetEnd - piTargetStart) == 3) {
@@ -2520,7 +2520,7 @@ public class MXParser
                                 }
                                 parseXmlDecl(ch);
                                 if(tokenize) posEnd = pos - 2;
-                                final int off = piTargetStart - bufAbsoluteStart + 3;
+                                final int off = piTargetStart + 3;
                                 final int len = pos - 2 - off;
                                 xmlDeclContent = newString(buf, off, len);
                                 return false;
@@ -2575,8 +2575,6 @@ public class MXParser
             //throw new XmlPullParserException(
             //    "processing instruction must have PITarget name", this, null);
         }
-        piTargetStart -= bufAbsoluteStart;
-        piTargetEnd -= bufAbsoluteStart;
         if(tokenize) {
             posEnd = pos - 2;
             if(normalizeIgnorableWS) {
