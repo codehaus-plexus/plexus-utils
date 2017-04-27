@@ -194,13 +194,17 @@ public class MXParserTest
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         sb.append("<project>");
 
-        sb.append("<!-- ");
 
-        for (int i = 0; i < 1000; i++) {
-            sb.append("ten bytes ");
+        // add ten times 1000 chars as comment
+        for (int j = 0; j < 10; j++) {
+
+            sb.append("<!-- ");
+            for (int i = 0; i < 2000; i++) {
+                sb.append("ten bytes ");
+            }
+            sb.append(" -->");
         }
 
-        sb.append(" -->");
         sb.append("<?m2e ignore?>");
         sb.append("</project>");
 
@@ -211,6 +215,15 @@ public class MXParserTest
 
         assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
         assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
         assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
         assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
