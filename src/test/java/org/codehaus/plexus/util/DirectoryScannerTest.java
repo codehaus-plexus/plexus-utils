@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +35,7 @@ import java.util.List;
 public class DirectoryScannerTest
     extends FileBasedTestCase
 {
+
     private static String testDir = getTestDirectory().getPath();
 
     public void testCrossPlatformIncludesString()
@@ -110,6 +113,44 @@ public class DirectoryScannerTest
         this.createFile( new File( testDir + "/scanner5.dat" ), 0 );
     }
 
+    /**
+     * Check if 'src/test/resources/symlinks/src/sym*' test files (start with 'sym') exist and are symlinks.<br>
+     * On some OS (like Windows 10), the 'git clone' requires to be executed with admin permissions and the
+     * 'core.symlinks=true' git option.
+     * 
+     * @return true If files here and symlinks, false otherwise
+     */
+    private boolean checkTestFilesSymlinks()
+    {
+        File symlinksDirectory = new File( "src/test/resources/symlinks/src" );
+        try
+        {
+            List<String> symlinks =
+                FileUtils.getFileAndDirectoryNames( symlinksDirectory, "sym*", null, true, true, true, true );
+            if ( symlinks.isEmpty() )
+            {
+                throw new IOException( "Symlinks files/directories are not present" );
+            }
+            for ( String symLink : symlinks )
+            {
+                if ( !Files.isSymbolicLink( Paths.get( symLink ) ) )
+                {
+                    throw new IOException( String.format( "Path is not a symlink: %s", symLink ) );
+                }
+            }
+            return true;
+        }
+        catch ( IOException e )
+        {
+            System.err.println( String.format( "The unit test '%s.%s' will be skipped, reason: %s",
+                                               this.getClass().getSimpleName(), this.getName(), e.getMessage() ) );
+            System.out.println( String.format( "This test requires symlinks files in '%s' directory.",
+                                               symlinksDirectory.getPath() ) );
+            System.out.println( "On some OS (like Windows 10), files are present only if the clone/checkout is done in administrator mode, and correct (symlinks and not flat file/directory) if symlinks option are used (for git: git clone -c core.symlinks=true [url])" );
+            return false;
+        }
+    }
+
     public void testGeneral()
         throws IOException
     {
@@ -146,6 +187,10 @@ public class DirectoryScannerTest
 
     public void testFollowSymlinksFalse()
     {
+        if ( !checkTestFilesSymlinks() )
+        {
+            return;
+        }
         DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
         ds.setFollowSymlinks( false );
@@ -177,6 +222,10 @@ public class DirectoryScannerTest
 
     public void testFollowSymlinks()
     {
+        if ( !checkTestFilesSymlinks() )
+        {
+            return;
+        }
         DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
         ds.setFollowSymlinks( true );
@@ -446,8 +495,7 @@ public class DirectoryScannerTest
         StringBuilder buffer = new StringBuilder();
         if ( !failedToExclude.isEmpty() )
         {
-            buffer.append( "Should NOT have included:\n" ).append(
-                                                                   StringUtils.join( failedToExclude.iterator(),
+            buffer.append( "Should NOT have included:\n" ).append( StringUtils.join( failedToExclude.iterator(),
                                                                                      "\n\t- " ) );
         }
 
@@ -458,8 +506,8 @@ public class DirectoryScannerTest
                 buffer.append( "\n\n" );
             }
 
-            buffer.append( "Should have included:\n" )
-                  .append( StringUtils.join( failedToInclude.iterator(), "\n\t- " ) );
+            buffer.append( "Should have included:\n" ).append( StringUtils.join( failedToInclude.iterator(),
+                                                                                 "\n\t- " ) );
         }
 
         if ( buffer.length() > 0 )

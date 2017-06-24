@@ -100,10 +100,11 @@ public class CommandlineTest
             cmd.createArg().setValue( "-version" );
             Process process = cmd.execute();
             String out = IOUtil.toString( process.getInputStream() );
-            assertTrue( out.contains( "Apache Maven" ) );
-            assertTrue( out.contains( "Maven home:" ) );
-            assertTrue( out.contains( "Java version:" ) );
-            assertTrue( out.contains( "Java home:" ) );
+            final String msg = String.format( "Maven seems not in PATH, 'mvn -version' result is: %s", out );
+            assertTrue( msg, out.contains( "Apache Maven" ) );
+            assertTrue( msg, out.contains( "Maven home:" ) );
+            assertTrue( msg, out.contains( "Java version:" ) );
+            assertTrue( msg, out.contains( "Java home:" ) );
         }
         catch ( Exception e )
         {
