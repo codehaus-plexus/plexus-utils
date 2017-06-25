@@ -405,6 +405,44 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    public void testIsSymbolicLink()
+        throws IOException
+    {
+        // TODO: Uncomment when PR #25 merged
+        // if ( !checkTestFilesSymlinks() )
+        // {
+        // return;
+        // }
+
+        final File directory = new File( "src/test/resources/symlinks/src" );
+        DirectoryScanner ds = new DirectoryScanner();
+        assertTrue( ds.isSymbolicLink( directory, "symR" ) );
+        assertTrue( ds.isSymbolicLink( directory, "symDir" ) );
+        assertFalse( ds.isSymbolicLink( directory, "fileR.txt" ) );
+        assertFalse( ds.isSymbolicLink( directory, "aRegularDir" ) );
+    }
+
+    public void testIsParentSymbolicLink()
+        throws IOException
+    {
+        // TODO: Uncomment when PR #25 merged
+        // if ( !checkTestFilesSymlinks() )
+        // {
+        // return;
+        // }
+
+        final File directory = new File( "src/test/resources/symlinks/src" );
+        DirectoryScanner ds = new DirectoryScanner();
+        assertFalse( ds.isParentSymbolicLink( directory, "symR" ) );
+        assertFalse( ds.isParentSymbolicLink( directory, "symDir" ) );
+        assertFalse( ds.isParentSymbolicLink( directory, "fileR.txt" ) );
+        assertFalse( ds.isParentSymbolicLink( directory, "aRegularDir" ) );
+        assertFalse( ds.isParentSymbolicLink( new File( directory, "aRegularDir" ), "aRegulatFile.txt" ) );
+        assertTrue( ds.isParentSymbolicLink( new File( directory, "symDir" ), "targetFile.txt" ) );
+        assertTrue( ds.isParentSymbolicLink( new File( directory, "symLinkToDirOnTheOutside" ),
+                                             "FileInDirOnTheOutside.txt" ) );
+    }
+
     private void printTestHeader()
     {
         StackTraceElement ste = new Throwable().getStackTrace()[1];
@@ -446,8 +484,7 @@ public class DirectoryScannerTest
         StringBuilder buffer = new StringBuilder();
         if ( !failedToExclude.isEmpty() )
         {
-            buffer.append( "Should NOT have included:\n" ).append(
-                                                                   StringUtils.join( failedToExclude.iterator(),
+            buffer.append( "Should NOT have included:\n" ).append( StringUtils.join( failedToExclude.iterator(),
                                                                                      "\n\t- " ) );
         }
 
@@ -458,8 +495,8 @@ public class DirectoryScannerTest
                 buffer.append( "\n\n" );
             }
 
-            buffer.append( "Should have included:\n" )
-                  .append( StringUtils.join( failedToInclude.iterator(), "\n\t- " ) );
+            buffer.append( "Should have included:\n" ).append( StringUtils.join( failedToInclude.iterator(),
+                                                                                 "\n\t- " ) );
         }
 
         if ( buffer.length() > 0 )
