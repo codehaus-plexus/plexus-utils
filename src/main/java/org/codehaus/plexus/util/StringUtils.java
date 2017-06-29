@@ -158,7 +158,7 @@ public class StringUtils
      */
     public static boolean isNotEmpty( String str )
     {
-        return ( ( str != null ) && ( str.length() > 0 ) );
+        return ( ( str != null ) && ( !str.isEmpty() ) );
     }
 
     /**
@@ -174,7 +174,7 @@ public class StringUtils
      */
     public static boolean isEmpty( String str )
     {
-        return ( ( str == null ) || ( str.trim().length() == 0 ) );
+        return ( ( str == null ) || ( str.trim().isEmpty() ) );
     }
 
     /**
@@ -828,7 +828,7 @@ public class StringUtils
      */
     public static String overlayString( String text, String overlay, int start, int end )
     {
-        return new StringBuffer( start + overlay.length() + text.length() - end + 1 )
+        return new StringBuilder( start + overlay.length() + text.length() - end + 1 )
             .append( text, 0, start  )
             .append( overlay )
             .append( text, end, text.length() )
@@ -1475,7 +1475,7 @@ public class StringUtils
         }
         else
         {
-            return new StringBuffer( str.length() )
+            return new StringBuilder( str.length() )
                 .append( Character.toLowerCase( str.charAt( 0 ) ) )
                 .append( str, 1, str.length() )
                 .toString();
@@ -1971,7 +1971,7 @@ public class StringUtils
         {
             return null;
         }
-        return new StringBuffer( str ).reverse().toString();
+        return new StringBuilder( str ).reverse().toString();
     }
 
     /**
