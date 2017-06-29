@@ -1952,7 +1952,7 @@ public class StringUtils
      */
     public static String defaultString( Object obj, String defaultString )
     {
-        return ( obj == null ) ? defaultString : obj.toString();
+        return Objects.toString( obj, defaultString );
     }
 
     // Reversing
