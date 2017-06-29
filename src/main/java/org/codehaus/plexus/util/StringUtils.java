@@ -57,6 +57,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 /**
@@ -258,10 +259,12 @@ public class StringUtils
      * @param str1 the first string
      * @param str2 the second string
      * @return <code>true</code> if the Strings are equal, case sensitive, or both <code>null</code>
+     * @see Objects#equals(Object, Object)
      */
+    @Deprecated
     public static boolean equals( String str1, String str2 )
     {
-        return ( str1 == null ? str2 == null : str1.equals( str2 ) );
+        return Objects.equals( str1, str2 );
     }
 
     /**
@@ -2038,7 +2041,9 @@ public class StringUtils
      *
      * @param obj the Object to check
      * @return the passed in Object's toString, or blank if it was <code>null</code>
+     * @see Objects#toString(Object, String)
      */
+    @Deprecated
     public static String defaultString( Object obj )
     {
         return defaultString( obj, "" );
@@ -2053,10 +2058,12 @@ public class StringUtils
      * @param obj the Object to check
      * @param defaultString the default String to return if str is <code>null</code>
      * @return the passed in string, or the default if it was <code>null</code>
+     * @see Objects#toString(Object, String)
      */
+    @Deprecated
     public static String defaultString( Object obj, String defaultString )
     {
-        return ( obj == null ) ? defaultString : obj.toString();
+        return Objects.toString( obj, defaultString );
     }
 
     // Reversing
