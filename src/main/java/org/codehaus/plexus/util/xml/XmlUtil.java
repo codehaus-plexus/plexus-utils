@@ -88,10 +88,13 @@ public class XmlUtil
 
     /**
      * Pretty format the input reader. For instance, the following input:
+     * 
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
+     * 
      * becomes
+     * 
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;
@@ -113,10 +116,13 @@ public class XmlUtil
 
     /**
      * Pretty format the input reader. For instance, the following input:
+     * 
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
+     * 
      * becomes
+     * 
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;
@@ -166,10 +172,13 @@ public class XmlUtil
 
     /**
      * Pretty format the input stream. For instance, the following input:
+     * 
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
+     * 
      * becomes
+     * 
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;
@@ -189,10 +198,13 @@ public class XmlUtil
 
     /**
      * Pretty format the input stream. For instance, the following input:
+     * 
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
+     * 
      * becomes
+     * 
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;

@@ -20,26 +20,25 @@ import java.io.StringReader;
 
 import junit.framework.TestCase;
 
-public class Xpp3DomUtilsTest extends TestCase {
-	
-    public void testCombineId() throws Exception
-    {
-        String lhs = "<props>" + 
-                        "<property combine.id='LHS-ONLY'><name>LHS-ONLY</name><value>LHS</value></property>" +
-                        "<property combine.id='TOOVERWRITE'><name>TOOVERWRITE</name><value>LHS</value></property>" +
-                      "</props>";
+public class Xpp3DomUtilsTest
+    extends TestCase
+{
 
-        String rhs = "<props>" + 
-                        "<property combine.id='RHS-ONLY'><name>RHS-ONLY</name><value>RHS</value></property>" +
-                        "<property combine.id='TOOVERWRITE'><name>TOOVERWRITE</name><value>RHS</value></property>" +
-                      "</props>";
-        
+    public void testCombineId()
+        throws Exception
+    {
+        String lhs = "<props>" + "<property combine.id='LHS-ONLY'><name>LHS-ONLY</name><value>LHS</value></property>"
+            + "<property combine.id='TOOVERWRITE'><name>TOOVERWRITE</name><value>LHS</value></property>" + "</props>";
+
+        String rhs = "<props>" + "<property combine.id='RHS-ONLY'><name>RHS-ONLY</name><value>RHS</value></property>"
+            + "<property combine.id='TOOVERWRITE'><name>TOOVERWRITE</name><value>RHS</value></property>" + "</props>";
+
         Xpp3Dom leftDom = Xpp3DomBuilder.build( new StringReader( lhs ) );
         Xpp3Dom rightDom = Xpp3DomBuilder.build( new StringReader( rhs ) );
-        
+
         Xpp3Dom mergeResult = Xpp3DomUtils.mergeXpp3Dom( leftDom, rightDom, true );
         assertEquals( 3, mergeResult.getChildren( "property" ).length );
-        
+
         assertEquals( "LHS-ONLY", mergeResult.getChildren( "property" )[0].getChild( "name" ).getValue() );
         assertEquals( "LHS", mergeResult.getChildren( "property" )[0].getChild( "value" ).getValue() );
         assertEquals( "TOOVERWRITE", mergeResult.getChildren( "property" )[1].getChild( "name" ).getValue() );

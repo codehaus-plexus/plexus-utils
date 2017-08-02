@@ -52,7 +52,7 @@ public class NioFiles
     private static Set<PosixFilePermission> getPermissions( int mode )
     {
         Set<PosixFilePermission> perms = new HashSet<PosixFilePermission>();
-        //add owners permission
+        // add owners permission
         if ( ( mode & 0400 ) > 0 )
         {
             perms.add( PosixFilePermission.OWNER_READ );
@@ -65,7 +65,7 @@ public class NioFiles
         {
             perms.add( PosixFilePermission.OWNER_EXECUTE );
         }
-        //add group permissions
+        // add group permissions
         if ( ( mode & 0040 ) > 0 )
         {
             perms.add( PosixFilePermission.GROUP_READ );
@@ -78,7 +78,7 @@ public class NioFiles
         {
             perms.add( PosixFilePermission.GROUP_EXECUTE );
         }
-        //add others permissions
+        // add others permissions
         if ( ( mode & 0004 ) > 0 )
         {
             perms.add( PosixFilePermission.OTHERS_READ );
@@ -137,12 +137,9 @@ public class NioFiles
     public static File copy( File source, File target )
         throws IOException
     {
-        Path copy = Files.copy( source.toPath(), target.toPath(),
-                                StandardCopyOption.REPLACE_EXISTING,
-                                StandardCopyOption.COPY_ATTRIBUTES,
-                                LinkOption.NOFOLLOW_LINKS );
+        Path copy = Files.copy( source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING,
+                                StandardCopyOption.COPY_ATTRIBUTES, LinkOption.NOFOLLOW_LINKS );
         return copy.toFile();
     }
-
 
 }

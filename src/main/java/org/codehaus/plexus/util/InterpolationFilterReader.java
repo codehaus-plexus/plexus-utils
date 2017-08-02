@@ -61,25 +61,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A FilterReader which interpolates keyword values into a character stream.
- * Keywords are recognized when enclosed between starting and ending delimiter
- * strings.  The keywords themselves, and their values, are fetched from a Map
+ * A FilterReader which interpolates keyword values into a character stream. Keywords are recognized when enclosed
+ * between starting and ending delimiter strings. The keywords themselves, and their values, are fetched from a Map
  * supplied to the constructor.
  * <p>
- * When a possible keyword token is recognized (by detecting the starting and
- * ending token delimiters):
+ * When a possible keyword token is recognized (by detecting the starting and ending token delimiters):
  * </p>
  * <ul>
- * <li>if the enclosed string is found in the keyword Map, the delimiters and
- * the keyword are effectively replaced by the keyword's value;</li>
- * <li>if the enclosed string is found in the keyword Map, but its value has
- * zero length, then the token (delimiters and keyword) is effectively removed
- * from the character stream;</li>
- * <li>if the enclosed string is <em>not</em> found in the keyword Map, then
- * no substitution is made; the token text is passed through unaltered.</li>
+ * <li>if the enclosed string is found in the keyword Map, the delimiters and the keyword are effectively replaced by
+ * the keyword's value;</li>
+ * <li>if the enclosed string is found in the keyword Map, but its value has zero length, then the token (delimiters and
+ * keyword) is effectively removed from the character stream;</li>
+ * <li>if the enclosed string is <em>not</em> found in the keyword Map, then no substitution is made; the token text is
+ * passed through unaltered.</li>
  * </ul>
- * @see LineOrientedInterpolatingReader
-s */
+ * 
+ * @see LineOrientedInterpolatingReader s
+ */
 public class InterpolationFilterReader
     extends FilterReader
 {
@@ -93,7 +91,7 @@ public class InterpolationFilterReader
     private int previousIndex = -1;
 
     /** Hashtable to hold the replacee-replacer pairs (String to String). */
-    private Map<?,Object> variables = new HashMap<Object,Object>();
+    private Map<?, Object> variables = new HashMap<Object, Object>();
 
     /** Character marking the beginning of a token. */
     private String beginToken;
@@ -114,13 +112,12 @@ public class InterpolationFilterReader
     private static final String DEFAULT_END_TOKEN = "}";
 
     /**
-     * Construct a Reader to interpolate values enclosed between the given
-     * delimiter tokens.
+     * Construct a Reader to interpolate values enclosed between the given delimiter tokens.
      * 
      * @param in a Reader to be wrapped for interpolation.
      * @param variables name/value pairs to be interpolated into the character stream.
      * @param beginToken an interpolation target begins with this.
-     * @param endToken  an interpolation target ends with this.
+     * @param endToken an interpolation target ends with this.
      */
     public InterpolationFilterReader( Reader in, Map<?, Object> variables, String beginToken, String endToken )
     {
@@ -135,8 +132,7 @@ public class InterpolationFilterReader
     }
 
     /**
-     * Construct a Reader using the default interpolation delimiter tokens
-     * "${" and "}".
+     * Construct a Reader using the default interpolation delimiter tokens "${" and "}".
      * 
      * @param in a Reader to be wrapped for interpolation.
      * @param variables name/value pairs to be interpolated into the character stream.
@@ -147,17 +143,16 @@ public class InterpolationFilterReader
     }
 
     /**
-     * Skips characters.  This method will block until some characters are
-     * available, an I/O error occurs, or the end of the stream is reached.
+     * Skips characters. This method will block until some characters are available, an I/O error occurs, or the end of
+     * the stream is reached.
      *
-     * @param  n  The number of characters to skip
-     *
-     * @return    the number of characters actually skipped
-     *
-     * @exception  IllegalArgumentException  If <code>n</code> is negative.
-     * @exception  IOException  If an I/O error occurs
+     * @param n The number of characters to skip
+     * @return the number of characters actually skipped
+     * @exception IllegalArgumentException If <code>n</code> is negative.
+     * @exception IOException If an I/O error occurs
      */
-    public long skip( long n ) throws IOException
+    public long skip( long n )
+        throws IOException
     {
         if ( n < 0L )
         {
@@ -175,23 +170,16 @@ public class InterpolationFilterReader
     }
 
     /**
-     * Reads characters into a portion of an array.  This method will block
-     * until some input is available, an I/O error occurs, or the end of the
-     * stream is reached.
+     * Reads characters into a portion of an array. This method will block until some input is available, an I/O error
+     * occurs, or the end of the stream is reached.
      *
-     * @param      cbuf  Destination buffer to write characters to.
-     *                   Must not be <code>null</code>.
-     * @param      off   Offset at which to start storing characters.
-     * @param      len   Maximum number of characters to read.
-     *
-     * @return     the number of characters read, or -1 if the end of the
-     *             stream has been reached
-     *
-     * @exception  IOException  If an I/O error occurs
+     * @param cbuf Destination buffer to write characters to. Must not be <code>null</code>.
+     * @param off Offset at which to start storing characters.
+     * @param len Maximum number of characters to read.
+     * @return the number of characters read, or -1 if the end of the stream has been reached
+     * @exception IOException If an I/O error occurs
      */
-    public int read( char cbuf[],
-                     int off,
-                     int len )
+    public int read( char cbuf[], int off, int len )
         throws IOException
     {
         for ( int i = 0; i < len; i++ )
@@ -214,16 +202,13 @@ public class InterpolationFilterReader
     }
 
     /**
-     * Returns the next character in the filtered stream, replacing tokens
-     * from the original stream.
+     * Returns the next character in the filtered stream, replacing tokens from the original stream.
      *
-     * @return the next character in the resulting stream, or -1
-     * if the end of the resulting stream has been reached
-     *
-     * @exception IOException if the underlying stream throws an IOException
-     * during reading
+     * @return the next character in the resulting stream, or -1 if the end of the resulting stream has been reached
+     * @exception IOException if the underlying stream throws an IOException during reading
      */
-    public int read() throws IOException
+    public int read()
+        throws IOException
     {
         if ( replaceIndex != -1 && replaceIndex < replaceData.length() )
         {
@@ -265,8 +250,8 @@ public class InterpolationFilterReader
                 {
                     key.append( (char) ch );
 
-                    if ( ( beginTokenMatchPos < beginTokenLength ) &&
-                            ( ch != beginToken.charAt( beginTokenMatchPos++ ) ) )
+                    if ( ( beginTokenMatchPos < beginTokenLength )
+                        && ( ch != beginToken.charAt( beginTokenMatchPos++ ) ) )
                     {
                         ch = -1; // not really EOF but to trigger code below
                         break;
@@ -326,7 +311,7 @@ public class InterpolationFilterReader
 
             String variableKey = key.substring( beginTokenLength - 1, key.length() - endTokenLength );
 
-            Object o = variables.get(variableKey);
+            Object o = variables.get( variableKey );
             if ( o != null )
             {
                 String value = o.toString();
@@ -340,9 +325,9 @@ public class InterpolationFilterReader
             else
             {
                 previousIndex = 0;
-                replaceData = key.substring(0, key.length() - endTokenLength );
+                replaceData = key.substring( 0, key.length() - endTokenLength );
                 replaceIndex = 0;
-                return beginToken.charAt(0);
+                return beginToken.charAt( 0 );
             }
         }
 

@@ -31,7 +31,7 @@ public class CommandShell
     public CommandShell()
     {
         setShellCommand( "command.com" );
-        setShellArgs( new String[]{"/C"} );
+        setShellArgs( new String[] { "/C" } );
     }
 
 }

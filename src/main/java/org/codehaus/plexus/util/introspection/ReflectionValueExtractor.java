@@ -38,8 +38,8 @@ import org.codehaus.plexus.util.StringUtils;
  * @author <a href="mailto:jason@maven.org">Jason van Zyl </a>
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @version $Id$
- * @see <a
- *      href="http://struts.apache.org/1.x/struts-taglib/indexedprops.html">http://struts.apache.org/1.x/struts-taglib/indexedprops.html</a>
+ * @see <a href=
+ *      "http://struts.apache.org/1.x/struts-taglib/indexedprops.html">http://struts.apache.org/1.x/struts-taglib/indexedprops.html</a>
  */
 public class ReflectionValueExtractor
 {
@@ -181,7 +181,7 @@ public class ReflectionValueExtractor
      * @throws Exception if any
      */
     // TODO: don't throw Exception
-    public static Object evaluate(  String expression, final Object root, final boolean trimRootToken )
+    public static Object evaluate( String expression, final Object root, final boolean trimRootToken )
         throws Exception
     {
         Object value = root;
@@ -196,7 +196,7 @@ public class ReflectionValueExtractor
             return null;
         }
 
-       boolean hasDots = expression.indexOf( PROPERTY_START ) >= 0;
+        boolean hasDots = expression.indexOf( PROPERTY_START ) >= 0;
 
         final Tokenizer tokenizer;
         if ( trimRootToken && hasDots )
@@ -219,14 +219,12 @@ public class ReflectionValueExtractor
             switch ( tokenizer.skipChar() )
             {
                 case INDEXED_START:
-                    value =
-                        getIndexedValue( expression, propertyPosition, tokenizer.getPosition(), value,
-                                         tokenizer.nextToken( INDEXED_END ) );
+                    value = getIndexedValue( expression, propertyPosition, tokenizer.getPosition(), value,
+                                             tokenizer.nextToken( INDEXED_END ) );
                     break;
                 case MAPPED_START:
-                    value =
-                        getMappedValue( expression, propertyPosition, tokenizer.getPosition(), value,
-                                        tokenizer.nextToken( MAPPED_END ) );
+                    value = getMappedValue( expression, propertyPosition, tokenizer.getPosition(), value,
+                                            tokenizer.nextToken( MAPPED_END ) );
                     break;
                 case PROPERTY_START:
                     propertyPosition = tokenizer.getPosition();

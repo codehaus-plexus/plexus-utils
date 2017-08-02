@@ -24,17 +24,17 @@ import java.util.List;
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
  */
-public class Vertex implements Cloneable, Serializable
+public class Vertex
+    implements Cloneable, Serializable
 {
-    //------------------------------------------------------------
-    //Fields
-    //------------------------------------------------------------
+    // ------------------------------------------------------------
+    // Fields
+    // ------------------------------------------------------------
     private String label = null;
 
     List<Vertex> children = new ArrayList<Vertex>();
 
     List<Vertex> parents = new ArrayList<Vertex>();
-
 
     // ------------------------------------------------------------
     // Constructors
@@ -52,7 +52,6 @@ public class Vertex implements Cloneable, Serializable
     // Accessors
     // ------------------------------------------------------------
 
-
     /**
      * @return
      */
@@ -69,7 +68,6 @@ public class Vertex implements Cloneable, Serializable
         children.add( vertex );
     }
 
-
     /**
      * @param vertex
      */
@@ -77,7 +75,6 @@ public class Vertex implements Cloneable, Serializable
     {
         children.remove( vertex );
     }
-
 
     /**
      * @param vertex
@@ -92,12 +89,10 @@ public class Vertex implements Cloneable, Serializable
         parents.remove( vertex );
     }
 
-
     public List<Vertex> getChildren()
     {
         return children;
     }
-
 
     /**
      * Get the labels used by the most direct children.
@@ -115,7 +110,6 @@ public class Vertex implements Cloneable, Serializable
         return retValue;
     }
 
-
     /**
      * Get the list the most direct ancestors (parents).
      *
@@ -125,7 +119,6 @@ public class Vertex implements Cloneable, Serializable
     {
         return parents;
     }
-
 
     /**
      * Get the labels used by the most direct ancestors (parents).
@@ -143,7 +136,6 @@ public class Vertex implements Cloneable, Serializable
         return retValue;
     }
 
-
     /**
      * Indicates if given vertex has no child
      *
@@ -153,7 +145,6 @@ public class Vertex implements Cloneable, Serializable
     {
         return children.size() == 0;
     }
-
 
     /**
      * Indicates if given vertex has no parent
@@ -165,7 +156,6 @@ public class Vertex implements Cloneable, Serializable
         return parents.size() == 0;
     }
 
-
     /**
      * Indicates if there is at least one edee leading to or from given vertex
      *
@@ -176,8 +166,8 @@ public class Vertex implements Cloneable, Serializable
         return isRoot() || isLeaf();
     }
 
-
-    public Object clone() throws CloneNotSupportedException
+    public Object clone()
+        throws CloneNotSupportedException
     {
         // this is what's failing..
         final Object retValue = super.clone();
@@ -187,11 +177,7 @@ public class Vertex implements Cloneable, Serializable
 
     public String toString()
     {
-        return "Vertex{" +
-               "label='" + label + "'" +
-               "}";
+        return "Vertex{" + "label='" + label + "'" + "}";
     }
 
-
 }
-

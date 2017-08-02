@@ -90,10 +90,10 @@ public abstract class CommandLineUtils
     }
 
     /**
-     * @param cl               The command line to execute
-     * @param systemIn         The input to read from, must be thread safe
-     * @param systemOut        A consumer that receives output, must be thread safe
-     * @param systemErr        A consumer that receives system error stream output, must be thread safe
+     * @param cl The command line to execute
+     * @param systemIn The input to read from, must be thread safe
+     * @param systemOut A consumer that receives output, must be thread safe
+     * @param systemErr A consumer that receives system error stream output, must be thread safe
      * @param timeoutInSeconds Positive integer to specify timeout, zero and negative integers for no timeout.
      * @return A return value, see {@link Process#exitValue()}
      * @throws CommandLineException or CommandLineTimeOutException if time out occurs
@@ -110,19 +110,19 @@ public abstract class CommandLineUtils
 
     /**
      * Immediately forks a process, returns a callable that will block until process is complete.
-     * @param cl               The command line to execute
-     * @param systemIn         The input to read from, must be thread safe
-     * @param systemOut        A consumer that receives output, must be thread safe
-     * @param systemErr        A consumer that receives system error stream output, must be thread safe
+     * 
+     * @param cl The command line to execute
+     * @param systemIn The input to read from, must be thread safe
+     * @param systemOut A consumer that receives output, must be thread safe
+     * @param systemErr A consumer that receives system error stream output, must be thread safe
      * @param timeoutInSeconds Positive integer to specify timeout, zero and negative integers for no timeout.
-     * @return A CommandLineCallable that provides the process return value, see {@link Process#exitValue()}. "call" must be called on
-     *         this to be sure the forked process has terminated, no guarantees is made about
-     *         any internal state before after the completion of the call statements
+     * @return A CommandLineCallable that provides the process return value, see {@link Process#exitValue()}. "call"
+     *         must be called on this to be sure the forked process has terminated, no guarantees is made about any
+     *         internal state before after the completion of the call statements
      * @throws CommandLineException or CommandLineTimeOutException if time out occurs
      * @noinspection ThrowableResultOfMethodCallIgnored
      */
-    public static CommandLineCallable executeCommandLineAsCallable( final Commandline cl,
-                                                                    final InputStream systemIn,
+    public static CommandLineCallable executeCommandLineAsCallable( final Commandline cl, final InputStream systemIn,
                                                                     final StreamConsumer systemOut,
                                                                     final StreamConsumer systemErr,
                                                                     final int timeoutInSeconds )
@@ -203,26 +203,27 @@ public abstract class CommandLineUtils
                         returnValue = p.exitValue();
                     }
 
-// TODO Find out if waitUntilDone needs to be called using a try-finally construct. The method may throw an
-//      InterruptedException so that calls to waitUntilDone may be skipped.
-//                    try
-//                    {
-//                        if ( inputFeeder != null )
-//                        {
-//                            inputFeeder.waitUntilDone();
-//                        }
-//                    }
-//                    finally
-//                    {
-//                        try
-//                        {
-//                            outputPumper.waitUntilDone();
-//                        }
-//                        finally
-//                        {
-//                            errorPumper.waitUntilDone();
-//                        }
-//                    }
+                    // TODO Find out if waitUntilDone needs to be called using a try-finally construct. The method may
+                    // throw an
+                    // InterruptedException so that calls to waitUntilDone may be skipped.
+                    // try
+                    // {
+                    // if ( inputFeeder != null )
+                    // {
+                    // inputFeeder.waitUntilDone();
+                    // }
+                    // }
+                    // finally
+                    // {
+                    // try
+                    // {
+                    // outputPumper.waitUntilDone();
+                    // }
+                    // finally
+                    // {
+                    // errorPumper.waitUntilDone();
+                    // }
+                    // }
                     if ( inputFeeder != null )
                     {
                         inputFeeder.waitUntilDone();
@@ -354,8 +355,8 @@ public abstract class CommandLineUtils
      *
      * @return The shell environment variables, can be empty but never <code>null</code>.
      * @throws IOException If the environment variables could not be queried from the shell.
-     * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result
-     *      <b>since 2.0.2 System#getenv() will be used if available in the current running jvm.</b>
+     * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result <b>since 2.0.2 System#getenv()
+     *      will be used if available in the current running jvm.</b>
      */
     public static Properties getSystemEnvVars()
         throws IOException
@@ -364,14 +365,14 @@ public abstract class CommandLineUtils
     }
 
     /**
-     * Return the shell environment variables. If <code>caseSensitive == true</code>, then envar
-     * keys will all be upper-case.
+     * Return the shell environment variables. If <code>caseSensitive == true</code>, then envar keys will all be
+     * upper-case.
      *
      * @param caseSensitive Whether environment variable keys should be treated case-sensitively.
      * @return Properties object of (possibly modified) envar keys mapped to their values.
      * @throws IOException .
-     * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result
-     *      <b>since 2.0.2 System#getenv() will be used if available in the current running jvm.</b>
+     * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result <b>since 2.0.2 System#getenv()
+     *      will be used if available in the current running jvm.</b>
      */
     public static Properties getSystemEnvVars( boolean caseSensitive )
         throws IOException
@@ -381,7 +382,7 @@ public abstract class CommandLineUtils
         for ( String key : envs.keySet() )
         {
             String value = envs.get( key );
-            if ( !caseSensitive)
+            if ( !caseSensitive )
             {
                 key = key.toUpperCase( Locale.ENGLISH );
             }
@@ -492,13 +493,15 @@ public abstract class CommandLineUtils
     }
 
     /**
-     * <p>Put quotes around the given String if necessary.</p>
-     * <p>If the argument doesn't include spaces or quotes, return it
-     * as is. If it contains double quotes, use single quotes - else
-     * surround the argument by double quotes.</p>
+     * <p>
+     * Put quotes around the given String if necessary.
+     * </p>
+     * <p>
+     * If the argument doesn't include spaces or quotes, return it as is. If it contains double quotes, use single
+     * quotes - else surround the argument by double quotes.
+     * </p>
      *
-     * @throws CommandLineException if the argument contains both, single
-     *                              and double quotes.
+     * @throws CommandLineException if the argument contains both, single and double quotes.
      * @deprecated Use {@link StringUtils#quoteAndEscape(String, char, char[], char[], char, boolean)},
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
@@ -511,13 +514,15 @@ public abstract class CommandLineUtils
     }
 
     /**
-     * <p>Put quotes around the given String if necessary.</p>
-     * <p>If the argument doesn't include spaces or quotes, return it
-     * as is. If it contains double quotes, use single quotes - else
-     * surround the argument by double quotes.</p>
+     * <p>
+     * Put quotes around the given String if necessary.
+     * </p>
+     * <p>
+     * If the argument doesn't include spaces or quotes, return it as is. If it contains double quotes, use single
+     * quotes - else surround the argument by double quotes.
+     * </p>
      *
-     * @throws CommandLineException if the argument contains both, single
-     *                              and double quotes.
+     * @throws CommandLineException if the argument contains both, single and double quotes.
      * @deprecated Use {@link StringUtils#quoteAndEscape(String, char, char[], char[], char, boolean)},
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.

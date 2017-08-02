@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CycleDetectedException
-        extends Exception
+    extends Exception
 {
     private List<String> cycle;
 

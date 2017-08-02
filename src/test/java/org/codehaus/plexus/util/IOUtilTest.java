@@ -37,14 +37,13 @@ import junit.framework.TestCase;
 /**
  * This is used to test IOUtil for correctness. The following checks are performed:
  * <ul>
- *   <li>The return must not be null, must be the same type and equals() to the method's second arg</li>
- *   <li>All bytes must have been read from the source (available() == 0)</li>
- *   <li>The source and destination content must be identical (byte-wise comparison check)</li>
- *   <li>The output stream must not have been closed (a byte/char is written to test this, and
- *   subsequent size checked)</li>
+ * <li>The return must not be null, must be the same type and equals() to the method's second arg</li>
+ * <li>All bytes must have been read from the source (available() == 0)</li>
+ * <li>The source and destination content must be identical (byte-wise comparison check)</li>
+ * <li>The output stream must not have been closed (a byte/char is written to test this, and subsequent size
+ * checked)</li>
  * </ul>
- * Due to interdependencies in IOUtils and IOUtilsTestlet, one bug may cause
- * multiple tests to fail.
+ * Due to interdependencies in IOUtils and IOUtilsTestlet, one bug may cause multiple tests to fail.
  *
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
  */
@@ -52,15 +51,15 @@ public final class IOUtilTest
     extends TestCase
 {
     /*
-     * Note: this is not particularly beautiful code. A better way to check for
-     * flush and close status would be to implement "trojan horse" wrapper
-     * implementations of the various stream classes, which set a flag when
-     * relevant methods are called. (JT)
+     * Note: this is not particularly beautiful code. A better way to check for flush and close status would be to
+     * implement "trojan horse" wrapper implementations of the various stream classes, which set a flag when relevant
+     * methods are called. (JT)
      */
 
     private int FILE_SIZE = 1024 * 4 + 1;
 
     private File testDirectory;
+
     private File testFile;
 
     public void setUp()
@@ -97,8 +96,7 @@ public final class IOUtilTest
     private void createFile( File file, long size )
         throws IOException
     {
-        BufferedOutputStream output =
-            new BufferedOutputStream( new FileOutputStream( file ) );
+        BufferedOutputStream output = new BufferedOutputStream( new FileOutputStream( file ) );
 
         for ( int i = 0; i < size; i++ )
         {
@@ -131,12 +129,10 @@ public final class IOUtilTest
             {
                 n0 = is0.read( buf0 );
                 n1 = is1.read( buf1 );
-                assertTrue( "The files " + f0 + " and " + f1 +
-                            " have differing number of bytes available (" + n0 +
-                            " vs " + n1 + ")", ( n0 == n1 ) );
+                assertTrue( "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0
+                    + " vs " + n1 + ")", ( n0 == n1 ) );
 
-                assertTrue( "The files " + f0 + " and " + f1 +
-                            " have different content", Arrays.equals( buf0, buf1 ) );
+                assertTrue( "The files " + f0 + " and " + f1 + " have different content", Arrays.equals( buf0, buf1 ) );
             }
         }
         finally
@@ -154,10 +150,8 @@ public final class IOUtilTest
         byte[] b1 = new byte[b0.length];
         int numRead = is.read( b1 );
         assertTrue( "Different number of bytes", numRead == b0.length && is.available() == 0 );
-        for ( int i = 0;
-              i < numRead;
-              assertTrue( "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")", b0[i] == b1[i] ), i++
-            )
+        for ( int i = 0; i < numRead; assertTrue( "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")",
+                                                  b0[i] == b1[i] ), i++ )
             ;
         is.close();
     }
@@ -206,8 +200,7 @@ public final class IOUtilTest
         String out = IOUtil.toString( fin );
         assertNotNull( out );
         assertTrue( "Not all bytes were read", fin.available() == 0 );
-        assertTrue( "Wrong output size: out.length()=" + out.length() +
-                    "!=" + FILE_SIZE, out.length() == FILE_SIZE );
+        assertTrue( "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE, out.length() == FILE_SIZE );
         fin.close();
     }
 
@@ -218,11 +211,11 @@ public final class IOUtilTest
         FileReader fin = new FileReader( testFile );
         FileOutputStream fout = new FileOutputStream( destination );
         IOUtil.copy( fin, fout );
-        //Note: this method *does* flush. It is equivalent to:
-        //   OutputStreamWriter _out = new OutputStreamWriter(fout);
-        //  IOUtil.copy( fin, _out, 4096 ); // copy( Reader, Writer, int );
-        //  _out.flush();
-        //  out = fout;
+        // Note: this method *does* flush. It is equivalent to:
+        // OutputStreamWriter _out = new OutputStreamWriter(fout);
+        // IOUtil.copy( fin, _out, 4096 ); // copy( Reader, Writer, int );
+        // _out.flush();
+        // out = fout;
 
         // Note: rely on the method to flush
         checkFile( destination );
@@ -254,9 +247,7 @@ public final class IOUtilTest
         FileReader fin = new FileReader( testFile );
         String out = IOUtil.toString( fin );
         assertNotNull( out );
-        assertTrue( "Wrong output size: out.length()=" +
-                    out.length() + "!=" + FILE_SIZE,
-                    out.length() == FILE_SIZE );
+        assertTrue( "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE, out.length() == FILE_SIZE );
         fin.close();
     }
 
@@ -269,11 +260,11 @@ public final class IOUtilTest
         String str = IOUtil.toString( fin );
         FileOutputStream fout = new FileOutputStream( destination );
         IOUtil.copy( str, fout );
-        //Note: this method *does* flush. It is equivalent to:
-        //   OutputStreamWriter _out = new OutputStreamWriter(fout);
-        //  IOUtil.copy( str, _out, 4096 ); // copy( Reader, Writer, int );
-        //  _out.flush();
-        //  out = fout;
+        // Note: this method *does* flush. It is equivalent to:
+        // OutputStreamWriter _out = new OutputStreamWriter(fout);
+        // IOUtil.copy( str, _out, 4096 ); // copy( Reader, Writer, int );
+        // _out.flush();
+        // out = fout;
         // note: we don't flush here; this IOUtils method does it for us
 
         checkFile( destination );
@@ -309,8 +300,7 @@ public final class IOUtilTest
         byte[] out = IOUtil.toByteArray( fin );
         assertNotNull( out );
         assertTrue( "Not all bytes were read", fin.available() == 0 );
-        assertTrue( "Wrong output size: out.length=" + out.length +
-                    "!=" + FILE_SIZE, out.length == FILE_SIZE );
+        assertTrue( "Wrong output size: out.length=" + out.length + "!=" + FILE_SIZE, out.length == FILE_SIZE );
         assertEqualContent( out, testFile );
         fin.close();
     }
@@ -511,8 +501,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = new File( testDirectory, filename );
-        assertTrue( filename + "Test output data file shouldn't previously exist",
-                    !destination.exists() );
+        assertTrue( filename + "Test output data file shouldn't previously exist", !destination.exists() );
 
         return destination;
     }
@@ -533,8 +522,8 @@ public final class IOUtilTest
         }
         catch ( Throwable t )
         {
-            throw new AssertionFailedError( "The copy() method closed the stream " +
-                                            "when it shouldn't have. " + t.getMessage() );
+            throw new AssertionFailedError( "The copy() method closed the stream " + "when it shouldn't have. "
+                + t.getMessage() );
         }
     }
 
@@ -547,16 +536,15 @@ public final class IOUtilTest
         }
         catch ( Throwable t )
         {
-            throw new AssertionFailedError( "The copy() method closed the stream " +
-                                            "when it shouldn't have. " + t.getMessage() );
+            throw new AssertionFailedError( "The copy() method closed the stream " + "when it shouldn't have. "
+                + t.getMessage() );
         }
     }
 
     private void deleteFile( File file )
         throws Exception
     {
-        assertTrue( "Wrong output size: file.length()=" +
-                    file.length() + "!=" + FILE_SIZE + 1,
+        assertTrue( "Wrong output size: file.length()=" + file.length() + "!=" + FILE_SIZE + 1,
                     file.length() == FILE_SIZE + 1 );
 
         assertTrue( "File would not delete", ( file.delete() || ( !file.exists() ) ) );

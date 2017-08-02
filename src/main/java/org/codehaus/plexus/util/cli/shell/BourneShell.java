@@ -31,7 +31,7 @@ public class BourneShell
 
     public BourneShell()
     {
-        this(false);
+        this( false );
     }
 
     public BourneShell( boolean isLoginShell )
@@ -43,7 +43,7 @@ public class BourneShell
         setSingleQuotedArgumentEscaped( true );
         setSingleQuotedExecutableEscaped( false );
         setQuotedExecutableEnabled( true );
-        setArgumentEscapePattern("'\\%s'");
+        setArgumentEscapePattern( "'\\%s'" );
 
         if ( isLoginShell )
         {
@@ -116,7 +116,9 @@ public class BourneShell
     }
 
     /**
-     * <p>Unify quotes in a path for the Bourne Shell.</p>
+     * <p>
+     * Unify quotes in a path for the Bourne Shell.
+     * </p>
      *
      * <pre>
      * BourneShell.quoteOneItem(null)                       = null

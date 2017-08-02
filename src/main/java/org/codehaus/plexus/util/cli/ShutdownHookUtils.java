@@ -19,9 +19,7 @@ package org.codehaus.plexus.util.cli;
 import java.security.AccessControlException;
 
 /**
- * A shutdown hook that does not throw any exceptions upon container startup/shutdown or security manager
- * restrictions.
- *
+ * A shutdown hook that does not throw any exceptions upon container startup/shutdown or security manager restrictions.
  * Incorrect usage of the hook itself may still throw an exception.
  *
  * @author Kristian Rosenvold
@@ -41,7 +39,6 @@ class ShutdownHookUtils
         catch ( AccessControlException ignore )
         {
         }
-
 
     }
 

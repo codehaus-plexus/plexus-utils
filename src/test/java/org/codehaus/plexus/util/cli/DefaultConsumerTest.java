@@ -20,7 +20,8 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 
-public class DefaultConsumerTest extends TestCase
+public class DefaultConsumerTest
+    extends TestCase
 {
     /**
      * @param testName
@@ -33,12 +34,14 @@ public class DefaultConsumerTest extends TestCase
     /*
      * @see TestCase#setUp()
      */
-    public void setUp() throws Exception
+    public void setUp()
+        throws Exception
     {
         super.setUp();
     }
 
-    public void testConsumeLine() throws IOException
+    public void testConsumeLine()
+        throws IOException
     {
         DefaultConsumer cons = new DefaultConsumer();
         cons.consumeLine( "Test DefaultConsumer consumeLine" );

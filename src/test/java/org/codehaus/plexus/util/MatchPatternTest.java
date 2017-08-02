@@ -20,13 +20,14 @@ import junit.framework.TestCase;
 /**
  * @author Kristian Rosenvold
  */
-public class MatchPatternTest extends TestCase
+public class MatchPatternTest
+    extends TestCase
 {
     public void testMatchPath()
         throws Exception
     {
-            MatchPattern mp = MatchPattern.fromString( "ABC*" );
-        assertTrue(mp.matchPath( "ABCD", true ));
+        MatchPattern mp = MatchPattern.fromString( "ABC*" );
+        assertTrue( mp.matchPath( "ABCD", true ) );
 
     }
 }

@@ -28,8 +28,8 @@ public class SelectorUtilsTest
         String separator = File.separator;
 
         // Pattern and target start with file separator
-        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", separator + "b" + separator
-            + "a.txt" ) );
+        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt",
+                                             separator + "b" + separator + "a.txt" ) );
         // Pattern starts with file separator, target doesn't
         assertFalse( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", "b" + separator + "a.txt" ) );
         // Pattern doesn't start with file separator, target does
@@ -43,8 +43,8 @@ public class SelectorUtilsTest
         String separator = "/";
 
         // Pattern and target start with file separator
-        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", separator + "b" + separator
-            + "a.txt", separator, false ) );
+        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt",
+                                             separator + "b" + separator + "a.txt", separator, false ) );
         // Pattern starts with file separator, target doesn't
         assertFalse( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", "b" + separator + "a.txt",
                                               separator, false ) );
@@ -60,8 +60,8 @@ public class SelectorUtilsTest
         String separator = "\\";
 
         // Pattern and target start with file separator
-        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", separator + "b" + separator
-            + "a.txt", separator, false ) );
+        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt",
+                                             separator + "b" + separator + "a.txt", separator, false ) );
         // Pattern starts with file separator, target doesn't
         assertFalse( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", "b" + separator + "a.txt",
                                               separator, false ) );

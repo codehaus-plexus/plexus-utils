@@ -29,7 +29,7 @@ public class CollectionUtilsTest
 {
     public void testMergeMaps()
     {
-        Map<String,String> dominantMap = new HashMap<String,String>();
+        Map<String, String> dominantMap = new HashMap<String, String>();
         dominantMap.put( "a", "a" );
         dominantMap.put( "b", "b" );
         dominantMap.put( "c", "c" );
@@ -37,7 +37,7 @@ public class CollectionUtilsTest
         dominantMap.put( "e", "e" );
         dominantMap.put( "f", "f" );
 
-        Map<String,String> recessiveMap = new HashMap<String,String>();
+        Map<String, String> recessiveMap = new HashMap<String, String>();
         recessiveMap.put( "a", "invalid" );
         recessiveMap.put( "b", "invalid" );
         recessiveMap.put( "c", "invalid" );
@@ -66,71 +66,48 @@ public class CollectionUtilsTest
     public void testMergeMapArray()
     {
         // Test empty array of Maps
-        Map<String, String> result0 = CollectionUtils.mergeMaps( new Map[]
-        {
-        } );
+        Map<String, String> result0 = CollectionUtils.mergeMaps( new Map[] {} );
 
         assertNull( result0 );
 
         // Test with an array with a single element.
-        Map<String, String>  map1 = new HashMap<String, String> ();
+        Map<String, String> map1 = new HashMap<String, String>();
         map1.put( "a", "a" );
 
-        Map<String, String> result1 = CollectionUtils.mergeMaps( new Map[]
-        {
-            map1
-        } );
+        Map<String, String> result1 = CollectionUtils.mergeMaps( new Map[] { map1 } );
 
         assertEquals( "a", result1.get( "a" ) );
 
         // Test with an array with two elements.
-        Map<String, String>  map2 = new HashMap<String, String> ();
+        Map<String, String> map2 = new HashMap<String, String>();
         map2.put( "a", "aa" );
         map2.put( "b", "bb" );
 
-        Map<String, String>  result2 = CollectionUtils.mergeMaps( new Map[]
-        {
-            map1,
-            map2
-        } );
+        Map<String, String> result2 = CollectionUtils.mergeMaps( new Map[] { map1, map2 } );
 
         assertEquals( "a", result2.get( "a" ) );
         assertEquals( "bb", result2.get( "b" ) );
 
         // Now swap the dominant order.
-        Map<String, String>  result3 = CollectionUtils.mergeMaps( new Map[]
-        {
-            map2,
-            map1
-        } );
+        Map<String, String> result3 = CollectionUtils.mergeMaps( new Map[] { map2, map1 } );
 
         assertEquals( "aa", result3.get( "a" ) );
         assertEquals( "bb", result3.get( "b" ) );
 
         // Test with an array with three elements.
-        Map<String, String>  map3 = new HashMap<String, String> ();
+        Map<String, String> map3 = new HashMap<String, String>();
         map3.put( "a", "aaa" );
         map3.put( "b", "bbb" );
         map3.put( "c", "ccc" );
 
-        Map<String, String> result4 = CollectionUtils.mergeMaps( new Map[]
-        {
-            map1,
-            map2,
-            map3
-        } );
+        Map<String, String> result4 = CollectionUtils.mergeMaps( new Map[] { map1, map2, map3 } );
 
         assertEquals( "a", result4.get( "a" ) );
         assertEquals( "bb", result4.get( "b" ) );
         assertEquals( "ccc", result4.get( "c" ) );
 
         // Now swap the dominant order.
-        Map<String, String> result5 = CollectionUtils.mergeMaps( new Map[]
-        {
-            map3,
-            map2,
-            map1
-        } );
+        Map<String, String> result5 = CollectionUtils.mergeMaps( new Map[] { map3, map2, map1 } );
 
         assertEquals( "aaa", result5.get( "a" ) );
         assertEquals( "bbb", result5.get( "b" ) );
@@ -175,14 +152,8 @@ public class CollectionUtilsTest
         driverProperties.setProperty( "maven.repo.remote.enabled", "true" );
         driverProperties.setProperty( "maven.repo.local", "${maven.home}/artifact" );
 
-        Map result = CollectionUtils.mergeMaps( new Map[]
-        {
-            systemProperties,
-            userBuildProperties,
-            projectBuildProperties,
-            projectProperties,
-            driverProperties
-        } );
+        Map result = CollectionUtils.mergeMaps( new Map[] { systemProperties, userBuildProperties,
+            projectBuildProperties, projectProperties, driverProperties } );
 
         // Values that should be taken from systemProperties.
         assertEquals( "/projects/maven", (String) result.get( "maven.home" ) );

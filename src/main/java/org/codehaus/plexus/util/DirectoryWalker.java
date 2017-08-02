@@ -24,6 +24,7 @@ import java.util.Stack;
 
 /**
  * DirectoryWalker
+ * 
  * @version $Id$
  */
 public class DirectoryWalker
@@ -71,8 +72,7 @@ public class DirectoryWalker
         }
 
         /**
-         * Calculate the next percentage offset.
-         * Used by the next DirStackEntry.
+         * Calculate the next percentage offset. Used by the next DirStackEntry.
          *
          * @return the value for the next percentage offset.
          */
@@ -82,8 +82,7 @@ public class DirectoryWalker
         }
 
         /**
-         * Calculate the next percentage size.
-         * Used by the next DirStackEntry.
+         * Calculate the next percentage size. Used by the next DirStackEntry.
          *
          * @return the value for the next percentage size.
          */
@@ -93,8 +92,7 @@ public class DirectoryWalker
         }
 
         /**
-         * The percentage of the DirStackEntry right now.
-         * Based on count, index, percentageOffset, and percentageSize.
+         * The percentage of the DirStackEntry right now. Based on count, index, percentageOffset, and percentageSize.
          *
          * @return the percentage right now.
          */

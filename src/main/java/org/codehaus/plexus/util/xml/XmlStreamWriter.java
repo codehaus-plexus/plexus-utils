@@ -31,12 +31,13 @@ import java.util.regex.Pattern;
 /**
  * Character stream that handles (or at least attempts to) all the necessary Voodo to figure out the charset encoding of
  * the XML document written to the stream.
+ * 
  * @author <a href="mailto:hboutemy@codehaus.org">Herve Boutemy</a>
  * @version $Id$
  * @since 1.4.4
  */
 public class XmlStreamWriter
-extends Writer
+    extends Writer
 {
     private static final int BUFFER_SIZE = 4096;
 
@@ -54,7 +55,7 @@ extends Writer
     }
 
     public XmlStreamWriter( File file )
-    throws FileNotFoundException
+        throws FileNotFoundException
     {
         this( new FileOutputStream( file ) );
     }
@@ -65,7 +66,7 @@ extends Writer
     }
 
     public void close()
-    throws IOException
+        throws IOException
     {
         if ( writer == null )
         {
@@ -77,7 +78,7 @@ extends Writer
     }
 
     public void flush()
-    throws IOException
+        throws IOException
     {
         if ( writer != null )
         {
@@ -86,7 +87,7 @@ extends Writer
     }
 
     private void detectEncoding( char[] cbuf, int off, int len )
-    throws IOException
+        throws IOException
     {
         int size = len;
         StringBuffer xmlProlog = xmlPrologWriter.getBuffer();
@@ -147,7 +148,7 @@ extends Writer
     }
 
     public void write( char[] cbuf, int off, int len )
-    throws IOException
+        throws IOException
     {
         if ( xmlPrologWriter != null )
         {

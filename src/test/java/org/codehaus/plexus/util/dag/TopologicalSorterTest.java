@@ -53,7 +53,7 @@ public class TopologicalSorterTest
         assertEquals( "Order is different then expected", expected1, actual1 );
 
         //
-        //  a <-- b <---c
+        // a <-- b <---c
         //
         // result c, b, a
         final DAG dag2 = new DAG();
@@ -81,10 +81,10 @@ public class TopologicalSorterTest
         assertEquals( "Order is different then expected", expected2, actual2 );
 
         //
-        //  a --> b --> c --> e
-        //        |     |     |
-        //        |     V     V
-        //          --> d <-- f  --> g
+        // a --> b --> c --> e
+        // | | |
+        // | V V
+        // --> d <-- f --> g
         // result d, g, f, c, b, a
         final DAG dag3 = new DAG();
 
@@ -138,10 +138,10 @@ public class TopologicalSorterTest
         assertEquals( "Order is different then expected", expected3, actual3 );
 
         //
-        //  a --> b --> c --> e
-        //        |     |     |
-        //        |     V     V
-        //          --> d <-- f
+        // a --> b --> c --> e
+        // | | |
+        // | V V
+        // --> d <-- f
         // result d, f, e, c, b, a
         final DAG dag4 = new DAG();
         // force order of nodes in the graph

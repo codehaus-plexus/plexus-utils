@@ -23,7 +23,9 @@ import java.io.InputStream;
  * Implementation of {@link InputStreamFacade} for raw input streams.
  */
 @SuppressWarnings( { "UnusedDeclaration" } )
-public class RawInputStreamFacade implements InputStreamFacade {
+public class RawInputStreamFacade
+    implements InputStreamFacade
+{
     final InputStream stream;
 
     public RawInputStreamFacade( InputStream stream )
@@ -31,7 +33,9 @@ public class RawInputStreamFacade implements InputStreamFacade {
         this.stream = stream;
     }
 
-    public InputStream getInputStream() throws IOException {
+    public InputStream getInputStream()
+        throws IOException
+    {
         return stream;
     }
 }

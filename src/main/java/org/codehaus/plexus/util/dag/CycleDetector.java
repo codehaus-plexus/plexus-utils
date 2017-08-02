@@ -35,7 +35,6 @@ public class CycleDetector
 
     private final static Integer VISITED = 2;
 
-
     public static List<String> hasCycle( final DAG graph )
     {
         final List<Vertex> vertices = graph.getVertices();
@@ -61,9 +60,8 @@ public class CycleDetector
     }
 
     /**
-     * This method will be called when an edge leading to given vertex was added
-     * and we want to check if introduction of this edge has not resulted
-     * in apparition of cycle in the graph
+     * This method will be called when an edge leading to given vertex was added and we want to check if introduction of
+     * this edge has not resulted in apparition of cycle in the graph
      *
      * @param vertex
      * @param vertexStateMap
@@ -78,7 +76,7 @@ public class CycleDetector
         if ( hasCycle )
         {
             // we have a situation like: [b, a, c, d, b, f, g, h].
-            // Label of Vertex which introduced  the cycle is at the first position in the list
+            // Label of Vertex which introduced the cycle is at the first position in the list
             // We have to find second occurrence of this label and use its position in the list
             // for getting the sublist of vertex labels of cycle participants
             //
@@ -96,7 +94,6 @@ public class CycleDetector
 
         return null;
     }
-
 
     public static List<String> introducesCycle( final Vertex vertex )
     {

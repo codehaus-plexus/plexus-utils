@@ -22,32 +22,37 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 /**
- * Manages  a number of test threads, which notify this manager when they have
- * completed. Allows TestCases to easily start and manage multiple test threads.
- *
- * <p>Created on 9/06/2003</p>
+ * Manages a number of test threads, which notify this manager when they have completed. Allows TestCases to easily
+ * start and manage multiple test threads.
+ * <p>
+ * Created on 9/06/2003
+ * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
  * @version $Revision$
- *
  */
 public class TestThreadManager
 {
-    //~ Instance fields ----------------------------------------------------------------------------
+    // ~ Instance fields ----------------------------------------------------------------------------
 
     /** Test threads which have completed running */
     private Collection<AbstractTestThread> runThreads = new Vector<AbstractTestThread>();
-    /** Test threads still needing to be run, or are currently running*/
+
+    /** Test threads still needing to be run, or are currently running */
     private Collection<AbstractTestThread> toRunThreads = new Vector<AbstractTestThread>();
+
     private Logger logger = null;
+
     /** Any test threads which failed */
     private Vector<AbstractTestThread> failedThreads = new Vector<AbstractTestThread>();
 
-    /**The object to notify when all the test threads have completed. Clients use this
-     * to lock on (wait) while waiting for the tests to complete*/
+    /**
+     * The object to notify when all the test threads have completed. Clients use this to lock on (wait) while waiting
+     * for the tests to complete
+     */
     private Object notify = null;
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors -------------------------------------------------------------------------------
 
     public TestThreadManager( Object notify )
     {
@@ -55,7 +60,7 @@ public class TestThreadManager
         this.notify = notify;
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
+    // ~ Methods ------------------------------------------------------------------------------------
 
     /**
      * @return
@@ -68,10 +73,10 @@ public class TestThreadManager
     public void runTestThreads()
     {
         failedThreads.clear();
-        //use an array as the tests may run very quickly
-        //and modify the toRunThreads vector and hence
-        //cause a Concurrent ModificationException on an
-        //iterator
+        // use an array as the tests may run very quickly
+        // and modify the toRunThreads vector and hence
+        // cause a Concurrent ModificationException on an
+        // iterator
         for ( AbstractTestThread toRunThread : toRunThreads )
         {
             toRunThread.start();
@@ -84,8 +89,7 @@ public class TestThreadManager
     }
 
     /**
-     * Return the object which threads can wait on to be notified
-     * when all the test threads have completed running
+     * Return the object which threads can wait on to be notified when all the test threads have completed running
      *
      * @return
      */
@@ -93,7 +97,6 @@ public class TestThreadManager
     {
         return notify;
     }
-
 
     public boolean hasFailedThreads()
     {
@@ -128,9 +131,10 @@ public class TestThreadManager
         failedThreads.clear();
     }
 
-    /* (non-Javadoc)
-    * @see java.util.Collection#remove(java.lang.Object)
-    */
+    /*
+     * (non-Javadoc)
+     * @see java.util.Collection#remove(java.lang.Object)
+     */
     public synchronized void completed( AbstractTestThread thread )
     {
         toRunThreads.remove( thread );
@@ -139,8 +143,8 @@ public class TestThreadManager
         {
             failedThreads.add( thread );
         }
-        //wakeup thread which is waiting for the threads to complete
-        //execution
+        // wakeup thread which is waiting for the threads to complete
+        // execution
         if ( toRunThreads.isEmpty() )
         {
             synchronized ( notify )
@@ -151,8 +155,7 @@ public class TestThreadManager
     }
 
     /**
-     * Override this to add your own stuff. Called after
-     * <code>registerThread(Object)</code>
+     * Override this to add your own stuff. Called after <code>registerThread(Object)</code>
      *
      * @param thread DOCUMENT ME!
      */
@@ -172,8 +175,7 @@ public class TestThreadManager
     }
 
     /**
-     * Put all the runThreads back in the que to be run again and
-     * clear the failedTest collection
+     * Put all the runThreads back in the que to be run again and clear the failedTest collection
      */
     public void reset()
     {

@@ -49,7 +49,7 @@ public class OsTest
             }
         }
 
-        //make sure the OS_FAMILY is set right.
+        // make sure the OS_FAMILY is set right.
         assertEquals( currentFamily, Os.OS_FAMILY );
 
         // check the current family and one of the others
@@ -71,12 +71,12 @@ public class OsTest
 
         // check the version
         assertTrue( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, Os.OS_VERSION ) );
-        assertFalse( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, "myversion"  ) );
+        assertFalse( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, "myversion" ) );
     }
 
     public void testValidList()
     {
-        assertTrue(Os.isValidFamily( "dos" ) );
+        assertTrue( Os.isValidFamily( "dos" ) );
 
         assertFalse( Os.isValidFamily( "" ) );
         assertFalse( Os.isValidFamily( null ) );

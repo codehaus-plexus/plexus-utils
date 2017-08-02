@@ -17,17 +17,19 @@ package org.codehaus.plexus.util;
  */
 
 /**
- * A thread which is registered with a ThreadRegistry and notifies it when it has completed
- * running. Collects any errors and makes it available for analysis.
- *
- * <p>Created on 1/07/2003</p>
+ * A thread which is registered with a ThreadRegistry and notifies it when it has completed running. Collects any errors
+ * and makes it available for analysis.
+ * <p>
+ * Created on 1/07/2003
+ * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
  * @version $Revision$
  */
-public abstract class AbstractTestThread implements Runnable
+public abstract class AbstractTestThread
+    implements Runnable
 {
-    //~ Instance fields ----------------------------------------------------------------------------
+    // ~ Instance fields ----------------------------------------------------------------------------
     private String name;
 
     public static final boolean DEBUG = true;
@@ -40,25 +42,26 @@ public abstract class AbstractTestThread implements Runnable
     /** The registry to notify on completion */
     private TestThreadManager registry;
 
-    /** The error thrown when running the test. Not necessarily a test failure as some tests
-     * may test for an exception */
+    /**
+     * The error thrown when running the test. Not necessarily a test failure as some tests may test for an exception
+     */
     private Throwable error;
 
     /** If the thread has been run */
     private boolean hasRun = false;
 
-    /** Flag indicating if the test has passed. Some test might require an
-     * exception so using the error to determine if the test has passed is
-     * not sufficient.
+    /**
+     * Flag indicating if the test has passed. Some test might require an exception so using the error to determine if
+     * the test has passed is not sufficient.
      */
     private boolean passed = false;
 
-    //~ Constructors -------------------------------------------------------------------------------
+    // ~ Constructors -------------------------------------------------------------------------------
 
     /**
      * Constructor
-     *
-     * <p>Remember to call <code>setThreadRegistry(ThreadRegistry)</code>
+     * <p>
+     * Remember to call <code>setThreadRegistry(ThreadRegistry)</code>
      */
     public AbstractTestThread()
     {
@@ -71,7 +74,7 @@ public abstract class AbstractTestThread implements Runnable
         setThreadRegistry( registry );
     }
 
-    //~ Methods ------------------------------------------------------------------------------------
+    // ~ Methods ------------------------------------------------------------------------------------
 
     /**
      * @return
@@ -82,15 +85,12 @@ public abstract class AbstractTestThread implements Runnable
     }
 
     /**
-     * Resets the test back to it's state before starting. If the test
-     * is currently running this method will block until the test has
-     * finished running. Subclasses should call this method if
-     * overriding it.
-     *
-     * */
+     * Resets the test back to it's state before starting. If the test is currently running this method will block until
+     * the test has finished running. Subclasses should call this method if overriding it.
+     */
     public void reset()
     {
-        //shouldn't reset until the test has finished running
+        // shouldn't reset until the test has finished running
         synchronized ( this )
         {
             while ( isRunning )
@@ -112,13 +112,11 @@ public abstract class AbstractTestThread implements Runnable
     }
 
     /**
-     * Start this TestThread running. If the test is currently running then
-     * this method does nothing.
-     *
+     * Start this TestThread running. If the test is currently running then this method does nothing.
      */
     public final void start()
     {
-        //shouldn't have multiple threads running this test at the same time
+        // shouldn't have multiple threads running this test at the same time
         synchronized ( this )
         {
             if ( isRunning == false )
@@ -180,8 +178,8 @@ public abstract class AbstractTestThread implements Runnable
         registry.completed( this );
         hasRun = true;
         isRunning = false;
-        //notify objects with blocked methods which are waiting
-        //on this test to complete running
+        // notify objects with blocked methods which are waiting
+        // on this test to complete running
         synchronized ( this )
         {
             notifyAll();
@@ -193,7 +191,8 @@ public abstract class AbstractTestThread implements Runnable
      *
      * @throws Throwable
      */
-    public abstract void doRun() throws Throwable;
+    public abstract void doRun()
+        throws Throwable;
 
     /**
      * Set the registry this thread should notify when it has completed running

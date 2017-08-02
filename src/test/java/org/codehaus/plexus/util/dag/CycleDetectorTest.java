@@ -24,7 +24,8 @@ import java.util.List;
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
  */
-public class CycleDetectorTest extends TestCase
+public class CycleDetectorTest
+    extends TestCase
 {
 
     public void testCycyleDetection()
@@ -49,10 +50,10 @@ public class CycleDetectorTest extends TestCase
         }
 
         //
-        //  a --> b --->c
-        //  ^           |
-        //  |           |
-        //   -----------|
+        // a --> b --->c
+        // ^ |
+        // | |
+        // -----------|
 
         try
         {
@@ -82,10 +83,10 @@ public class CycleDetectorTest extends TestCase
 
         }
 
-        //        | --> c
-        //  a --> b
-        //  |     | --> d
-        //   --------->
+        // | --> c
+        // a --> b
+        // | | --> d
+        // --------->
         try
         {
             final DAG dag3 = new DAG();
@@ -104,12 +105,12 @@ public class CycleDetectorTest extends TestCase
             fail( "Cycle should not be detected" );
         }
 
-        //  ------------
-        //  |           |
-        //  V     | --> c
-        //  a --> b
-        //  |     | --> d
-        //   --------->
+        // ------------
+        // | |
+        // V | --> c
+        // a --> b
+        // | | --> d
+        // --------->
         try
         {
             final DAG dag4 = new DAG();
@@ -133,23 +134,22 @@ public class CycleDetectorTest extends TestCase
 
             assertNotNull( "Cycle should be not null", cycle );
 
-            assertEquals( "Cycle contains 'a'", "a", ( String ) cycle.get( 0 ) );
+            assertEquals( "Cycle contains 'a'", "a", (String) cycle.get( 0 ) );
 
             assertEquals( "Cycle contains 'b'", "b", cycle.get( 1 ) );
 
             assertEquals( "Cycle contains 'c'", "c", cycle.get( 2 ) );
 
-            assertEquals( "Cycle contains 'a'", "a", ( String ) cycle.get( 3 ) );
+            assertEquals( "Cycle contains 'a'", "a", (String) cycle.get( 3 ) );
         }
 
-
-        //        f --> g --> h
-        //        |
-        //        |
-        //  a --> b ---> c --> d
-        //        ^            |
-        //        |            V
-        //        ------------ e
+        // f --> g --> h
+        // |
+        // |
+        // a --> b ---> c --> d
+        // ^ |
+        // | V
+        // ------------ e
 
         final DAG dag5 = new DAG();
 
@@ -183,15 +183,15 @@ public class CycleDetectorTest extends TestCase
 
             assertEquals( "Cycle contains 5 elements", 5, cycle.size() );
 
-            assertEquals( "Cycle contains 'b'", "b", ( String ) cycle.get( 0 ) );
+            assertEquals( "Cycle contains 'b'", "b", (String) cycle.get( 0 ) );
 
             assertEquals( "Cycle contains 'c'", "c", cycle.get( 1 ) );
 
             assertEquals( "Cycle contains 'd'", "d", cycle.get( 2 ) );
 
-            assertEquals( "Cycle contains 'e'", "e", ( String ) cycle.get( 3 ) );
+            assertEquals( "Cycle contains 'e'", "e", (String) cycle.get( 3 ) );
 
-            assertEquals( "Cycle contains 'b'", "b", ( String ) cycle.get( 4 ) );
+            assertEquals( "Cycle contains 'b'", "b", (String) cycle.get( 4 ) );
 
             assertTrue( "Edge exists", dag5.hasEdge( "a", "b" ) );
 
@@ -211,6 +211,5 @@ public class CycleDetectorTest extends TestCase
         }
 
     }
-
 
 }

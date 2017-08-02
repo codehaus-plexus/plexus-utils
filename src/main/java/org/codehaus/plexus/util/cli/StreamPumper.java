@@ -77,8 +77,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 /**
- * Class to pump the error stream during Process's runtime. Copied from the Ant
- * built-in task.
+ * Class to pump the error stream during Process's runtime. Copied from the Ant built-in task.
  *
  * @author <a href="mailto:fvancea@maxiq.com">Florin Vancea </a>
  * @author <a href="mailto:pj@thoughtworks.com">Paul Julius </a>

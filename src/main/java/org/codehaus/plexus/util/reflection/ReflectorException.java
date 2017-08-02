@@ -17,9 +17,8 @@ package org.codehaus.plexus.util.reflection;
  */
 
 /**
- * Exception indicating that an error has occurred while instantiating a class
- * with the Reflector class. This exception is meant to put a more user-friendly
- * face on the myriad other exceptions throws during reflective object creation.
+ * Exception indicating that an error has occurred while instantiating a class with the Reflector class. This exception
+ * is meant to put a more user-friendly face on the myriad other exceptions throws during reflective object creation.
  *
  * @author John Casey
  */
@@ -34,8 +33,7 @@ public class ReflectorException
     /**
      * Create a new ReflectorException with the specified message.
      *
-     * @param msg
-     *            The message.
+     * @param msg The message.
      */
     public ReflectorException( String msg )
     {
@@ -45,8 +43,7 @@ public class ReflectorException
     /**
      * Create a new ReflectorException with the specified root cause.
      *
-     * @param root
-     *            The root cause.
+     * @param root The root cause.
      */
     public ReflectorException( Throwable root )
     {
@@ -54,13 +51,10 @@ public class ReflectorException
     }
 
     /**
-     * Create a new ReflectorException with the specified message and root
-     * cause.
+     * Create a new ReflectorException with the specified message and root cause.
      *
-     * @param msg
-     *            The message.
-     * @param root
-     *            The root cause.
+     * @param msg The message.
+     * @param root The root cause.
      */
     public ReflectorException( String msg, Throwable root )
     {

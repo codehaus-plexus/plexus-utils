@@ -220,7 +220,8 @@ public class Xpp3DomTest
         String parentConfigStr = "<configuration><items><item>one</item><item>two</item></items></configuration>";
         Xpp3Dom parentConfig = Xpp3DomBuilder.build( new StringReader( parentConfigStr ) );
 
-        String childConfigStr = "<configuration><items combine.children=\"append\"><item>three</item></items></configuration>";
+        String childConfigStr =
+            "<configuration><items combine.children=\"append\"><item>three</item></items></configuration>";
         Xpp3Dom childConfig = Xpp3DomBuilder.build( new StringReader( childConfigStr ) );
 
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( childConfig, parentConfig );
@@ -269,10 +270,12 @@ public class Xpp3DomTest
         assertNotSame( result.getChild( "bar" ), recessiveConfig.getChild( "bar" ) );
     }
 
-    public void testDupeChildren() throws IOException, XmlPullParserException {
+    public void testDupeChildren()
+        throws IOException, XmlPullParserException
+    {
         String dupes = "<configuration><foo>x</foo><foo>y</foo></configuration>";
         Xpp3Dom dom = Xpp3DomBuilder.build( new StringReader( dupes ) );
-        assertNotNull( dom);
-        assertEquals("y", dom.getChild("foo").getValue());
+        assertNotNull( dom );
+        assertEquals( "y", dom.getChild( "foo" ).getValue() );
     }
 }

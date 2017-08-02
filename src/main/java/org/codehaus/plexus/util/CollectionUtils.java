@@ -37,25 +37,16 @@ public class CollectionUtils
     // ----------------------------------------------------------------------
 
     /**
-     * Take a dominant and recessive Map and merge the key:value
-     * pairs where the recessive Map may add key:value pairs to the dominant
-     * Map but may not override any existing key:value pairs.
-     *
-     * If we have two Maps, a dominant and recessive, and
-     * their respective keys are as follows:
-     *
-     *  dominantMapKeys = { a, b, c, d, e, f }
-     * recessiveMapKeys = { a, b, c, x, y, z }
-     *
-     * Then the result should be the following:
-     *
-     * resultantKeys = { a, b, c, d, e, f, x, y, z }
+     * Take a dominant and recessive Map and merge the key:value pairs where the recessive Map may add key:value pairs
+     * to the dominant Map but may not override any existing key:value pairs. If we have two Maps, a dominant and
+     * recessive, and their respective keys are as follows: dominantMapKeys = { a, b, c, d, e, f } recessiveMapKeys = {
+     * a, b, c, x, y, z } Then the result should be the following: resultantKeys = { a, b, c, d, e, f, x, y, z }
      *
      * @param dominantMap Dominant Map.
      * @param recessiveMap Recessive Map.
      * @return The result map with combined dominant and recessive values.
      */
-    public static <K,V> Map<K,V> mergeMaps( Map<K,V> dominantMap, Map<K,V> recessiveMap )
+    public static <K, V> Map<K, V> mergeMaps( Map<K, V> dominantMap, Map<K, V> recessiveMap )
     {
 
         if ( dominantMap == null && recessiveMap == null )
@@ -68,12 +59,12 @@ public class CollectionUtils
             return dominantMap;
         }
 
-        if ( dominantMap == null)
+        if ( dominantMap == null )
         {
             return recessiveMap;
         }
 
-        Map<K,V> result = new HashMap<K,V>();
+        Map<K, V> result = new HashMap<K, V>();
 
         // Grab the keys from the dominant and recessive maps.
         Set<K> dominantMapKeys = dominantMap.keySet();
@@ -99,16 +90,15 @@ public class CollectionUtils
     }
 
     /**
-     * Take a series of <code>Map</code>s and merge
-     * them where the ordering of the array from 0..n
-     * is the dominant order.
+     * Take a series of <code>Map</code>s and merge them where the ordering of the array from 0..n is the dominant
+     * order.
      *
      * @param maps An array of Maps to merge.
      * @return Map The result Map produced after the merging process.
      */
-    public static <K,V> Map<K,V> mergeMaps( Map<K,V>[] maps )
+    public static <K, V> Map<K, V> mergeMaps( Map<K, V>[] maps )
     {
-        Map<K,V> result;
+        Map<K, V> result;
 
         if ( maps.length == 0 )
         {
@@ -132,17 +122,15 @@ public class CollectionUtils
     }
 
     /**
-     * Returns a {@link Collection} containing the intersection
-     * of the given {@link Collection}s.
+     * Returns a {@link Collection} containing the intersection of the given {@link Collection}s.
      * <p>
-     * The cardinality of each element in the returned {@link Collection}
-     * will be equal to the minimum of the cardinality of that element
-     * in the two given {@link Collection}s.
+     * The cardinality of each element in the returned {@link Collection} will be equal to the minimum of the
+     * cardinality of that element in the two given {@link Collection}s.
      *
      * @param a The first collection
      * @param b The second collection
      * @see Collection#retainAll
-     * @return  The intersection of a and b, never null
+     * @return The intersection of a and b, never null
      */
     public static <E> Collection<E> intersection( final Collection<E> a, final Collection<E> b )
     {
@@ -162,10 +150,9 @@ public class CollectionUtils
     }
 
     /**
-     * Returns a {@link Collection} containing <tt><i>a</i> - <i>b</i></tt>.
-     * The cardinality of each element <i>e</i> in the returned {@link Collection}
-     * will be the cardinality of <i>e</i> in <i>a</i> minus the cardinality
-     * of <i>e</i> in <i>b</i>, or zero, whichever is greater.
+     * Returns a {@link Collection} containing <tt><i>a</i> - <i>b</i></tt>. The cardinality of each element <i>e</i> in
+     * the returned {@link Collection} will be the cardinality of <i>e</i> in <i>a</i> minus the cardinality of <i>e</i>
+     * in <i>b</i>, or zero, whichever is greater.
      *
      * @param a The start collection
      * @param b The collection that will be subtracted
@@ -183,12 +170,10 @@ public class CollectionUtils
     }
 
     /**
-     * Returns a {@link Map} mapping each unique element in
-     * the given {@link Collection} to an {@link Integer}
-     * representing the number of occurrences of that element
-     * in the {@link Collection}.
-     * An entry that maps to <tt>null</tt> indicates that the
-     * element does not appear in the given {@link Collection}.
+     * Returns a {@link Map} mapping each unique element in the given {@link Collection} to an {@link Integer}
+     * representing the number of occurrences of that element in the {@link Collection}. An entry that maps to
+     * <tt>null</tt> indicates that the element does not appear in the given {@link Collection}.
+     * 
      * @param col The collection to count cardinalities for
      * @return A map of counts, indexed on each element in the collection
      */
@@ -236,7 +221,7 @@ public class CollectionUtils
         try
         {
             Integer o = freqMap.get( obj );
-            if ( o != null )  // minimize NullPointerExceptions
+            if ( o != null ) // minimize NullPointerExceptions
             {
                 return o;
             }

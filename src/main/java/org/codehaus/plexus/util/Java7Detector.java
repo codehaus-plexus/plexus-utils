@@ -40,7 +40,6 @@ class Java7Detector
         isJava7 = isJava7x;
     }
 
-
     public static boolean isJava7()
     {
         return isJava7;

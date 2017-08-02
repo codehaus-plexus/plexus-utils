@@ -28,13 +28,13 @@ import java.net.URL;
  *
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @author <a href="mailto:mmaczka@interia.pl">Michal Maczka</a>
- *
  * @version $Id$
  */
 public class PropertyUtils
 {
 
-    public static Properties loadProperties( final URL url ) throws IOException
+    public static Properties loadProperties( final URL url )
+        throws IOException
     {
         if ( url == null )
         {
@@ -44,7 +44,8 @@ public class PropertyUtils
         return loadProperties( url.openStream() );
     }
 
-    public static Properties loadProperties( final File file ) throws IOException
+    public static Properties loadProperties( final File file )
+        throws IOException
     {
         if ( file == null )
         {
@@ -54,7 +55,8 @@ public class PropertyUtils
         return loadProperties( new FileInputStream( file ) );
     }
 
-    public static Properties loadProperties( final InputStream is ) throws IOException
+    public static Properties loadProperties( final InputStream is )
+        throws IOException
     {
         InputStream in = is;
         try

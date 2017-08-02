@@ -39,7 +39,7 @@ public class BourneShellTest
         sh.setWorkingDirectory( "/usr/local/bin" );
         sh.setExecutable( "chmod" );
 
-        String executable = StringUtils.join( sh.getShellCommandLine( new String[]{} ).iterator(), " " );
+        String executable = StringUtils.join( sh.getShellCommandLine( new String[] {} ).iterator(), " " );
 
         assertEquals( "/bin/sh -c cd '/usr/local/bin' && 'chmod'", executable );
     }
@@ -51,7 +51,7 @@ public class BourneShellTest
         sh.setWorkingDirectory( "/usr/local/'something else'" );
         sh.setExecutable( "chmod" );
 
-        String executable = StringUtils.join( sh.getShellCommandLine( new String[]{} ).iterator(), " " );
+        String executable = StringUtils.join( sh.getShellCommandLine( new String[] {} ).iterator(), " " );
 
         assertEquals( "/bin/sh -c cd '/usr/local/'\"'\"'something else'\"'\"'' && 'chmod'", executable );
     }
@@ -63,7 +63,7 @@ public class BourneShellTest
         sh.setWorkingDirectory( "\\usr\\local\\'something else'" );
         sh.setExecutable( "chmod" );
 
-        String executable = StringUtils.join( sh.getShellCommandLine( new String[]{} ).iterator(), " " );
+        String executable = StringUtils.join( sh.getShellCommandLine( new String[] {} ).iterator(), " " );
 
         assertEquals( "/bin/sh -c cd '\\usr\\local\\\'\"'\"'something else'\"'\"'' && 'chmod'", executable );
     }
@@ -81,7 +81,7 @@ public class BourneShellTest
 
         String cli = StringUtils.join( shellCommandLine.iterator(), " " );
         System.out.println( cli );
-        assertTrue( cli.endsWith("''\"'\"'some arg with spaces'\"'\"''"));
+        assertTrue( cli.endsWith( "''\"'\"'some arg with spaces'\"'\"''" ) );
     }
 
     public void testAddSingleQuotesOnArgumentWithSpaces()
@@ -113,7 +113,8 @@ public class BourneShellTest
 
         String cli = StringUtils.join( shellCommandLine.iterator(), " " );
         System.out.println( cli );
-        assertEquals("cd '/usr/bin' && 'chmod' 'arg'\"'\"'withquote'", shellCommandLine.get(shellCommandLine.size() - 1));
+        assertEquals( "cd '/usr/bin' && 'chmod' 'arg'\"'\"'withquote'",
+                      shellCommandLine.get( shellCommandLine.size() - 1 ) );
     }
 
     public void testArgumentsWithsemicolon()

@@ -61,8 +61,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 /**
- * Wraps a String as an InputStream. Note that data will be lost for
- * characters not in ISO Latin 1, as a simple char->byte mapping is assumed.
+ * Wraps a String as an InputStream. Note that data will be lost for characters not in ISO Latin 1, as a simple
+ * char->byte mapping is assumed.
  *
  * @author <a href="mailto:umagesh@codehaus.org">Magesh Umasankar</a>
  * @deprecated As of version 1.5.2 this class should no longer be used because it does not properly handle character
@@ -86,16 +86,14 @@ public class StringInputStream
     }
 
     /**
-     * Reads from the Stringreader, returning the same value. Note that
-     * data will be lost for characters not in ISO Latin 1. Clients
-     * assuming a return value in the range -1 to 255 may even fail on
-     * such input.
+     * Reads from the Stringreader, returning the same value. Note that data will be lost for characters not in ISO
+     * Latin 1. Clients assuming a return value in the range -1 to 255 may even fail on such input.
      *
      * @return the value of the next character in the StringReader
-     *
      * @exception IOException if the original StringReader fails to be read
      */
-    public int read() throws IOException
+    public int read()
+        throws IOException
     {
         return in.read();
     }
@@ -105,7 +103,8 @@ public class StringInputStream
      *
      * @exception IOException if the original StringReader fails to be closed
      */
-    public void close() throws IOException
+    public void close()
+        throws IOException
     {
         in.close();
     }
@@ -113,8 +112,7 @@ public class StringInputStream
     /**
      * Marks the read limit of the StringReader.
      *
-     * @param limit the maximum limit of bytes that can be read before the
-     *              mark position becomes invalid
+     * @param limit the maximum limit of bytes that can be read before the mark position becomes invalid
      */
     public synchronized void mark( final int limit )
     {
@@ -133,7 +131,8 @@ public class StringInputStream
      *
      * @exception IOException if the StringReader fails to be reset
      */
-    public synchronized void reset() throws IOException
+    public synchronized void reset()
+        throws IOException
     {
         in.reset();
     }
@@ -146,5 +145,3 @@ public class StringInputStream
         return in.markSupported();
     }
 }
-
-

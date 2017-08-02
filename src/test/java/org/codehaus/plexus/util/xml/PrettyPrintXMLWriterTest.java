@@ -171,20 +171,20 @@ public class PrettyPrintXMLWriterTest
 
         expected.append( "<html>" ).append( lineSeparator );
         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( "<head>" ).append( lineSeparator );
-        expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( "<title>title</title>" )
-                .append( lineSeparator );
-        expected.append( StringUtils.repeat( lineIndenter, 2 ) )
-                .append( "<meta name=\"author\" content=\"Author\"/>" ).append( lineSeparator );
-        expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( "<meta name=\"date\" content=\"Date\"/>" )
-                .append( lineSeparator );
+        expected.append( StringUtils.repeat( lineIndenter,
+                                             2 ) ).append( "<title>title</title>" ).append( lineSeparator );
+        expected.append( StringUtils.repeat( lineIndenter,
+                                             2 ) ).append( "<meta name=\"author\" content=\"Author\"/>" ).append( lineSeparator );
+        expected.append( StringUtils.repeat( lineIndenter,
+                                             2 ) ).append( "<meta name=\"date\" content=\"Date\"/>" ).append( lineSeparator );
         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( "</head>" ).append( lineSeparator );
         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( "<body>" ).append( lineSeparator );
-        expected.append( StringUtils.repeat( lineIndenter, 2 ) )
-                .append( "<p>Paragraph 1, line 1. Paragraph 1, line 2.</p>" ).append( lineSeparator );
-        expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( "<div class=\"section\">" )
-                .append( lineSeparator );
-        expected.append( StringUtils.repeat( lineIndenter, 3 ) ).append( "<h2>Section title</h2>" )
-                .append( lineSeparator );
+        expected.append( StringUtils.repeat( lineIndenter,
+                                             2 ) ).append( "<p>Paragraph 1, line 1. Paragraph 1, line 2.</p>" ).append( lineSeparator );
+        expected.append( StringUtils.repeat( lineIndenter,
+                                             2 ) ).append( "<div class=\"section\">" ).append( lineSeparator );
+        expected.append( StringUtils.repeat( lineIndenter,
+                                             3 ) ).append( "<h2>Section title</h2>" ).append( lineSeparator );
         expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( "</div>" ).append( lineSeparator );
         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( "</body>" ).append( lineSeparator );
         expected.append( "</html>" );

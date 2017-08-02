@@ -35,7 +35,7 @@ public class CmdShell
     {
         setShellCommand( "cmd.exe" );
         setQuotedExecutableEnabled( true );
-        setShellArgs( new String[]{"/X", "/C"} );
+        setShellArgs( new String[] { "/X", "/C" } );
     }
 
     /**
@@ -71,10 +71,9 @@ public class CmdShell
      *      remove the last quote character on the command line, preserving
      *      any text after the last quote character.
      * </pre>
-     *
-     *<p>
-     * Always quoting the entire command line, regardless of these conditions
-     * appears to make Windows processes invoke successfully.
+     * <p>
+     * Always quoting the entire command line, regardless of these conditions appears to make Windows processes invoke
+     * successfully.
      * </p>
      */
     public List<String> getCommandLine( String executable, String[] arguments )

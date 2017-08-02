@@ -81,7 +81,8 @@ public class PathToolTest
                                                    "http://plexus.codehaus.org/plexus-utils/index.html" ),
                       "plexus-utils/index.html" );
         assertEquals( PathTool.getRelativeWebPath( "http://plexus.codehaus.org/plexus-utils/index.html",
-                                                   "http://plexus.codehaus.org/" ), "../../" );
+                                                   "http://plexus.codehaus.org/" ),
+                      "../../" );
     }
 
     /**

@@ -26,7 +26,7 @@ import java.util.List;
  * @version $Id$
  */
 public class CycleDetectedExceptionTest
-        extends TestCase
+    extends TestCase
 {
     public void testException()
     {

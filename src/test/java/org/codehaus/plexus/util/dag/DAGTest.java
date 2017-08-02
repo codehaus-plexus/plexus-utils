@@ -131,7 +131,6 @@ public class DAGTest
         assertTrue( d.getParentLabels().contains( "c" ) );
     }
 
-
     public void testGetPredecessors()
         throws CycleDetectedException
     {
@@ -140,13 +139,13 @@ public class DAGTest
         dag.addEdge( "a", "b" );
 
         //
-        //  a --> b --> c --> e
-        //        |     |     |
-        //        |     V     V
-        //          --> d <-- f  --> g
+        // a --> b --> c --> e
+        // | | |
+        // | V V
+        // --> d <-- f --> g
         // result d, g, f, c, b, a
 
-        //force order of nodes
+        // force order of nodes
 
         dag.addVertex( "c" );
 

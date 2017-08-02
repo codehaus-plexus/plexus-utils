@@ -25,8 +25,7 @@ import java.util.List;
 
 /**
  * <p>
- * Class that abstracts the Shell functionality,
- * with subclasses for shells that behave particularly, like
+ * Class that abstracts the Shell functionality, with subclasses for shells that behave particularly, like
  * <ul>
  * <li><code>command.com</code></li>
  * <li><code>cmd.exe</code></li>
@@ -75,7 +74,7 @@ public class Shell
      *
      * @param unconditionallyQuote
      */
-    public void setUnconditionalQuoting(boolean unconditionallyQuote)
+    public void setUnconditionalQuoting( boolean unconditionallyQuote )
     {
         this.unconditionallyQuote = unconditionallyQuote;
     }
@@ -101,8 +100,7 @@ public class Shell
     }
 
     /**
-     * Set the shell arguments when calling a command line (not the executable arguments)
-     * (eg. /X /C for CMD.EXE)
+     * Set the shell arguments when calling a command line (not the executable arguments) (eg. /X /C for CMD.EXE)
      *
      * @param shellArgs
      */
@@ -133,7 +131,7 @@ public class Shell
      * Get the command line for the provided executable and arguments in this shell
      *
      * @param executable executable that the shell has to call
-     * @param arguments  arguments for the executable, not the shell
+     * @param arguments arguments for the executable, not the shell
      * @return List with one String object with executable and arguments quoted as needed
      */
     public List<String> getCommandLine( String executable, String[] arguments )
@@ -141,17 +139,12 @@ public class Shell
         return getRawCommandLine( executable, arguments );
     }
 
-    protected String quoteOneItem(String inputString, boolean isExecutable)
+    protected String quoteOneItem( String inputString, boolean isExecutable )
     {
         char[] escapeChars = getEscapeChars( isSingleQuotedExecutableEscaped(), isDoubleQuotedExecutableEscaped() );
-        return StringUtils.quoteAndEscape(
-            inputString,
-            isExecutable ? getExecutableQuoteDelimiter() : getArgumentQuoteDelimiter(),
-            escapeChars,
-            getQuotingTriggerChars(),
-            '\\',
-            unconditionallyQuote
-        );
+        return StringUtils.quoteAndEscape( inputString,
+                                           isExecutable ? getExecutableQuoteDelimiter() : getArgumentQuoteDelimiter(),
+                                           escapeChars, getQuotingTriggerChars(), '\\', unconditionallyQuote );
     }
 
     protected List<String> getRawCommandLine( String executable, String[] arguments )
@@ -267,22 +260,23 @@ public class Shell
         return exeQuoteDelimiter;
     }
 
-    protected void setArgumentEscapePattern(String argumentEscapePattern)
+    protected void setArgumentEscapePattern( String argumentEscapePattern )
     {
         this.argumentEscapePattern = argumentEscapePattern;
     }
 
-    protected String getArgumentEscapePattern() {
+    protected String getArgumentEscapePattern()
+    {
         return argumentEscapePattern;
     }
 
     /**
-     * Get the full command line to execute, including shell command, shell arguments,
-     * executable and executable arguments
+     * Get the full command line to execute, including shell command, shell arguments, executable and executable
+     * arguments
      *
-     * @param arguments  arguments for the executable, not the shell
-     * @return List of String objects, whose array version is suitable to be used as argument
-     *         of Runtime.getRuntime().exec()
+     * @param arguments arguments for the executable, not the shell
+     * @return List of String objects, whose array version is suitable to be used as argument of
+     *         Runtime.getRuntime().exec()
      */
     public List<String> getShellCommandLine( String[] arguments )
     {

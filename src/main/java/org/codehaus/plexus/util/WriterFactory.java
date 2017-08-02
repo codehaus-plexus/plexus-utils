@@ -30,8 +30,7 @@ import java.nio.charset.Charset;
 import org.codehaus.plexus.util.xml.XmlStreamWriter;
 
 /**
- * Utility to create Writers, with explicit encoding choice: platform default,
- * XML, or specified.
+ * Utility to create Writers, with explicit encoding choice: platform default, XML, or specified.
  *
  * @author <a href="mailto:hboutemy@codehaus.org">Herve Boutemy</a>
  * @see Charset
@@ -42,44 +41,50 @@ import org.codehaus.plexus.util.xml.XmlStreamWriter;
 public class WriterFactory
 {
     /**
-     * ISO Latin Alphabet #1, also known as ISO-LATIN-1.
-     * Every implementation of the Java platform is required to support this character encoding.
+     * ISO Latin Alphabet #1, also known as ISO-LATIN-1. Every implementation of the Java platform is required to
+     * support this character encoding.
+     * 
      * @see Charset
      */
     public static final String ISO_8859_1 = "ISO-8859-1";
 
     /**
-     * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set.
-     * Every implementation of the Java platform is required to support this character encoding.
+     * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set. Every
+     * implementation of the Java platform is required to support this character encoding.
+     * 
      * @see Charset
      */
     public static final String US_ASCII = "US-ASCII";
 
     /**
      * Sixteen-bit Unicode Transformation Format, byte order specified by a mandatory initial byte-order mark (either
-     * order accepted on input, big-endian used on output).
-     * Every implementation of the Java platform is required to support this character encoding.
+     * order accepted on input, big-endian used on output). Every implementation of the Java platform is required to
+     * support this character encoding.
+     * 
      * @see Charset
      */
     public static final String UTF_16 = "UTF-16";
 
     /**
-     * Sixteen-bit Unicode Transformation Format, big-endian byte order.
-     * Every implementation of the Java platform is required to support this character encoding.
+     * Sixteen-bit Unicode Transformation Format, big-endian byte order. Every implementation of the Java platform is
+     * required to support this character encoding.
+     * 
      * @see Charset
      */
     public static final String UTF_16BE = "UTF-16BE";
 
     /**
-     * Sixteen-bit Unicode Transformation Format, little-endian byte order.
-     * Every implementation of the Java platform is required to support this character encoding.
+     * Sixteen-bit Unicode Transformation Format, little-endian byte order. Every implementation of the Java platform is
+     * required to support this character encoding.
+     * 
      * @see Charset
      */
     public static final String UTF_16LE = "UTF-16LE";
 
     /**
-     * Eight-bit Unicode Transformation Format.
-     * Every implementation of the Java platform is required to support this character encoding.
+     * Eight-bit Unicode Transformation Format. Every implementation of the Java platform is required to support this
+     * character encoding.
+     * 
      * @see Charset
      */
     public static final String UTF_8 = "UTF-8";
@@ -98,7 +103,7 @@ public class WriterFactory
      * @see XmlStreamWriter
      */
     public static XmlStreamWriter newXmlWriter( OutputStream out )
-    throws IOException
+        throws IOException
     {
         return new XmlStreamWriter( out );
     }
@@ -112,7 +117,7 @@ public class WriterFactory
      * @see XmlStreamWriter
      */
     public static XmlStreamWriter newXmlWriter( File file )
-    throws IOException
+        throws IOException
     {
         return new XmlStreamWriter( file );
     }
@@ -139,7 +144,7 @@ public class WriterFactory
      * @see Charset#defaultCharset()
      */
     public static Writer newPlatformWriter( File file )
-    throws IOException
+        throws IOException
     {
         return new FileWriter( file );
     }
@@ -154,7 +159,7 @@ public class WriterFactory
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
     public static Writer newWriter( OutputStream out, String encoding )
-    throws UnsupportedEncodingException
+        throws UnsupportedEncodingException
     {
         return new OutputStreamWriter( out, encoding );
     }
@@ -170,7 +175,7 @@ public class WriterFactory
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
     public static Writer newWriter( File file, String encoding )
-    throws UnsupportedEncodingException, FileNotFoundException
+        throws UnsupportedEncodingException, FileNotFoundException
     {
         return newWriter( new FileOutputStream( file ), encoding );
     }

@@ -40,7 +40,7 @@ public final class ReflectionUtils
     // Field utils
     // ----------------------------------------------------------------------
 
-    public static Field getFieldByNameIncludingSuperclasses( String fieldName, Class<?> clazz  )
+    public static Field getFieldByNameIncludingSuperclasses( String fieldName, Class<?> clazz )
     {
         Field retValue = null;
 
@@ -80,8 +80,7 @@ public final class ReflectionUtils
     // ----------------------------------------------------------------------
 
     /**
-     * Finds a setter in the given class for the given field. It searches
-     * interfaces and superclasses too.
+     * Finds a setter in the given class for the given field. It searches interfaces and superclasses too.
      *
      * @param fieldName the name of the field (i.e. 'fooBar'); it will search for a method named 'setFooBar'.
      * @param clazz The class to find the method in.
@@ -125,15 +124,14 @@ public final class ReflectionUtils
     }
 
     /**
-     * Returns the class of the argument to the setter.
-     *
-     * Will throw an RuntimeException if the method isn't a setter.
+     * Returns the class of the argument to the setter. Will throw an RuntimeException if the method isn't a setter.
      */
     public static Class<?> getSetterType( Method method )
     {
         if ( !isSetter( method ) )
         {
-            throw new RuntimeException( "The method " + method.getDeclaringClass().getName() + "." + method.getName() + " is not a setter." );
+            throw new RuntimeException( "The method " + method.getDeclaringClass().getName() + "." + method.getName()
+                + " is not a setter." );
         }
 
         return method.getParameterTypes()[0];
@@ -158,12 +156,11 @@ public final class ReflectionUtils
 
         field.setAccessible( true );
 
-        field.set(object, value );
+        field.set( object, value );
     }
 
     /**
-     * Generates a map of the fields and values on a given object,
-     * also pulls from superclasses
+     * Generates a map of the fields and values on a given object, also pulls from superclasses
      *
      * @param object the object to generate the list of fields from
      * @return map containing the fields and their values
@@ -180,16 +177,15 @@ public final class ReflectionUtils
     }
 
     /**
-     * Generates a map of the fields and values on a given object,
-     * also pulls from superclasses
+     * Generates a map of the fields and values on a given object, also pulls from superclasses
      *
      * @param object the object to generate the list of fields from
      * @return map containing the fields and their values
      */
-    public static Map<String,Object> getVariablesAndValuesIncludingSuperclasses( Object object )
+    public static Map<String, Object> getVariablesAndValuesIncludingSuperclasses( Object object )
         throws IllegalAccessException
     {
-        Map<String,Object> map = new HashMap<String,Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
 
         gatherVariablesAndValuesIncludingSuperclasses( object, map );
 
@@ -203,18 +199,16 @@ public final class ReflectionUtils
     public static boolean isSetter( Method method )
     {
         return method.getReturnType().equals( Void.TYPE ) && // FIXME: needed /required?
-               !Modifier.isStatic( method.getModifiers() ) &&
-               method.getParameterTypes().length == 1;
+            !Modifier.isStatic( method.getModifiers() ) && method.getParameterTypes().length == 1;
     }
 
     /**
-     * populates a map of the fields and values on a given object,
-     * also pulls from superclasses
+     * populates a map of the fields and values on a given object, also pulls from superclasses
      *
      * @param object the object to generate the list of fields from
      * @param map to populate
      */
-    private static void gatherVariablesAndValuesIncludingSuperclasses( Object object, Map<String,Object> map )
+    private static void gatherVariablesAndValuesIncludingSuperclasses( Object object, Map<String, Object> map )
         throws IllegalAccessException
     {
 
@@ -222,7 +216,7 @@ public final class ReflectionUtils
 
         Field[] fields = clazz.getDeclaredFields();
 
-        AccessibleObject.setAccessible( fields, true);
+        AccessibleObject.setAccessible( fields, true );
 
         for ( Field field : fields )
         {
@@ -232,7 +226,7 @@ public final class ReflectionUtils
 
         Class<?> superclass = clazz.getSuperclass();
 
-        if ( !Object.class.equals(  superclass ) )
+        if ( !Object.class.equals( superclass ) )
         {
             gatherVariablesAndValuesIncludingSuperclasses( superclass, map );
         }

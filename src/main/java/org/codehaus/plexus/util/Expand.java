@@ -70,14 +70,13 @@ import java.util.zip.ZipInputStream;
  * @author costin@dnt.ro
  * @author <a href="mailto:stefan.bodewig@epost.de">Stefan Bodewig</a>
  * @author <a href="mailto:umagesh@codehaus.org">Magesh Umasankar</a>
- * @since Ant 1.1 @ant.task category="packaging" name="unzip" name="unjar"
- *      name="unwar"
+ * @since Ant 1.1 @ant.task category="packaging" name="unzip" name="unjar" name="unwar"
  * @version $Id$
  */
 public class Expand
 {
 
-    private File dest;//req
+    private File dest;// req
 
     private File source;// req
 
@@ -114,7 +113,7 @@ public class Expand
                 extractFile( srcF, dir, zis, ze.getName(), new Date( ze.getTime() ), ze.isDirectory() );
             }
 
-            //log("expand complete", Project.MSG_VERBOSE);
+            // log("expand complete", Project.MSG_VERBOSE);
             zis.close();
             zis = null;
         }
@@ -159,15 +158,16 @@ public class Expand
             }
             else
             {
-                byte[] buffer = new byte[ 65536 ];
+                byte[] buffer = new byte[65536];
                 FileOutputStream fos = null;
                 try
                 {
                     fos = new FileOutputStream( f );
 
-                    for ( int length = compressedInputStream.read( buffer );
-                          length >= 0;
-                          fos.write( buffer, 0, length ), length = compressedInputStream.read( buffer ) );
+                    for ( int length =
+                        compressedInputStream.read( buffer ); length >= 0; fos.write( buffer, 0, length ), length =
+                            compressedInputStream.read( buffer ) )
+                        ;
 
                     fos.close();
                     fos = null;
@@ -188,8 +188,7 @@ public class Expand
     }
 
     /**
-     * Set the destination directory. File will be unzipped into the destination
-     * directory.
+     * Set the destination directory. File will be unzipped into the destination directory.
      *
      * @param d Path to the directory.
      */
@@ -209,8 +208,7 @@ public class Expand
     }
 
     /**
-     * Should we overwrite files in dest, even if they are newer than the
-     * corresponding entries in the archive?
+     * Should we overwrite files in dest, even if they are newer than the corresponding entries in the archive?
      */
     public void setOverwrite( boolean b )
     {

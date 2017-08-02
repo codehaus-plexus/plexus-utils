@@ -20,6 +20,7 @@ import java.io.File;
 
 /**
  * Observes the actions of a {@link DirectoryWalker}.
+ * 
  * @version $Id$
  * @see DirectoryWalker
  */

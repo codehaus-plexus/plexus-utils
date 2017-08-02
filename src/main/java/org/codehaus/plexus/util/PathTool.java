@@ -20,8 +20,7 @@ import java.io.File;
 import java.util.StringTokenizer;
 
 /**
- * Path tool contains static methods to assist in determining path-related
- * information such as relative paths.
+ * Path tool contains static methods to assist in determining path-related information such as relative paths.
  *
  * @author <a href="mailto:pete-apache-dev@kazmier.com">Pete Kazmier</a>
  * @author <a href="mailto:vmassol@apache.org">Vincent Massol</a>
@@ -31,17 +30,14 @@ import java.util.StringTokenizer;
 public class PathTool
 {
     /**
-     * Determines the relative path of a filename from a base directory.
-     * This method is useful in building relative links within pages of
-     * a web site.  It provides similar functionality to Anakia's
-     * <code>$relativePath</code> context variable.  The arguments to
-     * this method may contain either forward or backward slashes as
-     * file separators.  The relative path returned is formed using
-     * forward slashes as it is expected this path is to be used as a
-     * link in a web page (again mimicking Anakia's behavior).
+     * Determines the relative path of a filename from a base directory. This method is useful in building relative
+     * links within pages of a web site. It provides similar functionality to Anakia's <code>$relativePath</code>
+     * context variable. The arguments to this method may contain either forward or backward slashes as file separators.
+     * The relative path returned is formed using forward slashes as it is expected this path is to be used as a link in
+     * a web page (again mimicking Anakia's behavior).
      * <p/>
-     * This method is thread-safe.
-     * <br/>
+     * This method is thread-safe. <br/>
+     * 
      * <pre>
      * PathTool.getRelativePath( null, null )                                   = ""
      * PathTool.getRelativePath( null, "/usr/local/java/bin" )                  = ""
@@ -51,14 +47,11 @@ public class PathTool
      * PathTool.getRelativePath( "/usr/local/java/bin/java.sh", "/usr/local/" ) = ""
      * </pre>
      *
-     * @param basedir  The base directory.
-     * @param filename The filename that is relative to the base
-     *                 directory.
-     * @return The relative path of the filename from the base
-     *         directory.  This value is not terminated with a forward slash.
-     *         A zero-length string is returned if: the filename is not relative to
-     *         the base directory, <code>basedir</code> is null or zero-length,
-     *         or <code>filename</code> is null or zero-length.
+     * @param basedir The base directory.
+     * @param filename The filename that is relative to the base directory.
+     * @return The relative path of the filename from the base directory. This value is not terminated with a forward
+     *         slash. A zero-length string is returned if: the filename is not relative to the base directory,
+     *         <code>basedir</code> is null or zero-length, or <code>filename</code> is null or zero-length.
      */
     public static final String getRelativePath( String basedir, String filename )
     {
@@ -66,8 +59,7 @@ public class PathTool
         filename = uppercaseDrive( filename );
 
         /*
-         * Verify the arguments and make sure the filename is relative
-         * to the base directory.
+         * Verify the arguments and make sure the filename is relative to the base directory.
          */
         if ( basedir == null || basedir.length() == 0 || filename == null || filename.length() == 0
             || !filename.startsWith( basedir ) )
@@ -76,18 +68,16 @@ public class PathTool
         }
 
         /*
-         * Normalize the arguments.  First, determine the file separator
-         * that is being used, then strip that off the end of both the
-         * base directory and filename.
+         * Normalize the arguments. First, determine the file separator that is being used, then strip that off the end
+         * of both the base directory and filename.
          */
         String separator = determineSeparator( filename );
         basedir = StringUtils.chompLast( basedir, separator );
         filename = StringUtils.chompLast( filename, separator );
 
         /*
-         * Remove the base directory from the filename to end up with a
-         * relative filename (relative to the base directory).  This
-         * filename is then used to determine the relative path.
+         * Remove the base directory from the filename to end up with a relative filename (relative to the base
+         * directory). This filename is then used to determine the relative path.
          */
         String relativeFilename = filename.substring( basedir.length() );
 
@@ -95,21 +85,17 @@ public class PathTool
     }
 
     /**
-     * Determines the relative path of a filename.  This method is
-     * useful in building relative links within pages of a web site.  It
-     * provides similar functionality to Anakia's
-     * <code>$relativePath</code> context variable.  The argument to
-     * this method may contain either forward or backward slashes as
-     * file separators.  The relative path returned is formed using
-     * forward slashes as it is expected this path is to be used as a
-     * link in a web page (again mimicking Anakia's behavior).
+     * Determines the relative path of a filename. This method is useful in building relative links within pages of a
+     * web site. It provides similar functionality to Anakia's <code>$relativePath</code> context variable. The argument
+     * to this method may contain either forward or backward slashes as file separators. The relative path returned is
+     * formed using forward slashes as it is expected this path is to be used as a link in a web page (again mimicking
+     * Anakia's behavior).
      * <p/>
      * This method is thread-safe.
      *
      * @param filename The filename to be parsed.
-     * @return The relative path of the filename. This value is not
-     *         terminated with a forward slash.  A zero-length string is
-     *         returned if: <code>filename</code> is null or zero-length.
+     * @return The relative path of the filename. This value is not terminated with a forward slash. A zero-length
+     *         string is returned if: <code>filename</code> is null or zero-length.
      * @see #getRelativeFilePath(String, String)
      */
     public static final String getRelativePath( String filename )
@@ -122,10 +108,8 @@ public class PathTool
         }
 
         /*
-         * Normalize the argument.  First, determine the file separator
-         * that is being used, then strip that off the end of the
-         * filename.  Then, if the filename doesn't begin with a
-         * separator, add one.
+         * Normalize the argument. First, determine the file separator that is being used, then strip that off the end
+         * of the filename. Then, if the filename doesn't begin with a separator, add one.
          */
 
         String separator = determineSeparator( filename );
@@ -139,13 +123,12 @@ public class PathTool
     }
 
     /**
-     * Determines the directory component of a filename.  This is useful
-     * within DVSL templates when used in conjunction with the DVSL's
-     * <code>$context.getAppValue("infilename")</code> to get the
-     * current directory that is currently being processed.
+     * Determines the directory component of a filename. This is useful within DVSL templates when used in conjunction
+     * with the DVSL's <code>$context.getAppValue("infilename")</code> to get the current directory that is currently
+     * being processed.
      * <p/>
-     * This method is thread-safe.
-     * <br/>
+     * This method is thread-safe. <br/>
+     * 
      * <pre>
      * PathTool.getDirectoryComponent( null )                                   = ""
      * PathTool.getDirectoryComponent( "/usr/local/java/bin" )                  = "/usr/local/java"
@@ -154,9 +137,8 @@ public class PathTool
      * </pre>
      *
      * @param filename The filename to be parsed.
-     * @return The directory portion of the <code>filename</code>.  If
-     *         the filename does not contain a directory component, "." is
-     *         returned.
+     * @return The directory portion of the <code>filename</code>. If the filename does not contain a directory
+     *         component, "." is returned.
      */
     public static final String getDirectoryComponent( String filename )
     {
@@ -177,8 +159,8 @@ public class PathTool
     }
 
     /**
-     * Calculates the appropriate link given the preferred link and the relativePath of the document.
-     * <br/>
+     * Calculates the appropriate link given the preferred link and the relativePath of the document. <br/>
+     * 
      * <pre>
      * PathTool.calculateLink( "/index.html", "../.." )                                        = "../../index.html"
      * PathTool.calculateLink( "http://plexus.codehaus.org/plexus-utils/index.html", "../.." ) = "http://plexus.codehaus.org/plexus-utils/index.html"
@@ -201,13 +183,13 @@ public class PathTool
         {
             relativePath = "";
         }
-        //This must be some historical feature
+        // This must be some historical feature
         if ( link.startsWith( "/site/" ) )
         {
             return link.substring( 5 );
         }
 
-        //Allows absolute links in nav-bars etc
+        // Allows absolute links in nav-bars etc
         if ( link.startsWith( "/absolute/" ) )
         {
             return link.substring( 10 );
@@ -219,7 +201,7 @@ public class PathTool
             return link;
         }
 
-        //If relativepath is current directory, just pass the link through
+        // If relativepath is current directory, just pass the link through
         if ( StringUtils.equals( relativePath, "." ) )
         {
             if ( link.startsWith( "/" ) )
@@ -230,7 +212,7 @@ public class PathTool
             return link;
         }
 
-        //If we don't do this, you can end up with ..//bob.html rather than ../bob.html
+        // If we don't do this, you can end up with ..//bob.html rather than ../bob.html
         if ( relativePath.endsWith( "/" ) && link.startsWith( "/" ) )
         {
             return relativePath + "." + link.substring( 1 );
@@ -245,8 +227,8 @@ public class PathTool
     }
 
     /**
-     * This method can calculate the relative path between two paths on a web site.
-     * <br/>
+     * This method can calculate the relative path between two paths on a web site. <br/>
+     * 
      * <pre>
      * PathTool.getRelativeWebPath( null, null )                                          = ""
      * PathTool.getRelativeWebPath( null, "http://plexus.codehaus.org/" )                 = ""
@@ -279,8 +261,8 @@ public class PathTool
     }
 
     /**
-     * This method can calculate the relative path between two paths on a file system.
-     * <br/>
+     * This method can calculate the relative path between two paths on a file system. <br/>
+     * 
      * <pre>
      * PathTool.getRelativeFilePath( null, null )                                   = ""
      * PathTool.getRelativeFilePath( null, "/usr/local/java/bin" )                  = ""
@@ -293,6 +275,7 @@ public class PathTool
      * PathTool.getRelativeFilePath( "/usr/local/", "/bin" )                        = "../../bin"
      * PathTool.getRelativeFilePath( "/bin", "/usr/local/" )                        = "../usr/local"
      * </pre>
+     * 
      * Note: On Windows based system, the <code>/</code> character should be replaced by <code>\</code> character.
      *
      * @param oldPath
@@ -332,16 +315,16 @@ public class PathTool
 
         // check for the presence of windows drives. No relative way of
         // traversing from one to the other.
-        if ( ( toPath.startsWith( ":", 1 ) && fromPath.startsWith( ":", 1 ) ) && ( !toPath.substring( 0, 1 ).equals(
-            fromPath.substring( 0, 1 ) ) ) )
+        if ( ( toPath.startsWith( ":", 1 ) && fromPath.startsWith( ":", 1 ) )
+            && ( !toPath.substring( 0, 1 ).equals( fromPath.substring( 0, 1 ) ) ) )
         {
             // they both have drive path element but they dont match, no
             // relative path
             return null;
         }
 
-        if ( ( toPath.startsWith( ":", 1 ) && !fromPath.startsWith( ":", 1 ) ) || ( !toPath.startsWith( ":", 1 )
-            && fromPath.startsWith( ":", 1 ) ) )
+        if ( ( toPath.startsWith( ":", 1 ) && !fromPath.startsWith( ":", 1 ) )
+            || ( !toPath.startsWith( ":", 1 ) && fromPath.startsWith( ":", 1 ) ) )
         {
             // one has a drive path element and the other doesnt, no relative
             // path.
@@ -363,15 +346,13 @@ public class PathTool
     // ----------------------------------------------------------------------
 
     /**
-     * Determines the relative path of a filename.  For each separator
-     * within the filename (except the leading if present), append the
-     * "../" string to the return value.
+     * Determines the relative path of a filename. For each separator within the filename (except the leading if
+     * present), append the "../" string to the return value.
      *
-     * @param filename  The filename to parse.
+     * @param filename The filename to parse.
      * @param separator The separator used within the filename.
-     * @return The relative path of the filename.  This value is not
-     *         terminated with a forward slash.  A zero-length string is
-     *         returned if: the filename is zero-length.
+     * @return The relative path of the filename. This value is not terminated with a forward slash. A zero-length
+     *         string is returned if: the filename is zero-length.
      */
     private static final String determineRelativePath( String filename, String separator )
     {
@@ -381,10 +362,9 @@ public class PathTool
         }
 
         /*
-        * Count the slashes in the relative filename, but exclude the
-        * leading slash.  If the path has no slashes, then the filename
-        * is relative to the current directory.
-        */
+         * Count the slashes in the relative filename, but exclude the leading slash. If the path has no slashes, then
+         * the filename is relative to the current directory.
+         */
         int slashCount = StringUtils.countMatches( filename, separator ) - 1;
         if ( slashCount <= 0 )
         {
@@ -392,9 +372,8 @@ public class PathTool
         }
 
         /*
-         * The relative filename contains one or more slashes indicating
-         * that the file is within one or more directories.  Thus, each
-         * slash represents a "../" in the relative path.
+         * The relative filename contains one or more slashes indicating that the file is within one or more
+         * directories. Thus, each slash represents a "../" in the relative path.
          */
         StringBuilder sb = new StringBuilder();
         for ( int i = 0; i < slashCount; i++ )
@@ -403,21 +382,17 @@ public class PathTool
         }
 
         /*
-         * Finally, return the relative path but strip the trailing
-         * slash to mimic Anakia's behavior.
+         * Finally, return the relative path but strip the trailing slash to mimic Anakia's behavior.
          */
         return StringUtils.chop( sb.toString() );
     }
 
     /**
-     * Helper method to determine the file separator (forward or
-     * backward slash) used in a filename.  The slash that occurs more
-     * often is returned as the separator.
+     * Helper method to determine the file separator (forward or backward slash) used in a filename. The slash that
+     * occurs more often is returned as the separator.
      *
-     * @param filename The filename parsed to determine the file
-     *                 separator.
-     * @return The file separator used within <code>filename</code>.
-     *         This value is either a forward or backward slash.
+     * @param filename The filename parsed to determine the file separator.
+     * @return The file separator used within <code>filename</code>. This value is either a forward or backward slash.
      */
     private static final String determineSeparator( String filename )
     {

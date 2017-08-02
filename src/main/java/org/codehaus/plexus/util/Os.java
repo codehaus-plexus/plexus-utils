@@ -1,3 +1,5 @@
+package org.codehaus.plexus.util;
+
 /*
  * The Apache Software License, Version 1.1
  *
@@ -51,8 +53,6 @@
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
-
-package org.codehaus.plexus.util;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -208,8 +208,7 @@ public class Os
     }
 
     /**
-     * Determines if the current OS matches the type of that
-     * set in setFamily.
+     * Determines if the current OS matches the type of that set in setFamily.
      * 
      * @see Os#setFamily(String)
      */
@@ -220,8 +219,7 @@ public class Os
     }
 
     /**
-     * Determines if the current OS matches the given OS
-     * family.
+     * Determines if the current OS matches the given OS family.
      * 
      * @param family the family to check for
      * @return true if the OS matches
@@ -233,8 +231,7 @@ public class Os
     }
 
     /**
-     * Determines if the current OS matches the given OS
-     * name.
+     * Determines if the current OS matches the given OS name.
      * 
      * @param name the OS name to check for
      * @return true if the OS matches
@@ -246,8 +243,7 @@ public class Os
     }
 
     /**
-     * Determines if the current OS matches the given OS
-     * architecture.
+     * Determines if the current OS matches the given OS architecture.
      * 
      * @param arch the OS architecture to check for
      * @return true if the OS matches
@@ -259,8 +255,7 @@ public class Os
     }
 
     /**
-     * Determines if the current OS matches the given OS
-     * version.
+     * Determines if the current OS matches the given OS version.
      * 
      * @param version the OS version to check for
      * @return true if the OS matches
@@ -272,12 +267,8 @@ public class Os
     }
 
     /**
-     * Determines if the current OS matches the given OS
-     * family, name, architecture and version.
-     * 
-     * The name, architecture and version are compared to
-     * the System properties os.name, os.version and os.arch
-     * in a case-independent way.
+     * Determines if the current OS matches the given OS family, name, architecture and version. The name, architecture
+     * and version are compared to the System properties os.name, os.version and os.arch in a case-independent way.
      * 
      * @param family The OS family
      * @param name The OS name
@@ -314,10 +305,8 @@ public class Os
                 }
                 else if ( family.equalsIgnoreCase( FAMILY_DOS ) )
                 {
-                    isFamily = PATH_SEP.equals( ";" )
-                                   && !isFamily( FAMILY_NETWARE )
-                                   && !isFamily( FAMILY_WINDOWS )
-                                   && !isFamily( FAMILY_WIN9X );
+                    isFamily = PATH_SEP.equals( ";" ) && !isFamily( FAMILY_NETWARE ) && !isFamily( FAMILY_WINDOWS )
+                        && !isFamily( FAMILY_WIN9X );
 
                 }
                 else if ( family.equalsIgnoreCase( FAMILY_MAC ) )
@@ -335,9 +324,8 @@ public class Os
                 }
                 else if ( family.equalsIgnoreCase( FAMILY_WIN9X ) )
                 {
-                    isFamily = isFamily( FAMILY_WINDOWS )
-                        && ( OS_NAME.contains( "95" ) || OS_NAME.contains( "98" )
-                            || OS_NAME.contains( "me" ) || OS_NAME.contains( "ce" ) );
+                    isFamily = isFamily( FAMILY_WINDOWS ) && ( OS_NAME.contains( "95" ) || OS_NAME.contains( "98" )
+                        || OS_NAME.contains( "me" ) || OS_NAME.contains( "ce" ) );
                 }
                 else if ( family.equalsIgnoreCase( FAMILY_ZOS ) )
                 {
@@ -404,8 +392,7 @@ public class Os
     }
 
     /**
-     * Helper method to check if the given family is in the
-     * following list:
+     * Helper method to check if the given family is in the following list:
      * <ul>
      * <li>dos</li>
      * <li>mac</li>

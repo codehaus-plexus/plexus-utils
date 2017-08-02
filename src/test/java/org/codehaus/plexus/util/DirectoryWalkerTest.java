@@ -20,14 +20,16 @@ import java.io.File;
 
 import junit.framework.TestCase;
 
-public class DirectoryWalkerTest extends TestCase {
+public class DirectoryWalkerTest
+    extends TestCase
+{
     public void testDirectoryWalk()
     {
         DirectoryWalker walker = new DirectoryWalker();
 
         walker.addSCMExcludes();
 
-        walker.setBaseDir( new File("src/test/resources/directorywalker") );
+        walker.setBaseDir( new File( "src/test/resources/directorywalker" ) );
 
         WalkCollector collector = new WalkCollector();
         walker.addDirectoryWalkListener( collector );

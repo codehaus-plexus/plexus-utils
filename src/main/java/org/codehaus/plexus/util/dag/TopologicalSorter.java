@@ -54,7 +54,6 @@ public class TopologicalSorter
         return retValue;
     }
 
-
     private static List<String> dfs( final DAG graph )
     {
         // we need to use addFirst method so we will use LinkedList explicitly
@@ -84,7 +83,6 @@ public class TopologicalSorter
         return ( state == null ) || NOT_VISITED.equals( state );
     }
 
-
     private static void dfsVisit( final Vertex vertex, final Map<Vertex, Integer> vertexStateMap,
                                   final List<String> list )
     {
@@ -104,4 +102,3 @@ public class TopologicalSorter
     }
 
 }
-

@@ -51,7 +51,7 @@ public class XmlUtilTest
             basedir = System.getProperty( "basedir", new File( "" ).getAbsolutePath() );
         }
         return basedir;
-    }    
+    }
 
     private File getTestOutputFile( String relPath )
         throws IOException
@@ -115,7 +115,8 @@ public class XmlUtilTest
         try
         {
             reader = ReaderFactory.newXmlReader( testDocument );
-            writer = WriterFactory.newXmlWriter( getTestOutputFile( "target/test/prettyFormatTestDocumentWriter.xml" ) );
+            writer =
+                WriterFactory.newXmlWriter( getTestOutputFile( "target/test/prettyFormatTestDocumentWriter.xml" ) );
 
             assertNotNull( reader );
             assertNotNull( writer );
@@ -182,5 +183,5 @@ public class XmlUtilTest
             IOUtil.close( reader );
             IOUtil.close( writer );
         }
-    }   
+    }
 }

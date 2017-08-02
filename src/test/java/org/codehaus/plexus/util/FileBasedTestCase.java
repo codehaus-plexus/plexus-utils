@@ -32,7 +32,6 @@ import java.util.Arrays;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
-
 /**
  * Base class for testcases doing tests with files.
  *
@@ -115,20 +114,20 @@ public abstract class FileBasedTestCase
     {
         for ( int i = 0; i < size; i++ )
         {
-            //output.write((byte)'X');
+            // output.write((byte)'X');
 
             // nice varied byte pattern compatible with Readers and Writers
             out.write( (byte) ( ( i % 127 ) + 1 ) );
         }
     }
 
-    protected File newFile( String filename ) throws IOException
+    protected File newFile( String filename )
+        throws IOException
     {
         final File destination = new File( getTestDirectory(), filename );
         /*
-        assertTrue( filename + "Test output data file shouldn't previously exist",
-                    !destination.exists() );
-        */
+         * assertTrue( filename + "Test output data file shouldn't previously exist", !destination.exists() );
+         */
         if ( destination.exists() )
         {
             FileUtils.forceDelete( destination );
@@ -143,7 +142,8 @@ public abstract class FileBasedTestCase
         assertEqualContent( referenceFile, file );
     }
 
-    protected void checkWrite( final OutputStream output ) throws Exception
+    protected void checkWrite( final OutputStream output )
+        throws Exception
     {
         try
         {
@@ -156,7 +156,8 @@ public abstract class FileBasedTestCase
         }
     }
 
-    protected void checkWrite( final Writer output ) throws Exception
+    protected void checkWrite( final Writer output )
+        throws Exception
     {
         try
         {
@@ -186,12 +187,11 @@ public abstract class FileBasedTestCase
     private void assertEqualContent( final File f0, final File f1 )
         throws IOException
     {
-        /* This doesn't work because the filesize isn't updated until the file
-         * is closed.
-        assertTrue( "The files " + f0 + " and " + f1 +
-                    " have differing file sizes (" + f0.length() +
-                    " vs " + f1.length() + ")", ( f0.length() == f1.length() ) );
-        */
+        /*
+         * This doesn't work because the filesize isn't updated until the file is closed. assertTrue( "The files " + f0
+         * + " and " + f1 + " have differing file sizes (" + f0.length() + " vs " + f1.length() + ")", ( f0.length() ==
+         * f1.length() ) );
+         */
         final InputStream is0 = new FileInputStream( f0 );
         try
         {
@@ -207,12 +207,11 @@ public abstract class FileBasedTestCase
                 {
                     n0 = is0.read( buf0 );
                     n1 = is1.read( buf1 );
-                    assertTrue( "The files " + f0 + " and " + f1 +
-                                " have differing number of bytes available (" + n0 +
-                                " vs " + n1 + ")", ( n0 == n1 ) );
+                    assertTrue( "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0
+                        + " vs " + n1 + ")", ( n0 == n1 ) );
 
-                    assertTrue( "The files " + f0 + " and " + f1 +
-                                " have different content", Arrays.equals( buf0, buf1 ) );
+                    assertTrue( "The files " + f0 + " and " + f1 + " have different content",
+                                Arrays.equals( buf0, buf1 ) );
                 }
             }
             finally
@@ -236,11 +235,8 @@ public abstract class FileBasedTestCase
             byte[] b1 = new byte[b0.length];
             int numRead = is.read( b1 );
             assertTrue( "Different number of bytes", numRead == b0.length && is.available() == 0 );
-            for ( int i = 0;
-                  i < numRead;
-                  assertTrue( "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")",
-                              b0[i] == b1[i] ), i++
-                )
+            for ( int i = 0; i < numRead; assertTrue( "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")",
+                                                      b0[i] == b1[i] ), i++ )
                 ;
         }
         finally

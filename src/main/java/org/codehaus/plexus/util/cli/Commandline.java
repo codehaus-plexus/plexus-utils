@@ -75,12 +75,11 @@ import java.util.Vector;
 
 /**
  * <p/>
- * Commandline objects help handling command lines specifying processes to
- * execute.
+ * Commandline objects help handling command lines specifying processes to execute.
  * </p>
  * <p/>
- * The class can be used to define a command line as nested elements or as a
- * helper to define a command line by an application.
+ * The class can be used to define a command line as nested elements or as a helper to define a command line by an
+ * application.
  * </p>
  * <p/>
  * <code>
@@ -94,8 +93,8 @@ import java.util.Vector;
  * </code>
  * </p>
  * <p/>
- * The element <code>someelement</code> must provide a method
- * <code>createAcommandline</code> which returns an instance of this class.
+ * The element <code>someelement</code> must provide a method <code>createAcommandline</code> which returns an instance
+ * of this class.
  * </p>
  *
  * @author thomas.haas@softwired-inc.com
@@ -116,9 +115,9 @@ public class Commandline
 
     protected Vector<Arg> arguments = new Vector<Arg>();
 
-    //protected Vector envVars = new Vector();
+    // protected Vector envVars = new Vector();
     // synchronized added to preserve synchronize of Vector class
-    protected Map<String,String> envVars = Collections.synchronizedMap( new LinkedHashMap<String,String>() );
+    protected Map<String, String> envVars = Collections.synchronizedMap( new LinkedHashMap<String, String>() );
 
     private long pid = -1;
 
@@ -130,16 +129,14 @@ public class Commandline
     protected String executable;
 
     /**
-     * @deprecated Use {@link Commandline#setWorkingDirectory(File)} or
-     * {@link Commandline#setWorkingDirectory(String)} instead.
+     * @deprecated Use {@link Commandline#setWorkingDirectory(File)} or {@link Commandline#setWorkingDirectory(String)}
+     *             instead.
      */
     private File workingDir;
 
     /**
-     * Create a new command line object.
-     * Shell is autodetected from operating system
-     *
-     * Shell usage is only desirable when generating code for remote execution.
+     * Create a new command line object. Shell is autodetected from operating system Shell usage is only desirable when
+     * generating code for remote execution.
      *
      * @param toProcess
      */
@@ -167,10 +164,8 @@ public class Commandline
     }
 
     /**
-     * Create a new command line object.
-     * Shell is autodetected from operating system
-     *
-     * Shell usage is only desirable when generating code for remote execution.
+     * Create a new command line object. Shell is autodetected from operating system Shell usage is only desirable when
+     * generating code for remote execution.
      */
     public Commandline( Shell shell )
     {
@@ -248,8 +243,9 @@ public class Commandline
         /**
          * Return the number of arguments that preceded this marker.
          * <p/>
-         * <p>The name of the executable - if set - is counted as the
-         * very first argument.</p>
+         * <p>
+         * The name of the executable - if set - is counted as the very first argument.
+         * </p>
          */
         public int getPosition()
         {
@@ -267,12 +263,13 @@ public class Commandline
     }
 
     /**
-     * <p>Sets the shell or command-line interpreter for the detected operating system,
-     * and the shell arguments.</p>
+     * <p>
+     * Sets the shell or command-line interpreter for the detected operating system, and the shell arguments.
+     * </p>
      */
     private void setDefaultShell()
     {
-        //If this is windows set the shell to command.com or cmd.exe with correct arguments.
+        // If this is windows set the shell to command.com or cmd.exe with correct arguments.
         if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             if ( Os.isFamily( Os.FAMILY_WIN9X ) )
@@ -293,9 +290,10 @@ public class Commandline
     /**
      * Creates an argument object.
      * <p/>
-     * <p>Each commandline object has at most one instance of the
-     * argument class.  This method calls
-     * <code>this.createArgument(false)</code>.</p>
+     * <p>
+     * Each commandline object has at most one instance of the argument class. This method calls
+     * <code>this.createArgument(false)</code>.
+     * </p>
      *
      * @return the argument object.
      * @see #createArgument(boolean)
@@ -309,11 +307,12 @@ public class Commandline
     /**
      * Creates an argument object and adds it to our list of args.
      * <p/>
-     * <p>Each commandline object has at most one instance of the
-     * argument class.</p>
+     * <p>
+     * Each commandline object has at most one instance of the argument class.
+     * </p>
      *
-     * @param insertAtStart if true, the argument is inserted at the
-     *                      beginning of the list of args, otherwise it is appended.
+     * @param insertAtStart if true, the argument is inserted at the beginning of the list of args, otherwise it is
+     *            appended.
      * @deprecated Use {@link Commandline#createArg(boolean)} instead
      */
     public Argument createArgument( boolean insertAtStart )
@@ -333,9 +332,10 @@ public class Commandline
     /**
      * Creates an argument object.
      * <p/>
-     * <p>Each commandline object has at most one instance of the
-     * argument class.  This method calls
-     * <code>this.createArgument(false)</code>.</p>
+     * <p>
+     * Each commandline object has at most one instance of the argument class. This method calls
+     * <code>this.createArgument(false)</code>.
+     * </p>
      *
      * @return the argument object.
      * @see #createArgument(boolean)
@@ -348,11 +348,12 @@ public class Commandline
     /**
      * Creates an argument object and adds it to our list of args.
      * <p/>
-     * <p>Each commandline object has at most one instance of the
-     * argument class.</p>
+     * <p>
+     * Each commandline object has at most one instance of the argument class.
+     * </p>
      *
-     * @param insertAtStart if true, the argument is inserted at the
-     *                      beginning of the list of args, otherwise it is appended.
+     * @param insertAtStart if true, the argument is inserted at the beginning of the list of args, otherwise it is
+     *            appended.
      */
     public Arg createArg( boolean insertAtStart )
     {
@@ -382,8 +383,8 @@ public class Commandline
     /**
      * Adds an argument object to our list of args.
      *
-     * @param insertAtStart if true, the argument is inserted at the
-     *                      beginning of the list of args, otherwise it is appended.
+     * @param insertAtStart if true, the argument is inserted at the beginning of the list of args, otherwise it is
+     *            appended.
      */
     public void addArg( Arg argument, boolean insertAtStart )
     {
@@ -415,9 +416,8 @@ public class Commandline
     }
 
     /**
-     * Return an executable name, quoted for shell use.
-     *
-     * Shell usage is only desirable when generating code for remote execution.
+     * Return an executable name, quoted for shell use. Shell usage is only desirable when generating code for remote
+     * execution.
      *
      * @return Executable to be run, quoted for shell interpretation
      */
@@ -446,7 +446,7 @@ public class Commandline
      */
     public void addEnvironment( String name, String value )
     {
-        //envVars.add( name + "=" + value );
+        // envVars.add( name + "=" + value );
         envVars.put( name, value );
     }
 
@@ -519,9 +519,8 @@ public class Commandline
     }
 
     /**
-     * Returns the shell, executable and all defined arguments.
-     *
-     * Shell usage is only desirable when generating code for remote execution.
+     * Returns the shell, executable and all defined arguments. Shell usage is only desirable when generating code for
+     * remote execution.
      */
     public String[] getShellCommandline()
     {
@@ -532,8 +531,7 @@ public class Commandline
     }
 
     /**
-     * Returns all arguments defined by <code>addLine</code>,
-     * <code>addValue</code> or the argument object.
+     * Returns all arguments defined by <code>addLine</code>, <code>addValue</code> or the argument object.
      */
     public String[] getArguments()
     {
@@ -598,9 +596,10 @@ public class Commandline
     /**
      * Return a marker.
      * <p/>
-     * <p>This marker can be used to locate a position on the
-     * commandline - to insert something for example - when all
-     * parameters have been set.</p>
+     * <p>
+     * This marker can be used to locate a position on the commandline - to insert something for example - when all
+     * parameters have been set.
+     * </p>
      */
     public Marker createMarker()
     {
@@ -648,7 +647,7 @@ public class Commandline
 
         Process process;
 
-        //addEnvironment( "MAVEN_TEST_ENVAR", "MAVEN_TEST_ENVAR_VALUE" );
+        // addEnvironment( "MAVEN_TEST_ENVAR", "MAVEN_TEST_ENVAR_VALUE" );
 
         String[] environment = getEnvironmentVariables();
 
@@ -707,9 +706,8 @@ public class Commandline
     }
 
     /**
-     * Allows to set the shell to be used in this command line.
-     *
-     * Shell usage is only desirable when generating code for remote execution.
+     * Allows to set the shell to be used in this command line. Shell usage is only desirable when generating code for
+     * remote execution.
      *
      * @param shell
      * @since 1.2
@@ -720,9 +718,9 @@ public class Commandline
     }
 
     /**
-     * Get the shell to be used in this command line.
-     *
-     * Shell usage is only desirable when generating code for remote execution.
+     * Get the shell to be used in this command line. Shell usage is only desirable when generating code for remote
+     * execution.
+     * 
      * @since 1.2
      */
     public Shell getShell()
@@ -761,7 +759,8 @@ public class Commandline
     {
         private String[] parts;
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#setValue(java.lang.String)
          */
         public void setValue( String value )
@@ -772,7 +771,8 @@ public class Commandline
             }
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#setLine(java.lang.String)
          */
         public void setLine( String line )
@@ -791,7 +791,8 @@ public class Commandline
             }
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#setFile(java.io.File)
          */
         public void setFile( File value )
@@ -799,7 +800,8 @@ public class Commandline
             parts = new String[] { value.getAbsolutePath() };
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#getParts()
          */
         public String[] getParts()

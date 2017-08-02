@@ -91,7 +91,7 @@ public class MXParserTest
     public void testEntityReplacementMap()
         throws XmlPullParserException, IOException
     {
-        EntityReplacementMap erm = new EntityReplacementMap( new String[][]{ { "abc", "CDE" }, { "EFG", "HIJ" } } );
+        EntityReplacementMap erm = new EntityReplacementMap( new String[][] { { "abc", "CDE" }, { "EFG", "HIJ" } } );
         MXParser parser = new MXParser( erm );
 
         String input = "<root>&EFG;</root>";
@@ -164,20 +164,18 @@ public class MXParserTest
     }
 
     public void testSubsequentProcessingInstructionShort()
-            throws Exception
+        throws Exception
     {
         StringBuffer sb = new StringBuffer();
 
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        sb.append("<project>");
-        sb.append("<!-- comment -->");
-        sb.append("<?m2e ignore?>");
-        sb.append("</project>");
-
+        sb.append( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" );
+        sb.append( "<project>" );
+        sb.append( "<!-- comment -->" );
+        sb.append( "<?m2e ignore?>" );
+        sb.append( "</project>" );
 
         MXParser parser = new MXParser();
         parser.setInput( new StringReader( sb.toString() ) );
-
 
         assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
         assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
@@ -187,31 +185,30 @@ public class MXParserTest
     }
 
     public void testSubsequentProcessingInstructionMoreThan8k()
-            throws Exception
+        throws Exception
     {
         StringBuffer sb = new StringBuffer();
 
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        sb.append("<project>");
-
+        sb.append( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" );
+        sb.append( "<project>" );
 
         // add ten times 1000 chars as comment
-        for (int j = 0; j < 10; j++) {
+        for ( int j = 0; j < 10; j++ )
+        {
 
-            sb.append("<!-- ");
-            for (int i = 0; i < 2000; i++) {
-                sb.append("ten bytes ");
+            sb.append( "<!-- " );
+            for ( int i = 0; i < 2000; i++ )
+            {
+                sb.append( "ten bytes " );
             }
-            sb.append(" -->");
+            sb.append( " -->" );
         }
 
-        sb.append("<?m2e ignore?>");
-        sb.append("</project>");
-
+        sb.append( "<?m2e ignore?>" );
+        sb.append( "</project>" );
 
         MXParser parser = new MXParser();
         parser.setInput( new StringReader( sb.toString() ) );
-
 
         assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
         assertEquals( XmlPullParser.START_TAG, parser.nextToken() );

@@ -30,14 +30,14 @@ import java.util.Set;
  * @version $Id$
  * @todo this class should be renamed from DAG to Dag
  */
-public class DAG implements Cloneable, Serializable
+public class DAG
+    implements Cloneable, Serializable
 {
-    //------------------------------------------------------------
-    //Fields
-    //------------------------------------------------------------
+    // ------------------------------------------------------------
+    // Fields
+    // ------------------------------------------------------------
     /**
-     * Nodes will be kept in two data structures at the same time
-     * for faster processing
+     * Nodes will be kept in two data structures at the same time for faster processing
      */
     /**
      * Maps vertex's label to vertex
@@ -92,12 +92,11 @@ public class DAG implements Cloneable, Serializable
     // ------------------------------------------------------------
 
     /**
-     * Adds vertex to DAG. If vertex of given label already exist in DAG
-     * no vertex is added
+     * Adds vertex to DAG. If vertex of given label already exist in DAG no vertex is added
      *
      * @param label The label of the Vertex
-     * @return New vertex if vertex of given label was not present in the DAG
-     *         or existing vertex if vertex of given label was already added to DAG
+     * @return New vertex if vertex of given label was not present in the DAG or existing vertex if vertex of given
+     *         label was already added to DAG
      */
     public Vertex addVertex( final String label )
     {
@@ -120,7 +119,8 @@ public class DAG implements Cloneable, Serializable
         return retValue;
     }
 
-    public void addEdge( final String from, final String to ) throws CycleDetectedException
+    public void addEdge( final String from, final String to )
+        throws CycleDetectedException
     {
         final Vertex v1 = addVertex( from );
 
@@ -129,7 +129,8 @@ public class DAG implements Cloneable, Serializable
         addEdge( v1, v2 );
     }
 
-    public void addEdge( final Vertex from, final Vertex to ) throws CycleDetectedException
+    public void addEdge( final Vertex from, final Vertex to )
+        throws CycleDetectedException
     {
 
         from.addEdgeTo( to );
@@ -150,7 +151,6 @@ public class DAG implements Cloneable, Serializable
         }
     }
 
-
     public void removeEdge( final String from, final String to )
     {
         final Vertex v1 = addVertex( from );
@@ -167,10 +167,9 @@ public class DAG implements Cloneable, Serializable
         to.removeEdgeFrom( from );
     }
 
-
     public Vertex getVertex( final String label )
     {
-        final Vertex retValue = ( Vertex ) vertexMap.get( label );
+        final Vertex retValue = (Vertex) vertexMap.get( label );
 
         return retValue;
     }
@@ -209,18 +208,17 @@ public class DAG implements Cloneable, Serializable
         return vertex.getParentLabels();
     }
 
-
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() throws CloneNotSupportedException
+    public Object clone()
+        throws CloneNotSupportedException
     {
         // this is what's failing..
         final Object retValue = super.clone();
 
         return retValue;
     }
-
 
     /**
      * Indicates if there is at least one edge leading to or from vertex of given label
@@ -237,15 +235,12 @@ public class DAG implements Cloneable, Serializable
 
     }
 
-
     /**
      * Return the list of labels of successor in order decided by topological sort
      *
      * @param label The label of the vertex whose predecessors are searched
-     *
-     * @return The list of labels. Returned list contains also
-     *         the label passed as parameter to this method. This label should
-     *         always be the last item in the list.
+     * @return The list of labels. Returned list contains also the label passed as parameter to this method. This label
+     *         should always be the last item in the list.
      */
     public List<String> getSuccessorLabels( final String label )
     {
@@ -253,7 +248,7 @@ public class DAG implements Cloneable, Serializable
 
         final List<String> retValue;
 
-        //optimization.
+        // optimization.
         if ( vertex.isLeaf() )
         {
             retValue = new ArrayList<String>( 1 );
@@ -267,6 +262,5 @@ public class DAG implements Cloneable, Serializable
 
         return retValue;
     }
-
 
 }

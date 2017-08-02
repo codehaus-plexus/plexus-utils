@@ -26,7 +26,8 @@ public class DefaultConsumer
     implements StreamConsumer
 {
 
-    public void consumeLine( String line ) throws IOException
+    public void consumeLine( String line )
+        throws IOException
     {
         System.out.println( line );
 

@@ -40,7 +40,6 @@ public class AbstractStreamHandler
         }
     }
 
-
     protected boolean isDisabled()
     {
         return disabled;

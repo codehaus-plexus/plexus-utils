@@ -86,7 +86,7 @@ public class Xpp3DomBuilderTest
             {
                 String rawName = parser.getName();
 
-                if ( "root".equals( rawName  ) )
+                if ( "root".equals( rawName ) )
                 {
                     dom = Xpp3DomBuilder.build( parser );
                 }
@@ -103,7 +103,7 @@ public class Xpp3DomBuilderTest
                 {
                     newRootClosed = true;
                 }
-                else if ( "root".equals( rawName  ) )
+                else if ( "root".equals( rawName ) )
                 {
                     rootClosed = true;
                 }

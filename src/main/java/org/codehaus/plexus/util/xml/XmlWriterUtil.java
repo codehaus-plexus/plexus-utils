@@ -127,7 +127,8 @@ public class XmlWriterUtil
     }
 
     /**
-     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of <code>80</code>.
+     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of
+     * <code>80</code>.
      *
      * @param writer not null
      * @param comment
@@ -140,8 +141,8 @@ public class XmlWriterUtil
     }
 
     /**
-     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of <code>80</code>
-     * and is indented by <code>indent</code> using <code>2</code> as indentation size.
+     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of
+     * <code>80</code> and is indented by <code>indent</code> using <code>2</code> as indentation size.
      *
      * @param writer not null
      * @param comment
@@ -155,8 +156,8 @@ public class XmlWriterUtil
     }
 
     /**
-     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of <code>80</code>
-     * and is indented by <code>indent</code> using <code>indentSize</code>.
+     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of
+     * <code>80</code> and is indented by <code>indent</code> using <code>indentSize</code>.
      *
      * @param writer not null
      * @param comment
@@ -169,9 +170,10 @@ public class XmlWriterUtil
     {
         writeComment( writer, comment, indent, indentSize, DEFAULT_COLUMN_LINE );
     }
+
     /**
-     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of <code>columnSize</code>
-     * and is indented by <code>indent</code> using <code>indentSize</code>.
+     * Convenience method to write XML comment line. The <code>comment</code> is splitted to have a size of
+     * <code>columnSize</code> and is indented by <code>indent</code> using <code>indentSize</code>.
      *
      * @param writer not null
      * @param comment
@@ -179,7 +181,7 @@ public class XmlWriterUtil
      * @param indentSize positive number
      * @param columnSize positive number
      */
-    public static void writeComment( XMLWriter writer, String comment, int indent, int indentSize, int columnSize  )
+    public static void writeComment( XMLWriter writer, String comment, int indent, int indentSize, int columnSize )
     {
         if ( comment == null )
         {
@@ -261,8 +263,7 @@ public class XmlWriterUtil
     }
 
     /**
-     * Convenience method to write XML comments between two comments line break.
-     * The XML comment block is not indented.
+     * Convenience method to write XML comments between two comments line break. The XML comment block is not indented.
      *
      * @param writer not null
      * @param comment
@@ -275,9 +276,8 @@ public class XmlWriterUtil
     }
 
     /**
-     * Convenience method to write XML comments between two comments line break.
-     * The XML comment block is also indented by <code>indent</code> using
-     * <code>2</code> as indentation size.
+     * Convenience method to write XML comments between two comments line break. The XML comment block is also indented
+     * by <code>indent</code> using <code>2</code> as indentation size.
      *
      * @param writer not null
      * @param comment
@@ -291,8 +291,8 @@ public class XmlWriterUtil
     }
 
     /**
-     * Convenience method to write XML comment between two comment line break.
-     * The XML comment block is also indented by <code>indent</code> using <code>indentSize</code>.
+     * Convenience method to write XML comment between two comment line break. The XML comment block is also indented by
+     * <code>indent</code> using <code>indentSize</code>.
      *
      * @param writer not null
      * @param comment
@@ -307,9 +307,8 @@ public class XmlWriterUtil
     }
 
     /**
-     * Convenience method to write XML comments between two comments line break.
-     * The XML comment block is also indented by <code>indent</code> using <code>indentSize</code>.
-     * The column size could be also be specified.
+     * Convenience method to write XML comments between two comments line break. The XML comment block is also indented
+     * by <code>indent</code> using <code>indentSize</code>. The column size could be also be specified.
      *
      * @param writer not null
      * @param comment

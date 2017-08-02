@@ -99,7 +99,7 @@ public class StreamPumperTest
         StreamPumper pumper = new StreamPumper( inputStream, consumer );
         new Thread( pumper ).run();
 
-        //Check the consumer to see if it got both lines.
+        // Check the consumer to see if it got both lines.
         assertTrue( consumer.wasLineConsumed( line1, 1000 ) );
         assertTrue( consumer.wasLineConsumed( line2, 1000 ) );
     }
@@ -191,7 +191,7 @@ public class StreamPumperTest
          * milliseconds for the line to get consumed.
          *
          * @param testLine Line to test for.
-         * @param timeout  Number of milliseconds to wait for the line.
+         * @param timeout Number of milliseconds to wait for the line.
          * @return true if the line gets consumed, else false.
          */
         public boolean wasLineConsumed( String testLine, long timeout )

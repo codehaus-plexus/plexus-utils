@@ -21,8 +21,9 @@ import java.io.StringWriter;
 
 /**
  * Convenience class to handle throwable stacktraces
- *
- * <p>Created on 18/06/2003</p>
+ * <p>
+ * Created on 18/06/2003
+ * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
  * @version $Revision$
@@ -32,8 +33,6 @@ public class Tracer
 
     /**
      * Constructor
-     *
-     *
      */
     private Tracer()
     {
@@ -42,7 +41,7 @@ public class Tracer
 
     /**
      * Return the throwable stack trace as a string
-     * */
+     */
     public static String traceToString( Throwable t )
     {
         if ( t == null )

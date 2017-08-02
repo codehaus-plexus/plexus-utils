@@ -127,12 +127,12 @@ public final class FileUtilsTest
     public void testToURLs()
         throws Exception
     {
-        File[] files = new File[]{ new File( "file1" ), new File( "file2" ), };
+        File[] files = new File[] { new File( "file1" ), new File( "file2" ), };
 
         URL[] urls = FileUtils.toURLs( files );
 
         assertEquals( "The length of the generated URL's is not equals to the length of files. " + "Was " + files.length
-                          + ", expected " + urls.length, files.length, urls.length );
+            + ", expected " + urls.length, files.length, urls.length );
 
         for ( int i = 0; i < urls.length; i++ )
         {
@@ -147,18 +147,15 @@ public final class FileUtilsTest
 
         // Non-existent files
         final String[] emptyFileNames =
-            FileUtils.getFilesFromExtension( getTestDirectory().getAbsolutePath(), new String[]{ "java" } );
+            FileUtils.getFilesFromExtension( getTestDirectory().getAbsolutePath(), new String[] { "java" } );
         assertTrue( emptyFileNames.length == 0 );
 
         // Existing files
         // TODO Figure out how to test this
         /*
-        final String[] fileNames =
-            FileUtils.getFilesFromExtension(
-                getClass().getResource("/java/util/").getFile(),
-                new String[] { "class" });
-        assertTrue(fileNames.length > 0);
-        */
+         * final String[] fileNames = FileUtils.getFilesFromExtension( getClass().getResource("/java/util/").getFile(),
+         * new String[] { "class" }); assertTrue(fileNames.length > 0);
+         */
     }
 
     // mkdir
@@ -262,7 +259,7 @@ public final class FileUtilsTest
     {
         // TODO StringIndexOutOfBoundsException thrown if file doesn't contain slash.
         // Is this acceptable?
-        //assertEquals("", FileUtils.catPath("a", "b"));
+        // assertEquals("", FileUtils.catPath("a", "b"));
 
         assertEquals( "/a/c", FileUtils.catPath( "/a/b", "c" ) );
         assertEquals( "/a/d", FileUtils.catPath( "/a/b/c", "../d" ) );
@@ -380,7 +377,7 @@ public final class FileUtilsTest
     }
 
     /**
-     * ensure we create  directory tree for destination
+     * ensure we create directory tree for destination
      *
      * @throws Exception
      */
@@ -576,14 +573,12 @@ public final class FileUtilsTest
     public void testNormalize()
         throws Exception
     {
-        final String[] src =
-            { "", "/", "///", "/foo", "/foo//", "/./", "/foo/./", "/foo/./bar", "/foo/../bar", "/foo/../bar/../baz",
-                "/foo/bar/../../baz", "/././", "/foo/./../bar", "/foo/.././bar/", "//foo//./bar", "/../",
-                "/foo/../../" };
+        final String[] src = { "", "/", "///", "/foo", "/foo//", "/./", "/foo/./", "/foo/./bar", "/foo/../bar",
+            "/foo/../bar/../baz", "/foo/bar/../../baz", "/././", "/foo/./../bar", "/foo/.././bar/", "//foo//./bar",
+            "/../", "/foo/../../" };
 
-        final String[] dest =
-            { "", "/", "/", "/foo", "/foo/", "/", "/foo/", "/foo/bar", "/bar", "/baz", "/baz", "/", "/bar", "/bar/",
-                "/foo/bar", null, null };
+        final String[] dest = { "", "/", "/", "/foo", "/foo/", "/", "/foo/", "/foo/bar", "/bar", "/baz", "/baz", "/",
+            "/bar", "/bar/", "/foo/bar", null, null };
 
         assertEquals( "Oops, test writer goofed", src.length, dest.length );
 
@@ -622,7 +617,7 @@ public final class FileUtilsTest
         assertNotNull( path + " was not found.", url );
 
         String filename = url.getFile();
-        //The following line applies a fix for spaces in a path
+        // The following line applies a fix for spaces in a path
         filename = replaceAll( filename, "%20", " " );
         final String filename2 = "test2.txt";
 
@@ -659,7 +654,7 @@ public final class FileUtilsTest
         for ( String[] test : tests )
         {
             assertEquals( test[1], FileUtils.getExtension( test[0] ) );
-            //assertEquals(tests[i][1], FileUtils.extension(tests[i][0]));
+            // assertEquals(tests[i][1], FileUtils.extension(tests[i][0]));
         }
     }
 
@@ -678,7 +673,7 @@ public final class FileUtilsTest
         for ( String[] testsWithPath : testsWithPaths )
         {
             assertEquals( testsWithPath[1], FileUtils.getExtension( testsWithPath[0] ) );
-            //assertEquals(testsWithPaths[i][1], FileUtils.extension(testsWithPaths[i][0]));
+            // assertEquals(testsWithPaths[i][1], FileUtils.extension(testsWithPaths[i][0]));
         }
     }
 
@@ -690,7 +685,7 @@ public final class FileUtilsTest
         for ( String[] test : tests )
         {
             assertEquals( test[1], FileUtils.removeExtension( test[0] ) );
-            //assertEquals(tests[i][1], FileUtils.basename(tests[i][0]));
+            // assertEquals(tests[i][1], FileUtils.basename(tests[i][0]));
         }
     }
 
@@ -700,23 +695,22 @@ public final class FileUtilsTest
         // Since the utilities are based on the separator for the platform
         // running the test, ensure we are using the right separator
         final String sep = File.separator;
-        final String[][] testsWithPaths =
-            { { sep + "tmp" + sep + "foo" + sep + "filename.ext", sep + "tmp" + sep + "foo" + sep + "filename" },
-                { "C:" + sep + "temp" + sep + "foo" + sep + "filename.ext",
-                    "C:" + sep + "temp" + sep + "foo" + sep + "filename" },
-                { sep + "tmp" + sep + "foo.bar" + sep + "filename.ext",
-                    sep + "tmp" + sep + "foo.bar" + sep + "filename" },
-                { "C:" + sep + "temp" + sep + "foo.bar" + sep + "filename.ext",
-                    "C:" + sep + "temp" + sep + "foo.bar" + sep + "filename" },
-                { sep + "tmp" + sep + "foo.bar" + sep + "README", sep + "tmp" + sep + "foo.bar" + sep + "README" },
-                { "C:" + sep + "temp" + sep + "foo.bar" + sep + "README",
-                    "C:" + sep + "temp" + sep + "foo.bar" + sep + "README" },
-                { ".." + sep + "filename.ext", ".." + sep + "filename" } };
+        final String[][] testsWithPaths = {
+            { sep + "tmp" + sep + "foo" + sep + "filename.ext", sep + "tmp" + sep + "foo" + sep + "filename" },
+            { "C:" + sep + "temp" + sep + "foo" + sep + "filename.ext",
+                "C:" + sep + "temp" + sep + "foo" + sep + "filename" },
+            { sep + "tmp" + sep + "foo.bar" + sep + "filename.ext", sep + "tmp" + sep + "foo.bar" + sep + "filename" },
+            { "C:" + sep + "temp" + sep + "foo.bar" + sep + "filename.ext",
+                "C:" + sep + "temp" + sep + "foo.bar" + sep + "filename" },
+            { sep + "tmp" + sep + "foo.bar" + sep + "README", sep + "tmp" + sep + "foo.bar" + sep + "README" },
+            { "C:" + sep + "temp" + sep + "foo.bar" + sep + "README",
+                "C:" + sep + "temp" + sep + "foo.bar" + sep + "README" },
+            { ".." + sep + "filename.ext", ".." + sep + "filename" } };
 
         for ( String[] testsWithPath : testsWithPaths )
         {
             assertEquals( testsWithPath[1], FileUtils.removeExtension( testsWithPath[0] ) );
-            //assertEquals(testsWithPaths[i][1], FileUtils.basename(testsWithPaths[i][0]));
+            // assertEquals(testsWithPaths[i][1], FileUtils.basename(testsWithPaths[i][0]));
         }
     }
 
@@ -927,7 +921,7 @@ public final class FileUtilsTest
         filterProperties.setProperty( "s", "sample text" );
 
         // test ${token}
-        FileUtils.FilterWrapper[] wrappers1 = new FileUtils.FilterWrapper[]{ new FileUtils.FilterWrapper()
+        FileUtils.FilterWrapper[] wrappers1 = new FileUtils.FilterWrapper[] { new FileUtils.FilterWrapper()
         {
             public Reader getReader( Reader reader )
             {
@@ -974,7 +968,6 @@ public final class FileUtilsTest
         assertEquals( content, destFileContent );
 
     }
-
 
     public void testFilteredWithoutFilterAndOlderFileAndOverwrite()
         throws Exception
@@ -1175,7 +1168,7 @@ public final class FileUtilsTest
         }
     }
 
-    //Test for bug PLXUTILS-10
+    // Test for bug PLXUTILS-10
     public void testCopyFileOnSameFile()
         throws IOException
     {

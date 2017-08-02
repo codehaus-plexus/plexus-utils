@@ -138,7 +138,8 @@ public class PrettyPrintXMLWriter
      * @param encoding could be null or invalid.
      * @param doctype could be null.
      */
-    public PrettyPrintXMLWriter( PrintWriter writer, String lineIndenter, String lineSeparator, String encoding, String doctype )
+    public PrettyPrintXMLWriter( PrintWriter writer, String lineIndenter, String lineSeparator, String encoding,
+                                 String doctype )
     {
         setWriter( writer );
 
@@ -207,26 +208,35 @@ public class PrettyPrintXMLWriter
     }
 
     private static final Pattern amp = Pattern.compile( "&" );
+
     private static final Pattern lt = Pattern.compile( "<" );
+
     private static final Pattern gt = Pattern.compile( ">" );
+
     private static final Pattern dqoute = Pattern.compile( "\"" );
+
     private static final Pattern sqoute = Pattern.compile( "\'" );
 
     private static String escapeXml( String text )
     {
-        if (text.indexOf('&') >= 0){
+        if ( text.indexOf( '&' ) >= 0 )
+        {
             text = amp.matcher( text ).replaceAll( "&amp;" );
         }
-        if (text.indexOf('<') >= 0){
+        if ( text.indexOf( '<' ) >= 0 )
+        {
             text = lt.matcher( text ).replaceAll( "&lt;" );
         }
-        if (text.indexOf('>') >= 0){
+        if ( text.indexOf( '>' ) >= 0 )
+        {
             text = gt.matcher( text ).replaceAll( "&gt;" );
         }
-        if (text.indexOf('"') >= 0){
+        if ( text.indexOf( '"' ) >= 0 )
+        {
             text = dqoute.matcher( text ).replaceAll( "&quot;" );
         }
-        if (text.indexOf('\'') >= 0){
+        if ( text.indexOf( '\'' ) >= 0 )
+        {
             text = sqoute.matcher( text ).replaceAll( "&apos;" );
         }
 
@@ -236,8 +246,8 @@ public class PrettyPrintXMLWriter
     private static final String crlf_str = "\r\n";
 
     private static final Pattern crlf = Pattern.compile( crlf_str );
-    private static final Pattern lowers = Pattern.compile( "([\000-\037])" );
 
+    private static final Pattern lowers = Pattern.compile( "([\000-\037])" );
 
     private static String escapeXmlAttribute( String text )
     {
@@ -245,7 +255,7 @@ public class PrettyPrintXMLWriter
 
         // Windows
         Matcher crlfmatcher = crlf.matcher( text );
-        if (text.contains( crlf_str ))
+        if ( text.contains( crlf_str ) )
         {
             text = crlfmatcher.replaceAll( "&#10;" );
         }
@@ -302,6 +312,7 @@ public class PrettyPrintXMLWriter
 
     /**
      * Write a string to the underlying writer
+     * 
      * @param str
      */
     private void write( String str )
@@ -361,8 +372,7 @@ public class PrettyPrintXMLWriter
     /**
      * Set the string used as line separator
      *
-     * @param lineSeparator new line separator, could be null but the normal way is valid line separator
-     * ("\n" on UNIX).
+     * @param lineSeparator new line separator, could be null but the normal way is valid line separator ("\n" on UNIX).
      */
     protected void setLineSeparator( String lineSeparator )
     {
@@ -370,8 +380,7 @@ public class PrettyPrintXMLWriter
     }
 
     /**
-     * Write the end of line character (using specified line separator)
-     * and start new line with indentation
+     * Write the end of line character (using specified line separator) and start new line with indentation
      *
      * @see #getLineIndenter()
      * @see #getLineSeparator()
@@ -420,7 +429,7 @@ public class PrettyPrintXMLWriter
     {
         if ( writer == null )
         {
-            throw new IllegalArgumentException( "writer could not be null");
+            throw new IllegalArgumentException( "writer could not be null" );
         }
 
         this.writer = writer;

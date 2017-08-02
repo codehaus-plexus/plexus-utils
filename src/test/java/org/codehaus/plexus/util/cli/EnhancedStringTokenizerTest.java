@@ -18,7 +18,8 @@ package org.codehaus.plexus.util.cli;
 
 import junit.framework.TestCase;
 
-public class EnhancedStringTokenizerTest extends TestCase
+public class EnhancedStringTokenizerTest
+    extends TestCase
 {
     /**
      * @param testName
@@ -31,7 +32,8 @@ public class EnhancedStringTokenizerTest extends TestCase
     /*
      * @see TestCase#setUp()
      */
-    public void setUp() throws Exception
+    public void setUp()
+        throws Exception
     {
         super.setUp();
     }

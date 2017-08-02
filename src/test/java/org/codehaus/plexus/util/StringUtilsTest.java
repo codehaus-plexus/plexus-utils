@@ -129,7 +129,7 @@ public class StringUtilsTest
         String check = "\'This pre'postis apre'post test\'";
 
         char[] escaped = { '\'', '\"' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, new char[]{ ' ' }, "pre%spost", false );
+        String result = StringUtils.quoteAndEscape( src, '\'', escaped, new char[] { ' ' }, "pre%spost", false );
 
         assertEquals( check, result );
     }
@@ -237,7 +237,6 @@ public class StringUtilsTest
         s = "this  \r\n   is \n  \r  test   \n ";
         assertEquals( "this is test ", StringUtils.removeDuplicateWhitespace( s ) );
 
-
     }
 
     public void testUnifyLineSeparators()
@@ -250,7 +249,7 @@ public class StringUtilsTest
             StringUtils.unifyLineSeparators( s, "abs" );
             assertTrue( "Exception NOT catched", false );
         }
-        catch ( IllegalArgumentException e)
+        catch ( IllegalArgumentException e )
         {
             assertTrue( "Exception catched", true );
         }

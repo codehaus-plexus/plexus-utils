@@ -23,21 +23,22 @@ public class MatchPatterns
      * <p/>
      * Uses far less string tokenization than any of the alternatives.
      *
-     * @param name            The name to look for
+     * @param name The name to look for
      * @param isCaseSensitive If the comparison is case sensitive
      * @return true if any of the supplied patterns match
      */
     public boolean matches( String name, boolean isCaseSensitive )
     {
         String[] tokenized = MatchPattern.tokenizePathToString( name, File.separator );
-        return matches(  name, tokenized, isCaseSensitive );
+        return matches( name, tokenized, isCaseSensitive );
     }
 
     public boolean matches( String name, String[] tokenizedName, boolean isCaseSensitive )
     {
         char[][] tokenizedNameChar = new char[tokenizedName.length][];
-        for(int i = 0;  i < tokenizedName.length; i++){
-        tokenizedNameChar[i] = tokenizedName[i].toCharArray();
+        for ( int i = 0; i < tokenizedName.length; i++ )
+        {
+            tokenizedNameChar[i] = tokenizedName[i].toCharArray();
         }
         for ( MatchPattern pattern : patterns )
         {

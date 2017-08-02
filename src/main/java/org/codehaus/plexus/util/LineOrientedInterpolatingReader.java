@@ -30,33 +30,27 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * A FilterReader which interpolates keyword values into a character stream.
- * Keywords are recognized when enclosed between starting and ending delimiter
- * strings.  The keywords themselves, and their values, are fetched from a Map
+ * A FilterReader which interpolates keyword values into a character stream. Keywords are recognized when enclosed
+ * between starting and ending delimiter strings. The keywords themselves, and their values, are fetched from a Map
  * supplied to the constructor.
  * <p>
- * When a possible keyword token is recognized (by detecting the starting and
- * ending token delimiters):
+ * When a possible keyword token is recognized (by detecting the starting and ending token delimiters):
  * </p>
  * <ul>
- * <li>if the enclosed string is found in the keyword Map, the delimiters and
- * the keyword are effectively replaced by the keyword's value;</li>
- * <li>if the enclosed string is found in the keyword Map, but its value has
- * zero length, then the token (delimiters and keyword) is effectively removed
- * from the character stream;</li>
- * <li>if the enclosed string is <em>not</em> found in the keyword Map, then
- * no substitution is made; the token text is passed through unaltered.</li>
+ * <li>if the enclosed string is found in the keyword Map, the delimiters and the keyword are effectively replaced by
+ * the keyword's value;</li>
+ * <li>if the enclosed string is found in the keyword Map, but its value has zero length, then the token (delimiters and
+ * keyword) is effectively removed from the character stream;</li>
+ * <li>if the enclosed string is <em>not</em> found in the keyword Map, then no substitution is made; the token text is
+ * passed through unaltered.</li>
  * </ul>
  * <p>
- * A token in the incoming character stream may be <em>escaped</em> by
- * prepending an "escape sequence" which is specified to the constructor.  An
- * escaped token is passed through as written, with the escape sequence removed.
- * This allows things which would look like tokens to be read literally rather
- * than interpolated.
+ * A token in the incoming character stream may be <em>escaped</em> by prepending an "escape sequence" which is
+ * specified to the constructor. An escaped token is passed through as written, with the escape sequence removed. This
+ * allows things which would look like tokens to be read literally rather than interpolated.
  * </p>
  * 
  * @author jdcasey Created on Feb 3, 2005
- * 
  * @see InterpolationFilterReader
  * @see org.codehaus.plexus.interpolation
  */
@@ -92,17 +86,16 @@ public class LineOrientedInterpolatingReader
     private String line;
 
     /**
-     * Construct an interpolating Reader, specifying token delimiters and the
-     * escape sequence.
+     * Construct an interpolating Reader, specifying token delimiters and the escape sequence.
      * 
      * @param reader the Reader to be filtered.
      * @param context keyword/value pairs for interpolation.
      * @param startDelim character sequence which (possibly) begins a token.
      * @param endDelim character sequence which ends a token.
-     * @param escapeSeq 
+     * @param escapeSeq
      */
     public LineOrientedInterpolatingReader( Reader reader, Map<String, ?> context, String startDelim, String endDelim,
-                                           String escapeSeq )
+                                            String escapeSeq )
     {
         super( reader );
 
@@ -135,7 +128,7 @@ public class LineOrientedInterpolatingReader
      * @param reader the Reader to be filtered.
      * @param context keyword/value pairs for interpolation.
      * @param startDelim the character sequence which (possibly) begins a token.
-     * @param endDelim  the character sequence which ends a token.
+     * @param endDelim the character sequence which ends a token.
      */
     public LineOrientedInterpolatingReader( Reader reader, Map<String, ?> context, String startDelim, String endDelim )
     {
@@ -143,8 +136,7 @@ public class LineOrientedInterpolatingReader
     }
 
     /**
-     * Filters a Reader using the default escape sequence "\" and token
-     * delimiters "${", "}".
+     * Filters a Reader using the default escape sequence "\" and token delimiters "${", "}".
      * 
      * @param reader the Reader to be filtered.
      * @param context keyword/value pairs for interpolation.
@@ -154,7 +146,8 @@ public class LineOrientedInterpolatingReader
         this( reader, context, DEFAULT_START_DELIM, DEFAULT_END_DELIM, DEFAULT_ESCAPE_SEQ );
     }
 
-    public int read() throws IOException
+    public int read()
+        throws IOException
     {
         if ( line == null || lineIdx >= line.length() )
         {
@@ -171,7 +164,8 @@ public class LineOrientedInterpolatingReader
         return next;
     }
 
-    public int read( char[] cbuf, int off, int len ) throws IOException
+    public int read( char[] cbuf, int off, int len )
+        throws IOException
     {
         int fillCount = 0;
 
@@ -198,7 +192,8 @@ public class LineOrientedInterpolatingReader
         return fillCount;
     }
 
-    public long skip( long n ) throws IOException
+    public long skip( long n )
+        throws IOException
     {
         long skipCount = 0;
 
@@ -217,11 +212,12 @@ public class LineOrientedInterpolatingReader
         return skipCount;
     }
 
-    private void readAndInterpolateLine() throws IOException
+    private void readAndInterpolateLine()
+        throws IOException
     {
         String rawLine = readLine();
 
-        if(rawLine != null)
+        if ( rawLine != null )
         {
             Set<String> expressions = parseForExpressions( rawLine );
 
@@ -243,11 +239,11 @@ public class LineOrientedInterpolatingReader
     }
 
     /*
-     * Read one line from the wrapped Reader.  A line is a sequence of characters
-     * ending in CRLF, CR, or LF.  The terminating character(s) will be included
-     * in the returned line.
+     * Read one line from the wrapped Reader. A line is a sequence of characters ending in CRLF, CR, or LF. The
+     * terminating character(s) will be included in the returned line.
      */
-    private String readLine() throws IOException
+    private String readLine()
+        throws IOException
     {
         StringBuilder lineBuffer = new StringBuilder( 40 ); // half of the "normal" line maxsize
         int next;
@@ -308,7 +304,7 @@ public class LineOrientedInterpolatingReader
 
     private Map<String, Object> evaluateExpressions( Set<String> expressions )
     {
-        Map<String, Object> evaluated = new TreeMap<String,Object>();
+        Map<String, Object> evaluated = new TreeMap<String, Object>();
 
         for ( Object expression : expressions )
         {
@@ -389,7 +385,8 @@ public class LineOrientedInterpolatingReader
 
                 // increment the placeholder so we can look beyond this expression.
                 placeholder = end + 1;
-            } while ( placeholder < rawLine.length() - minExpressionSize );
+            }
+            while ( placeholder < rawLine.length() - minExpressionSize );
         }
 
         return expressions;
@@ -419,14 +416,15 @@ public class LineOrientedInterpolatingReader
                 }
             }
 
-        } while ( position < 0 && placeholder < rawLine.length() - endDelim.length() );
+        }
+        while ( position < 0 && placeholder < rawLine.length() - endDelim.length() );
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         // use length() - endDelim.length() b/c otherwise there is nothing left to search.
 
         return position;
     }
 
-    private String findAndReplaceUnlessEscaped(String rawLine, String search, String replace)
+    private String findAndReplaceUnlessEscaped( String rawLine, String search, String replace )
     {
         StringBuilder lineBuffer = new StringBuilder( (int) ( rawLine.length() * 1.5 ) );
 
@@ -435,9 +433,9 @@ public class LineOrientedInterpolatingReader
         do
         {
             int nextReplacement = rawLine.indexOf( search, lastReplacement + 1 );
-            if(nextReplacement > -1)
+            if ( nextReplacement > -1 )
             {
-                if(lastReplacement < 0)
+                if ( lastReplacement < 0 )
                 {
                     lastReplacement = 0;
                 }
@@ -445,7 +443,7 @@ public class LineOrientedInterpolatingReader
                 lineBuffer.append( rawLine, lastReplacement, nextReplacement );
 
                 int escIdx = rawLine.indexOf( escapeSeq, lastReplacement + 1 );
-                if(escIdx > -1 && escIdx + escapeSeq.length() == nextReplacement)
+                if ( escIdx > -1 && escIdx + escapeSeq.length() == nextReplacement )
                 {
                     lineBuffer.setLength( lineBuffer.length() - escapeSeq.length() );
                     lineBuffer.append( search );
@@ -462,9 +460,9 @@ public class LineOrientedInterpolatingReader
                 break;
             }
         }
-        while(lastReplacement > -1);
+        while ( lastReplacement > -1 );
 
-        if( lastReplacement < rawLine.length() )
+        if ( lastReplacement < rawLine.length() )
         {
             lineBuffer.append( rawLine, lastReplacement, rawLine.length() );
         }

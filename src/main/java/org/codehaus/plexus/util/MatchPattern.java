@@ -1,4 +1,5 @@
 package org.codehaus.plexus.util;
+
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -36,28 +37,28 @@ public class MatchPattern
     private final String separator;
 
     private final String[] tokenized;
+
     private final char[][] tokenizedChar;
 
     private MatchPattern( String source, String separator )
     {
-        regexPattern = SelectorUtils.isRegexPrefixedPattern( source ) ? source.substring(
-            SelectorUtils.REGEX_HANDLER_PREFIX.length(),
-            source.length() - SelectorUtils.PATTERN_HANDLER_SUFFIX.length() ) : null;
-        this.source =
-            SelectorUtils.isAntPrefixedPattern( source )
-                ? source.substring( SelectorUtils.ANT_HANDLER_PREFIX.length(), source.length()
-                - SelectorUtils.PATTERN_HANDLER_SUFFIX.length() )
-                : source;
+        regexPattern = SelectorUtils.isRegexPrefixedPattern( source )
+                        ? source.substring( SelectorUtils.REGEX_HANDLER_PREFIX.length(),
+                                            source.length() - SelectorUtils.PATTERN_HANDLER_SUFFIX.length() )
+                        : null;
+        this.source = SelectorUtils.isAntPrefixedPattern( source )
+                        ? source.substring( SelectorUtils.ANT_HANDLER_PREFIX.length(),
+                                            source.length() - SelectorUtils.PATTERN_HANDLER_SUFFIX.length() )
+                        : source;
         this.separator = separator;
         tokenized = tokenizePathToString( this.source, separator );
         tokenizedChar = new char[tokenized.length][];
-        for (int i = 0; i < tokenized.length; i++){
+        for ( int i = 0; i < tokenized.length; i++ )
+        {
             tokenizedChar[i] = tokenized[i].toCharArray();
         }
 
     }
-
-
 
     public boolean matchPath( String str, boolean isCaseSensitive )
     {
@@ -114,7 +115,6 @@ public class MatchPattern
     {
         return source.startsWith( string );
     }
-
 
     static String[] tokenizePathToString( String path, String separator )
     {

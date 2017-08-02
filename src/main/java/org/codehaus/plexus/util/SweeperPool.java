@@ -18,10 +18,9 @@ package org.codehaus.plexus.util;
 
 import java.util.ArrayList;
 
-
 /**
- * Pools a bunch of objects . Runs a sweeper periodically to
- * keep it down to size. The objects in the pool first get disposed first.
+ * Pools a bunch of objects . Runs a sweeper periodically to keep it down to size. The objects in the pool first get
+ * disposed first.
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
  * @version $Id$
@@ -34,14 +33,15 @@ public class SweeperPool
     /** Sweeps the pool periodically to trim it's size */
     private transient Sweeper sweeper;
 
-    /** Absolute maximum size of the pool.*/
+    /** Absolute maximum size of the pool. */
     private transient int maxSize;
 
     /** The size the pool gets trimmed down to */
     private transient int minSize;
 
-    /** When the sweeper runs
-     * and the pool is over this size, then the pool is trimmed */
+    /**
+     * When the sweeper runs and the pool is over this size, then the pool is trimmed
+     */
     private int triggerSize;
 
     /** Holds the pooled objects */
@@ -50,30 +50,27 @@ public class SweeperPool
     /** Flag indicating this pool is shuting down */
     private boolean shuttingDown = false;
 
-    //private Vector used;
+    // private Vector used;
 
     /**
-     *
-     * <p>There are a number of settings to control how the pool operates.
+     * <p>
+     * There are a number of settings to control how the pool operates.
      * <ul>
-     *  <li><code>minSize</code> - this is the size the pool is trimmed to</li>
-     *  <li><code>triggerSize</code> - this determines if the pool is trimmed when
-     * the sweeper runs. If the pool size is greater or equal than this value then
-     * the pool is trimmed to <code>minSize</code>.</lie>
-     * <li><code>maxSize</code> - if the pool has reached this size, any objects added
-     * are immediately disposed. If the pool is this size when the sweeper runs, then
-     * the pool is also trimmed to <code>minSize</code> irrespective of the triggerSize.
-     * </li>
-     * <li><code>sweepInterval</code> - how often the sweeper runs. Is actually the
-     * time since the sweeper last finished a pass. 0 if the sweeper should not run.
-     * </li>
+     * <li><code>minSize</code> - this is the size the pool is trimmed to</li>
+     * <li><code>triggerSize</code> - this determines if the pool is trimmed when the sweeper runs. If the pool size is
+     * greater or equal than this value then the pool is trimmed to <code>minSize</code>.</lie>
+     * <li><code>maxSize</code> - if the pool has reached this size, any objects added are immediately disposed. If the
+     * pool is this size when the sweeper runs, then the pool is also trimmed to <code>minSize</code> irrespective of
+     * the triggerSize.</li>
+     * <li><code>sweepInterval</code> - how often the sweeper runs. Is actually the time since the sweeper last finished
+     * a pass. 0 if the sweeper should not run.</li>
      * </ul>
      * </p>
-     *
-     * <p>Any value less than 0 is automatically converted to 0</p>
+     * <p>
+     * Any value less than 0 is automatically converted to 0
+     * </p>
      */
-    public SweeperPool( int maxSize, int minSize, int intialCapacity,
-                        int sweepInterval, int triggerSize )
+    public SweeperPool( int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize )
     {
         super();
         this.maxSize = saneConvert( maxSize );
@@ -81,7 +78,7 @@ public class SweeperPool
         this.triggerSize = saneConvert( triggerSize );
         pooledObjects = new ArrayList( intialCapacity );
 
-        //only run a sweeper if sweep interval is positive
+        // only run a sweeper if sweep interval is positive
         if ( sweepInterval > 0 )
         {
             sweeper = new Sweeper( this, sweepInterval );
@@ -115,7 +112,7 @@ public class SweeperPool
             Object obj = pooledObjects.remove( 0 );
             objectRetrieved( obj );
 
-            //used.add(obj);
+            // used.add(obj);
             return obj;
         }
     }
@@ -124,16 +121,13 @@ public class SweeperPool
      * Add an object to the pool
      *
      * @param obj the object to pool. Can be null.
-     *
      * @return true if the object was added to the pool, false if it was disposed or null
-     *
      */
     public synchronized boolean put( Object obj )
     {
         objectAdded( obj );
 
-        if ( ( obj != null ) && ( pooledObjects.size() < maxSize )
-            && ( shuttingDown == false ) )
+        if ( ( obj != null ) && ( pooledObjects.size() < maxSize ) && ( shuttingDown == false ) )
         {
             pooledObjects.add( obj );
 
@@ -141,7 +135,7 @@ public class SweeperPool
         }
         else if ( obj != null )
         {
-            //no longer need the object, so dispose it
+            // no longer need the object, so dispose it
             objectDisposed( obj );
         }
 
@@ -149,8 +143,7 @@ public class SweeperPool
     }
 
     /**
-     * Return the number of pooled objects. This is never
-     * greater than t maximum size of the pool
+     * Return the number of pooled objects. This is never greater than t maximum size of the pool
      *
      * @return the number of pooled objects
      */
@@ -161,7 +154,6 @@ public class SweeperPool
 
     /**
      * Dispose of this pool. Stops the sweeper and disposes each object in the pool
-     *
      */
     public void dispose()
     {
@@ -219,7 +211,6 @@ public class SweeperPool
 
     /**
      * Trim the pool down to min size
-     *
      */
     public synchronized void trim()
     {
@@ -234,8 +225,7 @@ public class SweeperPool
     }
 
     /**
-     * Override this to be notified of object disposal. Called
-     * after the object has been removed. Occurs when the pool
+     * Override this to be notified of object disposal. Called after the object has been removed. Occurs when the pool
      * is trimmed.
      *
      * @param obj
@@ -245,8 +235,7 @@ public class SweeperPool
     }
 
     /**
-     * Override this to be notified of object addition.
-     * Called before object is to be added.
+     * Override this to be notified of object addition. Called before object is to be added.
      *
      * @param obj
      */
@@ -255,9 +244,8 @@ public class SweeperPool
     }
 
     /**
-     * Override this to be notified of object retrieval.
-     * Called after object removed from the pool, but
-     * before returned to the client.
+     * Override this to be notified of object retrieval. Called after object removed from the pool, but before returned
+     * to the client.
      *
      * @param obj
      */
@@ -266,17 +254,19 @@ public class SweeperPool
     }
 
     /**
-     * Periodically at <code>sweepInterval</code> goes through
-     * and tests if the pool should be trimmed.
+     * Periodically at <code>sweepInterval</code> goes through and tests if the pool should be trimmed.
      *
      * @author bert
-     *
      */
-    private static class Sweeper implements Runnable
+    private static class Sweeper
+        implements Runnable
     {
         private final transient SweeperPool pool;
+
         private transient boolean service = false;
+
         private final transient int sweepInterval;
+
         private transient Thread t = null;
 
         /**
@@ -306,8 +296,8 @@ public class SweeperPool
                     {
                         try
                         {
-                            //wait specified number of seconds
-                            //before running next sweep
+                            // wait specified number of seconds
+                            // before running next sweep
                             wait( sweepInterval * 1000 );
                         }
                         catch ( InterruptedException e )

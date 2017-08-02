@@ -22,7 +22,8 @@ import junit.framework.TestCase;
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
  */
-public class VertexTest extends TestCase
+public class VertexTest
+    extends TestCase
 {
     public void testVertex()
     {
