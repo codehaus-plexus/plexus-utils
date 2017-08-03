@@ -26,7 +26,7 @@ limitations under the License.
   </parent>
 
   <artifactId>plexus-utils</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1-SNAPSHOT</version>
 
   <name>Plexus Common Utilities</name>
   <description>A collection of various utility classes to ease working with strings, files, command lines, XML and
@@ -37,7 +37,7 @@ limitations under the License.
     <connection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</connection>
     <developerConnection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</developerConnection>
     <url>http://github.com/codehaus-plexus/plexus-utils</url>
-    <tag>plexus-utils-3.1.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>github</system>
