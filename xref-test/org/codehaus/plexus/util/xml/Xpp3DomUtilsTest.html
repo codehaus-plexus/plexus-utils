@@ -28,36 +28,35 @@
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/codehaus/plexus/util/xml/Xpp3DomUtilsTest.html">Xpp3DomUtilsTest</a> <strong class="jxr_keyword">extends</strong> TestCase {
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  	
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testCombineId() <strong class="jxr_keyword">throws</strong> Exception
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>      {
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>          String lhs = <span class="jxr_string">"&lt;props&gt;"</span> + 
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>                          <span class="jxr_string">"&lt;property combine.id='LHS-ONLY'&gt;&lt;name&gt;LHS-ONLY&lt;/name&gt;&lt;value&gt;LHS&lt;/value&gt;&lt;/property&gt;"</span> +
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>                          <span class="jxr_string">"&lt;property combine.id='TOOVERWRITE'&gt;&lt;name&gt;TOOVERWRITE&lt;/name&gt;&lt;value&gt;LHS&lt;/value&gt;&lt;/property&gt;"</span> +
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>                        <span class="jxr_string">"&lt;/props&gt;"</span>;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>          String rhs = <span class="jxr_string">"&lt;props&gt;"</span> + 
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>                          <span class="jxr_string">"&lt;property combine.id='RHS-ONLY'&gt;&lt;name&gt;RHS-ONLY&lt;/name&gt;&lt;value&gt;RHS&lt;/value&gt;&lt;/property&gt;"</span> +
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>                          <span class="jxr_string">"&lt;property combine.id='TOOVERWRITE'&gt;&lt;name&gt;TOOVERWRITE&lt;/name&gt;&lt;value&gt;RHS&lt;/value&gt;&lt;/property&gt;"</span> +
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>                        <span class="jxr_string">"&lt;/props&gt;"</span>;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>          Xpp3Dom leftDom = Xpp3DomBuilder.build( <strong class="jxr_keyword">new</strong> StringReader( lhs ) );
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>          Xpp3Dom rightDom = Xpp3DomBuilder.build( <strong class="jxr_keyword">new</strong> StringReader( rhs ) );
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          Xpp3Dom mergeResult = Xpp3DomUtils.mergeXpp3Dom( leftDom, rightDom, <strong class="jxr_keyword">true</strong> );
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          assertEquals( 3, mergeResult.getChildren( <span class="jxr_string">"property"</span> ).length );
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          assertEquals( <span class="jxr_string">"LHS-ONLY"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[0].getChild( <span class="jxr_string">"name"</span> ).getValue() );
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          assertEquals( <span class="jxr_string">"LHS"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[0].getChild( <span class="jxr_string">"value"</span> ).getValue() );
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          assertEquals( <span class="jxr_string">"TOOVERWRITE"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[1].getChild( <span class="jxr_string">"name"</span> ).getValue() );
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          assertEquals( <span class="jxr_string">"LHS"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[1].getChild( <span class="jxr_string">"value"</span> ).getValue() );
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          assertEquals( <span class="jxr_string">"RHS-ONLY"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[2].getChild( <span class="jxr_string">"name"</span> ).getValue() );
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          assertEquals( <span class="jxr_string">"RHS"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[2].getChild( <span class="jxr_string">"value"</span> ).getValue() );
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      }
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  }
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/codehaus/plexus/util/xml/Xpp3DomUtilsTest.html">Xpp3DomUtilsTest</a>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">extends</strong> TestCase
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  {
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testCombineId()
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          <strong class="jxr_keyword">throws</strong> Exception
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      {
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>          String lhs = <span class="jxr_string">"&lt;props&gt;"</span> + <span class="jxr_string">"&lt;property combine.id='LHS-ONLY'&gt;&lt;name&gt;LHS-ONLY&lt;/name&gt;&lt;value&gt;LHS&lt;/value&gt;&lt;/property&gt;"</span>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>              + <span class="jxr_string">"&lt;property combine.id='TOOVERWRITE'&gt;&lt;name&gt;TOOVERWRITE&lt;/name&gt;&lt;value&gt;LHS&lt;/value&gt;&lt;/property&gt;"</span> + <span class="jxr_string">"&lt;/props&gt;"</span>;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          String rhs = <span class="jxr_string">"&lt;props&gt;"</span> + <span class="jxr_string">"&lt;property combine.id='RHS-ONLY'&gt;&lt;name&gt;RHS-ONLY&lt;/name&gt;&lt;value&gt;RHS&lt;/value&gt;&lt;/property&gt;"</span>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>              + <span class="jxr_string">"&lt;property combine.id='TOOVERWRITE'&gt;&lt;name&gt;TOOVERWRITE&lt;/name&gt;&lt;value&gt;RHS&lt;/value&gt;&lt;/property&gt;"</span> + <span class="jxr_string">"&lt;/props&gt;"</span>;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          Xpp3Dom leftDom = Xpp3DomBuilder.build( <strong class="jxr_keyword">new</strong> StringReader( lhs ) );
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          Xpp3Dom rightDom = Xpp3DomBuilder.build( <strong class="jxr_keyword">new</strong> StringReader( rhs ) );
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          Xpp3Dom mergeResult = Xpp3DomUtils.mergeXpp3Dom( leftDom, rightDom, <strong class="jxr_keyword">true</strong> );
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          assertEquals( 3, mergeResult.getChildren( <span class="jxr_string">"property"</span> ).length );
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          assertEquals( <span class="jxr_string">"LHS-ONLY"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[0].getChild( <span class="jxr_string">"name"</span> ).getValue() );
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          assertEquals( <span class="jxr_string">"LHS"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[0].getChild( <span class="jxr_string">"value"</span> ).getValue() );
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          assertEquals( <span class="jxr_string">"TOOVERWRITE"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[1].getChild( <span class="jxr_string">"name"</span> ).getValue() );
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          assertEquals( <span class="jxr_string">"LHS"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[1].getChild( <span class="jxr_string">"value"</span> ).getValue() );
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          assertEquals( <span class="jxr_string">"RHS-ONLY"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[2].getChild( <span class="jxr_string">"name"</span> ).getValue() );
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          assertEquals( <span class="jxr_string">"RHS"</span>, mergeResult.getChildren( <span class="jxr_string">"property"</span> )[2].getChild( <span class="jxr_string">"value"</span> ).getValue() );
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2016 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2017 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>

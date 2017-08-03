@@ -137,7 +137,7 @@
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>         String check = <span class="jxr_string">"\'This pre'postis apre'post test\'"</span>;
 <a class="jxr_linenumber" name="L130" href="#L130">130</a> 
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>         <strong class="jxr_keyword">char</strong>[] escaped = { '\'', '\&quot;' };
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>         String result = StringUtils.quoteAndEscape( src, '\'', escaped, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">char</strong>[]{ ' ' }, <span class="jxr_string">"pre%spost"</span>, false );
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         String result = StringUtils.quoteAndEscape( src, '\'', escaped, <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">char</strong>[] { ' ' }, <span class="jxr_string">"pre%spost"</span>, false );
 <a class="jxr_linenumber" name="L133" href="#L133">133</a> 
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>         assertEquals( check, result );
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>     }
@@ -245,30 +245,29 @@
 <a class="jxr_linenumber" name="L237" href="#L237">237</a>         s = <span class="jxr_string">"this  \r\n   is \n  \r  test   \n "</span>;
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>         assertEquals( <span class="jxr_string">"this is test "</span>, StringUtils.removeDuplicateWhitespace( s ) );
 <a class="jxr_linenumber" name="L239" href="#L239">239</a> 
-<a class="jxr_linenumber" name="L240" href="#L240">240</a> 
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>     }
-<a class="jxr_linenumber" name="L242" href="#L242">242</a> 
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testUnifyLineSeparators()
-<a class="jxr_linenumber" name="L244" href="#L244">244</a>         <strong class="jxr_keyword">throws</strong> Exception
-<a class="jxr_linenumber" name="L245" href="#L245">245</a>     {
-<a class="jxr_linenumber" name="L246" href="#L246">246</a>         String s = <span class="jxr_string">"this\r\nis\na\r\ntest"</span>;
-<a class="jxr_linenumber" name="L247" href="#L247">247</a> 
-<a class="jxr_linenumber" name="L248" href="#L248">248</a>         <strong class="jxr_keyword">try</strong>
-<a class="jxr_linenumber" name="L249" href="#L249">249</a>         {
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>             StringUtils.unifyLineSeparators( s, <span class="jxr_string">"abs"</span> );
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>             assertTrue( <span class="jxr_string">"Exception NOT catched"</span>, false );
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>         }
-<a class="jxr_linenumber" name="L253" href="#L253">253</a>         <strong class="jxr_keyword">catch</strong> ( IllegalArgumentException e)
-<a class="jxr_linenumber" name="L254" href="#L254">254</a>         {
-<a class="jxr_linenumber" name="L255" href="#L255">255</a>             assertTrue( <span class="jxr_string">"Exception catched"</span>, <strong class="jxr_keyword">true</strong> );
-<a class="jxr_linenumber" name="L256" href="#L256">256</a>         }
-<a class="jxr_linenumber" name="L257" href="#L257">257</a> 
-<a class="jxr_linenumber" name="L258" href="#L258">258</a>         assertEquals( <span class="jxr_string">"this\nis\na\ntest"</span>, StringUtils.unifyLineSeparators( s, <span class="jxr_string">"\n"</span> ) );
-<a class="jxr_linenumber" name="L259" href="#L259">259</a>         assertEquals( <span class="jxr_string">"this\r\nis\r\na\r\ntest"</span>, StringUtils.unifyLineSeparators( s, <span class="jxr_string">"\r\n"</span> ) );
-<a class="jxr_linenumber" name="L260" href="#L260">260</a>     }
-<a class="jxr_linenumber" name="L261" href="#L261">261</a> }
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>     }
+<a class="jxr_linenumber" name="L241" href="#L241">241</a> 
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testUnifyLineSeparators()
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>         <strong class="jxr_keyword">throws</strong> Exception
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>     {
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>         String s = <span class="jxr_string">"this\r\nis\na\r\ntest"</span>;
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> 
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         <strong class="jxr_keyword">try</strong>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>         {
+<a class="jxr_linenumber" name="L249" href="#L249">249</a>             StringUtils.unifyLineSeparators( s, <span class="jxr_string">"abs"</span> );
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>             assertTrue( <span class="jxr_string">"Exception NOT catched"</span>, false );
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>         }
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>         <strong class="jxr_keyword">catch</strong> ( IllegalArgumentException e )
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>         {
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>             assertTrue( <span class="jxr_string">"Exception catched"</span>, <strong class="jxr_keyword">true</strong> );
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>         }
+<a class="jxr_linenumber" name="L256" href="#L256">256</a> 
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>         assertEquals( <span class="jxr_string">"this\nis\na\ntest"</span>, StringUtils.unifyLineSeparators( s, <span class="jxr_string">"\n"</span> ) );
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>         assertEquals( <span class="jxr_string">"this\r\nis\r\na\r\ntest"</span>, StringUtils.unifyLineSeparators( s, <span class="jxr_string">"\r\n"</span> ) );
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>     }
+<a class="jxr_linenumber" name="L260" href="#L260">260</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2016 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2017 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>

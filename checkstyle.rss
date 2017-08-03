@@ -23,10 +23,10 @@ under the License.
     <link>http://codehaus-plexus.github.io/plexus-utils/</link>
     <description>Plexus Common Utilities - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2001 - 2016 Codehaus Plexus</copyright>
+    <copyright>&#169;2001 - 2017 Codehaus Plexus</copyright>
     <item>
       <title>File: 83,
-             Errors: 7373,
+             Errors: 611,
              Warnings: 911,
              Infos: 162
       </title>
@@ -55,7 +55,7 @@ under the License.
                   1
                 </td>
                 <td>
-                  5
+                  4
                 </td>
               </tr>
                           <tr>
@@ -74,20 +74,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.pull.MXParser.java">org/codehaus/plexus/util/xml/pull/MXParser.java</a>
-                </td>
-                <td>
-                  80
-                </td>
-                <td>
-                  91
-                </td>
-                <td>
-                  3717
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.XmlUtil.java">org/codehaus/plexus/util/xml/XmlUtil.java</a>
                 </td>
                 <td>
@@ -102,6 +88,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.pull.MXParser.java">org/codehaus/plexus/util/xml/pull/MXParser.java</a>
+                </td>
+                <td>
+                  80
+                </td>
+                <td>
+                  91
+                </td>
+                <td>
+                  253
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.Base64.java">org/codehaus/plexus/util/Base64.java</a>
                 </td>
                 <td>
@@ -111,7 +111,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  284
+                  20
                 </td>
               </tr>
                           <tr>
@@ -153,7 +153,7 @@ under the License.
                   1
                 </td>
                 <td>
-                  9
+                  1
                 </td>
               </tr>
                           <tr>
@@ -164,10 +164,10 @@ under the License.
                   3
                 </td>
                 <td>
-                  3
+                  4
                 </td>
                 <td>
-                  20
+                  2
                 </td>
               </tr>
                           <tr>
@@ -195,7 +195,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
+                  1
                 </td>
               </tr>
                           <tr>
@@ -214,6 +214,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.XmlStreamReaderException.java">org/codehaus/plexus/util/xml/XmlStreamReaderException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.DirectoryWalkListener.java">org/codehaus/plexus/util/DirectoryWalkListener.java</a>
                 </td>
                 <td>
@@ -224,20 +238,6 @@ under the License.
                 </td>
                 <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.XmlStreamReaderException.java">org/codehaus/plexus/util/xml/XmlStreamReaderException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
                 </td>
               </tr>
                           <tr>
@@ -265,21 +265,7 @@ under the License.
                   15
                 </td>
                 <td>
-                  17
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.io.InputStreamFacade.java">org/codehaus/plexus/util/io/InputStreamFacade.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  1
+                  16
                 </td>
               </tr>
                           <tr>
@@ -293,7 +279,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  189
+                  16
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.io.InputStreamFacade.java">org/codehaus/plexus/util/io/InputStreamFacade.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  0
                 </td>
               </tr>
                           <tr>
@@ -312,20 +312,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.cli.StreamConsumer.java">org/codehaus/plexus/util/cli/StreamConsumer.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.SelectorUtils.java">org/codehaus/plexus/util/SelectorUtils.java</a>
                 </td>
                 <td>
@@ -335,7 +321,35 @@ under the License.
                   3
                 </td>
                 <td>
-                  4
+                  3
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.cli.StreamConsumer.java">org/codehaus/plexus/util/cli/StreamConsumer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.StringUtils.java">org/codehaus/plexus/util/StringUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  76
+                </td>
+                <td>
+                  15
                 </td>
               </tr>
                           <tr>
@@ -354,20 +368,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.StringUtils.java">org/codehaus/plexus/util/StringUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  76
-                </td>
-                <td>
-                  38
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.Xpp3Dom.java">org/codehaus/plexus/util/xml/Xpp3Dom.java</a>
                 </td>
                 <td>
@@ -377,7 +377,7 @@ under the License.
                   32
                 </td>
                 <td>
-                  3
+                  1
                 </td>
               </tr>
                           <tr>
@@ -391,7 +391,7 @@ under the License.
                   8
                 </td>
                 <td>
-                  13
+                  2
                 </td>
               </tr>
                           <tr>
@@ -405,7 +405,7 @@ under the License.
                   43
                 </td>
                 <td>
-                  1274
+                  59
                 </td>
               </tr>
                           <tr>
@@ -447,7 +447,7 @@ under the License.
                   9
                 </td>
                 <td>
-                  2
+                  0
                 </td>
               </tr>
                           <tr>
@@ -489,7 +489,7 @@ under the License.
                   8
                 </td>
                 <td>
-                  5
+                  6
                 </td>
               </tr>
                           <tr>
@@ -503,7 +503,7 @@ under the License.
                   4
                 </td>
                 <td>
-                  6
+                  1
                 </td>
               </tr>
                           <tr>
@@ -517,7 +517,7 @@ under the License.
                   6
                 </td>
                 <td>
-                  4
+                  0
                 </td>
               </tr>
                           <tr>
@@ -531,7 +531,7 @@ under the License.
                   20
                 </td>
                 <td>
-                  25
+                  7
                 </td>
               </tr>
                           <tr>
@@ -545,7 +545,7 @@ under the License.
                   55
                 </td>
                 <td>
-                  43
+                  4
                 </td>
               </tr>
                           <tr>
@@ -564,20 +564,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.StringOutputStream.java">org/codehaus/plexus/util/StringOutputStream.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-                <td>
-                  1
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.XMLWriter.java">org/codehaus/plexus/util/xml/XMLWriter.java</a>
                 </td>
                 <td>
@@ -585,6 +571,20 @@ under the License.
                 </td>
                 <td>
                   5
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.StringOutputStream.java">org/codehaus/plexus/util/StringOutputStream.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
                 </td>
                 <td>
                   0
@@ -620,20 +620,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.pull.EntityReplacementMap.java">org/codehaus/plexus/util/xml/pull/EntityReplacementMap.java</a>
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  38
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.Xpp3DomBuilder.java">org/codehaus/plexus/util/xml/Xpp3DomBuilder.java</a>
                 </td>
                 <td>
@@ -648,16 +634,16 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.cli.CommandLineUtils.java">org/codehaus/plexus/util/cli/CommandLineUtils.java</a>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.pull.EntityReplacementMap.java">org/codehaus/plexus/util/xml/pull/EntityReplacementMap.java</a>
                 </td>
                 <td>
-                  0
+                  1
                 </td>
                 <td>
-                  19
+                  2
                 </td>
                 <td>
-                  10
+                  6
                 </td>
               </tr>
                           <tr>
@@ -671,7 +657,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  42
+                  8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.cli.CommandLineUtils.java">org/codehaus/plexus/util/cli/CommandLineUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  19
+                </td>
+                <td>
+                  2
                 </td>
               </tr>
                           <tr>
@@ -685,7 +685,7 @@ under the License.
                   2
                 </td>
                 <td>
-                  2
+                  0
                 </td>
               </tr>
                           <tr>
@@ -699,7 +699,7 @@ under the License.
                   2
                 </td>
                 <td>
-                  38
+                  30
                 </td>
               </tr>
                           <tr>
@@ -713,7 +713,7 @@ under the License.
                   47
                 </td>
                 <td>
-                  7
+                  0
                 </td>
               </tr>
                           <tr>
@@ -741,7 +741,7 @@ under the License.
                   70
                 </td>
                 <td>
-                  79
+                  38
                 </td>
               </tr>
                           <tr>
@@ -755,7 +755,7 @@ under the License.
                   6
                 </td>
                 <td>
-                  44
+                  1
                 </td>
               </tr>
                           <tr>
@@ -774,6 +774,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.ReflectionUtils.java">org/codehaus/plexus/util/ReflectionUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.cli.WriterStreamConsumer.java">org/codehaus/plexus/util/cli/WriterStreamConsumer.java</a>
                 </td>
                 <td>
@@ -788,20 +802,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.ReflectionUtils.java">org/codehaus/plexus/util/ReflectionUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  14
-                </td>
-                <td>
-                  8
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.CachedMap.java">org/codehaus/plexus/util/CachedMap.java</a>
                 </td>
                 <td>
@@ -811,7 +811,7 @@ under the License.
                   16
                 </td>
                 <td>
-                  154
+                  7
                 </td>
               </tr>
                           <tr>
@@ -822,7 +822,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
+                  7
                 </td>
                 <td>
                   0
@@ -853,21 +853,7 @@ under the License.
                   1
                 </td>
                 <td>
-                  4
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.FastMap.java">org/codehaus/plexus/util/FastMap.java</a>
-                </td>
-                <td>
                   0
-                </td>
-                <td>
-                  6
-                </td>
-                <td>
-                  424
                 </td>
               </tr>
                           <tr>
@@ -882,6 +868,20 @@ under the License.
                 </td>
                 <td>
                   7
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.FastMap.java">org/codehaus/plexus/util/FastMap.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  20
                 </td>
               </tr>
                           <tr>
@@ -951,7 +951,7 @@ under the License.
                   109
                 </td>
                 <td>
-                  8
+                  3
                 </td>
               </tr>
                           <tr>
@@ -979,7 +979,7 @@ under the License.
                   2
                 </td>
                 <td>
-                  2
+                  0
                 </td>
               </tr>
                           <tr>
@@ -993,7 +993,7 @@ under the License.
                   5
                 </td>
                 <td>
-                  4
+                  0
                 </td>
               </tr>
                           <tr>
@@ -1077,7 +1077,7 @@ under the License.
                   48
                 </td>
                 <td>
-                  4
+                  2
                 </td>
               </tr>
                           <tr>
@@ -1091,21 +1091,7 @@ under the License.
                   10
                 </td>
                 <td>
-                  4
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.cli.CommandLineTimeOutException.java">org/codehaus/plexus/util/cli/CommandLineTimeOutException.java</a>
-                </td>
-                <td>
                   0
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  1
                 </td>
               </tr>
                           <tr>
@@ -1124,6 +1110,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.cli.CommandLineTimeOutException.java">org/codehaus/plexus/util/cli/CommandLineTimeOutException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.TypeFormat.java">org/codehaus/plexus/util/TypeFormat.java</a>
                 </td>
                 <td>
@@ -1133,7 +1133,7 @@ under the License.
                   10
                 </td>
                 <td>
-                  767
+                  24
                 </td>
               </tr>
                           <tr>
@@ -1147,7 +1147,7 @@ under the License.
                   2
                 </td>
                 <td>
-                  2
+                  0
                 </td>
               </tr>
                           <tr>
@@ -1161,7 +1161,7 @@ under the License.
                   6
                 </td>
                 <td>
-                  5
+                  0
                 </td>
               </tr>
                           <tr>
@@ -1175,7 +1175,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  2
                 </td>
               </tr>
                           <tr>
@@ -1200,7 +1200,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  15
+                  16
                 </td>
                 <td>
                   0

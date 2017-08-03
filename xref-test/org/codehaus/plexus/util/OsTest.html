@@ -57,7 +57,7 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>              }
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          }
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <em class="jxr_comment">//make sure the OS_FAMILY is set right.</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <em class="jxr_comment">// make sure the OS_FAMILY is set right.</em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          assertEquals( currentFamily, Os.OS_FAMILY );
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <em class="jxr_comment">// check the current family and one of the others</em>
@@ -79,12 +79,12 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <em class="jxr_comment">// check the version</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          assertTrue( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, Os.OS_VERSION ) );
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          assertFalse( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, <span class="jxr_string">"myversion"</span>  ) );
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          assertFalse( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, <span class="jxr_string">"myversion"</span> ) );
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      }
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>  
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testValidList()
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      {
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          assertTrue(Os.isValidFamily( <span class="jxr_string">"dos"</span> ) );
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          assertTrue( Os.isValidFamily( <span class="jxr_string">"dos"</span> ) );
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>          assertFalse( Os.isValidFamily( <span class="jxr_string">""</span> ) );
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          assertFalse( Os.isValidFamily( <strong class="jxr_keyword">null</strong> ) );
@@ -93,6 +93,6 @@
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2016 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2017 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>

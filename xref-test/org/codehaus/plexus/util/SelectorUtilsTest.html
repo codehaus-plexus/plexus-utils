@@ -36,8 +36,8 @@
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>          String separator = File.separator;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>          <em class="jxr_comment">// Pattern and target start with file separator</em>
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>          assertTrue( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>, separator + <span class="jxr_string">"b"</span> + separator
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>              + <span class="jxr_string">"a.txt"</span> ) );
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          assertTrue( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>,
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                                               separator + <span class="jxr_string">"b"</span> + separator + <span class="jxr_string">"a.txt"</span> ) );
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>          <em class="jxr_comment">// Pattern starts with file separator, target doesn't</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>          assertFalse( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>, <span class="jxr_string">"b"</span> + separator + <span class="jxr_string">"a.txt"</span> ) );
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>          <em class="jxr_comment">// Pattern doesn't start with file separator, target does</em>
@@ -51,8 +51,8 @@
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>          String separator = <span class="jxr_string">"/"</span>;
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          <em class="jxr_comment">// Pattern and target start with file separator</em>
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          assertTrue( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>, separator + <span class="jxr_string">"b"</span> + separator
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>              + <span class="jxr_string">"a.txt"</span>, separator, false ) );
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          assertTrue( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>,
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>                                               separator + <span class="jxr_string">"b"</span> + separator + <span class="jxr_string">"a.txt"</span>, separator, false ) );
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          <em class="jxr_comment">// Pattern starts with file separator, target doesn't</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          assertFalse( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>, <span class="jxr_string">"b"</span> + separator + <span class="jxr_string">"a.txt"</span>,
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>                                                separator, false ) );
@@ -68,8 +68,8 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          String separator = <span class="jxr_string">"&#92;&#92;"</span>;
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <em class="jxr_comment">// Pattern and target start with file separator</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          assertTrue( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>, separator + <span class="jxr_string">"b"</span> + separator
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>              + <span class="jxr_string">"a.txt"</span>, separator, false ) );
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          assertTrue( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>,
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>                                               separator + <span class="jxr_string">"b"</span> + separator + <span class="jxr_string">"a.txt"</span>, separator, false ) );
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          <em class="jxr_comment">// Pattern starts with file separator, target doesn't</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          assertFalse( SelectorUtils.matchPath( separator + <span class="jxr_string">"*"</span> + separator + <span class="jxr_string">"a.txt"</span>, <span class="jxr_string">"b"</span> + separator + <span class="jxr_string">"a.txt"</span>,
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>                                                separator, false ) );
@@ -82,6 +82,6 @@
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2016 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2017 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>

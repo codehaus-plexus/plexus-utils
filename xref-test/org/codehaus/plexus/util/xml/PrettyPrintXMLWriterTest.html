@@ -179,20 +179,20 @@
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> 
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>         expected.append( <span class="jxr_string">"&lt;html&gt;"</span> ).append( lineSeparator );
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( <span class="jxr_string">"&lt;head&gt;"</span> ).append( lineSeparator );
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( <span class="jxr_string">"&lt;title&gt;title&lt;/title&gt;"</span> )
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>                 .append( lineSeparator );
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>         expected.append( StringUtils.repeat( lineIndenter, 2 ) )
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>                 .append( <span class="jxr_string">"&lt;meta name=\&quot;author\&quot; content=\&quot;Author\&quot;/&gt;"</span> ).append( lineSeparator );
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( <span class="jxr_string">"&lt;meta name=\&quot;date\&quot; content=\&quot;Date\&quot;/&gt;"</span> )
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>                 .append( lineSeparator );
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         expected.append( StringUtils.repeat( lineIndenter,
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>                                              2 ) ).append( <span class="jxr_string">"&lt;title&gt;title&lt;/title&gt;"</span> ).append( lineSeparator );
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>         expected.append( StringUtils.repeat( lineIndenter,
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>                                              2 ) ).append( <span class="jxr_string">"&lt;meta name=\&quot;author\&quot; content=\&quot;Author\&quot;/&gt;"</span> ).append( lineSeparator );
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         expected.append( StringUtils.repeat( lineIndenter,
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>                                              2 ) ).append( <span class="jxr_string">"&lt;meta name=\&quot;date\&quot; content=\&quot;Date\&quot;/&gt;"</span> ).append( lineSeparator );
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( <span class="jxr_string">"&lt;/head&gt;"</span> ).append( lineSeparator );
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( <span class="jxr_string">"&lt;body&gt;"</span> ).append( lineSeparator );
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>         expected.append( StringUtils.repeat( lineIndenter, 2 ) )
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>                 .append( <span class="jxr_string">"&lt;p&gt;Paragraph 1, line 1. Paragraph 1, line 2.&lt;/p&gt;"</span> ).append( lineSeparator );
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>         expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( <span class="jxr_string">"&lt;div class=\&quot;section\&quot;&gt;"</span> )
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>                 .append( lineSeparator );
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>         expected.append( StringUtils.repeat( lineIndenter, 3 ) ).append( <span class="jxr_string">"&lt;h2&gt;Section title&lt;/h2&gt;"</span> )
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 .append( lineSeparator );
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         expected.append( StringUtils.repeat( lineIndenter,
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>                                              2 ) ).append( <span class="jxr_string">"&lt;p&gt;Paragraph 1, line 1. Paragraph 1, line 2.&lt;/p&gt;"</span> ).append( lineSeparator );
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         expected.append( StringUtils.repeat( lineIndenter,
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>                                              2 ) ).append( <span class="jxr_string">"&lt;div class=\&quot;section\&quot;&gt;"</span> ).append( lineSeparator );
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>         expected.append( StringUtils.repeat( lineIndenter,
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>                                              3 ) ).append( <span class="jxr_string">"&lt;h2&gt;Section title&lt;/h2&gt;"</span> ).append( lineSeparator );
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>         expected.append( StringUtils.repeat( lineIndenter, 2 ) ).append( <span class="jxr_string">"&lt;/div&gt;"</span> ).append( lineSeparator );
 <a class="jxr_linenumber" name="L189" href="#L189">189</a>         expected.append( StringUtils.repeat( lineIndenter, 1 ) ).append( <span class="jxr_string">"&lt;/body&gt;"</span> ).append( lineSeparator );
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>         expected.append( <span class="jxr_string">"&lt;/html&gt;"</span> );
@@ -202,6 +202,6 @@
 <a class="jxr_linenumber" name="L194" href="#L194">194</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2016 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2017 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>
