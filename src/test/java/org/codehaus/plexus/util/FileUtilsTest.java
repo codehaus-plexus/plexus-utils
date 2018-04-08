@@ -16,17 +16,11 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
+import org.junit.Assume;
+
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Properties;
 
 /**
@@ -390,6 +384,21 @@ public final class FileUtilsTest
             destDirectory.delete();
         }
         final File destination = new File( destDirectory, "copy2.txt" );
+        FileUtils.copyFile( testFile1, destination );
+        assertTrue( "Check Exist", destination.exists() );
+        assertTrue( "Check Full copy", destination.length() == testFile2Size );
+    }
+    
+    public void testCopyOverReadOnlyFile() 
+        throws IOException 
+    {
+        final File destination = new File( getTestDirectory(), "copy2.txt" );
+
+        // Make sure file exists and is read-only
+        assertTrue(destination.createNewFile());
+        assertTrue(destination.setReadOnly());;
+
+        // Copy
         FileUtils.copyFile( testFile1, destination );
         assertTrue( "Check Exist", destination.exists() );
         assertTrue( "Check Full copy", destination.length() == testFile2Size );

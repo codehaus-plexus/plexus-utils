@@ -58,21 +58,11 @@ package org.codehaus.plexus.util;
 import org.codehaus.plexus.util.io.InputStreamFacade;
 import org.codehaus.plexus.util.io.URLInputStreamFacade;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.attribute.DosFileAttributes;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -1094,6 +1084,16 @@ public class FileUtils
     private static void doCopyFile( File source, File destination )
         throws IOException
     {
+        // Special-case for Windows read-only file attribute -- if it's set, unset it so that replacement of the 
+        // destination doesn't fail. Files.copy will apparently not REPLACE_EXISTING in that case, at least on Windows.
+        if (Os.isFamily(Os.FAMILY_WINDOWS) 
+                && destination.exists() 
+                && !destination.canWrite() 
+                && Files.readAttributes(destination.toPath(), DosFileAttributes.class)
+                        .isReadOnly()) {
+            destination.setWritable(true);
+        }
+
         // offload to operating system if supported
         if ( Java7Detector.isJava7() )
         {
