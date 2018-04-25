@@ -1164,7 +1164,7 @@ public class FileUtils
     public static boolean copyFileIfModified( final File source, final File destination )
         throws IOException
     {
-        if ( destination.lastModified() < source.lastModified() )
+        if ( isSourceNewerThanDestination( source, destination ) )
         {
             copyFile( source, destination );
 
@@ -2289,7 +2289,7 @@ public class FileUtils
     }
 
     /**
-     * <b>If wrappers is null or empty, the file will be copy only if to.lastModified() < from.lastModified()</b>
+     * <b>If wrappers is null or empty, the file will be copy only if {@code to.lastModified() < from.lastModified()}</b>
      *
      * @param from the file to copy
      * @param to the destination file
@@ -2309,15 +2309,13 @@ public class FileUtils
     }
 
     /**
-     * <b>If wrappers is null or empty, the file will be copy only if to.lastModified() < from.lastModified() or if
-     * overwrite is true</b>
+     * <b>If wrappers is null or empty, the file will be copy only if {@code to.lastModified() < from.lastModified()}, if overwrite is true</b>
      *
      * @param from the file to copy
      * @param to the destination file
      * @param encoding the file output encoding (only if wrappers is not empty)
      * @param wrappers array of {@link FilterWrapper}
-     * @param overwrite if true and f wrappers is null or empty, the file will be copy even if to.lastModified() <
-     *            from.lastModified()
+     * @param overwrite if true and wrappers is null or empty, the file will be copied even if {@code to.lastModified() < from.lastModified()}
      * @throws IOException if an IO error occurs during copying or filtering
      * @since 1.5.2
      */
@@ -2367,11 +2365,15 @@ public class FileUtils
         }
         else
         {
-            if ( to.lastModified() < from.lastModified() || overwrite )
+            if ( isSourceNewerThanDestination( from, to ) || overwrite )
             {
                 copyFile( from, to );
             }
         }
+    }
+
+    private static boolean isSourceNewerThanDestination( File source, File destination ) {
+        return ( destination.lastModified() == 0L && source.lastModified() == 0L ) || destination.lastModified() < source.lastModified();
     }
 
     /**
