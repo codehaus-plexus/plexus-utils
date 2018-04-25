@@ -1164,7 +1164,7 @@ public class FileUtils
     public static boolean copyFileIfModified( final File source, final File destination )
         throws IOException
     {
-        if ( destination.lastModified() < source.lastModified() )
+        if ( isSourceNewerThanDestination( source, destination ) )
         {
             copyFile( source, destination );
 
@@ -2289,7 +2289,8 @@ public class FileUtils
     }
 
     /**
-     * <b>If wrappers is null or empty, the file will be copy only if to.lastModified() < from.lastModified()</b>
+     * <b>If wrappers is null or empty, the file will be copy only if to.lastModified() < from.lastModified(),
+     * if the files were both created on 1970-01-01 : 0000.00 </b>
      *
      * @param from the file to copy
      * @param to the destination file
@@ -2309,8 +2310,8 @@ public class FileUtils
     }
 
     /**
-     * <b>If wrappers is null or empty, the file will be copy only if to.lastModified() < from.lastModified() or if
-     * overwrite is true</b>
+     * <b>If wrappers is null or empty, the file will be copy only if to.lastModified() < from.lastModified(),
+     * if the files were both created on 1970-01-01 : 0000.00 or if overwrite is true</b>
      *
      * @param from the file to copy
      * @param to the destination file
@@ -2367,11 +2368,15 @@ public class FileUtils
         }
         else
         {
-            if ( to.lastModified() < from.lastModified() || overwrite )
+            if ( isSourceNewerThanDestination( from, to ) || overwrite )
             {
                 copyFile( from, to );
             }
         }
+    }
+
+    private static boolean isSourceNewerThanDestination( File source, File destination ) {
+        return ( destination.lastModified() == 0L && source.lastModified() == 0L ) || destination.lastModified() < source.lastModified();
     }
 
     /**
