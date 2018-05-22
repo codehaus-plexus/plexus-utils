@@ -495,25 +495,19 @@ public class Commandline
     }
 
     /**
-     * Returns the executable and all defined arguments.<br/>
-     * For Windows Family, {@link Commandline#getShellCommandline()} is returned
+     * Returns the executable and all defined arguments.
      */
     public String[] getCommandline()
     {
-        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
-        {
-            return getShellCommandline();
-        }
-
         final String[] args = getArguments();
-        String executable = getLiteralExecutable();
+        String executableTmp = getLiteralExecutable();
 
-        if ( executable == null )
+        if ( executableTmp == null )
         {
             return args;
         }
         final String[] result = new String[args.length + 1];
-        result[0] = executable;
+        result[0] = executableTmp;
         System.arraycopy( args, 0, result, 1, args.length );
         return result;
     }
