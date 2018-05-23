@@ -124,6 +124,15 @@ public class Commandline
     private Shell shell;
 
     /**
+     * For {@link Os#FAMILY_WINDOWS} (only), force the usage of {@link CmdShell} (=> 'cmd.exe /X /C' prefix).<br/>
+     * Allow built-in commands (like <i>echo</i>) or <i>.cmd</i>/<i>.bat</i> files on PATH without extension
+     * suffix.<br/>
+     * Warning: This usage breaks the capacity to terminate the launched sub process when SIGINT signal (CTRL+C) is
+     * catched ; So use at your own risk.
+     */
+    private boolean forceShellOsSpefic;
+
+    /**
      * @deprecated Use {@link Commandline#setExecutable(String)} instead.
      */
     protected String executable;
@@ -496,24 +505,26 @@ public class Commandline
 
     /**
      * Returns the executable and all defined arguments.<br/>
-     * For Windows Family, {@link Commandline#getShellCommandline()} is returned
+     * For Windows Family when {@link Commandline#setForceShellOsSpefic(boolean)} is used,
+     * {@link Commandline#getShellCommandline()} is returned
      */
     public String[] getCommandline()
     {
-        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+
+        if ( this.forceShellOsSpefic && Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
             return getShellCommandline();
         }
 
         final String[] args = getArguments();
-        String executable = getLiteralExecutable();
+        String executableTmp = getLiteralExecutable();
 
-        if ( executable == null )
+        if ( executableTmp == null )
         {
             return args;
         }
         final String[] result = new String[args.length + 1];
-        result[0] = executable;
+        result[0] = executableTmp;
         System.arraycopy( args, 0, result, 1, args.length );
         return result;
     }
@@ -726,6 +737,21 @@ public class Commandline
     public Shell getShell()
     {
         return shell;
+    }
+
+    /**
+     * For {@link Os#FAMILY_WINDOWS} (only), force the usage of {@link CmdShell} (=> 'cmd.exe /X /C' prefix).<br/>
+     * Allow built-in commands (like <i>echo</i>) or <i>.cmd</i>/<i>.bat</i> files on PATH without extension
+     * suffix.<br/>
+     * Warning: This usage breaks the capacity to terminate the launched sub process when SIGINT signal (CTRL+C) is
+     * catched ; So use at your own risk.
+     * 
+     * @param forceShellOsSpefic boolean
+     * @since 3.1.1
+     */
+    public void setForceShellOsSpefic( boolean forceShellOsSpefic )
+    {
+        this.forceShellOsSpefic = forceShellOsSpefic;
     }
 
     /**
