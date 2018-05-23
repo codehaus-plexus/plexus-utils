@@ -138,7 +138,7 @@ public class NioFiles
         throws IOException
     {
         Path copy = Files.copy( source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING,
-                                StandardCopyOption.COPY_ATTRIBUTES, LinkOption.NOFOLLOW_LINKS );
+                                LinkOption.NOFOLLOW_LINKS );
         return copy.toFile();
     }
 
