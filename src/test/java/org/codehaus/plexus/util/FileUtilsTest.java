@@ -454,6 +454,23 @@ public final class FileUtilsTest
         assertFalse( "Source file should not have been copied.", FileUtils.copyFileIfModified( source, destination ) );
     }
 
+    public void testCopyIfModifiedWhenSourceHasZeroDate()
+        throws Exception
+    {
+        FileUtils.forceMkdir( new File( getTestDirectory(), "temp" ) );
+
+        // Source modified on 1970-01-01T00:00Z
+        File source = new File( getTestDirectory(), "copy1.txt" );
+        FileUtils.copyFile( testFile1, source );
+        source.setLastModified( 0L );
+
+        // A non existing destination
+        File destination = new File( getTestDirectory(), "temp/copy1.txt" );
+
+        // Should copy the source to the non existing destination.
+        assertTrue( "Source file should have been copied.", FileUtils.copyFileIfModified( source, destination ) );
+    }
+
     // forceDelete
 
     public void testForceDeleteAFile1()
