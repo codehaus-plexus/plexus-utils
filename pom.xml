@@ -51,7 +51,7 @@ limitations under the License.
   </distributionManagement>
 
   <properties>
-    <javaVersion>6</javaVersion>
+    <javaVersion>7</javaVersion>
   </properties>
 
   <dependencies>

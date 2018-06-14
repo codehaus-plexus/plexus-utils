@@ -1096,8 +1096,18 @@ public class FileUtils
     private static void doCopyFile( File source, File destination )
         throws IOException
     {
-        // Special-case for Windows read-only file attribute -- if it's set, unset it so that replacement of the 
-        // destination doesn't fail. Files.copy will apparently not REPLACE_EXISTING in that case, at least on Windows.
+        // If the source file is read-only on windows, that's probably not what we want in the destination. e.g.
+        // jetty won't start if the web.xml or jetty-web.xml is read-only, for some reason. So after we copy,
+        // clear the read-only flag.
+        boolean setWriteable = Os.isFamily(Os.FAMILY_WINDOWS) 
+                        && source.exists() 
+                        && !source.canWrite() 
+                        && Files.readAttributes(source.toPath(), DosFileAttributes.class)
+                                .isReadOnly();
+        
+        // Special-case for Windows read-only file attribute on the destination file -- if it's set, unset it so 
+        // that replacement of the destination doesn't fail. Files.copy will apparently not REPLACE_EXISTING in 
+        // that case, at least on Windows.
         if (Os.isFamily(Os.FAMILY_WINDOWS) 
                 && destination.exists() 
                 && !destination.canWrite() 
@@ -1114,6 +1124,10 @@ public class FileUtils
         else
         {
             doCopyFileUsingLegacyIO( source, destination );
+        }
+        
+        if (setWriteable) {
+            destination.setWritable(true);
         }
     }
 
