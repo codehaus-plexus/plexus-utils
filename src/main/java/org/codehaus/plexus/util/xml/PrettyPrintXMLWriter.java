@@ -304,7 +304,14 @@ public class PrettyPrintXMLWriter
         {
             finishTag();
 
-            write( "</" + elementStack.removeLast() + ">" );
+            // see issue #51: https://github.com/codehaus-plexus/plexus-utils/issues/51
+            // Rationale: removed the element into a variable first, and only THEN
+            // concatenate the string.
+            // (this avoids the string concatenation optimization bug detected in Java 7)
+            // TODO: change the below code to a more efficient expression when the library
+            // be ready to target Java 8.
+            String element = elementStack.removeLast();
+            write( "</" + element + ">" );
         }
 
         readyForNewLine = true;

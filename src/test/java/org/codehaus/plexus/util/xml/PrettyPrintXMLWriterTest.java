@@ -16,7 +16,12 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.util.NoSuchElementException;
 
 import javax.swing.text.html.HTML.Tag;
 
@@ -28,6 +33,7 @@ import junit.framework.TestCase;
  * Test of {@link PrettyPrintXMLWriter}
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
+ * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
  * @version $Id$
  */
 public class PrettyPrintXMLWriterTest
@@ -126,6 +132,75 @@ public class PrettyPrintXMLWriterTest
         writer.addAttribute( "class", "sect\nion" );
         writer.endElement(); // Tag.DIV
         assertEquals( "<div class=\"sect&#10;ion\"/>", w.toString() );
+    }
+
+    public void testendElementAlreadyClosed()
+    {
+        try
+        {
+            writer.startElement( Tag.DIV.toString() );
+            writer.addAttribute( "class", "someattribute" );
+            writer.endElement(); // Tag.DIV closed
+            writer.endElement(); // Tag.DIV already closed, and there is no other outer tag!
+            fail( "Should throw a NoSuchElementException" );
+        }
+        catch ( NoSuchElementException e )
+        {
+            assert ( true );
+        }
+    }
+
+    /**
+     * Issue #51: https://github.com/codehaus-plexus/plexus-utils/issues/51
+     * 
+     * Purpose: test if concatenation string optimization bug is present.
+     * 
+     * Target environment: Java 7 (u79 and u80 verified) running on Windows.
+     * 
+     * Detection strategy: Tries to build a big XML file (~750MB size) and with 
+     * many nested tags to force the JVM to trigger the concatenation string 
+     * optimization bug that throws a NoSuchElementException when calling 
+     * endElement() method.
+     * 
+     * @throws IOException if an I/O error occurs
+     */
+    public void testIssue51DetectJava7ConcatenationBug()
+        throws IOException
+    {
+        File dir = new File( "target/test-xml" );
+        if ( !dir.exists() )
+        {
+            assertTrue( "cannot create directory test-xml", dir.mkdir() );
+        }
+        File xmlFile = new File( dir, "test-issue-51.xml" );
+        OutputStreamWriter osw = new OutputStreamWriter( new FileOutputStream( xmlFile ), "UTF-8" );
+        writer = new PrettyPrintXMLWriter( osw );
+
+        int iterations = 20000;
+
+        try
+        {
+            for ( int i = 0; i < iterations; ++i )
+            {
+                writer.startElement( Tag.DIV.toString() + i );
+                writer.addAttribute( "class", "someattribute" );
+            }
+            for ( int i = 0; i < iterations; ++i )
+            {
+                writer.endElement(); // closes Tag.DIV + i
+            }
+        }
+        catch ( NoSuchElementException e )
+        {
+            fail( "Should not throw a NoSuchElementException" );
+        }
+        finally
+        {
+            if ( osw != null )
+            {
+                osw.close();
+            }
+        }
     }
 
     private void writeXhtmlHead( XMLWriter writer )
