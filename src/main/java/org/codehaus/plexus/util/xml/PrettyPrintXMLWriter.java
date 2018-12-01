@@ -310,8 +310,9 @@ public class PrettyPrintXMLWriter
             // (this avoids the string concatenation optimization bug detected in Java 7)
             // TODO: change the below code to a more efficient expression when the library
             // be ready to target Java 8.
-            String element = elementStack.removeLast();
-            write( "</" + element + ">" );
+            write( "</" );
+            write( elementStack.removeLast() );
+            write( ">" );
         }
 
         readyForNewLine = true;
