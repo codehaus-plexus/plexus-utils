@@ -103,7 +103,6 @@ public class CommandlineTest
             assertTrue( out.contains( "Apache Maven" ) );
             assertTrue( out.contains( "Maven home:" ) );
             assertTrue( out.contains( "Java version:" ) );
-            assertTrue( out.contains( "OS name:" ) );
         }
         catch ( Exception e )
         {
