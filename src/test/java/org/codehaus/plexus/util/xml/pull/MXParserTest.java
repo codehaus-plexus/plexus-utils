@@ -16,18 +16,22 @@ package org.codehaus.plexus.util.xml.pull;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.StringReader;
+
+import org.junit.Test;
 
 /**
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
  * @version $Id$
  */
 public class MXParserTest
-    extends TestCase
 {
+    @Test
     public void testHexadecimalEntities()
         throws Exception
     {
@@ -48,6 +52,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    @Test
     public void testDecimalEntities()
         throws Exception
     {
@@ -68,6 +73,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    @Test
     public void testPredefinedEntities()
         throws Exception
     {
@@ -88,6 +94,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    @Test
     public void testEntityReplacementMap()
         throws XmlPullParserException, IOException
     {
@@ -103,6 +110,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    @Test
     public void testCustomEntities()
         throws Exception
     {
@@ -127,6 +135,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    @Test
     public void testUnicodeEntities()
         throws Exception
     {
@@ -149,6 +158,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    @Test
     public void testProcessingInstruction()
         throws Exception
     {
@@ -163,6 +173,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    @Test
     public void testSubsequentProcessingInstructionShort()
         throws Exception
     {
@@ -184,6 +195,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    @Test
     public void testSubsequentProcessingInstructionMoreThan8k()
         throws Exception
     {
@@ -225,4 +237,136 @@ public class MXParserTest
         assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
+
+    public void testMalformedProcessingInstructionAfterTag()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        String input = "<project /><?>";
+
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+
+            assertEquals( XmlPullParser.END_TAG, parser.next() );
+
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.next() );
+
+            fail( "Should fail since it has an invalid Processing Instruction" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "processing instruction PITarget name not found" ) );
+        }
+    }
+
+    public void testMalformedProcessingInstructionBeforeTag()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        String input = "<?><project />";
+
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.next() );
+
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+
+            assertEquals( XmlPullParser.END_TAG, parser.next() );
+
+            fail( "Should fail since it has invalid PI" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "processing instruction PITarget name not found" ) );
+        }
+    }
+
+    public void testMalformedProcessingInstructionSpaceBeforeName()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append( "<? shouldhavenospace>" );
+        sb.append( "<project />" );
+
+        parser.setInput( new StringReader( sb.toString() ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.next() );
+
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+
+            assertEquals( XmlPullParser.END_TAG, parser.next() );
+
+            fail( "Should fail since it has invalid PI" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "processing instruction PITarget must be exactly after <? and not white space character" ) );
+        }
+    }
+
+    public void testMalformedProcessingInstructionNoClosingQuestionMark()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append( "<?shouldhavenospace>" );
+        sb.append( "<project />" );
+
+        parser.setInput( new StringReader( sb.toString() ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.next() );
+
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+
+            assertEquals( XmlPullParser.END_TAG, parser.next() );
+
+            fail( "Should fail since it has invalid PI" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 2 was not closed" ) );
+        }
+    }
+
+    public void testSubsequentMalformedProcessingInstructionNoClosingQuestionMark()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append( "<project />" );
+        sb.append( "<?shouldhavenospace>" );
+
+        parser.setInput( new StringReader( sb.toString() ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+
+            assertEquals( XmlPullParser.END_TAG, parser.next() );
+
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.next() );
+
+            fail( "Should fail since it has invalid PI" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 13 was not closed" ) );
+        }
+    }
+
 }

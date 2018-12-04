@@ -16,18 +16,22 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
-import org.codehaus.plexus.util.Os;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 
+import org.codehaus.plexus.util.Os;
+import org.junit.Test;
+
 @SuppressWarnings( { "JavaDoc", "deprecation" } )
 public class CommandLineUtilsTest
-    extends TestCase
 {
 
+    @Test
     public void testQuoteArguments()
     {
         try
@@ -59,6 +63,7 @@ public class CommandLineUtilsTest
     /**
      * Tests that case-insensitive environment variables are normalized to upper case.
      */
+    @Test
     public void testGetSystemEnvVarsCaseInsensitive()
         throws Exception
     {
@@ -73,6 +78,7 @@ public class CommandLineUtilsTest
     /**
      * Tests that environment variables on Windows are normalized to upper case. Does nothing on Unix platforms.
      */
+    @Test
     public void testGetSystemEnvVarsWindows()
         throws Exception
     {
@@ -91,6 +97,7 @@ public class CommandLineUtilsTest
     /**
      * Tests the splitting of a command line into distinct arguments.
      */
+    @Test
     public void testTranslateCommandline()
         throws Exception
     {

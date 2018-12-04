@@ -130,10 +130,10 @@ public abstract class AbstractScanner
     }
 
     /**
-     * Tests whether or not a given path matches the start of a given pattern up to the first "**".
-     * <p/>
-     * This is not a general purpose test and should only be used if you can live with false positives. For example,
-     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
+     * <p>Tests whether or not a given path matches the start of a given pattern up to the first "**".</p>
+     * 
+     * <p>This is not a general purpose test and should only be used if you can live with false positives. For example,
+     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.</p>
      *
      * @param pattern The pattern to match against. Must not be <code>null</code>.
      * @param str The path to match, as a String. Must not be <code>null</code>.
@@ -145,10 +145,10 @@ public abstract class AbstractScanner
     }
 
     /**
-     * Tests whether or not a given path matches the start of a given pattern up to the first "**".
-     * <p/>
-     * This is not a general purpose test and should only be used if you can live with false positives. For example,
-     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
+     * <p>Tests whether or not a given path matches the start of a given pattern up to the first "**".</p>
+     * 
+     * <p>This is not a general purpose test and should only be used if you can live with false positives. For example,
+     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.</p>
      *
      * @param pattern The pattern to match against. Must not be <code>null</code>.
      * @param str The path to match, as a String. Must not be <code>null</code>.
@@ -215,10 +215,10 @@ public abstract class AbstractScanner
     }
 
     /**
-     * Sets the list of include patterns to use. All '/' and '\' characters are replaced by
-     * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.
-     * <p/>
-     * When a pattern ends with a '/' or '\', "**" is appended.
+     * <p>Sets the list of include patterns to use. All '/' and '\' characters are replaced by
+     * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.</p>
+     * 
+     * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
      *            included. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
@@ -244,10 +244,10 @@ public abstract class AbstractScanner
     }
 
     /**
-     * Sets the list of exclude patterns to use. All '/' and '\' characters are replaced by
-     * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.
-     * <p/>
-     * When a pattern ends with a '/' or '\', "**" is appended.
+     * <p>Sets the list of exclude patterns to use. All '/' and '\' characters are replaced by
+     * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.</p>
+     * 
+     * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
      *            excluded. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.

@@ -97,7 +97,6 @@ public abstract class CommandLineUtils
      * @param timeoutInSeconds Positive integer to specify timeout, zero and negative integers for no timeout.
      * @return A return value, see {@link Process#exitValue()}
      * @throws CommandLineException or CommandLineTimeOutException if time out occurs
-     * @noinspection ThrowableResultOfMethodCallIgnored
      */
     public static int executeCommandLine( Commandline cl, InputStream systemIn, StreamConsumer systemOut,
                                           StreamConsumer systemErr, int timeoutInSeconds )
@@ -120,7 +119,6 @@ public abstract class CommandLineUtils
      *         must be called on this to be sure the forked process has terminated, no guarantees is made about any
      *         internal state before after the completion of the call statements
      * @throws CommandLineException or CommandLineTimeOutException if time out occurs
-     * @noinspection ThrowableResultOfMethodCallIgnored
      */
     public static CommandLineCallable executeCommandLineAsCallable( final Commandline cl, final InputStream systemIn,
                                                                     final StreamConsumer systemOut,

@@ -72,12 +72,12 @@ public class ClassMap
     }
 
     /**
-     * Find a Method using the methodKey provided.
-     * <p/>
-     * Look in the methodMap for an entry. If found, it'll either be a CACHE_MISS, in which case we simply give up, or
-     * it'll be a Method, in which case, we return it.
-     * <p/>
-     * If nothing is found, then we must actually go and introspect the method from the MethodMap.
+     * <p>Find a Method using the methodKey provided.</p>
+     * 
+     * <p>Look in the methodMap for an entry. If found, it'll either be a CACHE_MISS, in which case we simply give up, or
+     * it'll be a Method, in which case, we return it.</p>
+     * 
+     * <p>If nothing is found, then we must actually go and introspect the method from the MethodMap.</p>
      */
     public Method findMethod( String name, Object[] params )
         throws MethodMap.AmbiguousException

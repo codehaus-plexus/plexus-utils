@@ -139,7 +139,7 @@ public class Vertex
     /**
      * Indicates if given vertex has no child
      *
-     * @return <code>true</true> if this vertex has no child, <code>false</code> otherwise
+     * @return <code>true</code> if this vertex has no child, <code>false</code> otherwise
      */
     public boolean isLeaf()
     {
@@ -149,7 +149,7 @@ public class Vertex
     /**
      * Indicates if given vertex has no parent
      *
-     * @return <code>true</true> if this vertex has no parent, <code>false</code> otherwise
+     * @return <code>true</code> if this vertex has no parent, <code>false</code> otherwise
      */
     public boolean isRoot()
     {
@@ -159,7 +159,7 @@ public class Vertex
     /**
      * Indicates if there is at least one edee leading to or from given vertex
      *
-     * @return <code>true</true> if this vertex is connected with other vertex,<code>false</code> otherwise
+     * @return <code>true</code> if this vertex is connected with other vertex,<code>false</code> otherwise
      */
     public boolean isConnected()
     {

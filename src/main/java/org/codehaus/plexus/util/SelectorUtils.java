@@ -60,14 +60,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * <p>
- * This is a utility class used by selectors and DirectoryScanner. The functionality more properly belongs just to
+ * <p>This is a utility class used by selectors and DirectoryScanner. The functionality more properly belongs just to
  * selectors, but unfortunately DirectoryScanner exposed these as protected methods. Thus we have to support any
- * subclasses of DirectoryScanner that may access these methods.
- * </p>
- * <p>
- * This is a Singleton.
- * </p>
+ * subclasses of DirectoryScanner that may access these methods.</p>
+ * 
+ * <p>This is a Singleton.</p>
  *
  * @author Arnout J. Kuiper <a href="mailto:ajkuiper@wxs.nl">ajkuiper@wxs.nl</a>
  * @author Magesh Umasankar
@@ -104,10 +101,10 @@ public final class SelectorUtils
     }
 
     /**
-     * Tests whether or not a given path matches the start of a given pattern up to the first "**".
-     * <p/>
-     * This is not a general purpose test and should only be used if you can live with false positives. For example,
-     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
+     * <p>Tests whether or not a given path matches the start of a given pattern up to the first "**".</p>
+     * 
+     * <p>This is not a general purpose test and should only be used if you can live with false positives. For example,
+     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.</p>
      *
      * @param pattern The pattern to match against. Must not be <code>null</code>.
      * @param str The path to match, as a String. Must not be <code>null</code>.
@@ -119,10 +116,10 @@ public final class SelectorUtils
     }
 
     /**
-     * Tests whether or not a given path matches the start of a given pattern up to the first "**".
-     * <p/>
-     * This is not a general purpose test and should only be used if you can live with false positives. For example,
-     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.
+     * <p>Tests whether or not a given path matches the start of a given pattern up to the first "**".</p>
+     * 
+     * <p>This is not a general purpose test and should only be used if you can live with false positives. For example,
+     * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.</p>
      *
      * @param pattern The pattern to match against. Must not be <code>null</code>.
      * @param str The path to match, as a String. Must not be <code>null</code>.

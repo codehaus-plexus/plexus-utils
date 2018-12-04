@@ -52,7 +52,9 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -62,32 +64,16 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * @author <a href="mailto:pj@thoughtworks.com">Paul Julius</a>
  */
 public class StreamPumperTest
-    extends TestCase
 {
-    private String lineSeparator;
+    private String lineSeparator = System.lineSeparator();
 
-    /**
-     * @param testName
-     */
-    public StreamPumperTest( String testName )
-    {
-        super( testName );
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    public void setUp()
-        throws Exception
-    {
-        super.setUp();
-        lineSeparator = System.getProperty( "line.separator" );
-    }
-
+    @Test
     public void testPumping()
     {
         String line1 = "line1";
@@ -104,6 +90,7 @@ public class StreamPumperTest
         assertTrue( consumer.wasLineConsumed( line2, 1000 ) );
     }
 
+    @Test
     public void testPumpingWithPrintWriter()
     {
         String inputString = "This a test string";
@@ -118,6 +105,7 @@ public class StreamPumperTest
         pumper.close();
     }
 
+    @Test
     public void testPumperReadsInputStreamUntilEndEvenIfConsumerFails()
     {
         // the number of bytes generated should surely exceed the read buffer used by the pumper
@@ -233,6 +221,7 @@ public class StreamPumperTest
         }
     }
 
+    @Test
     public void testEnabled()
     {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( "AB\nCE\nEF".getBytes() );
@@ -242,6 +231,7 @@ public class StreamPumperTest
         assertEquals( 3, streamConsumer.lines.size() );
     }
 
+    @Test
     public void testDisabled()
     {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( "AB\nCE\nEF".getBytes() );

@@ -157,7 +157,7 @@ public class StringUtils
 
     /**
      * <p>
-     * Checks if a String is non <code>null</code> and is not empty (<code>length > 0</code>).
+     * Checks if a String is non <code>null</code> and is not empty (<code>length &gt; 0</code>).
      * </p>
      *
      * @param str the String to check
@@ -1263,7 +1263,7 @@ public class StringUtils
      * @param str String to repeat
      * @param repeat number of times to repeat str
      * @return String with repeated String
-     * @throws NegativeArraySizeException if <code>repeat < 0</code>
+     * @throws NegativeArraySizeException if <code>repeat &lt; 0</code>
      * @throws NullPointerException if str is <code>null</code>
      */
     public static String repeat( String str, int repeat )
@@ -2199,7 +2199,7 @@ public class StringUtils
      * Compare two strings, and return the portion where they differ. (More precisely, return the remainder of the
      * second string, starting from where it's different from the first.)
      * <p>
-     * E.g. strdiff("i am a machine", "i am a robot") -> "robot"
+     * E.g. strdiff("i am a machine", "i am a robot") -&gt; "robot"
      *
      * @return the portion of s2 where it differs from s1; returns the empty string ("") if they are equal
      **/
@@ -2216,7 +2216,7 @@ public class StringUtils
     /**
      * Compare two strings, and return the index at which the strings begin to differ.
      * <p>
-     * E.g. strdiff("i am a machine", "i am a robot") -> 7
+     * E.g. strdiff("i am a machine", "i am a robot") -&gt; 7
      * </p>
      *
      * @return the index where s2 and s1 begin to differ; -1 if they are equal

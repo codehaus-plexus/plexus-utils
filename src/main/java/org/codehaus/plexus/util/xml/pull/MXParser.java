@@ -582,7 +582,9 @@ public class MXParser
         }
     }
 
-    /** Unknown properties are <string>always</strong> returned as false */
+    /** 
+     * Unknown properties are <strong>always</strong> returned as false 
+     */
     public boolean getFeature( String name )
     {
         if ( name == null )
@@ -3012,6 +3014,7 @@ public class MXParser
 
         try
         {
+            boolean seenPITarget = false;
             boolean seenQ = false;
             char ch = more();
             if ( isS( ch ) )
@@ -3026,6 +3029,11 @@ public class MXParser
 
                 if ( ch == '?' )
                 {
+                    if ( !seenPITarget )
+                    {
+                        throw new XmlPullParserException( "processing instruction PITarget name not found", this,
+                                                          null );
+                    }
                     seenQ = true;
                 }
                 else if ( ch == '>' )
@@ -3034,7 +3042,18 @@ public class MXParser
                     {
                         break; // found end sequence!!!!
                     }
-                    seenQ = false;
+
+                    if ( !seenPITarget )
+                    {
+                        throw new XmlPullParserException( "processing instruction PITarget name not found", this,
+                                                          null );
+                    }
+                    else
+                    {
+                        // seenPITarget && !seenQ
+                        throw new XmlPullParserException( "processing instruction started on line " + curLine
+                            + " and column " + curColumn + " was not closed", this, null );
+                    }
                 }
                 else
                 {
@@ -3073,6 +3092,7 @@ public class MXParser
                             }
                         }
                     }
+
                     seenQ = false;
                 }
                 if ( normalizeIgnorableWS )
@@ -3122,6 +3142,7 @@ public class MXParser
                         normalizedCR = false;
                     }
                 }
+                seenPITarget = true;
                 ch = more();
             }
         }

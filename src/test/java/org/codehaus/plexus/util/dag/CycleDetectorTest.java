@@ -16,18 +16,24 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
+
+import org.junit.Test;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
  */
 public class CycleDetectorTest
-    extends TestCase
 {
 
+    @Test
     public void testCycyleDetection()
     {
         // No cycle

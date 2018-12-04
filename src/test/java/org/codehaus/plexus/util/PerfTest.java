@@ -1,7 +1,5 @@
 package org.codehaus.plexus.util;
 
-import junit.framework.TestCase;
-
 /*
  * Copyright 2011 The Codehaus Foundation.
  *
@@ -18,14 +16,15 @@ import junit.framework.TestCase;
  * limitations under the License.
  */
 
-public class PerfTest
-    extends TestCase
-{
+import org.junit.Test;
 
+public class PerfTest
+{
     String src = "012345578901234556789012345678901234456789012345678901234567890";
 
     private final int oops = 100;
 
+    @Test
     public void testSubString()
     {
         StringBuilder res = new StringBuilder();
@@ -41,6 +40,7 @@ public class PerfTest
         System.out.println( "i = " + i );
     }
 
+    @Test
     public void testResDir()
     {
         StringBuilder res = new StringBuilder();

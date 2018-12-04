@@ -19,6 +19,10 @@ package org.codehaus.plexus.util.xml;
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /** @author Jason van Zyl */
 public class Xpp3DomUtils
@@ -71,24 +75,43 @@ public class Xpp3DomUtils
     }
 
     /**
-     * Merges one DOM into another, given a specific algorithm and possible override points for that algorithm. The
-     * algorithm is as follows: 1. if the recessive DOM is null, there is nothing to do...return. 2. Determine whether
-     * the dominant node will suppress the recessive one (flag=mergeSelf). A. retrieve the 'combine.self' attribute on
-     * the dominant node, and try to match against 'override'... if it matches 'override', then set mergeSelf ==
-     * false...the dominant node suppresses the recessive one completely. B. otherwise, use the default value for
-     * mergeSelf, which is true...this is the same as specifying 'combine.self' == 'merge' as an attribute of the
-     * dominant root node. 3. If mergeSelf == true A. if the dominant root node's value is empty, set it to the
-     * recessive root node's value B. For each attribute in the recessive root node which is not set in the dominant
-     * root node, set it. C. Determine whether children from the recessive DOM will be merged or appended to the
-     * dominant DOM as siblings (flag=mergeChildren). i. if childMergeOverride is set (non-null), use that value
-     * (true/false) ii. retrieve the 'combine.children' attribute on the dominant node, and try to match against
-     * 'append'...if it matches 'append', then set mergeChildren == false...the recessive children will be appended as
-     * siblings of the dominant children. iii. otherwise, use the default value for mergeChildren, which is true...this
-     * is the same as specifying 'combine.children' == 'merge' as an attribute on the dominant root node. D. Iterate
-     * through the recessive children, and: i. if 'combine.id' is set and there is a corresponding dominant child
-     * (matched by value of 'combine.id'), merge the two. ii. if mergeChildren == true and there is a corresponding
-     * dominant child (matched by element name), merge the two. iii. otherwise, add the recessive child as a new child
-     * on the dominant root node.
+     * Merges one DOM into another, given a specific algorithm and possible override points for that algorithm.<p>
+     * The algorithm is as follows:
+     * <ol>
+     * <li> if the recessive DOM is null, there is nothing to do... return.</li>
+     * <li> Determine whether the dominant node will suppress the recessive one (flag=mergeSelf).
+     *   <ol type="A">
+     *   <li> retrieve the 'combine.self' attribute on the dominant node, and try to match against 'override'...
+     *        if it matches 'override', then set mergeSelf == false...the dominant node suppresses the recessive one
+     *        completely.</li>
+     *   <li> otherwise, use the default value for mergeSelf, which is true...this is the same as specifying
+     *        'combine.self' == 'merge' as an attribute of the dominant root node.</li>
+     *   </ol></li>
+     * <li> If mergeSelf == true
+     *   <ol type="A">
+     *   <li> if the dominant root node's value is empty, set it to the recessive root node's value</li>
+     *   <li> For each attribute in the recessive root node which is not set in the dominant root node, set it.</li>
+     *   <li> Determine whether children from the recessive DOM will be merged or appended to the dominant DOM as
+     *        siblings (flag=mergeChildren).
+     *     <ol type="i">
+     *     <li> if childMergeOverride is set (non-null), use that value (true/false)</li>
+     *     <li> retrieve the 'combine.children' attribute on the dominant node, and try to match against
+     *          'append'...</li>
+     *     <li> if it matches 'append', then set mergeChildren == false...the recessive children will be appended as
+     *          siblings of the dominant children.</li>
+     *     <li> otherwise, use the default value for mergeChildren, which is true...this is the same as specifying
+     *          'combine.children' == 'merge' as an attribute on the dominant root node.</li>
+     *     </ol></li>
+     *   <li> Iterate through the recessive children, and:
+     *     <ol type="i">
+     *     <li> if 'combine.id' is set and there is a corresponding dominant child (matched by value of 'combine.id'),
+     *          merge the two.</li>
+     *     <li> if mergeChildren == true and there is a corresponding dominant child (matched by element name),
+     *          merge the two.</li>
+     *     <li> otherwise, add the recessive child as a new child on the dominant root node.</li>
+     *     </ol></li>
+     *   </ol></li>
+     * </ol>
      */
     private static void mergeIntoXpp3Dom( Xpp3Dom dominant, Xpp3Dom recessive, Boolean childMergeOverride )
     {
@@ -109,9 +132,10 @@ public class Xpp3DomUtils
 
         if ( mergeSelf )
         {
-            if ( isEmpty( dominant.getValue() ) )
+            if ( isEmpty( dominant.getValue() ) && !isEmpty( recessive.getValue() ) )
             {
                 dominant.setValue( recessive.getValue() );
+                dominant.setInputLocation( recessive.getInputLocation() );
             }
 
             String[] recessiveAttrs = recessive.getAttributeNames();

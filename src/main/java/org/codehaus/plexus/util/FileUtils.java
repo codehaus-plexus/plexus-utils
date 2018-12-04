@@ -81,12 +81,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class provides basic facilities for manipulating files and file paths.
- * <p/>
+ * <p>This class provides basic facilities for manipulating files and file paths.</p>
+ * 
  * <h3>Path-related methods</h3>
- * <p/>
- * <p>
- * Methods exist to retrieve the components of a typical file path. For example
+ * 
+ * <p>Methods exist to retrieve the components of a typical file path. For example
  * <code>/www/hosted/mysite/index.html</code>, can be broken into:
  * <ul>
  * <li><code>/www/hosted/mysite/</code> -- retrievable through {@link #getPath}</li>
@@ -94,21 +93,19 @@ import java.util.Random;
  * <li><code>/www/hosted/mysite/index</code> -- retrievable through {@link #removeExtension}</li>
  * <li><code>html</code> -- retrievable through {@link #getExtension}</li>
  * </ul>
- * There are also methods to {@link #catPath concatenate two paths}, {@link #resolveFile resolve a path relative to a
- * File} and {@link #normalize} a path.
- * </p>
- * <p/>
+ * <p>There are also methods to {@link #catPath concatenate two paths}, {@link #resolveFile resolve a path relative to a
+ * File} and {@link #normalize} a path.</p>
+
  * <h3>File-related methods</h3>
- * <p/>
- * There are methods to create a {@link #toFile File from a URL}, copy a {@link #copyFileToDirectory File to a
+ * 
+ * <p>There are methods to create a {@link #toFile File from a URL}, copy a {@link #copyFileToDirectory File to a
  * directory}, copy a {@link #copyFile File to another File}, copy a {@link #copyURLToFile URL's contents to a File}, as
- * well as methods to {@link #deleteDirectory(File) delete} and {@link #cleanDirectory(File) clean} a directory.
- * </p>
- * <p/>
- * Common {@link java.io.File} manipulation routines.
- * <p/>
- * Taken from the commons-utils repo. Also code from Alexandria's FileUtils. And from Avalon Excalibur's IO. And from
- * Ant.
+ * well as methods to {@link #deleteDirectory(File) delete} and {@link #cleanDirectory(File) clean} a directory.</p>
+ * 
+ * <p>Common {@link java.io.File} manipulation routines.</p>
+ * 
+ * <p>Taken from the commons-utils repo. Also code from Alexandria's FileUtils. And from Avalon Excalibur's IO. And from
+ * Ant.</p>
  *
  * @author <a href="mailto:burton@relativity.yi.org">Kevin A. Burton</A>
  * @author <a href="mailto:sanders@codehaus.org">Scott Sanders</a>
@@ -601,11 +598,11 @@ public class FileUtils
     }
 
     /**
-     * Given a directory and an array of extensions return an array of compliant files.
-     * <p/>
-     * TODO Should an ignore list be passed in? TODO Should a recurse flag be passed in?
-     * <p/>
-     * The given extensions should be like "java" and not like ".java"
+     * <p>Given a directory and an array of extensions return an array of compliant files.</p>
+     * 
+     * <p>TODO Should an ignore list be passed in? TODO Should a recurse flag be passed in?</p>
+     * 
+     * <p>The given extensions should be like "java" and not like ".java"</p>
      *
      * @param directory The path of the directory.
      * @param extensions an array of expected extensions.
@@ -828,9 +825,9 @@ public class FileUtils
      * Remove extension from filename. ie
      * 
      * <pre>
-     * foo.txt    --> foo
-     * a\b\c.jpg --> a\b\c
-     * a\b\c     --> a\b\c
+     * foo.txt    --&gt; foo
+     * a\b\c.jpg  --&gt; a\b\c
+     * a\b\c      --&gt; a\b\c
      * </pre>
      *
      * @param filename the path of the file
@@ -853,9 +850,9 @@ public class FileUtils
      * Get extension from filename. ie
      * 
      * <pre>
-     * foo.txt    --> "txt"
-     * a\b\c.jpg --> "jpg"
-     * a\b\c     --> ""
+     * foo.txt    --&gt; "txt"
+     * a\b\c.jpg  --&gt; "jpg"
+     * a\b\c      --&gt; ""
      * </pre>
      *
      * @param filename the path of the file
@@ -870,8 +867,8 @@ public class FileUtils
      * Remove path from filename. Equivalent to the unix command <code>basename</code> ie.
      * 
      * <pre>
-     * a/b/c.txt --> c.txt
-     * a.txt     --> a.txt
+     * a/b/c.txt --&gt; c.txt
+     * a.txt     --&gt; a.txt
      * </pre>
      *
      * @param filepath the path of the file
@@ -886,8 +883,8 @@ public class FileUtils
      * Remove path from filename. ie.
      * 
      * <pre>
-     * a/b/c.txt --> c.txt
-     * a.txt     --> a.txt
+     * a/b/c.txt --&gt; c.txt
+     * a.txt     --&gt; a.txt
      * </pre>
      *
      * @param filepath the path of the file
@@ -910,8 +907,8 @@ public class FileUtils
      * Get path from filename. Roughly equivalent to the unix command <code>dirname</code>. ie.
      * 
      * <pre>
-     * a/b/c.txt --> a/b
-     * a.txt     --> ""
+     * a/b/c.txt --&gt; a/b
+     * a.txt     --&gt; ""
      * </pre>
      *
      * @param filepath the filepath
@@ -926,8 +923,8 @@ public class FileUtils
      * Get path from filename. ie.
      * 
      * <pre>
-     * a/b/c.txt --> a/b
-     * a.txt     --> ""
+     * a/b/c.txt --&gt; a/b
+     * a.txt     --&gt; ""
      * </pre>
      *
      * @param filepath the filepath
@@ -1259,13 +1256,13 @@ public class FileUtils
      * root. Eg:
      * 
      * <pre>
-     * /foo//               -->     /foo/
-     * /foo/./              -->     /foo/
-     * /foo/../bar          -->     /bar
-     * /foo/../bar/         -->     /bar/
-     * /foo/../bar/../baz   -->     /baz
-     * //foo//./bar         -->     /foo/bar
-     * /../                 -->     null
+     * /foo//               --&gt;     /foo/
+     * /foo/./              --&gt;     /foo/
+     * /foo/../bar          --&gt;     /bar
+     * /foo/../bar/         --&gt;     /bar/
+     * /foo/../bar/../baz   --&gt;     /baz
+     * //foo//./bar         --&gt;     /foo/bar
+     * /../                 --&gt;     null
      * </pre>
      *
      * @param path the path to normalize
@@ -1317,14 +1314,15 @@ public class FileUtils
     }
 
     /**
-     * Will concatenate 2 paths. Paths with <code>..</code> will be properly handled.
-     * <p>
-     * Eg.,<br />
-     * <code>/a/b/c</code> + <code>d</code> = <code>/a/b/d</code><br />
-     * <code>/a/b/c</code> + <code>../d</code> = <code>/a/d</code><br />
-     * </p>
-     * <p/>
-     * Thieved from Tomcat sources...
+     * <p>Will concatenate 2 paths. Paths with <code>..</code> will be properly handled.</p>
+     * 
+     * Eg.,
+     * <pre>
+     * /a/b/c + d = /a/b/d
+     * /a/b/c + ../d = /a/d
+     * </pre>
+
+     * <p>Thieved from Tomcat sources...</p>
      *
      * @param lookupPath a path
      * @param path the path to concatenate
@@ -2019,8 +2017,8 @@ public class FileUtils
     }
 
     /**
-     * Copies a entire directory layout : no files will be copied only directories
-     * <p/>
+     * <p>Copies a entire directory layout : no files will be copied only directories</p>
+     * 
      * Note:
      * <ul>
      * <li>It will include empty directories.
@@ -2095,8 +2093,8 @@ public class FileUtils
     }
 
     /**
-     * Copies a entire directory structure.
-     * <p/>
+     * <p>Copies a entire directory structure.</p>
+     * 
      * Note:
      * <ul>
      * <li>It will include empty directories.
@@ -2114,8 +2112,8 @@ public class FileUtils
     }
 
     /**
-     * Copies an entire directory structure but only source files with timestamp later than the destinations'.
-     * <p/>
+     * <p>Copies an entire directory structure but only source files with timestamp later than the destinations'.</p>
+     * 
      * Note:
      * <ul>
      * <li>It will include empty directories.
@@ -2205,12 +2203,10 @@ public class FileUtils
     }
 
     /**
-     * Renames a file, even if that involves crossing file system boundaries.
-     * <p/>
-     * <p>
-     * This will remove <code>to</code> (if it exists), ensure that <code>to</code>'s parent directory exists and move
-     * <code>from</code>, which involves deleting <code>from</code> as well.
-     * </p>
+     * <p>Renames a file, even if that involves crossing file system boundaries.</p>
+     * 
+     * <p>This will remove <code>to</code> (if it exists), ensure that <code>to</code>'s parent directory exists and move
+     * <code>from</code>, which involves deleting <code>from</code> as well.</p>
      *
      * @param from the file to move
      * @param to the new file name
@@ -2242,22 +2238,17 @@ public class FileUtils
     }
 
     /**
-     * Create a temporary file in a given directory.
-     * <p/>
-     * <p>
-     * The file denoted by the returned abstract pathname did not exist before this method was invoked, any subsequent
-     * invocation of this method will yield a different file name.
-     * </p>
-     * <p/>
-     * The filename is prefixNNNNNsuffix where NNNN is a random number
-     * </p>
-     * <p>
-     * This method is different to {@link File#createTempFile(String, String, File)} of JDK 1.2 as it doesn't create the
-     * file itself. It uses the location pointed to by java.io.tmpdir when the parentDir attribute is null.
-     * </p>
-     * <p>
-     * To delete automatically the file created by this method, use the {@link File#deleteOnExit()} method.
-     * </p>
+     * <p>Create a temporary file in a given directory.</p>
+     * 
+     * <p>The file denoted by the returned abstract pathname did not exist before this method was invoked, any subsequent
+     * invocation of this method will yield a different file name.</p>
+     * 
+     * <p>The filename is prefixNNNNNsuffix where NNNN is a random number</p>
+     * 
+     * <p>This method is different to {@link File#createTempFile(String, String, File)} of JDK 1.2 as it doesn't create the
+     * file itself. It uses the location pointed to by java.io.tmpdir when the parentDir attribute is null.</p>
+     * 
+     * <p>To delete automatically the file created by this method, use the {@link File#deleteOnExit()} method.</p>
      *
      * @param prefix prefix before the random number
      * @param suffix file extension; include the '.'
@@ -2418,7 +2409,7 @@ public class FileUtils
 
     /**
      * For Windows OS, check if the file name contains any of the following characters:
-     * <code>":", "*", "?", "\"", "<", ">", "|"</code>
+     * <code>":", "*", "?", "\"", "&lt;", "&gt;", "|"</code>
      *
      * @param f not null file
      * @return <code>false</code> if the file path contains any of forbidden Windows characters, <code>true</code> if

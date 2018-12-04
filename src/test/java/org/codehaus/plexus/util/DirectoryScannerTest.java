@@ -16,14 +16,26 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
 
 /**
  * Base class for testcases doing tests with files.
@@ -33,8 +45,12 @@ import java.util.List;
 public class DirectoryScannerTest
     extends FileBasedTestCase
 {
+    @Rule
+    public TestName name = new TestName();
+    
     private static String testDir = getTestDirectory().getPath();
 
+    @Test
     public void testCrossPlatformIncludesString()
         throws IOException, URISyntaxException
     {
@@ -59,6 +75,7 @@ public class DirectoryScannerTest
         assertEquals( 1, files.length );
     }
 
+    @Test
     public void testCrossPlatformExcludesString()
         throws IOException, URISyntaxException
     {
@@ -109,7 +126,49 @@ public class DirectoryScannerTest
         this.createFile( new File( testDir + "/scanner4.dat" ), 0 );
         this.createFile( new File( testDir + "/scanner5.dat" ), 0 );
     }
+    
+    /**
+     * Check if 'src/test/resources/symlinks/src/sym*' test files (start with 'sym') exist and are symlinks.<br>
+     * On some OS (like Windows 10), the 'git clone' requires to be executed with admin permissions and the
+     * 'core.symlinks=true' git option.
+     * 
+     * @return true If files here and symlinks, false otherwise
+     */
+    private boolean checkTestFilesSymlinks()
+    {
+        File symlinksDirectory = new File( "src/test/resources/symlinks/src" );
+        try
+        {
+            List<String> symlinks =
+                FileUtils.getFileAndDirectoryNames( symlinksDirectory, "sym*", null, true, true, true, true );
+            if ( symlinks.isEmpty() )
+            {
+                throw new IOException( "Symlinks files/directories are not present" );
+            }
+            for ( String symLink : symlinks )
+            {
+                if ( !Files.isSymbolicLink( Paths.get( symLink ) ) )
+                {
+                    throw new IOException( String.format( "Path is not a symlink: %s", symLink ) );
+                }
+            }
+            return true;
+        }
+        catch ( IOException e )
+        {
+            System.err.println( String.format( "The unit test '%s.%s' will be skipped, reason: %s",
+                                               this.getClass().getSimpleName(), name.getMethodName(),
+                                               e.getMessage() ) );
+            System.out.println( String.format( "This test requires symlinks files in '%s' directory.",
+                                               symlinksDirectory.getPath() ) );
+            System.out.println( "On some OS (like Windows 10), files are present only if the clone/checkout is done"
+                + " in administrator mode, and correct (symlinks and not flat file/directory)"
+                + " if symlinks option are used (for git: git clone -c core.symlinks=true [url])" );
+            return false;
+        }
+    }
 
+    @Test
     public void testGeneral()
         throws IOException
     {
@@ -127,6 +186,7 @@ public class DirectoryScannerTest
 
     }
 
+    @Test
     public void testIncludesExcludesWithWhiteSpaces()
         throws IOException
     {
@@ -144,8 +204,11 @@ public class DirectoryScannerTest
         assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
     }
 
+    @Test
     public void testFollowSymlinksFalse()
     {
+        assumeTrue( checkTestFilesSymlinks() );
+        
         DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
         ds.setFollowSymlinks( false );
@@ -175,8 +238,11 @@ public class DirectoryScannerTest
         assertTrue( included.contains( "symLinkToFileOnTheOutside" ) );
     }
 
+    @Test
     public void testFollowSymlinks()
     {
+        assumeTrue( checkTestFilesSymlinks() );
+        
         DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
         ds.setFollowSymlinks( true );
@@ -211,6 +277,7 @@ public class DirectoryScannerTest
             + File.separator + "file1.dat" ), 0 );
     }
 
+    @Test
     public void testDirectoriesWithHyphens()
         throws IOException
     {
@@ -229,6 +296,7 @@ public class DirectoryScannerTest
         assertEquals( "Wrong number of results.", 3, files.length );
     }
 
+    @Test
     public void testAntExcludesOverrideIncludes()
         throws IOException
     {
@@ -263,6 +331,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testAntExcludesOverrideIncludesWithExplicitAntPrefix()
         throws IOException
     {
@@ -298,6 +367,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testRegexIncludeWithExcludedPrefixDirs()
         throws IOException
     {
@@ -328,6 +398,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testRegexExcludeWithNegativeLookahead()
         throws IOException
     {
@@ -366,6 +437,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testRegexWithSlashInsideCharacterClass()
         throws IOException
     {
@@ -405,14 +477,11 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testIsSymbolicLink()
         throws IOException
     {
-        // TODO: Uncomment when PR #25 merged
-        // if ( !checkTestFilesSymlinks() )
-        // {
-        // return;
-        // }
+        assumeTrue( checkTestFilesSymlinks() );
 
         final File directory = new File( "src/test/resources/symlinks/src" );
         DirectoryScanner ds = new DirectoryScanner();
@@ -422,14 +491,11 @@ public class DirectoryScannerTest
         assertFalse( ds.isSymbolicLink( directory, "aRegularDir" ) );
     }
 
+    @Test
     public void testIsParentSymbolicLink()
         throws IOException
     {
-        // TODO: Uncomment when PR #25 merged
-        // if ( !checkTestFilesSymlinks() )
-        // {
-        // return;
-        // }
+        assumeTrue( checkTestFilesSymlinks() );
 
         final File directory = new File( "src/test/resources/symlinks/src" );
         DirectoryScanner ds = new DirectoryScanner();

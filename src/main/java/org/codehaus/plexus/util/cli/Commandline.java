@@ -67,21 +67,17 @@ import org.codehaus.plexus.util.cli.shell.Shell;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
 /**
- * <p/>
- * Commandline objects help handling command lines specifying processes to execute.
- * </p>
- * <p/>
- * The class can be used to define a command line as nested elements or as a helper to define a command line by an
- * application.
- * </p>
- * <p/>
+ * <p>Commandline objects help handling command lines specifying processes to execute.</p>
+ * 
+ * <p>The class can be used to define a command line as nested elements or as a helper to define a command line by an
+ * application.</p>
+ * 
  * <code>
  * &lt;someelement&gt;<br>
  * &nbsp;&nbsp;&lt;acommandline executable="/executable/to/run"&gt;<br>
@@ -91,11 +87,9 @@ import java.util.Vector;
  * &nbsp;&nbsp;&lt;/acommandline&gt;<br>
  * &lt;/someelement&gt;<br>
  * </code>
- * </p>
- * <p/>
- * The element <code>someelement</code> must provide a method <code>createAcommandline</code> which returns an instance
- * of this class.
- * </p>
+ * 
+ * <p>The element <code>someelement</code> must provide a method <code>createAcommandline</code> which returns an instance
+ * of this class.</p>
  *
  * @author thomas.haas@softwired-inc.com
  * @author <a href="mailto:stefan.bodewig@epost.de">Stefan Bodewig</a>
@@ -241,11 +235,9 @@ public class Commandline
         }
 
         /**
-         * Return the number of arguments that preceded this marker.
-         * <p/>
-         * <p>
-         * The name of the executable - if set - is counted as the very first argument.
-         * </p>
+         * <p>Return the number of arguments that preceded this marker.</p>
+         * 
+         * <p>The name of the executable - if set - is counted as the very first argument.</p>
          */
         public int getPosition()
         {
@@ -288,12 +280,10 @@ public class Commandline
     }
 
     /**
-     * Creates an argument object.
-     * <p/>
-     * <p>
-     * Each commandline object has at most one instance of the argument class. This method calls
-     * <code>this.createArgument(false)</code>.
-     * </p>
+     * <p>Creates an argument object.</p>
+     * 
+     * <p>Each commandline object has at most one instance of the argument class. This method calls
+     * <code>this.createArgument(false)</code>.</p>
      *
      * @return the argument object.
      * @see #createArgument(boolean)
@@ -305,11 +295,9 @@ public class Commandline
     }
 
     /**
-     * Creates an argument object and adds it to our list of args.
-     * <p/>
-     * <p>
-     * Each commandline object has at most one instance of the argument class.
-     * </p>
+     * <p>Creates an argument object and adds it to our list of args.</p>
+     * 
+     * <p>Each commandline object has at most one instance of the argument class.</p>
      *
      * @param insertAtStart if true, the argument is inserted at the beginning of the list of args, otherwise it is
      *            appended.
@@ -330,12 +318,10 @@ public class Commandline
     }
 
     /**
-     * Creates an argument object.
-     * <p/>
-     * <p>
-     * Each commandline object has at most one instance of the argument class. This method calls
-     * <code>this.createArgument(false)</code>.
-     * </p>
+     * <p>Creates an argument object.</p>
+     * 
+     * <p>Each commandline object has at most one instance of the argument class. This method calls
+     * <code>this.createArgument(false)</code>.</p>
      *
      * @return the argument object.
      * @see #createArgument(boolean)
@@ -346,11 +332,9 @@ public class Commandline
     }
 
     /**
-     * Creates an argument object and adds it to our list of args.
-     * <p/>
-     * <p>
-     * Each commandline object has at most one instance of the argument class.
-     * </p>
+     * <p>Creates an argument object and adds it to our list of args.</p>
+     * 
+     * <p>Each commandline object has at most one instance of the argument class.</p>
      *
      * @param insertAtStart if true, the argument is inserted at the beginning of the list of args, otherwise it is
      *            appended.
@@ -372,7 +356,6 @@ public class Commandline
     /**
      * Adds an argument object to our list of args.
      *
-     * @return the argument object.
      * @see #addArg(Arg,boolean)
      */
     public void addArg( Arg argument )
@@ -495,7 +478,7 @@ public class Commandline
     }
 
     /**
-     * Returns the executable and all defined arguments.<br/>
+     * Returns the executable and all defined arguments.<br>
      * For Windows Family, {@link Commandline#getShellCommandline()} is returned
      */
     public String[] getCommandline()
@@ -594,10 +577,9 @@ public class Commandline
     }
 
     /**
-     * Return a marker.
-     * <p/>
-     * <p>
-     * This marker can be used to locate a position on the commandline - to insert something for example - when all
+     * <p>Return a marker.</p>
+     * 
+     * <p>This marker can be used to locate a position on the commandline - to insert something for example - when all
      * parameters have been set.
      * </p>
      */

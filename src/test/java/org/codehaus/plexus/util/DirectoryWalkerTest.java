@@ -16,13 +16,17 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 public class DirectoryWalkerTest
-    extends TestCase
 {
+    @Test
     public void testDirectoryWalk()
     {
         DirectoryWalker walker = new DirectoryWalker();

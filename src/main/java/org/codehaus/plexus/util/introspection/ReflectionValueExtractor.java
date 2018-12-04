@@ -141,16 +141,15 @@ public class ReflectionValueExtractor
     }
 
     /**
-     * <p>
-     * The implementation supports indexed, nested and mapped properties.
-     * </p>
+     * <p>The implementation supports indexed, nested and mapped properties.</p>
+     * 
      * <ul>
      * <li>nested properties should be defined by a dot, i.e. "user.address.street"</li>
      * <li>indexed properties (java.util.List or array instance) should be contains <code>(\\w+)\\[(\\d+)\\]</code>
      * pattern, i.e. "user.addresses[1].street"</li>
      * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e.
      * "user.addresses(myAddress).street"</li>
-     * <ul>
+     * </ul>
      * 
      * @param expression not null expression
      * @param root not null object
@@ -164,16 +163,15 @@ public class ReflectionValueExtractor
     }
 
     /**
-     * <p>
-     * The implementation supports indexed, nested and mapped properties.
-     * </p>
+     * <p>The implementation supports indexed, nested and mapped properties.</p>
+     * 
      * <ul>
      * <li>nested properties should be defined by a dot, i.e. "user.address.street"</li>
      * <li>indexed properties (java.util.List or array instance) should be contains <code>(\\w+)\\[(\\d+)\\]</code>
      * pattern, i.e. "user.addresses[1].street"</li>
      * <li>mapped properties should be contains <code>(\\w+)\\((.+)\\)</code> pattern, i.e.
      * "user.addresses(myAddress).street"</li>
-     * <ul>
+     * </ul>
      * 
      * @param expression not null expression
      * @param root not null object

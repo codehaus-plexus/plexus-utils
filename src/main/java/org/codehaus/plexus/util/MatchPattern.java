@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * Describes a match target for SelectorUtils.
- * <p/>
- * Significantly more efficient than using strings, since re-evaluation and re-tokenizing is avoided.
+ * <p>Describes a match target for SelectorUtils.</p>
+ * 
+ * <p>Significantly more efficient than using strings, since re-evaluation and re-tokenizing is avoided.</p>
  *
  * @author Kristian Rosenvold
  */

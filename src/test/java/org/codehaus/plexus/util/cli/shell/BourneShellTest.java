@@ -1,5 +1,6 @@
 package org.codehaus.plexus.util.cli.shell;
 
+
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -16,15 +17,17 @@ package org.codehaus.plexus.util.cli.shell;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
-import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.cli.Commandline;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.codehaus.plexus.util.StringUtils;
+import org.codehaus.plexus.util.cli.Commandline;
+import org.junit.Test;
+
 public class BourneShellTest
-    extends TestCase
 {
 
     protected Shell newShell()
@@ -32,6 +35,7 @@ public class BourneShellTest
         return new BourneShell();
     }
 
+    @Test
     public void testQuoteWorkingDirectoryAndExecutable()
     {
         Shell sh = newShell();
@@ -44,6 +48,7 @@ public class BourneShellTest
         assertEquals( "/bin/sh -c cd '/usr/local/bin' && 'chmod'", executable );
     }
 
+    @Test
     public void testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes()
     {
         Shell sh = newShell();
@@ -56,6 +61,7 @@ public class BourneShellTest
         assertEquals( "/bin/sh -c cd '/usr/local/'\"'\"'something else'\"'\"'' && 'chmod'", executable );
     }
 
+    @Test
     public void testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes_BackslashFileSep()
     {
         Shell sh = newShell();
@@ -68,6 +74,7 @@ public class BourneShellTest
         assertEquals( "/bin/sh -c cd '\\usr\\local\\\'\"'\"'something else'\"'\"'' && 'chmod'", executable );
     }
 
+    @Test
     public void testPreserveSingleQuotesOnArgument()
     {
         Shell sh = newShell();
@@ -84,6 +91,7 @@ public class BourneShellTest
         assertTrue( cli.endsWith( "''\"'\"'some arg with spaces'\"'\"''" ) );
     }
 
+    @Test
     public void testAddSingleQuotesOnArgumentWithSpaces()
     {
         Shell sh = newShell();
@@ -100,6 +108,7 @@ public class BourneShellTest
         assertTrue( cli.endsWith( "\'" + args[0] + "\'" ) );
     }
 
+    @Test
     public void testEscapeSingleQuotesOnArgument()
     {
         Shell sh = newShell();
@@ -117,6 +126,7 @@ public class BourneShellTest
                       shellCommandLine.get( shellCommandLine.size() - 1 ) );
     }
 
+    @Test
     public void testArgumentsWithsemicolon()
     {
 
@@ -173,6 +183,7 @@ public class BourneShellTest
         assertEquals( "\"--password ;password\"", lines[3] );
     }
 
+    @Test
     public void testBourneShellQuotingCharacters()
         throws Exception
     {

@@ -16,6 +16,10 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,8 +35,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Arrays;
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * This is used to test IOUtil for correctness. The following checks are performed:
@@ -48,7 +52,6 @@ import junit.framework.TestCase;
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
  */
 public final class IOUtilTest
-    extends TestCase
 {
     /*
      * Note: this is not particularly beautiful code. A better way to check for flush and close status would be to
@@ -62,6 +65,7 @@ public final class IOUtilTest
 
     private File testFile;
 
+    @Before
     public void setUp()
     {
         try
@@ -86,11 +90,6 @@ public final class IOUtilTest
     {
         testFile.delete();
         testDirectory.delete();
-    }
-
-    public IOUtilTest( String name )
-    {
-        super( name );
     }
 
     private void createFile( File file, long size )
@@ -156,6 +155,7 @@ public final class IOUtilTest
         is.close();
     }
 
+    @Test
     public void testInputStreamToOutputStream()
         throws Exception
     {
@@ -174,6 +174,7 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    @Test
     public void testInputStreamToWriter()
         throws Exception
     {
@@ -193,6 +194,7 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    @Test
     public void testInputStreamToString()
         throws Exception
     {
@@ -204,6 +206,7 @@ public final class IOUtilTest
         fin.close();
     }
 
+    @Test
     public void testReaderToOutputStream()
         throws Exception
     {
@@ -225,6 +228,7 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    @Test
     public void testReaderToWriter()
         throws Exception
     {
@@ -241,6 +245,7 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    @Test
     public void testReaderToString()
         throws Exception
     {
@@ -251,6 +256,7 @@ public final class IOUtilTest
         fin.close();
     }
 
+    @Test
     public void testStringToOutputStream()
         throws Exception
     {
@@ -274,6 +280,7 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    @Test
     public void testStringToWriter()
         throws Exception
     {
@@ -293,6 +300,7 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    @Test
     public void testInputStreamToByteArray()
         throws Exception
     {
@@ -305,6 +313,7 @@ public final class IOUtilTest
         fin.close();
     }
 
+    @Test
     public void testStringToByteArray()
         throws Exception
     {
@@ -318,6 +327,7 @@ public final class IOUtilTest
         fin.close();
     }
 
+    @Test
     public void testByteArrayToWriter()
         throws Exception
     {
@@ -336,6 +346,7 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    @Test
     public void testByteArrayToString()
         throws Exception
     {
@@ -347,6 +358,7 @@ public final class IOUtilTest
         fin.close();
     }
 
+    @Test
     public void testByteArrayToOutputStream()
         throws Exception
     {
@@ -372,6 +384,7 @@ public final class IOUtilTest
     // Test closeXXX()
     // ----------------------------------------------------------------------
 
+    @Test
     public void testCloseInputStream()
         throws Exception
     {
@@ -384,6 +397,7 @@ public final class IOUtilTest
         assertTrue( inputStream.closed );
     }
 
+    @Test
     public void testCloseOutputStream()
         throws Exception
     {
@@ -396,6 +410,7 @@ public final class IOUtilTest
         assertTrue( outputStream.closed );
     }
 
+    @Test
     public void testCloseReader()
         throws Exception
     {
@@ -408,6 +423,7 @@ public final class IOUtilTest
         assertTrue( reader.closed );
     }
 
+    @Test
     public void testCloseWriter()
         throws Exception
     {
@@ -522,7 +538,7 @@ public final class IOUtilTest
         }
         catch ( Throwable t )
         {
-            throw new AssertionFailedError( "The copy() method closed the stream " + "when it shouldn't have. "
+            throw new Exception( "The copy() method closed the stream " + "when it shouldn't have. "
                 + t.getMessage() );
         }
     }
@@ -536,7 +552,7 @@ public final class IOUtilTest
         }
         catch ( Throwable t )
         {
-            throw new AssertionFailedError( "The copy() method closed the stream " + "when it shouldn't have. "
+            throw new Exception( "The copy() method closed the stream " + "when it shouldn't have. "
                 + t.getMessage() );
         }
     }

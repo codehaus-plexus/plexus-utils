@@ -16,18 +16,20 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import java.io.StringWriter;
+
+import org.junit.Test;
 
 /**
  * @author Edwin Punzalan
  */
 public class Xpp3DomWriterTest
-    extends TestCase
 {
     private static final String LS = System.getProperty( "line.separator" );
 
+    @Test
     public void testWriter()
     {
         StringWriter writer = new StringWriter();
@@ -37,6 +39,7 @@ public class Xpp3DomWriterTest
         assertEquals( "Check if output matches", createExpectedXML( true ), writer.toString() );
     }
 
+    @Test
     public void testWriterNoEscape()
     {
         StringWriter writer = new StringWriter();

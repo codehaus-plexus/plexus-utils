@@ -44,15 +44,13 @@ import java.util.TreeMap;
  * <li>if the enclosed string is <em>not</em> found in the keyword Map, then no substitution is made; the token text is
  * passed through unaltered.</li>
  * </ul>
- * <p>
- * A token in the incoming character stream may be <em>escaped</em> by prepending an "escape sequence" which is
+ * 
+ * <p>A token in the incoming character stream may be <em>escaped</em> by prepending an "escape sequence" which is
  * specified to the constructor. An escaped token is passed through as written, with the escape sequence removed. This
- * allows things which would look like tokens to be read literally rather than interpolated.
- * </p>
+ * allows things which would look like tokens to be read literally rather than interpolated.</p>
  * 
  * @author jdcasey Created on Feb 3, 2005
  * @see InterpolationFilterReader
- * @see org.codehaus.plexus.interpolation
  */
 public class LineOrientedInterpolatingReader
     extends FilterReader

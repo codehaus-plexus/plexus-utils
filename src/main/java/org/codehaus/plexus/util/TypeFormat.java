@@ -14,7 +14,6 @@ package org.codehaus.plexus.util;
  * Methods from this utility class <b>do not create temporary objects</b> and are typically faster than standard library
  * methods (e.g {@link #parseDouble} is up to 15x faster than <code>Double.parseDouble</code>).
  * </p>
- * <p>
  * For class instances, formatting is typically performed using specialized <code>java.text.Format</code>
  * (<code>Locale</code> sensitive) and/or using conventional methods (class sensitive). For example:
  * 
@@ -27,7 +26,6 @@ package org.codehaus.plexus.util;
  *         }
  *     }
  * </pre>
- * </p>
  * <p>
  * <i> This class is <b>public domain</b> (not copyrighted).</i>
  * </p>

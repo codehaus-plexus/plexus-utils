@@ -16,9 +16,12 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
+
+import org.junit.Test;
+
 import java.util.HashMap;
 
 /**
@@ -29,22 +32,17 @@ import java.util.HashMap;
  * @see org.codehaus.plexus.util.ReflectionUtils
  */
 public final class ReflectionUtilsTest
-    extends TestCase
 {
     public ReflectionUtilsTestClass testClass = new ReflectionUtilsTestClass();
 
-    protected void setUp()
-        throws Exception
-    {
-
-    }
-
+    @Test
     public void testSimpleVariableAccess()
         throws IllegalAccessException
     {
         assertEquals( "woohoo", (String) ReflectionUtils.getValueIncludingSuperclasses( "myString", testClass ) );
     }
 
+    @Test
     public void testComplexVariableAccess()
         throws IllegalAccessException
     {
@@ -57,6 +55,7 @@ public final class ReflectionUtilsTest
 
     }
 
+    @Test
     public void testSuperClassVariableAccess()
         throws IllegalAccessException
     {
@@ -64,6 +63,7 @@ public final class ReflectionUtilsTest
                       (String) ReflectionUtils.getValueIncludingSuperclasses( "mySuperString", testClass ) );
     }
 
+    @Test
     public void testSettingVariableValue()
         throws IllegalAccessException
     {
