@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -493,6 +494,113 @@ public class MXParserTest
         catch ( XmlPullParserException ex )
         {
             assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 13 was not closed" ) );
+        }
+    }
+
+    public void testMalformedXMLRootElement()
+        throws Exception
+    {
+        String input = "<Y";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+
+            fail( "Should throw EOFException" );
+        }
+        catch ( EOFException e )
+        {
+            assertTrue( e.getMessage().contains( "no more data available - expected the opening tag <Y...>" ) );
+        }
+    }
+
+    public void testMalformedXMLRootElement2()
+        throws Exception
+    {
+        String input = "<hello";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+
+            fail( "Should throw EOFException" );
+        }
+        catch ( EOFException e )
+        {
+            assertTrue( e.getMessage().contains( "no more data available - expected the opening tag <hello...>" ) );
+        }
+    }
+
+    public void testMalformedXMLRootElement3()
+        throws Exception
+    {
+        String input = "<hello><how";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+
+            fail( "Should throw EOFException" );
+        }
+        catch ( EOFException e )
+        {
+            assertTrue( e.getMessage().contains( "no more data available - expected the opening tag <how...>" ) );
+        }
+    }
+
+    public void testMalformedXMLRootElement4()
+        throws Exception
+    {
+        String input = "<hello>some text<how";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.TEXT, parser.nextToken() );
+            assertEquals( "some text", parser.getText() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+
+            fail( "Should throw EOFException" );
+        }
+        catch ( EOFException e )
+        {
+            assertTrue( e.getMessage().contains( "no more data available - expected the opening tag <how...>" ) );
+        }
+    }
+
+    public void testMalformedXMLRootElement5()
+        throws Exception
+    {
+        String input = "<hello>some text</hello";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.TEXT, parser.nextToken() );
+            assertEquals( "some text", parser.getText() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+
+            fail( "Should throw EOFException" );
+        }
+        catch ( EOFException e )
+        {
+            assertTrue( e.getMessage().contains( "no more data available - expected end tag </hello> to close start tag <hello>" ) );
         }
     }
 

@@ -3711,31 +3711,57 @@ public class MXParser
                     StringBuilder expectedTagStack = new StringBuilder();
                     if ( depth > 0 )
                     {
-                        // final char[] cbuf = elRawName[depth];
-                        // final String startname = new String(cbuf, 0, elRawNameEnd[depth]);
-                        expectedTagStack.append( " - expected end tag" );
-                        if ( depth > 1 )
+                        if ( elRawName == null || elRawName[depth] == null )
                         {
-                            expectedTagStack.append( "s" ); // more than one end tag
+                            String tagName = new String( buf, posStart + 1, pos - posStart - 1 );
+                            expectedTagStack.append( " - expected the opening tag <" ).append( tagName ).append( "...>" );
                         }
-                        expectedTagStack.append( " " );
-                        for ( int i = depth; i > 0; i-- )
+                        else
                         {
-                            String tagName = new String( elRawName[i], 0, elRawNameEnd[i] );
-                            expectedTagStack.append( "</" ).append( tagName ).append( '>' );
-                        }
-                        expectedTagStack.append( " to close" );
-                        for ( int i = depth; i > 0; i-- )
-                        {
-                            if ( i != depth )
+                            // final char[] cbuf = elRawName[depth];
+                            // final String startname = new String(cbuf, 0, elRawNameEnd[depth]);
+                            expectedTagStack.append( " - expected end tag" );
+                            if ( depth > 1 )
                             {
-                                expectedTagStack.append( " and" ); // more than one end tag
+                                expectedTagStack.append( "s" ); // more than one end tag
                             }
-                            String tagName = new String( elRawName[i], 0, elRawNameEnd[i] );
-                            expectedTagStack.append( " start tag <" ).append( tagName ).append( ">" );
-                            expectedTagStack.append( " from line " ).append( elRawNameLine[i] );
+                            expectedTagStack.append( " " );
+
+                            for ( int i = depth; i > 0; i-- )
+                            {
+                                if ( elRawName == null || elRawName[i] == null )
+                                {
+                                    String tagName = new String( buf, posStart + 1, pos - posStart - 1 );
+                                    expectedTagStack.append( " - expected the opening tag <" ).append( tagName ).append( "...>" );
+                                }
+                                else
+                                {
+                                    String tagName = new String( elRawName[i], 0, elRawNameEnd[i] );
+                                    expectedTagStack.append( "</" ).append( tagName ).append( '>' );
+                                }
+                            }
+                            expectedTagStack.append( " to close" );
+                            for ( int i = depth; i > 0; i-- )
+                            {
+                                if ( i != depth )
+                                {
+                                    expectedTagStack.append( " and" ); // more than one end tag
+                                }
+                                if ( elRawName == null || elRawName[i] == null )
+                                {
+                                    String tagName = new String( buf, posStart + 1, pos - posStart - 1 );
+                                    expectedTagStack.append( " start tag <" ).append( tagName ).append( ">" );
+                                    expectedTagStack.append( " from line " ).append( elRawNameLine[i] );
+                                }
+                                else
+                                {
+                                String tagName = new String( elRawName[i], 0, elRawNameEnd[i] );
+                                expectedTagStack.append( " start tag <" ).append( tagName ).append( ">" );
+                                expectedTagStack.append( " from line " ).append( elRawNameLine[i] );
+                                }
+                            }
+                            expectedTagStack.append( ", parser stopped on" );
                         }
-                        expectedTagStack.append( ", parser stopped on" );
                     }
                     throw new EOFException( "no more data available" + expectedTagStack.toString()
                         + getPositionDescription() );
