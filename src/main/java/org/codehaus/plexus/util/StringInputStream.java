@@ -62,7 +62,7 @@ import java.io.StringReader;
 
 /**
  * Wraps a String as an InputStream. Note that data will be lost for characters not in ISO Latin 1, as a simple
- * char->byte mapping is assumed.
+ * char-&gt;byte mapping is assumed.
  *
  * @author <a href="mailto:umagesh@codehaus.org">Magesh Umasankar</a>
  * @deprecated As of version 1.5.2 this class should no longer be used because it does not properly handle character

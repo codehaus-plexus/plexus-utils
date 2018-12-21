@@ -68,7 +68,7 @@ public interface XmlSerializer
     /**
      * Look up the value of a property. The property name is any fully-qualified URI. I
      * <p>
-     * <strong>NOTE:</strong> unknown properties are <string>always</strong> returned as null
+     * <strong>NOTE:</strong> unknown properties are <strong>always</strong> returned as null
      *
      * @param name The name of property to be retrieved.
      * @return The value of named property.

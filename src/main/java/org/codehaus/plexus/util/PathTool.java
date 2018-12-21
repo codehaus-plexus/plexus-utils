@@ -30,13 +30,13 @@ import java.util.StringTokenizer;
 public class PathTool
 {
     /**
-     * Determines the relative path of a filename from a base directory. This method is useful in building relative
+     * <p>Determines the relative path of a filename from a base directory. This method is useful in building relative
      * links within pages of a web site. It provides similar functionality to Anakia's <code>$relativePath</code>
      * context variable. The arguments to this method may contain either forward or backward slashes as file separators.
      * The relative path returned is formed using forward slashes as it is expected this path is to be used as a link in
-     * a web page (again mimicking Anakia's behavior).
-     * <p/>
-     * This method is thread-safe. <br/>
+     * a web page (again mimicking Anakia's behavior).<p>
+     * 
+     * <p>This method is thread-safe.</p>
      * 
      * <pre>
      * PathTool.getRelativePath( null, null )                                   = ""
@@ -85,13 +85,13 @@ public class PathTool
     }
 
     /**
-     * Determines the relative path of a filename. This method is useful in building relative links within pages of a
+     * <p>Determines the relative path of a filename. This method is useful in building relative links within pages of a
      * web site. It provides similar functionality to Anakia's <code>$relativePath</code> context variable. The argument
      * to this method may contain either forward or backward slashes as file separators. The relative path returned is
      * formed using forward slashes as it is expected this path is to be used as a link in a web page (again mimicking
-     * Anakia's behavior).
-     * <p/>
-     * This method is thread-safe.
+     * Anakia's behavior).</p>
+     * 
+     * <p>This method is thread-safe.</p>
      *
      * @param filename The filename to be parsed.
      * @return The relative path of the filename. This value is not terminated with a forward slash. A zero-length
@@ -123,11 +123,11 @@ public class PathTool
     }
 
     /**
-     * Determines the directory component of a filename. This is useful within DVSL templates when used in conjunction
+     * <p>Determines the directory component of a filename. This is useful within DVSL templates when used in conjunction
      * with the DVSL's <code>$context.getAppValue("infilename")</code> to get the current directory that is currently
-     * being processed.
-     * <p/>
-     * This method is thread-safe. <br/>
+     * being processed.</p>
+     * 
+     * <p>This method is thread-safe.</p>
      * 
      * <pre>
      * PathTool.getDirectoryComponent( null )                                   = ""
@@ -159,7 +159,7 @@ public class PathTool
     }
 
     /**
-     * Calculates the appropriate link given the preferred link and the relativePath of the document. <br/>
+     * Calculates the appropriate link given the preferred link and the relativePath of the document.
      * 
      * <pre>
      * PathTool.calculateLink( "/index.html", "../.." )                                        = "../../index.html"
@@ -227,7 +227,7 @@ public class PathTool
     }
 
     /**
-     * This method can calculate the relative path between two paths on a web site. <br/>
+     * This method can calculate the relative path between two paths on a web site.
      * 
      * <pre>
      * PathTool.getRelativeWebPath( null, null )                                          = ""
@@ -261,7 +261,7 @@ public class PathTool
     }
 
     /**
-     * This method can calculate the relative path between two paths on a file system. <br/>
+     * This method can calculate the relative path between two paths on a file system.
      * 
      * <pre>
      * PathTool.getRelativeFilePath( null, null )                                   = ""

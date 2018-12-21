@@ -34,23 +34,22 @@ import java.util.regex.Matcher;
 import java.text.MessageFormat;
 
 /**
- * Character stream that handles (or at least attempts to) all the necessary Voodo to figure out the charset encoding of
- * the XML document within the stream.
- * <p>
- * IMPORTANT: This class is not related in any way to the org.xml.sax.XMLReader. This one IS a character stream.
- * <p>
- * All this has to be done without consuming characters from the stream, if not the XML parser will not recognized the
+ * <p>Character stream that handles (or at least attempts to) all the necessary Voodo to figure out the charset encoding of
+ * the XML document within the stream.</p>
+ * 
+ * <p>IMPORTANT: This class is not related in any way to the org.xml.sax.XMLReader. This one IS a character stream.</p>
+ * 
+ * <p>All this has to be done without consuming characters from the stream, if not the XML parser will not recognized the
  * document as a valid XML. This is not 100% true, but it's close enough (UTF-8 BOM is not handled by all parsers right
- * now, XmlReader handles it and things work in all parsers).
- * <p>
- * The XmlReader class handles the charset encoding of XML documents in Files, raw streams and HTTP streams by offering
- * a wide set of constructors.
- * <P>
- * By default the charset encoding detection is lenient, the constructor with the lenient flag can be used for an script
+ * now, XmlReader handles it and things work in all parsers).</p>
+ * 
+ * <p>The XmlReader class handles the charset encoding of XML documents in Files, raw streams and HTTP streams by offering
+ * a wide set of constructors.</p>
+ * 
+ * <p>By default the charset encoding detection is lenient, the constructor with the lenient flag can be used for an script
  * (following HTTP MIME and XML specifications). All this is nicely explained by Mark Pilgrim in his blog,
  * <a href="http://diveintomark.org/archives/2004/02/13/xml-media-types"> Determining the character encoding of a
- * feed</a>.
- * <p>
+ * feed</a>.</p>
  *
  * @author Alejandro Abdelnur
  * @version revision 1.17 taken on 26/06/2007 from Rome (see
@@ -84,13 +83,12 @@ public class XmlReader
     private String _defaultEncoding;
 
     /**
-     * Sets the default encoding to use if none is set in HTTP content-type, XML prolog and the rules based on
-     * content-type are not adequate.
-     * <p/>
-     * If it is set to NULL the content-type based rules are used.
-     * <p/>
-     * By default it is NULL.
-     * <p/>
+     * <p>Sets the default encoding to use if none is set in HTTP content-type, XML prolog and the rules based on
+     * content-type are not adequate.</p>
+     * 
+     * <p>If it is set to NULL the content-type based rules are used.</p>
+     * 
+     * <p>By default it is NULL.</p>
      *
      * @param encoding charset encoding to default to.
      */
@@ -100,11 +98,10 @@ public class XmlReader
     }
 
     /**
-     * Returns the default encoding to use if none is set in HTTP content-type, XML prolog and the rules based on
-     * content-type are not adequate.
-     * <p/>
-     * If it is NULL the content-type based rules are used.
-     * <p/>
+     * <p>Returns the default encoding to use if none is set in HTTP content-type, XML prolog and the rules based on
+     * content-type are not adequate.</p>
+     * 
+     * <p>If it is NULL the content-type based rules are used.</p>
      *
      * @return the default encoding to use.
      */

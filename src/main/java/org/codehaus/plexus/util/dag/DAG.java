@@ -28,7 +28,7 @@ import java.util.Set;
  *
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
- * @todo this class should be renamed from DAG to Dag
+ * TODO this class should be renamed from DAG to Dag
  */
 public class DAG
     implements Cloneable, Serializable
@@ -223,7 +223,7 @@ public class DAG
     /**
      * Indicates if there is at least one edge leading to or from vertex of given label
      *
-     * @return <code>true</true> if this vertex is connected with other vertex,<code>false</code> otherwise
+     * @return <code>true</code> if this vertex is connected with other vertex,<code>false</code> otherwise
      */
     public boolean isConnected( final String label )
     {

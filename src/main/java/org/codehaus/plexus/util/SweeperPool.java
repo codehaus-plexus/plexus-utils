@@ -53,22 +53,19 @@ public class SweeperPool
     // private Vector used;
 
     /**
-     * <p>
      * There are a number of settings to control how the pool operates.
      * <ul>
      * <li><code>minSize</code> - this is the size the pool is trimmed to</li>
      * <li><code>triggerSize</code> - this determines if the pool is trimmed when the sweeper runs. If the pool size is
-     * greater or equal than this value then the pool is trimmed to <code>minSize</code>.</lie>
+     * greater or equal than this value then the pool is trimmed to <code>minSize</code>.</li>
      * <li><code>maxSize</code> - if the pool has reached this size, any objects added are immediately disposed. If the
      * pool is this size when the sweeper runs, then the pool is also trimmed to <code>minSize</code> irrespective of
      * the triggerSize.</li>
      * <li><code>sweepInterval</code> - how often the sweeper runs. Is actually the time since the sweeper last finished
      * a pass. 0 if the sweeper should not run.</li>
      * </ul>
-     * </p>
-     * <p>
-     * Any value less than 0 is automatically converted to 0
-     * </p>
+
+     * <p>Any value less than 0 is automatically converted to 0</p>
      */
     public SweeperPool( int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize )
     {

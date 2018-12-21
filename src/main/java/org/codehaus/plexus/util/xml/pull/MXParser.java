@@ -582,7 +582,9 @@ public class MXParser
         }
     }
 
-    /** Unknown properties are <string>always</strong> returned as false */
+    /** 
+     * Unknown properties are <strong>always</strong> returned as false 
+     */
     public boolean getFeature( String name )
     {
         if ( name == null )

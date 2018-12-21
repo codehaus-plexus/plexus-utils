@@ -127,7 +127,6 @@ public class WriterFactory
      *
      * @param out not null output stream.
      * @return a writer instance for the output stream using the default platform charset.
-     * @throws IOException if any.
      * @see Charset#defaultCharset()
      */
     public static Writer newPlatformWriter( OutputStream out )

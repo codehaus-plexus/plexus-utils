@@ -24,13 +24,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>
  * Class that abstracts the Shell functionality, with subclasses for shells that behave particularly, like
  * <ul>
  * <li><code>command.com</code></li>
  * <li><code>cmd.exe</code></li>
  * </ul>
- * </p>
  *
  * @author <a href="mailto:carlos@apache.org">Carlos Sanchez</a>
  * @since 1.2

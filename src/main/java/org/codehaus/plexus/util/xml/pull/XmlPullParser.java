@@ -66,8 +66,8 @@ import java.io.Reader;
  * import java.io.StringReader;
  *
  * import org.xmlpull.v1.XmlPullParser;
- * import org.xmlpull.v1.<a href="XmlPullParserException.html">XmlPullParserException.html</a>;
- * import org.xmlpull.v1.<a href="XmlPullParserFactory.html">XmlPullParserFactory</a>;
+ * import org.xmlpull.v1.XmlPullParserException;
+ * import org.xmlpull.v1.XmlPullParserFactory;
  *
  * public class SimpleXmlPullApp
  * {
@@ -79,7 +79,7 @@ import java.io.Reader;
  *         factory.setNamespaceAware(true);
  *         XmlPullParser xpp = factory.newPullParser();
  *
- *         xpp.<a href="#setInput">setInput</a>( new StringReader ( "&lt;foo>Hello World!&lt;/foo>" ) );
+ *         xpp.setInput( new StringReader ( "&lt;foo%gt;Hello World!&lt;/foo&gt;" ) );
  *         int eventType = xpp.getEventType();
  *         while (eventType != xpp.END_DOCUMENT) {
  *          if(eventType == xpp.START_DOCUMENT) {
@@ -87,11 +87,11 @@ import java.io.Reader;
  *          } else if(eventType == xpp.END_DOCUMENT) {
  *              System.out.println("End document");
  *          } else if(eventType == xpp.START_TAG) {
- *              System.out.println("Start tag "+xpp.<a href="#getName()">getName()</a>);
+ *              System.out.println("Start tag "+xpp.getName());
  *          } else if(eventType == xpp.END_TAG) {
  *              System.out.println("End tag "+xpp.getName());
  *          } else if(eventType == xpp.TEXT) {
- *              System.out.println("Text "+xpp.<a href="#getText()">getText()</a>);
+ *              System.out.println("Text "+xpp.getText());
  *          }
  *          eventType = xpp.next();
  *         }
@@ -107,7 +107,7 @@ import java.io.Reader;
  * Text Hello World!
  * End tag foo
  * </pre>
- * <p>
+ * 
  * For more details on API usage, please refer to the quick Introduction available at
  * <a href="http://www.xmlpull.org">http://www.xmlpull.org</a>
  *
@@ -140,7 +140,7 @@ public interface XmlPullParser
 
     /**
      * Signalize that parser is at the very beginning of the document and nothing was read yet. This event type can only
-     * be observed by calling getEvent() before the first call to next(), nextToken, or nextTag()</a>).
+     * be observed by calling getEvent() before the first call to next(), nextToken, or nextTag()).
      *
      * @see #next
      * @see #nextToken
@@ -457,7 +457,7 @@ public interface XmlPullParser
      *       XmlPullParser pp = ...
      *       int nsStart = pp.getNamespaceCount(pp.getDepth()-1);
      *       int nsEnd = pp.getNamespaceCount(pp.getDepth());
-     *       for (int i = nsStart; i < nsEnd; i++) {
+     *       for (int i = nsStart; i &gt; nsEnd; i++) {
      *          String prefix = pp.getNamespacePrefix(i);
      *          String ns = pp.getNamespaceUri(i);
      *           // ...
@@ -501,7 +501,7 @@ public interface XmlPullParser
      * This method is a convenience method for
      *
      * <pre>
-     * for ( int i = getNamespaceCount( getDepth() ) - 1; i >= 0; i-- )
+     * for ( int i = getNamespaceCount( getDepth() ) - 1; i &gt;= 0; i-- )
      * {
      *     if ( getNamespacePrefix( i ).equals( prefix ) )
      *     {
@@ -531,7 +531,7 @@ public interface XmlPullParser
      *
      * <pre>
      * &lt;!-- outside --&gt;     0
-     * &lt;root>                  1
+     * &lt;root&gt;                  1
      *   sometext                 1
      *     &lt;foobar&gt;         2
      *     &lt;/foobar&gt;        2
@@ -763,8 +763,8 @@ public interface XmlPullParser
      * exception mus be thrown if entity reference can not be expanded). If element content is empty (content is "")
      * then no TEXT event will be reported.
      * <p>
-     * <b>NOTE:</b> empty element (such as &lt;tag/>) will be reported with two separate events: START_TAG, END_TAG - it
-     * must be so to preserve parsing equivalency of empty element to &lt;tag>&lt;/tag>. (see isEmptyElementTag ())
+     * <b>NOTE:</b> empty element (such as &lt;tag/&gt;) will be reported with two separate events: START_TAG, END_TAG - it
+     * must be so to preserve parsing equivalency of empty element to &lt;tag&gt;&lt;/tag&gt;. (see isEmptyElementTag ())
      *
      * @see #isEmptyElementTag
      * @see #START_TAG
@@ -795,9 +795,9 @@ public interface XmlPullParser
      * <dt>END_DOCUMENT
      * <dd>null
      * <dt>START_TAG
-     * <dd>null unless FEATURE_XML_ROUNDTRIP enabled and then returns XML tag, ex: &lt;tag attr='val'>
+     * <dd>null unless FEATURE_XML_ROUNDTRIP enabled and then returns XML tag, ex: &lt;tag attr='val'&gt;
      * <dt>END_TAG
-     * <dd>null unless FEATURE_XML_ROUNDTRIP id enabled and then returns XML tag, ex: &lt;/tag>
+     * <dd>null unless FEATURE_XML_ROUNDTRIP id enabled and then returns XML tag, ex: &lt;/tag&gt;
      * <dt>TEXT
      * <dd>return element content. <br>
      * Note: that element content may be delivered in multiple consecutive TEXT events.
@@ -807,13 +807,13 @@ public interface XmlPullParser
      * optional. <br>
      * Note: that element content may be delivered in multiple consecutive IGNORABLE_WHITESPACE events.
      * <dt>CDSECT
-     * <dd>return text <em>inside</em> CDATA (ex. 'fo&lt;o' from &lt;!CDATA[fo&lt;o]]>)
+     * <dd>return text <em>inside</em> CDATA (ex. 'fo&lt;o' from &lt;!CDATA[fo&lt;o]]&gt;)
      * <dt>PROCESSING_INSTRUCTION
-     * <dd>if FEATURE_XML_ROUNDTRIP is true return exact PI content ex: 'pi foo' from &lt;?pi foo?> otherwise it may be
-     * exact PI content or concatenation of PI target, space and data so for example for &lt;?target data?> string
+     * <dd>if FEATURE_XML_ROUNDTRIP is true return exact PI content ex: 'pi foo' from &lt;?pi foo?&gt; otherwise it may be
+     * exact PI content or concatenation of PI target, space and data so for example for &lt;?target data?&gt; string
      * &quot;target data&quot; may be returned if FEATURE_XML_ROUNDTRIP is false.
      * <dt>COMMENT
-     * <dd>return comment content ex. 'foo bar' from &lt;!--foo bar-->
+     * <dd>return comment content ex. 'foo bar' from &lt;!--foo bar--&gt;
      * <dt>ENTITY_REF
      * <dd>getText() MUST return entity replacement text if PROCESS_DOCDECL is false otherwise getText() MAY return
      * null, additionally getTextCharacters() MUST return entity name (for example 'entity_name' for &amp;entity_name;).
@@ -831,14 +831,14 @@ public interface XmlPullParser
      * 
      * <pre>
      * &quot; titlepage SYSTEM "http://www.foo.bar/dtds/typo.dtd"
-     * [&lt;!ENTITY % active.links "INCLUDE">]&quot;
+     * [&lt;!ENTITY % active.links "INCLUDE"&gt;]&quot;
      * </pre>
      * <p>
      * for input document that contained:
      * 
      * <pre>
      * &lt;!DOCTYPE titlepage SYSTEM "http://www.foo.bar/dtds/typo.dtd"
-     * [&lt;!ENTITY % active.links "INCLUDE">]>
+     * [&lt;!ENTITY % active.links "INCLUDE"&gt;]&gt;
      * </pre>
      * 
      * otherwise if FEATURE_XML_ROUNDTRIP is false and PROCESS_DOCDECL is true then what is returned is undefined (it
@@ -904,7 +904,7 @@ public interface XmlPullParser
      *   p.requireEvent(p.START_TAG, "", "tag");
      *   String content = p.nextText();
      *   p.requireEvent(p.END_TAG, "", "tag");
-     * </pre>
+     * </pre></li></ol>
      * 
      * This function together with nextTag make it very easy to parse XML that has no mixed content.
      * <p>

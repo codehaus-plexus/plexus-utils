@@ -156,8 +156,8 @@ public class Os
     /**
      * Sets the desired OS family type
      * 
-     * @param f The OS family type desired<br />
-     *            Possible values:<br />
+     * @param f The OS family type desired<br>
+     *            Possible values:
      *            <ul>
      *            <li>dos</li>
      *            <li>mac</li>
