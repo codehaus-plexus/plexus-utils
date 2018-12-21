@@ -16,18 +16,20 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
  */
 public class TopologicalSorterTest
-    extends TestCase
 {
+    @Test
     public void testDfs()
         throws CycleDetectedException
     {

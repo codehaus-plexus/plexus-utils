@@ -16,19 +16,23 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.junit.Test;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
  */
 public class DAGTest
-    extends TestCase
 {
+    @Test
     public void testDAG()
         throws CycleDetectedException
     {
@@ -131,6 +135,7 @@ public class DAGTest
         assertTrue( d.getParentLabels().contains( "c" ) );
     }
 
+    @Test
     public void testGetPredecessors()
         throws CycleDetectedException
     {

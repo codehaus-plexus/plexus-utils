@@ -16,24 +16,25 @@ package org.codehaus.plexus.util.reflection;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author J&ouml;rg Schaible
  * @version $Id$
  */
 public class ReflectorTest
-    extends TestCase
 {
     private Project project;
 
     private Reflector reflector;
 
-    protected void setUp()
+    @Before
+    public void setUp()
         throws Exception
     {
-        super.setUp();
-
         project = new Project();
         project.setModelVersion( "1.0.0" );
         project.setVersion( "42" );
@@ -41,18 +42,21 @@ public class ReflectorTest
         reflector = new Reflector();
     }
 
+    @Test
     public void testObjectPropertyFromName()
         throws Exception
     {
         assertEquals( "1.0.0", reflector.getObjectProperty( project, "modelVersion" ) );
     }
 
+    @Test
     public void testObjectPropertyFromBean()
         throws Exception
     {
         assertEquals( "Foo", reflector.getObjectProperty( project, "name" ) );
     }
 
+    @Test
     public void testObjectPropertyFromField()
         throws Exception
     {

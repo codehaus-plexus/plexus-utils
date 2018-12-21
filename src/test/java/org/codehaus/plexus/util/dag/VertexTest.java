@@ -16,15 +16,17 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  * @version $Id$
  */
 public class VertexTest
-    extends TestCase
 {
+    @Test
     public void testVertex()
     {
 
