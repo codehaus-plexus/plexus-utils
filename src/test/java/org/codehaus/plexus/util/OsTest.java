@@ -16,21 +16,26 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Iterator;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test Case for Os
  */
 public class OsTest
-    extends TestCase
 {
+    @Test
     public void testUndefinedFamily()
     {
         assertFalse( Os.isFamily( "bogus family" ) );
     }
 
+    @Test
     public void testOs()
     {
         Iterator<String> iter = Os.getValidFamilies().iterator();
@@ -74,6 +79,7 @@ public class OsTest
         assertFalse( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, "myversion" ) );
     }
 
+    @Test
     public void testValidList()
     {
         assertTrue( Os.isValidFamily( "dos" ) );

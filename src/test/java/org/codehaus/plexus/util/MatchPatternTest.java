@@ -1,4 +1,5 @@
 package org.codehaus.plexus.util;
+
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -15,19 +16,20 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * @author Kristian Rosenvold
  */
 public class MatchPatternTest
-    extends TestCase
 {
+    @Test
     public void testMatchPath()
         throws Exception
     {
         MatchPattern mp = MatchPattern.fromString( "ABC*" );
         assertTrue( mp.matchPath( "ABCD", true ) );
-
     }
 }

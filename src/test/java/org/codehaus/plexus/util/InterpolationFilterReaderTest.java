@@ -16,19 +16,21 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 public class InterpolationFilterReaderTest
-    extends TestCase
 {
     /*
      * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
      * kenneyw@15-04-2005 fixed the bug.
      */
+    @Test
     public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken()
         throws Exception
     {
@@ -43,6 +45,7 @@ public class InterpolationFilterReaderTest
     /*
      * kenneyw@14-04-2005 Added test to check above fix.
      */
+    @Test
     public void testShouldNotInterpolateExpressionWithMissingEndToken()
         throws Exception
     {
@@ -54,6 +57,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "This is a ${test, really", interpolate( testStr, m ) );
     }
 
+    @Test
     public void testShouldNotInterpolateWithMalformedStartToken()
         throws Exception
     {
@@ -65,6 +69,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "This is a $!test} again", interpolate( foo, m ) );
     }
 
+    @Test
     public void testShouldNotInterpolateWithMalformedEndToken()
         throws Exception
     {
@@ -76,6 +81,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "This is a ${test!} again", interpolate( foo, m, "${", "$}" ) );
     }
 
+    @Test
     public void testInterpolationWithMulticharDelimiters()
         throws Exception
     {
@@ -87,6 +93,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "This is a testValue again", interpolate( foo, m, "${", "$}" ) );
     }
 
+    @Test
     public void testDefaultInterpolationWithNonInterpolatedValueAtEnd()
         throws Exception
     {
@@ -99,6 +106,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "jason is an asshole. ${not.interpolated}", interpolate( foo, m ) );
     }
 
+    @Test
     public void testDefaultInterpolationWithInterpolatedValueAtEnd()
         throws Exception
     {
@@ -111,6 +119,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "jason is an asshole", interpolate( foo, m ) );
     }
 
+    @Test
     public void testInterpolationWithSpecifiedBoundaryTokens()
         throws Exception
     {
@@ -123,6 +132,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "jason is an asshole. @not.interpolated@ baby @foo@. @bar@", interpolate( foo, m, "@", "@" ) );
     }
 
+    @Test
     public void testInterpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd()
         throws Exception
     {
@@ -135,6 +145,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "jason is an @foobarred@", interpolate( foo, m, "@", "@" ) );
     }
 
+    @Test
     public void testInterpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd()
         throws Exception
     {
@@ -147,6 +158,7 @@ public class InterpolationFilterReaderTest
         assertEquals( "jason is an asshole", interpolate( foo, m, "@", "@" ) );
     }
 
+    @Test
     public void testInterpolationWithSpecifiedBoundaryTokensAndAdditionalTokenCharacter()
         throws Exception
     {

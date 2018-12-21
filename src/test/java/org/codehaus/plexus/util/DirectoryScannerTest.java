@@ -16,6 +16,11 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -24,6 +29,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Test;
 
 /**
  * Base class for testcases doing tests with files.
@@ -35,6 +42,7 @@ public class DirectoryScannerTest
 {
     private static String testDir = getTestDirectory().getPath();
 
+    @Test
     public void testCrossPlatformIncludesString()
         throws IOException, URISyntaxException
     {
@@ -59,6 +67,7 @@ public class DirectoryScannerTest
         assertEquals( 1, files.length );
     }
 
+    @Test
     public void testCrossPlatformExcludesString()
         throws IOException, URISyntaxException
     {
@@ -110,6 +119,7 @@ public class DirectoryScannerTest
         this.createFile( new File( testDir + "/scanner5.dat" ), 0 );
     }
 
+    @Test
     public void testGeneral()
         throws IOException
     {
@@ -127,6 +137,7 @@ public class DirectoryScannerTest
 
     }
 
+    @Test
     public void testIncludesExcludesWithWhiteSpaces()
         throws IOException
     {
@@ -144,6 +155,7 @@ public class DirectoryScannerTest
         assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
     }
 
+    @Test
     public void testFollowSymlinksFalse()
     {
         DirectoryScanner ds = new DirectoryScanner();
@@ -175,6 +187,7 @@ public class DirectoryScannerTest
         assertTrue( included.contains( "symLinkToFileOnTheOutside" ) );
     }
 
+    @Test
     public void testFollowSymlinks()
     {
         DirectoryScanner ds = new DirectoryScanner();
@@ -211,6 +224,7 @@ public class DirectoryScannerTest
             + File.separator + "file1.dat" ), 0 );
     }
 
+    @Test
     public void testDirectoriesWithHyphens()
         throws IOException
     {
@@ -229,6 +243,7 @@ public class DirectoryScannerTest
         assertEquals( "Wrong number of results.", 3, files.length );
     }
 
+    @Test
     public void testAntExcludesOverrideIncludes()
         throws IOException
     {
@@ -263,6 +278,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testAntExcludesOverrideIncludesWithExplicitAntPrefix()
         throws IOException
     {
@@ -298,6 +314,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testRegexIncludeWithExcludedPrefixDirs()
         throws IOException
     {
@@ -328,6 +345,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testRegexExcludeWithNegativeLookahead()
         throws IOException
     {
@@ -366,6 +384,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testRegexWithSlashInsideCharacterClass()
         throws IOException
     {
@@ -405,6 +424,7 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    @Test
     public void testIsSymbolicLink()
         throws IOException
     {
@@ -422,6 +442,7 @@ public class DirectoryScannerTest
         assertFalse( ds.isSymbolicLink( directory, "aRegularDir" ) );
     }
 
+    @Test
     public void testIsParentSymbolicLink()
         throws IOException
     {

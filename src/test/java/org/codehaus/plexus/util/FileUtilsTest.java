@@ -16,6 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +36,11 @@ import java.io.Writer;
 import java.net.URL;
 import java.util.Properties;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
+
 /**
  * This is used to test FileUtils for correctness.
  *
@@ -40,6 +52,9 @@ import java.util.Properties;
 public final class FileUtilsTest
     extends FileBasedTestCase
 {
+    @Rule
+    public TestName name = new TestName();
+
     // Test data
 
     /**
@@ -65,10 +80,8 @@ public final class FileUtilsTest
         testFile2Size = (int) testFile2.length();
     }
 
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp()
+    @Before
+    public void setUp()
         throws Exception
     {
         getTestDirectory().mkdirs();
@@ -82,6 +95,7 @@ public final class FileUtilsTest
 
     // byteCountToDisplaySize
 
+    @Test
     public void testByteCountToDisplaySize()
     {
         assertEquals( FileUtils.byteCountToDisplaySize( 0 ), "0 bytes" );
@@ -92,6 +106,7 @@ public final class FileUtilsTest
 
     // waitFor
 
+    @Test
     public void testWaitFor()
     {
         FileUtils.waitFor( "", -1 );
@@ -99,6 +114,7 @@ public final class FileUtilsTest
         FileUtils.waitFor( "", 2 );
     }
 
+    @Test
     public void testToFile()
         throws Exception
     {
@@ -108,6 +124,7 @@ public final class FileUtilsTest
         assertEquals( "name #%20?{}[]<>.txt", file.getName() );
     }
 
+    @Test
     public void testToFileBadProtocol()
         throws Exception
     {
@@ -116,6 +133,7 @@ public final class FileUtilsTest
         assertNull( file );
     }
 
+    @Test
     public void testToFileNull()
         throws Exception
     {
@@ -124,6 +142,7 @@ public final class FileUtilsTest
     }
 
     // Hacked to sanity by Trygve
+    @Test
     public void testToURLs()
         throws Exception
     {
@@ -140,6 +159,7 @@ public final class FileUtilsTest
         }
     }
 
+    @Test
     public void testGetFilesFromExtension()
     {
         // TODO I'm not sure what is supposed to happen here
@@ -160,6 +180,7 @@ public final class FileUtilsTest
 
     // mkdir
 
+    @Test
     public void testMkdir()
     {
         final File dir = new File( getTestDirectory(), "testdir" );
@@ -184,11 +205,12 @@ public final class FileUtilsTest
 
     // contentEquals
 
+    @Test
     public void testContentEquals()
         throws Exception
     {
         // Non-existent files
-        final File file = new File( getTestDirectory(), getName() );
+        final File file = new File( getTestDirectory(), name.getMethodName() );
         assertTrue( FileUtils.contentEquals( file, file ) );
 
         // TODO Should comparing 2 directories throw an Exception instead of returning false?
@@ -196,11 +218,11 @@ public final class FileUtilsTest
         assertTrue( !FileUtils.contentEquals( getTestDirectory(), getTestDirectory() ) );
 
         // Different files
-        final File objFile1 = new File( getTestDirectory(), getName() + ".object" );
+        final File objFile1 = new File( getTestDirectory(), name.getMethodName() + ".object" );
         objFile1.deleteOnExit();
         FileUtils.copyURLToFile( getClass().getResource( "/java/lang/Object.class" ), objFile1 );
 
-        final File objFile2 = new File( getTestDirectory(), getName() + ".collection" );
+        final File objFile2 = new File( getTestDirectory(), name.getMethodName() + ".collection" );
         objFile2.deleteOnExit();
         FileUtils.copyURLToFile( getClass().getResource( "/java/util/Collection.class" ), objFile2 );
 
@@ -213,27 +235,32 @@ public final class FileUtilsTest
 
     // removePath
 
+    @Test
     public void testRemovePath()
     {
-        final String fileName = FileUtils.removePath( new File( getTestDirectory(), getName() ).getAbsolutePath() );
-        assertEquals( getName(), fileName );
+        final String fileName =
+            FileUtils.removePath( new File( getTestDirectory(), name.getMethodName() ).getAbsolutePath() );
+        assertEquals( name.getMethodName(), fileName );
     }
 
     // getPath
 
+    @Test
     public void testGetPath()
     {
-        final String fileName = FileUtils.getPath( new File( getTestDirectory(), getName() ).getAbsolutePath() );
+        final String fileName =
+            FileUtils.getPath( new File( getTestDirectory(), name.getMethodName() ).getAbsolutePath() );
         assertEquals( getTestDirectory().getAbsolutePath(), fileName );
     }
 
     // copyURLToFile
 
+    @Test
     public void testCopyURLToFile()
         throws Exception
     {
         // Creates file
-        final File file = new File( getTestDirectory(), getName() );
+        final File file = new File( getTestDirectory(), name.getMethodName() );
         file.deleteOnExit();
 
         // Loads resource
@@ -255,6 +282,7 @@ public final class FileUtilsTest
 
     // catPath
 
+    @Test
     public void testCatPath()
     {
         // TODO StringIndexOutOfBoundsException thrown if file doesn't contain slash.
@@ -267,6 +295,7 @@ public final class FileUtilsTest
 
     // forceMkdir
 
+    @Test
     public void testForceMkdir()
         throws Exception
     {
@@ -274,7 +303,7 @@ public final class FileUtilsTest
         FileUtils.forceMkdir( getTestDirectory() );
 
         // Creates test file
-        final File testFile = new File( getTestDirectory(), getName() );
+        final File testFile = new File( getTestDirectory(), name.getMethodName() );
         testFile.deleteOnExit();
         testFile.createNewFile();
         assertTrue( "Test file does not exist.", testFile.exists() );
@@ -313,10 +342,11 @@ public final class FileUtilsTest
 
     // sizeOfDirectory
 
+    @Test
     public void testSizeOfDirectory()
         throws Exception
     {
-        final File file = new File( getTestDirectory(), getName() );
+        final File file = new File( getTestDirectory(), name.getMethodName() );
 
         // Non-existent file
         try
@@ -358,6 +388,7 @@ public final class FileUtilsTest
     }
 
     // copyFile
+    @Test
     public void testCopyFile1()
         throws Exception
     {
@@ -367,6 +398,7 @@ public final class FileUtilsTest
         assertTrue( "Check Full copy", destination.length() == testFile1Size );
     }
 
+    @Test
     public void testCopyFile2()
         throws Exception
     {
@@ -381,6 +413,7 @@ public final class FileUtilsTest
      *
      * @throws Exception
      */
+    @Test
     public void testCopyFile3()
         throws Exception
     {
@@ -397,6 +430,7 @@ public final class FileUtilsTest
 
     // copyFileIfModified
 
+    @Test
     public void testCopyIfModifiedWhenSourceIsNewer()
         throws Exception
     {
@@ -419,6 +453,7 @@ public final class FileUtilsTest
                     FileUtils.copyFileIfModified( source, destination ) );
     }
 
+    @Test
     public void testCopyIfModifiedWhenSourceIsOlder()
         throws Exception
     {
@@ -439,6 +474,7 @@ public final class FileUtilsTest
         assertFalse( "Source file should not have been copied.", FileUtils.copyFileIfModified( source, destination ) );
     }
 
+    @Test
     public void testCopyIfModifiedWhenSourceHasZeroDate()
         throws Exception
     {
@@ -458,6 +494,7 @@ public final class FileUtilsTest
 
     // forceDelete
 
+    @Test
     public void testForceDeleteAFile1()
         throws Exception
     {
@@ -468,6 +505,7 @@ public final class FileUtilsTest
         assertTrue( "Check No Exist", !destination.exists() );
     }
 
+    @Test
     public void testForceDeleteAFile2()
         throws Exception
     {
@@ -480,6 +518,7 @@ public final class FileUtilsTest
 
     // copyFileToDirectory
 
+    @Test
     public void testCopyFile1ToDir()
         throws Exception
     {
@@ -494,6 +533,7 @@ public final class FileUtilsTest
         assertTrue( "Check Full copy", destination.length() == testFile1Size );
     }
 
+    @Test
     public void testCopyFile2ToDir()
         throws Exception
     {
@@ -510,6 +550,7 @@ public final class FileUtilsTest
 
     // copyFileToDirectoryIfModified
 
+    @Test
     public void testCopyFile1ToDirIfModified()
         throws Exception
     {
@@ -535,6 +576,7 @@ public final class FileUtilsTest
         assertTrue( "Timestamp was changed", timestamp == target.lastModified() );
     }
 
+    @Test
     public void testCopyFile2ToDirIfModified()
         throws Exception
     {
@@ -562,6 +604,7 @@ public final class FileUtilsTest
 
     // forceDelete
 
+    @Test
     public void testForceDeleteDir()
         throws Exception
     {
@@ -571,6 +614,7 @@ public final class FileUtilsTest
 
     // resolveFile
 
+    @Test
     public void testResolveFileDotDot()
         throws Exception
     {
@@ -578,6 +622,7 @@ public final class FileUtilsTest
         assertEquals( "Check .. operator", file, getTestDirectory().getParentFile() );
     }
 
+    @Test
     public void testResolveFileDot()
         throws Exception
     {
@@ -587,6 +632,7 @@ public final class FileUtilsTest
 
     // normalize
 
+    @Test
     public void testNormalize()
         throws Exception
     {
@@ -625,6 +671,7 @@ public final class FileUtilsTest
      * Test the FileUtils implementation.
      */
     // Used to exist as IOTestCase class
+    @Test
     public void testFileUtils()
         throws Exception
     {
@@ -662,6 +709,7 @@ public final class FileUtilsTest
 
     }
 
+    @Test
     public void testGetExtension()
     {
         final String[][] tests =
@@ -675,6 +723,7 @@ public final class FileUtilsTest
         }
     }
 
+    @Test
     public void testGetExtensionWithPaths()
     {
         // Since the utilities are based on the separator for the platform
@@ -694,6 +743,7 @@ public final class FileUtilsTest
         }
     }
 
+    @Test
     public void testRemoveExtension()
     {
         final String[][] tests = { { "filename.ext", "filename" }, { "first.second.third.ext", "first.second.third" },
@@ -707,6 +757,7 @@ public final class FileUtilsTest
     }
 
     /* TODO: Reenable this test */
+    @Test
     public void testRemoveExtensionWithPaths()
     {
         // Since the utilities are based on the separator for the platform
@@ -731,6 +782,7 @@ public final class FileUtilsTest
         }
     }
 
+    @Test
     public void testCopyDirectoryStructureWithAEmptyDirectoryStructure()
         throws Exception
     {
@@ -747,6 +799,7 @@ public final class FileUtilsTest
         FileUtils.copyDirectoryStructure( from, to );
     }
 
+    @Test
     public void testCopyDirectoryStructureWithAPopulatedStructure()
         throws Exception
     {
@@ -806,6 +859,7 @@ public final class FileUtilsTest
         checkFile( f2_1, new File( to, "2/2_1/2_1.txt" ) );
     }
 
+    @Test
     public void testCopyDirectoryStructureIfModified()
         throws Exception
     {
@@ -885,6 +939,7 @@ public final class FileUtilsTest
 
     }
 
+    @Test
     public void testCopyDirectoryStructureToSelf()
         throws Exception
     {
@@ -926,6 +981,7 @@ public final class FileUtilsTest
         }
     }
 
+    @Test
     public void testFilteredFileCopy()
         throws Exception
     {
@@ -957,6 +1013,7 @@ public final class FileUtilsTest
         compareFile.delete();
     }
 
+    @Test
     public void testFilteredWithoutFilterAndOlderFile()
         throws Exception
     {
@@ -986,6 +1043,7 @@ public final class FileUtilsTest
 
     }
 
+    @Test
     public void testFilteredWithoutFilterAndOlderFileAndOverwrite()
         throws Exception
     {
@@ -1015,6 +1073,7 @@ public final class FileUtilsTest
 
     }
 
+    @Test
     public void testFileRead()
         throws IOException
     {
@@ -1043,6 +1102,7 @@ public final class FileUtilsTest
         testFile.delete();
     }
 
+    @Test
     public void testFileReadWithEncoding()
         throws IOException
     {
@@ -1067,6 +1127,7 @@ public final class FileUtilsTest
         testFile.delete();
     }
 
+    @Test
     public void testFileAppend()
         throws IOException
     {
@@ -1091,6 +1152,7 @@ public final class FileUtilsTest
         testFile.delete();
     }
 
+    @Test
     public void testFileAppendWithEncoding()
         throws IOException
     {
@@ -1116,6 +1178,7 @@ public final class FileUtilsTest
         testFile.delete();
     }
 
+    @Test
     public void testFileWrite()
         throws IOException
     {
@@ -1128,6 +1191,7 @@ public final class FileUtilsTest
         testFile.delete();
     }
 
+    @Test
     public void testFileWriteWithEncoding()
         throws IOException
     {
@@ -1149,6 +1213,7 @@ public final class FileUtilsTest
      * @see <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6182812">Sun bug id=6182812</a>
      * @see <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6481955">Sun bug id=6481955</a>
      */
+    @Test
     public void testDeleteLongPathOnWindows()
         throws Exception
     {
@@ -1186,6 +1251,7 @@ public final class FileUtilsTest
     }
 
     // Test for bug PLXUTILS-10
+    @Test
     public void testCopyFileOnSameFile()
         throws IOException
     {
@@ -1202,6 +1268,7 @@ public final class FileUtilsTest
         assertTrue( theFile.length() > 0 );
     }
 
+    @Test
     public void testExtensions()
         throws Exception
     {
@@ -1221,6 +1288,7 @@ public final class FileUtilsTest
         }
     }
 
+    @Test
     public void testIsValidWindowsFileName()
         throws Exception
     {
@@ -1246,6 +1314,7 @@ public final class FileUtilsTest
         }
     }
 
+    @Test
     public void testDeleteDirectoryWithValidFileSymlink()
         throws Exception
     {
@@ -1267,6 +1336,7 @@ public final class FileUtilsTest
         assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
     }
 
+    @Test
     public void testDeleteDirectoryWithValidDirSymlink()
         throws Exception
     {
@@ -1288,6 +1358,7 @@ public final class FileUtilsTest
         assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
     }
 
+    @Test
     public void testDeleteDirectoryWithDanglingSymlink()
         throws Exception
     {
@@ -1308,6 +1379,7 @@ public final class FileUtilsTest
         assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
     }
 
+    @Test
     public void testcopyDirectoryLayoutWithExcludesIncludes()
         throws Exception
     {
@@ -1349,6 +1421,7 @@ public final class FileUtilsTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testCreateTempFile()
         throws Exception
     {

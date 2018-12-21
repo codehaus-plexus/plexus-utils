@@ -16,18 +16,20 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @version $Id$
  */
 public class PathToolTest
-    extends TestCase
 {
     /**
      * @throws Exception
      */
+    @Test
     public void testGetRelativePath()
         throws Exception
     {
@@ -42,6 +44,7 @@ public class PathToolTest
     /**
      * @throws Exception
      */
+    @Test
     public void testGetDirectoryComponent()
         throws Exception
     {
@@ -54,6 +57,7 @@ public class PathToolTest
     /**
      * @throws Exception
      */
+    @Test
     public void testCalculateLink()
         throws Exception
     {
@@ -71,6 +75,7 @@ public class PathToolTest
     /**
      * @throws Exception
      */
+    @Test
     public void testGetRelativeWebPath()
         throws Exception
     {
@@ -88,6 +93,7 @@ public class PathToolTest
     /**
      * @throws Exception
      */
+    @Test
     public void testGetRelativeFilePath()
         throws Exception
     {

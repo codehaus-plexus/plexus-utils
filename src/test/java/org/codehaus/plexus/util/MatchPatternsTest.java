@@ -1,4 +1,5 @@
 package org.codehaus.plexus.util;
+
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -15,11 +16,14 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class MatchPatternsTest
-    extends TestCase
 {
+    @Test
     public void testMatches()
         throws Exception
     {
@@ -27,6 +31,5 @@ public class MatchPatternsTest
         assertTrue( from.matches( "ABCDE", true ) );
         assertTrue( from.matches( "CDEF", true ) );
         assertFalse( from.matches( "XYZ", true ) );
-
     }
 }
