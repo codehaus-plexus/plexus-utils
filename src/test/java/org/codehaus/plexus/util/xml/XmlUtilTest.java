@@ -16,6 +16,9 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,12 +29,11 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import junit.framework.TestCase;
-
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.WriterFactory;
+import org.junit.Test;
 
 /**
  * Test the {@link XmlUtil} class.
@@ -40,7 +42,6 @@ import org.codehaus.plexus.util.WriterFactory;
  * @version $Id$
  */
 public class XmlUtilTest
-    extends TestCase
 {
     private String basedir;
 
@@ -65,20 +66,7 @@ public class XmlUtilTest
         return file;
     }
 
-    /** {@inheritDoc} */
-    protected void setUp()
-        throws Exception
-    {
-        super.setUp();
-    }
-
-    /** {@inheritDoc} */
-    protected void tearDown()
-        throws Exception
-    {
-        super.tearDown();
-    }
-
+    @Test
     public void testPrettyFormatInputStreamOutputStream()
         throws Exception
     {
@@ -104,6 +92,7 @@ public class XmlUtilTest
         }
     }
 
+    @Test
     public void testPrettyFormatReaderWriter()
         throws Exception
     {
@@ -130,6 +119,7 @@ public class XmlUtilTest
         }
     }
 
+    @Test
     public void testPrettyFormatString()
         throws Exception
     {
@@ -160,6 +150,7 @@ public class XmlUtilTest
         assertTrue( countEOL < StringUtils.countMatches( writer.toString(), XmlUtil.DEFAULT_LINE_SEPARATOR ) );
     }
 
+    @Test
     public void testPrettyFormatReaderWriter2()
         throws Exception
     {

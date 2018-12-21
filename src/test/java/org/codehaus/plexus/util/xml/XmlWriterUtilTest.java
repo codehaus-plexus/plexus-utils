@@ -16,21 +16,24 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import junit.framework.TestCase;
-
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.WriterFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @version $Id$
  */
 public class XmlWriterUtilTest
-    extends TestCase
 {
     private OutputStream output;
 
@@ -38,23 +41,19 @@ public class XmlWriterUtilTest
 
     private XMLWriter xmlWriter;
 
-    /** {@inheritDoc} */
-    protected void setUp()
+    @Before
+    public void setUp()
         throws Exception
     {
-        super.setUp();
-
         output = new ByteArrayOutputStream();
         writer = WriterFactory.newXmlWriter( output );
         xmlWriter = new PrettyPrintXMLWriter( writer );
     }
 
-    /** {@inheritDoc} */
-    protected void tearDown()
+    @After
+    public void tearDown()
         throws Exception
     {
-        super.tearDown();
-
         xmlWriter = null;
         writer = null;
         output = null;
@@ -66,6 +65,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteLineBreakXMLWriter()
         throws Exception
     {
@@ -80,6 +80,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteLineBreakXMLWriterInt()
         throws Exception
     {
@@ -94,6 +95,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteLineBreakXMLWriterIntInt()
         throws Exception
     {
@@ -111,6 +113,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteLineBreakXMLWriterIntIntInt()
         throws Exception
     {
@@ -126,6 +129,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentLineBreakXMLWriter()
         throws Exception
     {
@@ -143,6 +147,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentLineBreakXMLWriterInt()
         throws Exception
     {
@@ -164,6 +169,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentXMLWriterString()
         throws Exception
     {
@@ -204,6 +210,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentXMLWriterStringInt()
         throws Exception
     {
@@ -239,6 +246,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentXMLWriterStringIntInt()
         throws Exception
     {
@@ -274,6 +282,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentXMLWriterStringIntIntInt()
         throws Exception
     {
@@ -305,6 +314,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentTextXMLWriterStringInt()
         throws Exception
     {
@@ -347,6 +357,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentTextXMLWriterStringIntInt()
         throws Exception
     {
@@ -372,6 +383,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentTextXMLWriterStringIntIntInt()
         throws Exception
     {
@@ -397,6 +409,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentNull()
         throws Exception
     {
@@ -413,6 +426,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentShort()
         throws Exception
     {
@@ -429,6 +443,7 @@ public class XmlWriterUtilTest
      *
      * @throws Exception if any
      */
+    @Test
     public void testWriteCommentLong()
         throws Exception
     {

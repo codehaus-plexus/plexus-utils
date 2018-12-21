@@ -1,5 +1,7 @@
 package org.codehaus.plexus.util.xml;
 
+import static org.junit.Assert.assertEquals;
+
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -19,10 +21,9 @@ package org.codehaus.plexus.util.xml;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 public class XmlStreamWriterTest
-    extends TestCase
 {
     /** french */
     private static final String TEXT_LATIN1 = "eacute: \u00E9";
@@ -71,6 +72,7 @@ public class XmlStreamWriterTest
         checkXmlContent( xml, effectiveEncoding );
     }
 
+    @Test
     public void testNoXmlHeader()
         throws IOException
     {
@@ -78,6 +80,7 @@ public class XmlStreamWriterTest
         checkXmlContent( xml, "UTF-8" );
     }
 
+    @Test
     public void testEmpty()
         throws IOException
     {
@@ -91,60 +94,70 @@ public class XmlStreamWriterTest
         writer.close();
     }
 
+    @Test
     public void testDefaultEncoding()
         throws IOException
     {
         checkXmlWriter( TEXT_UNICODE, null );
     }
 
+    @Test
     public void testUTF8Encoding()
         throws IOException
     {
         checkXmlWriter( TEXT_UNICODE, "UTF-8" );
     }
 
+    @Test
     public void testUTF16Encoding()
         throws IOException
     {
         checkXmlWriter( TEXT_UNICODE, "UTF-16" );
     }
 
+    @Test
     public void testUTF16BEEncoding()
         throws IOException
     {
         checkXmlWriter( TEXT_UNICODE, "UTF-16BE" );
     }
 
+    @Test
     public void testUTF16LEEncoding()
         throws IOException
     {
         checkXmlWriter( TEXT_UNICODE, "UTF-16LE" );
     }
 
+    @Test
     public void testLatin1Encoding()
         throws IOException
     {
         checkXmlWriter( TEXT_LATIN1, "ISO-8859-1" );
     }
 
+    @Test
     public void testLatin7Encoding()
         throws IOException
     {
         checkXmlWriter( TEXT_LATIN7, "ISO-8859-7" );
     }
 
+    @Test
     public void testLatin15Encoding()
         throws IOException
     {
         checkXmlWriter( TEXT_LATIN15, "ISO-8859-15" );
     }
 
+    @Test
     public void testEUC_JPEncoding()
         throws IOException
     {
         checkXmlWriter( TEXT_EUC_JP, "EUC-JP" );
     }
 
+    @Test
     public void testEBCDICEncoding()
         throws IOException
     {
