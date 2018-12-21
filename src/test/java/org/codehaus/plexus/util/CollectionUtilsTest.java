@@ -16,17 +16,21 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 public class CollectionUtilsTest
-    extends TestCase
 {
+    @Test
     public void testMergeMaps()
     {
         Map<String, String> dominantMap = new HashMap<String, String>();
@@ -63,6 +67,7 @@ public class CollectionUtilsTest
     }
 
     @SuppressWarnings( "unchecked" )
+    @Test
     public void testMergeMapArray()
     {
         // Test empty array of Maps
@@ -114,6 +119,7 @@ public class CollectionUtilsTest
         assertEquals( "ccc", result5.get( "c" ) );
     }
 
+    @Test
     public void testMavenPropertiesLoading()
     {
         // Mimic MavenSession properties loading. Properties listed
@@ -170,6 +176,7 @@ public class CollectionUtilsTest
         assertEquals( mavenRepoRemote, (String) result.get( "maven.repo.remote" ) );
     }
 
+    @Test
     public void testIteratorToListWithAPopulatedList()
     {
         List<String> original = new ArrayList<String>();
@@ -189,6 +196,7 @@ public class CollectionUtilsTest
         assertEquals( "tre", copy.get( 2 ) );
     }
 
+    @Test
     public void testIteratorToListWithAEmptyList()
     {
         List<String> original = new ArrayList<String>();

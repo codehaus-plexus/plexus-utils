@@ -16,28 +16,14 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 public class EnhancedStringTokenizerTest
-    extends TestCase
 {
-    /**
-     * @param testName
-     */
-    public EnhancedStringTokenizerTest( final String testName )
-    {
-        super( testName );
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    public void setUp()
-        throws Exception
-    {
-        super.setUp();
-    }
-
+    @Test
     public void test1()
     {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer( "this is a test string" );
@@ -50,6 +36,7 @@ public class EnhancedStringTokenizerTest
         assertEquals( "this is a test string ", sb.toString() );
     }
 
+    @Test
     public void test2()
     {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer( "1,,,3,,4", "," );
@@ -61,6 +48,7 @@ public class EnhancedStringTokenizerTest
         assertEquals( "Token 6", "4", est.nextToken() );
     }
 
+    @Test
     public void test3()
     {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer( "1,,,3,,4", ",", true );
@@ -77,6 +65,7 @@ public class EnhancedStringTokenizerTest
         assertEquals( "Token 11", "4", est.nextToken() );
     }
 
+    @Test
     public void testMultipleDelim()
     {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer( "1 2|3|4", " |", true );
@@ -90,6 +79,7 @@ public class EnhancedStringTokenizerTest
         assertEquals( "est.hasMoreTokens()", false, est.hasMoreTokens() );
     }
 
+    @Test
     public void testEmptyString()
     {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer( "" );
@@ -104,6 +94,7 @@ public class EnhancedStringTokenizerTest
         }
     }
 
+    @Test
     public void testSimpleString()
     {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer( "a " );

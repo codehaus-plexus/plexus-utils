@@ -16,14 +16,15 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.StringReader;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 public class Xpp3DomUtilsTest
-    extends TestCase
 {
-
+    @Test
     public void testCombineId()
         throws Exception
     {

@@ -16,9 +16,18 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Vector;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created on 21/06/2003
@@ -27,7 +36,6 @@ import java.util.Vector;
  * @version $Revision$
  */
 public class SweeperPoolTest
-    extends TestCase
 {
     /** The pool under test */
     TestObjectPool pool;
@@ -46,26 +54,9 @@ public class SweeperPoolTest
     Object o6;
 
     /**
-     * Constructor
-     */
-    public SweeperPoolTest()
-    {
-        super();
-    }
-
-    /**
-     * Constructor
-     *
-     * @param arg0
-     */
-    public SweeperPoolTest( String arg0 )
-    {
-        super( arg0 );
-    }
-
-    /**
      * Test the pool limits it's size, and disposes unneeded objects correctly
      */
+    @Test
     public void testMaxSize()
     {
         int sweepInterval = 0;
@@ -98,6 +89,7 @@ public class SweeperPoolTest
 
     }
 
+    @Test
     public void testSweepAndTrim1()
     {
         // test trigger
@@ -129,32 +121,25 @@ public class SweeperPoolTest
 
     }
 
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp()
+    @Before
+    public void setUp()
         throws Exception
     {
-
         o1 = new Object();
         o2 = new Object();
         o3 = new Object();
         o4 = new Object();
         o5 = new Object();
         o6 = new Object();
-        super.setUp();
     }
 
-    /**
-     * @see junit.framework.TestCase#tearDown()
-     */
-    protected void tearDown()
+    @After
+    public void tearDown()
         throws Exception
     {
         pool.dispose();
         assertTrue( pool.isDisposed() );
         pool = null;
-        super.tearDown();
 
     }
 

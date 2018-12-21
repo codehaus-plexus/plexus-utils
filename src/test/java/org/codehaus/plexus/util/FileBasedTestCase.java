@@ -16,6 +16,8 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,7 +32,6 @@ import java.io.Writer;
 import java.util.Arrays;
 
 import junit.framework.AssertionFailedError;
-import junit.framework.TestCase;
 
 /**
  * Base class for testcases doing tests with files.
@@ -38,7 +39,6 @@ import junit.framework.TestCase;
  * @author Jeremias Maerki
  */
 public abstract class FileBasedTestCase
-    extends TestCase
 {
     private static File testDir;
 

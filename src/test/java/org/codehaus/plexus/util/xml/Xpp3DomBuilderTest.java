@@ -16,14 +16,18 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
-import org.codehaus.plexus.util.xml.pull.MXParser;
-import org.codehaus.plexus.util.xml.pull.XmlPullParser;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+
+import org.codehaus.plexus.util.xml.pull.MXParser;
+import org.codehaus.plexus.util.xml.pull.XmlPullParser;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.junit.Test;
 
 /**
  * Test the Xpp3DomBuilder.
@@ -32,11 +36,10 @@ import java.io.StringWriter;
  * @version $Id$
  */
 public class Xpp3DomBuilderTest
-    extends TestCase
 {
+    private static final String LS = System.lineSeparator();
 
-    private static final String LS = System.getProperty( "line.separator" );
-
+    @Test
     public void testBuildFromReader()
         throws Exception
     {
@@ -49,6 +52,7 @@ public class Xpp3DomBuilderTest
         assertEquals( "check DOMs match", expectedDom, dom );
     }
 
+    @Test
     public void testBuildTrimming()
         throws Exception
     {
@@ -63,6 +67,7 @@ public class Xpp3DomBuilderTest
         assertEquals( "test with trimming off", " element1\n ", dom.getChild( "el1" ).getValue() );
     }
 
+    @Test
     public void testBuildFromXpp3Dom()
         throws Exception
     {
@@ -120,6 +125,7 @@ public class Xpp3DomBuilderTest
     /**
      * Test we get an error from the parser, and don't hit the IllegalStateException.
      */
+    @Test
     public void testUnclosedXml()
     {
         String domString = "<newRoot>" + createDomString();
@@ -139,6 +145,7 @@ public class Xpp3DomBuilderTest
         }
     }
 
+    @Test
     public void testEscapingInContent()
         throws IOException, XmlPullParserException
     {
@@ -153,6 +160,7 @@ public class Xpp3DomBuilderTest
         assertEquals( "Compare stringified DOMs", getExpectedString(), w.toString() );
     }
 
+    @Test
     public void testEscapingInAttributes()
         throws IOException, XmlPullParserException
     {

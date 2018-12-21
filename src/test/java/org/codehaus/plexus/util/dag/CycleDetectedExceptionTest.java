@@ -16,18 +16,20 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
 
 /**
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @version $Id$
  */
 public class CycleDetectedExceptionTest
-    extends TestCase
 {
+    @Test
     public void testException()
     {
         final List<String> cycle = new ArrayList<String>();

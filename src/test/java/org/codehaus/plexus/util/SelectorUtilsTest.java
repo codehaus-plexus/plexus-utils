@@ -1,9 +1,5 @@
 package org.codehaus.plexus.util;
 
-import java.io.File;
-
-import junit.framework.TestCase;
-
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -20,9 +16,16 @@ import junit.framework.TestCase;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+
+import org.junit.Test;
+
 public class SelectorUtilsTest
-    extends TestCase
 {
+    @Test
     public void testMatchPath_DefaultFileSeparator()
     {
         String separator = File.separator;
@@ -38,6 +41,7 @@ public class SelectorUtilsTest
         assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt" ) );
     }
 
+    @Test
     public void testMatchPath_UnixFileSeparator()
     {
         String separator = "/";
@@ -55,6 +59,7 @@ public class SelectorUtilsTest
         assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false ) );
     }
 
+    @Test
     public void testMatchPath_WindowsFileSeparator()
     {
         String separator = "\\";

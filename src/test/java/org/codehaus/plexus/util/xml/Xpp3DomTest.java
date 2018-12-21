@@ -16,18 +16,23 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 
-import junit.framework.TestCase;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.junit.Test;
 
 public class Xpp3DomTest
-    extends TestCase
 {
-
+    @Test
     public void testShouldPerformAppendAtFirstSubElementLevel()
     {
         // create the dominant DOM
@@ -53,6 +58,7 @@ public class Xpp3DomTest
         assertEquals( 2, result.getChildren( "topsub1" ).length );
     }
 
+    @Test
     public void testShouldOverrideAppendAndDeepMerge()
     {
         // create the dominant DOM
@@ -78,6 +84,7 @@ public class Xpp3DomTest
         assertEquals( 1, result.getChildren( "topsub1" ).length );
     }
 
+    @Test
     public void testShouldPerformSelfOverrideAtTopLevel()
     {
         // create the dominant DOM
@@ -98,6 +105,7 @@ public class Xpp3DomTest
         assertNull( result.getValue() );
     }
 
+    @Test
     public void testShouldMergeValuesAtTopLevelByDefault()
     {
         // create the dominant DOM
@@ -118,6 +126,7 @@ public class Xpp3DomTest
         assertEquals( result.getValue(), t2.getValue() );
     }
 
+    @Test
     public void testShouldMergeValuesAtTopLevel()
     {
         // create the dominant DOM
@@ -138,6 +147,7 @@ public class Xpp3DomTest
         assertEquals( result.getValue(), t2.getValue() );
     }
 
+    @Test
     public void testNullAttributeNameOrValue()
     {
         Xpp3Dom t1 = new Xpp3Dom( "top" );
@@ -161,6 +171,7 @@ public class Xpp3DomTest
         t1.toString();
     }
 
+    @Test
     public void testEquals()
     {
         Xpp3Dom dom = new Xpp3Dom( "top" );
@@ -170,6 +181,7 @@ public class Xpp3DomTest
         assertFalse( dom.equals( new Xpp3Dom( (String) null ) ) );
     }
 
+    @Test
     public void testEqualsIsNullSafe()
         throws XmlPullParserException, IOException
     {
@@ -196,6 +208,7 @@ public class Xpp3DomTest
         }
     }
 
+    @Test
     public void testShouldOverwritePluginConfigurationSubItemsByDefault()
         throws XmlPullParserException, IOException
     {
@@ -214,6 +227,7 @@ public class Xpp3DomTest
         assertEquals( "three", item.getValue() );
     }
 
+    @Test
     public void testShouldMergePluginConfigurationSubItemsWithMergeAttributeSet()
         throws XmlPullParserException, IOException
     {
@@ -236,6 +250,7 @@ public class Xpp3DomTest
         assertEquals( "three", item[2].getValue() );
     }
 
+    @Test
     public void testShouldNotChangeUponMergeWithItselfWhenFirstOrLastSubItemIsEmpty()
         throws Exception
     {
@@ -253,6 +268,7 @@ public class Xpp3DomTest
         assertEquals( null, items.getChild( 2 ).getValue() );
     }
 
+    @Test
     public void testShouldCopyRecessiveChildrenNotPresentInTarget()
         throws Exception
     {
@@ -270,6 +286,7 @@ public class Xpp3DomTest
         assertNotSame( result.getChild( "bar" ), recessiveConfig.getChild( "bar" ) );
     }
 
+    @Test
     public void testDupeChildren()
         throws IOException, XmlPullParserException
     {

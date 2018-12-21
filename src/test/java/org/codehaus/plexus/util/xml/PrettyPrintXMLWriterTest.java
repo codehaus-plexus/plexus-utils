@@ -16,6 +16,10 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,8 +30,9 @@ import java.util.NoSuchElementException;
 import javax.swing.text.html.HTML.Tag;
 
 import org.codehaus.plexus.util.StringUtils;
-
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test of {@link PrettyPrintXMLWriter}
@@ -37,27 +42,20 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public class PrettyPrintXMLWriterTest
-    extends TestCase
 {
     StringWriter w;
 
     PrettyPrintXMLWriter writer;
 
-    /** {@inheritDoc} */
-    protected void setUp()
-        throws Exception
+    @Before
+    public void setUp()
     {
-        super.setUp();
-
         initWriter();
     }
 
-    /** {@inheritDoc} */
-    protected void tearDown()
-        throws Exception
+    @After
+    public void tearDown()
     {
-        super.tearDown();
-
         writer = null;
         w = null;
     }
@@ -68,6 +66,7 @@ public class PrettyPrintXMLWriterTest
         writer = new PrettyPrintXMLWriter( w );
     }
 
+    @Test
     public void testDefaultPrettyPrintXMLWriter()
     {
         writer.startElement( Tag.HTML.toString() );
@@ -81,6 +80,7 @@ public class PrettyPrintXMLWriterTest
         assertEquals( expectedResult( PrettyPrintXMLWriter.LS ), w.toString() );
     }
 
+    @Test
     public void testPrettyPrintXMLWriterWithGivenLineSeparator()
     {
         writer.setLineSeparator( "\n" );
@@ -96,6 +96,7 @@ public class PrettyPrintXMLWriterTest
         assertEquals( expectedResult( "\n" ), w.toString() );
     }
 
+    @Test
     public void testPrettyPrintXMLWriterWithGivenLineIndenter()
     {
         writer.setLineIndenter( "    " );
@@ -111,6 +112,7 @@ public class PrettyPrintXMLWriterTest
         assertEquals( expectedResult( "    ", PrettyPrintXMLWriter.LS ), w.toString() );
     }
 
+    @Test
     public void testEscapeXmlAttribute()
     {
         // Windows
@@ -134,6 +136,7 @@ public class PrettyPrintXMLWriterTest
         assertEquals( "<div class=\"sect&#10;ion\"/>", w.toString() );
     }
 
+    @Test
     public void testendElementAlreadyClosed()
     {
         try
@@ -151,19 +154,14 @@ public class PrettyPrintXMLWriterTest
     }
 
     /**
-     * Issue #51: https://github.com/codehaus-plexus/plexus-utils/issues/51
-     * 
-     * Purpose: test if concatenation string optimization bug is present.
-     * 
-     * Target environment: Java 7 (u79 and u80 verified) running on Windows.
-     * 
-     * Detection strategy: Tries to build a big XML file (~750MB size) and with 
-     * many nested tags to force the JVM to trigger the concatenation string 
-     * optimization bug that throws a NoSuchElementException when calling 
-     * endElement() method.
+     * Issue #51: https://github.com/codehaus-plexus/plexus-utils/issues/51 Purpose: test if concatenation string
+     * optimization bug is present. Target environment: Java 7 (u79 and u80 verified) running on Windows. Detection
+     * strategy: Tries to build a big XML file (~750MB size) and with many nested tags to force the JVM to trigger the
+     * concatenation string optimization bug that throws a NoSuchElementException when calling endElement() method.
      * 
      * @throws IOException if an I/O error occurs
      */
+    @Test
     public void testIssue51DetectJava7ConcatenationBug()
         throws IOException
     {

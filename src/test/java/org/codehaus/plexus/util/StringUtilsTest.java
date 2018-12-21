@@ -16,10 +16,14 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.Locale;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test string utils.
@@ -28,9 +32,9 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public class StringUtilsTest
-    extends TestCase
 {
 
+    @Test
     public void testIsEmpty()
     {
         assertEquals( true, StringUtils.isEmpty( null ) );
@@ -40,6 +44,7 @@ public class StringUtilsTest
         assertEquals( false, StringUtils.isEmpty( "  foo  " ) );
     }
 
+    @Test
     public void testIsNotEmpty()
     {
         assertEquals( false, StringUtils.isNotEmpty( null ) );
@@ -49,6 +54,7 @@ public class StringUtilsTest
         assertEquals( true, StringUtils.isNotEmpty( "  foo  " ) );
     }
 
+    @Test
     public void testIsBlank()
     {
         assertEquals( true, StringUtils.isBlank( null ) );
@@ -58,6 +64,7 @@ public class StringUtilsTest
         assertEquals( false, StringUtils.isBlank( "  foo  " ) );
     }
 
+    @Test
     public void testIsNotBlank()
     {
         assertEquals( false, StringUtils.isNotBlank( null ) );
@@ -67,12 +74,14 @@ public class StringUtilsTest
         assertEquals( true, StringUtils.isNotBlank( "  foo  " ) );
     }
 
+    @Test
     public void testCapitalizeFirstLetter()
     {
         assertEquals( "Id", StringUtils.capitalizeFirstLetter( "id" ) );
         assertEquals( "Id", StringUtils.capitalizeFirstLetter( "Id" ) );
     }
 
+    @Test
     public void testCapitalizeFirstLetterTurkish()
     {
         Locale l = Locale.getDefault();
@@ -82,12 +91,14 @@ public class StringUtilsTest
         Locale.setDefault( l );
     }
 
+    @Test
     public void testLowerCaseFirstLetter()
     {
         assertEquals( "id", StringUtils.lowercaseFirstLetter( "id" ) );
         assertEquals( "id", StringUtils.lowercaseFirstLetter( "Id" ) );
     }
 
+    @Test
     public void testLowerCaseFirstLetterTurkish()
     {
         Locale l = Locale.getDefault();
@@ -97,12 +108,14 @@ public class StringUtilsTest
         Locale.setDefault( l );
     }
 
+    @Test
     public void testRemoveAndHump()
     {
         assertEquals( "Id", StringUtils.removeAndHump( "id", "-" ) );
         assertEquals( "SomeId", StringUtils.removeAndHump( "some-id", "-" ) );
     }
 
+    @Test
     public void testRemoveAndHumpTurkish()
     {
         Locale l = Locale.getDefault();
@@ -112,6 +125,7 @@ public class StringUtilsTest
         Locale.setDefault( l );
     }
 
+    @Test
     public void testQuote_EscapeEmbeddedSingleQuotes()
     {
         String src = "This \'is a\' test";
@@ -123,6 +137,7 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    @Test
     public void testQuote_EscapeEmbeddedSingleQuotesWithPattern()
     {
         String src = "This \'is a\' test";
@@ -134,6 +149,7 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    @Test
     public void testQuote_EscapeEmbeddedDoubleQuotesAndSpaces()
     {
         String src = "This \"is a\" test";
@@ -145,6 +161,7 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    @Test
     public void testQuote_DontQuoteIfUnneeded()
     {
         String src = "ThisIsATest";
@@ -155,6 +172,7 @@ public class StringUtilsTest
         assertEquals( src, result );
     }
 
+    @Test
     public void testQuote_WrapWithSingleQuotes()
     {
         String src = "This is a test";
@@ -166,6 +184,7 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    @Test
     public void testQuote_PreserveExistingQuotes()
     {
         String src = "\'This is a test\'";
@@ -176,6 +195,7 @@ public class StringUtilsTest
         assertEquals( src, result );
     }
 
+    @Test
     public void testQuote_WrapExistingQuotesWhenForceIsTrue()
     {
         String src = "\'This is a test\'";
@@ -187,6 +207,7 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    @Test
     public void testQuote_ShortVersion_SingleQuotesPreserved()
     {
         String src = "\'This is a test\'";
@@ -196,6 +217,7 @@ public class StringUtilsTest
         assertEquals( src, result );
     }
 
+    @Test
     public void testSplit()
     {
         String[] tokens;
@@ -225,6 +247,7 @@ public class StringUtilsTest
         assertEquals( Arrays.asList( new String[] { "this", "is", "a", "test", "really" } ), Arrays.asList( tokens ) );
     }
 
+    @Test
     public void testRemoveDuplicateWhitespace()
         throws Exception
     {
@@ -239,6 +262,7 @@ public class StringUtilsTest
 
     }
 
+    @Test
     public void testUnifyLineSeparators()
         throws Exception
     {
