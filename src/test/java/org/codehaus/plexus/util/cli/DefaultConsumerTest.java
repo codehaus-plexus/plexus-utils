@@ -16,32 +16,13 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import java.io.IOException;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 public class DefaultConsumerTest
-    extends TestCase
 {
-    /**
-     * @param testName
-     */
-    public DefaultConsumerTest( String testName )
-    {
-        super( testName );
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
-    public void setUp()
-        throws Exception
-    {
-        super.setUp();
-    }
-
+    @Test
     public void testConsumeLine()
-        throws IOException
+        throws Exception
     {
         DefaultConsumer cons = new DefaultConsumer();
         cons.consumeLine( "Test DefaultConsumer consumeLine" );

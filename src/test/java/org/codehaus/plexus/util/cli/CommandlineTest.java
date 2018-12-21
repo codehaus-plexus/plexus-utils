@@ -16,36 +16,32 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.Os;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.shell.BourneShell;
 import org.codehaus.plexus.util.cli.shell.CmdShell;
 import org.codehaus.plexus.util.cli.shell.Shell;
-
-import java.io.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CommandlineTest
-    extends TestCase
 {
     private String baseDir;
 
-    /**
-     * @param testName
-     */
-    public CommandlineTest( final String testName )
-    {
-        super( testName );
-    }
-
-    /*
-     * @see TestCase#setUp()
-     */
+    @Before
     public void setUp()
         throws Exception
     {
-        super.setUp();
         baseDir = System.getProperty( "basedir" );
 
         if ( baseDir == null )
@@ -54,143 +50,104 @@ public class CommandlineTest
         }
     }
 
+    @Test
     public void testCommandlineWithoutCommandInConstructor()
     {
-        try
-        {
-            Commandline cmd = new Commandline( new Shell() );
-            cmd.setWorkingDirectory( baseDir );
-            cmd.createArgument().setValue( "cd" );
-            cmd.createArgument().setValue( "." );
+        Commandline cmd = new Commandline( new Shell() );
+        cmd.setWorkingDirectory( baseDir );
+        cmd.createArgument().setValue( "cd" );
+        cmd.createArgument().setValue( "." );
 
-            // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
-            assertEquals( "cd .", cmd.toString() );
-        }
-        catch ( Exception e )
-        {
-            fail( e.getMessage() );
-        }
+        // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
+        assertEquals( "cd .", cmd.toString() );
     }
 
+    @Test
     public void testCommandlineWithCommandInConstructor()
     {
-        try
-        {
-            Commandline cmd = new Commandline( "cd .", new Shell() );
-            cmd.setWorkingDirectory( baseDir );
+        Commandline cmd = new Commandline( "cd .", new Shell() );
+        cmd.setWorkingDirectory( baseDir );
 
-            // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
-            assertEquals( "cd .", cmd.toString() );
-        }
-        catch ( Exception e )
-        {
-            fail( e.getMessage() );
-        }
+        // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
+        assertEquals( "cd .", cmd.toString() );
     }
 
+    @Test
     public void testExecuteBinaryOnPath()
+        throws Exception
     {
-        try
-        {
-            // Maven startup script on PATH is required for this test
-            Commandline cmd = new Commandline();
-            cmd.setWorkingDirectory( baseDir );
-            cmd.setExecutable( "mvn" );
-            assertEquals( "mvn", cmd.getShell().getOriginalExecutable() );
-            cmd.createArg().setValue( "-version" );
-            Process process = cmd.execute();
-            String out = IOUtil.toString( process.getInputStream() );
-            assertTrue( out.contains( "Apache Maven" ) );
-            assertTrue( out.contains( "Maven home:" ) );
-            assertTrue( out.contains( "Java version:" ) );
-        }
-        catch ( Exception e )
-        {
-            fail( "Maven startup script seems not on the PATH: " + e.getMessage() );
-        }
+        // Maven startup script on PATH is required for this test
+        Commandline cmd = new Commandline();
+        cmd.setWorkingDirectory( baseDir );
+        cmd.setExecutable( "mvn" );
+        assertEquals( "mvn", cmd.getShell().getOriginalExecutable() );
+        cmd.createArg().setValue( "-version" );
+        Process process = cmd.execute();
+        String out = IOUtil.toString( process.getInputStream() );
+        assertTrue( out.contains( "Apache Maven" ) );
+        assertTrue( out.contains( "Maven home:" ) );
+        assertTrue( out.contains( "Java version:" ) );
     }
 
+    @Test
     public void testExecute()
+        throws Exception
     {
-        try
-        {
-            // allow it to detect the proper shell here.
-            Commandline cmd = new Commandline();
-            cmd.setWorkingDirectory( baseDir );
-            cmd.setExecutable( "echo" );
-            assertEquals( "echo", cmd.getShell().getOriginalExecutable() );
-            cmd.createArgument().setValue( "Hello" );
+        // allow it to detect the proper shell here.
+        Commandline cmd = new Commandline();
+        cmd.setWorkingDirectory( baseDir );
+        cmd.setExecutable( "echo" );
+        assertEquals( "echo", cmd.getShell().getOriginalExecutable() );
+        cmd.createArgument().setValue( "Hello" );
 
-            Process process = cmd.execute();
-            assertEquals( "Hello", IOUtil.toString( process.getInputStream() ).trim() );
-        }
-        catch ( Exception e )
-        {
-            fail( e.getMessage() );
-        }
+        Process process = cmd.execute();
+        assertEquals( "Hello", IOUtil.toString( process.getInputStream() ).trim() );
     }
 
+    @Test
     public void testSetLine()
     {
-        try
-        {
-            Commandline cmd = new Commandline( new Shell() );
-            cmd.setWorkingDirectory( baseDir );
-            cmd.setExecutable( "echo" );
-            cmd.createArgument().setLine( null );
-            cmd.createArgument().setLine( "Hello" );
+        Commandline cmd = new Commandline( new Shell() );
+        cmd.setWorkingDirectory( baseDir );
+        cmd.setExecutable( "echo" );
+        cmd.createArgument().setLine( null );
+        cmd.createArgument().setLine( "Hello" );
 
-            // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
-            assertEquals( "echo Hello", cmd.toString() );
-        }
-        catch ( Exception e )
-        {
-            fail( e.getMessage() );
-        }
+        // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
+        assertEquals( "echo Hello", cmd.toString() );
     }
 
+    @Test
     public void testCreateCommandInReverseOrder()
     {
-        try
-        {
-            Commandline cmd = new Commandline( new Shell() );
-            cmd.setWorkingDirectory( baseDir );
-            cmd.createArgument().setValue( "." );
-            cmd.createArgument( true ).setValue( "cd" );
+        Commandline cmd = new Commandline( new Shell() );
+        cmd.setWorkingDirectory( baseDir );
+        cmd.createArgument().setValue( "." );
+        cmd.createArgument( true ).setValue( "cd" );
 
-            // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
-            assertEquals( "cd .", cmd.toString() );
-        }
-        catch ( Exception e )
-        {
-            fail( e.getMessage() );
-        }
+        // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
+        assertEquals( "cd .", cmd.toString() );
     }
 
+    @Test
     public void testSetFile()
     {
-        try
+        Commandline cmd = new Commandline( new Shell() );
+        cmd.setWorkingDirectory( baseDir );
+        cmd.createArgument().setValue( "more" );
+        File f = new File( "test.txt" );
+        cmd.createArgument().setFile( f );
+        String fileName = f.getAbsolutePath();
+        if ( fileName.contains( " " ) )
         {
-            Commandline cmd = new Commandline( new Shell() );
-            cmd.setWorkingDirectory( baseDir );
-            cmd.createArgument().setValue( "more" );
-            File f = new File( "test.txt" );
-            cmd.createArgument().setFile( f );
-            String fileName = f.getAbsolutePath();
-            if ( fileName.contains( " " ) )
-            {
-                fileName = "\"" + fileName + "\"";
-            }
+            fileName = "\"" + fileName + "\"";
+        }
 
-            // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
-            assertEquals( "more " + fileName, cmd.toString() );
-        }
-        catch ( Exception e )
-        {
-            fail( e.getMessage() );
-        }
+        // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
+        assertEquals( "more " + fileName, cmd.toString() );
     }
 
+    @Test
     public void testGetShellCommandLineWindows()
         throws Exception
     {
@@ -209,6 +166,7 @@ public class CommandlineTest
         assertEquals( expectedShellCmd, shellCommandline[3] );
     }
 
+    @Test
     public void testGetShellCommandLineWindowsWithSeveralQuotes()
         throws Exception
     {
@@ -233,6 +191,7 @@ public class CommandlineTest
      * 
      * @throws Exception
      */
+    @Test
     public void testGetShellCommandLineBash()
         throws Exception
     {
@@ -259,6 +218,7 @@ public class CommandlineTest
      * 
      * @throws Exception
      */
+    @Test
     public void testGetShellCommandLineBash_WithWorkingDirectory()
         throws Exception
     {
@@ -288,6 +248,7 @@ public class CommandlineTest
      * 
      * @throws Exception
      */
+    @Test
     public void testGetShellCommandLineBash_WithSingleQuotedArg()
         throws Exception
     {
@@ -309,6 +270,7 @@ public class CommandlineTest
         assertEquals( expectedShellCmd, shellCommandline[2] );
     }
 
+    @Test
     public void testGetShellCommandLineNonWindows()
         throws Exception
     {
@@ -332,6 +294,7 @@ public class CommandlineTest
         }
     }
 
+    @Test
     public void testEnvironment()
         throws Exception
     {
@@ -340,6 +303,7 @@ public class CommandlineTest
         assertEquals( "name=value", cmd.getEnvironmentVariables()[0] );
     }
 
+    @Test
     public void testEnvironmentWitOverrideSystemEnvironment()
         throws Exception
     {
@@ -364,6 +328,7 @@ public class CommandlineTest
      *
      * @throws Exception
      */
+    @Test
     public void testQuotedPathWithSingleApostrophe()
         throws Exception
     {
@@ -379,6 +344,7 @@ public class CommandlineTest
      *
      * @throws Exception
      */
+    @Test
     public void testPathWithShellExpansionStrings()
         throws Exception
     {
@@ -391,6 +357,7 @@ public class CommandlineTest
      *
      * @throws Exception
      */
+    @Test
     public void testQuotedPathWithQuotationMark()
         throws Exception
     {
@@ -413,6 +380,7 @@ public class CommandlineTest
      *
      * @throws Exception
      */
+    @Test
     public void testQuotedPathWithQuotationMarkAndApostrophe()
         throws Exception
     {
@@ -434,6 +402,7 @@ public class CommandlineTest
      *
      * @throws Exception
      */
+    @Test
     public void testOnlyQuotedPath()
         throws Exception
     {
@@ -464,6 +433,7 @@ public class CommandlineTest
         createAndCallScript( dir, javaBinStr + " -version" );
     }
 
+    @Test
     public void testDollarSignInArgumentPath()
         throws Exception
     {
@@ -498,6 +468,7 @@ public class CommandlineTest
         executeCommandLine( cmd );
     }
 
+    @Test
     public void testTimeOutException()
         throws Exception
     {
