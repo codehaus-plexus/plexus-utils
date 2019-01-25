@@ -17,6 +17,8 @@ package org.codehaus.plexus.util.xml.pull;
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -154,6 +156,46 @@ public class MXParserTest
         assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
         assertEquals( "\u0159", parser.getText() );
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+    }
+
+    @Test
+    public void testInvalidCharacterReferenceHexa()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        String input = "<root>&#x110000;</root>";
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            fail( "Should fail since &#x110000; is an illegal character reference" );
+        }
+        catch ( XmlPullParserException e )
+        {
+            assertTrue( e.getMessage().contains( "character reference (with hex value 110000) is invalid" ) );
+        }
+    }
+
+    @Test
+    public void testInvalidCharacterReferenceDecimal()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        String input = "<root>&#1114112;</root>";
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            fail( "Should fail since &#1114112; is an illegal character reference" );
+        }
+        catch ( XmlPullParserException e )
+        {
+            assertTrue( e.getMessage().contains( "character reference (with decimal value 1114112) is invalid" ) );
+        }
     }
 
     @Test
