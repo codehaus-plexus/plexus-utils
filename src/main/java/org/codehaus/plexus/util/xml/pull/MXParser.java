@@ -2664,13 +2664,16 @@ public class MXParser
         entityRefName = null;
         posStart = pos;
         char ch = more();
-        StringBuilder sb = new StringBuilder();
         if ( ch == '#' )
         {
             // parse character reference
+
             char charRef = 0;
             ch = more();
-            if ( ch == 'x' )
+            StringBuilder sb = new StringBuilder();
+            boolean isHex = ( ch == 'x' );
+
+            if ( isHex )
             {
                 // encoded in hex
                 while ( true )
@@ -2710,6 +2713,7 @@ public class MXParser
                     if ( ch >= '0' && ch <= '9' )
                     {
                         charRef = (char) ( charRef * 10 + ( ch - '0' ) );
+                        sb.append( ch );
                     }
                     else if ( ch == ';' )
                     {
@@ -2724,20 +2728,19 @@ public class MXParser
                 }
             }
             posEnd = pos - 1;
-            if ( sb.length() > 0 )
+            try
             {
-                char[] tmp = toChars( Integer.parseInt( sb.toString(), 16 ) );
-                charRefOneCharBuf = tmp;
-                if ( tokenize )
-                {
-                    text = newString( charRefOneCharBuf, 0, charRefOneCharBuf.length );
-                }
-                return charRefOneCharBuf;
+                charRefOneCharBuf = toChars( Integer.parseInt( sb.toString(), isHex ? 16 : 10 ) );
             }
-            charRefOneCharBuf[0] = charRef;
+            catch ( IllegalArgumentException e )
+            {
+                throw new XmlPullParserException( "character reference (with " + ( isHex ? "hex" : "decimal" )
+                    + " value " + sb.toString() + ") is invalid", this, null );
+            }
+
             if ( tokenize )
             {
-                text = newString( charRefOneCharBuf, 0, 1 );
+                text = newString( charRefOneCharBuf, 0, charRefOneCharBuf.length );
             }
             return charRefOneCharBuf;
         }
@@ -3996,15 +3999,21 @@ public class MXParser
         return ( MIN_HIGH_SURROGATE <= ch && MAX_HIGH_SURROGATE >= ch );
     }
 
-    private static final int MIN_CODE_POINT = 0x000000;
-
     private static final int MAX_CODE_POINT = 0x10FFFF;
 
     private static final int MIN_SUPPLEMENTARY_CODE_POINT = 0x10000;
 
+    /**
+     * Check if the provided parameter is a valid Char, according to: {@link https://www.w3.org/TR/REC-xml/#NT-Char}
+     * 
+     * @param codePoint the numeric value to check
+     * @return true if it is a valid numeric character reference. False otherwise.
+     */
     private static boolean isValidCodePoint( int codePoint )
     {
-        return ( MIN_CODE_POINT <= codePoint && MAX_CODE_POINT >= codePoint );
+        // Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+        return codePoint == 0x9 || codePoint == 0xA || codePoint == 0xD || ( 0x20 <= codePoint && codePoint <= 0xD7FF )
+            || ( 0xE000 <= codePoint && codePoint <= 0xFFFD ) || ( 0x10000 <= codePoint && codePoint <= 0x10FFFF );
     }
 
     private static boolean isSupplementaryCodePoint( int codePoint )
