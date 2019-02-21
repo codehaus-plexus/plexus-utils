@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.StringReader;
 
+import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.junit.Test;
 
 public class Xpp3DomUtilsTest
@@ -34,17 +35,44 @@ public class Xpp3DomUtilsTest
         String rhs = "<props>" + "<property combine.id='RHS-ONLY'><name>RHS-ONLY</name><value>RHS</value></property>"
             + "<property combine.id='TOOVERWRITE'><name>TOOVERWRITE</name><value>RHS</value></property>" + "</props>";
 
-        Xpp3Dom leftDom = Xpp3DomBuilder.build( new StringReader( lhs ) );
-        Xpp3Dom rightDom = Xpp3DomBuilder.build( new StringReader( rhs ) );
+        Xpp3Dom leftDom = Xpp3DomBuilder.build( new StringReader( lhs ), new FixedInputLocationBuilder( "left" ) );
+        Xpp3Dom rightDom = Xpp3DomBuilder.build( new StringReader( rhs ), new FixedInputLocationBuilder( "right" ) );
 
         Xpp3Dom mergeResult = Xpp3DomUtils.mergeXpp3Dom( leftDom, rightDom, true );
         assertEquals( 3, mergeResult.getChildren( "property" ).length );
 
-        assertEquals( "LHS-ONLY", mergeResult.getChildren( "property" )[0].getChild( "name" ).getValue() );
-        assertEquals( "LHS", mergeResult.getChildren( "property" )[0].getChild( "value" ).getValue() );
+        Xpp3Dom p0 = mergeResult.getChildren( "property" )[0];
+        assertEquals( "LHS-ONLY", p0.getChild( "name" ).getValue() );
+        assertEquals( "left", p0.getChild( "name" ).getInputLocation() );
+        assertEquals( "LHS", p0.getChild( "value" ).getValue() );
+        assertEquals( "left", p0.getChild( "value" ).getInputLocation() );
+        
+        Xpp3Dom p1 = mergeResult.getChildren( "property" )[1];
         assertEquals( "TOOVERWRITE", mergeResult.getChildren( "property" )[1].getChild( "name" ).getValue() );
+        assertEquals( "left", p1.getChild( "name" ).getInputLocation() );
         assertEquals( "LHS", mergeResult.getChildren( "property" )[1].getChild( "value" ).getValue() );
+        assertEquals( "left", p1.getChild( "value" ).getInputLocation() );
+
+        Xpp3Dom p2 = mergeResult.getChildren( "property" )[2];
         assertEquals( "RHS-ONLY", mergeResult.getChildren( "property" )[2].getChild( "name" ).getValue() );
+        assertEquals( "right", p2.getChild( "name" ).getInputLocation() );
         assertEquals( "RHS", mergeResult.getChildren( "property" )[2].getChild( "value" ).getValue() );
+        assertEquals( "right", p2.getChild( "value" ).getInputLocation() );
+    }
+
+    private static class FixedInputLocationBuilder
+        implements Xpp3DomBuilder.InputLocationBuilder
+    {
+        private final Object location;
+
+        public FixedInputLocationBuilder( Object location )
+        {
+            this.location = location;
+        }
+
+        public Object toInputLocation( XmlPullParser parser )
+        {
+            return location;
+        }
     }
 }

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 
+import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.junit.Test;
 
@@ -38,17 +39,21 @@ public class Xpp3DomTest
         // create the dominant DOM
         Xpp3Dom t1 = new Xpp3Dom( "top" );
         t1.setAttribute( Xpp3Dom.CHILDREN_COMBINATION_MODE_ATTRIBUTE, Xpp3Dom.CHILDREN_COMBINATION_APPEND );
+        t1.setInputLocation( "t1top" );
 
         Xpp3Dom t1s1 = new Xpp3Dom( "topsub1" );
         t1s1.setValue( "t1s1Value" );
+        t1s1.setInputLocation( "t1s1" );
 
         t1.addChild( t1s1 );
 
         // create the recessive DOM
         Xpp3Dom t2 = new Xpp3Dom( "top" );
+        t2.setInputLocation( "t2top" );
 
         Xpp3Dom t2s1 = new Xpp3Dom( "topsub1" );
         t2s1.setValue( "t2s1Value" );
+        t2s1.setInputLocation( "t2s1" );
 
         t2.addChild( t2s1 );
 
@@ -56,6 +61,12 @@ public class Xpp3DomTest
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( t1, t2 );
 
         assertEquals( 2, result.getChildren( "topsub1" ).length );
+        assertEquals( "t2s1Value", result.getChildren( "topsub1" )[0].getValue() );
+        assertEquals( "t1s1Value", result.getChildren( "topsub1" )[1].getValue() );
+
+        assertEquals( "t1top", result.getInputLocation() );
+        assertEquals( "t2s1", result.getChildren( "topsub1" )[0].getInputLocation() );
+        assertEquals( "t1s1", result.getChildren( "topsub1" )[1].getInputLocation() );
     }
 
     @Test
@@ -64,17 +75,21 @@ public class Xpp3DomTest
         // create the dominant DOM
         Xpp3Dom t1 = new Xpp3Dom( "top" );
         t1.setAttribute( Xpp3Dom.CHILDREN_COMBINATION_MODE_ATTRIBUTE, Xpp3Dom.CHILDREN_COMBINATION_APPEND );
+        t1.setInputLocation( "t1top" );
 
         Xpp3Dom t1s1 = new Xpp3Dom( "topsub1" );
         t1s1.setValue( "t1s1Value" );
+        t1s1.setInputLocation( "t1s1" );
 
         t1.addChild( t1s1 );
 
         // create the recessive DOM
         Xpp3Dom t2 = new Xpp3Dom( "top" );
+        t2.setInputLocation( "t2top" );
 
         Xpp3Dom t2s1 = new Xpp3Dom( "topsub1" );
         t2s1.setValue( "t2s1Value" );
+        t2s1.setInputLocation( "t2s1" );
 
         t2.addChild( t2s1 );
 
@@ -82,6 +97,10 @@ public class Xpp3DomTest
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( t1, t2, Boolean.TRUE );
 
         assertEquals( 1, result.getChildren( "topsub1" ).length );
+        assertEquals( "t1s1Value", result.getChildren( "topsub1" )[0].getValue() );
+
+        assertEquals( "t1top", result.getInputLocation() );
+        assertEquals( "t1s1", result.getChildren( "topsub1" )[0].getInputLocation() );
     }
 
     @Test
@@ -90,6 +109,7 @@ public class Xpp3DomTest
         // create the dominant DOM
         Xpp3Dom t1 = new Xpp3Dom( "top" );
         t1.setAttribute( "attr", "value" );
+        t1.setInputLocation( "t1top" );
 
         t1.setAttribute( Xpp3Dom.SELF_COMBINATION_MODE_ATTRIBUTE, Xpp3Dom.SELF_COMBINATION_OVERRIDE );
 
@@ -97,12 +117,14 @@ public class Xpp3DomTest
         Xpp3Dom t2 = new Xpp3Dom( "top" );
         t2.setAttribute( "attr2", "value2" );
         t2.setValue( "t2Value" );
+        t2.setInputLocation( "t2top" );
 
         // merge and check results.
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( t1, t2 );
 
         assertEquals( 2, result.getAttributeNames().length );
         assertNull( result.getValue() );
+        assertEquals( "t1top", result.getInputLocation() );
     }
 
     @Test
@@ -111,11 +133,13 @@ public class Xpp3DomTest
         // create the dominant DOM
         Xpp3Dom t1 = new Xpp3Dom( "top" );
         t1.setAttribute( "attr", "value" );
+        t1.setInputLocation( "t1top" );
 
         // create the recessive DOM
         Xpp3Dom t2 = new Xpp3Dom( "top" );
         t2.setAttribute( "attr2", "value2" );
         t2.setValue( "t2Value" );
+        t2.setInputLocation( "t2top" );
 
         // merge and check results.
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( t1, t2 );
@@ -124,6 +148,7 @@ public class Xpp3DomTest
         assertEquals( 2, result.getAttributeNames().length );
 
         assertEquals( result.getValue(), t2.getValue() );
+        assertEquals( "t2top", result.getInputLocation() );
     }
 
     @Test
@@ -213,10 +238,12 @@ public class Xpp3DomTest
         throws XmlPullParserException, IOException
     {
         String parentConfigStr = "<configuration><items><item>one</item><item>two</item></items></configuration>";
-        Xpp3Dom parentConfig = Xpp3DomBuilder.build( new StringReader( parentConfigStr ) );
+        Xpp3Dom parentConfig =
+            Xpp3DomBuilder.build( new StringReader( parentConfigStr ), new FixedInputLocationBuilder( "parent" ) );
 
         String childConfigStr = "<configuration><items><item>three</item></items></configuration>";
-        Xpp3Dom childConfig = Xpp3DomBuilder.build( new StringReader( childConfigStr ) );
+        Xpp3Dom childConfig =
+            Xpp3DomBuilder.build( new StringReader( childConfigStr ), new FixedInputLocationBuilder( "child" ) );
 
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( childConfig, parentConfig );
         Xpp3Dom items = result.getChild( "items" );
@@ -225,6 +252,7 @@ public class Xpp3DomTest
 
         Xpp3Dom item = items.getChild( 0 );
         assertEquals( "three", item.getValue() );
+        assertEquals( "child", item.getInputLocation() );
     }
 
     @Test
@@ -232,11 +260,13 @@ public class Xpp3DomTest
         throws XmlPullParserException, IOException
     {
         String parentConfigStr = "<configuration><items><item>one</item><item>two</item></items></configuration>";
-        Xpp3Dom parentConfig = Xpp3DomBuilder.build( new StringReader( parentConfigStr ) );
+        Xpp3Dom parentConfig =
+            Xpp3DomBuilder.build( new StringReader( parentConfigStr ), new FixedInputLocationBuilder( "parent" ) );
 
         String childConfigStr =
             "<configuration><items combine.children=\"append\"><item>three</item></items></configuration>";
-        Xpp3Dom childConfig = Xpp3DomBuilder.build( new StringReader( childConfigStr ) );
+        Xpp3Dom childConfig =
+            Xpp3DomBuilder.build( new StringReader( childConfigStr ), new FixedInputLocationBuilder( "child" ) );
 
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( childConfig, parentConfig );
         Xpp3Dom items = result.getChild( "items" );
@@ -246,8 +276,11 @@ public class Xpp3DomTest
         Xpp3Dom[] item = items.getChildren();
 
         assertEquals( "one", item[0].getValue() );
+        assertEquals( "parent", item[0].getInputLocation() );
         assertEquals( "two", item[1].getValue() );
+        assertEquals( "parent", item[1].getInputLocation() );
         assertEquals( "three", item[2].getValue() );
+        assertEquals( "child", item[2].getInputLocation() );
     }
 
     @Test
@@ -294,5 +327,21 @@ public class Xpp3DomTest
         Xpp3Dom dom = Xpp3DomBuilder.build( new StringReader( dupes ) );
         assertNotNull( dom );
         assertEquals( "y", dom.getChild( "foo" ).getValue() );
+    }
+
+    private static class FixedInputLocationBuilder
+        implements Xpp3DomBuilder.InputLocationBuilder
+    {
+        private final Object location;
+
+        public FixedInputLocationBuilder( Object location )
+        {
+            this.location = location;
+        }
+
+        public Object toInputLocation( XmlPullParser parser )
+        {
+            return location;
+        }
     }
 }
