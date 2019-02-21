@@ -48,6 +48,11 @@ public class Xpp3Dom
 
     protected Xpp3Dom parent;
 
+    /**
+     * @since 3.2.0
+     */
+    protected Object inputLocation;
+
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     private static final Xpp3Dom[] EMPTY_DOM_ARRAY = new Xpp3Dom[0];
@@ -276,6 +281,26 @@ public class Xpp3Dom
     public void setParent( Xpp3Dom parent )
     {
         this.parent = parent;
+    }
+
+    // ----------------------------------------------------------------------
+    // Input location handling
+    // ----------------------------------------------------------------------
+
+    /**
+     * @since 3.2.0
+     */
+    public Object getInputLocation()
+    {
+        return inputLocation;
+    }
+
+    /**
+     * @since 3.2.0
+     */
+    public void setInputLocation( Object inputLocation )
+    {
+        this.inputLocation = inputLocation;
     }
 
     // ----------------------------------------------------------------------
