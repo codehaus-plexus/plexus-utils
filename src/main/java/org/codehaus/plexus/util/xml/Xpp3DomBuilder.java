@@ -37,7 +37,16 @@ public class Xpp3DomBuilder
     public static Xpp3Dom build( Reader reader )
         throws XmlPullParserException, IOException
     {
-        return build( reader, DEFAULT_TRIM );
+        return build( reader, null );
+    }
+
+    /**
+     * @since 3.2.0
+     */
+    public static Xpp3Dom build( Reader reader, InputLocationBuilder locationBuilder )
+        throws XmlPullParserException, IOException
+    {
+        return build( reader, DEFAULT_TRIM, locationBuilder );
     }
 
     public static Xpp3Dom build( InputStream is, String encoding )
@@ -69,12 +78,21 @@ public class Xpp3DomBuilder
     public static Xpp3Dom build( Reader reader, boolean trim )
         throws XmlPullParserException, IOException
     {
+        return build( reader, trim, null );
+    }
+
+    /**
+     * @since 3.2.0
+     */
+    public static Xpp3Dom build( Reader reader, boolean trim, InputLocationBuilder locationBuilder )
+        throws XmlPullParserException, IOException
+    {
         try
         {
             final XmlPullParser parser = new MXParser();
             parser.setInput( reader );
 
-            final Xpp3Dom xpp3Dom = build( parser, trim );
+            final Xpp3Dom xpp3Dom = build( parser, trim, locationBuilder );
             reader.close();
             reader = null;
 
@@ -95,6 +113,15 @@ public class Xpp3DomBuilder
     public static Xpp3Dom build( XmlPullParser parser, boolean trim )
         throws XmlPullParserException, IOException
     {
+        return build( parser, trim, null );
+    }
+
+    /**
+     * @since 3.2.0
+     */
+    public static Xpp3Dom build( XmlPullParser parser, boolean trim, InputLocationBuilder locationBuilder )
+        throws XmlPullParserException, IOException
+    {
         List<Xpp3Dom> elements = new ArrayList<Xpp3Dom>();
 
         List<StringBuilder> values = new ArrayList<StringBuilder>();
@@ -112,6 +139,11 @@ public class Xpp3DomBuilder
                 String rawName = parser.getName();
 
                 Xpp3Dom childConfiguration = new Xpp3Dom( rawName );
+
+                if ( locationBuilder != null )
+                {
+                    childConfiguration.setInputLocation( locationBuilder.toInputLocation( parser ) );
+                }
 
                 int depth = elements.size();
 
@@ -193,5 +225,15 @@ public class Xpp3DomBuilder
         }
 
         throw new IllegalStateException( "End of document found before returning to 0 depth" );
+    }
+
+    /**
+     * Input location builder interface, to be implemented to choose how to store data.
+     *
+     * @since 3.2.0
+     */
+    public static interface InputLocationBuilder
+    {
+        Object toInputLocation( XmlPullParser parser );
     }
 }

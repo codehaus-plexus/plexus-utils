@@ -175,6 +175,35 @@ public class Xpp3DomBuilderTest
         assertEquals( "Compare stringified DOMs", newString, s );
     }
 
+    @Test
+    public void testInputLocationTracking()
+        throws IOException, XmlPullParserException
+    {
+        Xpp3DomBuilder.InputLocationBuilder ilb = new Xpp3DomBuilder.InputLocationBuilder() {
+            public Object toInputLocation( XmlPullParser parser )
+            {
+                return parser.getLineNumber(); // store only line number as a simple Integer
+            }
+            
+        };
+        Xpp3Dom dom = Xpp3DomBuilder.build( new StringReader( createDomString() ), true, ilb );
+        Xpp3Dom expectedDom = createExpectedDom();
+        assertEquals( "root input location", expectedDom.getInputLocation(), dom.getInputLocation() );
+        for( int i = 0; i < dom.getChildCount(); i++ )
+        {
+            Xpp3Dom elt = dom.getChild( i );
+            Xpp3Dom expectedElt = expectedDom.getChild( i );
+            assertEquals( elt.getName() + " input location", expectedElt.getInputLocation(), elt.getInputLocation() );
+            
+            if ( "el2".equals( elt.getName() ) )
+            {
+                Xpp3Dom el3 = elt.getChild( 0 );
+                Xpp3Dom expectedEl3 = expectedElt.getChild( 0 );
+                assertEquals( el3.getName() + " input location", expectedEl3.getInputLocation(), el3.getInputLocation() );
+            }
+        }
+    }
+
     private static String getAttributeEncodedString()
     {
         StringBuilder domString = new StringBuilder();
@@ -237,23 +266,33 @@ public class Xpp3DomBuilderTest
 
     private static Xpp3Dom createExpectedDom()
     {
+        int line = 1;
         Xpp3Dom expectedDom = new Xpp3Dom( "root" );
+        expectedDom.setInputLocation( line );
         Xpp3Dom el1 = new Xpp3Dom( "el1" );
+        el1.setInputLocation( ++line );
         el1.setValue( "element1" );
         expectedDom.addChild( el1 );
+        ++line; // newline trimmed in Xpp3Dom but not in source
         Xpp3Dom el2 = new Xpp3Dom( "el2" );
+        el2.setInputLocation( ++line );
         el2.setAttribute( "att2", "attribute2\nnextline" );
         expectedDom.addChild( el2 );
         Xpp3Dom el3 = new Xpp3Dom( "el3" );
+        el3.setInputLocation( ++line );
         el3.setAttribute( "att3", "attribute3" );
         el3.setValue( "element3" );
         el2.addChild( el3 );
+        ++line;
         Xpp3Dom el4 = new Xpp3Dom( "el4" );
+        el4.setInputLocation( ++line );
         el4.setValue( "" );
         expectedDom.addChild( el4 );
         Xpp3Dom el5 = new Xpp3Dom( "el5" );
+        el5.setInputLocation( ++line );
         expectedDom.addChild( el5 );
         Xpp3Dom el6 = new Xpp3Dom( "el6" );
+        el6.setInputLocation( ++line );
         el6.setAttribute( "xml:space", "preserve" );
         el6.setValue( "  do not trim  " );
         expectedDom.addChild( el6 );
