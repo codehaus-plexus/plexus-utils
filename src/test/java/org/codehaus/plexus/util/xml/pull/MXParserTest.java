@@ -179,6 +179,49 @@ public class MXParserTest
     }
 
     @Test
+    public void testValidCharacterReferenceHexa()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        String input = "<root>&#x9;&#xA;&#xD;&#x20;&#x200;&#xD7FF;&#xE000;&#xFFA2;&#xFFFD;&#x10000;&#x10FFFD;&#x10FFFF;</root>";
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0x9, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0xA, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0xD, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0x20, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0x200, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0xD7FF, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0xE000, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0xFFA2, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0xFFFD, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0x10000, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0x10FFFD, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 0x10FFFF, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "Should success since the input represents all legal character references" );
+        }
+    }
+
+    @Test
     public void testInvalidCharacterReferenceDecimal()
         throws Exception
     {
@@ -195,6 +238,50 @@ public class MXParserTest
         catch ( XmlPullParserException e )
         {
             assertTrue( e.getMessage().contains( "character reference (with decimal value 1114112) is invalid" ) );
+        }
+    }
+
+    @Test
+    public void testValidCharacterReferenceDecimal()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        String input =
+            "<root>&#9;&#10;&#13;&#32;&#512;&#55295;&#57344;&#65442;&#65533;&#65536;&#1114109;&#1114111;</root>";
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 9, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 10, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 13, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 32, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 512, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 55295, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 57344, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 65442, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 65533, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 65536, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 1114109, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( 1114111, parser.getText().codePointAt( 0 ) );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "Should success since the input represents all legal character references" );
         }
     }
 

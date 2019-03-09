@@ -2664,14 +2664,16 @@ public class MXParser
         entityRefName = null;
         posStart = pos;
         char ch = more();
-        StringBuilder sb16 = new StringBuilder();
-        StringBuilder sb10 = new StringBuilder();
         if ( ch == '#' )
         {
             // parse character reference
+
             char charRef = 0;
             ch = more();
-            if ( ch == 'x' )
+            StringBuilder sb = new StringBuilder();
+            boolean isHex = ( ch == 'x' );
+
+            if ( isHex )
             {
                 // encoded in hex
                 while ( true )
@@ -2680,17 +2682,17 @@ public class MXParser
                     if ( ch >= '0' && ch <= '9' )
                     {
                         charRef = (char) ( charRef * 16 + ( ch - '0' ) );
-                        sb16.append( ch );
+                        sb.append( ch );
                     }
                     else if ( ch >= 'a' && ch <= 'f' )
                     {
                         charRef = (char) ( charRef * 16 + ( ch - ( 'a' - 10 ) ) );
-                        sb16.append( ch );
+                        sb.append( ch );
                     }
                     else if ( ch >= 'A' && ch <= 'F' )
                     {
                         charRef = (char) ( charRef * 16 + ( ch - ( 'A' - 10 ) ) );
-                        sb16.append( ch );
+                        sb.append( ch );
                     }
                     else if ( ch == ';' )
                     {
@@ -2711,7 +2713,7 @@ public class MXParser
                     if ( ch >= '0' && ch <= '9' )
                     {
                         charRef = (char) ( charRef * 10 + ( ch - '0' ) );
-                        sb10.append( ch );
+                        sb.append( ch );
                     }
                     else if ( ch == ';' )
                     {
@@ -2726,39 +2728,19 @@ public class MXParser
                 }
             }
             posEnd = pos - 1;
-            if ( sb16.length() > 0 )
-            {
-                try
-                {
-                    charRefOneCharBuf = toChars( Integer.parseInt( sb16.toString(), 16 ) );
-                }
-                catch ( IllegalArgumentException e )
-                {
-                    throw new XmlPullParserException( "character reference (with hex value " + sb16.toString()
-                        + ") is invalid", this, null );
-                }
-
-                if ( tokenize )
-                {
-                    text = newString( charRefOneCharBuf, 0, charRefOneCharBuf.length );
-                }
-                return charRefOneCharBuf;
-            }
-
             try
             {
-                toChars( Integer.parseInt( sb10.toString(), 10 ) );
+                charRefOneCharBuf = toChars( Integer.parseInt( sb.toString(), isHex ? 16 : 10 ) );
             }
             catch ( IllegalArgumentException e )
             {
-                throw new XmlPullParserException( "character reference (with decimal value " + sb10.toString()
-                    + ") is invalid", this, null );
+                throw new XmlPullParserException( "character reference (with " + ( isHex ? "hex" : "decimal" )
+                    + " value " + sb.toString() + ") is invalid", this, null );
             }
 
-            charRefOneCharBuf[0] = charRef;
             if ( tokenize )
             {
-                text = newString( charRefOneCharBuf, 0, 1 );
+                text = newString( charRefOneCharBuf, 0, charRefOneCharBuf.length );
             }
             return charRefOneCharBuf;
         }
@@ -4031,7 +4013,7 @@ public class MXParser
     {
         // Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
         return codePoint == 0x9 || codePoint == 0xA || codePoint == 0xD || ( 0x20 <= codePoint && codePoint <= 0xD7FF )
-            || ( 0xE000 <= codePoint && codePoint <= 0xFFFD ) || ( 0x10000 <= codePoint && codePoint <= 0X10FFFF );
+            || ( 0xE000 <= codePoint && codePoint <= 0xFFFD ) || ( 0x10000 <= codePoint && codePoint <= 0x10FFFF );
     }
 
     private static boolean isSupplementaryCodePoint( int codePoint )
