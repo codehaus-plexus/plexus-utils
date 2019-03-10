@@ -74,8 +74,8 @@
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_comment"> * import java.io.StringReader;</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_comment"> * import org.xmlpull.v1.XmlPullParser;</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_comment"> * import org.xmlpull.v1.&lt;a href="XmlPullParserException.html"&gt;XmlPullParserException.html&lt;/a&gt;;</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_comment"> * import org.xmlpull.v1.&lt;a href="XmlPullParserFactory.html"&gt;XmlPullParserFactory&lt;/a&gt;;</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_comment"> * import org.xmlpull.v1.XmlPullParserException;</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_comment"> * import org.xmlpull.v1.XmlPullParserFactory;</em>
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_comment"> * public class SimpleXmlPullApp</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_comment"> * {</em>
@@ -87,7 +87,7 @@
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_comment"> *         factory.setNamespaceAware(true);</em>
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_comment"> *         XmlPullParser xpp = factory.newPullParser();</em>
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_comment"> *         xpp.&lt;a href="#setInput"&gt;setInput&lt;/a&gt;( new StringReader ( "&amp;lt;foo&gt;Hello World!&amp;lt;/foo&gt;" ) );</em>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_comment"> *         xpp.setInput( new StringReader ( "&amp;lt;foo%gt;Hello World!&amp;lt;/foo&amp;gt;" ) );</em>
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_comment"> *         int eventType = xpp.getEventType();</em>
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_comment"> *         while (eventType != xpp.END_DOCUMENT) {</em>
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_comment"> *          if(eventType == xpp.START_DOCUMENT) {</em>
@@ -95,11 +95,11 @@
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_comment"> *          } else if(eventType == xpp.END_DOCUMENT) {</em>
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_comment"> *              System.out.println("End document");</em>
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_comment"> *          } else if(eventType == xpp.START_TAG) {</em>
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_comment"> *              System.out.println("Start tag "+xpp.&lt;a href="#getName()"&gt;getName()&lt;/a&gt;);</em>
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_comment"> *              System.out.println("Start tag "+xpp.getName());</em>
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_comment"> *          } else if(eventType == xpp.END_TAG) {</em>
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_comment"> *              System.out.println("End tag "+xpp.getName());</em>
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_comment"> *          } else if(eventType == xpp.TEXT) {</em>
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_comment"> *              System.out.println("Text "+xpp.&lt;a href="#getText()"&gt;getText()&lt;/a&gt;);</em>
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_comment"> *              System.out.println("Text "+xpp.getText());</em>
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>  <em class="jxr_comment"> *          }</em>
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  <em class="jxr_comment"> *          eventType = xpp.next();</em>
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>  <em class="jxr_comment"> *         }</em>
@@ -115,7 +115,7 @@
 <a class="jxr_linenumber" name="L107" href="#L107">107</a> <em class="jxr_comment"> * Text Hello World!</em>
 <a class="jxr_linenumber" name="L108" href="#L108">108</a> <em class="jxr_comment"> * End tag foo</em>
 <a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_comment"> * &lt;/pre&gt;</em>
-<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_comment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_comment"> * </em>
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_comment"> * For more details on API usage, please refer to the quick Introduction available at</em>
 <a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_comment"> * &lt;a href="<a href="http://www.xmlpull.org" target="alexandria_uri">http://www.xmlpull.org</a>"&gt;<a href="http://www.xmlpull.org" target="alexandria_uri">http://www.xmlpull.org</a>&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_comment"> *</em>
@@ -148,7 +148,7 @@
 <a class="jxr_linenumber" name="L140" href="#L140">140</a> 
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_javadoccomment">     * Signalize that parser is at the very beginning of the document and nothing was read yet. This event type can only</em>
-<a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_javadoccomment">     * be observed by calling getEvent() before the first call to next(), nextToken, or nextTag()&lt;/a&gt;).</em>
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_javadoccomment">     * be observed by calling getEvent() before the first call to next(), nextToken, or nextTag()).</em>
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_javadoccomment">     * @see #next</em>
 <a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * @see #nextToken</em>
@@ -465,7 +465,7 @@
 <a class="jxr_linenumber" name="L457" href="#L457">457</a> <em class="jxr_javadoccomment">     *       XmlPullParser pp = ...</em>
 <a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     *       int nsStart = pp.getNamespaceCount(pp.getDepth()-1);</em>
 <a class="jxr_linenumber" name="L459" href="#L459">459</a> <em class="jxr_javadoccomment">     *       int nsEnd = pp.getNamespaceCount(pp.getDepth());</em>
-<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     *       for (int i = nsStart; i &lt; nsEnd; i++) {</em>
+<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     *       for (int i = nsStart; i &amp;gt; nsEnd; i++) {</em>
 <a class="jxr_linenumber" name="L461" href="#L461">461</a> <em class="jxr_javadoccomment">     *          String prefix = pp.getNamespacePrefix(i);</em>
 <a class="jxr_linenumber" name="L462" href="#L462">462</a> <em class="jxr_javadoccomment">     *          String ns = pp.getNamespaceUri(i);</em>
 <a class="jxr_linenumber" name="L463" href="#L463">463</a> <em class="jxr_javadoccomment">     *           // ...</em>
@@ -509,7 +509,7 @@
 <a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     * This method is a convenience method for</em>
 <a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     * for ( int i = getNamespaceCount( getDepth() ) - 1; i &gt;= 0; i-- )</em>
+<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     * for ( int i = getNamespaceCount( getDepth() ) - 1; i &amp;gt;= 0; i-- )</em>
 <a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">     * {</em>
 <a class="jxr_linenumber" name="L506" href="#L506">506</a> <em class="jxr_javadoccomment">     *     if ( getNamespacePrefix( i ).equals( prefix ) )</em>
 <a class="jxr_linenumber" name="L507" href="#L507">507</a> <em class="jxr_javadoccomment">     *     {</em>
@@ -539,7 +539,7 @@
 <a class="jxr_linenumber" name="L531" href="#L531">531</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L532" href="#L532">532</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
 <a class="jxr_linenumber" name="L533" href="#L533">533</a> <em class="jxr_javadoccomment">     * &amp;lt;!-- outside --&amp;gt;     0</em>
-<a class="jxr_linenumber" name="L534" href="#L534">534</a> <em class="jxr_javadoccomment">     * &amp;lt;root&gt;                  1</em>
+<a class="jxr_linenumber" name="L534" href="#L534">534</a> <em class="jxr_javadoccomment">     * &amp;lt;root&amp;gt;                  1</em>
 <a class="jxr_linenumber" name="L535" href="#L535">535</a> <em class="jxr_javadoccomment">     *   sometext                 1</em>
 <a class="jxr_linenumber" name="L536" href="#L536">536</a> <em class="jxr_javadoccomment">     *     &amp;lt;foobar&amp;gt;         2</em>
 <a class="jxr_linenumber" name="L537" href="#L537">537</a> <em class="jxr_javadoccomment">     *     &amp;lt;/foobar&amp;gt;        2</em>
@@ -771,8 +771,8 @@
 <a class="jxr_linenumber" name="L763" href="#L763">763</a> <em class="jxr_javadoccomment">     * exception mus be thrown if entity reference can not be expanded). If element content is empty (content is "")</em>
 <a class="jxr_linenumber" name="L764" href="#L764">764</a> <em class="jxr_javadoccomment">     * then no TEXT event will be reported.</em>
 <a class="jxr_linenumber" name="L765" href="#L765">765</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="L766" href="#L766">766</a> <em class="jxr_javadoccomment">     * &lt;b&gt;NOTE:&lt;/b&gt; empty element (such as &amp;lt;tag/&gt;) will be reported with two separate events: START_TAG, END_TAG - it</em>
-<a class="jxr_linenumber" name="L767" href="#L767">767</a> <em class="jxr_javadoccomment">     * must be so to preserve parsing equivalency of empty element to &amp;lt;tag&gt;&amp;lt;/tag&gt;. (see isEmptyElementTag ())</em>
+<a class="jxr_linenumber" name="L766" href="#L766">766</a> <em class="jxr_javadoccomment">     * &lt;b&gt;NOTE:&lt;/b&gt; empty element (such as &amp;lt;tag/&amp;gt;) will be reported with two separate events: START_TAG, END_TAG - it</em>
+<a class="jxr_linenumber" name="L767" href="#L767">767</a> <em class="jxr_javadoccomment">     * must be so to preserve parsing equivalency of empty element to &amp;lt;tag&amp;gt;&amp;lt;/tag&amp;gt;. (see isEmptyElementTag ())</em>
 <a class="jxr_linenumber" name="L768" href="#L768">768</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L769" href="#L769">769</a> <em class="jxr_javadoccomment">     * @see #isEmptyElementTag</em>
 <a class="jxr_linenumber" name="L770" href="#L770">770</a> <em class="jxr_javadoccomment">     * @see #START_TAG</em>
@@ -803,9 +803,9 @@
 <a class="jxr_linenumber" name="L795" href="#L795">795</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;END_DOCUMENT</em>
 <a class="jxr_linenumber" name="L796" href="#L796">796</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;null</em>
 <a class="jxr_linenumber" name="L797" href="#L797">797</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;START_TAG</em>
-<a class="jxr_linenumber" name="L798" href="#L798">798</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP enabled and then returns XML tag, ex: &amp;lt;tag attr='val'&gt;</em>
+<a class="jxr_linenumber" name="L798" href="#L798">798</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP enabled and then returns XML tag, ex: &amp;lt;tag attr='val'&amp;gt;</em>
 <a class="jxr_linenumber" name="L799" href="#L799">799</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;END_TAG</em>
-<a class="jxr_linenumber" name="L800" href="#L800">800</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP id enabled and then returns XML tag, ex: &amp;lt;/tag&gt;</em>
+<a class="jxr_linenumber" name="L800" href="#L800">800</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP id enabled and then returns XML tag, ex: &amp;lt;/tag&amp;gt;</em>
 <a class="jxr_linenumber" name="L801" href="#L801">801</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;TEXT</em>
 <a class="jxr_linenumber" name="L802" href="#L802">802</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;return element content. &lt;br&gt;</em>
 <a class="jxr_linenumber" name="L803" href="#L803">803</a> <em class="jxr_javadoccomment">     * Note: that element content may be delivered in multiple consecutive TEXT events.</em>
@@ -815,13 +815,13 @@
 <a class="jxr_linenumber" name="L807" href="#L807">807</a> <em class="jxr_javadoccomment">     * optional. &lt;br&gt;</em>
 <a class="jxr_linenumber" name="L808" href="#L808">808</a> <em class="jxr_javadoccomment">     * Note: that element content may be delivered in multiple consecutive IGNORABLE_WHITESPACE events.</em>
 <a class="jxr_linenumber" name="L809" href="#L809">809</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;CDSECT</em>
-<a class="jxr_linenumber" name="L810" href="#L810">810</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;return text &lt;em&gt;inside&lt;/em&gt; CDATA (ex. 'fo&amp;lt;o' from &amp;lt;!CDATA[fo&amp;lt;o]]&gt;)</em>
+<a class="jxr_linenumber" name="L810" href="#L810">810</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;return text &lt;em&gt;inside&lt;/em&gt; CDATA (ex. 'fo&amp;lt;o' from &amp;lt;!CDATA[fo&amp;lt;o]]&amp;gt;)</em>
 <a class="jxr_linenumber" name="L811" href="#L811">811</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;PROCESSING_INSTRUCTION</em>
-<a class="jxr_linenumber" name="L812" href="#L812">812</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;if FEATURE_XML_ROUNDTRIP is true return exact PI content ex: 'pi foo' from &amp;lt;?pi foo?&gt; otherwise it may be</em>
-<a class="jxr_linenumber" name="L813" href="#L813">813</a> <em class="jxr_javadoccomment">     * exact PI content or concatenation of PI target, space and data so for example for &amp;lt;?target data?&gt; string</em>
+<a class="jxr_linenumber" name="L812" href="#L812">812</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;if FEATURE_XML_ROUNDTRIP is true return exact PI content ex: 'pi foo' from &amp;lt;?pi foo?&amp;gt; otherwise it may be</em>
+<a class="jxr_linenumber" name="L813" href="#L813">813</a> <em class="jxr_javadoccomment">     * exact PI content or concatenation of PI target, space and data so for example for &amp;lt;?target data?&amp;gt; string</em>
 <a class="jxr_linenumber" name="L814" href="#L814">814</a> <em class="jxr_javadoccomment">     * &amp;quot;target data&amp;quot; may be returned if FEATURE_XML_ROUNDTRIP is false.</em>
 <a class="jxr_linenumber" name="L815" href="#L815">815</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;COMMENT</em>
-<a class="jxr_linenumber" name="L816" href="#L816">816</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;return comment content ex. 'foo bar' from &amp;lt;!--foo bar--&gt;</em>
+<a class="jxr_linenumber" name="L816" href="#L816">816</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;return comment content ex. 'foo bar' from &amp;lt;!--foo bar--&amp;gt;</em>
 <a class="jxr_linenumber" name="L817" href="#L817">817</a> <em class="jxr_javadoccomment">     * &lt;dt&gt;ENTITY_REF</em>
 <a class="jxr_linenumber" name="L818" href="#L818">818</a> <em class="jxr_javadoccomment">     * &lt;dd&gt;getText() MUST return entity replacement text if PROCESS_DOCDECL is false otherwise getText() MAY return</em>
 <a class="jxr_linenumber" name="L819" href="#L819">819</a> <em class="jxr_javadoccomment">     * null, additionally getTextCharacters() MUST return entity name (for example 'entity_name' for &amp;amp;entity_name;).</em>
@@ -839,14 +839,14 @@
 <a class="jxr_linenumber" name="L831" href="#L831">831</a> <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L832" href="#L832">832</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
 <a class="jxr_linenumber" name="L833" href="#L833">833</a> <em class="jxr_javadoccomment">     * &amp;quot; titlepage SYSTEM "<a href="http://www.foo.bar/dtds/typo.dtd" target="alexandria_uri">http://www.foo.bar/dtds/typo.dtd</a>"</em>
-<a class="jxr_linenumber" name="L834" href="#L834">834</a> <em class="jxr_javadoccomment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&gt;]&amp;quot;</em>
+<a class="jxr_linenumber" name="L834" href="#L834">834</a> <em class="jxr_javadoccomment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&amp;gt;]&amp;quot;</em>
 <a class="jxr_linenumber" name="L835" href="#L835">835</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
 <a class="jxr_linenumber" name="L836" href="#L836">836</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
 <a class="jxr_linenumber" name="L837" href="#L837">837</a> <em class="jxr_javadoccomment">     * for input document that contained:</em>
 <a class="jxr_linenumber" name="L838" href="#L838">838</a> <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L839" href="#L839">839</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
 <a class="jxr_linenumber" name="L840" href="#L840">840</a> <em class="jxr_javadoccomment">     * &amp;lt;!DOCTYPE titlepage SYSTEM "<a href="http://www.foo.bar/dtds/typo.dtd" target="alexandria_uri">http://www.foo.bar/dtds/typo.dtd</a>"</em>
-<a class="jxr_linenumber" name="L841" href="#L841">841</a> <em class="jxr_javadoccomment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&gt;]&gt;</em>
+<a class="jxr_linenumber" name="L841" href="#L841">841</a> <em class="jxr_javadoccomment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&amp;gt;]&amp;gt;</em>
 <a class="jxr_linenumber" name="L842" href="#L842">842</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
 <a class="jxr_linenumber" name="L843" href="#L843">843</a> <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L844" href="#L844">844</a> <em class="jxr_javadoccomment">     * otherwise if FEATURE_XML_ROUNDTRIP is false and PROCESS_DOCDECL is true then what is returned is undefined (it</em>
@@ -912,7 +912,7 @@
 <a class="jxr_linenumber" name="L904" href="#L904">904</a> <em class="jxr_javadoccomment">     *   p.requireEvent(p.START_TAG, "", "tag");</em>
 <a class="jxr_linenumber" name="L905" href="#L905">905</a> <em class="jxr_javadoccomment">     *   String content = p.nextText();</em>
 <a class="jxr_linenumber" name="L906" href="#L906">906</a> <em class="jxr_javadoccomment">     *   p.requireEvent(p.END_TAG, "", "tag");</em>
-<a class="jxr_linenumber" name="L907" href="#L907">907</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;</em>
+<a class="jxr_linenumber" name="L907" href="#L907">907</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;&lt;/li&gt;&lt;/ol&gt;</em>
 <a class="jxr_linenumber" name="L908" href="#L908">908</a> <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L909" href="#L909">909</a> <em class="jxr_javadoccomment">     * This function together with nextTag make it very easy to parse XML that has no mixed content.</em>
 <a class="jxr_linenumber" name="L910" href="#L910">910</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
@@ -972,6 +972,6 @@
 <a class="jxr_linenumber" name="L964" href="#L964">964</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2017 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2019 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>

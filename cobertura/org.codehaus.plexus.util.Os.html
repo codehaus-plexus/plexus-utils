@@ -12,7 +12,7 @@
 <div class="separator">&nbsp;</div>
 <table class="report">
 <thead><tr>  <td class="heading">Classes in this File</td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Line Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Branch Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Complexity</a></td></tr></thead>
-  <tr><td><a href="org.codehaus.plexus.util.Os.html">Os</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">73%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:73px"><span class="text">63/86</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">50%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:50px"><span class="text">41/82</span></div></div></td></tr></table></td><td class="value"><span class="hidden">3.3125;</span>3.312</td></tr>
+  <tr><td><a href="org.codehaus.plexus.util.Os.html">Os</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">76 %</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:76px"><span class="text">66/86</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">57 %</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:57px"><span class="text">47/82</span></div></div></td></tr></table></td><td class="value"><span class="hidden">3.3125;</span>3,312</td></tr>
 
 </table>
 <div class="separator">&nbsp;</div>
@@ -310,9 +310,9 @@
 <tr>  <td class="numLine">&nbsp;158</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * </span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;159</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * @param f The OS family type desired&lt;br /&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * @param f The OS family type desired&lt;br&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;160</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     *            Possible values:&lt;br /&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     *            Possible values:</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;161</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     *            &lt;ul&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;162</td>  <td class="nbHits">&nbsp;</td>
@@ -442,7 +442,7 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> isFamily( String family )</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;229</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;230</td>  <td class="nbHitsCovered">&nbsp;104</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> isOs( family, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span> );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;230</td>  <td class="nbHitsCovered">&nbsp;128</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> isOs( family, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span> );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;231</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;232</td>  <td class="nbHits">&nbsp;</td>
@@ -542,95 +542,95 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> isOs( String family, String name, String arch, String version )</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;281</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;282</td>  <td class="nbHitsCovered">&nbsp;113</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">boolean</span> retValue = <span class="keyword">false</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;282</td>  <td class="nbHitsCovered">&nbsp;137</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">boolean</span> retValue = <span class="keyword">false</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;283</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;284</td>  <td class="nbHitsUncovered"><a title="Line 284: Conditional coverage 12% (1/8) [each condition: 50%, 0%, 0%, 0%].">&nbsp;113</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 284: Conditional coverage 12% (1/8) [each condition: 50%, 0%, 0%, 0%].">        <span class="keyword">if</span> ( family != <span class="keyword">null</span> || name != <span class="keyword">null</span> || arch != <span class="keyword">null</span> || version != <span class="keyword">null</span> )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;284</td>  <td class="nbHitsUncovered"><a title="Line 284: Conditional coverage 12 % (1/8) [each condition: 50 %, 0 %, 0 %, 0 %].">&nbsp;137</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 284: Conditional coverage 12 % (1/8) [each condition: 50 %, 0 %, 0 %, 0 %].">        <span class="keyword">if</span> ( family != <span class="keyword">null</span> || name != <span class="keyword">null</span> || arch != <span class="keyword">null</span> || version != <span class="keyword">null</span> )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;285</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;286</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;287</td>  <td class="nbHitsCovered">&nbsp;113</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isFamily = <span class="keyword">true</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;288</td>  <td class="nbHitsCovered">&nbsp;113</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isName = <span class="keyword">true</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;289</td>  <td class="nbHitsCovered">&nbsp;113</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isArch = <span class="keyword">true</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;290</td>  <td class="nbHitsCovered">&nbsp;113</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isVersion = <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;287</td>  <td class="nbHitsCovered">&nbsp;137</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isFamily = <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;288</td>  <td class="nbHitsCovered">&nbsp;137</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isName = <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;289</td>  <td class="nbHitsCovered">&nbsp;137</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isArch = <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;290</td>  <td class="nbHitsCovered">&nbsp;137</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> isVersion = <span class="keyword">true</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;291</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;292</td>  <td class="nbHitsUncovered"><a title="Line 292: Conditional coverage 50% (1/2).">&nbsp;113</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 292: Conditional coverage 50% (1/2).">            <span class="keyword">if</span> ( family != <span class="keyword">null</span> )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;292</td>  <td class="nbHitsUncovered"><a title="Line 292: Conditional coverage 50 % (1/2).">&nbsp;137</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 292: Conditional coverage 50 % (1/2).">            <span class="keyword">if</span> ( family != <span class="keyword">null</span> )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;293</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;294</td>  <td class="nbHitsCovered"><a title="Line 294: Conditional coverage 100% (2/2).">&nbsp;113</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 294: Conditional coverage 100% (2/2).">                <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_WINDOWS ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;294</td>  <td class="nbHitsCovered"><a title="Line 294: Conditional coverage 100 % (2/2).">&nbsp;137</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 294: Conditional coverage 100 % (2/2).">                <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_WINDOWS ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;295</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;296</td>  <td class="nbHitsCovered">&nbsp;91</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_WINDOWS );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;296</td>  <td class="nbHitsCovered">&nbsp;93</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_WINDOWS );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;297</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;298</td>  <td class="nbHitsUncovered"><a title="Line 298: Conditional coverage 50% (1/2).">&nbsp;22</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 298: Conditional coverage 50% (1/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_OS2 ) )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;298</td>  <td class="nbHitsCovered"><a title="Line 298: Conditional coverage 100 % (2/2).">&nbsp;44</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 298: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_OS2 ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;299</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;300</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_OS2 );</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;300</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_OS2 );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;301</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;302</td>  <td class="nbHitsCovered"><a title="Line 302: Conditional coverage 100% (2/2).">&nbsp;22</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 302: Conditional coverage 100% (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_NETWARE ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;302</td>  <td class="nbHitsCovered"><a title="Line 302: Conditional coverage 100 % (2/2).">&nbsp;42</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 302: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_NETWARE ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;303</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;304</td>  <td class="nbHitsCovered">&nbsp;3</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_NETWARE );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;304</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_NETWARE );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;305</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;306</td>  <td class="nbHitsUncovered"><a title="Line 306: Conditional coverage 50% (1/2).">&nbsp;19</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 306: Conditional coverage 50% (1/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_DOS ) )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;306</td>  <td class="nbHitsUncovered"><a title="Line 306: Conditional coverage 50 % (1/2).">&nbsp;40</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 306: Conditional coverage 50 % (1/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_DOS ) )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;307</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;308</td>  <td class="nbHitsUncovered"><a title="Line 308: Conditional coverage 0% (0/8) [each condition: 0%, 0%, 0%, 0%].">&nbsp;0</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 308: Conditional coverage 0% (0/8) [each condition: 0%, 0%, 0%, 0%].">                    isFamily = PATH_SEP.equals( <span class="string">";"</span> ) &amp;&amp; !isFamily( FAMILY_NETWARE ) &amp;&amp; !isFamily( FAMILY_WINDOWS )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;308</td>  <td class="nbHitsUncovered"><a title="Line 308: Conditional coverage 0 % (0/8) [each condition: 0 %, 0 %, 0 %, 0 %].">&nbsp;0</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 308: Conditional coverage 0 % (0/8) [each condition: 0 %, 0 %, 0 %, 0 %].">                    isFamily = PATH_SEP.equals( <span class="string">";"</span> ) &amp;&amp; !isFamily( FAMILY_NETWARE ) &amp;&amp; !isFamily( FAMILY_WINDOWS )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;309</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        &amp;&amp; !isFamily( FAMILY_WIN9X );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;310</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;311</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;312</td>  <td class="nbHitsCovered"><a title="Line 312: Conditional coverage 100% (2/2).">&nbsp;19</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 312: Conditional coverage 100% (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_MAC ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;312</td>  <td class="nbHitsCovered"><a title="Line 312: Conditional coverage 100 % (2/2).">&nbsp;40</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 312: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_MAC ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;313</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;314</td>  <td class="nbHitsCovered">&nbsp;9</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_MAC );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;314</td>  <td class="nbHitsCovered">&nbsp;11</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_MAC );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;315</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;316</td>  <td class="nbHitsCovered"><a title="Line 316: Conditional coverage 100% (2/2).">&nbsp;10</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 316: Conditional coverage 100% (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_TANDEM ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;316</td>  <td class="nbHitsCovered"><a title="Line 316: Conditional coverage 100 % (2/2).">&nbsp;29</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 316: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_TANDEM ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;317</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;318</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( <span class="string">"nonstop_kernel"</span> );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;319</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;320</td>  <td class="nbHitsUncovered"><a title="Line 320: Conditional coverage 50% (1/2).">&nbsp;8</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 320: Conditional coverage 50% (1/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_UNIX ) )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;320</td>  <td class="nbHitsCovered"><a title="Line 320: Conditional coverage 100 % (2/2).">&nbsp;27</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 320: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_UNIX ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;321</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;322</td>  <td class="nbHitsUncovered"><a title="Line 322: Conditional coverage 0% (0/8) [each condition: 0%, 0%, 0%, 0%].">&nbsp;0</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 322: Conditional coverage 0% (0/8) [each condition: 0%, 0%, 0%, 0%].">                    isFamily = PATH_SEP.equals( <span class="string">":"</span> ) &amp;&amp; !isFamily( FAMILY_OPENVMS )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;322</td>  <td class="nbHitsUncovered"><a title="Line 322: Conditional coverage 37 % (3/8) [each condition: 50 %, 50 %, 50 %, 0 %].">&nbsp;9</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 322: Conditional coverage 37 % (3/8) [each condition: 50 %, 50 %, 50 %, 0 %].">                    isFamily = PATH_SEP.equals( <span class="string">":"</span> ) &amp;&amp; !isFamily( FAMILY_OPENVMS )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;323</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        &amp;&amp; ( !isFamily( FAMILY_MAC ) || OS_NAME.endsWith( <span class="string">"x"</span> ) );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;324</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;325</td>  <td class="nbHitsCovered"><a title="Line 325: Conditional coverage 100% (2/2).">&nbsp;8</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 325: Conditional coverage 100% (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_WIN9X ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;325</td>  <td class="nbHitsCovered"><a title="Line 325: Conditional coverage 100 % (2/2).">&nbsp;18</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 325: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_WIN9X ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;326</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;327</td>  <td class="nbHitsUncovered"><a title="Line 327: Conditional coverage 10% (1/10) [each condition: 50%, 0%, 0%, 0%, 0%].">&nbsp;2</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 327: Conditional coverage 10% (1/10) [each condition: 50%, 0%, 0%, 0%, 0%].">                    isFamily = isFamily( FAMILY_WINDOWS ) &amp;&amp; ( OS_NAME.contains( <span class="string">"95"</span> ) || OS_NAME.contains( <span class="string">"98"</span> )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;327</td>  <td class="nbHitsUncovered"><a title="Line 327: Conditional coverage 10 % (1/10) [each condition: 50 %, 0 %, 0 %, 0 %, 0 %].">&nbsp;2</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 327: Conditional coverage 10 % (1/10) [each condition: 50 %, 0 %, 0 %, 0 %, 0 %].">                    isFamily = isFamily( FAMILY_WINDOWS ) &amp;&amp; ( OS_NAME.contains( <span class="string">"95"</span> ) || OS_NAME.contains( <span class="string">"98"</span> )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;328</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                        || OS_NAME.contains( <span class="string">"me"</span> ) || OS_NAME.contains( <span class="string">"ce"</span> ) );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;329</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;330</td>  <td class="nbHitsCovered"><a title="Line 330: Conditional coverage 100% (2/2).">&nbsp;6</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 330: Conditional coverage 100% (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_ZOS ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;330</td>  <td class="nbHitsCovered"><a title="Line 330: Conditional coverage 100 % (2/2).">&nbsp;16</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 330: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_ZOS ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;331</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;332</td>  <td class="nbHitsUncovered"><a title="Line 332: Conditional coverage 50% (2/4) [each condition: 50%, 50%].">&nbsp;2</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 332: Conditional coverage 50% (2/4) [each condition: 50%, 50%].">                    isFamily = OS_NAME.contains( FAMILY_ZOS ) || OS_NAME.contains( <span class="string">"os/390"</span> );</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;332</td>  <td class="nbHitsUncovered"><a title="Line 332: Conditional coverage 50 % (2/4) [each condition: 50 %, 50 %].">&nbsp;2</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 332: Conditional coverage 50 % (2/4) [each condition: 50 %, 50 %].">                    isFamily = OS_NAME.contains( FAMILY_ZOS ) || OS_NAME.contains( <span class="string">"os/390"</span> );</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;333</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;334</td>  <td class="nbHitsCovered"><a title="Line 334: Conditional coverage 100% (2/2).">&nbsp;4</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 334: Conditional coverage 100% (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_OS400 ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;334</td>  <td class="nbHitsCovered"><a title="Line 334: Conditional coverage 100 % (2/2).">&nbsp;14</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 334: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_OS400 ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;335</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;336</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_OS400 );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;337</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;338</td>  <td class="nbHitsUncovered"><a title="Line 338: Conditional coverage 50% (1/2).">&nbsp;2</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 338: Conditional coverage 50% (1/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_OPENVMS ) )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;338</td>  <td class="nbHitsCovered"><a title="Line 338: Conditional coverage 100 % (2/2).">&nbsp;12</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 338: Conditional coverage 100 % (2/2).">                <span class="keyword">else</span> <span class="keyword">if</span> ( family.equalsIgnoreCase( FAMILY_OPENVMS ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;339</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;340</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_OPENVMS );</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;340</td>  <td class="nbHitsCovered">&nbsp;10</td>  <td class="src"><pre class="src">&nbsp;                    isFamily = OS_NAME.contains( FAMILY_OPENVMS );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;341</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;342</td>  <td class="nbHits">&nbsp;</td>
@@ -642,28 +642,28 @@
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;346</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;347</td>  <td class="nbHitsCovered"><a title="Line 347: Conditional coverage 100% (2/2).">&nbsp;113</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 347: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> ( name != <span class="keyword">null</span> )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;347</td>  <td class="nbHitsCovered"><a title="Line 347: Conditional coverage 100 % (2/2).">&nbsp;137</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 347: Conditional coverage 100 % (2/2).">            <span class="keyword">if</span> ( name != <span class="keyword">null</span> )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;348</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;349</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;                isName = name.toLowerCase( Locale.US ).equals( OS_NAME );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;350</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;351</td>  <td class="nbHitsCovered"><a title="Line 351: Conditional coverage 100% (2/2).">&nbsp;113</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 351: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> ( arch != <span class="keyword">null</span> )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;351</td>  <td class="nbHitsCovered"><a title="Line 351: Conditional coverage 100 % (2/2).">&nbsp;137</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 351: Conditional coverage 100 % (2/2).">            <span class="keyword">if</span> ( arch != <span class="keyword">null</span> )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;352</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;353</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;                isArch = arch.toLowerCase( Locale.US ).equals( OS_ARCH );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;354</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;355</td>  <td class="nbHitsCovered"><a title="Line 355: Conditional coverage 100% (2/2).">&nbsp;113</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 355: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> ( version != <span class="keyword">null</span> )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;355</td>  <td class="nbHitsCovered"><a title="Line 355: Conditional coverage 100 % (2/2).">&nbsp;137</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 355: Conditional coverage 100 % (2/2).">            <span class="keyword">if</span> ( version != <span class="keyword">null</span> )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;356</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;357</td>  <td class="nbHitsCovered">&nbsp;2</td>  <td class="src"><pre class="src">&nbsp;                isVersion = version.toLowerCase( Locale.US ).equals( OS_VERSION );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;358</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;359</td>  <td class="nbHitsCovered"><a title="Line 359: Conditional coverage 100% (8/8) [each condition: 100%, 100%, 100%, 100%].">&nbsp;113</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 359: Conditional coverage 100% (8/8) [each condition: 100%, 100%, 100%, 100%].">            retValue = isFamily &amp;&amp; isName &amp;&amp; isArch &amp;&amp; isVersion;</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;359</td>  <td class="nbHitsCovered"><a title="Line 359: Conditional coverage 100 % (8/8) [each condition: 100 %, 100 %, 100 %, 100 %].">&nbsp;137</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 359: Conditional coverage 100 % (8/8) [each condition: 100 %, 100 %, 100 %, 100 %].">            retValue = isFamily &amp;&amp; isName &amp;&amp; isArch &amp;&amp; isVersion;</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;360</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;361</td>  <td class="nbHitsCovered">&nbsp;113</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> retValue;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;361</td>  <td class="nbHitsCovered">&nbsp;137</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> retValue;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;362</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;363</td>  <td class="nbHits">&nbsp;</td>
@@ -691,7 +691,7 @@
 <tr>  <td class="numLine">&nbsp;374</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// safely.</span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;375</td>  <td class="nbHitsCovered">&nbsp;1</td>  <td class="src"><pre class="src">&nbsp;        Set&lt;String&gt; families = <span class="keyword">null</span>;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;376</td>  <td class="nbHitsUncovered"><a title="Line 376: Conditional coverage 50% (1/2).">&nbsp;1</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 376: Conditional coverage 50% (1/2).">        <span class="keyword">if</span> ( !validFamilies.isEmpty() )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;376</td>  <td class="nbHitsUncovered"><a title="Line 376: Conditional coverage 50 % (1/2).">&nbsp;1</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 376: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !validFamilies.isEmpty() )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;377</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;378</td>  <td class="nbHitsCovered">&nbsp;1</td>  <td class="src"><pre class="src">&nbsp;            families = validFamilies;</pre></td></tr>
@@ -704,16 +704,16 @@
 <tr>  <td class="numLineCover">&nbsp;382</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            families = setValidFamilies();</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;383</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;384</td>  <td class="nbHitsUncovered"><a title="Line 384: Conditional coverage 50% (1/2).">&nbsp;1</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 384: Conditional coverage 50% (1/2).">        <span class="keyword">for</span> ( String fam : families )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;384</td>  <td class="nbHitsUncovered"><a title="Line 384: Conditional coverage 50 % (1/2).">&nbsp;1</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 384: Conditional coverage 50 % (1/2).">        <span class="keyword">for</span> ( String fam : families )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;385</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;386</td>  <td class="nbHitsCovered"><a title="Line 386: Conditional coverage 100% (2/2).">&nbsp;7</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 386: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> ( Os.isFamily( fam ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;386</td>  <td class="nbHitsCovered"><a title="Line 386: Conditional coverage 100 % (2/2).">&nbsp;9</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 386: Conditional coverage 100 % (2/2).">            <span class="keyword">if</span> ( Os.isFamily( fam ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;387</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;388</td>  <td class="nbHitsCovered">&nbsp;1</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">return</span> fam;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;389</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;390</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;390</td>  <td class="nbHitsCovered">&nbsp;8</td>  <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;391</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;        <span class="keyword">return</span> <span class="keyword">null</span>;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;392</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
@@ -787,6 +787,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.0.3 on 8/3/17 8:02 PM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 10/03/19 19:25.</div>
 </body>
 </html>

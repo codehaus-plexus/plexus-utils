@@ -154,9 +154,9 @@
 <tr>  <td class="numLine">&nbsp;68</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> * import org.xmlpull.v1.XmlPullParser;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;69</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment"> * import org.xmlpull.v1.&lt;a href="XmlPullParserException.html"&gt;XmlPullParserException.html&lt;/a&gt;;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment"> * import org.xmlpull.v1.XmlPullParserException;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;70</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment"> * import org.xmlpull.v1.&lt;a href="XmlPullParserFactory.html"&gt;XmlPullParserFactory&lt;/a&gt;;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment"> * import org.xmlpull.v1.XmlPullParserFactory;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;71</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;72</td>  <td class="nbHits">&nbsp;</td>
@@ -180,7 +180,7 @@
 <tr>  <td class="numLine">&nbsp;81</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;82</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment"> *         xpp.&lt;a href="#setInput"&gt;setInput&lt;/a&gt;( new StringReader ( "&amp;lt;foo&gt;Hello World!&amp;lt;/foo&gt;" ) );</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment"> *         xpp.setInput( new StringReader ( "&amp;lt;foo%gt;Hello World!&amp;lt;/foo&amp;gt;" ) );</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;83</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *         int eventType = xpp.getEventType();</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;84</td>  <td class="nbHits">&nbsp;</td>
@@ -196,7 +196,7 @@
 <tr>  <td class="numLine">&nbsp;89</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *          } else if(eventType == xpp.START_TAG) {</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;90</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment"> *              System.out.println("Start tag "+xpp.&lt;a href="#getName()"&gt;getName()&lt;/a&gt;);</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment"> *              System.out.println("Start tag "+xpp.getName());</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;91</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *          } else if(eventType == xpp.END_TAG) {</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;92</td>  <td class="nbHits">&nbsp;</td>
@@ -204,7 +204,7 @@
 <tr>  <td class="numLine">&nbsp;93</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *          } else if(eventType == xpp.TEXT) {</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;94</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment"> *              System.out.println("Text "+xpp.&lt;a href="#getText()"&gt;getText()&lt;/a&gt;);</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment"> *              System.out.println("Text "+xpp.getText());</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;95</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> *          }</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;96</td>  <td class="nbHits">&nbsp;</td>
@@ -236,7 +236,7 @@
 <tr>  <td class="numLine">&nbsp;109</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> * &lt;/pre&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;110</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment"> * &lt;p&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment"> * </span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;111</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment"> * For more details on API usage, please refer to the quick Introduction available at</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;112</td>  <td class="nbHits">&nbsp;</td>
@@ -302,7 +302,7 @@
 <tr>  <td class="numLine">&nbsp;142</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * Signalize that parser is at the very beginning of the document and nothing was read yet. This event type can only</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;143</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * be observed by calling getEvent() before the first call to next(), nextToken, or nextTag()&lt;/a&gt;).</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * be observed by calling getEvent() before the first call to next(), nextToken, or nextTag()).</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;144</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     *</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;145</td>  <td class="nbHits">&nbsp;</td>
@@ -936,7 +936,7 @@
 <tr>  <td class="numLine">&nbsp;459</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     *       int nsEnd = pp.getNamespaceCount(pp.getDepth());</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;460</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     *       for (int i = nsStart; i &lt; nsEnd; i++) {</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     *       for (int i = nsStart; i &amp;gt; nsEnd; i++) {</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;461</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     *          String prefix = pp.getNamespacePrefix(i);</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;462</td>  <td class="nbHits">&nbsp;</td>
@@ -1024,7 +1024,7 @@
 <tr>  <td class="numLine">&nbsp;503</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;pre&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;504</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * for ( int i = getNamespaceCount( getDepth() ) - 1; i &gt;= 0; i-- )</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * for ( int i = getNamespaceCount( getDepth() ) - 1; i &amp;gt;= 0; i-- )</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;505</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * {</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;506</td>  <td class="nbHits">&nbsp;</td>
@@ -1084,7 +1084,7 @@
 <tr>  <td class="numLine">&nbsp;533</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &amp;lt;!-- outside --&amp;gt;     0</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;534</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &amp;lt;root&gt;                  1</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &amp;lt;root&amp;gt;                  1</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;535</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     *   sometext                 1</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;536</td>  <td class="nbHits">&nbsp;</td>
@@ -1548,9 +1548,9 @@
 <tr>  <td class="numLine">&nbsp;765</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;p&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;766</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;b&gt;NOTE:&lt;/b&gt; empty element (such as &amp;lt;tag/&gt;) will be reported with two separate events: START_TAG, END_TAG - it</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;b&gt;NOTE:&lt;/b&gt; empty element (such as &amp;lt;tag/&amp;gt;) will be reported with two separate events: START_TAG, END_TAG - it</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;767</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * must be so to preserve parsing equivalency of empty element to &amp;lt;tag&gt;&amp;lt;/tag&gt;. (see isEmptyElementTag ())</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * must be so to preserve parsing equivalency of empty element to &amp;lt;tag&amp;gt;&amp;lt;/tag&amp;gt;. (see isEmptyElementTag ())</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;768</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     *</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;769</td>  <td class="nbHits">&nbsp;</td>
@@ -1612,11 +1612,11 @@
 <tr>  <td class="numLine">&nbsp;797</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dt&gt;START_TAG</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;798</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP enabled and then returns XML tag, ex: &amp;lt;tag attr='val'&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP enabled and then returns XML tag, ex: &amp;lt;tag attr='val'&amp;gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;799</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dt&gt;END_TAG</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;800</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP id enabled and then returns XML tag, ex: &amp;lt;/tag&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;null unless FEATURE_XML_ROUNDTRIP id enabled and then returns XML tag, ex: &amp;lt;/tag&amp;gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;801</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dt&gt;TEXT</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;802</td>  <td class="nbHits">&nbsp;</td>
@@ -1636,19 +1636,19 @@
 <tr>  <td class="numLine">&nbsp;809</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dt&gt;CDSECT</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;810</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;return text &lt;em&gt;inside&lt;/em&gt; CDATA (ex. 'fo&amp;lt;o' from &amp;lt;!CDATA[fo&amp;lt;o]]&gt;)</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;return text &lt;em&gt;inside&lt;/em&gt; CDATA (ex. 'fo&amp;lt;o' from &amp;lt;!CDATA[fo&amp;lt;o]]&amp;gt;)</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;811</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dt&gt;PROCESSING_INSTRUCTION</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;812</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;if FEATURE_XML_ROUNDTRIP is true return exact PI content ex: 'pi foo' from &amp;lt;?pi foo?&gt; otherwise it may be</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;if FEATURE_XML_ROUNDTRIP is true return exact PI content ex: 'pi foo' from &amp;lt;?pi foo?&amp;gt; otherwise it may be</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;813</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * exact PI content or concatenation of PI target, space and data so for example for &amp;lt;?target data?&gt; string</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * exact PI content or concatenation of PI target, space and data so for example for &amp;lt;?target data?&amp;gt; string</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;814</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &amp;quot;target data&amp;quot; may be returned if FEATURE_XML_ROUNDTRIP is false.</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;815</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dt&gt;COMMENT</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;816</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;return comment content ex. 'foo bar' from &amp;lt;!--foo bar--&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dd&gt;return comment content ex. 'foo bar' from &amp;lt;!--foo bar--&amp;gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;817</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;dt&gt;ENTITY_REF</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;818</td>  <td class="nbHits">&nbsp;</td>
@@ -1684,7 +1684,7 @@
 <tr>  <td class="numLine">&nbsp;833</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &amp;quot; titlepage SYSTEM "http://www.foo.bar/dtds/typo.dtd"</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;834</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&gt;]&amp;quot;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&amp;gt;]&amp;quot;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;835</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;/pre&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;836</td>  <td class="nbHits">&nbsp;</td>
@@ -1698,7 +1698,7 @@
 <tr>  <td class="numLine">&nbsp;840</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &amp;lt;!DOCTYPE titlepage SYSTEM "http://www.foo.bar/dtds/typo.dtd"</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;841</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&gt;]&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * [&amp;lt;!ENTITY % active.links "INCLUDE"&amp;gt;]&amp;gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;842</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;/pre&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;843</td>  <td class="nbHits">&nbsp;</td>
@@ -1830,7 +1830,7 @@
 <tr>  <td class="numLine">&nbsp;906</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     *   p.requireEvent(p.END_TAG, "", "tag");</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;907</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;/pre&gt;</span></pre></td></tr>
+  <td class="src"><pre class="src">&nbsp;<span class="comment">     * &lt;/pre&gt;&lt;/li&gt;&lt;/ol&gt;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;908</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * </span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;909</td>  <td class="nbHits">&nbsp;</td>
@@ -1947,6 +1947,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.0.3 on 8/3/17 8:02 PM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 10/03/19 19:25.</div>
 </body>
 </html>

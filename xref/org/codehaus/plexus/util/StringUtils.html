@@ -165,7 +165,7 @@
 <a class="jxr_linenumber" name="L157" href="#L157">157</a> 
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L159" href="#L159">159</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     * Checks if a String is non &lt;code&gt;null&lt;/code&gt; and is not empty (&lt;code&gt;length &gt; 0&lt;/code&gt;).</em>
+<a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     * Checks if a String is non &lt;code&gt;null&lt;/code&gt; and is not empty (&lt;code&gt;length &amp;gt; 0&lt;/code&gt;).</em>
 <a class="jxr_linenumber" name="L161" href="#L161">161</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
 <a class="jxr_linenumber" name="L162" href="#L162">162</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L163" href="#L163">163</a> <em class="jxr_javadoccomment">     * @param str the String to check</em>
@@ -1271,7 +1271,7 @@
 <a class="jxr_linenumber" name="L1263" href="#L1263">1263</a> <em class="jxr_javadoccomment">     * @param str String to repeat</em>
 <a class="jxr_linenumber" name="L1264" href="#L1264">1264</a> <em class="jxr_javadoccomment">     * @param repeat number of times to repeat str</em>
 <a class="jxr_linenumber" name="L1265" href="#L1265">1265</a> <em class="jxr_javadoccomment">     * @return String with repeated String</em>
-<a class="jxr_linenumber" name="L1266" href="#L1266">1266</a> <em class="jxr_javadoccomment">     * @throws NegativeArraySizeException if &lt;code&gt;repeat &lt; 0&lt;/code&gt;</em>
+<a class="jxr_linenumber" name="L1266" href="#L1266">1266</a> <em class="jxr_javadoccomment">     * @throws NegativeArraySizeException if &lt;code&gt;repeat &amp;lt; 0&lt;/code&gt;</em>
 <a class="jxr_linenumber" name="L1267" href="#L1267">1267</a> <em class="jxr_javadoccomment">     * @throws NullPointerException if str is &lt;code&gt;null&lt;/code&gt;</em>
 <a class="jxr_linenumber" name="L1268" href="#L1268">1268</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L1269" href="#L1269">1269</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String repeat( String str, <strong class="jxr_keyword">int</strong> repeat )
@@ -2207,7 +2207,7 @@
 <a class="jxr_linenumber" name="L2199" href="#L2199">2199</a> <em class="jxr_javadoccomment">     * Compare two strings, and return the portion where they differ. (More precisely, return the remainder of the</em>
 <a class="jxr_linenumber" name="L2200" href="#L2200">2200</a> <em class="jxr_javadoccomment">     * second string, starting from where it's different from the first.)</em>
 <a class="jxr_linenumber" name="L2201" href="#L2201">2201</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="L2202" href="#L2202">2202</a> <em class="jxr_javadoccomment">     * E.g. strdiff("i am a machine", "i am a robot") -&gt; "robot"</em>
+<a class="jxr_linenumber" name="L2202" href="#L2202">2202</a> <em class="jxr_javadoccomment">     * E.g. strdiff("i am a machine", "i am a robot") -&amp;gt; "robot"</em>
 <a class="jxr_linenumber" name="L2203" href="#L2203">2203</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L2204" href="#L2204">2204</a> <em class="jxr_javadoccomment">     * @return the portion of s2 where it differs from s1; returns the empty string ("") if they are equal</em>
 <a class="jxr_linenumber" name="L2205" href="#L2205">2205</a> <em class="jxr_javadoccomment">     **/</em>
@@ -2224,7 +2224,7 @@
 <a class="jxr_linenumber" name="L2216" href="#L2216">2216</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L2217" href="#L2217">2217</a> <em class="jxr_javadoccomment">     * Compare two strings, and return the index at which the strings begin to differ.</em>
 <a class="jxr_linenumber" name="L2218" href="#L2218">2218</a> <em class="jxr_javadoccomment">     * &lt;p&gt;</em>
-<a class="jxr_linenumber" name="L2219" href="#L2219">2219</a> <em class="jxr_javadoccomment">     * E.g. strdiff("i am a machine", "i am a robot") -&gt; 7</em>
+<a class="jxr_linenumber" name="L2219" href="#L2219">2219</a> <em class="jxr_javadoccomment">     * E.g. strdiff("i am a machine", "i am a robot") -&amp;gt; 7</em>
 <a class="jxr_linenumber" name="L2220" href="#L2220">2220</a> <em class="jxr_javadoccomment">     * &lt;/p&gt;</em>
 <a class="jxr_linenumber" name="L2221" href="#L2221">2221</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L2222" href="#L2222">2222</a> <em class="jxr_javadoccomment">     * @return the index where s2 and s1 begin to differ; -1 if they are equal</em>
@@ -2661,6 +2661,6 @@
 <a class="jxr_linenumber" name="L2653" href="#L2653">2653</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2017 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2019 <a href="http://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>
