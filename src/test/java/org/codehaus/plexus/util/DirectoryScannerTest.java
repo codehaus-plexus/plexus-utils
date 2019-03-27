@@ -31,8 +31,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -49,6 +52,19 @@ public class DirectoryScannerTest
     public TestName name = new TestName();
     
     private static String testDir = getTestDirectory().getPath();
+
+    @Before
+    public void setUp()
+    {
+        try
+        {
+            FileUtils.deleteDirectory( testDir );
+        }
+        catch ( IOException e )
+        {
+            fail( "Could not delete directory " + testDir );
+        }
+    }
 
     @Test
     public void testCrossPlatformIncludesString()
@@ -475,6 +491,75 @@ public class DirectoryScannerTest
         ds.scan();
 
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+    }
+
+    /**
+     * Test that the directory scanning does not enter into not matching directories.
+     *
+     * @see <a href="https://github.com/codehaus-plexus/plexus-utils/issues/63">Issue #63</a>
+     * @throws IOException if occurs an I/O error.
+     */
+    @Test
+    public void testDoNotScanUnnecesaryDirectories()
+        throws IOException
+    {
+        createTestDirectories();
+
+        // create additional directories 'anotherDir1', 'anotherDir2' and 'anotherDir3' with a 'file1.dat' file
+        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "testDir123" + File.separator
+            + "anotherDir1" );
+        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "test_dir_123" + File.separator
+            + "anotherDir2" );
+        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "test-dir-123" + File.separator
+            + "anotherDir3" );
+
+        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "testDir123"
+            + File.separator + "anotherDir1" + File.separator + "file1.dat" ), 0 );
+        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "test_dir_123"
+            + File.separator + "anotherDir2" + File.separator + "file1.dat" ), 0 );
+        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "test-dir-123"
+            + File.separator + "anotherDir3" + File.separator + "file1.dat" ), 0 );
+
+        String[] excludedPaths = {
+            "directoryTest" + File.separator + "testDir123" + File.separator + "anotherDir1" + File.separator
+                + "file1.dat",
+            "directoryTest" + File.separator + "test_dir_123" + File.separator + "anotherDir2" + File.separator
+                + "file1.dat",
+            "directoryTest" + File.separator + "test-dir-123" + File.separator + "anotherDir3" + File.separator
+                + "file1.dat"
+        };
+
+        String[] includedPaths = {
+            "directoryTest" + File.separator + "testDir123" + File.separator + "file1.dat",
+            "directoryTest" + File.separator + "test_dir_123" + File.separator + "file1.dat",
+            "directoryTest" + File.separator + "test-dir-123" + File.separator + "file1.dat"
+        };
+
+        final Set<String> scannedDirSet = new HashSet<String>();
+
+        DirectoryScanner ds = new DirectoryScanner()
+        {
+            @Override
+            protected void scandir( File dir, String vpath, boolean fast )
+            {
+                scannedDirSet.add( dir.getName() );
+                super.scandir( dir, vpath, fast );
+            }
+
+        };
+
+        // one '*' matches only ONE directory level
+        String[] includes = { "directoryTest" + File.separator + "*" + File.separator + "file1.dat" };
+        ds.setIncludes( includes );
+        ds.setBasedir( new File( testDir ) );
+        ds.scan();
+
+        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+
+        Set<String> expectedScannedDirSet =
+            new HashSet<String>( Arrays.asList( "io", "directoryTest", "testDir123", "test_dir_123", "test-dir-123" ) );
+
+        assertEquals( expectedScannedDirSet, scannedDirSet );
     }
 
     @Test

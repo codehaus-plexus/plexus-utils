@@ -16,6 +16,7 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -32,4 +33,23 @@ public class MatchPatternTest
         MatchPattern mp = MatchPattern.fromString( "ABC*" );
         assertTrue( mp.matchPath( "ABCD", true ) );
     }
+
+    /**
+     * @see <a href="https://github.com/codehaus-plexus/plexus-utils/issues/63">Issue #63</a>
+     */
+    @Test
+    public void testMatchPatternStart()
+    {
+        MatchPattern mp = MatchPattern.fromString( "ABC*" );
+
+        assertTrue( mp.matchPatternStart( "ABCD", true ) );
+        assertFalse( mp.matchPatternStart( "AbCD", true ) );
+
+        assertTrue( mp.matchPatternStart( "ABCD", false ) );
+        assertTrue( mp.matchPatternStart( "AbCD", false ) );
+
+        assertFalse( mp.matchPatternStart( "XXXX", true ) );
+        assertFalse( mp.matchPatternStart( "XXXX", false ) );
+    }
+
 }
