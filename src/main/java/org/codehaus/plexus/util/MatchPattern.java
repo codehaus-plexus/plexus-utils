@@ -94,7 +94,7 @@ public class MatchPattern
         }
         else
         {
-            String altStr = source.replace( '\\', '/' );
+            String altStr = str.replace( '\\', '/' );
 
             return SelectorUtils.matchAntPathPatternStart( this, str, File.separator, isCaseSensitive )
                 || SelectorUtils.matchAntPathPatternStart( this, altStr, "/", isCaseSensitive );
