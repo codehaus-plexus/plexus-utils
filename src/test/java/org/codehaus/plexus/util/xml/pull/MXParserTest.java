@@ -302,6 +302,31 @@ public class MXParserTest
     }
 
     @Test
+    public void testProcessingInstructionsContainingXml()
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer();
+
+        sb.append( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" );
+        sb.append( "<project>\n" );
+        sb.append( " <?pi\n" );
+        sb.append( "   <tag>\n" );
+        sb.append( "   </tag>\n" );
+        sb.append( " ?>\n" );
+        sb.append( "</project>" );
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( sb.toString() ) );
+
+        assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+        assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+        assertEquals( XmlPullParser.TEXT, parser.nextToken() ); // whitespace
+        assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+        assertEquals( XmlPullParser.TEXT, parser.nextToken() ); // whitespace
+        assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+    }
+
+    @Test
     public void testSubsequentProcessingInstructionShort()
         throws Exception
     {

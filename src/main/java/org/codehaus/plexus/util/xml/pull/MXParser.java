@@ -3051,12 +3051,6 @@ public class MXParser
                         throw new XmlPullParserException( "processing instruction PITarget name not found", this,
                                                           null );
                     }
-                    else
-                    {
-                        // seenPITarget && !seenQ
-                        throw new XmlPullParserException( "processing instruction started on line " + curLine
-                            + " and column " + curColumn + " was not closed", this, null );
-                    }
                 }
                 else
                 {
