@@ -247,38 +247,10 @@ public class Xpp3Dom
 
     public Xpp3Dom[] getChildren( String name )
     {
-        if ( null == childList )
-        {
-            return EMPTY_DOM_ARRAY;
-        }
-        else
-        {
-            ArrayList<Xpp3Dom> children = null;
-
-            for ( Xpp3Dom configuration : childList )
-            {
-                if ( name.equals( configuration.getName() ) )
-                {
-                    if ( children == null )
-                    {
-                        children = new ArrayList<Xpp3Dom>();
-                    }
-                    children.add( configuration );
-                }
-            }
-
-            if ( children != null )
-            {
-                return children.toArray( EMPTY_DOM_ARRAY );
-            }
-            else
-            {
-                return EMPTY_DOM_ARRAY;
-            }
-        }
+        return getChildrenAsList( name ).toArray( EMPTY_DOM_ARRAY );
     }
 
-    public List<Xpp3Dom> getChildrenAsList( String name )
+    private List<Xpp3Dom> getChildrenAsList( String name )
     {
         if ( null == childList )
         {
