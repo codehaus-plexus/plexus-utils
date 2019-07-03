@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -272,6 +273,39 @@ public class Xpp3Dom
         }
     }
 
+    public List<Xpp3Dom> getChildrenAsList( String name )
+    {
+        if ( null == childList )
+        {
+            return Collections.emptyList();
+        }
+        else
+        {
+            ArrayList<Xpp3Dom> children = null;
+
+            for ( Xpp3Dom configuration : childList )
+            {
+                if ( name.equals( configuration.getName() ) )
+                {
+                    if ( children == null )
+                    {
+                        children = new ArrayList<Xpp3Dom>();
+                    }
+                    children.add( configuration );
+                }
+            }
+
+            if ( children != null )
+            {
+                return children;
+            }
+            else
+            {
+                return Collections.emptyList();
+            }
+        }
+    }
+
     public int getChildCount()
     {
         if ( null == childList )
@@ -460,10 +494,10 @@ public class Xpp3Dom
                         {
                             continue;
                         }
-                        Xpp3Dom[] dominantChildren = dominant.getChildren( recChild.name );
-                        if ( dominantChildren.length > 0 )
+                        List<Xpp3Dom> dominantChildren = dominant.getChildrenAsList( recChild.name );
+                        if ( dominantChildren.size() > 0 )
                         {
-                            commonChildren.put( recChild.name, Arrays.asList( dominantChildren ).iterator() );
+                            commonChildren.put( recChild.name, dominantChildren.iterator() );
                         }
                     }
 
