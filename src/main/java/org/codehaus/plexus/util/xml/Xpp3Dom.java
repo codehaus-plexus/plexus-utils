@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 /**
@@ -211,12 +212,16 @@ public class Xpp3Dom
 
     public Xpp3Dom getChild( String name )
     {
-        for ( int i = childList.size() - 1; i >= 0; i-- )
+        if ( name != null )
         {
-            Xpp3Dom child = childList.get( i );
-            if ( name.equals( child.getName() ) )
+            ListIterator<Xpp3Dom> it = childList.listIterator( childList.size() );
+            while ( it.hasPrevious() )
             {
-                return child;
+                Xpp3Dom child = it.previous();
+                if ( name.equals( child.getName() ) )
+                {
+                    return child;
+                }
             }
         }
         return null;
