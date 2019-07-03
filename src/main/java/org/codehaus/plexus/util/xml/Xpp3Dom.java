@@ -44,8 +44,6 @@ public class Xpp3Dom
 
     protected final List<Xpp3Dom> childList;
 
-    protected final Map<String, Xpp3Dom> childMap;
-
     protected Xpp3Dom parent;
 
     /**
@@ -88,7 +86,6 @@ public class Xpp3Dom
     {
         this.name = name;
         childList = new ArrayList<Xpp3Dom>();
-        childMap = new HashMap<String, Xpp3Dom>();
     }
 
     /**
@@ -119,7 +116,6 @@ public class Xpp3Dom
         int childCount = src.getChildCount();
 
         childList = new ArrayList<Xpp3Dom>( childCount );
-        childMap = new HashMap<String, Xpp3Dom>( childCount << 1 );
 
         setValue( src.getValue() );
 
@@ -170,13 +166,13 @@ public class Xpp3Dom
         }
         else
         {
-            return (String[]) attributes.keySet().toArray( new String[attributes.size()] );
+            return attributes.keySet().toArray( EMPTY_STRING_ARRAY );
         }
     }
 
     public String getAttribute( String name )
     {
-        return ( null != attributes ) ? (String) attributes.get( name ) : null;
+        return ( null != attributes ) ? attributes.get( name ) : null;
     }
 
     /**
@@ -209,19 +205,26 @@ public class Xpp3Dom
 
     public Xpp3Dom getChild( int i )
     {
-        return (Xpp3Dom) childList.get( i );
+        return childList.get( i );
     }
 
     public Xpp3Dom getChild( String name )
     {
-        return (Xpp3Dom) childMap.get( name );
+        for ( int i = childList.size() - 1; i >= 0; i-- )
+        {
+            Xpp3Dom child = childList.get( i );
+            if ( name.equals( child.getName() ) )
+            {
+                return child;
+            }
+        }
+        return null;
     }
 
     public void addChild( Xpp3Dom xpp3Dom )
     {
         xpp3Dom.setParent( this );
         childList.add( xpp3Dom );
-        childMap.put( xpp3Dom.getName(), xpp3Dom );
     }
 
     public Xpp3Dom[] getChildren()
@@ -232,7 +235,7 @@ public class Xpp3Dom
         }
         else
         {
-            return (Xpp3Dom[]) childList.toArray( new Xpp3Dom[childList.size()] );
+            return childList.toArray( EMPTY_DOM_ARRAY );
         }
     }
 
@@ -244,19 +247,28 @@ public class Xpp3Dom
         }
         else
         {
-            ArrayList<Xpp3Dom> children = new ArrayList<Xpp3Dom>();
-            int size = childList.size();
+            ArrayList<Xpp3Dom> children = null;
 
-            for ( Xpp3Dom aChildList : childList )
+            for ( Xpp3Dom configuration : childList )
             {
-                Xpp3Dom configuration = (Xpp3Dom) aChildList;
                 if ( name.equals( configuration.getName() ) )
                 {
+                    if ( children == null )
+                    {
+                        children = new ArrayList<Xpp3Dom>();
+                    }
                     children.add( configuration );
                 }
             }
 
-            return (Xpp3Dom[]) children.toArray( new Xpp3Dom[children.size()] );
+            if ( children != null )
+            {
+                return children.toArray( EMPTY_DOM_ARRAY );
+            }
+            else
+            {
+                return EMPTY_DOM_ARRAY;
+            }
         }
     }
 
@@ -273,7 +285,6 @@ public class Xpp3Dom
     public void removeChild( int i )
     {
         Xpp3Dom child = getChild( i );
-        childMap.values().remove( child );
         childList.remove( i );
         // In case of any dangling references
         child.setParent( null );
@@ -392,12 +403,14 @@ public class Xpp3Dom
                 dominant.setInputLocation( recessive.getInputLocation() );
             }
 
-            String[] recessiveAttrs = recessive.getAttributeNames();
-            for ( String attr : recessiveAttrs )
+            if ( recessive.attributes != null )
             {
-                if ( isEmpty( dominant.getAttribute( attr ) ) )
+                for ( String attr : recessive.attributes.keySet() )
                 {
-                    dominant.setAttribute( attr, recessive.getAttribute( attr ) );
+                    if ( isEmpty( dominant.getAttribute( attr ) ) )
+                    {
+                        dominant.setAttribute( attr, recessive.getAttribute( attr ) );
+                    }
                 }
             }
 
@@ -441,12 +454,16 @@ public class Xpp3Dom
                 {
                     Map<String, Iterator<Xpp3Dom>> commonChildren = new HashMap<String, Iterator<Xpp3Dom>>();
 
-                    for ( String childName : recessive.childMap.keySet() )
+                    for ( Xpp3Dom recChild : recessive.childList )
                     {
-                        Xpp3Dom[] dominantChildren = dominant.getChildren( childName );
+                        if ( commonChildren.containsKey( recChild.name ) )
+                        {
+                            continue;
+                        }
+                        Xpp3Dom[] dominantChildren = dominant.getChildren( recChild.name );
                         if ( dominantChildren.length > 0 )
                         {
-                            commonChildren.put( childName, Arrays.asList( dominantChildren ).iterator() );
+                            commonChildren.put( recChild.name, Arrays.asList( dominantChildren ).iterator() );
                         }
                     }
 
