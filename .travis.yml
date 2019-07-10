@@ -3,7 +3,7 @@ jdk:
   - openjdk7
   - openjdk8
   - openjdk11
-  - openjdk12
+#  - openjdk12 add once code is requires Java 7
 
 # No need for preliminary install step.
 install: true
