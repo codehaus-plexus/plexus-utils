@@ -488,6 +488,15 @@ public class Commandline
             return getShellCommandline();
         }
 
+        return getRawCommandline();
+    }
+
+    /**
+     * Returns the executable and all defined arguments.<br>
+     * 
+     */
+    public String[] getRawCommandline()
+    {
         final String[] args = getArguments();
         String executable = getLiteralExecutable();
 
@@ -501,7 +510,7 @@ public class Commandline
         return result;
     }
 
-    /**
+	/**
      * Returns the shell, executable and all defined arguments. Shell usage is only desirable when generating code for
      * remote execution.
      */
