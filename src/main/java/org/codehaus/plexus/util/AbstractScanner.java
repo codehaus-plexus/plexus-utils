@@ -18,6 +18,7 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -119,6 +120,11 @@ public abstract class AbstractScanner
      */
     protected boolean isCaseSensitive = true;
 
+    /**
+     * @since 3.3.0
+     */
+    protected Comparator<String> filenameComparator;
+    
     /**
      * Sets whether or not the file system should be regarded as case sensitive.
      *
@@ -389,5 +395,11 @@ public abstract class AbstractScanner
     {
         includesPatterns = MatchPatterns.from( includes );
         excludesPatterns = MatchPatterns.from( excludes );
+    }
+
+    @Override
+    public void setFilenameComparator( Comparator<String> filenameComparator )
+    {
+        this.filenameComparator = filenameComparator;
     }
 }

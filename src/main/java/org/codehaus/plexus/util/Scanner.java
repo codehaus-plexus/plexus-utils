@@ -17,6 +17,7 @@ package org.codehaus.plexus.util;
  */
 
 import java.io.File;
+import java.util.Comparator;
 
 /**
  * Scan a directory tree for files, with specified inclusions and exclusions.
@@ -83,4 +84,12 @@ public interface Scanner
      * @return the base directory to be scanned
      */
     File getBasedir();
+
+    /**
+     * Use a filename comparator in each directory when scanning.
+     *
+     * @param filenameComparator
+     * @since 3.3.0
+     */
+    void setFilenameComparator( Comparator<String> filenameComparator );
 }

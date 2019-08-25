@@ -57,6 +57,7 @@ package org.codehaus.plexus.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 
 /**
@@ -434,6 +435,11 @@ public class DirectoryScanner
                 }
             }
             newfiles = noLinks.toArray( new String[noLinks.size()] );
+        }
+
+        if ( filenameComparator != null )
+        {
+            Arrays.sort( newfiles, filenameComparator );
         }
 
         for ( String newfile : newfiles )
