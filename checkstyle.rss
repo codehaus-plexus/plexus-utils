@@ -26,9 +26,9 @@ under the License.
     <copyright>&#169;2001 - 2019 Codehaus Plexus</copyright>
     <item>
       <title>File: 83,
-             Errors: 579,
-             Warnings: 846,
-             Infos: 162
+             Errors: 581,
+             Warnings: 849,
+             Infos: 161
       </title>
             <link>http://codehaus-plexus.github.io/plexus-utils//checkstyle.html</link>
       <description>
@@ -371,13 +371,13 @@ under the License.
                   <a href="http://codehaus-plexus.github.io/plexus-utils//checkstyle.html#org.codehaus.plexus.util.xml.Xpp3Dom.java">org/codehaus/plexus/util/xml/Xpp3Dom.java</a>
                 </td>
                 <td>
-                  12
+                  11
                 </td>
                 <td>
-                  36
+                  37
                 </td>
                 <td>
-                  1
+                  2
                 </td>
               </tr>
                           <tr>
@@ -850,7 +850,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  1
                 </td>
                 <td>
                   0
@@ -1074,10 +1074,10 @@ under the License.
                   2
                 </td>
                 <td>
-                  47
+                  48
                 </td>
                 <td>
-                  2
+                  3
                 </td>
               </tr>
                           <tr>

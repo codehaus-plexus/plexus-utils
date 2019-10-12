@@ -390,10 +390,10 @@
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;192</td>  <td class="nbHitsCovered">&nbsp;56</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">char</span>[] buffer = <span class="keyword">new</span> <span class="keyword">char</span>[bufferSize];</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;193</td>  <td class="nbHitsCovered">&nbsp;56</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> n = 0;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;194</td>  <td class="nbHitsCovered"><a title="Line 194: Conditional coverage 100 % (2/2).">&nbsp;444</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 194: Conditional coverage 100 % (2/2).">        <span class="keyword">while</span> ( 0 &lt;= ( n = input.read( buffer ) ) )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;194</td>  <td class="nbHitsCovered"><a title="Line 194: Conditional coverage 100 % (2/2).">&nbsp;328</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 194: Conditional coverage 100 % (2/2).">        <span class="keyword">while</span> ( 0 &lt;= ( n = input.read( buffer ) ) )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;195</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;196</td>  <td class="nbHitsCovered">&nbsp;388</td>  <td class="src"><pre class="src">&nbsp;            output.write( buffer, 0, n );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;196</td>  <td class="nbHitsCovered">&nbsp;272</td>  <td class="src"><pre class="src">&nbsp;            output.write( buffer, 0, n );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;197</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;198</td>  <td class="nbHitsCovered">&nbsp;56</td>  <td class="src"><pre class="src">&nbsp;        output.flush();</pre></td></tr>
@@ -1255,18 +1255,18 @@
 <tr>  <td class="numLine">&nbsp;667</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;668</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> ch = bufferedInput1.read();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;669</td>  <td class="nbHitsCovered"><a title="Line 669: Conditional coverage 100 % (2/2).">&nbsp;1562</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 669: Conditional coverage 100 % (2/2).">        <span class="keyword">while</span> ( 0 &lt;= ch )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;669</td>  <td class="nbHitsCovered"><a title="Line 669: Conditional coverage 100 % (2/2).">&nbsp;1781</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 669: Conditional coverage 100 % (2/2).">        <span class="keyword">while</span> ( 0 &lt;= ch )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;670</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;671</td>  <td class="nbHitsCovered">&nbsp;1559</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> <span class="keyword">int</span> ch2 = bufferedInput2.read();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;672</td>  <td class="nbHitsCovered"><a title="Line 672: Conditional coverage 100 % (2/2).">&nbsp;1559</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 672: Conditional coverage 100 % (2/2).">            <span class="keyword">if</span> ( ch != ch2 )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;671</td>  <td class="nbHitsCovered">&nbsp;1778</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">final</span> <span class="keyword">int</span> ch2 = bufferedInput2.read();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;672</td>  <td class="nbHitsCovered"><a title="Line 672: Conditional coverage 100 % (2/2).">&nbsp;1778</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 672: Conditional coverage 100 % (2/2).">            <span class="keyword">if</span> ( ch != ch2 )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;673</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;674</td>  <td class="nbHitsCovered">&nbsp;1</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">return</span> <span class="keyword">false</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;675</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;676</td>  <td class="nbHitsCovered">&nbsp;1558</td>  <td class="src"><pre class="src">&nbsp;            ch = bufferedInput1.read();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;677</td>  <td class="nbHitsCovered">&nbsp;1558</td>  <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;676</td>  <td class="nbHitsCovered">&nbsp;1777</td>  <td class="src"><pre class="src">&nbsp;            ch = bufferedInput1.read();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;677</td>  <td class="nbHitsCovered">&nbsp;1777</td>  <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;678</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;679</td>  <td class="nbHitsCovered">&nbsp;3</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> <span class="keyword">int</span> ch2 = bufferedInput2.read();</pre></td></tr>
@@ -1487,6 +1487,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 10/03/19 19:25.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 12/10/19 16:40.</div>
 </body>
 </html>

@@ -5,4 +5,5 @@ org.codehaus.plexus.util.dag
 org.codehaus.plexus.util.introspection
 org.codehaus.plexus.util.reflection
 org.codehaus.plexus.util.xml
+org.codehaus.plexus.util.xml.generated
 org.codehaus.plexus.util.xml.pull

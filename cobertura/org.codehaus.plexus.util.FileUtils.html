@@ -12,7 +12,7 @@
 <div class="separator">&nbsp;</div>
 <table class="report">
 <thead><tr>  <td class="heading">Classes in this File</td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Line Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Branch Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Complexity</a></td></tr></thead>
-  <tr><td><a href="org.codehaus.plexus.util.FileUtils.html">FileUtils</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">64 %</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:64px"><span class="text">402/619</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">54 %</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:54px"><span class="text">183/336</span></div></div></td></tr></table></td><td class="value"><span class="hidden">3.7045454545454546;</span>3,705</td></tr>
+  <tr><td><a href="org.codehaus.plexus.util.FileUtils.html">FileUtils</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">65 %</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:65px"><span class="text">404/619</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">54 %</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:54px"><span class="text">182/336</span></div></div></td></tr></table></td><td class="value"><span class="hidden">3.7045454545454546;</span>3,705</td></tr>
   <tr><td><a href="org.codehaus.plexus.util.FileUtils.html">FileUtils$FilterWrapper</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">100 %</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:100px"><span class="text">1/1</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">N/A</a></td><td class="percentgraph"><div class="percentgraph"><div class="na" style="width:100px"><span class="text"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">N/A</a></span></div></div></td></tr></table></td><td class="value"><span class="hidden">3.7045454545454546;</span>3,705</td></tr>
 
 </table>
@@ -1304,10 +1304,10 @@
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> mkdir( String dir )</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;710</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;711</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;        File file = <span class="keyword">new</span> File( dir );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;711</td>  <td class="nbHitsCovered">&nbsp;14</td>  <td class="src"><pre class="src">&nbsp;        File file = <span class="keyword">new</span> File( dir );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;712</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;713</td>  <td class="nbHitsUncovered"><a title="Line 713: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">&nbsp;7</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 713: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">        <span class="keyword">if</span> ( Os.isFamily( Os.FAMILY_WINDOWS ) &amp;&amp; !isValidWindowsFileName( file ) )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;713</td>  <td class="nbHitsUncovered"><a title="Line 713: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">&nbsp;14</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 713: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">        <span class="keyword">if</span> ( Os.isFamily( Os.FAMILY_WINDOWS ) &amp;&amp; !isValidWindowsFileName( file ) )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;714</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;715</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException( <span class="string">"The file ("</span> + dir</span></pre></td></tr>
@@ -1319,13 +1319,13 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;719</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;720</td>  <td class="nbHitsCovered"><a title="Line 720: Conditional coverage 100 % (2/2).">&nbsp;7</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 720: Conditional coverage 100 % (2/2).">        <span class="keyword">if</span> ( !file.exists() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;720</td>  <td class="nbHitsUncovered"><a title="Line 720: Conditional coverage 50 % (1/2).">&nbsp;14</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 720: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !file.exists() )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;721</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;722</td>  <td class="nbHitsCovered">&nbsp;5</td>  <td class="src"><pre class="src">&nbsp;            file.mkdirs();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;722</td>  <td class="nbHitsCovered">&nbsp;14</td>  <td class="src"><pre class="src">&nbsp;            file.mkdirs();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;723</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;724</td>  <td class="nbHitsCovered">&nbsp;7</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;724</td>  <td class="nbHitsCovered">&nbsp;14</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;725</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;726</td>  <td class="nbHits">&nbsp;</td>
@@ -2589,10 +2589,10 @@
   <td class="src"><pre class="src">&nbsp;        <span class="keyword">throws</span> IOException</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1459</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1460</td>  <td class="nbHitsCovered"><a title="Line 1460: Conditional coverage 100 % (2/2).">&nbsp;276</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1460: Conditional coverage 100 % (2/2).">        <span class="keyword">if</span> ( file.isDirectory() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1460</td>  <td class="nbHitsCovered"><a title="Line 1460: Conditional coverage 100 % (2/2).">&nbsp;310</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1460: Conditional coverage 100 % (2/2).">        <span class="keyword">if</span> ( file.isDirectory() )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1461</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1462</td>  <td class="nbHitsCovered">&nbsp;80</td>  <td class="src"><pre class="src">&nbsp;            deleteDirectory( file );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1462</td>  <td class="nbHitsCovered">&nbsp;98</td>  <td class="src"><pre class="src">&nbsp;            deleteDirectory( file );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1463</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1464</td>  <td class="nbHits">&nbsp;</td>
@@ -2607,8 +2607,8 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">             * symlink whose target does not exist is deleted, too.</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1469</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">             */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1470</td>  <td class="nbHitsCovered">&nbsp;196</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> filePresent = file.getCanonicalFile().exists();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1471</td>  <td class="nbHitsUncovered"><a title="Line 1471: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">&nbsp;196</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1471: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">            <span class="keyword">if</span> ( !deleteFile( file ) &amp;&amp; filePresent )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1470</td>  <td class="nbHitsCovered">&nbsp;212</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">boolean</span> filePresent = file.getCanonicalFile().exists();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1471</td>  <td class="nbHitsUncovered"><a title="Line 1471: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">&nbsp;212</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1471: Conditional coverage 25 % (1/4) [each condition: 50 %, 0 %].">            <span class="keyword">if</span> ( !deleteFile( file ) &amp;&amp; filePresent )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1472</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1473</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                <span class="keyword">final</span> String message = <span class="string">"File "</span> + file + <span class="string">" unable to be deleted."</span>;</span></pre></td></tr>
@@ -2617,7 +2617,7 @@
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1476</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1477</td>  <td class="nbHitsCovered">&nbsp;276</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1477</td>  <td class="nbHitsCovered">&nbsp;310</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1478</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1479</td>  <td class="nbHits">&nbsp;</td>
@@ -2640,7 +2640,7 @@
   <td class="src"><pre class="src">&nbsp;        <span class="keyword">throws</span> IOException</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1488</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1489</td>  <td class="nbHitsUncovered"><a title="Line 1489: Conditional coverage 50 % (1/2).">&nbsp;196</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1489: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( file.isDirectory() )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1489</td>  <td class="nbHitsUncovered"><a title="Line 1489: Conditional coverage 50 % (1/2).">&nbsp;212</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1489: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( file.isDirectory() )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1490</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1491</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IOException( <span class="string">"File "</span> + file + <span class="string">" isn't a file."</span> );</span></pre></td></tr>
@@ -2648,7 +2648,7 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1493</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1494</td>  <td class="nbHitsUncovered"><a title="Line 1494: Conditional coverage 50 % (1/2).">&nbsp;196</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1494: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !file.delete() )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1494</td>  <td class="nbHitsUncovered"><a title="Line 1494: Conditional coverage 50 % (1/2).">&nbsp;212</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1494: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !file.delete() )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1495</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1496</td>  <td class="nbHitsUncovered"><a title="Line 1496: Conditional coverage 0 % (0/2).">&nbsp;0</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1496: Conditional coverage 0 % (0/2).">            <span class="keyword">if</span> ( Os.isFamily( Os.FAMILY_WINDOWS ) )</a></span></pre></td></tr>
@@ -2678,7 +2678,7 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1512</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1513</td>  <td class="nbHitsCovered">&nbsp;196</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1513</td>  <td class="nbHitsCovered">&nbsp;212</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">true</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1514</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1515</td>  <td class="nbHits">&nbsp;</td>
@@ -2911,8 +2911,8 @@
   <td class="src"><pre class="src">&nbsp;        <span class="keyword">throws</span> IOException</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1648</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1649</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;        deleteDirectory( <span class="keyword">new</span> File( directory ) );</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1650</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;    }</span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1649</td>  <td class="nbHitsCovered">&nbsp;15</td>  <td class="src"><pre class="src">&nbsp;        deleteDirectory( <span class="keyword">new</span> File( directory ) );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1650</td>  <td class="nbHitsCovered">&nbsp;15</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1651</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1652</td>  <td class="nbHits">&nbsp;</td>
@@ -2933,10 +2933,10 @@
   <td class="src"><pre class="src">&nbsp;        <span class="keyword">throws</span> IOException</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1660</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1661</td>  <td class="nbHitsCovered"><a title="Line 1661: Conditional coverage 100 % (2/2).">&nbsp;147</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1661: Conditional coverage 100 % (2/2).">        <span class="keyword">if</span> ( !directory.exists() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1661</td>  <td class="nbHitsCovered"><a title="Line 1661: Conditional coverage 100 % (2/2).">&nbsp;180</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1661: Conditional coverage 100 % (2/2).">        <span class="keyword">if</span> ( !directory.exists() )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1662</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1663</td>  <td class="nbHitsCovered">&nbsp;4</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1663</td>  <td class="nbHitsCovered">&nbsp;12</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1664</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1665</td>  <td class="nbHits">&nbsp;</td>
@@ -2949,7 +2949,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">         * symbolic links.</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1669</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">         */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1670</td>  <td class="nbHitsCovered"><a title="Line 1670: Conditional coverage 100 % (2/2).">&nbsp;143</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1670: Conditional coverage 100 % (2/2).">        <span class="keyword">if</span> ( directory.delete() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1670</td>  <td class="nbHitsCovered"><a title="Line 1670: Conditional coverage 100 % (2/2).">&nbsp;168</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1670: Conditional coverage 100 % (2/2).">        <span class="keyword">if</span> ( directory.delete() )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1671</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1672</td>  <td class="nbHitsCovered">&nbsp;12</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span>;</pre></td></tr>
@@ -2957,15 +2957,15 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1674</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1675</td>  <td class="nbHitsCovered">&nbsp;131</td>  <td class="src"><pre class="src">&nbsp;        cleanDirectory( directory );</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1676</td>  <td class="nbHitsUncovered"><a title="Line 1676: Conditional coverage 50 % (1/2).">&nbsp;131</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1676: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !directory.delete() )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1675</td>  <td class="nbHitsCovered">&nbsp;156</td>  <td class="src"><pre class="src">&nbsp;        cleanDirectory( directory );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1676</td>  <td class="nbHitsUncovered"><a title="Line 1676: Conditional coverage 50 % (1/2).">&nbsp;156</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1676: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !directory.delete() )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1677</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1678</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">final</span> String message = <span class="string">"Directory "</span> + directory + <span class="string">" unable to be deleted."</span>;</span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1679</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IOException( message );</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1680</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1681</td>  <td class="nbHitsCovered">&nbsp;131</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1681</td>  <td class="nbHitsCovered">&nbsp;156</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1682</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1683</td>  <td class="nbHits">&nbsp;</td>
@@ -3008,7 +3008,7 @@
   <td class="src"><pre class="src">&nbsp;        <span class="keyword">throws</span> IOException</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1703</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1704</td>  <td class="nbHitsUncovered"><a title="Line 1704: Conditional coverage 50 % (1/2).">&nbsp;132</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1704: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !directory.exists() )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1704</td>  <td class="nbHitsUncovered"><a title="Line 1704: Conditional coverage 50 % (1/2).">&nbsp;157</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1704: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !directory.exists() )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1705</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1706</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">final</span> String message = directory + <span class="string">" does not exist"</span>;</span></pre></td></tr>
@@ -3017,7 +3017,7 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1709</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1710</td>  <td class="nbHitsUncovered"><a title="Line 1710: Conditional coverage 50 % (1/2).">&nbsp;132</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1710: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !directory.isDirectory() )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1710</td>  <td class="nbHitsUncovered"><a title="Line 1710: Conditional coverage 50 % (1/2).">&nbsp;157</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1710: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( !directory.isDirectory() )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1711</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1712</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">final</span> String message = directory + <span class="string">" is not a directory"</span>;</span></pre></td></tr>
@@ -3026,13 +3026,13 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1715</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1716</td>  <td class="nbHitsCovered">&nbsp;132</td>  <td class="src"><pre class="src">&nbsp;        IOException exception = <span class="keyword">null</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1716</td>  <td class="nbHitsCovered">&nbsp;157</td>  <td class="src"><pre class="src">&nbsp;        IOException exception = <span class="keyword">null</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1717</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1718</td>  <td class="nbHitsCovered">&nbsp;132</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> File[] files = directory.listFiles();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1718</td>  <td class="nbHitsCovered">&nbsp;157</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">final</span> File[] files = directory.listFiles();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1719</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1720</td>  <td class="nbHitsUncovered"><a title="Line 1720: Conditional coverage 50 % (1/2).">&nbsp;132</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1720: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( files == <span class="keyword">null</span> )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1720</td>  <td class="nbHitsUncovered"><a title="Line 1720: Conditional coverage 50 % (1/2).">&nbsp;157</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1720: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( files == <span class="keyword">null</span> )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1721</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1722</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">return</span>;</span></pre></td></tr>
@@ -3040,32 +3040,32 @@
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1724</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1725</td>  <td class="nbHitsCovered"><a title="Line 1725: Conditional coverage 100 % (2/2).">&nbsp;405</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1725: Conditional coverage 100 % (2/2).">        <span class="keyword">for</span> ( <span class="keyword">final</span> File file : files )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1725</td>  <td class="nbHitsCovered"><a title="Line 1725: Conditional coverage 100 % (2/2).">&nbsp;464</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 1725: Conditional coverage 100 % (2/2).">        <span class="keyword">for</span> ( <span class="keyword">final</span> File file : files )</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1726</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1727</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            <span class="keyword">try</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1728</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1729</td>  <td class="nbHitsCovered">&nbsp;273</td>  <td class="src"><pre class="src">&nbsp;                forceDelete( file );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1729</td>  <td class="nbHitsCovered">&nbsp;307</td>  <td class="src"><pre class="src">&nbsp;                forceDelete( file );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1730</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1731</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">catch</span> ( <span class="keyword">final</span> IOException ioe )</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1732</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1733</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                exception = ioe;</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1734</td>  <td class="nbHitsCovered">&nbsp;273</td>  <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1734</td>  <td class="nbHitsCovered">&nbsp;307</td>  <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1735</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1736</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1737</td>  <td class="nbHitsUncovered"><a title="Line 1737: Conditional coverage 50 % (1/2).">&nbsp;132</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1737: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( <span class="keyword">null</span> != exception )</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1737</td>  <td class="nbHitsUncovered"><a title="Line 1737: Conditional coverage 50 % (1/2).">&nbsp;157</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 1737: Conditional coverage 50 % (1/2).">        <span class="keyword">if</span> ( <span class="keyword">null</span> != exception )</a></span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1738</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;1739</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">throw</span> exception;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1740</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;1741</td>  <td class="nbHitsCovered">&nbsp;132</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;1741</td>  <td class="nbHitsCovered">&nbsp;157</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1742</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;1743</td>  <td class="nbHits">&nbsp;</td>
@@ -4277,6 +4277,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 10/03/19 19:25.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.1.1 on 12/10/19 16:40.</div>
 </body>
 </html>

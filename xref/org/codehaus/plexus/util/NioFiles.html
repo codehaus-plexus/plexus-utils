@@ -146,7 +146,7 @@
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>         <strong class="jxr_keyword">throws</strong> IOException
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>     {
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         Path copy = Files.copy( source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING,
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>                                 StandardCopyOption.COPY_ATTRIBUTES, LinkOption.NOFOLLOW_LINKS );
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>                                 StandardCopyOption.COPY_ATTRIBUTES );
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">return</strong> copy.toFile();
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>     }
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> 
