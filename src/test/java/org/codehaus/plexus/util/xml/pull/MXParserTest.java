@@ -391,6 +391,23 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    @Test
+    public void testFillBuf_NoOverflow()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        parser.reader = new StringReader("testFillBuf_NoOverflow");
+        parser.bufEnd = 15941364;
+        parser.buf = new char[16777216];
+
+        parser.fillBuf();
+
+        // Without this fix
+        // https://web.archive.org/web/20070831191548/http://www.extreme.indiana.edu/bugzilla/show_bug.cgi?id=228
+        // the integer value overflows to -11072962
+        assertTrue(parser.bufSoftLimit >= 0);
+    }
+
     public void testMalformedProcessingInstructionAfterTag()
         throws Exception
     {
