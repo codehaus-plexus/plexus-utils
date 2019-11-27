@@ -401,9 +401,11 @@ public class MXParser
     protected int bufLoadFactor = 95; // 99%
     // protected int bufHardLimit; // only matters when expanding
 
+    protected float bufferLoadFactor = bufLoadFactor / 100f;
+
     protected char buf[] = new char[Runtime.getRuntime().freeMemory() > 1000000L ? READ_CHUNK_SIZE : 256];
 
-    protected int bufSoftLimit = ( bufLoadFactor * buf.length ) / 100; // desirable size of buffer
+    protected int bufSoftLimit = (int) (bufferLoadFactor * buf.length); // desirable size of buffer
 
     protected boolean preventBufferCompaction;
 
@@ -3657,7 +3659,7 @@ public class MXParser
                 if ( bufLoadFactor > 0 )
                 {
                     // Include fix for https://web.archive.org/web/20070831191548/http://www.extreme.indiana.edu/bugzilla/show_bug.cgi?id=228
-                    bufSoftLimit = (int) ((((long) bufLoadFactor) * buf.length) / 100);
+                    bufSoftLimit = (int) (bufferLoadFactor * buf.length);
                 }
 
             }
