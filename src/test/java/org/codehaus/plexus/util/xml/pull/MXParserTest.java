@@ -392,20 +392,25 @@ public class MXParserTest
     }
 
     @Test
-    public void testFillBuf_NoOverflow()
+    public void testLargeText_NoOverflow()
         throws Exception
     {
-        MXParser parser = new MXParser();
-        parser.reader = new StringReader("testFillBuf_NoOverflow");
-        parser.bufEnd = 15941364;
-        parser.buf = new char[16777216];
-
-        parser.fillBuf();
-
-        // Without this fix
+        StringBuffer sb = new StringBuffer();
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        sb.append("<largetextblock>");
+        // Anything above 33,554,431 would fail without a fix for
         // https://web.archive.org/web/20070831191548/http://www.extreme.indiana.edu/bugzilla/show_bug.cgi?id=228
-        // the integer value overflows to -11072962
-        assertTrue(parser.bufSoftLimit >= 0);
+        // with java.io.IOException: error reading input, returned 0
+        sb.append(new String(new char[33554432]));
+        sb.append("</largetextblock>");
+
+        MXParser parser = new MXParser();
+        parser.setInput(new StringReader(sb.toString()));
+
+        assertEquals(XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken());
+        assertEquals(XmlPullParser.START_TAG, parser.nextToken());
+        assertEquals(XmlPullParser.TEXT, parser.nextToken());
+        assertEquals(XmlPullParser.END_TAG, parser.nextToken());
     }
 
     public void testMalformedProcessingInstructionAfterTag()

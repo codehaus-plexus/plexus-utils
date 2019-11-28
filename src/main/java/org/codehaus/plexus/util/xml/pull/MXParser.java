@@ -3658,7 +3658,7 @@ public class MXParser
                 buf = newBuf;
                 if ( bufLoadFactor > 0 )
                 {
-                    // Include fix for https://web.archive.org/web/20070831191548/http://www.extreme.indiana.edu/bugzilla/show_bug.cgi?id=228
+                    // Include a fix for https://web.archive.org/web/20070831191548/http://www.extreme.indiana.edu/bugzilla/show_bug.cgi?id=228
                     bufSoftLimit = (int) (bufferLoadFactor * buf.length);
                 }
 
