@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -427,7 +426,7 @@ public class Xpp3Dom
             {
                 for ( String attr : recessive.attributes.keySet() )
                 {
-                    if ( isEmpty( dominant.getAttribute( attr ) ) )
+                    if ( isEmpty( dominant.getAttribute( attr ) ) && !SELF_COMBINATION_MODE_ATTRIBUTE.equals( attr ) )
                     {
                         dominant.setAttribute( attr, recessive.getAttribute( attr ) );
                     }
