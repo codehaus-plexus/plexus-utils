@@ -329,6 +329,21 @@ public class Xpp3DomTest
         assertEquals( "y", dom.getChild( "foo" ).getValue() );
     }
 
+    @Test
+    public void testShouldRemoveEntireElementWithAttributesAndChildren()
+        throws Exception
+    {
+        String dominantStr = "<config><service combine.self=\"remove\"/></config>";
+        String recessiveStr = "<config><service><parameter>parameter</parameter></service></config>";
+        Xpp3Dom dominantConfig = Xpp3DomBuilder.build( new StringReader( dominantStr ) );
+        Xpp3Dom recessiveConfig = Xpp3DomBuilder.build( new StringReader( recessiveStr ) );
+
+        Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( dominantConfig, recessiveConfig );
+
+        assertEquals( 0, result.getChildCount() );
+        assertEquals( "config", result.getName() );
+    }
+
     private static class FixedInputLocationBuilder
         implements Xpp3DomBuilder.InputLocationBuilder
     {

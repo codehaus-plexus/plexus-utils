@@ -76,6 +76,8 @@ public class Xpp3Dom
 
     public static final String SELF_COMBINATION_MERGE = "merge";
 
+    public static final String SELF_COMBINATION_REMOVE = "remove";
+
     /**
      * This default mode for combining a DOM node during merge means that where element names match, the process will
      * try to merge the element attributes and values, rather than overriding the recessive element completely with the
@@ -301,6 +303,13 @@ public class Xpp3Dom
         child.setParent( null );
     }
 
+    public void removeChild( Xpp3Dom child )
+    {
+        childList.remove( child );
+        // In case of any dangling references
+        child.setParent( null );
+    }
+
     // ----------------------------------------------------------------------
     // Parent handling
     // ----------------------------------------------------------------------
@@ -489,7 +498,17 @@ public class Xpp3Dom
                         else if ( it.hasNext() )
                         {
                             Xpp3Dom dominantChild = it.next();
-                            mergeIntoXpp3Dom( dominantChild, recessiveChild, childMergeOverride );
+
+                            String dominantChildCombinationMode =
+                                dominantChild.getAttribute( SELF_COMBINATION_MODE_ATTRIBUTE );
+                            if ( SELF_COMBINATION_REMOVE.equals( dominantChildCombinationMode ) )
+                            {
+                                dominant.removeChild( dominantChild );
+                            }
+                            else
+                            {
+                                mergeIntoXpp3Dom( dominantChild, recessiveChild, childMergeOverride );
+                            }
                         }
                     }
                 }
