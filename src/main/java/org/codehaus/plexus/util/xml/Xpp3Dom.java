@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -75,6 +74,8 @@ public class Xpp3Dom
     public static final String SELF_COMBINATION_OVERRIDE = "override";
 
     public static final String SELF_COMBINATION_MERGE = "merge";
+
+    public static final String SELF_COMBINATION_REMOVE = "remove";
 
     /**
      * This default mode for combining a DOM node during merge means that where element names match, the process will
@@ -301,6 +302,13 @@ public class Xpp3Dom
         child.setParent( null );
     }
 
+    public void removeChild( Xpp3Dom child )
+    {
+        childList.remove( child );
+        // In case of any dangling references
+        child.setParent( null );
+    }
+
     // ----------------------------------------------------------------------
     // Parent handling
     // ----------------------------------------------------------------------
@@ -418,7 +426,7 @@ public class Xpp3Dom
             {
                 for ( String attr : recessive.attributes.keySet() )
                 {
-                    if ( isEmpty( dominant.getAttribute( attr ) ) )
+                    if ( isEmpty( dominant.getAttribute( attr ) ) && !SELF_COMBINATION_MODE_ATTRIBUTE.equals( attr ) )
                     {
                         dominant.setAttribute( attr, recessive.getAttribute( attr ) );
                     }
@@ -489,7 +497,17 @@ public class Xpp3Dom
                         else if ( it.hasNext() )
                         {
                             Xpp3Dom dominantChild = it.next();
-                            mergeIntoXpp3Dom( dominantChild, recessiveChild, childMergeOverride );
+
+                            String dominantChildCombinationMode =
+                                dominantChild.getAttribute( SELF_COMBINATION_MODE_ATTRIBUTE );
+                            if ( SELF_COMBINATION_REMOVE.equals( dominantChildCombinationMode ) )
+                            {
+                                dominant.removeChild( dominantChild );
+                            }
+                            else
+                            {
+                                mergeIntoXpp3Dom( dominantChild, recessiveChild, childMergeOverride );
+                            }
                         }
                     }
                 }
