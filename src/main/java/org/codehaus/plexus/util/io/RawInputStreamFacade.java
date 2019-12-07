@@ -33,6 +33,7 @@ public class RawInputStreamFacade
         this.stream = stream;
     }
 
+    @Override
     public InputStream getInputStream()
         throws IOException
     {

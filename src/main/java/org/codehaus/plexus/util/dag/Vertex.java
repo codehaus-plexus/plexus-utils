@@ -166,6 +166,7 @@ public class Vertex
         return isRoot() || isLeaf();
     }
 
+    @Override
     public Object clone()
         throws CloneNotSupportedException
     {
@@ -175,6 +176,7 @@ public class Vertex
         return retValue;
     }
 
+    @Override
     public String toString()
     {
         return "Vertex{" + "label='" + label + "'" + "}";

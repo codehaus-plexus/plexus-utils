@@ -169,7 +169,7 @@ public class DAG
 
     public Vertex getVertex( final String label )
     {
-        final Vertex retValue = (Vertex) vertexMap.get( label );
+        final Vertex retValue = vertexMap.get( label );
 
         return retValue;
     }
@@ -211,6 +211,7 @@ public class DAG
     /**
      * @see java.lang.Object#clone()
      */
+    @Override
     public Object clone()
         throws CloneNotSupportedException
     {

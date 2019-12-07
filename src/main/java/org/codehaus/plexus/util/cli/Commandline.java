@@ -100,11 +100,13 @@ public class Commandline
     /**
      * @deprecated Use {@link org.codehaus.plexus.util.Os} class instead.
      */
+    @Deprecated
     protected static final String OS_NAME = "os.name";
 
     /**
      * @deprecated Use {@link org.codehaus.plexus.util.Os} class instead.
      */
+    @Deprecated
     protected static final String WINDOWS = "Windows";
 
     protected Vector<Arg> arguments = new Vector<Arg>();
@@ -120,12 +122,14 @@ public class Commandline
     /**
      * @deprecated Use {@link Commandline#setExecutable(String)} instead.
      */
+    @Deprecated
     protected String executable;
 
     /**
      * @deprecated Use {@link Commandline#setWorkingDirectory(File)} or {@link Commandline#setWorkingDirectory(String)}
      *             instead.
      */
+    @Deprecated
     private File workingDir;
 
     /**
@@ -246,7 +250,7 @@ public class Commandline
                 realPos = ( getLiteralExecutable() == null ? 0 : 1 );
                 for ( int i = 0; i < position; i++ )
                 {
-                    Arg arg = (Arg) arguments.elementAt( i );
+                    Arg arg = arguments.elementAt( i );
                     realPos += arg.getParts().length;
                 }
             }
@@ -289,6 +293,7 @@ public class Commandline
      * @see #createArgument(boolean)
      * @deprecated Use {@link Commandline#createArg()} instead
      */
+    @Deprecated
     public Argument createArgument()
     {
         return this.createArgument( false );
@@ -303,6 +308,7 @@ public class Commandline
      *            appended.
      * @deprecated Use {@link Commandline#createArg(boolean)} instead
      */
+    @Deprecated
     public Argument createArgument( boolean insertAtStart )
     {
         Argument argument = new Argument();
@@ -519,7 +525,7 @@ public class Commandline
         // TODO: Provided only for backward compat. with <= 1.4
         verifyShellState();
 
-        return (String[]) getShell().getShellCommandLine( getArguments() ).toArray( new String[0] );
+        return getShell().getShellCommandLine( getArguments() ).toArray( new String[0] );
     }
 
     /**
@@ -546,6 +552,7 @@ public class Commandline
         return res;
     }
 
+    @Override
     public String toString()
     {
         return StringUtils.join( getShellCommandline(), " " );
@@ -556,6 +563,7 @@ public class Commandline
         return getCommandline().length;
     }
 
+    @Override
     public Object clone()
     {
         Commandline c = new Commandline( (Shell) shell.clone() );
@@ -677,6 +685,7 @@ public class Commandline
     /**
      * @deprecated Remove once backward compat with plexus-utils <= 1.4 is no longer a consideration
      */
+    @Deprecated
     private void verifyShellState()
     {
         if ( shell.getWorkingDirectory() == null )
@@ -722,6 +731,7 @@ public class Commandline
     /**
      * @deprecated Use {@link CommandLineUtils#translateCommandline(String)} instead.
      */
+    @Deprecated
     public static String[] translateCommandline( String toProcess )
         throws Exception
     {
@@ -731,6 +741,7 @@ public class Commandline
     /**
      * @deprecated Use {@link CommandLineUtils#quote(String)} instead.
      */
+    @Deprecated
     public static String quoteArgument( String argument )
         throws CommandLineException
     {
@@ -740,6 +751,7 @@ public class Commandline
     /**
      * @deprecated Use {@link CommandLineUtils#toString(String[])} instead.
      */
+    @Deprecated
     public static String toString( String[] line )
     {
         return CommandLineUtils.toString( line );
@@ -754,6 +766,7 @@ public class Commandline
          * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#setValue(java.lang.String)
          */
+        @Override
         public void setValue( String value )
         {
             if ( value != null )
@@ -766,6 +779,7 @@ public class Commandline
          * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#setLine(java.lang.String)
          */
+        @Override
         public void setLine( String line )
         {
             if ( line == null )
@@ -786,6 +800,7 @@ public class Commandline
          * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#setFile(java.io.File)
          */
+        @Override
         public void setFile( File value )
         {
             parts = new String[] { value.getAbsolutePath() };
@@ -795,6 +810,7 @@ public class Commandline
          * (non-Javadoc)
          * @see org.codehaus.plexus.util.cli.Argument#getParts()
          */
+        @Override
         public String[] getParts()
         {
             return parts;

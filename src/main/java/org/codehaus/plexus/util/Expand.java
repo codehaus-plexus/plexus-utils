@@ -102,28 +102,17 @@ public class Expand
     protected void expandFile( final File srcF, final File dir )
         throws Exception
     {
-        ZipInputStream zis = null;
-        try
+        // code from WarExpand
+        try ( ZipInputStream zis = new ZipInputStream( new FileInputStream( srcF ) ) )
         {
-            // code from WarExpand
-            zis = new ZipInputStream( new FileInputStream( srcF ) );
-
             for ( ZipEntry ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry() )
             {
                 extractFile( srcF, dir, zis, ze.getName(), new Date( ze.getTime() ), ze.isDirectory() );
             }
-
-            // log("expand complete", Project.MSG_VERBOSE);
-            zis.close();
-            zis = null;
         }
         catch ( IOException ioe )
         {
             throw new Exception( "Error while expanding " + srcF.getPath(), ioe );
-        }
-        finally
-        {
-            IOUtil.close( zis );
         }
     }
 
@@ -159,22 +148,13 @@ public class Expand
             else
             {
                 byte[] buffer = new byte[65536];
-                FileOutputStream fos = null;
-                try
+                
+                try ( FileOutputStream fos = new FileOutputStream( f ) )
                 {
-                    fos = new FileOutputStream( f );
-
-                    for ( int length =
-                        compressedInputStream.read( buffer ); length >= 0; fos.write( buffer, 0, length ), length =
-                            compressedInputStream.read( buffer ) )
+                    for ( int length = compressedInputStream.read( buffer ); 
+                          length >= 0; 
+                          fos.write( buffer, 0, length ), length = compressedInputStream.read( buffer ) )
                         ;
-
-                    fos.close();
-                    fos = null;
-                }
-                finally
-                {
-                    IOUtil.close( fos );
                 }
             }
 

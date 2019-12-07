@@ -191,6 +191,7 @@ public final class CachedMap
      * @throws ClassCastException if the key is of an inappropriate type for the backing map (optional).
      * @throws NullPointerException if the key is <code>null</code>.
      */
+    @Override
     public Object get( Object key )
     {
         int index = key.hashCode() & _mask;
@@ -243,6 +244,7 @@ public final class CachedMap
      * @throws IllegalArgumentException if some aspect of this key or value prevents it from being stored in this map.
      * @throws NullPointerException if the key is <code>null</code>.
      */
+    @Override
     public Object put( Object key, Object value )
     {
         // Updates the cache.
@@ -269,6 +271,7 @@ public final class CachedMap
      * @throws NullPointerException if the key is <code>null</code>.
      * @throws UnsupportedOperationException if the <code>remove</code> method is not supported by the backing map.
      */
+    @Override
     public Object remove( Object key )
     {
         // Removes from cache.
@@ -292,6 +295,7 @@ public final class CachedMap
      * @param key the key whose presence in this map is to be tested.
      * @return <code>true</code> if this map contains a mapping for the specified key; <code>false</code> otherwise.
      */
+    @Override
     public boolean containsKey( Object key )
     {
         // Checks the cache.
@@ -312,6 +316,7 @@ public final class CachedMap
      *
      * @return the number of key-value mappings in this map.
      */
+    @Override
     public int size()
     {
         return _backingMap.size();
@@ -322,6 +327,7 @@ public final class CachedMap
      *
      * @return <code>true</code> if this map contains no key-value mappings.
      */
+    @Override
     public boolean isEmpty()
     {
         return _backingMap.isEmpty();
@@ -336,6 +342,7 @@ public final class CachedMap
      * @throws NullPointerException if the value is <code>null</code> and the backing map does not not permit
      *             <code>null</code> values.
      */
+    @Override
     public boolean containsValue( Object value )
     {
         return _backingMap.containsValue( value );
@@ -354,6 +361,7 @@ public final class CachedMap
      * @throws NullPointerException the specified map is <code>null</code>, or if the backing map does not permit
      *             <code>null</code> keys or values, and the specified map contains <code>null</code> keys or values.
      */
+    @Override
     public void putAll( Map map )
     {
         _backingMap.putAll( map );
@@ -365,6 +373,7 @@ public final class CachedMap
      *
      * @throws UnsupportedOperationException if clear is not supported by the backing map.
      */
+    @Override
     public void clear()
     {
         _backingMap.clear();
@@ -376,6 +385,7 @@ public final class CachedMap
      *
      * @return an unmodifiable view of the keys contained in this map.
      */
+    @Override
     public Set keySet()
     {
         return Collections.unmodifiableSet( _backingMap.keySet() );
@@ -386,6 +396,7 @@ public final class CachedMap
      *
      * @return an unmodifiable view of the values contained in this map.
      */
+    @Override
     public Collection values()
     {
         return Collections.unmodifiableCollection( _backingMap.values() );
@@ -397,6 +408,7 @@ public final class CachedMap
      *
      * @return an unmodifiable view of the mappings contained in this map.
      */
+    @Override
     public Set entrySet()
     {
         return Collections.unmodifiableSet( _backingMap.entrySet() );
@@ -409,6 +421,7 @@ public final class CachedMap
      * @param o object to be compared for equality with this map.
      * @return <code>true</code> if the specified object is equal to this map.
      */
+    @Override
     public boolean equals( Object o )
     {
         return _backingMap.equals( o );
@@ -419,6 +432,7 @@ public final class CachedMap
      *
      * @return the hash code value for this map.
      */
+    @Override
     public int hashCode()
     {
         return _backingMap.hashCode();

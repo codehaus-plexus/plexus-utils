@@ -102,6 +102,7 @@ public class DirectoryWalker
             return (int) Math.floor( percentageOffset + ( percentageWithinDir * percentageSize ) );
         }
 
+        @Override
         public String toString()
         {
             return "DirStackEntry[" + "dir=" + dir.getAbsolutePath() + ",count=" + count + ",index=" + index
@@ -154,7 +155,7 @@ public class DirectoryWalker
      */
     public void addSCMExcludes()
     {
-        String scmexcludes[] = DirectoryScanner.DEFAULTEXCLUDES;
+        String scmexcludes[] = AbstractScanner.DEFAULTEXCLUDES;
         for ( String scmexclude : scmexcludes )
         {
             addExclude( scmexclude );
@@ -330,7 +331,7 @@ public class DirectoryWalker
         }
 
         fireWalkStarting();
-        dirStack = new Stack();
+        dirStack = new Stack<DirStackEntry>();
         scanDir( baseDir );
         fireWalkFinished();
     }
@@ -352,7 +353,7 @@ public class DirectoryWalker
         }
         else
         {
-            DirectoryWalker.DirStackEntry previousStackEntry = (DirectoryWalker.DirStackEntry) dirStack.peek();
+            DirectoryWalker.DirStackEntry previousStackEntry = dirStack.peek();
             curStackEntry.percentageOffset = previousStackEntry.getNextPercentageOffset();
             curStackEntry.percentageSize = previousStackEntry.getNextPercentageSize();
         }

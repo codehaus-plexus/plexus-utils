@@ -56,6 +56,7 @@ public class CycleDetectedException
         return buffer.toString();
     }
 
+    @Override
     public String getMessage()
     {
         return super.getMessage() + " " + cycleToString();

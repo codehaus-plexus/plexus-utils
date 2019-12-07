@@ -72,7 +72,6 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
-import java.nio.channels.FileChannel;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -133,14 +132,9 @@ public class FileUtils
     public static final int ONE_GB = ONE_KB * ONE_MB;
 
     /**
-     * The file copy buffer size (30 MB)
-     */
-    private static final long FILE_COPY_BUFFER_SIZE = ONE_MB * 30;
-
-    /**
      * The vm file separator
      */
-    public static String FS = System.getProperty( "file.separator" );
+    public static String FS = File.separator;
 
     /**
      * Non-valid Characters for naming files, folders under Windows: <code>":", "*", "?", "\"", "<", ">", "|"</code>
@@ -363,35 +357,31 @@ public class FileUtils
     {
         StringBuilder buf = new StringBuilder();
 
-        Reader reader = null;
-
-        try
+        try ( Reader reader = getInputStreamReader( file, encoding ) )
         {
-            if ( encoding != null )
-            {
-                reader = new InputStreamReader( new FileInputStream( file ), encoding );
-            }
-            else
-            {
-                reader = new InputStreamReader( new FileInputStream( file ) );
-            }
             int count;
             char[] b = new char[512];
             while ( ( count = reader.read( b ) ) >= 0 ) // blocking read
             {
                 buf.append( b, 0, count );
             }
-            reader.close();
-            reader = null;
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
 
         return buf.toString();
     }
 
+    private static InputStreamReader getInputStreamReader( File file, String encoding ) throws IOException
+    {
+        if ( encoding != null )
+        {
+            return new InputStreamReader( new FileInputStream( file ), encoding );
+        }
+        else
+        {
+            return new InputStreamReader( new FileInputStream( file ) );
+        }
+    }
+    
     /**
      * Appends data to a file. The file will be created if it does not exist. Note: the data is written with platform
      * encoding
@@ -417,10 +407,8 @@ public class FileUtils
     public static void fileAppend( String fileName, String encoding, String data )
         throws IOException
     {
-        FileOutputStream out = null;
-        try
+        try ( FileOutputStream out = new FileOutputStream( fileName, true ) )
         {
-            out = new FileOutputStream( fileName, true );
             if ( encoding != null )
             {
                 out.write( data.getBytes( encoding ) );
@@ -429,12 +417,6 @@ public class FileUtils
             {
                 out.write( data.getBytes() );
             }
-            out.close();
-            out = null;
-        }
-        finally
-        {
-            IOUtil.close( out );
         }
     }
 
@@ -494,25 +476,22 @@ public class FileUtils
     public static void fileWrite( File file, String encoding, String data )
         throws IOException
     {
-        Writer writer = null;
-        try
+        try ( Writer writer = getOutputStreamWriter( file, encoding ) )
         {
-            OutputStream out = new FileOutputStream( file );
-            if ( encoding != null )
-            {
-                writer = new OutputStreamWriter( out, encoding );
-            }
-            else
-            {
-                writer = new OutputStreamWriter( out );
-            }
             writer.write( data );
-            writer.close();
-            writer = null;
         }
-        finally
+    }
+    
+    private static OutputStreamWriter getOutputStreamWriter( File file, String encoding ) throws IOException
+    {
+        OutputStream out = new FileOutputStream( file );
+        if ( encoding != null )
         {
-            IOUtil.close( writer );
+            return new OutputStreamWriter( out, encoding );
+        }
+        else
+        {
+            return new OutputStreamWriter( out );
         }
     }
 
@@ -524,20 +503,13 @@ public class FileUtils
     public static void fileDelete( String fileName )
     {
         File file = new File( fileName );
-        if ( Java7Detector.isJava7() )
+        try
         {
-            try
-            {
-                NioFiles.deleteIfExists( file );
-            }
-            catch ( IOException e )
-            {
-                throw new RuntimeException( e );
-            }
+            NioFiles.deleteIfExists( file );
         }
-        else
+        catch ( IOException e )
         {
-            file.delete();
+            throw new RuntimeException( e );
         }
     }
 
@@ -751,26 +723,12 @@ public class FileUtils
             // don't want to compare directory contents
             return false;
         }
-
-        InputStream input1 = null;
-        InputStream input2 = null;
-        boolean equals = false;
-        try
+        
+        try ( InputStream input1 = new FileInputStream( file1 );
+              InputStream input2 = new FileInputStream( file2 ) )
         {
-            input1 = new FileInputStream( file1 );
-            input2 = new FileInputStream( file2 );
-            equals = IOUtil.contentEquals( input1, input2 );
-            input1.close();
-            input1 = null;
-            input2.close();
-            input2 = null;
+            return IOUtil.contentEquals( input1, input2 );
         }
-        finally
-        {
-            IOUtil.close( input1 );
-            IOUtil.close( input2 );
-        }
-        return equals;
     }
 
     /**
@@ -1038,7 +996,7 @@ public class FileUtils
         {
             File src = new File( sourceBase, dir );
             File dst = new File( destination, dir );
-            if ( Java7Detector.isJava7() && NioFiles.isSymbolicLink( src ) )
+            if ( NioFiles.isSymbolicLink( src ) )
             {
                 File target = NioFiles.readSymbolicLink( src );
                 NioFiles.createSymbolicLink( dst, target );
@@ -1091,54 +1049,7 @@ public class FileUtils
     private static void doCopyFile( File source, File destination )
         throws IOException
     {
-        // offload to operating system if supported
-        if ( Java7Detector.isJava7() )
-        {
-            doCopyFileUsingNewIO( source, destination );
-        }
-        else
-        {
-            doCopyFileUsingLegacyIO( source, destination );
-        }
-    }
-
-    private static void doCopyFileUsingLegacyIO( File source, File destination )
-        throws IOException
-    {
-        FileInputStream fis = null;
-        FileOutputStream fos = null;
-        FileChannel input = null;
-        FileChannel output = null;
-        try
-        {
-            fis = new FileInputStream( source );
-            fos = new FileOutputStream( destination );
-            input = fis.getChannel();
-            output = fos.getChannel();
-            long size = input.size();
-            long pos = 0;
-            long count = 0;
-            while ( pos < size )
-            {
-                count = size - pos > FILE_COPY_BUFFER_SIZE ? FILE_COPY_BUFFER_SIZE : size - pos;
-                pos += output.transferFrom( input, pos, count );
-            }
-            output.close();
-            output = null;
-            fos.close();
-            fos = null;
-            input.close();
-            input = null;
-            fis.close();
-            fis = null;
-        }
-        finally
-        {
-            IOUtil.close( output );
-            IOUtil.close( fos );
-            IOUtil.close( input );
-            IOUtil.close( fis );
-        }
+        doCopyFileUsingNewIO( source, destination );
     }
 
     private static void doCopyFileUsingNewIO( File source, File destination )
@@ -1211,22 +1122,10 @@ public class FileUtils
         mkdirsFor( destination );
         checkCanWrite( destination );
 
-        InputStream input = null;
-        FileOutputStream output = null;
-        try
+        try (  InputStream input = source.getInputStream();
+               FileOutputStream output = new FileOutputStream( destination ) )
         {
-            input = source.getInputStream();
-            output = new FileOutputStream( destination );
             IOUtil.copy( input, output );
-            output.close();
-            output = null;
-            input.close();
-            input = null;
-        }
-        finally
-        {
-            IOUtil.close( input );
-            IOUtil.close( output );
         }
     }
 
@@ -2378,13 +2277,11 @@ public class FileUtils
         throws IOException
     {
         final List<String> lines = new ArrayList<String>();
-        BufferedReader reader = null;
-        try
-        {
-            if ( file.exists() )
-            {
-                reader = new BufferedReader( new FileReader( file ) );
 
+        if ( file.exists() )
+        {
+            try ( BufferedReader reader = new BufferedReader( new FileReader( file ) ) )
+            {
                 for ( String line = reader.readLine(); line != null; line = reader.readLine() )
                 {
                     line = line.trim();
@@ -2394,14 +2291,7 @@ public class FileUtils
                         lines.add( line );
                     }
                 }
-
-                reader.close();
-                reader = null;
             }
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
 
         return lines;

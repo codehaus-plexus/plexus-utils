@@ -24,7 +24,6 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 
-import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.WriterFactory;
@@ -65,24 +64,16 @@ public class XmlUtil
             throw new IllegalArgumentException( "The file '" + f.getAbsolutePath() + "' is not a file." );
         }
 
-        Reader reader = null;
-        try
+        try ( Reader reader = ReaderFactory.newXmlReader( f ) )
         {
-            reader = ReaderFactory.newXmlReader( f );
             XmlPullParser parser = new MXParser();
             parser.setInput( reader );
             parser.nextToken();
-            reader.close();
-            reader = null;
             return true;
         }
         catch ( Exception e )
         {
             return false;
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
     }
 
@@ -233,13 +224,9 @@ public class XmlUtil
             indentSize = 0;
         }
 
-        Reader reader = null;
-        Writer writer = null;
-        try
+        try ( Reader reader = ReaderFactory.newXmlReader( is );
+              Writer writer = new OutputStreamWriter( os ) )
         {
-            reader = ReaderFactory.newXmlReader( is );
-            writer = new OutputStreamWriter( os );
-
             final PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter( writer );
             xmlWriter.setLineIndenter( StringUtils.repeat( " ", indentSize ) );
             xmlWriter.setLineSeparator( lineSeparator );
@@ -248,21 +235,10 @@ public class XmlUtil
             parser.setInput( reader );
 
             prettyFormatInternal( parser, xmlWriter );
-
-            writer.close();
-            writer = null;
-
-            reader.close();
-            reader = null;
         }
         catch ( XmlPullParserException e )
         {
             throw new IOException( "Unable to parse the XML: " + e.getMessage() );
-        }
-        finally
-        {
-            IOUtil.close( writer );
-            IOUtil.close( reader );
         }
     }
 

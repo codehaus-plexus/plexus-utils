@@ -234,6 +234,7 @@ public class DirectoryScanner
      *
      * @return the base directory to be scanned
      */
+    @Override
     public File getBasedir()
     {
         return basedir;
@@ -266,6 +267,7 @@ public class DirectoryScanner
      * @throws IllegalStateException if the base directory was set incorrectly (i.e. if it is <code>null</code>, doesn't
      *             exist, or isn't a directory).
      */
+    @Override
     public void scan()
         throws IllegalStateException
     {
@@ -548,6 +550,7 @@ public class DirectoryScanner
      * @return the names of the files which matched at least one of the include patterns and none of the exclude
      *         patterns.
      */
+    @Override
     public String[] getIncludedFiles()
     {
         String[] files = new String[filesIncluded.size()];
@@ -611,6 +614,7 @@ public class DirectoryScanner
      * @return the names of the directories which matched at least one of the include patterns and none of the exclude
      *         patterns.
      */
+    @Override
     public String[] getIncludedDirectories()
     {
         String[] directories = new String[dirsIncluded.size()];
@@ -683,13 +687,7 @@ public class DirectoryScanner
     public boolean isSymbolicLink( File parent, String name )
         throws IOException
     {
-        if ( Java7Detector.isJava7() )
-        {
-            return NioFiles.isSymbolicLink( new File( parent, name ) );
-        }
-        File resolvedParent = new File( parent.getCanonicalPath() );
-        File toTest = new File( resolvedParent, name );
-        return !toTest.getAbsolutePath().equals( toTest.getCanonicalPath() );
+        return NioFiles.isSymbolicLink( new File( parent, name ) );
     }
 
     /**
@@ -707,12 +705,6 @@ public class DirectoryScanner
     public boolean isParentSymbolicLink( File parent, String name )
         throws IOException
     {
-        if ( Java7Detector.isJava7() )
-        {
-            return NioFiles.isSymbolicLink( parent );
-        }
-        File resolvedParent = new File( parent.getCanonicalPath() );
-        File toTest = new File( resolvedParent, name );
-        return !toTest.getAbsolutePath().equals( toTest.getCanonicalPath() );
+        return NioFiles.isSymbolicLink( parent );
     }
 }

@@ -229,6 +229,7 @@ public abstract class AbstractScanner
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
      *            included. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
      */
+    @Override
     public void setIncludes( String[] includes )
     {
         if ( includes == null )
@@ -258,6 +259,7 @@ public abstract class AbstractScanner
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
      *            excluded. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
      */
+    @Override
     public void setExcludes( String[] excludes )
     {
         if ( excludes == null )
@@ -361,6 +363,7 @@ public abstract class AbstractScanner
     /**
      * Adds default exclusions to the current exclusions set.
      */
+    @Override
     public void addDefaultExcludes()
     {
         int excludesLength = excludes == null ? 0 : excludes.length;

@@ -36,6 +36,7 @@ public class CompactXMLWriter
         super( writer );
     }
 
+    @Override
     protected void endOfLine()
     {
         // override parent: don't write anything at end of line

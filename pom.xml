@@ -22,7 +22,7 @@ limitations under the License.
   <parent>
     <groupId>org.codehaus.plexus</groupId>
     <artifactId>plexus</artifactId>
-    <version>5.1</version>
+    <version>6.0</version>
   </parent>
 
   <artifactId>plexus-utils</artifactId>
@@ -142,19 +142,4 @@ limitations under the License.
     </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <!-- See https://github.com/codehaus-plexus/plexus-utils/pull/27 -->
-      <!-- m2e Eclipse plugin doesn't respect the maven-enforcer-plugin 'requireJavaVersion' parameter  -->
-      <id>eclipse-only-jdk-version</id>
-      <activation>
-        <property>
-          <name>m2e.version</name>
-        </property>
-      </activation>
-      <properties>
-        <javaVersion>7</javaVersion>
-      </properties>
-    </profile>
-  </profiles>
 </project>

@@ -536,7 +536,7 @@ public final class Reflector
 
         synchronized ( paramKey.intern() )
         {
-            method = (Method) methodMap.get( paramKey );
+            method = methodMap.get( paramKey );
 
             if ( method == null )
             {

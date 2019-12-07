@@ -236,6 +236,7 @@ public class MXSerializer
         // }
     }
 
+    @Override
     public void setFeature( String name, boolean state )
         throws IllegalArgumentException, IllegalStateException
     {
@@ -257,6 +258,7 @@ public class MXSerializer
         }
     }
 
+    @Override
     public boolean getFeature( String name )
         throws IllegalArgumentException
     {
@@ -347,6 +349,7 @@ public class MXSerializer
         out.write( indentationBuf, start, ( level * indentationJump ) + offsetNewLine );
     }
 
+    @Override
     public void setProperty( String name, Object value )
         throws IllegalArgumentException, IllegalStateException
     {
@@ -380,6 +383,7 @@ public class MXSerializer
         seenTag = false; // for consistency
     }
 
+    @Override
     public Object getProperty( String name )
         throws IllegalArgumentException
     {
@@ -416,12 +420,14 @@ public class MXSerializer
         return out;
     }
 
+    @Override
     public void setOutput( Writer writer )
     {
         reset();
         out = writer;
     }
 
+    @Override
     public void setOutput( OutputStream os, String encoding )
         throws IOException
     {
@@ -438,6 +444,7 @@ public class MXSerializer
         }
     }
 
+    @Override
     public void startDocument( String encoding, Boolean standalone )
         throws IOException
     {
@@ -484,6 +491,7 @@ public class MXSerializer
         }
     }
 
+    @Override
     public void endDocument()
         throws IOException
     {
@@ -502,6 +510,7 @@ public class MXSerializer
         out.flush();
     }
 
+    @Override
     public void setPrefix( String prefix, String namespace )
         throws IOException
     {
@@ -563,6 +572,7 @@ public class MXSerializer
         return getPrefix( namespace, true );
     }
 
+    @Override
     public String getPrefix( String namespace, boolean generatePrefix )
     {
         // assert namespace != null;
@@ -641,21 +651,25 @@ public class MXSerializer
         }
     }
 
+    @Override
     public int getDepth()
     {
         return depth;
     }
 
+    @Override
     public String getNamespace()
     {
         return elNamespace[depth];
     }
 
+    @Override
     public String getName()
     {
         return elName[depth];
     }
 
+    @Override
     public XmlSerializer startTag( String namespace, String name )
         throws IOException
     {
@@ -764,6 +778,7 @@ public class MXSerializer
         return this;
     }
 
+    @Override
     public XmlSerializer attribute( String namespace, String name, String value )
         throws IOException
     {
@@ -871,6 +886,7 @@ public class MXSerializer
         }
     }
 
+    @Override
     public XmlSerializer endTag( String namespace, String name )
         throws IOException
     {
@@ -947,6 +963,7 @@ public class MXSerializer
         return this;
     }
 
+    @Override
     public XmlSerializer text( String text )
         throws IOException
     {
@@ -959,6 +976,7 @@ public class MXSerializer
         return this;
     }
 
+    @Override
     public XmlSerializer text( char[] buf, int start, int len )
         throws IOException
     {
@@ -970,6 +988,7 @@ public class MXSerializer
         return this;
     }
 
+    @Override
     public void cdsect( String text )
         throws IOException
     {
@@ -982,6 +1001,7 @@ public class MXSerializer
         out.write( "]]>" );
     }
 
+    @Override
     public void entityRef( String text )
         throws IOException
     {
@@ -994,6 +1014,7 @@ public class MXSerializer
         out.write( ';' );
     }
 
+    @Override
     public void processingInstruction( String text )
         throws IOException
     {
@@ -1006,6 +1027,7 @@ public class MXSerializer
         out.write( "?>" );
     }
 
+    @Override
     public void comment( String text )
         throws IOException
     {
@@ -1018,6 +1040,7 @@ public class MXSerializer
         out.write( "-->" );
     }
 
+    @Override
     public void docdecl( String text )
         throws IOException
     {
@@ -1030,6 +1053,7 @@ public class MXSerializer
         out.write( ">" );
     }
 
+    @Override
     public void ignorableWhitespace( String text )
         throws IOException
     {
@@ -1045,6 +1069,7 @@ public class MXSerializer
         out.write( text ); // no escape?
     }
 
+    @Override
     public void flush()
         throws IOException
     {

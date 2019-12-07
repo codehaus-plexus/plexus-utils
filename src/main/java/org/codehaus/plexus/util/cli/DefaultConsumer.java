@@ -26,6 +26,7 @@ public class DefaultConsumer
     implements StreamConsumer
 {
 
+    @Override
     public void consumeLine( String line )
         throws IOException
     {

@@ -33,6 +33,7 @@ public class WriterStreamConsumer
         this.writer = new PrintWriter( writer );
     }
 
+    @Override
     public void consumeLine( String line )
     {
         writer.println( line );

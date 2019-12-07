@@ -136,6 +136,7 @@ public class FastMap<K, V>
      *
      * @return this map's size.
      */
+    @Override
     public int size()
     {
         return _size;
@@ -157,6 +158,7 @@ public class FastMap<K, V>
      *
      * @return <code>true</code> if this map contains no key-value mappings; <code>false</code> otherwise.
      */
+    @Override
     public boolean isEmpty()
     {
         return _size == 0;
@@ -169,6 +171,7 @@ public class FastMap<K, V>
      * @return <code>true</code> if this map contains a mapping for the specified key; <code>false</code> otherwise.
      * @throws NullPointerException if the key is <code>null</code>.
      */
+    @Override
     public boolean containsKey( Object key )
     {
         EntryImpl entry = _entries[keyHash( key ) & _mask];
@@ -190,6 +193,7 @@ public class FastMap<K, V>
      * @return <code>true</code> if this map maps one or more keys to the specified value.
      * @throws NullPointerException if the key is <code>null</code>.
      */
+    @Override
     public boolean containsValue( Object value )
     {
         EntryImpl entry = _mapFirst;
@@ -212,6 +216,7 @@ public class FastMap<K, V>
      *         key.
      * @throws NullPointerException if key is <code>null</code>.
      */
+    @Override
     public V get( Object key )
     {
         EntryImpl<K, V> entry = _entries[keyHash( key ) & _mask];
@@ -257,6 +262,7 @@ public class FastMap<K, V>
      *         specified key.
      * @throws NullPointerException if the key is <code>null</code>.
      */
+    @Override
     public Object put( Object key, Object value )
     {
         EntryImpl entry = _entries[keyHash( key ) & _mask];
@@ -282,6 +288,7 @@ public class FastMap<K, V>
      * @throws NullPointerException the specified map is <code>null</code>, or the specified map contains
      *             <code>null</code> keys.
      */
+    @Override
     public void putAll( Map<? extends K, ? extends V> map )
     {
         for ( Entry<? extends K, ? extends V> entry : map.entrySet() )
@@ -299,6 +306,7 @@ public class FastMap<K, V>
      *         specified key.
      * @throws NullPointerException if the key is <code>null</code>.
      */
+    @Override
     public V remove( Object key )
     {
         EntryImpl<K, V> entry = _entries[keyHash( key ) & _mask];
@@ -318,6 +326,7 @@ public class FastMap<K, V>
     /**
      * Removes all mappings from this {@link FastMap}.
      */
+    @Override
     public void clear()
     {
         // Clears all keys, values and buckets linked lists.
@@ -417,6 +426,7 @@ public class FastMap<K, V>
      *
      * @return a shallow copy of this map.
      */
+    @Override
     public Object clone()
     {
         try
@@ -440,6 +450,7 @@ public class FastMap<K, V>
      * @param obj the object to be compared for equality with this map.
      * @return <code>true</code> if the specified object is equal to this map; <code>false</code> otherwise.
      */
+    @Override
     public boolean equals( Object obj )
     {
         if ( obj == this )
@@ -478,6 +489,7 @@ public class FastMap<K, V>
      *
      * @return the hash code value for this map.
      */
+    @Override
     public int hashCode()
     {
         int code = 0;
@@ -495,6 +507,7 @@ public class FastMap<K, V>
      *
      * @return <code>this.entrySet().toString();</code>
      */
+    @Override
     public String toString()
     {
         return entrySet().toString();
@@ -509,6 +522,7 @@ public class FastMap<K, V>
      *
      * @return a collection view of the values contained in this map.
      */
+    @Override
     public Collection values()
     {
         return _values;
@@ -519,6 +533,7 @@ public class FastMap<K, V>
     private class Values
         extends AbstractCollection
     {
+        @Override
         public Iterator iterator()
         {
             return new Iterator()
@@ -527,16 +542,19 @@ public class FastMap<K, V>
 
                 EntryImpl before;
 
+                @Override
                 public void remove()
                 {
                     removeEntry( before );
                 }
 
+                @Override
                 public boolean hasNext()
                 {
                     return after != null;
                 }
 
+                @Override
                 public Object next()
                 {
                     before = after;
@@ -546,16 +564,19 @@ public class FastMap<K, V>
             };
         }
 
+        @Override
         public int size()
         {
             return _size;
         }
 
+        @Override
         public boolean contains( Object o )
         {
             return containsValue( o );
         }
 
+        @Override
         public void clear()
         {
             FastMap.this.clear();
@@ -572,6 +593,7 @@ public class FastMap<K, V>
      *
      * @return a collection view of the mappings contained in this map.
      */
+    @Override
     public Set entrySet()
     {
         return _entrySet;
@@ -582,6 +604,7 @@ public class FastMap<K, V>
     private class EntrySet
         extends AbstractSet
     {
+        @Override
         public Iterator iterator()
         {
             return new Iterator()
@@ -590,16 +613,19 @@ public class FastMap<K, V>
 
                 EntryImpl before;
 
+                @Override
                 public void remove()
                 {
                     removeEntry( before );
                 }
 
+                @Override
                 public boolean hasNext()
                 {
                     return after != null;
                 }
 
+                @Override
                 public Object next()
                 {
                     before = after;
@@ -609,11 +635,13 @@ public class FastMap<K, V>
             };
         }
 
+        @Override
         public int size()
         {
             return _size;
         }
 
+        @Override
         public boolean contains( Object obj )
         { // Optimization.
             if ( obj instanceof Map.Entry )
@@ -628,6 +656,7 @@ public class FastMap<K, V>
             }
         }
 
+        @Override
         public boolean remove( Object obj )
         { // Optimization.
             if ( obj instanceof Map.Entry )
@@ -653,6 +682,7 @@ public class FastMap<K, V>
      *
      * @return a set view of the keys contained in this map.
      */
+    @Override
     public Set keySet()
     {
         return _keySet;
@@ -663,6 +693,7 @@ public class FastMap<K, V>
     private class KeySet
         extends AbstractSet
     {
+        @Override
         public Iterator iterator()
         {
             return new Iterator()
@@ -671,16 +702,19 @@ public class FastMap<K, V>
 
                 EntryImpl before;
 
+                @Override
                 public void remove()
                 {
                     removeEntry( before );
                 }
 
+                @Override
                 public boolean hasNext()
                 {
                     return after != null;
                 }
 
+                @Override
                 public Object next()
                 {
                     before = after;
@@ -690,21 +724,25 @@ public class FastMap<K, V>
             };
         }
 
+        @Override
         public int size()
         {
             return _size;
         }
 
+        @Override
         public boolean contains( Object obj )
         { // Optimization.
             return FastMap.this.containsKey( obj );
         }
 
+        @Override
         public boolean remove( Object obj )
         { // Optimization.
             return FastMap.this.remove( obj ) != null;
         }
 
+        @Override
         public void clear()
         { // Optimization.
             FastMap.this.clear();
@@ -995,6 +1033,7 @@ public class FastMap<K, V>
          * 
          * @return the entry's key.
          */
+        @Override
         public K getKey()
         {
             return _key;
@@ -1005,6 +1044,7 @@ public class FastMap<K, V>
          * 
          * @return the entry's value.
          */
+        @Override
         public V getValue()
         {
             return _value;
@@ -1016,6 +1056,7 @@ public class FastMap<K, V>
          * @param value the new value.
          * @return the previous value.
          */
+        @Override
         public V setValue( V value )
         {
             V old = _value;
@@ -1029,6 +1070,7 @@ public class FastMap<K, V>
          * @param that the object to test for equality.
          * @return <code>true<code> if both entry are considered equal; <code>false<code> otherwise.
          */
+        @Override
         public boolean equals( Object that )
         {
             if ( that instanceof Map.Entry )
@@ -1048,6 +1090,7 @@ public class FastMap<K, V>
          * 
          * @return this entry's hash code.
          */
+        @Override
         public int hashCode()
         {
             return _key.hashCode() ^ ( ( _value != null ) ? _value.hashCode() : 0 );
@@ -1058,6 +1101,7 @@ public class FastMap<K, V>
          * 
          * @return this entry's textual representation.
          */
+        @Override
         public String toString()
         {
             return _key + "=" + _value;

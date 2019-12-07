@@ -558,6 +558,7 @@ public class Xpp3Dom
     // Standard object handling
     // ----------------------------------------------------------------------
 
+    @Override
     public boolean equals( Object obj )
     {
         if ( obj == this )
@@ -594,6 +595,7 @@ public class Xpp3Dom
         }
     }
 
+    @Override
     public int hashCode()
     {
         int result = 17;
@@ -604,6 +606,7 @@ public class Xpp3Dom
         return result;
     }
 
+    @Override
     public String toString()
     {
         // TODO: WARNING! Later versions of plexus-utils psit out an <?xml ?> header due to thinking this is a new

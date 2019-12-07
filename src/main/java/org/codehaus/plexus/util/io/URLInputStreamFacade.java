@@ -33,6 +33,7 @@ public class URLInputStreamFacade
         this.url = url;
     }
 
+    @Override
     public InputStream getInputStream()
         throws IOException
     {

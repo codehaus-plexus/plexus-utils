@@ -47,6 +47,7 @@ public abstract class CommandLineUtils
 
         private String ls = System.getProperty( "line.separator" );
 
+        @Override
         public void consumeLine( String line )
         {
             string.append( line ).append( ls );
@@ -154,6 +155,7 @@ public abstract class CommandLineUtils
         return new CommandLineCallable()
         {
 
+            @Override
             public Integer call()
                 throws CommandLineException
             {
@@ -504,6 +506,7 @@ public abstract class CommandLineUtils
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
+    @Deprecated
     @SuppressWarnings( { "JavaDoc", "deprecation" } )
     public static String quote( String argument )
         throws CommandLineException
@@ -525,6 +528,7 @@ public abstract class CommandLineUtils
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
+    @Deprecated
     @SuppressWarnings( { "JavaDoc", "UnusedDeclaration", "deprecation" } )
     public static String quote( String argument, boolean wrapExistingQuotes )
         throws CommandLineException
@@ -537,6 +541,7 @@ public abstract class CommandLineUtils
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
+    @Deprecated
     @SuppressWarnings( { "JavaDoc" } )
     public static String quote( String argument, boolean escapeSingleQuotes, boolean escapeDoubleQuotes,
                                 boolean wrapExistingQuotes )

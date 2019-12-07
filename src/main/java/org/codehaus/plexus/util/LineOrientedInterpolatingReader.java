@@ -144,6 +144,7 @@ public class LineOrientedInterpolatingReader
         this( reader, context, DEFAULT_START_DELIM, DEFAULT_END_DELIM, DEFAULT_ESCAPE_SEQ );
     }
 
+    @Override
     public int read()
         throws IOException
     {
@@ -162,6 +163,7 @@ public class LineOrientedInterpolatingReader
         return next;
     }
 
+    @Override
     public int read( char[] cbuf, int off, int len )
         throws IOException
     {
@@ -190,6 +192,7 @@ public class LineOrientedInterpolatingReader
         return fillCount;
     }
 
+    @Override
     public long skip( long n )
         throws IOException
     {

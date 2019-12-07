@@ -1,5 +1,7 @@
 package org.codehaus.plexus.util;
 
+import java.util.Objects;
+
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -28,7 +30,6 @@ import java.net.URL;
  *
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @author <a href="mailto:mmaczka@interia.pl">Michal Maczka</a>
- * @version $Id$
  */
 public class PropertyUtils
 {
@@ -36,47 +37,30 @@ public class PropertyUtils
     public static Properties loadProperties( final URL url )
         throws IOException
     {
-        if ( url == null )
-        {
-            throw new NullPointerException( "url" );
-        }
-
-        return loadProperties( url.openStream() );
+        return loadProperties( Objects.requireNonNull( url, "url" ).openStream() );
     }
 
     public static Properties loadProperties( final File file )
         throws IOException
     {
-        if ( file == null )
-        {
-            throw new NullPointerException( "file" );
-        }
-
-        return loadProperties( new FileInputStream( file ) );
+        return loadProperties( new FileInputStream( Objects.requireNonNull( file, "file" ) ) );
     }
 
     public static Properties loadProperties( final InputStream is )
         throws IOException
     {
-        InputStream in = is;
-        try
+        final Properties properties = new Properties();
+        
+        // Make sure the properties stream is valid
+        if ( is != null )
         {
-            final Properties properties = new Properties();
-
-            // Make sure the properties stream is valid
-            if ( in != null )
+            try ( InputStream in = is ) 
             {
                 properties.load( in );
-                in.close();
-                in = null;
             }
+        }
 
-            return properties;
-        }
-        finally
-        {
-            IOUtil.close( in );
-        }
+        return properties;
     }
 
 }

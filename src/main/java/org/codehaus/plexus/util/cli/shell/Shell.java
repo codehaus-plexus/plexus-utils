@@ -121,7 +121,7 @@ public class Shell
         }
         else
         {
-            return (String[]) shellArgs.toArray( new String[shellArgs.size()] );
+            return shellArgs.toArray( new String[shellArgs.size()] );
         }
     }
 
@@ -381,6 +381,7 @@ public class Shell
         shellArgs.clear();
     }
 
+    @Override
     public Object clone()
     {
         Shell shell = new Shell();

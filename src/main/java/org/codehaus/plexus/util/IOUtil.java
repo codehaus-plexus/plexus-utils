@@ -478,6 +478,7 @@ public final class IOUtil
      * @deprecated Buffering streams is actively harmful! See the class description as to why. Use
      *             {@link #copy(InputStream, OutputStream)} instead.
      */
+    @Deprecated
     public static void bufferedCopy( final InputStream input, final OutputStream output )
         throws IOException
     {
@@ -695,7 +696,9 @@ public final class IOUtil
      * Closes the input stream. The input stream can be null and any IOException's will be swallowed.
      * 
      * @param inputStream The stream to close.
+     * @deprecated use try-with-resources instead
      */
+    @Deprecated
     public static void close( InputStream inputStream )
     {
         if ( inputStream == null )
@@ -717,7 +720,9 @@ public final class IOUtil
      * Closes a channel. Channel can be null and any IOException's will be swallowed.
      *
      * @param channel The stream to close.
+     * @deprecated use try-with-resources instead
      */
+    @Deprecated
     public static void close( Channel channel )
     {
         if ( channel == null )
@@ -739,7 +744,9 @@ public final class IOUtil
      * Closes the output stream. The output stream can be null and any IOException's will be swallowed.
      * 
      * @param outputStream The stream to close.
+     * @deprecated use try-with-resources instead
      */
+    @Deprecated
     public static void close( OutputStream outputStream )
     {
         if ( outputStream == null )
@@ -761,7 +768,9 @@ public final class IOUtil
      * Closes the reader. The reader can be null and any IOException's will be swallowed.
      * 
      * @param reader The reader to close.
+     * @deprecated use try-with-resources instead
      */
+    @Deprecated
     public static void close( Reader reader )
     {
         if ( reader == null )
@@ -783,7 +792,9 @@ public final class IOUtil
      * Closes the writer. The writer can be null and any IOException's will be swallowed.
      * 
      * @param writer The writer to close.
+     * @deprecated use try-with-resources instead
      */
+    @Deprecated
     public static void close( Writer writer )
     {
         if ( writer == null )

@@ -47,6 +47,7 @@ public class SerializerXMLWriter
         this.namespace = namespace;
     }
 
+    @Override
     public void startElement( String name )
     {
         try
@@ -60,6 +61,7 @@ public class SerializerXMLWriter
         }
     }
 
+    @Override
     public void addAttribute( String key, String value )
     {
         try
@@ -72,6 +74,7 @@ public class SerializerXMLWriter
         }
     }
 
+    @Override
     public void writeText( String text )
     {
         try
@@ -84,6 +87,7 @@ public class SerializerXMLWriter
         }
     }
 
+    @Override
     public void writeMarkup( String text )
     {
         try
@@ -96,11 +100,12 @@ public class SerializerXMLWriter
         }
     }
 
+    @Override
     public void endElement()
     {
         try
         {
-            serializer.endTag( namespace, (String) elements.pop() );
+            serializer.endTag( namespace, elements.pop() );
         }
         catch ( IOException e )
         {

@@ -158,6 +158,7 @@ public class PrettyPrintXMLWriter
     }
 
     /** {@inheritDoc} */
+    @Override
     public void startElement( String name )
     {
         tagIsEmpty = false;
@@ -180,12 +181,14 @@ public class PrettyPrintXMLWriter
     }
 
     /** {@inheritDoc} */
+    @Override
     public void writeText( String text )
     {
         writeText( text, true );
     }
 
     /** {@inheritDoc} */
+    @Override
     public void writeMarkup( String text )
     {
         writeText( text, false );
@@ -272,6 +275,7 @@ public class PrettyPrintXMLWriter
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addAttribute( String key, String value )
     {
         write( " " );
@@ -286,6 +290,7 @@ public class PrettyPrintXMLWriter
     }
 
     /** {@inheritDoc} */
+    @Override
     public void endElement()
     {
         setDepth( getDepth() - 1 );

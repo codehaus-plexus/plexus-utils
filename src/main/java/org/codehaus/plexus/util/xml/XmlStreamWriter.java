@@ -65,6 +65,7 @@ public class XmlStreamWriter
         return encoding;
     }
 
+    @Override
     public void close()
         throws IOException
     {
@@ -77,6 +78,7 @@ public class XmlStreamWriter
         writer.close();
     }
 
+    @Override
     public void flush()
         throws IOException
     {
@@ -147,6 +149,7 @@ public class XmlStreamWriter
         }
     }
 
+    @Override
     public void write( char[] cbuf, int off, int len )
         throws IOException
     {

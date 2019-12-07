@@ -57,6 +57,7 @@ import java.text.MessageFormat;
  * @deprecated use XmlStreamReader
  * @since 1.4.3
  */
+@Deprecated
 public class XmlReader
     extends Reader
 {
@@ -415,6 +416,7 @@ public class XmlReader
         return _encoding;
     }
 
+    @Override
     public int read( char[] buf, int offset, int len )
         throws IOException
     {
@@ -427,6 +429,7 @@ public class XmlReader
      *
      * @throws IOException thrown if there was a problem closing the stream.
      */
+    @Override
     public void close()
         throws IOException
     {
