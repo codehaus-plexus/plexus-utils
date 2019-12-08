@@ -64,10 +64,10 @@ public class Xpp3DomUtilsTest
     public void testCombineKeys()
         throws Exception
     {
-        String lhs = "<props>" + "<property combine.keys='name'><name>LHS-ONLY</name><value>LHS</value></property>"
+        String lhs = "<props combine.keys='key'>" + "<property key=\"LHS-ONLY\"><name>LHS-ONLY</name><value>LHS</value></property>"
                         + "<property combine.keys='name'><name>TOOVERWRITE</name><value>LHS</value></property>" + "</props>";
 
-        String rhs = "<props>" + "<property combine.keys='name'><name>RHS-ONLY</name><value>RHS</value></property>"
+        String rhs = "<props combine.keys='key'>" + "<property key=\"RHS-ONLY\"><name>RHS-ONLY</name><value>RHS</value></property>"
             + "<property combine.keys='name'><name>TOOVERWRITE</name><value>RHS</value></property>" + "</props>";
 
         Xpp3Dom leftDom = Xpp3DomBuilder.build( new StringReader( lhs ), new FixedInputLocationBuilder( "left" ) );

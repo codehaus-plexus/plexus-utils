@@ -171,11 +171,12 @@ public class Xpp3DomUtils
                 }
             }
 
+            final String keysValue = recessive.getAttribute( KEYS_COMBINATION_MODE_ATTRIBUTE );
+
             Xpp3Dom[] children = recessive.getChildren();
             for ( Xpp3Dom recessiveChild : children )
             {
                 String idValue = recessiveChild.getAttribute( ID_COMBINATION_MODE_ATTRIBUTE );
-                String keysValue = recessiveChild.getAttribute( KEYS_COMBINATION_MODE_ATTRIBUTE );
 
                 Xpp3Dom childDom = null;
                 if ( isNotEmpty( idValue ) )
@@ -196,7 +197,7 @@ public class Xpp3DomUtils
                     Map<String, String> recessiveKeyValues = new HashMap<String, String>( keys.length );
                     for ( String key : keys )
                     {
-                        recessiveKeyValues.put( key, recessiveChild.getChild( key ).getValue() );
+                        recessiveKeyValues.put( key, recessiveChild.getAttribute( key ) );
                     }
                     
                     for ( Xpp3Dom dominantChild : dominant.getChildren() )
@@ -204,7 +205,7 @@ public class Xpp3DomUtils
                         Map<String, String> dominantKeyValues = new HashMap<String, String>( keys.length );
                         for ( String key : keys )
                         {
-                            dominantKeyValues.put( key, dominantChild.getChild( key ).getValue() );
+                            dominantKeyValues.put( key, dominantChild.getAttribute( key ) );
                         }
 
                         if ( recessiveKeyValues.equals( dominantKeyValues ) )
