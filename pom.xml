@@ -22,7 +22,7 @@ limitations under the License.
   <parent>
     <groupId>org.codehaus.plexus</groupId>
     <artifactId>plexus</artifactId>
-    <version>6.0</version>
+    <version>6.1</version>
   </parent>
 
   <artifactId>plexus-utils</artifactId>
@@ -49,6 +49,10 @@ limitations under the License.
       <url>${project.scm.developerConnection}</url>
     </site>
   </distributionManagement>
+
+  <properties>
+    <project.build.outputTimestamp>2020-01-20T18:52:37Z</project.build.outputTimestamp>
+  </properties>
 
   <dependencies>
       <dependency>
@@ -119,25 +123,6 @@ limitations under the License.
             </property>
           </systemProperties>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>enforce-java</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireJavaVersion>
-                  <version>1.7.0</version>
-                </requireJavaVersion>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
