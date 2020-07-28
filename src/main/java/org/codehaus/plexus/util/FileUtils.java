@@ -1059,6 +1059,38 @@ public class FileUtils
     }
 
     /**
+     * Link file from destination to source. The directories up to <code>destination</code> will be created if they
+     * don't already exist. <code>destination</code> will be overwritten if it already exists.
+     *
+     * @param source An existing non-directory <code>File</code> to link to.
+     * @param destination A non-directory <code>File</code> becoming the link (possibly overwriting).
+     * @throws IOException if <code>source</code> does not exist, <code>destination</code> cannot be created, or an
+     *             IO error occurs during linking.
+     * @throws java.io.FileNotFoundException if <code>destination</code> is a directory (use
+     *             {@link #copyFileToDirectory}).
+     */
+    public static void linkFile( final File source, final File destination )
+        throws IOException
+    {
+        // check source exists
+        if ( !source.exists() )
+        {
+            final String message = "File " + source + " does not exist";
+            throw new IOException( message );
+        }
+
+        // check source != destination, see PLXUTILS-10
+        if ( source.getCanonicalPath().equals( destination.getCanonicalPath() ) )
+        {
+            // if they are equal, we can exit the method without doing any work
+            return;
+        }
+        mkdirsFor( destination );
+
+        NioFiles.createSymbolicLink( destination, source );
+    }
+
+    /**
      * Copy file from source to destination only if source timestamp is later than the destination timestamp. The
      * directories up to <code>destination</code> will be created if they don't already exist. <code>destination</code>
      * will be overwritten if it already exists.
