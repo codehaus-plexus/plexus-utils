@@ -61,7 +61,6 @@ import org.codehaus.plexus.util.io.URLInputStreamFacade;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -72,6 +71,9 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -407,7 +409,7 @@ public class FileUtils
     public static void fileAppend( String fileName, String encoding, String data )
         throws IOException
     {
-        try ( FileOutputStream out = new FileOutputStream( fileName, true ) )
+        try ( OutputStream out = Files.newOutputStream( Paths.get(fileName), StandardOpenOption.APPEND ) )
         {
             if ( encoding != null )
             {
@@ -484,7 +486,7 @@ public class FileUtils
     
     private static OutputStreamWriter getOutputStreamWriter( File file, String encoding ) throws IOException
     {
-        OutputStream out = new FileOutputStream( file );
+        OutputStream out = Files.newOutputStream( file.toPath() );
         if ( encoding != null )
         {
             return new OutputStreamWriter( out, encoding );
@@ -1123,7 +1125,7 @@ public class FileUtils
         checkCanWrite( destination );
 
         try (  InputStream input = source.getInputStream();
-               FileOutputStream output = new FileOutputStream( destination ) )
+               OutputStream output = Files.newOutputStream( destination.toPath() ) )
         {
             IOUtil.copy( input, output );
         }
@@ -2228,7 +2230,7 @@ public class FileUtils
                 {
                     FileInputStream instream = new FileInputStream( from );
 
-                    FileOutputStream outstream = new FileOutputStream( to );
+                    OutputStream outstream = Files.newOutputStream( to.toPath() );
 
                     fileReader = new BufferedReader( new InputStreamReader( instream, encoding ) );
 

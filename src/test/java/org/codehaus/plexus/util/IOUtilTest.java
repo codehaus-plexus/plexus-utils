@@ -23,7 +23,6 @@ import static org.junit.Assert.fail;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,6 +32,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -95,7 +95,7 @@ public final class IOUtilTest
     private void createFile( File file, long size )
         throws IOException
     {
-        BufferedOutputStream output = new BufferedOutputStream( new FileOutputStream( file ) );
+        BufferedOutputStream output = new BufferedOutputStream( Files.newOutputStream( file.toPath() ) );
 
         for ( int i = 0; i < size; i++ )
         {
@@ -161,7 +161,7 @@ public final class IOUtilTest
     {
         File destination = newFile( "copy1.txt" );
         FileInputStream fin = new FileInputStream( testFile );
-        FileOutputStream fout = new FileOutputStream( destination );
+        OutputStream fout = Files.newOutputStream( destination.toPath() );
 
         IOUtil.copy( fin, fout );
         assertTrue( "Not all bytes were read", fin.available() == 0 );
@@ -212,7 +212,7 @@ public final class IOUtilTest
     {
         File destination = newFile( "copy3.txt" );
         FileReader fin = new FileReader( testFile );
-        FileOutputStream fout = new FileOutputStream( destination );
+        OutputStream fout = Files.newOutputStream( destination.toPath() );
         IOUtil.copy( fin, fout );
         // Note: this method *does* flush. It is equivalent to:
         // OutputStreamWriter _out = new OutputStreamWriter(fout);
@@ -264,7 +264,7 @@ public final class IOUtilTest
         FileReader fin = new FileReader( testFile );
         // Create our String. Rely on testReaderToString() to make sure this is valid.
         String str = IOUtil.toString( fin );
-        FileOutputStream fout = new FileOutputStream( destination );
+        OutputStream fout = Files.newOutputStream( destination.toPath() );
         IOUtil.copy( str, fout );
         // Note: this method *does* flush. It is equivalent to:
         // OutputStreamWriter _out = new OutputStreamWriter(fout);
@@ -363,7 +363,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy8.txt" );
-        FileOutputStream fout = new FileOutputStream( destination );
+        OutputStream fout = Files.newOutputStream( destination.toPath() );
         FileInputStream fin = new FileInputStream( testFile );
 
         // Create our byte[]. Rely on testInputStreamToByteArray() to make sure this is valid.

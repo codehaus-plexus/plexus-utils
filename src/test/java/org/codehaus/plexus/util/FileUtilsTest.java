@@ -26,7 +26,6 @@ import static org.junit.Assert.fail;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,6 +33,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Properties;
 
 import org.junit.Before;
@@ -1089,7 +1089,7 @@ public final class FileUtilsTest
         Writer writer = null;
         try
         {
-            writer = new OutputStreamWriter( new FileOutputStream( testFile ) );
+            writer = new OutputStreamWriter( Files.newOutputStream( testFile.toPath() ) );
             writer.write( testString );
             writer.flush();
         }
@@ -1114,7 +1114,7 @@ public final class FileUtilsTest
         Writer writer = null;
         try
         {
-            writer = new OutputStreamWriter( new FileOutputStream( testFile ), encoding );
+            writer = new OutputStreamWriter( Files.newOutputStream( testFile.toPath() ), encoding );
             writer.write( testString );
             writer.flush();
         }
@@ -1137,7 +1137,7 @@ public final class FileUtilsTest
         Writer writer = null;
         try
         {
-            writer = new OutputStreamWriter( new FileOutputStream( testFile ) );
+            writer = new OutputStreamWriter( Files.newOutputStream( testFile.toPath() ) );
             writer.write( baseString );
             writer.flush();
         }
@@ -1163,7 +1163,7 @@ public final class FileUtilsTest
         Writer writer = null;
         try
         {
-            writer = new OutputStreamWriter( new FileOutputStream( testFile ), encoding );
+            writer = new OutputStreamWriter( Files.newOutputStream( testFile.toPath() ), encoding );
             writer.write( baseString );
             writer.flush();
         }
@@ -1236,7 +1236,7 @@ public final class FileUtilsTest
         File f = new File( a1, path.toString() + "test.txt" );
 
         InputStream is = new ByteArrayInputStream( "Blabla".getBytes( "UTF-8" ) );
-        OutputStream os = new FileOutputStream( f.getCanonicalFile() );
+        OutputStream os = Files.newOutputStream( f.getCanonicalFile().toPath() );
         IOUtil.copy( is, os );
         IOUtil.close( is );
         IOUtil.close( os );

@@ -18,7 +18,6 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 
 import org.codehaus.plexus.util.xml.XmlStreamWriter;
 
@@ -169,13 +169,12 @@ public class WriterFactory
      * @param file not null file.
      * @param encoding not null supported encoding.
      * @return a writer instance for the output file using the given encoding.
-     * @throws UnsupportedEncodingException if any.
-     * @throws FileNotFoundException if any.
+     * @throws IOException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
     public static Writer newWriter( File file, String encoding )
-        throws UnsupportedEncodingException, FileNotFoundException
+        throws IOException
     {
-        return newWriter( new FileOutputStream( file ), encoding );
+        return newWriter( Files.newOutputStream( file.toPath() ), encoding );
     }
 }

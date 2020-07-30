@@ -22,13 +22,13 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.Arrays;
 
 import junit.framework.AssertionFailedError;
@@ -61,7 +61,7 @@ public abstract class FileBasedTestCase
 
         byte[] data = generateTestData( size );
 
-        final BufferedOutputStream output = new BufferedOutputStream( new FileOutputStream( file ) );
+        final BufferedOutputStream output = new BufferedOutputStream( Files.newOutputStream( file.toPath() ) );
 
         try
         {
