@@ -21,10 +21,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.util.NoSuchElementException;
 
 import javax.swing.text.html.HTML.Tag;
@@ -171,7 +171,7 @@ public class PrettyPrintXMLWriterTest
             assertTrue( "cannot create directory test-xml", dir.mkdir() );
         }
         File xmlFile = new File( dir, "test-issue-51.xml" );
-        OutputStreamWriter osw = new OutputStreamWriter( new FileOutputStream( xmlFile ), "UTF-8" );
+        OutputStreamWriter osw = new OutputStreamWriter( Files.newOutputStream( xmlFile.toPath() ), "UTF-8" );
         writer = new PrettyPrintXMLWriter( osw );
 
         int iterations = 20000;

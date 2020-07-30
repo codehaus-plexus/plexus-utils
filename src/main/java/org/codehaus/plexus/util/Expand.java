@@ -57,9 +57,10 @@ package org.codehaus.plexus.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -140,7 +141,7 @@ public class Expand
             {
                 byte[] buffer = new byte[65536];
                 
-                try ( FileOutputStream fos = new FileOutputStream( f ) )
+                try ( OutputStream fos = Files.newOutputStream( f.toPath() ) )
                 {
                     for ( int length = compressedInputStream.read( buffer ); 
                           length >= 0; 

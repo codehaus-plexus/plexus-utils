@@ -21,13 +21,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
 
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
@@ -78,7 +78,7 @@ public class XmlUtilTest
         try
         {
             is = new FileInputStream( testDocument );
-            os = new FileOutputStream( getTestOutputFile( "target/test/prettyFormatTestDocumentOutputStream.xml" ) );
+            os = Files.newOutputStream( getTestOutputFile( "target/test/prettyFormatTestDocumentOutputStream.xml" ).toPath() );
 
             assertNotNull( is );
             assertNotNull( os );

@@ -17,13 +17,12 @@ package org.codehaus.plexus.util.xml;
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,9 +54,9 @@ public class XmlStreamWriter
     }
 
     public XmlStreamWriter( File file )
-        throws FileNotFoundException
+        throws IOException
     {
-        this( new FileOutputStream( file ) );
+        this( Files.newOutputStream( file.toPath() ) );
     }
 
     public String getEncoding()
