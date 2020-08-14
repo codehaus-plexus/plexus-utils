@@ -23,7 +23,7 @@ package org.codehaus.plexus.util.cli.shell;
  *
  * @author <a href="mailto:carlos@apache.org">Carlos Sanchez</a>
  * @since 1.2
- * @version $Id$
+ *
  */
 public class CommandShell
     extends Shell

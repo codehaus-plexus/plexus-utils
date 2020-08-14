@@ -81,7 +81,7 @@ import java.io.PrintWriter;
  *
  * @author <a href="mailto:fvancea@maxiq.com">Florin Vancea </a>
  * @author <a href="mailto:pj@thoughtworks.com">Paul Julius </a>
- * @version $Id$
+ *
  * @since June 11, 2001
  */
 public class StreamPumper

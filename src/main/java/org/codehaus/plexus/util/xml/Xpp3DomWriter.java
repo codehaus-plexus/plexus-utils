@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 /**
- * @version $Id$
+ *
  */
 public class Xpp3DomWriter
 {

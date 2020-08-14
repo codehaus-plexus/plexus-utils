@@ -31,7 +31,7 @@ import org.junit.Test;
 
 /**
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
+ *
  */
 public class XmlWriterUtilTest
 {

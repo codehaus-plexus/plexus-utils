@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * the XML document written to the stream.
  * 
  * @author <a href="mailto:hboutemy@codehaus.org">Herve Boutemy</a>
- * @version $Id$
+ *
  * @since 1.4.4
  */
 public class XmlStreamWriter

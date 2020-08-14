@@ -28,7 +28,7 @@ import java.util.Stack;
  * Write to an MXSerializer.
  *
  * @author <a href="mailto:brett@codehaus.org">Brett Porter</a>
- * @version $Id$
+ *
  */
 public class SerializerXMLWriter
     implements XMLWriter

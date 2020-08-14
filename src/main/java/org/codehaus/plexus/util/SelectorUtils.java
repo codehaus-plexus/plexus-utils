@@ -69,7 +69,7 @@ import java.util.StringTokenizer;
  * @author Arnout J. Kuiper <a href="mailto:ajkuiper@wxs.nl">ajkuiper@wxs.nl</a>
  * @author Magesh Umasankar
  * @author <a href="mailto:bruce@callenish.com">Bruce Atherton</a>
- * @version $Id$
+ *
  * @since 1.5
  */
 public final class SelectorUtils

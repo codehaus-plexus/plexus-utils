@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
  * The java.util.StringTokenizer is horribly broken. Given the string 1,,,3,,4 (, delim) It will return 1,3,4 Which is
  * clearly wrong - 1,EMPTY,EMPTY,3,EMPTY,4 is what it should return
  * 
- * @version $Id$
+ *
  */
 public final class EnhancedStringTokenizer
 {

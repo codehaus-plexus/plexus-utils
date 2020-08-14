@@ -76,7 +76,7 @@ import java.util.StringTokenizer;
  * @author Dmitri Plotnikov
  * @author Stephen Colebourne
  * @since 1.0
- * @version $Id$
+ *
  */
 public class ExceptionUtils
 {

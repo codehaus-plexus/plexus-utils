@@ -27,7 +27,7 @@ import java.util.Set;
  * DAG = Directed Acyclic Graph
  *
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id$
+ *
  * TODO this class should be renamed from DAG to Dag
  */
 public class DAG

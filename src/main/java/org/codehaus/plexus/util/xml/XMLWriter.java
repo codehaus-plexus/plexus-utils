@@ -17,7 +17,7 @@ package org.codehaus.plexus.util.xml;
  */
 
 /**
- * @version $Id$
+ *
  */
 public interface XMLWriter
 {

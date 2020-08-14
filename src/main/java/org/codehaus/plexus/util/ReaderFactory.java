@@ -36,7 +36,7 @@ import org.codehaus.plexus.util.xml.XmlStreamReader;
  * @author <a href="mailto:hboutemy@codehaus.org">Herve Boutemy</a>
  * @see Charset
  * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
- * @version $Id$
+ *
  * @since 1.4.3
  */
 public class ReaderFactory

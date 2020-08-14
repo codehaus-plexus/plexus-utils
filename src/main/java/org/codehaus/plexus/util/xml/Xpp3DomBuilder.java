@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @version $Id$
+ *
  */
 public class Xpp3DomBuilder
 {

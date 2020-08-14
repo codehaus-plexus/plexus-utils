@@ -33,7 +33,7 @@ import org.junit.Test;
  * Test the Xpp3DomBuilder.
  *
  * @author <a href="mailto:brett@codehaus.org">Brett Porter</a>
- * @version $Id$
+ *
  */
 public class Xpp3DomBuilderTest
 {

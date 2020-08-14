@@ -23,7 +23,7 @@ import org.junit.Test;
 
 /**
  * @author J&ouml;rg Schaible
- * @version $Id$
+ *
  */
 public class ReflectorTest
 {

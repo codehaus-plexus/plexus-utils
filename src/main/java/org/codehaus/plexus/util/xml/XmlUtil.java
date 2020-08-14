@@ -35,7 +35,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
  * Common XML utilities methods.
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
+ *
  * @since 1.5.7
  */
 public class XmlUtil

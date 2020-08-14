@@ -118,7 +118,7 @@ import java.nio.channels.Channel;
  *
  * @author <a href="mailto:peter@codehaus.org">Peter Donald</a>
  * @author <a href="mailto:jefft@codehaus.org">Jeff Turner</a>
- * @version $Id$
+ *
  * @since 4.0
  */
 

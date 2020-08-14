@@ -24,7 +24,7 @@ import java.io.OutputStream;
  * Read from an InputStream and write the output to an OutputStream.
  *
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
- * @version $Id$
+ *
  */
 public class StreamFeeder
     extends AbstractStreamHandler

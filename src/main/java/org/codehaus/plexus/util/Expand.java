@@ -71,7 +71,7 @@ import java.util.zip.ZipInputStream;
  * @author <a href="mailto:stefan.bodewig@epost.de">Stefan Bodewig</a>
  * @author <a href="mailto:umagesh@codehaus.org">Magesh Umasankar</a>
  * @since Ant 1.1 @ant.task category="packaging" name="unzip" name="unjar" name="unwar"
- * @version $Id$
+ *
  */
 public class Expand
 {

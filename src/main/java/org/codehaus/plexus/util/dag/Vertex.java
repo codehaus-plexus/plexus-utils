@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id$
+ *
  */
 public class Vertex
     implements Cloneable, Serializable

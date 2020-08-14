@@ -30,7 +30,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * @version $Id$ NOTE: remove all the util code in here when separated, this class should be pure data.
+ *  NOTE: remove all the util code in here when separated, this class should be pure data.
  */
 public class Xpp3Dom
     implements Serializable

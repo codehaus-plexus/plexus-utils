@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * disposed first.
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- * @version $Id$
+ *
  */
 public class SweeperPool
 {

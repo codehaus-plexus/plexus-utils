@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:pete-apache-dev@kazmier.com">Pete Kazmier</a>
  * @author <a href="mailto:vmassol@apache.org">Vincent Massol</a>
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
+ *
  */
 public class PathTool
 {
