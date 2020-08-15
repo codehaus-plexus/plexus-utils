@@ -33,7 +33,7 @@ import org.junit.Test;
  * Created on 21/06/2003
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- * @version $Revision$
+ *
  */
 public class SweeperPoolTest
 {

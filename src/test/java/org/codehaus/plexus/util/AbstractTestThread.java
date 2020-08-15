@@ -24,7 +24,7 @@ package org.codehaus.plexus.util;
  * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- * @version $Revision$
+ *
  */
 public abstract class AbstractTestThread
     implements Runnable

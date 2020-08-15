@@ -26,7 +26,7 @@ import java.io.StringWriter;
  * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- * @version $Revision$
+ *
  */
 public class Tracer
 {
