@@ -82,7 +82,7 @@ import java.util.Random;
 /**
  * <p>This class provides basic facilities for manipulating files and file paths.</p>
  * 
- * <h3>Path-related methods</h3>
+ * <b>Path-related methods</b>
  * 
  * <p>Methods exist to retrieve the components of a typical file path. For example
  * <code>/www/hosted/mysite/index.html</code>, can be broken into:
