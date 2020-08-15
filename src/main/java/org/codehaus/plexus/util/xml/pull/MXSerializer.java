@@ -1342,7 +1342,7 @@ public class MXSerializer
         }
     }
 
-    /** simple utility method -- good for debugging */
+    // simple utility method -- good for debugging
     protected static final String printable( String s )
     {
         if ( s == null )

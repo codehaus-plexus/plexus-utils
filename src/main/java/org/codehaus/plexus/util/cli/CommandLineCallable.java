@@ -27,6 +27,6 @@ public interface CommandLineCallable
     extends Callable<Integer>
 {
     @Override
-    public Integer call()
+    Integer call()
         throws CommandLineException;
 }

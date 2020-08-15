@@ -39,7 +39,7 @@ import org.junit.Test;
  * Test the {@link XmlUtil} class.
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
+ *
  */
 public class XmlUtilTest
 {

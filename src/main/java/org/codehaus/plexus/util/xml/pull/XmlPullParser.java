@@ -343,7 +343,8 @@ public interface XmlPullParser
      * Example: call setFeature(FEATURE_PROCESS_NAMESPACES, true) in order to switch on namespace processing. The
      * initial settings correspond to the properties requested from the XML Pull Parser factory. If none were requested,
      * all features are deactivated by default.
-     *
+     * @param name feature name
+     * @param state feature state
      * @exception XmlPullParserException If the feature is not supported or can not be set
      * @exception IllegalArgumentException If string with the feature name is null
      */
@@ -359,14 +360,15 @@ public interface XmlPullParser
      * @return The value of the feature.
      * @exception IllegalArgumentException if string the feature name is null
      */
-
     boolean getFeature( String name );
 
     /**
      * Set the value of a property. The property name is any fully-qualified URI.
-     *
+     * @param name property name
+     * @param value property value
      * @exception XmlPullParserException If the property is not supported or can not be set
      * @exception IllegalArgumentException If string with the property name is null
+     * @throws XmlPullParserException parsing issue
      */
     void setProperty( String name, Object value )
         throws XmlPullParserException;
@@ -385,6 +387,8 @@ public interface XmlPullParser
      * Set the input source for parser to the given reader and resets the parser. The event type is set to the initial
      * value START_DOCUMENT. Setting the reader to null will just stop parsing and reset parser state, allowing the
      * parser to free internal resources such as parsing buffers.
+     * @param in the Reader
+     * @throws XmlPullParserException parsing issue
      */
     void setInput( Reader in )
         throws XmlPullParserException;
@@ -401,12 +405,13 @@ public interface XmlPullParser
      *
      * @param inputStream contains a raw byte input stream of possibly unknown encoding (when inputEncoding is null).
      * @param inputEncoding if not null it MUST be used as encoding for inputStream
+     * @throws XmlPullParserException parsing issue
      */
     void setInput( InputStream inputStream, String inputEncoding )
         throws XmlPullParserException;
 
     /**
-     * Returns the input encoding if known, null otherwise. If setInput(InputStream, inputEncoding) was called with an
+     * @return the input encoding if known, null otherwise. If setInput(InputStream, inputEncoding) was called with an
      * inputEncoding value other than null, this value must be returned from this method. Otherwise, if inputEncoding is
      * null and the parser supports the encoding detection feature
      * (http://xmlpull.org/v1/doc/features.html#detect-encoding), it must return the detected encoding. If
@@ -436,16 +441,18 @@ public interface XmlPullParser
      * <b>Note:</b> The list of pre-defined entity names will always contain standard XML entities such as amp
      * (&amp;amp;), lt (&amp;lt;), gt (&amp;gt;), quot (&amp;quot;), and apos (&amp;apos;). Those cannot be redefined by
      * this method!
-     *
+     * @param entityName entity name
+     * @param replacementText remplacement
      * @see #setInput
      * @see #FEATURE_PROCESS_DOCDECL
      * @see #FEATURE_VALIDATION
+     * @throws XmlPullParserException parsing issue
      */
     void defineEntityReplacementText( String entityName, String replacementText )
         throws XmlPullParserException;
 
     /**
-     * Returns the numbers of elements in the namespace stack for the given depth. If namespaces are not enabled, 0 is
+     * @return the numbers of elements in the namespace stack for the given depth. If namespaces are not enabled, 0 is
      * returned.
      * <p>
      * <b>NOTE:</b> when parser is on END_TAG then it is allowed to call this function with getDepth()+1 argument to
@@ -468,32 +475,39 @@ public interface XmlPullParser
      * @see #getNamespaceUri
      * @see #getNamespace()
      * @see #getNamespace(String)
+     * @param depth depth
+     * @throws XmlPullParserException parsing issue
      */
     int getNamespaceCount( int depth )
         throws XmlPullParserException;
 
     /**
-     * Returns the namespace prefix for the given position in the namespace stack. Default namespace declaration
+     * @return Returns the namespace prefix for the given position in the namespace stack. Default namespace declaration
      * (xmlns='...') will have null as prefix. If the given index is out of range, an exception is thrown.
-     * <p>
+     *
      * <b>Please note:</b> when the parser is on an END_TAG, namespace prefixes that were declared in the corresponding
      * START_TAG are still accessible although they are no longer in scope.
+     *  namespace prefix
+     * @param pos namespace stack position
+     * @throws XmlPullParserException parsing issue
      */
     String getNamespacePrefix( int pos )
         throws XmlPullParserException;
 
     /**
-     * Returns the namespace URI for the given position in the namespace stack If the position is out of range, an
+     * @return Returns the namespace URI for the given position in the namespace stack If the position is out of range, an
      * exception is thrown.
-     * <p>
+     *
      * <b>NOTE:</b> when parser is on END_TAG then namespace prefixes that were declared in corresponding START_TAG are
      * still accessible even though they are not in scope
+     * @throws XmlPullParserException parsing issue
+     * @param pos namespace stack position
      */
     String getNamespaceUri( int pos )
         throws XmlPullParserException;
 
     /**
-     * Returns the URI corresponding to the given prefix, depending on current state of the parser.
+     * @return the URI corresponding to the given prefix, depending on current state of the parser.
      * <p>
      * If the prefix was not declared in the current scope, null is returned. The default namespace is included in the
      * namespace table and is available via getNamespace (null).
@@ -515,7 +529,7 @@ public interface XmlPullParser
      * The 'xml' prefix is bound to "http://www.w3.org/XML/1998/namespace", as defined in the
      * <a href="http://www.w3.org/TR/REC-xml-names/#ns-using">Namespaces in XML</a> specification. Analogous, the
      * 'xmlns' prefix is resolved to <a href="http://www.w3.org/2000/xmlns/">http://www.w3.org/2000/xmlns/</a>
-     *
+     * @param prefix given prefix
      * @see #getNamespaceCount
      * @see #getNamespacePrefix
      * @see #getNamespaceUri
@@ -526,7 +540,7 @@ public interface XmlPullParser
     // miscellaneous reporting methods
 
     /**
-     * Returns the current depth of the element. Outside the root element, the depth is 0. The depth is incremented by 1
+     * @return the current depth of the element. Outside the root element, the depth is 0. The depth is incremented by 1
      * when a start tag is reached. The depth is decremented AFTER the end tag event was observed.
      *
      * <pre>
@@ -542,7 +556,7 @@ public interface XmlPullParser
     int getDepth();
 
     /**
-     * Returns a short text describing the current parser state, including the position, a description of the current
+     * @return a short text describing the current parser state, including the position, a description of the current
      * event and the data source if known. This method is especially useful to provide meaningful error messages and for
      * debugging purposes.
      */
@@ -568,19 +582,20 @@ public interface XmlPullParser
     // TEXT related methods
 
     /**
-     * Checks whether the current TEXT event contains only whitespace characters. For IGNORABLE_WHITESPACE, this is
+     * @return Checks whether the current TEXT event contains only whitespace characters. For IGNORABLE_WHITESPACE, this is
      * always true. For TEXT and CDSECT, false is returned when the current event text contains at least one non-white
      * space character. For any other event type an exception is thrown.
      * <p>
      * <b>Please note:</b> non-validating parsers are not able to distinguish whitespace and ignorable whitespace,
      * except from whitespace outside the root element. Ignorable whitespace is reported as separate event, which is
      * exposed via nextToken only.
+     * @throws XmlPullParserException parsing issue
      */
     boolean isWhitespace()
         throws XmlPullParserException;
 
     /**
-     * Returns the text content of the current event as String. The value returned depends on current event type, for
+     * @return  the text content of the current event as String. The value returned depends on current event type, for
      * example for TEXT event it is element content (this is typical case when next() is used). See description of
      * nextToken() for detailed description of possible returned values for different types of events.
      * <p>
@@ -617,14 +632,14 @@ public interface XmlPullParser
     // START_TAG / END_TAG shared methods
 
     /**
-     * Returns the namespace URI of the current element. The default namespace is represented as empty string. If
+     * @return the namespace URI of the current element. The default namespace is represented as empty string. If
      * namespaces are not enabled, an empty String ("") is always returned. The current event must be START_TAG or
      * END_TAG; otherwise, null is returned.
      */
     String getNamespace();
 
     /**
-     * For START_TAG or END_TAG events, the (local) name of the current element is returned when namespaces are enabled.
+     * @return For START_TAG or END_TAG events, the (local) name of the current element is returned when namespaces are enabled.
      * When namespace processing is disabled, the raw name is returned. For ENTITY_REF events, the entity name is
      * returned. If the current event is not START_TAG, END_TAG, or ENTITY_REF, null is returned.
      * <p>
@@ -634,15 +649,16 @@ public interface XmlPullParser
     String getName();
 
     /**
-     * Returns the prefix of the current element. If the element is in the default namespace (has no prefix), null is
+     * @return the prefix of the current element. If the element is in the default namespace (has no prefix), null is
      * returned. If namespaces are not enabled, or the current event is not START_TAG or END_TAG, null is returned.
      */
     String getPrefix();
 
     /**
-     * Returns true if the current event is START_TAG and the tag is degenerated (e.g. &lt;foobar/&gt;).
+     * @return true if the current event is START_TAG and the tag is degenerated (e.g. &lt;foobar/&gt;).
      * <p>
      * <b>NOTE:</b> if the parser is not on START_TAG, an exception will be thrown.
+     * @throws XmlPullParserException parsing issue
      */
     boolean isEmptyElementTag()
         throws XmlPullParserException;
@@ -651,7 +667,7 @@ public interface XmlPullParser
     // START_TAG Attributes retrieval methods
 
     /**
-     * Returns the number of attributes of the current start tag, or -1 if the current event type is not START_TAG
+     * @return the number of attributes of the current start tag, or -1 if the current event type is not START_TAG
      *
      * @see #getAttributeNamespace
      * @see #getAttributeName
@@ -749,16 +765,17 @@ public interface XmlPullParser
     // actual parsing methods
 
     /**
-     * Returns the type of the current event (START_TAG, END_TAG, TEXT, etc.)
+     * @return the type of the current event (START_TAG, END_TAG, TEXT, etc.)
      *
      * @see #next()
      * @see #nextToken()
+     * @throws XmlPullParserException parsing issue
      */
     int getEventType()
         throws XmlPullParserException;
 
     /**
-     * Get next parsing event - element content wil be coalesced and only one TEXT event must be returned for whole
+     * @return Get next parsing event - element content wil be coalesced and only one TEXT event must be returned for whole
      * element content (comments and processing instructions will be ignored and entity references must be expanded or
      * exception mus be thrown if entity reference can not be expanded). If element content is empty (content is "")
      * then no TEXT event will be reported.
@@ -771,8 +788,9 @@ public interface XmlPullParser
      * @see #TEXT
      * @see #END_TAG
      * @see #END_DOCUMENT
+     * @throws XmlPullParserException parsing issue
+     * @throws IOException io issue
      */
-
     int next()
         throws XmlPullParserException, IOException;
 
@@ -788,7 +806,7 @@ public interface XmlPullParser
      * is enabled exact content of START_TAG, END_TAG, DOCDECL and PROCESSING_INSTRUCTION is available.
      * <p>
      * Here is the list of tokens that can be returned from nextToken() and what getText() and getTextCharacters()
-     * returns:
+     * @return
      * <dl>
      * <dt>START_DOCUMENT
      * <dd>null
@@ -854,7 +872,8 @@ public interface XmlPullParser
      * <p>
      * <strong>NOTE:</strong> XMLDecl (&lt;?xml ...?&gt;) is not reported but its content is available through optional
      * properties (see class description above).
-     *
+     * @throws XmlPullParserException parsing issue
+     * @throws IOException io issue
      * @see #next
      * @see #START_TAG
      * @see #TEXT
@@ -884,6 +903,11 @@ public interface XmlPullParser
      *     || ( name != null &amp;&amp; !name.equals( getName() ) ) )
      *     throw new XmlPullParserException( "expected " + TYPES[type] + getPositionDescription() );
      * </pre>
+     * @param type type
+     * @param name name
+     * @param namespace namespace
+     * @throws XmlPullParserException parsing issue
+     * @throws IOException io issue
      */
     void require( int type, String namespace, String name )
         throws XmlPullParserException, IOException;
@@ -935,6 +959,9 @@ public interface XmlPullParser
      *     throw new XmlPullParserException( "parser must be on START_TAG or TEXT to read text", this, null );
      * }
      * </pre>
+     * @return see description
+     * @throws XmlPullParserException parsing issue
+     * @throws IOException io issue
      */
     String nextText()
         throws XmlPullParserException, IOException;
@@ -957,6 +984,10 @@ public interface XmlPullParser
      * }
      * return eventType;
      * </pre>
+     * @return see description
+     * @throws XmlPullParserException parsing issue
+     * @throws
+     * IOException io issue
      */
     int nextTag()
         throws XmlPullParserException, IOException;

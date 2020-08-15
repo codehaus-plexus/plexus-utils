@@ -71,7 +71,7 @@ import java.util.zip.ZipInputStream;
  * @author <a href="mailto:stefan.bodewig@epost.de">Stefan Bodewig</a>
  * @author <a href="mailto:umagesh@codehaus.org">Magesh Umasankar</a>
  * @since Ant 1.1 @ant.task category="packaging" name="unzip" name="unjar" name="unwar"
- * @version $Id$
+ *
  */
 public class Expand
 {
@@ -93,12 +93,6 @@ public class Expand
         expandFile( source, dest );
     }
 
-    /*
-     * This method is to be overridden by extending unarchival tasks.
-     */
-    /**
-     * Description of the Method
-     */
     protected void expandFile( final File srcF, final File dir )
         throws Exception
     {
@@ -116,9 +110,6 @@ public class Expand
         }
     }
 
-    /**
-     * Description of the Method
-     */
     protected void extractFile( File srcF, File dir, InputStream compressedInputStream, String entryName,
                                 Date entryDate, boolean isDirectory )
         throws Exception
@@ -188,7 +179,7 @@ public class Expand
     }
 
     /**
-     * Should we overwrite files in dest, even if they are newer than the corresponding entries in the archive?
+     * @param b Should we overwrite files in dest, even if they are newer than the corresponding entries in the archive?
      */
     public void setOverwrite( boolean b )
     {

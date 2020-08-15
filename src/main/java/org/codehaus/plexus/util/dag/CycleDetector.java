@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id$
+ *
  */
 public class CycleDetector
 {
@@ -39,7 +39,7 @@ public class CycleDetector
     {
         final List<Vertex> vertices = graph.getVertices();
 
-        final Map<Vertex, Integer> vertexStateMap = new HashMap<Vertex, Integer>();
+        final Map<Vertex, Integer> vertexStateMap = new HashMap<>();
 
         List<String> retValue = null;
 
@@ -63,13 +63,13 @@ public class CycleDetector
      * This method will be called when an edge leading to given vertex was added and we want to check if introduction of
      * this edge has not resulted in apparition of cycle in the graph
      *
-     * @param vertex
-     * @param vertexStateMap
-     * @return
+     * @param vertex the vertex
+     * @param vertexStateMap the vertex Map
+     * @return the found cycle
      */
     public static List<String> introducesCycle( final Vertex vertex, final Map<Vertex, Integer> vertexStateMap )
     {
-        final LinkedList<String> cycleStack = new LinkedList<String>();
+        final LinkedList<String> cycleStack = new LinkedList<>();
 
         final boolean hasCycle = dfsVisit( vertex, cycleStack, vertexStateMap );
 
@@ -97,16 +97,11 @@ public class CycleDetector
 
     public static List<String> introducesCycle( final Vertex vertex )
     {
-        final Map<Vertex, Integer> vertexStateMap = new HashMap<Vertex, Integer>();
+        final Map<Vertex, Integer> vertexStateMap = new HashMap<>();
 
         return introducesCycle( vertex, vertexStateMap );
     }
 
-    /**
-     * @param vertex
-     * @param vertexStateMap
-     * @return
-     */
     private static boolean isNotVisited( final Vertex vertex, final Map<Vertex, Integer> vertexStateMap )
     {
         final Integer state = vertexStateMap.get( vertex );
@@ -114,11 +109,6 @@ public class CycleDetector
         return ( state == null ) || NOT_VISITED.equals( state );
     }
 
-    /**
-     * @param vertex
-     * @param vertexStateMap
-     * @return
-     */
     private static boolean isVisiting( final Vertex vertex, final Map<Vertex, Integer> vertexStateMap )
     {
         final Integer state = vertexStateMap.get( vertex );

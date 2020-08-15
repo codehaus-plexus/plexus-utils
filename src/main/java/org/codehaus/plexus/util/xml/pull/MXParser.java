@@ -220,9 +220,7 @@ public class MXParser
     // protected int attributeValueStart[];
     // protected int attributeValueEnd[];
 
-    /**
-     * Make sure that in attributes temporary array is enough space.
-     */
+    // Make sure that in attributes temporary array is enough space.
     protected void ensureAttributesCapacity( int size )
     {
         final int attrPosSize = attributeName != null ? attributeName.length : 0;
@@ -312,10 +310,10 @@ public class MXParser
         }
     }
 
-    /**
-     * simplistic implementation of hash function that has <b>constant</b> time to compute - so it also means
-     * diminishing hash quality for long strings but for XML parsing it should be good enough ...
-     */
+
+     // simplistic implementation of hash function that has <b>constant</b> time to compute - so it also means
+     // diminishing hash quality for long strings but for XML parsing it should be good enough ...
+
     protected static final int fastHash( char ch[], int off, int len )
     {
         if ( len == 0 )
@@ -536,7 +534,7 @@ public class MXParser
      *
      * @param name a String
      * @param state a boolean
-     * @throws XmlPullParserException
+     * @throws XmlPullParserException issue
      */
     @Override
     public void setFeature( String name, boolean state )
@@ -1252,8 +1250,10 @@ public class MXParser
     }
 
     /**
-     * Skip sub tree that is currently parser positioned on. <br>
+     * <p>Skip sub tree that is currently parser positioned on.</p>
      * NOTE: parser must be on START_TAG and when function returns parser will be positioned on corresponding END_TAG
+     * @throws XmlPullParserException issue
+     * @throws IOException io
      */
     public void skipSubTree()
         throws XmlPullParserException, IOException
@@ -4100,12 +4100,7 @@ public class MXParser
         return ( MIN_SUPPLEMENTARY_CODE_POINT <= codePoint && MAX_CODE_POINT >= codePoint );
     }
 
-    /**
-     * TODO add javadoc
-     *
-     * @param codePoint
-     * @return
-     */
+    // TODO add javadoc
     public static char[] toChars( int codePoint )
     {
         if ( !isValidCodePoint( codePoint ) )

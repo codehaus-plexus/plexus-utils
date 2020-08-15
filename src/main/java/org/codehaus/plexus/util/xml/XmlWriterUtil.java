@@ -22,7 +22,7 @@ import org.codehaus.plexus.util.StringUtils;
  * Utility class for the <code>XmlWriter</code> class.
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
+ *
  */
 public class XmlWriterUtil
 {
@@ -63,7 +63,7 @@ public class XmlWriterUtil
      * Convenience method to repeat <code>CRLF</code> and to indent the writer by <code>2</code>.
      *
      * @param writer not null
-     * @param repeat
+     * @param repeat space repeat
      * @param indent positive number
      * @see #DEFAULT_INDENTATION_SIZE
      * @see #writeLineBreak(XMLWriter, int, int, int)
@@ -77,7 +77,7 @@ public class XmlWriterUtil
      * Convenience method to repeat <code>CRLF</code> and to indent the writer by <code>indentSize</code>.
      *
      * @param writer not null
-     * @param repeat
+     * @param repeat repeat time
      * @param indent positive number
      * @param indentSize positive number
      */
@@ -131,7 +131,7 @@ public class XmlWriterUtil
      * <code>80</code>.
      *
      * @param writer not null
-     * @param comment
+     * @param comment the comment
      * @see #DEFAULT_INDENTATION_SIZE
      * @see #writeComment(XMLWriter, String, int, int)
      */
@@ -145,7 +145,7 @@ public class XmlWriterUtil
      * <code>80</code> and is indented by <code>indent</code> using <code>2</code> as indentation size.
      *
      * @param writer not null
-     * @param comment
+     * @param comment the comment
      * @param indent positive number
      * @see #DEFAULT_INDENTATION_SIZE
      * @see #writeComment(XMLWriter, String, int, int)
@@ -160,7 +160,7 @@ public class XmlWriterUtil
      * <code>80</code> and is indented by <code>indent</code> using <code>indentSize</code>.
      *
      * @param writer not null
-     * @param comment
+     * @param comment the comment
      * @param indent positive number
      * @param indentSize positive number
      * @see #DEFAULT_COLUMN_LINE
@@ -176,7 +176,7 @@ public class XmlWriterUtil
      * <code>columnSize</code> and is indented by <code>indent</code> using <code>indentSize</code>.
      *
      * @param writer not null
-     * @param comment
+     * @param comment the comment
      * @param indent positive number
      * @param indentSize positive number
      * @param columnSize positive number
@@ -266,7 +266,7 @@ public class XmlWriterUtil
      * Convenience method to write XML comments between two comments line break. The XML comment block is not indented.
      *
      * @param writer not null
-     * @param comment
+     * @param comment the comment
      * @see #DEFAULT_INDENTATION_SIZE
      * @see #writeCommentText(XMLWriter, String, int, int)
      */
@@ -280,7 +280,7 @@ public class XmlWriterUtil
      * by <code>indent</code> using <code>2</code> as indentation size.
      *
      * @param writer not null
-     * @param comment
+     * @param comment the comment
      * @param indent positive number
      * @see #DEFAULT_INDENTATION_SIZE
      * @see #writeCommentText(XMLWriter, String, int, int)
@@ -295,7 +295,7 @@ public class XmlWriterUtil
      * <code>indent</code> using <code>indentSize</code>.
      *
      * @param writer not null
-     * @param comment
+     * @param comment the comment
      * @param indent positive number
      * @param indentSize positive number
      * @see #DEFAULT_COLUMN_LINE
@@ -311,7 +311,7 @@ public class XmlWriterUtil
      * by <code>indent</code> using <code>indentSize</code>. The column size could be also be specified.
      *
      * @param writer not null
-     * @param comment
+     * @param comment comment
      * @param indent positive number
      * @param indentSize positive number
      * @param columnSize positive number

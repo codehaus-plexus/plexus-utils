@@ -26,7 +26,9 @@ import java.io.InputStream;
 public interface InputStreamFacade
 {
     /**
-     * Retrieves the actual {@link InputStream}. The caller must assume, that this method may be invoked only once.
+     * The caller must assume, that this method may be invoked only once.
+     * @return Retrieves the actual {@link InputStream}.
+     * @throws IOException if io issue
      */
     InputStream getInputStream()
         throws IOException;

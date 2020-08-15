@@ -30,7 +30,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 /**
- * @version $Id$ NOTE: remove all the util code in here when separated, this class should be pure data.
+ *  NOTE: remove all the util code in here when separated, this class should be pure data.
  */
 public class Xpp3Dom
     implements Serializable
@@ -88,11 +88,13 @@ public class Xpp3Dom
     public Xpp3Dom( String name )
     {
         this.name = name;
-        childList = new ArrayList<Xpp3Dom>();
+        childList = new ArrayList<>();
     }
 
     /**
      * @since 3.2.0
+     * @param inputLocation The input location.
+     * @param name The name of the Dom.
      */
     public Xpp3Dom( String name, Object inputLocation )
     {
@@ -102,6 +104,7 @@ public class Xpp3Dom
 
     /**
      * Copy constructor.
+     * @param src The source Dom.
      */
     public Xpp3Dom( Xpp3Dom src )
     {
@@ -110,6 +113,8 @@ public class Xpp3Dom
 
     /**
      * Copy constructor with alternative name.
+     * @param src The source Dom.
+     * @param name The name of the Dom.
      */
     public Xpp3Dom( Xpp3Dom src, String name )
     {
@@ -329,6 +334,7 @@ public class Xpp3Dom
 
     /**
      * @since 3.2.0
+     * @return input location
      */
     public Object getInputLocation()
     {
@@ -337,6 +343,7 @@ public class Xpp3Dom
 
     /**
      * @since 3.2.0
+     * @param inputLocation input location to set
      */
     public void setInputLocation( Object inputLocation )
     {
@@ -524,6 +531,7 @@ public class Xpp3Dom
      * @param recessive The recessive DOM, which will be merged into the dominant DOM
      * @param childMergeOverride Overrides attribute flags to force merging or appending of child elements into the
      *            dominant DOM
+     * @return merged DOM
      */
     public static Xpp3Dom mergeXpp3Dom( Xpp3Dom dominant, Xpp3Dom recessive, Boolean childMergeOverride )
     {
@@ -543,6 +551,7 @@ public class Xpp3Dom
      * @see #SELF_COMBINATION_MODE_ATTRIBUTE
      * @param dominant The dominant DOM into which the recessive value/attributes/children will be merged
      * @param recessive The recessive DOM, which will be merged into the dominant DOM
+     * @return merged DOM
      */
     public static Xpp3Dom mergeXpp3Dom( Xpp3Dom dominant, Xpp3Dom recessive )
     {

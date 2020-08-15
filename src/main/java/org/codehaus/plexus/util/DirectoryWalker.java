@@ -25,7 +25,7 @@ import java.util.Stack;
 /**
  * DirectoryWalker
  * 
- * @version $Id$
+ *
  */
 public class DirectoryWalker
 {

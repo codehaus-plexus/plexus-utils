@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @version $Id$
+ *
  */
 public class Xpp3DomBuilder
 {
@@ -41,7 +41,12 @@ public class Xpp3DomBuilder
     }
 
     /**
+     * @param reader the reader
+     * @param locationBuilder the builder
      * @since 3.2.0
+     * @return DOM
+     * @throws XmlPullParserException xml exception
+     * @throws IOException io
      */
     public static Xpp3Dom build( Reader reader, InputLocationBuilder locationBuilder )
         throws XmlPullParserException, IOException
@@ -82,7 +87,13 @@ public class Xpp3DomBuilder
     }
 
     /**
+     * @param reader the reader
+     * @param trim to trim
+     * @param locationBuilder the builder
      * @since 3.2.0
+     * @return DOM
+     * @throws XmlPullParserException xml exception
+     * @throws IOException io
      */
     public static Xpp3Dom build( Reader reader, boolean trim, InputLocationBuilder locationBuilder )
         throws XmlPullParserException, IOException
@@ -118,13 +129,19 @@ public class Xpp3DomBuilder
 
     /**
      * @since 3.2.0
+     * @param locationBuilder builder
+     * @param parser the parser
+     * @param trim do trim
+     * @return DOM
+     * @throws XmlPullParserException xml exception
+     * @throws IOException io
      */
     public static Xpp3Dom build( XmlPullParser parser, boolean trim, InputLocationBuilder locationBuilder )
         throws XmlPullParserException, IOException
     {
-        List<Xpp3Dom> elements = new ArrayList<Xpp3Dom>();
+        List<Xpp3Dom> elements = new ArrayList<>();
 
-        List<StringBuilder> values = new ArrayList<StringBuilder>();
+        List<StringBuilder> values = new ArrayList<>();
 
         int eventType = parser.getEventType();
 

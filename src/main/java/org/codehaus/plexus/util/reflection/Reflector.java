@@ -50,6 +50,7 @@ public final class Reflector
      *
      * @param theClass The class to instantiate
      * @param params The parameters to pass to the constructor
+     * @param <T> the type
      * @return The instantiated object
      * @throws ReflectorException In case anything goes wrong here...
      */
@@ -94,15 +95,7 @@ public final class Reflector
 
             return con.newInstance( params );
         }
-        catch ( InstantiationException ex )
-        {
-            throw new ReflectorException( ex );
-        }
-        catch ( InvocationTargetException ex )
-        {
-            throw new ReflectorException( ex );
-        }
-        catch ( IllegalAccessException ex )
+        catch ( InstantiationException | InvocationTargetException | IllegalAccessException ex )
         {
             throw new ReflectorException( ex );
         }
@@ -114,6 +107,7 @@ public final class Reflector
      *
      * @param theClass The class to retrieve the singleton of
      * @param initParams The parameters to pass to the constructor
+     * @param <T> the type
      * @return The singleton object
      * @throws ReflectorException In case anything goes wrong here...
      */
@@ -135,11 +129,7 @@ public final class Reflector
             // noinspection unchecked
             return (T) method.invoke( null, initParams );
         }
-        catch ( InvocationTargetException ex )
-        {
-            throw new ReflectorException( ex );
-        }
-        catch ( IllegalAccessException ex )
+        catch ( InvocationTargetException | IllegalAccessException ex )
         {
             throw new ReflectorException( ex );
         }
@@ -193,11 +183,7 @@ public final class Reflector
 
             return method.invoke( target, params );
         }
-        catch ( InvocationTargetException ex )
-        {
-            throw new ReflectorException( ex );
-        }
-        catch ( IllegalAccessException ex )
+        catch ( InvocationTargetException | IllegalAccessException ex )
         {
             throw new ReflectorException( ex );
         }
@@ -213,19 +199,7 @@ public final class Reflector
 
             return field.get( null );
         }
-        catch ( SecurityException e )
-        {
-            throw new ReflectorException( e );
-        }
-        catch ( NoSuchFieldException e )
-        {
-            throw new ReflectorException( e );
-        }
-        catch ( IllegalArgumentException e )
-        {
-            throw new ReflectorException( e );
-        }
-        catch ( IllegalAccessException e )
+        catch ( SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e )
         {
             throw new ReflectorException( e );
         }
@@ -331,11 +305,7 @@ public final class Reflector
 
             return method.invoke( null, params );
         }
-        catch ( InvocationTargetException ex )
-        {
-            throw new ReflectorException( ex );
-        }
-        catch ( IllegalAccessException ex )
+        catch ( InvocationTargetException | IllegalAccessException ex )
         {
             throw new ReflectorException( ex );
         }
@@ -346,6 +316,7 @@ public final class Reflector
      *
      * @param targetClass The class to get the constructor from
      * @param params The classes of the parameters which the constructor should match.
+     * @param <T> the type
      * @return the Constructor object that matches.
      * @throws ReflectorException In case we can't retrieve the proper constructor.
      */
@@ -496,6 +467,7 @@ public final class Reflector
      *
      * @param targetClass The class to get the method from
      * @param params The classes of the parameters which the method should match.
+     * @param methodName the method name
      * @return the Method object that matches.
      * @throws ReflectorException In case we can't retrieve the proper method.
      */
@@ -615,8 +587,8 @@ public final class Reflector
 
             if ( classMethods == null )
             {
-                classMethods = new HashMap<String, Map<String, Method>>();
-                methodMap = new HashMap<String, Method>();
+                classMethods = new HashMap<>();
+                methodMap = new HashMap<>();
                 classMethods.put( methodName, methodMap );
                 classMaps.put( className, classMethods );
             }
@@ -630,7 +602,7 @@ public final class Reflector
 
                     if ( methodMap == null )
                     {
-                        methodMap = new HashMap<String, Method>();
+                        methodMap = new HashMap<>();
                         classMethods.put( methodName, methodMap );
                     }
                 }

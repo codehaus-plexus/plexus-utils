@@ -109,7 +109,7 @@ public class Commandline
     @Deprecated
     protected static final String WINDOWS = "Windows";
 
-    protected Vector<Arg> arguments = new Vector<Arg>();
+    protected Vector<Arg> arguments = new Vector<>();
 
     // protected Vector envVars = new Vector();
     // synchronized added to preserve synchronize of Vector class
@@ -136,7 +136,8 @@ public class Commandline
      * Create a new command line object. Shell is autodetected from operating system Shell usage is only desirable when
      * generating code for remote execution.
      *
-     * @param toProcess
+     * @param toProcess sh to process
+     * @param shell Shell to use
      */
     public Commandline( String toProcess, Shell shell )
     {
@@ -164,6 +165,7 @@ public class Commandline
     /**
      * Create a new command line object. Shell is autodetected from operating system Shell usage is only desirable when
      * generating code for remote execution.
+     * @param shell the Shell
      */
     public Commandline( Shell shell )
     {
@@ -173,7 +175,7 @@ public class Commandline
     /**
      * Create a new command line object, given a command following POSIX sh quoting rules
      *
-     * @param toProcess
+     * @param toProcess the process
      */
     public Commandline( String toProcess )
     {
@@ -239,7 +241,7 @@ public class Commandline
         }
 
         /**
-         * <p>Return the number of arguments that preceded this marker.</p>
+         * @return the number of arguments that preceded this marker.
          * 
          * <p>The name of the executable - if set - is counted as the very first argument.</p>
          */
@@ -307,6 +309,7 @@ public class Commandline
      * @param insertAtStart if true, the argument is inserted at the beginning of the list of args, otherwise it is
      *            appended.
      * @deprecated Use {@link Commandline#createArg(boolean)} instead
+     * @return Argument the argument Object
      */
     @Deprecated
     public Argument createArgument( boolean insertAtStart )
@@ -338,7 +341,7 @@ public class Commandline
     }
 
     /**
-     * <p>Creates an argument object and adds it to our list of args.</p>
+     * @return Creates an argument object and adds it to our list of args.
      * 
      * <p>Each commandline object has at most one instance of the argument class.</p>
      *
@@ -360,8 +363,7 @@ public class Commandline
     }
 
     /**
-     * Adds an argument object to our list of args.
-     *
+     * @param argument the argument
      * @see #addArg(Arg,boolean)
      */
     public void addArg( Arg argument )
@@ -371,7 +373,7 @@ public class Commandline
 
     /**
      * Adds an argument object to our list of args.
-     *
+     * @param argument the argument
      * @param insertAtStart if true, the argument is inserted at the beginning of the list of args, otherwise it is
      *            appended.
      */
@@ -389,6 +391,7 @@ public class Commandline
 
     /**
      * Sets the executable to run.
+     * @param executable the executable
      */
     public void setExecutable( String executable )
     {
@@ -432,6 +435,8 @@ public class Commandline
 
     /**
      * Add an environment variable
+     * @param name name
+     * @param value value
      */
     public void addEnvironment( String name, String value )
     {
@@ -441,6 +446,7 @@ public class Commandline
 
     /**
      * Add system environment variables
+     * @throws Exception if error
      */
     public void addSystemEnvironment()
         throws Exception
@@ -458,7 +464,8 @@ public class Commandline
     }
 
     /**
-     * Return the list of environment variables
+     * @return String[] Return the list of environment variables
+     * @throws CommandLineException if error
      */
     public String[] getEnvironmentVariables()
         throws CommandLineException
@@ -484,8 +491,8 @@ public class Commandline
     }
 
     /**
-     * Returns the executable and all defined arguments.<br>
-     * For Windows Family, {@link Commandline#getShellCommandline()} is returned
+     * @return Returns the executable and all defined arguments.
+     *      For Windows Family, {@link Commandline#getShellCommandline()} is returned
      */
     public String[] getCommandline()
     {
@@ -498,8 +505,8 @@ public class Commandline
     }
 
     /**
-     * Returns the executable and all defined arguments.<br>
-     * 
+     * Returns the executable and all defined arguments.
+     * @return the command line as array not escaped neither quoted
      */
     public String[] getRawCommandline()
     {
@@ -519,6 +526,7 @@ public class Commandline
 	/**
      * Returns the shell, executable and all defined arguments. Shell usage is only desirable when generating code for
      * remote execution.
+     * @return the command line as array
      */
     public String[] getShellCommandline()
     {
@@ -529,11 +537,11 @@ public class Commandline
     }
 
     /**
-     * Returns all arguments defined by <code>addLine</code>, <code>addValue</code> or the argument object.
+     * @return Returns all arguments defined by <code>addLine</code>, <code>addValue</code> or the argument object.
      */
     public String[] getArguments()
     {
-        Vector<String> result = new Vector<String>( arguments.size() * 2 );
+        Vector<String> result = new Vector<>( arguments.size() * 2 );
         for ( int i = 0; i < arguments.size(); i++ )
         {
             Arg arg = arguments.elementAt( i );
@@ -594,11 +602,11 @@ public class Commandline
     }
 
     /**
-     * <p>Return a marker.</p>
-     * 
+     *
      * <p>This marker can be used to locate a position on the commandline - to insert something for example - when all
      * parameters have been set.
      * </p>
+     * @return Return a marker.
      */
     public Marker createMarker()
     {
@@ -607,6 +615,7 @@ public class Commandline
 
     /**
      * Sets execution directory.
+     * @param path the working directory as String
      */
     public void setWorkingDirectory( String path )
     {
@@ -616,6 +625,7 @@ public class Commandline
 
     /**
      * Sets execution directory.
+     * @param workingDirectory the File used as working directory
      */
     public void setWorkingDirectory( File workingDirectory )
     {
@@ -637,6 +647,8 @@ public class Commandline
 
     /**
      * Executes the command.
+     * @return the Process
+     * @throws CommandLineException if error
      */
     public Process execute()
         throws CommandLineException
@@ -709,7 +721,7 @@ public class Commandline
      * Allows to set the shell to be used in this command line. Shell usage is only desirable when generating code for
      * remote execution.
      *
-     * @param shell
+     * @param shell Shell to use
      * @since 1.2
      */
     public void setShell( Shell shell )
@@ -722,6 +734,7 @@ public class Commandline
      * execution.
      * 
      * @since 1.2
+     * @return the Shell
      */
     public Shell getShell()
     {
@@ -729,6 +742,9 @@ public class Commandline
     }
 
     /**
+     * @param toProcess the process
+     * @return the command line arguments
+     * @throws Exception if error happen
      * @deprecated Use {@link CommandLineUtils#translateCommandline(String)} instead.
      */
     @Deprecated
@@ -739,6 +755,9 @@ public class Commandline
     }
 
     /**
+     * @param argument the argument
+     * @return the quote arg
+     * @throws CommandLineException if error happen
      * @deprecated Use {@link CommandLineUtils#quote(String)} instead.
      */
     @Deprecated
@@ -750,6 +769,8 @@ public class Commandline
 
     /**
      * @deprecated Use {@link CommandLineUtils#toString(String[])} instead.
+     * @param line the lines
+     * @return lines as single String
      */
     @Deprecated
     public static String toString( String[] line )

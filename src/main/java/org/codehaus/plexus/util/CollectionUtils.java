@@ -28,7 +28,7 @@ import java.util.Set;
 
 /**
  * @author <a href="mailto:olamy@codehaus.org">olamy</a>
- * @version $Id$
+ *
  */
 public class CollectionUtils
 {
@@ -44,6 +44,8 @@ public class CollectionUtils
      *
      * @param dominantMap Dominant Map.
      * @param recessiveMap Recessive Map.
+     * @param <K> type
+     * @param <V> type
      * @return The result map with combined dominant and recessive values.
      */
     public static <K, V> Map<K, V> mergeMaps( Map<K, V> dominantMap, Map<K, V> recessiveMap )
@@ -64,7 +66,7 @@ public class CollectionUtils
             return recessiveMap;
         }
 
-        Map<K, V> result = new HashMap<K, V>();
+        Map<K, V> result = new HashMap<>();
 
         // Grab the keys from the dominant and recessive maps.
         Set<K> dominantMapKeys = dominantMap.keySet();
@@ -94,6 +96,8 @@ public class CollectionUtils
      * order.
      *
      * @param maps An array of Maps to merge.
+     * @param <K> type
+     * @param <V> type
      * @return Map The result Map produced after the merging process.
      */
     public static <K, V> Map<K, V> mergeMaps( Map<K, V>[] maps )
@@ -122,22 +126,24 @@ public class CollectionUtils
     }
 
     /**
-     * Returns a {@link Collection} containing the intersection of the given {@link Collection}s.
      * <p>
+     * Returns a {@link Collection} containing the intersection of the given {@link Collection}s.
+     * </p>
      * The cardinality of each element in the returned {@link Collection} will be equal to the minimum of the
      * cardinality of that element in the two given {@link Collection}s.
      *
      * @param a The first collection
      * @param b The second collection
+     * @param <E> the type
      * @see Collection#retainAll
      * @return The intersection of a and b, never null
      */
     public static <E> Collection<E> intersection( final Collection<E> a, final Collection<E> b )
     {
-        ArrayList<E> list = new ArrayList<E>();
+        ArrayList<E> list = new ArrayList<>();
         Map<E, Integer> mapa = getCardinalityMap( a );
         Map<E, Integer> mapb = getCardinalityMap( b );
-        Set<E> elts = new HashSet<E>( a );
+        Set<E> elts = new HashSet<>( a );
         elts.addAll( b );
         for ( E obj : elts )
         {
@@ -150,18 +156,19 @@ public class CollectionUtils
     }
 
     /**
-     * Returns a {@link Collection} containing <tt><i>a</i> - <i>b</i></tt>. The cardinality of each element <i>e</i> in
+     * Returns a {@link Collection} containing <code>a - b</code>. The cardinality of each element <i>e</i> in
      * the returned {@link Collection} will be the cardinality of <i>e</i> in <i>a</i> minus the cardinality of <i>e</i>
      * in <i>b</i>, or zero, whichever is greater.
      *
      * @param a The start collection
      * @param b The collection that will be subtracted
+     * @param <T> the type
      * @see Collection#removeAll
      * @return The result of the subtraction
      */
     public static <T> Collection<T> subtract( final Collection<T> a, final Collection<T> b )
     {
-        ArrayList<T> list = new ArrayList<T>( a );
+        ArrayList<T> list = new ArrayList<>( a );
         for ( T aB : b )
         {
             list.remove( aB );
@@ -172,14 +179,15 @@ public class CollectionUtils
     /**
      * Returns a {@link Map} mapping each unique element in the given {@link Collection} to an {@link Integer}
      * representing the number of occurrences of that element in the {@link Collection}. An entry that maps to
-     * <tt>null</tt> indicates that the element does not appear in the given {@link Collection}.
+     * <code>null</code> indicates that the element does not appear in the given {@link Collection}.
      * 
      * @param col The collection to count cardinalities for
+     * @param <E> the type
      * @return A map of counts, indexed on each element in the collection
      */
     public static <E> Map<E, Integer> getCardinalityMap( final Collection<E> col )
     {
-        HashMap<E, Integer> count = new HashMap<E, Integer>();
+        HashMap<E, Integer> count = new HashMap<>();
         for ( E obj : col )
         {
             Integer c = count.get( obj );
@@ -226,10 +234,7 @@ public class CollectionUtils
                 return o;
             }
         }
-        catch ( NullPointerException ignore )
-        {
-        }
-        catch ( NoSuchElementException ignore )
+        catch ( NullPointerException | NoSuchElementException ignore )
         {
         }
         return 0;

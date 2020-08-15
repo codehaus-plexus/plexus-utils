@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:pete-apache-dev@kazmier.com">Pete Kazmier</a>
  * @author <a href="mailto:vmassol@apache.org">Vincent Massol</a>
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
+ *
  */
 public class PathTool
 {
@@ -34,7 +34,7 @@ public class PathTool
      * links within pages of a web site. It provides similar functionality to Anakia's <code>$relativePath</code>
      * context variable. The arguments to this method may contain either forward or backward slashes as file separators.
      * The relative path returned is formed using forward slashes as it is expected this path is to be used as a link in
-     * a web page (again mimicking Anakia's behavior).<p>
+     * a web page (again mimicking Anakia's behavior).</p>
      * 
      * <p>This method is thread-safe.</p>
      * 
@@ -169,8 +169,8 @@ public class PathTool
      * PathTool.calculateLink( "../index.html", "http://plexus.codehaus.org/plexus-utils" )    = "http://plexus.codehaus.org/plexus-utils/../index.html"
      * </pre>
      *
-     * @param link
-     * @param relativePath
+     * @param link main link
+     * @param relativePath relative
      * @return String
      */
     public static final String calculateLink( String link, String relativePath )
@@ -239,8 +239,8 @@ public class PathTool
      *                      "http://plexus.codehaus.org/"                                 = "../../"
      * </pre>
      *
-     * @param oldPath
-     * @param newPath
+     * @param oldPath main path
+     * @param newPath second path
      * @return a relative web path from <code>oldPath</code>.
      */
     public static final String getRelativeWebPath( final String oldPath, final String newPath )
@@ -278,8 +278,8 @@ public class PathTool
      * 
      * Note: On Windows based system, the <code>/</code> character should be replaced by <code>\</code> character.
      *
-     * @param oldPath
-     * @param newPath
+     * @param oldPath main path
+     * @param newPath second path
      * @return a relative file path from <code>oldPath</code>.
      */
     public static final String getRelativeFilePath( final String oldPath, final String newPath )

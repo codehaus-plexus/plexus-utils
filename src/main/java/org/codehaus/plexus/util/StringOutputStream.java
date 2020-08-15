@@ -23,7 +23,7 @@ import java.io.OutputStream;
  * Wraps a String as an OutputStream.
  *
  * @author <a href="mailto:evenisse@codehaus.org">Emmanuel Venisse</a>
- * @version $Id$
+ *
  * @deprecated As of version 1.5.2 this class should no longer be used because it does not properly handle character
  *             encoding. Instead, use {@link java.io.ByteArrayOutputStream#toString(String)}.
  */

@@ -26,7 +26,7 @@ package org.codehaus.plexus.util;
  * @see <a href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>
  * @author Apache Software Foundation
  * @since 1.0-dev
- * @version $Id$
+ *
  */
 public class Base64
 {

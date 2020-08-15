@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id$
+ *
  */
 public class TopologicalSorter
 {
@@ -35,10 +35,9 @@ public class TopologicalSorter
     private final static Integer VISITED = 2;
 
     /**
-     * @param graph
+     * @param graph the graph
      * @return List of String (vertex labels)
      */
-
     public static List<String> sort( final DAG graph )
     {
         return dfs( graph );
@@ -47,7 +46,7 @@ public class TopologicalSorter
     public static List<String> sort( final Vertex vertex )
     {
         // we need to use addFirst method so we will use LinkedList explicitly
-        final List<String> retValue = new LinkedList<String>();
+        final List<String> retValue = new LinkedList<>();
 
         dfsVisit( vertex, new HashMap<Vertex, Integer>(), retValue );
 
@@ -57,8 +56,8 @@ public class TopologicalSorter
     private static List<String> dfs( final DAG graph )
     {
         // we need to use addFirst method so we will use LinkedList explicitly
-        final List<String> retValue = new LinkedList<String>();
-        final Map<Vertex, Integer> vertexStateMap = new HashMap<Vertex, Integer>();
+        final List<String> retValue = new LinkedList<>();
+        final Map<Vertex, Integer> vertexStateMap = new HashMap<>();
 
         for ( Vertex vertex : graph.getVertices() )
         {
@@ -71,11 +70,6 @@ public class TopologicalSorter
         return retValue;
     }
 
-    /**
-     * @param vertex
-     * @param vertexStateMap
-     * @return
-     */
     private static boolean isNotVisited( final Vertex vertex, final Map<Vertex, Integer> vertexStateMap )
     {
         final Integer state = vertexStateMap.get( vertex );

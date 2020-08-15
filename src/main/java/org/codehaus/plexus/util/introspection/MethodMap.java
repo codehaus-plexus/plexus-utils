@@ -30,7 +30,7 @@ import java.util.Map;
  * @author <a href="mailto:Christoph.Reck@dlr.de">Christoph Reck</a>
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author <a href="mailto:szegedia@freemail.hu">Attila Szegedi</a>
- * @version $Id$
+ *
  */
 public class MethodMap
 {

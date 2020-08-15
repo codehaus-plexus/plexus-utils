@@ -90,7 +90,7 @@ public class LineOrientedInterpolatingReader
      * @param context keyword/value pairs for interpolation.
      * @param startDelim character sequence which (possibly) begins a token.
      * @param endDelim character sequence which ends a token.
-     * @param escapeSeq
+     * @param escapeSeq escape sequence
      */
     public LineOrientedInterpolatingReader( Reader reader, Map<String, ?> context, String startDelim, String endDelim,
                                             String escapeSeq )

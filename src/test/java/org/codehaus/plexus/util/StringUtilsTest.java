@@ -29,7 +29,7 @@ import org.junit.Test;
  * Test string utils.
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
- * @version $Id$
+ *
  */
 public class StringUtilsTest
 {

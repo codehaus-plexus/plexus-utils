@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * disposed first.
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- * @version $Id$
+ *
  */
 public class SweeperPool
 {
@@ -54,17 +54,16 @@ public class SweeperPool
 
     /**
      * There are a number of settings to control how the pool operates.
-     * <ul>
-     * <li><code>minSize</code> - this is the size the pool is trimmed to</li>
-     * <li><code>triggerSize</code> - this determines if the pool is trimmed when the sweeper runs. If the pool size is
-     * greater or equal than this value then the pool is trimmed to <code>minSize</code>.</li>
-     * <li><code>maxSize</code> - if the pool has reached this size, any objects added are immediately disposed. If the
-     * pool is this size when the sweeper runs, then the pool is also trimmed to <code>minSize</code> irrespective of
-     * the triggerSize.</li>
-     * <li><code>sweepInterval</code> - how often the sweeper runs. Is actually the time since the sweeper last finished
-     * a pass. 0 if the sweeper should not run.</li>
-     * </ul>
-
+     * @param maxSize if the pool has reached this size, any objects added are immediately disposed. If the
+     *      pool is this size when the sweeper runs, then the pool is also trimmed to <code>minSize</code> irrespective of
+     *      the triggerSize.
+     * @param minSize - this is the size the pool is trimmed to
+     * @param  triggerSize - this determines if the pool is trimmed when the sweeper runs. If the pool size is
+     * greater or equal than this value then the pool is trimmed to <code>minSize</code>.
+     *
+     * @param sweepInterval how often the sweeper runs. Is actually the time since the sweeper last finished
+     * a pass. 0 if the sweeper should not run.
+     * @param intialCapacity the intial capacity
      * <p>Any value less than 0 is automatically converted to 0</p>
      */
     public SweeperPool( int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize )
@@ -85,18 +84,12 @@ public class SweeperPool
 
     private int saneConvert( int value )
     {
-        if ( value < 0 )
-        {
-            return 0;
-        }
-        else
-        {
-            return value;
-        }
+        return Math.max( value, 0 );
     }
 
     /**
      * Return the pooled object
+     * @return first available object from the pool
      */
     public synchronized Object get()
     {
@@ -225,7 +218,7 @@ public class SweeperPool
      * Override this to be notified of object disposal. Called after the object has been removed. Occurs when the pool
      * is trimmed.
      *
-     * @param obj
+     * @param obj the Object
      */
     public void objectDisposed( Object obj )
     {
@@ -234,7 +227,7 @@ public class SweeperPool
     /**
      * Override this to be notified of object addition. Called before object is to be added.
      *
-     * @param obj
+     * @param obj the Object
      */
     public void objectAdded( Object obj )
     {
@@ -244,7 +237,7 @@ public class SweeperPool
      * Override this to be notified of object retrieval. Called after object removed from the pool, but before returned
      * to the client.
      *
-     * @param obj
+     * @param obj the Object
      */
     public void objectRetrieved( Object obj )
     {

@@ -51,7 +51,7 @@ public class NioFiles
     @SuppressWarnings( { "OctalInteger", "MagicNumber" } )
     private static Set<PosixFilePermission> getPermissions( int mode )
     {
-        Set<PosixFilePermission> perms = new HashSet<PosixFilePermission>();
+        Set<PosixFilePermission> perms = new HashSet<>();
         // add owners permission
         if ( ( mode & 0400 ) > 0 )
         {
@@ -106,7 +106,7 @@ public class NioFiles
      *
      * @param symlink A file that is a symlink
      * @return A file that is the target of the symlink
-     * @throws java.io.IOException
+     * @throws java.io.IOException io issue
      */
 
     public static File readSymbolicLink( File symlink )

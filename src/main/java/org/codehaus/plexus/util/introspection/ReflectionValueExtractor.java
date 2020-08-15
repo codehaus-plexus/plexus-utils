@@ -37,7 +37,7 @@ import org.codehaus.plexus.util.StringUtils;
  * 
  * @author <a href="mailto:jason@maven.org">Jason van Zyl </a>
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
+ *
  * @see <a href=
  *      "http://struts.apache.org/1.x/struts-taglib/indexedprops.html">http://struts.apache.org/1.x/struts-taglib/indexedprops.html</a>
  */
@@ -175,6 +175,7 @@ public class ReflectionValueExtractor
      * 
      * @param expression not null expression
      * @param root not null object
+     * @param trimRootToken  root start
      * @return the object defined by the expression
      * @throws Exception if any
      */

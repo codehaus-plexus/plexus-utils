@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id$
+ *
  */
 public class Vertex
     implements Cloneable, Serializable
@@ -32,17 +32,14 @@ public class Vertex
     // ------------------------------------------------------------
     private String label = null;
 
-    List<Vertex> children = new ArrayList<Vertex>();
+    List<Vertex> children = new ArrayList<>();
 
-    List<Vertex> parents = new ArrayList<Vertex>();
+    List<Vertex> parents = new ArrayList<>();
 
     // ------------------------------------------------------------
     // Constructors
     // ------------------------------------------------------------
 
-    /**
-     *
-     */
     public Vertex( final String label )
     {
         this.label = label;
@@ -52,33 +49,21 @@ public class Vertex
     // Accessors
     // ------------------------------------------------------------
 
-    /**
-     * @return
-     */
     public String getLabel()
     {
         return label;
     }
 
-    /**
-     * @param vertex
-     */
     public void addEdgeTo( final Vertex vertex )
     {
         children.add( vertex );
     }
 
-    /**
-     * @param vertex
-     */
     public void removeEdgeTo( final Vertex vertex )
     {
         children.remove( vertex );
     }
 
-    /**
-     * @param vertex
-     */
     public void addEdgeFrom( final Vertex vertex )
     {
         parents.add( vertex );
@@ -101,7 +86,7 @@ public class Vertex
      */
     public List<String> getChildLabels()
     {
-        final List<String> retValue = new ArrayList<String>( children.size() );
+        final List<String> retValue = new ArrayList<>( children.size() );
 
         for ( Vertex vertex : children )
         {
@@ -127,7 +112,7 @@ public class Vertex
      */
     public List<String> getParentLabels()
     {
-        final List<String> retValue = new ArrayList<String>( parents.size() );
+        final List<String> retValue = new ArrayList<>( parents.size() );
 
         for ( Vertex vertex : parents )
         {

@@ -46,7 +46,7 @@ import org.junit.rules.TestName;
  *
  * @author Peter Donald
  * @author Matthew Hawthorne
- * @version $Id$
+ *
  * @see FileUtils
  */
 public final class FileUtilsTest

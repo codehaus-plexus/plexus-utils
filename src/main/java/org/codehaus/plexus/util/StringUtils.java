@@ -80,7 +80,7 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:alex@purpletech.com">Alexander Day Chaffee</a>
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @since 1.0
- * @version $Id$
+ *
  */
 public class StringUtils
 {
@@ -140,7 +140,6 @@ public class StringUtils
      *
      * @param str String target to delete whitespace from
      * @return the String without whitespaces
-     * @throws NullPointerException
      */
     public static String deleteWhitespace( String str )
     {
@@ -578,7 +577,9 @@ public class StringUtils
     }
 
     /**
-     * @see #split(String, String, int)
+     * @param text The string to parse.
+     * @param separator Characters used as the delimiters. If <code>null</code>, splits on whitespace.
+     * @return an array of parsed Strings
      */
     public static String[] split( String text, String separator )
     {
@@ -892,7 +893,7 @@ public class StringUtils
     /**
      * <p>
      * Center a String in a larger String of size <code>n</code>.
-     * <p>
+     * </p>
      * <p>
      * Uses spaces as the value to buffer the String with. Equivalent to <code>center(str, size, " ")</code>.
      * </p>
@@ -2141,14 +2142,14 @@ public class StringUtils
     // --------------------------------------------------------------------------
 
     /**
-     * Turn "Now is the time for all good men" into "Now is the time for..."
+     * @return Turn "Now is the time for all good men" into "Now is the time for..."
      * <p>
      * Specifically:
      * <p>
      * If str is less than max characters long, return it. Else abbreviate it to (substring(str, 0, max-3) + "..."). If
      * maxWidth is less than 3, throw an IllegalArgumentException. In no case will it return a string of length greater
      * than maxWidth.
-     *
+     * @param s string
      * @param maxWidth maximum length of result string
      **/
     public static String abbreviate( String s, int maxWidth )
@@ -2157,12 +2158,12 @@ public class StringUtils
     }
 
     /**
-     * Turn "Now is the time for all good men" into "...is the time for..."
-     * <p>
+     * @return Turn "Now is the time for all good men" into "...is the time for..."
+     *
      * Works like abbreviate(String, int), but allows you to specify a "left edge" offset. Note that this left edge is
      * not necessarily going to be the leftmost character in the result, or the first character following the ellipses,
      * but it will appear somewhere in the result. In no case will it return a string of length greater than maxWidth.
-     *
+     * @param s string
      * @param offset left edge of source string
      * @param maxWidth maximum length of result string
      **/
@@ -2207,7 +2208,8 @@ public class StringUtils
      * second string, starting from where it's different from the first.)
      * <p>
      * E.g. strdiff("i am a machine", "i am a robot") -&gt; "robot"
-     *
+     * @param s1 string
+     * @param s2 string
      * @return the portion of s2 where it differs from s1; returns the empty string ("") if they are equal
      **/
     public static String difference( String s1, String s2 )
@@ -2225,7 +2227,8 @@ public class StringUtils
      * <p>
      * E.g. strdiff("i am a machine", "i am a robot") -&gt; 7
      * </p>
-     *
+     * @param s1 string
+     * @param s2 string
      * @return the index where s2 and s1 begin to differ; -1 if they are equal
      **/
     public static int differenceAt( String s1, String s2 )
@@ -2340,8 +2343,8 @@ public class StringUtils
      * StringUtils.quoteAndEscape("a\"bc", '\'') = 'a\"bc'
      * </pre>
      *
-     * @param source
-     * @param quoteChar
+     * @param source the source String
+     * @param quoteChar the char used to quote
      * @return the String quoted and escaped
      * @since 1.5.1
      * @see #quoteAndEscape(String, char, char[], char[], char, boolean)
@@ -2356,9 +2359,9 @@ public class StringUtils
      * Quote and escape a String with the given character, handling <code>null</code>.
      * </p>
      *
-     * @param source
-     * @param quoteChar
-     * @param quotingTriggers
+     * @param source the source String
+     * @param quoteChar the char used to quote
+     * @param quotingTriggers chars generating a quote
      * @return the String quoted and escaped
      * @since 1.5.1
      * @see #quoteAndEscape(String, char, char[], char[], char, boolean)
@@ -2369,11 +2372,11 @@ public class StringUtils
     }
 
     /**
-     * @param source
-     * @param quoteChar
-     * @param escapedChars
-     * @param escapeChar
-     * @param force
+     * @param source the source String
+     * @param quoteChar the char used to quote
+     * @param escapedChars chars to escape
+     * @param escapeChar char used for escaping
+     * @param force force the quoting
      * @return the String quoted and escaped
      * @since 1.5.1
      * @see #quoteAndEscape(String, char, char[], char[], char, boolean)
@@ -2385,12 +2388,12 @@ public class StringUtils
     }
 
     /**
-     * @param source
-     * @param quoteChar
-     * @param escapedChars
-     * @param quotingTriggers
-     * @param escapeChar
-     * @param force
+     * @param source the source String
+     * @param quoteChar the char used to quote
+     * @param escapedChars chars to escape
+     * @param quotingTriggers chars generating a quote
+     * @param escapeChar char used for escaping
+     * @param force force the quoting
      * @return the String quoted and escaped
      * @since 1.5.1
      */
@@ -2401,12 +2404,12 @@ public class StringUtils
     }
 
     /**
-     * @param source
-     * @param quoteChar
-     * @param escapedChars
-     * @param quotingTriggers
-     * @param escapePattern
-     * @param force
+     * @param source the source String
+     * @param quoteChar the char used to quote
+     * @param escapedChars chars to escape
+     * @param quotingTriggers chars generating a quote
+     * @param escapePattern pattern used for escaping
+     * @param force force the quoting
      * @return the String quoted and escaped
      * @since 3.0.4
      */
@@ -2456,9 +2459,9 @@ public class StringUtils
     }
 
     /**
-     * @param source
-     * @param escapedChars
-     * @param escapeChar
+     * @param source the source String
+     * @param escapedChars chars to escape
+     * @param escapeChar char used for escaping
      * @return the String escaped
      * @since 1.5.1
      */
@@ -2468,9 +2471,9 @@ public class StringUtils
     }
 
     /**
-     * @param source
-     * @param escapedChars
-     * @param escapePattern
+     * @param source the source String
+     * @param escapedChars chars to escape
+     * @param escapePattern pattern used for escaping
      * @return the String escaped
      * @since 3.0.4
      */

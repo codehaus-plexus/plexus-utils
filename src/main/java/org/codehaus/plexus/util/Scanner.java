@@ -88,7 +88,7 @@ public interface Scanner
     /**
      * Use a filename comparator in each directory when scanning.
      *
-     * @param filenameComparator
+     * @param filenameComparator the Comparator instance to use
      * @since 3.3.0
      */
     void setFilenameComparator( Comparator<String> filenameComparator );

@@ -39,7 +39,7 @@ import org.junit.Test;
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
- * @version $Id$
+ *
  */
 public class PrettyPrintXMLWriterTest
 {

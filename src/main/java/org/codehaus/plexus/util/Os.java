@@ -65,7 +65,7 @@ import java.util.Set;
  * @author Magesh Umasankar
  * @author Brian Fox
  * @since 1.0
- * @version $Revision$
+ *
  */
 public class Os
 {
@@ -208,9 +208,10 @@ public class Os
     }
 
     /**
-     * Determines if the current OS matches the type of that set in setFamily.
-     * 
+     * @return Determines if the current OS matches the type of that set in setFamily.
+     *
      * @see Os#setFamily(String)
+     * @throws Exception any errir
      */
     public boolean eval()
         throws Exception

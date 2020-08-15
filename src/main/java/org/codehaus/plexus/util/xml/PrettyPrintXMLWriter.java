@@ -27,7 +27,7 @@ import org.codehaus.plexus.util.StringUtils;
 /**
  * Implementation of XMLWriter which emits nicely formatted documents.
  *
- * @version $Id$
+ *
  */
 public class PrettyPrintXMLWriter
     implements XMLWriter

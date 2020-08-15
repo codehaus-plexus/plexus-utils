@@ -415,7 +415,7 @@ public final class CachedMap
     }
 
     /**
-     * Compares the specified object with this map for equality. Returns <tt>true</tt> if the given object is also a map
+     * Compares the specified object with this map for equality. Returns <code>true</code> if the given object is also a map
      * and the two Maps represent the same mappings.
      *
      * @param o object to be compared for equality with this map.

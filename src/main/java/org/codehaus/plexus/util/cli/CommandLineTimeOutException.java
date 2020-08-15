@@ -22,24 +22,17 @@ package org.codehaus.plexus.util.cli;
 /**
  * @author <a href="mailto:olamy@apache.org">olamy</a>
  * @since 1.5.9
- * @version $Id$
+ *
  */
 public class CommandLineTimeOutException
     extends CommandLineException
 {
 
-    /**
-     * @param message
-     */
     public CommandLineTimeOutException( String message )
     {
         super( message );
     }
 
-    /**
-     * @param message
-     * @param cause
-     */
     public CommandLineTimeOutException( String message, Throwable cause )
     {
         super( message, cause );
