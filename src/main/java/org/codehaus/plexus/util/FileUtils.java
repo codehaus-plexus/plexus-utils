@@ -95,7 +95,7 @@ import java.util.Random;
  * <p>There are also methods to {@link #catPath concatenate two paths}, {@link #resolveFile resolve a path relative to a
  * File} and {@link #normalize} a path.</p>
 
- * <h3>File-related methods</h3>
+ * <b>File-related methods</b>
  * 
  * <p>There are methods to create a {@link #toFile File from a URL}, copy a {@link #copyFileToDirectory File to a
  * directory}, copy a {@link #copyFile File to another File}, copy a {@link #copyURLToFile URL's contents to a File}, as
