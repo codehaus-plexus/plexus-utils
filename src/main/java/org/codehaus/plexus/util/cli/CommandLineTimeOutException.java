@@ -28,18 +28,11 @@ public class CommandLineTimeOutException
     extends CommandLineException
 {
 
-    /**
-     * @param message
-     */
     public CommandLineTimeOutException( String message )
     {
         super( message );
     }
 
-    /**
-     * @param message
-     * @param cause
-     */
     public CommandLineTimeOutException( String message, Throwable cause )
     {
         super( message, cause );

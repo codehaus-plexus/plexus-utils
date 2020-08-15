@@ -37,9 +37,6 @@ public class CycleDetectedException
         return cycle;
     }
 
-    /**
-     * @return
-     */
     public String cycleToString()
     {
         final StringBuilder buffer = new StringBuilder();

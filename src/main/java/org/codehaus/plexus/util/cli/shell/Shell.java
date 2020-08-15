@@ -70,7 +70,7 @@ public class Shell
     /**
      * Toggle unconditional quoting
      *
-     * @param unconditionallyQuote
+     * @param unconditionallyQuote see name
      */
     public void setUnconditionalQuoting( boolean unconditionallyQuote )
     {
@@ -80,7 +80,7 @@ public class Shell
     /**
      * Set the command to execute the shell (eg. COMMAND.COM, /bin/bash,...)
      *
-     * @param shellCommand
+     * @param shellCommand see name
      */
     public void setShellCommand( String shellCommand )
     {
@@ -90,7 +90,7 @@ public class Shell
     /**
      * Get the command to execute the shell
      *
-     * @return
+     * @return the command
      */
     public String getShellCommand()
     {
@@ -100,7 +100,7 @@ public class Shell
     /**
      * Set the shell arguments when calling a command line (not the executable arguments) (eg. /X /C for CMD.EXE)
      *
-     * @param shellArgs
+     * @param shellArgs see name
      */
     public void setShellArgs( String[] shellArgs )
     {
@@ -109,9 +109,7 @@ public class Shell
     }
 
     /**
-     * Get the shell arguments
-     *
-     * @return
+     * @return the shell arguments
      */
     public String[] getShellArgs()
     {
@@ -328,7 +326,8 @@ public class Shell
     }
 
     /**
-     * Sets the executable to run.
+     *
+     * @param executable Sets the executable to run.
      */
     public void setExecutable( String executable )
     {
@@ -345,7 +344,7 @@ public class Shell
     }
 
     /**
-     * Sets execution directory.
+     * @param path Sets execution directory.
      */
     public void setWorkingDirectory( String path )
     {
@@ -356,7 +355,7 @@ public class Shell
     }
 
     /**
-     * Sets execution directory.
+     * @param workingDir Sets execution directory.
      */
     public void setWorkingDirectory( File workingDir )
     {

@@ -51,7 +51,7 @@ public class XmlPullParserException
 
     /**
      * @deprecated Use the generic <code>getCause()</code> method
-     * @return
+     * @return the cause
      */
     @Deprecated
     public Throwable getDetail()

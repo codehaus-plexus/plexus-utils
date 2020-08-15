@@ -50,12 +50,13 @@ public class ClassMap
     /**
      * Cache of Methods, or CACHE_MISS, keyed by method name and actual arguments used to find it.
      */
-    private Map<String, Object> methodCache = new Hashtable<String, Object>();
+    private Map<String, Object> methodCache = new Hashtable<>();
 
     private final MethodMap methodMap = new MethodMap();
 
     /**
      * Standard constructor
+     * @param clazz the Class
      */
     public ClassMap( Class clazz )
     {
@@ -78,6 +79,10 @@ public class ClassMap
      * it'll be a Method, in which case, we return it.</p>
      * 
      * <p>If nothing is found, then we must actually go and introspect the method from the MethodMap.</p>
+     * @param name method name
+     * @param params method params
+     * @return the find Method or <code>null</code>
+     * @throws org.codehaus.plexus.util.introspection.MethodMap.AmbiguousException if ambiguous name
      */
     public Method findMethod( String name, Object[] params )
         throws MethodMap.AmbiguousException

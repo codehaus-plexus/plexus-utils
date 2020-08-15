@@ -42,12 +42,12 @@ public class DAG
     /**
      * Maps vertex's label to vertex
      */
-    private Map<String, Vertex> vertexMap = new HashMap<String, Vertex>();
+    private Map<String, Vertex> vertexMap = new HashMap<>();
 
     /**
      * Conatin list of all vertices
      */
-    private List<Vertex> vertexList = new ArrayList<Vertex>();
+    private List<Vertex> vertexList = new ArrayList<>();
 
     // ------------------------------------------------------------
     // Constructors
@@ -66,7 +66,7 @@ public class DAG
     // ------------------------------------------------------------
 
     /**
-     * @return
+     * @return the vertices
      */
     public List<Vertex> getVertices()
     {
@@ -75,6 +75,7 @@ public class DAG
 
     /**
      * @deprecated instead use {@link #getVertices()}
+     * @return the vertices
      */
     @Deprecated
     public List<Vertex> getVerticies()
@@ -187,8 +188,8 @@ public class DAG
     }
 
     /**
-     * @param label
-     * @return
+     * @param label see name
+     * @return the childs
      */
     public List<String> getChildLabels( final String label )
     {
@@ -198,8 +199,8 @@ public class DAG
     }
 
     /**
-     * @param label
-     * @return
+     * @param label see name
+     * @return the parents
      */
     public List<String> getParentLabels( final String label )
     {
@@ -223,7 +224,7 @@ public class DAG
 
     /**
      * Indicates if there is at least one edge leading to or from vertex of given label
-     *
+     * @param label the label
      * @return <code>true</code> if this vertex is connected with other vertex,<code>false</code> otherwise
      */
     public boolean isConnected( final String label )
@@ -252,7 +253,7 @@ public class DAG
         // optimization.
         if ( vertex.isLeaf() )
         {
-            retValue = new ArrayList<String>( 1 );
+            retValue = new ArrayList<>( 1 );
 
             retValue.add( label );
         }

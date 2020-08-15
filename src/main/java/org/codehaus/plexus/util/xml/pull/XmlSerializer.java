@@ -37,7 +37,8 @@ public interface XmlSerializer
      * defined in <a href="http://www.xmlpull.org/v1/doc/features.html">
      * http://www.xmlpull.org/v1/doc/features.html</a>. If feature is not recognized or can not be set then
      * IllegalStateException MUST be thrown.
-     *
+     * @param name feature name
+     * @param state feature state
      * @exception IllegalStateException If the feature is not supported or can not be set
      */
     void setFeature( String name, boolean state )
@@ -59,7 +60,8 @@ public interface XmlSerializer
      * optional properties are defined in <a href="http://www.xmlpull.org/v1/doc/properties.html">
      * http://www.xmlpull.org/v1/doc/properties.html</a>. If property is not recognized or can not be set then
      * IllegalStateException MUST be thrown.
-     *
+     * @param name property name
+     * @param value property value
      * @exception IllegalStateException if the property is not supported or can not be set
      */
     void setProperty( String name, Object value )
@@ -77,14 +79,22 @@ public interface XmlSerializer
 
     /**
      * Set to use binary output stream with given encoding.
+     * @param os out
+     * @param encoding encoding
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     void setOutput( OutputStream os, String encoding )
         throws IOException, IllegalArgumentException, IllegalStateException;
 
     /**
-     * Set the output to the given writer.
+     * @param writer Set the output to the given writer.
      * <p>
      * <b>WARNING</b> no information about encoding is available!
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     void setOutput( Writer writer )
         throws IOException, IllegalArgumentException, IllegalStateException;
@@ -92,6 +102,11 @@ public interface XmlSerializer
     /**
      * Write &lt;&#63;xml declaration with encoding (if encoding not null) and standalone flag (if standalone not null)
      * This method can only be called just after setOutput.
+     * @param encoding document encoding
+     * @param standalone standalone flag value
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     void startDocument( String encoding, Boolean standalone )
         throws IOException, IllegalArgumentException, IllegalStateException;
@@ -99,6 +114,9 @@ public interface XmlSerializer
     /**
      * Finish writing. All unclosed start tags will be closed and output will be flushed. After calling this method no
      * more output can be serialized until next call to setOutput()
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     void endDocument()
         throws IOException, IllegalArgumentException, IllegalStateException;
@@ -119,12 +137,15 @@ public interface XmlSerializer
      *
      * @param prefix must be not null (or IllegalArgumentException is thrown)
      * @param namespace must be not null
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     void setPrefix( String prefix, String namespace )
         throws IOException, IllegalArgumentException, IllegalStateException;
 
     /**
-     * Return namespace that corresponds to given prefix If there is no prefix bound to this namespace return null but
+     * @return namespace that corresponds to given prefix If there is no prefix bound to this namespace return null but
      * if generatePrefix is false then return generated prefix.
      * <p>
      * <b>NOTE:</b> if the prefix is empty string "" and default namespace is bound to this prefix then empty string
@@ -132,12 +153,15 @@ public interface XmlSerializer
      * <p>
      * <b>NOTE:</b> prefixes "xml" and "xmlns" are already bound will have values as defined
      * <a href="http://www.w3.org/TR/REC-xml-names/">Namespaces in XML specification</a>
+     * @param namespace the namespace
+     * @param generatePrefix to generate the missing prefix
+     * @throws IllegalArgumentException if null
      */
     String getPrefix( String namespace, boolean generatePrefix )
         throws IllegalArgumentException;
 
     /**
-     * Returns the current depth of the element. Outside the root element, the depth is 0. The depth is incremented by 1
+     * @return the current depth of the element. Outside the root element, the depth is 0. The depth is incremented by 1
      * when startTag() is called. The depth is decremented after the call to endTag() event was observed.
      *
      * <pre>
@@ -179,6 +203,12 @@ public interface XmlSerializer
      * setPrefix() immediately before this method. If namespace is null no namespace prefix is printed but just name. If
      * namespace is empty string then serializer will make sure that default empty namespace is declared (in XML 1.0
      * xmlns='') or throw IllegalStateException if default namespace is already bound to non-empty string.
+     * @param namespace ns
+     * @param name tag name
+     * @return XmlSerializer
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     XmlSerializer startTag( String namespace, String name )
         throws IOException, IllegalArgumentException, IllegalStateException;
@@ -187,16 +217,28 @@ public interface XmlSerializer
      * Write an attribute. Calls to attribute() MUST follow a call to startTag() immediately. If there is no prefix
      * defined for the given namespace, a prefix will be defined automatically. If namespace is null or empty string no
      * namespace prefix is printed but just name.
+     * @param name attribute name
+     * @param value attribute value
+     * @param namespace namespace to use
+     * @return XmlSerializer
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     XmlSerializer attribute( String namespace, String name, String value )
         throws IOException, IllegalArgumentException, IllegalStateException;
 
     /**
      * Write end tag. Repetition of namespace and name is just for avoiding errors.
-     * <p>
      * <b>Background:</b> in kXML endTag had no arguments, and non matching tags were very difficult to find... If
      * namespace is null no namespace prefix is printed but just name. If namespace is empty string then serializer will
      * make sure that default empty namespace is declared (in XML 1.0 xmlns='').
+     * @param namespace ns
+     * @param name tag name
+     * @return XmlSerializer
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     XmlSerializer endTag( String namespace, String name )
         throws IOException, IllegalArgumentException, IllegalStateException;
@@ -255,13 +297,24 @@ public interface XmlSerializer
     // throws IOException, IllegalArgumentException, IllegalStateException;
 
     /**
-     * Writes text, where special XML chars are escaped automatically
+     * @param text Writes text, where special XML chars are escaped automatically
+     * @return XmlSerializer
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     XmlSerializer text( String text )
         throws IOException, IllegalArgumentException, IllegalStateException;
 
     /**
      * Writes text, where special XML chars are escaped automatically
+     * @param buf characters
+     * @param len lenght
+     * @param start start
+     * @return XmlSerializer
+     * @throws IOException io
+     * @throws IllegalArgumentException if null
+     * @throws IllegalStateException illegal use
      */
     XmlSerializer text( char[] buf, int start, int len )
         throws IOException, IllegalArgumentException, IllegalStateException;
@@ -290,6 +343,7 @@ public interface XmlSerializer
      * <p>
      * <b>NOTE:</b> if there is need to close start tag (so no more attribute() calls are allowed) but without flushing
      * output call method text() with empty string (text("")).
+     * @throws IOException io
      */
     void flush()
         throws IOException;

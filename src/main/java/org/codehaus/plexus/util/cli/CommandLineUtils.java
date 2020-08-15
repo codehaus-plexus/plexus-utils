@@ -500,7 +500,8 @@ public abstract class CommandLineUtils
      * If the argument doesn't include spaces or quotes, return it as is. If it contains double quotes, use single
      * quotes - else surround the argument by double quotes.
      * </p>
-     *
+     * @param argument the argument
+     * @return the transformed command line
      * @throws CommandLineException if the argument contains both, single and double quotes.
      * @deprecated Use {@link StringUtils#quoteAndEscape(String, char, char[], char[], char, boolean)},
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
@@ -522,7 +523,9 @@ public abstract class CommandLineUtils
      * If the argument doesn't include spaces or quotes, return it as is. If it contains double quotes, use single
      * quotes - else surround the argument by double quotes.
      * </p>
-     *
+     * @param argument see name
+     * @param wrapExistingQuotes see name
+     * @return the transformed command line
      * @throws CommandLineException if the argument contains both, single and double quotes.
      * @deprecated Use {@link StringUtils#quoteAndEscape(String, char, char[], char[], char, boolean)},
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
@@ -537,6 +540,12 @@ public abstract class CommandLineUtils
     }
 
     /**
+     * @param argument the argument
+     * @param escapeSingleQuotes see name
+     * @param escapeDoubleQuotes see name
+     * @param wrapExistingQuotes see name
+     * @return the transformed command line
+     * @throws CommandLineException some trouble
      * @deprecated Use {@link StringUtils#quoteAndEscape(String, char, char[], char[], char, boolean)},
      *             {@link StringUtils#quoteAndEscape(String, char, char[], char, boolean)}, or
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.

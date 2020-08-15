@@ -201,6 +201,7 @@ public class XmlStreamReader
      * @param is InputStream to create the reader from.
      * @param httpContentType content-type header to use for the resolution of the charset encoding.
      * @param lenient indicates if the charset encoding detection should be relaxed.
+     * @param defaultEncoding encoding to use
      * @throws IOException thrown if there is a problem reading the file.
      * @throws XmlStreamReaderException thrown if the charset encoding could not be determined according to the specs.
      */

@@ -175,6 +175,7 @@ public class ReflectionValueExtractor
      * 
      * @param expression not null expression
      * @param root not null object
+     * @param trimRootToken  root start
      * @return the object defined by the expression
      * @throws Exception if any
      */

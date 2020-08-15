@@ -121,6 +121,7 @@ public class StreamFeeder
 
     /**
      * @since 3.1.0
+     * @return the Exception
      */
     public Throwable getException()
     {

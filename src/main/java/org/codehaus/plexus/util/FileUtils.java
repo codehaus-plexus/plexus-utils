@@ -988,6 +988,7 @@ public class FileUtils
      * @param sourceBase The basedir used for the directory scan
      * @param dirs The getIncludedDirs from the dirscanner
      * @param destination The base dir of the output structure
+     * @throws IOException io issue
      */
     public static void mkDirs( final File sourceBase, String[] dirs, final File destination )
         throws IOException
@@ -1696,7 +1697,7 @@ public class FileUtils
      * @param includes the includes pattern, comma separated
      * @param excludes the excludes pattern, comma separated
      * @return a list of File objects
-     * @throws IOException
+     * @throws IOException io issue
      * @see #getFileNames(File, String, String, boolean)
      */
     public static List<File> getFiles( File directory, String includes, String excludes )
@@ -1713,7 +1714,7 @@ public class FileUtils
      * @param excludes the excludes pattern, comma separated
      * @param includeBasedir true to include the base dir in each file
      * @return a list of File objects
-     * @throws IOException
+     * @throws IOException io issue
      * @see #getFileNames(File, String, String, boolean)
      */
     public static List<File> getFiles( File directory, String includes, String excludes, boolean includeBasedir )
@@ -1739,7 +1740,7 @@ public class FileUtils
      * @param excludes the excludes pattern, comma separated
      * @param includeBasedir true to include the base dir in each String of file
      * @return a list of files as String
-     * @throws IOException
+     * @throws IOException io issue
      */
     public static List<String> getFileNames( File directory, String includes, String excludes, boolean includeBasedir )
         throws IOException
@@ -1756,7 +1757,7 @@ public class FileUtils
      * @param includeBasedir true to include the base dir in each String of file
      * @param isCaseSensitive true if case sensitive
      * @return a list of files as String
-     * @throws IOException
+     * @throws IOException io issue
      */
     public static List<String> getFileNames( File directory, String includes, String excludes, boolean includeBasedir,
                                              boolean isCaseSensitive )
@@ -1773,7 +1774,7 @@ public class FileUtils
      * @param excludes the excludes pattern, comma separated
      * @param includeBasedir true to include the base dir in each String of file
      * @return a list of directories as String
-     * @throws IOException
+     * @throws IOException io issue
      */
     public static List<String> getDirectoryNames( File directory, String includes, String excludes,
                                                   boolean includeBasedir )
@@ -1791,7 +1792,7 @@ public class FileUtils
      * @param includeBasedir true to include the base dir in each String of file
      * @param isCaseSensitive true if case sensitive
      * @return a list of directories as String
-     * @throws IOException
+     * @throws IOException io issue
      */
     public static List<String> getDirectoryNames( File directory, String includes, String excludes,
                                                   boolean includeBasedir, boolean isCaseSensitive )
@@ -1811,7 +1812,7 @@ public class FileUtils
      * @param getFiles true if get files
      * @param getDirectories true if get directories
      * @return a list of files as String
-     * @throws IOException
+     * @throws IOException io issue
      */
     public static List<String> getFileAndDirectoryNames( File directory, String includes, String excludes,
                                                          boolean includeBasedir, boolean isCaseSensitive,

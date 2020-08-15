@@ -93,7 +93,7 @@ public final class SelectorUtils
     }
 
     /**
-     * Retrieves the manager of the Singleton.
+     * @return Retrieves the manager of the Singleton.
      */
     public static SelectorUtils getInstance()
     {

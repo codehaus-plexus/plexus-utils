@@ -158,6 +158,7 @@ public class ExceptionUtils
      * </p>
      *
      * @param throwable The exception to introspect for a cause.
+     * @param methodNames the methods names to match
      * @return The cause of the <code>Throwable</code>.
      * @throws NullPointerException if the method names array is null or contains null
      * @throws NullPointerException if the throwable is null
@@ -343,7 +344,7 @@ public class ExceptionUtils
      */
     public static Throwable[] getThrowables( Throwable throwable )
     {
-        List<Throwable> list = new ArrayList<Throwable>();
+        List<Throwable> list = new ArrayList<>();
         while ( throwable != null )
         {
             list.add( throwable );
@@ -357,7 +358,9 @@ public class ExceptionUtils
      * Delegates to {@link #indexOfThrowable(Throwable, Class, int)}, starting the search at the beginning of the
      * exception chain.
      * </p>
-     *
+     * @param throwable the exception to inspect
+     * @param type <code>Class</code> to look for
+     * @return index of the stack matching the type
      * @see #indexOfThrowable(Throwable, Class, int)
      */
     public static int indexOfThrowable( Throwable throwable, Class type )
@@ -406,6 +409,8 @@ public class ExceptionUtils
      * exception and continues with stack frames until the wrapper exception is caught and wrapped again, etc.
      * <p>
      * The method is equivalent to t.printStackTrace() for throwables that don't have nested causes.
+     * @param t the exception
+     * @param stream the stream
      */
     public static void printRootCauseStackTrace( Throwable t, PrintStream stream )
     {
@@ -419,6 +424,7 @@ public class ExceptionUtils
 
     /**
      * Equivalent to printRootCauseStackTrace(t, System.err)
+     * @param t the exception
      */
     public static void printRootCauseStackTrace( Throwable t )
     {
@@ -427,6 +433,8 @@ public class ExceptionUtils
 
     /**
      * Same as printRootCauseStackTrace(t, stream), except it takes a PrintWriter as an argument.
+     * @param t the cause
+     * @param writer the writer
      */
     public static void printRootCauseStackTrace( Throwable t, PrintWriter writer )
     {
@@ -441,12 +449,14 @@ public class ExceptionUtils
     /**
      * Creates a compact stack trace for the root cause of the supplied throwable. See
      * <code>printRootCauseStackTrace(Throwable t, PrintStream s)</code>
+     * @param t the cause
+     * @return the Stack
      */
     public static String[] getRootCauseStackTrace( Throwable t )
     {
         Throwable[] throwables = getThrowables( t );
         int count = throwables.length;
-        ArrayList<String> frames = new ArrayList<String>();
+        ArrayList<String> frames = new ArrayList<>();
         List<String> nextTrace = getStackFrameList( throwables[count - 1] );
         for ( int i = count; --i >= 0; )
         {
