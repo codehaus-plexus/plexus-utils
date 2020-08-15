@@ -34,6 +34,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Properties;
 
 import org.junit.Before;
@@ -426,6 +427,50 @@ public final class FileUtilsTest
         FileUtils.copyFile( testFile1, destination );
         assertTrue( "Check Exist", destination.exists() );
         assertTrue( "Check Full copy", destination.length() == testFile2Size );
+    }
+
+    // linkFile
+    @Test
+    public void testLinkFile1()
+        throws Exception
+    {
+        final File destination = new File( getTestDirectory(), "link1.txt" );
+        FileUtils.linkFile( testFile1, destination );
+        assertTrue( "Check Exist", destination.exists() );
+        assertTrue( "Check File length", destination.length() == testFile1Size );
+        assertTrue( "Check is link", Files.isSymbolicLink(destination.toPath()));
+    }
+
+    @Test
+    public void testLinkFile2()
+        throws Exception
+    {
+        final File destination = new File( getTestDirectory(), "link2.txt" );
+        FileUtils.linkFile( testFile1, destination );
+        assertTrue( "Check Exist", destination.exists() );
+        assertTrue( "Check File length", destination.length() == testFile2Size );
+        assertTrue( "Check is link", Files.isSymbolicLink(destination.toPath()));
+    }
+
+    /**
+     * ensure we create directory tree for destination
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testLinkFile3()
+        throws Exception
+    {
+        File destDirectory = new File( getTestDirectory(), "foo/bar/testlink" );
+        if ( destDirectory.exists() )
+        {
+            destDirectory.delete();
+        }
+        final File destination = new File( destDirectory, "link2.txt" );
+        FileUtils.linkFile( testFile1, destination );
+        assertTrue( "Check Exist", destination.exists() );
+        assertTrue( "Check File length", destination.length() == testFile2Size );
+        assertTrue( "Check is link", Files.isSymbolicLink(destination.toPath()));
     }
 
     // copyFileIfModified
