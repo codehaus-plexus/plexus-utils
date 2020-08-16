@@ -186,7 +186,7 @@ public final class IOUtil
     public static void copy( final Reader input, final Writer output )
         throws IOException
     {
-        copy( input, output, DEFAULT_BUFFER_SIZE );
+        input.transferTo( output );
     }
 
     /**
