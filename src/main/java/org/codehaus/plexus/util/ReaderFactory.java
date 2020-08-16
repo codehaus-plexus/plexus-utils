@@ -18,7 +18,6 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -154,13 +153,13 @@ public class ReaderFactory
      *
      * @param file not null file.
      * @return a reader instance for the input file using the default platform charset.
-     * @throws FileNotFoundException if any.
+     * @throws IOException if any.
      * @see Charset#defaultCharset()
      */
     public static Reader newPlatformReader( File file )
-        throws FileNotFoundException
+        throws IOException
     {
-        return new FileReader( file );
+        return Files.newBufferedReader( file.toPath() );
     }
 
     /**

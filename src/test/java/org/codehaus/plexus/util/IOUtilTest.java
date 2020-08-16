@@ -22,7 +22,6 @@ import static org.junit.Assert.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -210,7 +209,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy3.txt" );
-        FileReader fin = new FileReader( testFile );
+        Reader fin = Files.newBufferedReader( testFile.toPath() );
         OutputStream fout = Files.newOutputStream( destination.toPath() );
         IOUtil.copy( fin, fout );
         // Note: this method *does* flush. It is equivalent to:
@@ -232,7 +231,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy4.txt" );
-        FileReader fin = new FileReader( testFile );
+        Reader fin = Files.newBufferedReader( testFile.toPath() );
         FileWriter fout = new FileWriter( destination );
         IOUtil.copy( fin, fout );
 
@@ -248,7 +247,7 @@ public final class IOUtilTest
     public void testReaderToString()
         throws Exception
     {
-        FileReader fin = new FileReader( testFile );
+        Reader fin = Files.newBufferedReader( testFile.toPath() );
         String out = IOUtil.toString( fin );
         assertNotNull( out );
         assertTrue( "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE, out.length() == FILE_SIZE );
@@ -260,7 +259,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy5.txt" );
-        FileReader fin = new FileReader( testFile );
+        Reader fin = Files.newBufferedReader( testFile.toPath() );
         // Create our String. Rely on testReaderToString() to make sure this is valid.
         String str = IOUtil.toString( fin );
         OutputStream fout = Files.newOutputStream( destination.toPath() );
@@ -284,7 +283,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy6.txt" );
-        FileReader fin = new FileReader( testFile );
+        Reader fin = Files.newBufferedReader( testFile.toPath() );
         // Create our String. Rely on testReaderToString() to make sure this is valid.
         String str = IOUtil.toString( fin );
         FileWriter fout = new FileWriter( destination );
@@ -316,7 +315,7 @@ public final class IOUtilTest
     public void testStringToByteArray()
         throws Exception
     {
-        FileReader fin = new FileReader( testFile );
+        Reader fin = Files.newBufferedReader( testFile.toPath() );
 
         // Create our String. Rely on testReaderToString() to make sure this is valid.
         String str = IOUtil.toString( fin );

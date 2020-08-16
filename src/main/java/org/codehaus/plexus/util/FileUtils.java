@@ -60,7 +60,6 @@ import org.codehaus.plexus.util.io.URLInputStreamFacade;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,6 +69,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -2252,16 +2252,14 @@ public class FileUtils
             {
                 if ( encoding == null || encoding.length() < 1 )
                 {
-                    fileReader = new BufferedReader( new FileReader( from ) );
+                    fileReader = Files.newBufferedReader( from.toPath() );
                     fileWriter = new FileWriter( to );
                 }
                 else
                 {
-                    InputStream instream = Files.newInputStream( from.toPath() );
-
                     OutputStream outstream = Files.newOutputStream( to.toPath() );
 
-                    fileReader = new BufferedReader( new InputStreamReader( instream, encoding ) );
+                    fileReader = Files.newBufferedReader( from.toPath(), Charset.forName( encoding ) );
 
                     fileWriter = new OutputStreamWriter( outstream, encoding );
                 }
@@ -2311,7 +2309,7 @@ public class FileUtils
 
         if ( file.exists() )
         {
-            try ( BufferedReader reader = new BufferedReader( new FileReader( file ) ) )
+            try ( BufferedReader reader = Files.newBufferedReader( file.toPath() ) )
             {
                 for ( String line = reader.readLine(); line != null; line = reader.readLine() )
                 {
