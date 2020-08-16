@@ -21,9 +21,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.Os;
@@ -443,10 +444,10 @@ public class CommandlineTest
             assertTrue( "Can't create dir:" + dir.getAbsolutePath(), dir.mkdirs() );
         }
 
-        FileWriter writer = null;
+        Writer writer = null;
         try
         {
-            writer = new FileWriter( new File( dir, "test$1.txt" ) );
+            writer = Files.newBufferedWriter( dir.toPath().resolve( "test$1.txt" ) );
             IOUtil.copy( "Success", writer );
         }
         finally
@@ -568,7 +569,7 @@ public class CommandlineTest
             bat = new File( dir, "echo" );
         }
 
-        Writer w = new FileWriter( bat );
+        Writer w = Files.newBufferedWriter( bat.toPath() );
         try
         {
             IOUtil.copy( content, w );

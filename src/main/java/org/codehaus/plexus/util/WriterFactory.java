@@ -17,8 +17,6 @@ package org.codehaus.plexus.util;
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -145,7 +143,7 @@ public class WriterFactory
     public static Writer newPlatformWriter( File file )
         throws IOException
     {
-        return new FileWriter( file );
+        return Files.newBufferedWriter( file.toPath() );
     }
 
     /**

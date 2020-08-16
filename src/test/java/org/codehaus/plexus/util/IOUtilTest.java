@@ -22,7 +22,6 @@ import static org.junit.Assert.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -178,7 +177,7 @@ public final class IOUtilTest
     {
         File destination = newFile( "copy2.txt" );
         InputStream fin = Files.newInputStream( testFile.toPath() );
-        FileWriter fout = new FileWriter( destination );
+        Writer fout = Files.newBufferedWriter( destination.toPath() );
 
         IOUtil.copy( fin, fout );
 
@@ -232,7 +231,7 @@ public final class IOUtilTest
     {
         File destination = newFile( "copy4.txt" );
         Reader fin = Files.newBufferedReader( testFile.toPath() );
-        FileWriter fout = new FileWriter( destination );
+        Writer fout = Files.newBufferedWriter( destination.toPath() );
         IOUtil.copy( fin, fout );
 
         fout.flush();
@@ -286,7 +285,7 @@ public final class IOUtilTest
         Reader fin = Files.newBufferedReader( testFile.toPath() );
         // Create our String. Rely on testReaderToString() to make sure this is valid.
         String str = IOUtil.toString( fin );
-        FileWriter fout = new FileWriter( destination );
+        Writer fout = Files.newBufferedWriter( destination.toPath() );
         IOUtil.copy( str, fout );
         fout.flush();
 
@@ -330,7 +329,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy7.txt" );
-        FileWriter fout = new FileWriter( destination );
+        Writer fout = Files.newBufferedWriter( destination.toPath() );
         InputStream fin = Files.newInputStream( testFile.toPath() );
 
         // Create our byte[]. Rely on testInputStreamToByteArray() to make sure this is valid.
