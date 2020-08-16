@@ -20,7 +20,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -77,7 +76,7 @@ public class XmlUtilTest
         OutputStream os = null;
         try
         {
-            is = new FileInputStream( testDocument );
+            is = Files.newInputStream( testDocument.toPath() );
             os = Files.newOutputStream( getTestOutputFile( "target/test/prettyFormatTestDocumentOutputStream.xml" ).toPath() );
 
             assertNotNull( is );

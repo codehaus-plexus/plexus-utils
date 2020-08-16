@@ -25,7 +25,6 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -268,7 +267,7 @@ public final class FileUtilsTest
         FileUtils.copyURLToFile( getClass().getResource( resourceName ), file );
 
         // Tests that resource was copied correctly
-        final FileInputStream fis = new FileInputStream( file );
+        final InputStream fis = Files.newInputStream( file.toPath() );
         try
         {
             assertTrue( "Content is not equal.",

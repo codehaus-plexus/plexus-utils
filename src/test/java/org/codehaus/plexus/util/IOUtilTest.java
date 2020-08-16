@@ -22,7 +22,6 @@ import static org.junit.Assert.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -115,8 +114,8 @@ public final class IOUtilTest
     private void assertEqualContent( File f0, File f1 )
         throws IOException
     {
-        FileInputStream is0 = new FileInputStream( f0 );
-        FileInputStream is1 = new FileInputStream( f1 );
+        InputStream is0 = Files.newInputStream( f0.toPath() );
+        InputStream is1 = Files.newInputStream( f1.toPath() );
         byte[] buf0 = new byte[FILE_SIZE];
         byte[] buf1 = new byte[FILE_SIZE];
         int n0 = 0;
@@ -145,7 +144,7 @@ public final class IOUtilTest
     private void assertEqualContent( byte[] b0, File file )
         throws IOException
     {
-        FileInputStream is = new FileInputStream( file );
+        InputStream is = Files.newInputStream( file.toPath() );
         byte[] b1 = new byte[b0.length];
         int numRead = is.read( b1 );
         assertTrue( "Different number of bytes", numRead == b0.length && is.available() == 0 );
@@ -160,7 +159,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy1.txt" );
-        FileInputStream fin = new FileInputStream( testFile );
+        InputStream fin = Files.newInputStream( testFile.toPath() );
         OutputStream fout = Files.newOutputStream( destination.toPath() );
 
         IOUtil.copy( fin, fout );
@@ -179,7 +178,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = newFile( "copy2.txt" );
-        FileInputStream fin = new FileInputStream( testFile );
+        InputStream fin = Files.newInputStream( testFile.toPath() );
         FileWriter fout = new FileWriter( destination );
 
         IOUtil.copy( fin, fout );
@@ -198,7 +197,7 @@ public final class IOUtilTest
     public void testInputStreamToString()
         throws Exception
     {
-        FileInputStream fin = new FileInputStream( testFile );
+        InputStream fin = Files.newInputStream( testFile.toPath() );
         String out = IOUtil.toString( fin );
         assertNotNull( out );
         assertTrue( "Not all bytes were read", fin.available() == 0 );
@@ -304,7 +303,7 @@ public final class IOUtilTest
     public void testInputStreamToByteArray()
         throws Exception
     {
-        FileInputStream fin = new FileInputStream( testFile );
+        InputStream fin = Files.newInputStream( testFile.toPath() );
         byte[] out = IOUtil.toByteArray( fin );
         assertNotNull( out );
         assertTrue( "Not all bytes were read", fin.available() == 0 );
@@ -333,7 +332,7 @@ public final class IOUtilTest
     {
         File destination = newFile( "copy7.txt" );
         FileWriter fout = new FileWriter( destination );
-        FileInputStream fin = new FileInputStream( testFile );
+        InputStream fin = Files.newInputStream( testFile.toPath() );
 
         // Create our byte[]. Rely on testInputStreamToByteArray() to make sure this is valid.
         byte[] in = IOUtil.toByteArray( fin );
@@ -350,7 +349,7 @@ public final class IOUtilTest
     public void testByteArrayToString()
         throws Exception
     {
-        FileInputStream fin = new FileInputStream( testFile );
+        InputStream fin = Files.newInputStream( testFile.toPath() );
         byte[] in = IOUtil.toByteArray( fin );
         // Create our byte[]. Rely on testInputStreamToByteArray() to make sure this is valid.
         String str = IOUtil.toString( in );
@@ -364,7 +363,7 @@ public final class IOUtilTest
     {
         File destination = newFile( "copy8.txt" );
         OutputStream fout = Files.newOutputStream( destination.toPath() );
-        FileInputStream fin = new FileInputStream( testFile );
+        InputStream fin = Files.newInputStream( testFile.toPath() );
 
         // Create our byte[]. Rely on testInputStreamToByteArray() to make sure this is valid.
         byte[] in = IOUtil.toByteArray( fin );

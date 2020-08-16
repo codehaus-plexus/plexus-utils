@@ -19,7 +19,6 @@ package org.codehaus.plexus.util.xml;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,6 +26,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
 import java.net.HttpURLConnection;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -126,7 +126,7 @@ public class XmlReader
     public XmlReader( File file )
         throws IOException
     {
-        this( new FileInputStream( file ) );
+        this( Files.newInputStream( file.toPath() ) );
     }
 
     /**

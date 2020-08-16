@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -192,10 +191,10 @@ public abstract class FileBasedTestCase
          * + " and " + f1 + " have differing file sizes (" + f0.length() + " vs " + f1.length() + ")", ( f0.length() ==
          * f1.length() ) );
          */
-        final InputStream is0 = new FileInputStream( f0 );
+        final InputStream is0 = Files.newInputStream( f0.toPath() );
         try
         {
-            final InputStream is1 = new FileInputStream( f1 );
+            final InputStream is1 = Files.newInputStream( f1.toPath() );
             try
             {
                 final byte[] buf0 = new byte[1024];
@@ -229,7 +228,7 @@ public abstract class FileBasedTestCase
     protected void assertEqualContent( final byte[] b0, final File file )
         throws IOException
     {
-        final InputStream is = new FileInputStream( file );
+        final InputStream is = Files.newInputStream( file.toPath() );
         try
         {
             byte[] b1 = new byte[b0.length];

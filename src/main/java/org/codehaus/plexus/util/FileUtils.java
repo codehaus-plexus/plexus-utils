@@ -60,7 +60,6 @@ import org.codehaus.plexus.util.io.URLInputStreamFacade;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -376,11 +375,11 @@ public class FileUtils
     {
         if ( encoding != null )
         {
-            return new InputStreamReader( new FileInputStream( file ), encoding );
+            return new InputStreamReader( Files.newInputStream( file.toPath() ), encoding );
         }
         else
         {
-            return new InputStreamReader( new FileInputStream( file ) );
+            return new InputStreamReader( Files.newInputStream( file.toPath() ) );
         }
     }
     
@@ -723,8 +722,8 @@ public class FileUtils
             return false;
         }
         
-        try ( InputStream input1 = new FileInputStream( file1 );
-              InputStream input2 = new FileInputStream( file2 ) )
+        try ( InputStream input1 = Files.newInputStream( file1.toPath() );
+              InputStream input2 = Files.newInputStream( file2.toPath() ) )
         {
             return IOUtil.contentEquals( input1, input2 );
         }
@@ -2258,7 +2257,7 @@ public class FileUtils
                 }
                 else
                 {
-                    FileInputStream instream = new FileInputStream( from );
+                    InputStream instream = Files.newInputStream( from.toPath() );
 
                     OutputStream outstream = Files.newOutputStream( to.toPath() );
 
