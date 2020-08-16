@@ -55,7 +55,6 @@ package org.codehaus.plexus.util;
  */
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -104,7 +103,7 @@ public class Expand
         throws Exception
     {
         // code from WarExpand
-        try ( ZipInputStream zis = new ZipInputStream( new FileInputStream( srcF ) ) )
+        try ( ZipInputStream zis = new ZipInputStream( Files.newInputStream( srcF.toPath() ) ) )
         {
             for ( ZipEntry ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry() )
             {

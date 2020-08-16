@@ -20,10 +20,10 @@ import java.util.Objects;
 
 import java.util.Properties;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 
 /**
  * Static methods to create Properties loaded from various sources.
@@ -43,7 +43,7 @@ public class PropertyUtils
     public static Properties loadProperties( final File file )
         throws IOException
     {
-        return loadProperties( new FileInputStream( Objects.requireNonNull( file, "file" ) ) );
+        return loadProperties( Files.newInputStream( Objects.requireNonNull( file, "file" ).toPath() ) );
     }
 
     public static Properties loadProperties( final InputStream is )
