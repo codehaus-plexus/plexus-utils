@@ -16,6 +16,7 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
+import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
 
 import java.io.IOException;
@@ -181,6 +182,11 @@ public class Xpp3Dom
     public String getAttribute( String name )
     {
         return ( null != attributes ) ? attributes.get( name ) : null;
+    }
+
+    public boolean removeAttribute( String name )
+    {
+        return StringUtils.isEmpty( name ) ? false: attributes.remove( name ) == null;
     }
 
     /**
