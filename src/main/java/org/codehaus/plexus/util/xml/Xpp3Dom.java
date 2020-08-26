@@ -184,6 +184,12 @@ public class Xpp3Dom
         return ( null != attributes ) ? attributes.get( name ) : null;
     }
 
+    /**
+     *
+     * @param name name of the attribute to be removed
+     * @return <code>true</code> if the attribute has been removed
+     * @since 3.4.0
+     */
     public boolean removeAttribute( String name )
     {
         return StringUtils.isEmpty( name ) ? false: attributes.remove( name ) == null;
