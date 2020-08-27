@@ -1,3 +1,11 @@
+arch:
+  - amd64
+  - ppc64le
+
+addons:
+  apt:
+    packages: maven
+
 language: java
 jdk:
   - openjdk7
