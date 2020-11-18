@@ -127,6 +127,17 @@ public class MatchPattern
         return ret.toArray( new String[0] );
     }
 
+    static char[][] tokenizePathToCharArray( String path, String separator )
+    {
+        String[] tokenizedName = tokenizePathToString( path, separator );
+        char[][] tokenizedNameChar = new char[tokenizedName.length][];
+        for ( int i = 0; i < tokenizedName.length; i++ )
+        {
+            tokenizedNameChar[i] = tokenizedName[i].toCharArray();
+        }
+        return tokenizedNameChar;
+    }
+
     public static MatchPattern fromString( String source )
     {
         return new MatchPattern( source, File.separator );

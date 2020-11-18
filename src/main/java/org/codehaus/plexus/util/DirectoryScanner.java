@@ -199,7 +199,7 @@ public class DirectoryScanner
      */
     protected boolean everythingIncluded = true;
 
-    private final String[] tokenizedEmpty = MatchPattern.tokenizePathToString( "", File.separator );
+    private final char[][] tokenizedEmpty = MatchPattern.tokenizePathToCharArray( "", File.separator );
 
     /**
      * Sole constructor.
@@ -445,7 +445,7 @@ public class DirectoryScanner
         for ( String newfile : newfiles )
         {
             String name = vpath + newfile;
-            String[] tokenizedName = MatchPattern.tokenizePathToString( name, File.separator );
+            char[][] tokenizedName = MatchPattern.tokenizePathToCharArray( name, File.separator );
             File file = new File( dir, newfile );
             if ( file.isDirectory() )
             {
