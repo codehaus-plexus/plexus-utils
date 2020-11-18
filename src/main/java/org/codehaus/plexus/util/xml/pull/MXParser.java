@@ -36,26 +36,26 @@ public class MXParser
     implements XmlPullParser
 {
     // NOTE: no interning of those strings --> by Java leng spec they MUST be already interned
-    protected final static String XML_URI = "http://www.w3.org/XML/1998/namespace";
+    private final static String XML_URI = "http://www.w3.org/XML/1998/namespace";
 
-    protected final static String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
+    private final static String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
 
-    protected final static String FEATURE_XML_ROUNDTRIP =
+    private final static String FEATURE_XML_ROUNDTRIP =
         // "http://xmlpull.org/v1/doc/features.html#xml-roundtrip";
         "http://xmlpull.org/v1/doc/features.html#xml-roundtrip";
 
-    protected final static String FEATURE_NAMES_INTERNED = "http://xmlpull.org/v1/doc/features.html#names-interned";
+    private final static String FEATURE_NAMES_INTERNED = "http://xmlpull.org/v1/doc/features.html#names-interned";
 
-    protected final static String PROPERTY_XMLDECL_VERSION =
+    private final static String PROPERTY_XMLDECL_VERSION =
         "http://xmlpull.org/v1/doc/properties.html#xmldecl-version";
 
-    protected final static String PROPERTY_XMLDECL_STANDALONE =
+    private final static String PROPERTY_XMLDECL_STANDALONE =
         "http://xmlpull.org/v1/doc/properties.html#xmldecl-standalone";
 
-    protected final static String PROPERTY_XMLDECL_CONTENT =
+    private final static String PROPERTY_XMLDECL_CONTENT =
         "http://xmlpull.org/v1/doc/properties.html#xmldecl-content";
 
-    protected final static String PROPERTY_LOCATION = "http://xmlpull.org/v1/doc/properties.html#location";
+    private final static String PROPERTY_LOCATION = "http://xmlpull.org/v1/doc/properties.html#location";
 
     /**
      * Implementation notice: the is instance variable that controls if newString() is interning.
@@ -65,19 +65,19 @@ public class MXParser
      * <p>
      * <b>NOTE:</b> by default in this minimal implementation it is false!
      */
-    protected boolean allStringsInterned;
+    private boolean allStringsInterned;
 
-    protected void resetStringCache()
+    private void resetStringCache()
     {
         // System.out.println("resetStringCache() minimum called");
     }
 
-    protected String newString( char[] cbuf, int off, int len )
+    private String newString( char[] cbuf, int off, int len )
     {
         return new String( cbuf, off, len );
     }
 
-    protected String newStringIntern( char[] cbuf, int off, int len )
+    private String newStringIntern( char[] cbuf, int off, int len )
     {
         return ( new String( cbuf, off, len ) ).intern();
     }
@@ -85,48 +85,48 @@ public class MXParser
     private static final boolean TRACE_SIZING = false;
 
     // NOTE: features are not resetable and typically defaults to false ...
-    protected boolean processNamespaces;
+    private boolean processNamespaces;
 
-    protected boolean roundtripSupported;
+    private boolean roundtripSupported;
 
     // global parser state
-    protected String location;
+    private String location;
 
-    protected int lineNumber;
+    private int lineNumber;
 
-    protected int columnNumber;
+    private int columnNumber;
 
-    protected boolean seenRoot;
+    private boolean seenRoot;
 
-    protected boolean reachedEnd;
+    private boolean reachedEnd;
 
-    protected int eventType;
+    private int eventType;
 
-    protected boolean emptyElementTag;
+    private boolean emptyElementTag;
 
     // element stack
-    protected int depth;
+    private int depth;
 
-    protected char[] elRawName[];
+    private char[] elRawName[];
 
-    protected int elRawNameEnd[];
+    private int elRawNameEnd[];
 
-    protected int elRawNameLine[];
+    private int elRawNameLine[];
 
-    protected String elName[];
+    private String elName[];
 
-    protected String elPrefix[];
+    private String elPrefix[];
 
-    protected String elUri[];
+    private String elUri[];
 
-    // protected String elValue[];
-    protected int elNamespaceCount[];
+    // private String elValue[];
+    private int elNamespaceCount[];
 
     /**
      * Make sure that we have enough space to keep element stack if passed size. It will always create one additional
      * slot then current depth
      */
-    protected void ensureElementsCapacity()
+    private void ensureElementsCapacity()
     {
         final int elStackSize = elName != null ? elName.length : 0;
         if ( ( depth + 1 ) >= elStackSize )
@@ -204,24 +204,24 @@ public class MXParser
     }
 
     // attribute stack
-    protected int attributeCount;
+    private int attributeCount;
 
-    protected String attributeName[];
+    private String attributeName[];
 
-    protected int attributeNameHash[];
+    private int attributeNameHash[];
 
-    // protected int attributeNameStart[];
-    // protected int attributeNameEnd[];
-    protected String attributePrefix[];
+    // private int attributeNameStart[];
+    // private int attributeNameEnd[];
+    private String attributePrefix[];
 
-    protected String attributeUri[];
+    private String attributeUri[];
 
-    protected String attributeValue[];
-    // protected int attributeValueStart[];
-    // protected int attributeValueEnd[];
+    private String attributeValue[];
+    // private int attributeValueStart[];
+    // private int attributeValueEnd[];
 
     // Make sure that in attributes temporary array is enough space.
-    protected void ensureAttributesCapacity( int size )
+    private void ensureAttributesCapacity( int size )
     {
         final int attrPosSize = attributeName != null ? attributeName.length : 0;
         if ( size >= attrPosSize )
@@ -268,15 +268,15 @@ public class MXParser
     }
 
     // namespace stack
-    protected int namespaceEnd;
+    private int namespaceEnd;
 
-    protected String namespacePrefix[];
+    private String namespacePrefix[];
 
-    protected int namespacePrefixHash[];
+    private int namespacePrefixHash[];
 
-    protected String namespaceUri[];
+    private String namespaceUri[];
 
-    protected void ensureNamespacesCapacity( int size )
+    private void ensureNamespacesCapacity( int size )
     {
         final int namespaceSize = namespacePrefix != null ? namespacePrefix.length : 0;
         if ( size >= namespaceSize )
@@ -314,7 +314,7 @@ public class MXParser
      // simplistic implementation of hash function that has <b>constant</b> time to compute - so it also means
      // diminishing hash quality for long strings but for XML parsing it should be good enough ...
 
-    protected static final int fastHash( char ch[], int off, int len )
+    private static final int fastHash( char ch[], int off, int len )
     {
         if ( len == 0 )
             return 0;
@@ -337,21 +337,21 @@ public class MXParser
     }
 
     // entity replacement stack
-    protected int entityEnd;
+    private int entityEnd;
 
-    protected String entityName[];
+    private String entityName[];
 
-    protected char[] entityNameBuf[];
+    private char[] entityNameBuf[];
 
-    protected String entityReplacement[];
+    private String entityReplacement[];
 
-    protected char[] entityReplacementBuf[];
+    private char[] entityReplacementBuf[];
 
-    protected int entityNameHash[];
+    private int entityNameHash[];
 
     private final EntityReplacementMap replacementMapTemplate;
 
-    protected void ensureEntityCapacity()
+    private void ensureEntityCapacity()
     {
         final int entitySize = entityReplacementBuf != null ? entityReplacementBuf.length : 0;
         if ( entityEnd >= entitySize )
@@ -390,72 +390,72 @@ public class MXParser
     }
 
     // input buffer management
-    protected static final int READ_CHUNK_SIZE = 8 * 1024; // max data chars in one read() call
+    private static final int READ_CHUNK_SIZE = 8 * 1024; // max data chars in one read() call
 
-    protected Reader reader;
+    private Reader reader;
 
-    protected String inputEncoding;
+    private String inputEncoding;
 
-    protected int bufLoadFactor = 95; // 99%
-    // protected int bufHardLimit; // only matters when expanding
+    private int bufLoadFactor = 95; // 99%
+    // private int bufHardLimit; // only matters when expanding
 
-    protected float bufferLoadFactor = bufLoadFactor / 100f;
+    private float bufferLoadFactor = bufLoadFactor / 100f;
 
-	protected char buf[] = new char[Runtime.getRuntime().freeMemory() > 1000000L ? READ_CHUNK_SIZE : 256];
+	private char buf[] = new char[Runtime.getRuntime().freeMemory() > 1000000L ? READ_CHUNK_SIZE : 256];
 
-	protected int bufSoftLimit = (int) ( bufferLoadFactor * buf.length ); // desirable size of buffer
+	private int bufSoftLimit = (int) ( bufferLoadFactor * buf.length ); // desirable size of buffer
 
-    protected boolean preventBufferCompaction;
+    private boolean preventBufferCompaction;
 
-    protected int bufAbsoluteStart; // this is buf
+    private int bufAbsoluteStart; // this is buf
 
-    protected int bufStart;
+    private int bufStart;
 
-    protected int bufEnd;
+    private int bufEnd;
 
-    protected int pos;
+    private int pos;
 
-    protected int posStart;
+    private int posStart;
 
-    protected int posEnd;
+    private int posEnd;
 
-    protected char pc[] = new char[Runtime.getRuntime().freeMemory() > 1000000L ? READ_CHUNK_SIZE : 64];
+    private char pc[] = new char[Runtime.getRuntime().freeMemory() > 1000000L ? READ_CHUNK_SIZE : 64];
 
-    protected int pcStart;
+    private int pcStart;
 
-    protected int pcEnd;
+    private int pcEnd;
 
     // parsing state
-    // protected boolean needsMore;
-    // protected boolean seenMarkup;
-    protected boolean usePC;
+    // private boolean needsMore;
+    // private boolean seenMarkup;
+    private boolean usePC;
 
-    protected boolean seenStartTag;
+    private boolean seenStartTag;
 
-    protected boolean seenEndTag;
+    private boolean seenEndTag;
 
-    protected boolean pastEndTag;
+    private boolean pastEndTag;
 
-    protected boolean seenAmpersand;
+    private boolean seenAmpersand;
 
-    protected boolean seenMarkup;
+    private boolean seenMarkup;
 
-    protected boolean seenDocdecl;
+    private boolean seenDocdecl;
 
     // transient variable set during each call to next/Token()
-    protected boolean tokenize;
+    private boolean tokenize;
 
-    protected String text;
+    private String text;
 
-    protected String entityRefName;
+    private String entityRefName;
 
-    protected String xmlDeclVersion;
+    private String xmlDeclVersion;
 
-    protected Boolean xmlDeclStandalone;
+    private Boolean xmlDeclStandalone;
 
-    protected String xmlDeclContent;
+    private String xmlDeclContent;
 
-    protected void reset()
+    private void reset()
     {
         // System.out.println("reset() called");
         location = null;
@@ -719,7 +719,7 @@ public class MXParser
             }
         }
 
-        // protected char[] entityReplacement[];
+        // private char[] entityReplacement[];
         ensureEntityCapacity();
 
         // this is to make sure that if interning works we will take advantage of it ...
@@ -742,7 +742,7 @@ public class MXParser
     public int getNamespaceCount( int depth )
         throws XmlPullParserException
     {
-        if ( processNamespaces == false || depth == 0 )
+        if ( !processNamespaces || depth == 0 )
         {
             return 0;
         }
@@ -1102,7 +1102,7 @@ public class MXParser
     {
         if ( eventType != START_TAG )
             throw new IndexOutOfBoundsException( "only START_TAG can have attributes" );
-        if ( processNamespaces == false )
+        if ( !processNamespaces )
             return NO_NAMESPACE;
         if ( index < 0 || index >= attributeCount )
             throw new IndexOutOfBoundsException( "attribute position must be 0.." + ( attributeCount - 1 ) + " and not "
@@ -1126,7 +1126,7 @@ public class MXParser
     {
         if ( eventType != START_TAG )
             throw new IndexOutOfBoundsException( "only START_TAG can have attributes" );
-        if ( processNamespaces == false )
+        if ( !processNamespaces )
             return null;
         if ( index < 0 || index >= attributeCount )
             throw new IndexOutOfBoundsException( "attribute position must be 0.." + ( attributeCount - 1 ) + " and not "
@@ -1225,7 +1225,7 @@ public class MXParser
     public void require( int type, String namespace, String name )
         throws XmlPullParserException, IOException
     {
-        if ( processNamespaces == false && namespace != null )
+        if ( !processNamespaces && namespace != null )
         {
             throw new XmlPullParserException( "processing namespaces must be enabled on parser (or factory)"
                 + " to have possible namespaces declared on elements" + ( " (position:" + getPositionDescription() )
@@ -1365,7 +1365,7 @@ public class MXParser
         return nextImpl();
     }
 
-    protected int nextImpl()
+    private int nextImpl()
         throws XmlPullParserException, IOException
     {
         text = null;
@@ -1640,7 +1640,7 @@ public class MXParser
                     hadCharData = true;
 
                     boolean normalizedCR = false;
-                    final boolean normalizeInput = tokenize == false || roundtripSupported == false;
+                    final boolean normalizeInput = !tokenize || !roundtripSupported;
                     // use loop locality here!!!!
                     boolean seenBracket = false;
                     boolean seenBracketBracket = false;
@@ -1741,7 +1741,7 @@ public class MXParser
         }
     }
 
-    protected int parseProlog()
+    private int parseProlog()
         throws XmlPullParserException, IOException
     {
         // [2] prolog: ::= XMLDecl? Misc* (doctypedecl Misc*)? and look for [39] element
@@ -1775,7 +1775,7 @@ public class MXParser
         seenMarkup = false;
         boolean gotS = false;
         posStart = pos - 1;
-        final boolean normalizeIgnorableWS = tokenize == true && roundtripSupported == false;
+        final boolean normalizeIgnorableWS = tokenize && !roundtripSupported;
         boolean normalizedCR = false;
         while ( true )
         {
@@ -1907,7 +1907,7 @@ public class MXParser
         }
     }
 
-    protected int parseEpilog()
+    private int parseEpilog()
         throws XmlPullParserException, IOException
     {
         if ( eventType == END_DOCUMENT )
@@ -1919,7 +1919,7 @@ public class MXParser
             return eventType = END_DOCUMENT;
         }
         boolean gotS = false;
-        final boolean normalizeIgnorableWS = tokenize == true && roundtripSupported == false;
+        final boolean normalizeIgnorableWS = tokenize && !roundtripSupported;
         boolean normalizedCR = false;
         try
         {
@@ -2077,19 +2077,12 @@ public class MXParser
         {
             reachedEnd = true;
         }
-        if ( reachedEnd )
+        if ( tokenize && gotS )
         {
-            if ( tokenize && gotS )
-            {
-                posEnd = pos; // well - this is LAST available character pos
-                return eventType = IGNORABLE_WHITESPACE;
-            }
-            return eventType = END_DOCUMENT;
+            posEnd = pos; // well - this is LAST available character pos
+            return eventType = IGNORABLE_WHITESPACE;
         }
-        else
-        {
-            throw new XmlPullParserException( "internal error in parseEpilog" );
-        }
+        return eventType = END_DOCUMENT;
     }
 
     public int parseEndTag()
@@ -2258,7 +2251,6 @@ public class MXParser
             {
                 ch = parseAttribute();
                 ch = more();
-                continue;
             }
             else
             {
@@ -2370,7 +2362,7 @@ public class MXParser
         return eventType = START_TAG;
     }
 
-    protected char parseAttribute()
+    private char parseAttribute()
         throws XmlPullParserException, IOException
     {
         // parse attribute
@@ -2691,9 +2683,9 @@ public class MXParser
         return ch;
     }
 
-    protected char[] charRefOneCharBuf = new char[1];
+    private char[] charRefOneCharBuf = new char[1];
 
-    protected char[] parseEntityRef()
+    private char[] parseEntityRef()
         throws XmlPullParserException, IOException
     {
         // entity reference http://www.w3.org/TR/2000/REC-xml-20001006#NT-Reference
@@ -2769,7 +2761,7 @@ public class MXParser
             posEnd = pos - 1;
             try
             {
-                charRefOneCharBuf = toChars( Integer.parseInt( sb.toString(), isHex ? 16 : 10 ) );
+                charRefOneCharBuf = Character.toChars( Integer.parseInt( sb.toString(), isHex ? 16 : 10 ) );
             }
             catch ( IllegalArgumentException e )
             {
@@ -2873,7 +2865,7 @@ public class MXParser
         }
     }
 
-    protected char[] lookuEntityReplacement( int entityNameLen )
+    private char[] lookuEntityReplacement( int entityNameLen )
         throws XmlPullParserException, IOException
 
     {
@@ -2913,7 +2905,7 @@ public class MXParser
         return null;
     }
 
-    protected void parseComment()
+    private void parseComment()
         throws XmlPullParserException, IOException
     {
         // implements XML 1.0 Section 2.5 Comments
@@ -2929,7 +2921,7 @@ public class MXParser
         final int curColumn = columnNumber;
         try
         {
-            final boolean normalizeIgnorableWS = tokenize == true && roundtripSupported == false;
+            final boolean normalizeIgnorableWS = tokenize && !roundtripSupported;
             boolean normalizedCR = false;
 
             boolean seenDash = false;
@@ -2952,7 +2944,6 @@ public class MXParser
                     else
                     {
                         seenDashDash = true;
-                        seenDash = false;
                     }
                 }
                 else if ( ch == '>' )
@@ -2960,10 +2951,6 @@ public class MXParser
                     if ( seenDashDash )
                     {
                         break; // found end sequence!!!!
-                    }
-                    else
-                    {
-                        seenDashDash = false;
                     }
                     seenDash = false;
                 }
@@ -3037,7 +3024,7 @@ public class MXParser
         }
     }
 
-    protected boolean parsePI()
+    private boolean parsePI()
         throws XmlPullParserException, IOException
     {
         // implements XML 1.0 Section 2.6 Processing Instructions
@@ -3051,7 +3038,7 @@ public class MXParser
         final int curColumn = columnNumber;
         int piTargetStart = pos;
         int piTargetEnd = -1;
-        final boolean normalizeIgnorableWS = tokenize == true && roundtripSupported == false;
+        final boolean normalizeIgnorableWS = tokenize && !roundtripSupported;
         boolean normalizedCR = false;
 
         try
@@ -3211,17 +3198,17 @@ public class MXParser
     // protected final static char[] YES = {'y','e','s'};
     // protected final static char[] NO = {'n','o'};
 
-    protected final static char[] VERSION = "version".toCharArray();
+    private final static char[] VERSION = "version".toCharArray();
 
-    protected final static char[] NCODING = "ncoding".toCharArray();
+    private final static char[] NCODING = "ncoding".toCharArray();
 
-    protected final static char[] TANDALONE = "tandalone".toCharArray();
+    private final static char[] TANDALONE = "tandalone".toCharArray();
 
-    protected final static char[] YES = "yes".toCharArray();
+    private final static char[] YES = "yes".toCharArray();
 
-    protected final static char[] NO = "no".toCharArray();
+    private final static char[] NO = "no".toCharArray();
 
-    protected void parseXmlDecl( char ch )
+    private void parseXmlDecl( char ch )
         throws XmlPullParserException, IOException
     {
         // [23] XMLDecl ::= '<?xml' VersionInfo EncodingDecl? SDDecl? S? '?>'
@@ -3269,9 +3256,9 @@ public class MXParser
         parseXmlDeclWithVersion( versionStart, versionEnd );
         preventBufferCompaction = false; // allow again buffer compaction - pos MAY change
     }
-    // protected String xmlDeclVersion;
+    // private String xmlDeclVersion;
 
-    protected void parseXmlDeclWithVersion( int versionStart, int versionEnd )
+    private void parseXmlDeclWithVersion( int versionStart, int versionEnd )
         throws XmlPullParserException, IOException
     {
         // check version is "1.0"
@@ -3390,7 +3377,7 @@ public class MXParser
 
     }
 
-    protected void parseDocdecl()
+    private void parseDocdecl()
         throws XmlPullParserException, IOException
     {
         // ASSUMPTION: seen <!D
@@ -3418,7 +3405,7 @@ public class MXParser
         // [28] doctypedecl ::= '<!DOCTYPE' S Name (S ExternalID)? S? ('['
         // (markupdecl | DeclSep)* ']' S?)? '>'
         int bracketLevel = 0;
-        final boolean normalizeIgnorableWS = tokenize == true && roundtripSupported == false;
+        final boolean normalizeIgnorableWS = tokenize && !roundtripSupported;
         boolean normalizedCR = false;
         while ( true )
         {
@@ -3481,7 +3468,7 @@ public class MXParser
         posEnd = pos - 1;
     }
 
-    protected void parseCDSect( boolean hadCharData )
+    private void parseCDSect( boolean hadCharData )
         throws XmlPullParserException, IOException
     {
         // implements XML 1.0 Section 2.7 CDATA Sections
@@ -3515,7 +3502,7 @@ public class MXParser
         final int cdStart = pos + bufAbsoluteStart;
         final int curLine = lineNumber;
         final int curColumn = columnNumber;
-        final boolean normalizeInput = tokenize == false || roundtripSupported == false;
+        final boolean normalizeInput = !tokenize || !roundtripSupported;
         try
         {
             if ( normalizeInput )
@@ -3640,7 +3627,7 @@ public class MXParser
         posEnd = pos - 3;
     }
 
-    protected void fillBuf()
+    private void fillBuf()
         throws IOException, XmlPullParserException
     {
         if ( reader == null )
@@ -3650,28 +3637,9 @@ public class MXParser
         if ( bufEnd > bufSoftLimit )
         {
 
-            // expand buffer it makes sense!!!!
-            boolean compact = bufStart > bufSoftLimit;
-            boolean expand = false;
-            if ( preventBufferCompaction )
-            {
-                compact = false;
-                expand = true;
-            }
-            else if ( !compact )
-            {
-                // freeSpace
-                if ( bufStart < buf.length / 2 )
-                {
-                    // less then half buffer available for compacting --> expand instead!!!
-                    expand = true;
-                }
-                else
-                {
-                    // at least half of buffer can be reclaimed --> worthwhile effort!!!
-                    compact = true;
-                }
-            }
+            // check if we need to compact or expand the buffer
+            boolean compact = !preventBufferCompaction
+                    && ( bufStart > bufSoftLimit || bufStart >= buf.length / 2 );
 
             // if buffer almost full then compact it
             if ( compact )
@@ -3682,13 +3650,13 @@ public class MXParser
                 if ( TRACE_SIZING )
                     System.out.println( "TRACE_SIZING fillBuf() compacting " + bufStart + " bufEnd=" + bufEnd + " pos="
                         + pos + " posStart=" + posStart + " posEnd=" + posEnd + " buf first 100 chars:"
-                        + new String( buf, bufStart, bufEnd - bufStart < 100 ? bufEnd - bufStart : 100 ) );
+                        + new String( buf, bufStart, Math.min(bufEnd - bufStart, 100)) );
 
             }
-            else if ( expand )
+            else
             {
                 final int newSize = 2 * buf.length;
-                final char newBuf[] = new char[newSize];
+                final char[] newBuf = new char[newSize];
                 if ( TRACE_SIZING )
                     System.out.println( "TRACE_SIZING fillBuf() " + buf.length + " => " + newSize );
                 System.arraycopy( buf, bufStart, newBuf, 0, bufEnd - bufStart );
@@ -3700,10 +3668,6 @@ public class MXParser
                 }
 
             }
-            else
-            {
-                throw new XmlPullParserException( "internal error in fillBuffer()" );
-            }
             bufEnd -= bufStart;
             pos -= bufStart;
             posStart -= bufStart;
@@ -3713,17 +3677,17 @@ public class MXParser
             if ( TRACE_SIZING )
                 System.out.println( "TRACE_SIZING fillBuf() after bufEnd=" + bufEnd + " pos=" + pos + " posStart="
                     + posStart + " posEnd=" + posEnd + " buf first 100 chars:"
-                    + new String( buf, 0, bufEnd < 100 ? bufEnd : 100 ) );
+                    + new String( buf, 0, Math.min(bufEnd, 100)) );
         }
         // at least one character must be read or error
-        final int len = buf.length - bufEnd > READ_CHUNK_SIZE ? READ_CHUNK_SIZE : buf.length - bufEnd;
+        final int len = Math.min(buf.length - bufEnd, READ_CHUNK_SIZE);
         final int ret = reader.read( buf, bufEnd, len );
         if ( ret > 0 )
         {
             bufEnd += ret;
             if ( TRACE_SIZING )
                 System.out.println( "TRACE_SIZING fillBuf() after filling in buffer" + " buf first 100 chars:"
-                    + new String( buf, 0, bufEnd < 100 ? bufEnd : 100 ) );
+                    + new String( buf, 0, Math.min(bufEnd, 100)) );
 
             return;
         }
@@ -3808,7 +3772,7 @@ public class MXParser
         }
     }
 
-    protected char more()
+    private char more()
         throws IOException, XmlPullParserException
     {
         if ( pos >= bufEnd )
@@ -3843,7 +3807,7 @@ public class MXParser
     // return pos + bufAbsoluteStart;
     // }
 
-    protected void ensurePC( int end )
+    private void ensurePC( int end )
     {
         // assert end >= pc.length;
         final int newSize = end > READ_CHUNK_SIZE ? 2 * end : 2 * READ_CHUNK_SIZE;
@@ -3855,7 +3819,7 @@ public class MXParser
         // assert end < pc.length;
     }
 
-    protected void joinPC()
+    private void joinPC()
     {
         // assert usePC == false;
         // assert posEnd > posStart;
@@ -3870,7 +3834,7 @@ public class MXParser
 
     }
 
-    protected char requireInput( char ch, char[] input )
+    private char requireInput( char ch, char[] input )
         throws XmlPullParserException, IOException
     {
         for ( char anInput : input )
@@ -3885,7 +3849,7 @@ public class MXParser
         return ch;
     }
 
-    protected char requireNextS()
+    private char requireNextS()
         throws XmlPullParserException, IOException
     {
         final char ch = more();
@@ -3896,7 +3860,7 @@ public class MXParser
         return skipS( ch );
     }
 
-    protected char skipS( char ch )
+    private char skipS( char ch )
         throws XmlPullParserException, IOException
     {
         while ( isS( ch ) )
@@ -3907,23 +3871,23 @@ public class MXParser
     }
 
     // nameStart / name lookup tables based on XML 1.1 http://www.w3.org/TR/2001/WD-xml11-20011213/
-    protected static final int LOOKUP_MAX = 0x400;
+    private static final int LOOKUP_MAX = 0x400;
 
-    protected static final char LOOKUP_MAX_CHAR = (char) LOOKUP_MAX;
+    private static final char LOOKUP_MAX_CHAR = (char) LOOKUP_MAX;
 
-    // protected static int lookupNameStartChar[] = new int[ LOOKUP_MAX_CHAR / 32 ];
-    // protected static int lookupNameChar[] = new int[ LOOKUP_MAX_CHAR / 32 ];
-    protected static boolean lookupNameStartChar[] = new boolean[LOOKUP_MAX];
+    // private static int lookupNameStartChar[] = new int[ LOOKUP_MAX_CHAR / 32 ];
+    // private static int lookupNameChar[] = new int[ LOOKUP_MAX_CHAR / 32 ];
+    private static final boolean[] lookupNameStartChar = new boolean[LOOKUP_MAX];
 
-    protected static boolean lookupNameChar[] = new boolean[LOOKUP_MAX];
+    private static final boolean[] lookupNameChar = new boolean[LOOKUP_MAX];
 
-    private static final void setName( char ch )
+    private static void setName( char ch )
     // { lookupNameChar[ (int)ch / 32 ] |= (1 << (ch % 32)); }
     {
         lookupNameChar[ch] = true;
     }
 
-    private static final void setNameStart( char ch )
+    private static void setNameStart( char ch )
     // { lookupNameStartChar[ (int)ch / 32 ] |= (1 << (ch % 32)); setName(ch); }
     {
         lookupNameStartChar[ch] = true;
@@ -3954,10 +3918,10 @@ public class MXParser
             setName( ch );
     }
 
-    // private final static boolean isNameStartChar(char ch) {
-    protected boolean isNameStartChar( char ch )
+    // protected boolean isNameStartChar( char ch )
+    private static boolean isNameStartChar( char ch )
     {
-        return ( ch < LOOKUP_MAX_CHAR && lookupNameStartChar[ch] ) || ( ch >= LOOKUP_MAX_CHAR && ch <= '\u2027' )
+        return ch < LOOKUP_MAX_CHAR ? lookupNameStartChar[ch] : ( ch <= '\u2027' )
             || ( ch >= '\u202A' && ch <= '\u218F' ) || ( ch >= '\u2800' && ch <= '\uFFEF' );
 
         // if(ch < LOOKUP_MAX_CHAR) return lookupNameStartChar[ ch ];
@@ -3981,14 +3945,14 @@ public class MXParser
         // else return (supportXml11 && ( (ch < '\u2027') || (ch > '\u2029' && ch < '\u2200') ...
     }
 
-    // private final static boolean isNameChar(char ch) {
-    protected boolean isNameChar( char ch )
+    // protected boolean isNameChar( char ch )
+    private static boolean isNameChar( char ch )
     {
         // return isNameStartChar(ch);
 
         // if(ch < LOOKUP_MAX_CHAR) return (lookupNameChar[ (int)ch / 32 ] & (1 << (ch % 32))) != 0;
 
-        return ( ch < LOOKUP_MAX_CHAR && lookupNameChar[ch] ) || ( ch >= LOOKUP_MAX_CHAR && ch <= '\u2027' )
+        return ch < LOOKUP_MAX_CHAR ? lookupNameChar[ch] : ( ch <= '\u2027' )
             || ( ch >= '\u202A' && ch <= '\u218F' ) || ( ch >= '\u2800' && ch <= '\uFFEF' );
         // return false;
         // return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == ':'
@@ -4006,7 +3970,7 @@ public class MXParser
         // else return false;
     }
 
-    protected boolean isS( char ch )
+    private static boolean isS( char ch )
     {
         return ( ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t' );
         // || (supportXml11 && (ch == '\u0085' || ch == '\u2028');
@@ -4015,8 +3979,8 @@ public class MXParser
     // protected boolean isChar(char ch) { return (ch < '\uD800' || ch > '\uDFFF')
     // ch != '\u0000' ch < '\uFFFE'
 
-    // protected char printable(char ch) { return ch; }
-    protected String printable( char ch )
+    // private char printable(char ch) { return ch; }
+    private static String printable( char ch )
     {
         if ( ch == '\n' )
         {
@@ -4041,7 +4005,7 @@ public class MXParser
         return "" + ch;
     }
 
-    protected String printable( String s )
+    private static String printable( String s )
     {
         if ( s == null )
             return null;
@@ -4055,69 +4019,6 @@ public class MXParser
         return s;
     }
 
-    //
-    // Imported code from ASF Harmony project rev 770909
-    // http://svn.apache.org/repos/asf/harmony/enhanced/classlib/trunk/modules/luni/src/main/java/java/lang/Character.java
-    //
-
-    private static int toCodePoint( char high, char low )
-    {
-        // See RFC 2781, Section 2.2
-        // http://www.faqs.org/rfcs/rfc2781.html
-        int h = ( high & 0x3FF ) << 10;
-        int l = low & 0x3FF;
-        return ( h | l ) + 0x10000;
-    }
-
-    private static final char MIN_HIGH_SURROGATE = '\uD800';
-
-    private static final char MAX_HIGH_SURROGATE = '\uDBFF';
-
-    private static boolean isHighSurrogate( char ch )
-    {
-        return ( MIN_HIGH_SURROGATE <= ch && MAX_HIGH_SURROGATE >= ch );
-    }
-
-    private static final int MAX_CODE_POINT = 0x10FFFF;
-
-    private static final int MIN_SUPPLEMENTARY_CODE_POINT = 0x10000;
-
-    /**
-     * Check if the provided parameter is a valid Char, according to: {@link https://www.w3.org/TR/REC-xml/#NT-Char}
-     * 
-     * @param codePoint the numeric value to check
-     * @return true if it is a valid numeric character reference. False otherwise.
-     */
-    private static boolean isValidCodePoint( int codePoint )
-    {
-        // Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
-        return codePoint == 0x9 || codePoint == 0xA || codePoint == 0xD || ( 0x20 <= codePoint && codePoint <= 0xD7FF )
-            || ( 0xE000 <= codePoint && codePoint <= 0xFFFD ) || ( 0x10000 <= codePoint && codePoint <= 0x10FFFF );
-    }
-
-    private static boolean isSupplementaryCodePoint( int codePoint )
-    {
-        return ( MIN_SUPPLEMENTARY_CODE_POINT <= codePoint && MAX_CODE_POINT >= codePoint );
-    }
-
-    // TODO add javadoc
-    public static char[] toChars( int codePoint )
-    {
-        if ( !isValidCodePoint( codePoint ) )
-        {
-            throw new IllegalArgumentException();
-        }
-
-        if ( isSupplementaryCodePoint( codePoint ) )
-        {
-            int cpPrime = codePoint - 0x10000;
-            int high = 0xD800 | ( ( cpPrime >> 10 ) & 0x3FF );
-            int low = 0xDC00 | ( cpPrime & 0x3FF );
-            return new char[] { (char) high, (char) low };
-        }
-
-        return new char[] { (char) codePoint };
-    }
 }
 
 /*
