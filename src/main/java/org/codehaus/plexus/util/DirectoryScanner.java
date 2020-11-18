@@ -58,7 +58,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
 
 /**
  * <p>Class for scanning a directory for files/directories which match certain criteria.</p>
@@ -136,6 +135,8 @@ public class DirectoryScanner
     extends AbstractScanner
 {
 
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
+
     /**
      * The base directory to be scanned.
      */
@@ -144,42 +145,42 @@ public class DirectoryScanner
     /**
      * The files which matched at least one include and no excludes and were selected.
      */
-    protected Vector<String> filesIncluded;
+    protected ArrayList<String> filesIncluded;
 
     /**
      * The files which did not match any includes or selectors.
      */
-    protected Vector<String> filesNotIncluded;
+    protected ArrayList<String> filesNotIncluded;
 
     /**
      * The files which matched at least one include and at least one exclude.
      */
-    protected Vector<String> filesExcluded;
+    protected ArrayList<String> filesExcluded;
 
     /**
      * The directories which matched at least one include and no excludes and were selected.
      */
-    protected Vector<String> dirsIncluded;
+    protected ArrayList<String> dirsIncluded;
 
     /**
      * The directories which were found and did not match any includes.
      */
-    protected Vector<String> dirsNotIncluded;
+    protected ArrayList<String> dirsNotIncluded;
 
     /**
      * The directories which matched at least one include and at least one exclude.
      */
-    protected Vector<String> dirsExcluded;
+    protected ArrayList<String> dirsExcluded;
 
     /**
      * The files which matched at least one include and no excludes and which a selector discarded.
      */
-    protected Vector<String> filesDeselected;
+    protected ArrayList<String> filesDeselected;
 
     /**
      * The directories which matched at least one include and no excludes but which a selector discarded.
      */
-    protected Vector<String> dirsDeselected;
+    protected ArrayList<String> dirsDeselected;
 
     /**
      * Whether or not our results were built by a slow scan.
@@ -198,7 +199,7 @@ public class DirectoryScanner
      */
     protected boolean everythingIncluded = true;
 
-    private final String[] tokenizedEmpty = MatchPattern.tokenizePathToString( "", File.separator );
+    private final char[][] tokenizedEmpty = MatchPattern.tokenizePathToCharArray( "", File.separator );
 
     /**
      * Sole constructor.
@@ -287,14 +288,14 @@ public class DirectoryScanner
         setupDefaultFilters();
         setupMatchPatterns();
 
-        filesIncluded = new Vector<String>();
-        filesNotIncluded = new Vector<String>();
-        filesExcluded = new Vector<String>();
-        filesDeselected = new Vector<String>();
-        dirsIncluded = new Vector<String>();
-        dirsNotIncluded = new Vector<String>();
-        dirsExcluded = new Vector<String>();
-        dirsDeselected = new Vector<String>();
+        filesIncluded = new ArrayList<String>();
+        filesNotIncluded = new ArrayList<String>();
+        filesExcluded = new ArrayList<String>();
+        filesDeselected = new ArrayList<String>();
+        dirsIncluded = new ArrayList<String>();
+        dirsNotIncluded = new ArrayList<String>();
+        dirsExcluded = new ArrayList<String>();
+        dirsDeselected = new ArrayList<String>();
 
         if ( isIncluded( "", tokenizedEmpty ) )
         {
@@ -303,21 +304,21 @@ public class DirectoryScanner
             {
                 if ( isSelected( "", basedir ) )
                 {
-                    dirsIncluded.addElement( "" );
+                    dirsIncluded.add( "" );
                 }
                 else
                 {
-                    dirsDeselected.addElement( "" );
+                    dirsDeselected.add( "" );
                 }
             }
             else
             {
-                dirsExcluded.addElement( "" );
+                dirsExcluded.add( "" );
             }
         }
         else
         {
-            dirsNotIncluded.addElement( "" );
+            dirsNotIncluded.add( "" );
         }
         scandir( basedir, "", true );
     }
@@ -336,11 +337,8 @@ public class DirectoryScanner
             return;
         }
 
-        String[] excl = new String[dirsExcluded.size()];
-        dirsExcluded.copyInto( excl );
-
-        String[] notIncl = new String[dirsNotIncluded.size()];
-        dirsNotIncluded.copyInto( notIncl );
+        String[] excl = dirsExcluded.toArray( EMPTY_STRING_ARRAY );
+        String[] notIncl = dirsNotIncluded.toArray( EMPTY_STRING_ARRAY );
 
         for ( String anExcl : excl )
         {
@@ -398,45 +396,39 @@ public class DirectoryScanner
              * [bentmann] A null array will also be returned from list() on NTFS when dir refers to a soft link or
              * junction point whose target is not existent.
              */
-            newfiles = new String[0];
+            newfiles = EMPTY_STRING_ARRAY;
 
             // throw new IOException( "IO error scanning directory " + dir.getAbsolutePath() );
         }
 
         if ( !followSymlinks )
         {
-            ArrayList<String> noLinks = new ArrayList<String>();
-            for ( String newfile : newfiles )
+            try
             {
-                try
+                if ( isParentSymbolicLink( dir, null ) )
                 {
-                    if ( isParentSymbolicLink( dir, newfile ) )
+                    for ( String newfile : newfiles )
                     {
                         String name = vpath + newfile;
                         File file = new File( dir, newfile );
                         if ( file.isDirectory() )
                         {
-                            dirsExcluded.addElement( name );
+                            dirsExcluded.add( name );
                         }
                         else
                         {
-                            filesExcluded.addElement( name );
+                            filesExcluded.add( name );
                         }
                     }
-                    else
-                    {
-                        noLinks.add( newfile );
-                    }
-                }
-                catch ( IOException ioe )
-                {
-                    String msg = "IOException caught while checking " + "for links, couldn't get canonical path!";
-                    // will be caught and redirected to Ant's logging system
-                    System.err.println( msg );
-                    noLinks.add( newfile );
+                    return;
                 }
             }
-            newfiles = noLinks.toArray( new String[noLinks.size()] );
+            catch ( IOException ioe )
+            {
+                String msg = "IOException caught while checking for links!";
+                // will be caught and redirected to Ant's logging system
+                System.err.println( msg );
+            }
         }
 
         if ( filenameComparator != null )
@@ -447,7 +439,7 @@ public class DirectoryScanner
         for ( String newfile : newfiles )
         {
             String name = vpath + newfile;
-            String[] tokenizedName = MatchPattern.tokenizePathToString( name, File.separator );
+            char[][] tokenizedName = MatchPattern.tokenizePathToCharArray( name, File.separator );
             File file = new File( dir, newfile );
             if ( file.isDirectory() )
             {
@@ -458,7 +450,7 @@ public class DirectoryScanner
                     {
                         if ( isSelected( name, file ) )
                         {
-                            dirsIncluded.addElement( name );
+                            dirsIncluded.add( name );
                             if ( fast )
                             {
                                 scandir( file, name + File.separator, fast );
@@ -467,7 +459,7 @@ public class DirectoryScanner
                         else
                         {
                             everythingIncluded = false;
-                            dirsDeselected.addElement( name );
+                            dirsDeselected.add( name );
                             if ( fast && couldHoldIncluded( name ) )
                             {
                                 scandir( file, name + File.separator, fast );
@@ -478,7 +470,7 @@ public class DirectoryScanner
                     else
                     {
                         everythingIncluded = false;
-                        dirsExcluded.addElement( name );
+                        dirsExcluded.add( name );
                         if ( fast && couldHoldIncluded( name ) )
                         {
                             scandir( file, name + File.separator, fast );
@@ -488,7 +480,7 @@ public class DirectoryScanner
                 else
                 {
                     everythingIncluded = false;
-                    dirsNotIncluded.addElement( name );
+                    dirsNotIncluded.add( name );
                     if ( fast && couldHoldIncluded( name ) )
                     {
                         scandir( file, name + File.separator, fast );
@@ -507,24 +499,24 @@ public class DirectoryScanner
                     {
                         if ( isSelected( name, file ) )
                         {
-                            filesIncluded.addElement( name );
+                            filesIncluded.add( name );
                         }
                         else
                         {
                             everythingIncluded = false;
-                            filesDeselected.addElement( name );
+                            filesDeselected.add( name );
                         }
                     }
                     else
                     {
                         everythingIncluded = false;
-                        filesExcluded.addElement( name );
+                        filesExcluded.add( name );
                     }
                 }
                 else
                 {
                     everythingIncluded = false;
-                    filesNotIncluded.addElement( name );
+                    filesNotIncluded.add( name );
                 }
             }
         }
@@ -553,9 +545,7 @@ public class DirectoryScanner
     @Override
     public String[] getIncludedFiles()
     {
-        String[] files = new String[filesIncluded.size()];
-        filesIncluded.copyInto( files );
-        return files;
+        return filesIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -568,9 +558,7 @@ public class DirectoryScanner
     public String[] getNotIncludedFiles()
     {
         slowScan();
-        String[] files = new String[filesNotIncluded.size()];
-        filesNotIncluded.copyInto( files );
-        return files;
+        return filesNotIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -585,9 +573,7 @@ public class DirectoryScanner
     public String[] getExcludedFiles()
     {
         slowScan();
-        String[] files = new String[filesExcluded.size()];
-        filesExcluded.copyInto( files );
-        return files;
+        return filesExcluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -602,9 +588,7 @@ public class DirectoryScanner
     public String[] getDeselectedFiles()
     {
         slowScan();
-        String[] files = new String[filesDeselected.size()];
-        filesDeselected.copyInto( files );
-        return files;
+        return filesDeselected.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -617,9 +601,7 @@ public class DirectoryScanner
     @Override
     public String[] getIncludedDirectories()
     {
-        String[] directories = new String[dirsIncluded.size()];
-        dirsIncluded.copyInto( directories );
-        return directories;
+        return dirsIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -632,9 +614,7 @@ public class DirectoryScanner
     public String[] getNotIncludedDirectories()
     {
         slowScan();
-        String[] directories = new String[dirsNotIncluded.size()];
-        dirsNotIncluded.copyInto( directories );
-        return directories;
+        return dirsNotIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -649,9 +629,7 @@ public class DirectoryScanner
     public String[] getExcludedDirectories()
     {
         slowScan();
-        String[] directories = new String[dirsExcluded.size()];
-        dirsExcluded.copyInto( directories );
-        return directories;
+        return dirsExcluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -666,9 +644,7 @@ public class DirectoryScanner
     public String[] getDeselectedDirectories()
     {
         slowScan();
-        String[] directories = new String[dirsDeselected.size()];
-        dirsDeselected.copyInto( directories );
-        return directories;
+        return dirsDeselected.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**

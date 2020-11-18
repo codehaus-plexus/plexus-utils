@@ -112,7 +112,7 @@ public class ExceptionUtils
         {
             List<String> list = new ArrayList<String>( Arrays.asList( CAUSE_METHOD_NAMES ) );
             list.add( methodName );
-            CAUSE_METHOD_NAMES = list.toArray( new String[list.size()] );
+            CAUSE_METHOD_NAMES = list.toArray( new String[0] );
         }
     }
 
@@ -350,7 +350,7 @@ public class ExceptionUtils
             list.add( throwable );
             throwable = getCause( throwable );
         }
-        return list.toArray( new Throwable[list.size()] );
+        return list.toArray( new Throwable[0] );
     }
 
     /**
@@ -479,7 +479,7 @@ public class ExceptionUtils
                 frames.add( aTrace );
             }
         }
-        return frames.toArray( new String[frames.size()] );
+        return frames.toArray( new String[0] );
     }
 
     /**
@@ -625,7 +625,7 @@ public class ExceptionUtils
         {
             list.add( frames.nextToken() );
         }
-        return list.toArray( new String[list.size()] );
+        return list.toArray( new String[0] );
     }
 
     /**

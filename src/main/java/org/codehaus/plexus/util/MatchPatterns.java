@@ -40,6 +40,11 @@ public class MatchPatterns
         {
             tokenizedNameChar[i] = tokenizedName[i].toCharArray();
         }
+        return matches(name, tokenizedNameChar, isCaseSensitive);
+    }
+
+    public boolean matches(String name, char[][] tokenizedNameChar, boolean isCaseSensitive)
+    {
         for ( MatchPattern pattern : patterns )
         {
             if ( pattern.matchPath( name, tokenizedNameChar, isCaseSensitive ) )
@@ -85,7 +90,7 @@ public class MatchPatterns
         {
             result.add( MatchPattern.fromString( string ) );
         }
-        return result.toArray( new MatchPattern[result.size()] );
+        return result.toArray( new MatchPattern[0] );
     }
 
 }

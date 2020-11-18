@@ -246,7 +246,7 @@ public abstract class AbstractScanner
                     list.add( normalizePattern( include ) );
                 }
             }
-            this.includes = list.toArray( new String[list.size()] );
+            this.includes = list.toArray( new String[0] );
         }
     }
 
@@ -276,7 +276,7 @@ public abstract class AbstractScanner
                     list.add( normalizePattern( exclude ) );
                 }
             }
-            this.excludes = list.toArray( new String[list.size()] );
+            this.excludes = list.toArray( new String[0] );
         }
     }
 
@@ -331,6 +331,11 @@ public abstract class AbstractScanner
         return includesPatterns.matches( name, tokenizedName, isCaseSensitive );
     }
 
+    protected boolean isIncluded( String name, char[][] tokenizedName )
+    {
+        return includesPatterns.matches( name, tokenizedName, isCaseSensitive );
+    }
+
     /**
      * Tests whether or not a name matches the start of at least one include pattern.
      *
@@ -356,6 +361,11 @@ public abstract class AbstractScanner
     }
 
     protected boolean isExcluded( String name, String[] tokenizedName )
+    {
+        return excludesPatterns.matches( name, tokenizedName, isCaseSensitive );
+    }
+
+    protected boolean isExcluded( String name, char[][] tokenizedName )
     {
         return excludesPatterns.matches( name, tokenizedName, isCaseSensitive );
     }
