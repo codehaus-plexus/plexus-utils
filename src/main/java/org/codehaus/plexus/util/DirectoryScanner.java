@@ -403,12 +403,11 @@ public class DirectoryScanner
 
         if ( !followSymlinks )
         {
-            ArrayList<String> noLinks = new ArrayList<String>();
-            for ( String newfile : newfiles )
+            try
             {
-                try
+                if ( isParentSymbolicLink( dir, null ) )
                 {
-                    if ( isParentSymbolicLink( dir, newfile ) )
+                    for ( String newfile : newfiles )
                     {
                         String name = vpath + newfile;
                         File file = new File( dir, newfile );
@@ -421,20 +420,15 @@ public class DirectoryScanner
                             filesExcluded.add( name );
                         }
                     }
-                    else
-                    {
-                        noLinks.add( newfile );
-                    }
-                }
-                catch ( IOException ioe )
-                {
-                    String msg = "IOException caught while checking " + "for links, couldn't get canonical path!";
-                    // will be caught and redirected to Ant's logging system
-                    System.err.println( msg );
-                    noLinks.add( newfile );
+                    return;
                 }
             }
-            newfiles = noLinks.toArray( EMPTY_STRING_ARRAY );
+            catch ( IOException ioe )
+            {
+                String msg = "IOException caught while checking for links!";
+                // will be caught and redirected to Ant's logging system
+                System.err.println( msg );
+            }
         }
 
         if ( filenameComparator != null )
