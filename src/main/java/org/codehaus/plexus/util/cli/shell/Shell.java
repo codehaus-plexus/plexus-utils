@@ -119,7 +119,7 @@ public class Shell
         }
         else
         {
-            return shellArgs.toArray( new String[shellArgs.size()] );
+            return shellArgs.toArray( new String[0] );
         }
     }
 

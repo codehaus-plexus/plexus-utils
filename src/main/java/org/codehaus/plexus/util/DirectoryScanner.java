@@ -135,6 +135,8 @@ public class DirectoryScanner
     extends AbstractScanner
 {
 
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
+
     /**
      * The base directory to be scanned.
      */
@@ -335,8 +337,8 @@ public class DirectoryScanner
             return;
         }
 
-        String[] excl = dirsExcluded.toArray( new String[dirsExcluded.size()] );
-        String[] notIncl = dirsNotIncluded.toArray( new String[dirsNotIncluded.size()] );
+        String[] excl = dirsExcluded.toArray( EMPTY_STRING_ARRAY );
+        String[] notIncl = dirsNotIncluded.toArray( EMPTY_STRING_ARRAY );
 
         for ( String anExcl : excl )
         {
@@ -394,7 +396,7 @@ public class DirectoryScanner
              * [bentmann] A null array will also be returned from list() on NTFS when dir refers to a soft link or
              * junction point whose target is not existent.
              */
-            newfiles = new String[0];
+            newfiles = EMPTY_STRING_ARRAY;
 
             // throw new IOException( "IO error scanning directory " + dir.getAbsolutePath() );
         }
@@ -432,7 +434,7 @@ public class DirectoryScanner
                     noLinks.add( newfile );
                 }
             }
-            newfiles = noLinks.toArray( new String[noLinks.size()] );
+            newfiles = noLinks.toArray( EMPTY_STRING_ARRAY );
         }
 
         if ( filenameComparator != null )
@@ -549,7 +551,7 @@ public class DirectoryScanner
     @Override
     public String[] getIncludedFiles()
     {
-        return filesIncluded.toArray( new String[filesIncluded.size()] );
+        return filesIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -562,7 +564,7 @@ public class DirectoryScanner
     public String[] getNotIncludedFiles()
     {
         slowScan();
-        return filesNotIncluded.toArray( new String[filesNotIncluded.size()] );
+        return filesNotIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -577,7 +579,7 @@ public class DirectoryScanner
     public String[] getExcludedFiles()
     {
         slowScan();
-        return filesExcluded.toArray( new String[filesExcluded.size()] );
+        return filesExcluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -592,7 +594,7 @@ public class DirectoryScanner
     public String[] getDeselectedFiles()
     {
         slowScan();
-        return filesDeselected.toArray( new String[filesDeselected.size()] );
+        return filesDeselected.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -605,7 +607,7 @@ public class DirectoryScanner
     @Override
     public String[] getIncludedDirectories()
     {
-        return dirsIncluded.toArray( new String[dirsIncluded.size()] );
+        return dirsIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -618,7 +620,7 @@ public class DirectoryScanner
     public String[] getNotIncludedDirectories()
     {
         slowScan();
-        return dirsNotIncluded.toArray( new String[dirsNotIncluded.size()] );
+        return dirsNotIncluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -633,7 +635,7 @@ public class DirectoryScanner
     public String[] getExcludedDirectories()
     {
         slowScan();
-        return dirsExcluded.toArray( new String[dirsExcluded.size()] );
+        return dirsExcluded.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**
@@ -648,7 +650,7 @@ public class DirectoryScanner
     public String[] getDeselectedDirectories()
     {
         slowScan();
-        return dirsDeselected.toArray( new String[dirsDeselected.size()] );
+        return dirsDeselected.toArray( EMPTY_STRING_ARRAY );
     }
 
     /**

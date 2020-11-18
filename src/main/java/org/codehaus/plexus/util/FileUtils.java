@@ -625,10 +625,7 @@ public class FileUtils
         }
 
         // ok... move the Vector into the files list...
-        String[] foundFiles = new String[files.size()];
-        files.toArray( foundFiles );
-
-        return foundFiles;
+        return files.toArray( new String[0] );
     }
 
     /**

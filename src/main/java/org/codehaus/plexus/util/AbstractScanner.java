@@ -246,7 +246,7 @@ public abstract class AbstractScanner
                     list.add( normalizePattern( include ) );
                 }
             }
-            this.includes = list.toArray( new String[list.size()] );
+            this.includes = list.toArray( new String[0] );
         }
     }
 
@@ -276,7 +276,7 @@ public abstract class AbstractScanner
                     list.add( normalizePattern( exclude ) );
                 }
             }
-            this.excludes = list.toArray( new String[list.size()] );
+            this.excludes = list.toArray( new String[0] );
         }
     }
 

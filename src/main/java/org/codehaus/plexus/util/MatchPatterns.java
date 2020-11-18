@@ -85,7 +85,7 @@ public class MatchPatterns
         {
             result.add( MatchPattern.fromString( string ) );
         }
-        return result.toArray( new MatchPattern[result.size()] );
+        return result.toArray( new MatchPattern[0] );
     }
 
 }

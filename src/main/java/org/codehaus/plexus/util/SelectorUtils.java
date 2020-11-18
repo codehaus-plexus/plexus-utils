@@ -772,7 +772,7 @@ public final class SelectorUtils
         {
             ret.add( st.nextToken() );
         }
-        return ret.toArray( new String[ret.size()] );
+        return ret.toArray( new String[0] );
     }
 
     /**
