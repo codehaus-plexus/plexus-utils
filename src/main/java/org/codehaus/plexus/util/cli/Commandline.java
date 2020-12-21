@@ -491,34 +491,32 @@ public class Commandline
     }
 
     /**
+     * Warning: For built-in commands like 'echo' on {@link Os#FAMILY_WINDOWS}, use <code>cmd /X /C echo</code>  
+     * @deprecated Use {@link org.codehaus.plexus.util.cli.Commandline#getRawCommandline()} method instead.
      * @return Returns the executable and all defined arguments.
-     *      For Windows Family, {@link Commandline#getShellCommandline()} is returned
      */
+    @Deprecated
     public String[] getCommandline()
     {
-        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
-        {
-            return getShellCommandline();
-        }
-
         return getRawCommandline();
     }
 
     /**
-     * Returns the executable and all defined arguments.
+     * Returns the executable and all defined arguments.<br>
+     * Warning: For built-in commands like 'echo' on {@link Os#FAMILY_WINDOWS}, use <code>cmd /X /C echo</code>
      * @return the command line as array not escaped neither quoted
      */
     public String[] getRawCommandline()
     {
         final String[] args = getArguments();
-        String executable = getLiteralExecutable();
+        String executableTmp = getLiteralExecutable();
 
-        if ( executable == null )
+        if ( executableTmp == null )
         {
             return args;
         }
         final String[] result = new String[args.length + 1];
-        result[0] = executable;
+        result[0] = executableTmp;
         System.arraycopy( args, 0, result, 1, args.length );
         return result;
     }
@@ -568,7 +566,7 @@ public class Commandline
 
     public int size()
     {
-        return getCommandline().length;
+        return getRawCommandline().length;
     }
 
     @Override
@@ -668,7 +666,7 @@ public class Commandline
         {
             if ( workingDir == null )
             {
-                process = Runtime.getRuntime().exec( getCommandline(), environment, workingDir );
+                process = Runtime.getRuntime().exec( getRawCommandline(), environment, workingDir );
             }
             else
             {
