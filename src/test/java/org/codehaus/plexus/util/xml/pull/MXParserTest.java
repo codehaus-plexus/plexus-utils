@@ -413,6 +413,7 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    @Test
     public void testMalformedProcessingInstructionAfterTag()
         throws Exception
     {
@@ -438,6 +439,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedProcessingInstructionBeforeTag()
         throws Exception
     {
@@ -463,6 +465,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedProcessingInstructionSpaceBeforeName()
         throws Exception
     {
@@ -490,6 +493,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedProcessingInstructionNoClosingQuestionMark()
         throws Exception
     {
@@ -517,6 +521,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testSubsequentMalformedProcessingInstructionNoClosingQuestionMark()
         throws Exception
     {
@@ -544,6 +549,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedXMLRootElement()
         throws Exception
     {
@@ -564,6 +570,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedXMLRootElement2()
         throws Exception
     {
@@ -584,6 +591,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedXMLRootElement3()
         throws Exception
     {
@@ -605,6 +613,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedXMLRootElement4()
         throws Exception
     {
@@ -628,6 +637,7 @@ public class MXParserTest
         }
     }
 
+    @Test
     public void testMalformedXMLRootElement5()
         throws Exception
     {
