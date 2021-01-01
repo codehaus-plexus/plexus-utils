@@ -156,7 +156,7 @@ public final class IOUtil
     public static void copy( final InputStream input, final OutputStream output )
         throws IOException
     {
-        copy( input, output, DEFAULT_BUFFER_SIZE );
+        input.transferTo( output );
     }
 
     /**
