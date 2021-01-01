@@ -97,6 +97,46 @@ limitations under the License.
     </pluginManagement>
     <plugins>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <release>8</release>
+            </configuration>
+          </execution>
+          <execution>
+            <id>compile-java-9</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <release>9</release>
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
+            </compileSourceRoots>
+            <multiReleaseOutput>true</multiReleaseOutput>
+            </configuration>
+          </execution>
+          <execution>
+            <id>compile-java-10</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <release>10</release>
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/java10</compileSourceRoot>
+            </compileSourceRoots>
+            <multiReleaseOutput>true</multiReleaseOutput>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-publish-plugin</artifactId>
         <configuration>
@@ -132,6 +172,16 @@ limitations under the License.
               <value>${M2_HOME}</value>
             </property>
           </systemProperties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Multi-Release>true</Multi-Release>
+            </manifestEntries>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
