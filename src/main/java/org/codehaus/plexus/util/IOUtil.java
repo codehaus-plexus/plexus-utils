@@ -156,7 +156,7 @@ public final class IOUtil
     public static void copy( final InputStream input, final OutputStream output )
         throws IOException
     {
-        copy( input, output, DEFAULT_BUFFER_SIZE );
+        VersionSpecifics.INSTANCE.copy( input, output );
     }
 
     /**
@@ -186,7 +186,7 @@ public final class IOUtil
     public static void copy( final Reader input, final Writer output )
         throws IOException
     {
-        copy( input, output, DEFAULT_BUFFER_SIZE );
+        VersionSpecifics.INSTANCE.copy( input, output );
     }
 
     /**
