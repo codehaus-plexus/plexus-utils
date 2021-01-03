@@ -460,7 +460,7 @@ public class MXParser
         // System.out.println("reset() called");
         location = null;
         lineNumber = 1;
-        columnNumber = 0;
+        columnNumber = 1;
         seenRoot = false;
         reachedEnd = false;
         eventType = START_DOCUMENT;
@@ -3082,7 +3082,7 @@ public class MXParser
                     {
                         // seenPITarget && !seenQ
                         throw new XmlPullParserException( "processing instruction started on line " + curLine
-                            + " and column " + curColumn + " was not closed", this, null );
+                            + " and column " + (curColumn -2) + " was not closed", this, null );
                     }
                 }
                 else if ( ch == '<' )
