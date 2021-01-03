@@ -3084,6 +3084,10 @@ public class MXParser
                         throw new XmlPullParserException( "processing instruction started on line " + curLine
                             + " and column " + (curColumn -2) + " was not closed", this, null );
                     }
+                    else
+                    {
+                        seenInnerTag = false;
+                    }
                 }
                 else if ( ch == '<' )
                 {
