@@ -156,7 +156,7 @@ public final class IOUtil
     public static void copy( final InputStream input, final OutputStream output )
         throws IOException
     {
-        VersionSpecifics.INSTANCE.copy( input, output );
+        VersionSpecifics.copy( input, output );
     }
 
     /**
@@ -186,7 +186,7 @@ public final class IOUtil
     public static void copy( final Reader input, final Writer output )
         throws IOException
     {
-        VersionSpecifics.INSTANCE.copy( input, output );
+        VersionSpecifics.copy( input, output );
     }
 
     /**

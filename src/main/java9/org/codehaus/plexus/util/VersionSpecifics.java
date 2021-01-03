@@ -9,17 +9,23 @@ import java.io.Writer;
 /**
  * Implementation specific to Java SE 9 version.
  */
-final class VersionSpecifics extends CommonImplementation
+final class VersionSpecifics
 {
-    static final VersionSpecifics INSTANCE = new VersionSpecifics();
+    private static final int DEFAULT_BUFFER_SIZE = 1024 * 16;
 
     private VersionSpecifics() {
         // singleton
     }
 
-    void copy( final InputStream input, final OutputStream output )
+    static void copy( final InputStream input, final OutputStream output )
         throws IOException
     {
         input.transferTo( output );
+    }
+ 
+    static void copy( final Reader input, final Writer output )
+        throws IOException
+    {
+        IOUtil.copy( input, output, DEFAULT_BUFFER_SIZE );
     }
 }
