@@ -354,6 +354,35 @@ public class MXParserTest
      * @throws java.lang.Exception if any.
      */
     @Test
+    public void testParserPosition()
+            throws Exception
+    {
+        String input = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!-- A --> \n <!-- B --><test>\tnnn</test>\n<!-- C\nC -->";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+        assertPosition( 1, 39, parser );
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertPosition( 1, 49, parser );
+        assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+        assertPosition( 2, 3, parser ); // end when next token starts
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertPosition( 2, 12, parser );
+        assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+        assertPosition( 2, 18, parser );
+        assertEquals( XmlPullParser.TEXT, parser.nextToken() );
+        assertPosition( 2, 23, parser ); // end when next token starts
+        assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+        assertPosition( 2, 29, parser );
+        assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+        assertPosition( 3, 2, parser ); // end when next token starts
+        assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+        assertPosition( 4, 6, parser );
+    }
+
+    @Test
     public void testProcessingInstruction()
         throws Exception
     {
@@ -624,7 +653,7 @@ public class MXParserTest
         }
         catch ( XmlPullParserException ex )
         {
-            assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 2 was not closed" ) );
+            assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 1 was not closed" ) );
         }
     }
 
@@ -657,7 +686,7 @@ public class MXParserTest
         }
         catch ( XmlPullParserException ex )
         {
-            assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 13 was not closed" ) );
+            assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 12 was not closed" ) );
         }
     }
 
@@ -900,6 +929,12 @@ public class MXParserTest
         }
     }
 
+    private static void assertPosition( int row, int col, MXParser parser )
+    {
+        assertEquals( "Current line", row, parser.getLineNumber() );
+        assertEquals( "Current column", col, parser.getColumnNumber() );
+    }
+
     /**
      * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
      *
@@ -958,7 +993,7 @@ public class MXParserTest
         }
         catch ( XmlPullParserException e )
         {
-            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_TAG seen <root>&otherentity;... @1:19)" ) );
+            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_TAG seen <root>&otherentity;... @1:20)" ) );
             assertEquals( XmlPullParser.START_TAG, parser.getEventType() ); // not an ENTITY_REF
             assertEquals( "otherentity", parser.getText() );
         }
@@ -1025,7 +1060,7 @@ public class MXParserTest
         }
         catch ( XmlPullParserException e )
         {
-            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_DOCUMENT seen <root name=\"&otherentity;... @1:25)" ) );
+            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_DOCUMENT seen <root name=\"&otherentity;... @1:26)" ) );
             assertEquals( XmlPullParser.START_DOCUMENT, parser.getEventType() ); // not an ENTITY_REF
             assertNull( parser.getText() );
         }
@@ -1060,7 +1095,7 @@ public class MXParserTest
         }
         catch ( XmlPullParserException e )
         {
-            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_DOCUMENT seen <root name=\"&otherentity;... @1:25)" ) );
+            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_DOCUMENT seen <root name=\"&otherentity;... @1:26)" ) );
             assertEquals( XmlPullParser.START_DOCUMENT, parser.getEventType() ); // not an ENTITY_REF
             assertNull( parser.getText() );
         }
