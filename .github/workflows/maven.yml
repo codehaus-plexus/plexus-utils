@@ -43,10 +43,18 @@ jobs:
             maven-${{ matrix.os }}-java${{ matrix.java }}-
             maven-${{ matrix.os }}-
 
-      - name: Set up JDK
+      - name: Set up JDK for building
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+
+      - name: Build with Maven
+        run: mvn verify javadoc:javadoc -e -B -V
+
+      - name: Set up JDK for testing
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Build with Maven
-        run: mvn verify javadoc:javadoc -e -B -V
+      - name: Test with Maven
+        run: mvn verify -e -B -V
