@@ -433,6 +433,37 @@ public class MXParserTest
      * @throws java.lang.Exception if any.
      */
     @Test
+    public void testMalformedProcessingInstructionsContainingXmlNoClosingQuestionMark()
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" );
+        sb.append( "<project />\n" );
+        sb.append( "<?pi\n" );
+        sb.append( "   <tag>\n" );
+        sb.append( "   </tag>>\n" );
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( sb.toString() ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+            assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+
+            fail( "Should fail since it has invalid PI" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "processing instruction started on line 3 and column 1 was not closed" ) );
+        }
+    }
+
+    @Test
     public void testSubsequentProcessingInstructionShort()
         throws Exception
     {
