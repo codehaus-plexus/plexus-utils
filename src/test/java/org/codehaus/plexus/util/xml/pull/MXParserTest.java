@@ -579,6 +579,58 @@ public class MXParserTest
     }
 
     @Test
+    public void testSubsequentAbortedProcessingInstruction()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        StringBuilder sb = new StringBuilder();
+        sb.append( "<project />" );
+        sb.append( "<?aborted" );
+
+        parser.setInput( new StringReader( sb.toString() ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+            assertEquals( XmlPullParser.END_TAG, parser.next() );
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.next() );
+
+            fail( "Should fail since it has aborted PI" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "@1:21" ) );
+            assertTrue( ex.getMessage().contains( "processing instruction started on line 1 and column 12 was not closed" ) );
+        }
+    }
+
+    @Test
+    public void testSubsequentAbortedComment()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+        StringBuilder sb = new StringBuilder();
+        sb.append( "<project />" );
+        sb.append( "<!-- aborted" );
+
+        parser.setInput( new StringReader( sb.toString() ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+            assertEquals( XmlPullParser.END_TAG, parser.next() );
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.next() );
+
+            fail( "Should fail since it has aborted comment" );
+        }
+        catch ( XmlPullParserException ex )
+        {
+            assertTrue( ex.getMessage().contains( "@1:24" ) );
+            assertTrue( ex.getMessage().contains( "comment started on line 1 and column 12 was not closed" ) );
+        }
+    }
+
+    @Test
     public void testMalformedXMLRootElement()
         throws Exception
     {

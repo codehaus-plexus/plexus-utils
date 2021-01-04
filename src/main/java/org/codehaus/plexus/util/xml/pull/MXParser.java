@@ -2930,7 +2930,11 @@ public class MXParser
             {
                 // scan until it hits -->
                 ch = more();
-                if ( seenDashDash && ch != '>' )
+                if ( ch == (char)-1 )
+                {
+                    throw new EOFException( "no more data available" + getPositionDescription() );
+                }
+                else if ( seenDashDash && ch != '>' )
                 {
                     throw new XmlPullParserException( "in comment after two dashes (--) next character must be >"
                         + " not " + printable( ch ), this, null );
@@ -3057,7 +3061,11 @@ public class MXParser
                 // scan until it hits ?>
                 // ch = more();
 
-                if ( ch == '?' )
+                if ( ch == (char)-1 )
+                {
+                    throw new EOFException( "no more data available" + getPositionDescription() );
+                }
+                else if ( ch == '?' )
                 {
                     if ( !seenPITarget )
                     {
