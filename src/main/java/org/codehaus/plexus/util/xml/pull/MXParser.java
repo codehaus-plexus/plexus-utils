@@ -2988,7 +2988,7 @@ public class MXParser
             posStart = pos;
 
         final int curLine = lineNumber;
-        final int curColumn = columnNumber;
+        final int curColumn = columnNumber - 4;
         try
         {
             final boolean normalizeIgnorableWS = tokenize && !roundtripSupported;
@@ -3109,7 +3109,7 @@ public class MXParser
         if ( tokenize )
             posStart = pos;
         final int curLine = lineNumber;
-        final int curColumn = columnNumber;
+        final int curColumn = columnNumber - 2;
         int piTargetStart = pos;
         int piTargetEnd = -1;
         final boolean normalizeIgnorableWS = tokenize && !roundtripSupported;
@@ -3156,7 +3156,7 @@ public class MXParser
                     {
                         // seenPITarget && !seenQ
                         throw new XmlPullParserException( "processing instruction started on line " + curLine
-                            + " and column " + (curColumn -2) + " was not closed", this, null );
+                            + " and column " + curColumn + " was not closed", this, null );
                     }
                 }
                 else if ( ch == '<' )
