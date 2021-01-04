@@ -3964,7 +3964,7 @@ public class MXParser
             fillBuf();
             // this return value should be ignored as it is used in epilog parsing ...
             if ( reachedEnd )
-                return (char) -1;
+                throw new EOFException( "no more data available" + getPositionDescription() );
         }
         final char ch = buf[pos++];
         // line/columnNumber
