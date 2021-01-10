@@ -105,33 +105,8 @@ limitations under the License.
               <goal>compile</goal>
             </goals>
             <configuration>
-              <release>8</release>
-            </configuration>
-          </execution>
-          <execution>
-            <id>compile-java-9</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <release>9</release>
-              <compileSourceRoots>
-                <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
-            </compileSourceRoots>
-            <multiReleaseOutput>true</multiReleaseOutput>
-            </configuration>
-          </execution>
-          <execution>
-            <id>compile-java-10</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <release>10</release>
-              <compileSourceRoots>
-                <compileSourceRoot>${project.basedir}/src/main/java10</compileSourceRoot>
-            </compileSourceRoots>
-            <multiReleaseOutput>true</multiReleaseOutput>
+              <source>1.8</source>
+              <target>1.8</target>
             </configuration>
           </execution>
         </executions>
@@ -187,4 +162,66 @@ limitations under the License.
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>jdk9+</id>
+      <activation>
+        <jdk>[9,)</jdk>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>compile-java-9</id>
+                  <goals>
+                    <goal>compile</goal>
+                  </goals>
+                  <configuration>
+                    <release>9</release>
+                    <compileSourceRoots>
+                      <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
+                  </compileSourceRoots>
+                  <multiReleaseOutput>true</multiReleaseOutput>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+    <profile>
+      <id>jdk10+</id>
+      <activation>
+        <jdk>[10,)</jdk>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>compile-java-10</id>
+                  <goals>
+                    <goal>compile</goal>
+                  </goals>
+                  <configuration>
+                    <release>10</release>
+                    <compileSourceRoots>
+                      <compileSourceRoot>${project.basedir}/src/main/java10</compileSourceRoot>
+                  </compileSourceRoots>
+                  <multiReleaseOutput>true</multiReleaseOutput>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
 </project>
