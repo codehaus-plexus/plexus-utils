@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -859,7 +860,8 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
     public void testibm_not_wf_P02_ibm02n32xml()
                     throws IOException
     {
-        try ( Reader reader = new FileReader( new File( testResourcesDir, "not-wf/P02/ibm02n32.xml" ) ) )
+        try ( FileInputStream is = new FileInputStream( new File( testResourcesDir, "not-wf/P02/ibm02n32.xml" ) );
+                        InputStreamReader reader = new InputStreamReader( is, StandardCharsets.UTF_8 ) )
         {
             parser.setInput( reader );
             while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
@@ -885,7 +887,8 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
     public void testibm_not_wf_P02_ibm02n33xml()
                     throws IOException
     {
-        try ( Reader reader = new FileReader( new File( testResourcesDir, "not-wf/P02/ibm02n33.xml" ) ) )
+        try ( FileInputStream is = new FileInputStream( new File( testResourcesDir, "not-wf/P02/ibm02n33.xml" ) );
+                        InputStreamReader reader = new InputStreamReader( is, StandardCharsets.UTF_8 ) )
         {
             parser.setInput( reader );
             while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
