@@ -2865,6 +2865,19 @@ public class MXParser
         }
     }
 
+    /**
+     * Check if the provided parameter is a valid Char, according to: {@link https://www.w3.org/TR/REC-xml/#NT-Char}
+     *
+     * @param codePoint the numeric value to check
+     * @return true if it is a valid numeric character reference. False otherwise.
+     */
+    private static boolean isValidCodePoint( int codePoint )
+    {
+        // Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+        return codePoint == 0x9 || codePoint == 0xA || codePoint == 0xD || ( 0x20 <= codePoint && codePoint <= 0xD7FF )
+            || ( 0xE000 <= codePoint && codePoint <= 0xFFFD ) || ( 0x10000 <= codePoint && codePoint <= 0x10FFFF );
+    }
+
     private char[] lookuEntityReplacement( int entityNameLen )
         throws XmlPullParserException, IOException
 
@@ -2954,9 +2967,13 @@ public class MXParser
                     }
                     seenDash = false;
                 }
-                else
+                else if (isValidCodePoint( ch ))
                 {
                     seenDash = false;
+                }
+                else
+                {
+                    throw new XmlPullParserException( "Illegal character 0x" + Integer.toHexString(((int) ch)) + " found in comment", this, null );
                 }
                 if ( normalizeIgnorableWS )
                 {
