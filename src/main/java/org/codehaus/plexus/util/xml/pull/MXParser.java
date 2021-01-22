@@ -3096,7 +3096,7 @@ public class MXParser
                         piTargetEnd = pos - 1;
 
                         // [17] PITarget ::= Name - (('X' | 'x') ('M' | 'm') ('L' | 'l'))
-                        if ( ( piTargetEnd - piTargetStart ) == 3 )
+                        if ( ( piTargetEnd - piTargetStart ) >= 3 )
                         {
                             if ( ( buf[piTargetStart] == 'x' || buf[piTargetStart] == 'X' )
                                 && ( buf[piTargetStart + 1] == 'm' || buf[piTargetStart + 1] == 'M' )
