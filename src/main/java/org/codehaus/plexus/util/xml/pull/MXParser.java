@@ -3325,9 +3325,9 @@ public class MXParser
 
             // TODO reconcile with setInput encodingName
             inputEncoding = newString( buf, encodingStart, encodingEnd - encodingStart );
-            ch = more();
         }
 
+        ch = more();
         ch = skipS( ch );
         // [32] SDDecl ::= S 'standalone' Eq (("'" ('yes' | 'no') "'") | ('"' ('yes' | 'no') '"'))
         if ( ch == 's' )
@@ -3858,17 +3858,6 @@ public class MXParser
             ch = more();
         }
         return ch;
-    }
-
-    private char requireNextS()
-        throws XmlPullParserException, IOException
-    {
-        final char ch = more();
-        if ( !isS( ch ) )
-        {
-            throw new XmlPullParserException( "white space is required and not " + printable( ch ), this, null );
-        }
-        return skipS( ch );
     }
 
     private char skipS( char ch )
