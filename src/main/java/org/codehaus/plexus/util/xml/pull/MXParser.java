@@ -2534,44 +2534,7 @@ public class MXParser
             }
             if ( ch == '&' )
             {
-                // extractEntityRef
-                posEnd = pos - 1;
-                if ( !usePC )
-                {
-                    final boolean hadCharData = posEnd > posStart;
-                    if ( hadCharData )
-                    {
-                        // posEnd is already set correctly!!!
-                        joinPC();
-                    }
-                    else
-                    {
-                        usePC = true;
-                        pcStart = pcEnd = 0;
-                    }
-                }
-                // assert usePC == true;
-
-                final char[] resolvedEntity = parseEntityRef();
-                // check if replacement text can be resolved !!!
-                if ( resolvedEntity == null )
-                {
-                    if ( entityRefName == null )
-                    {
-                        entityRefName = newString( buf, posStart, posEnd - posStart );
-                    }
-                    throw new XmlPullParserException( "could not resolve entity named '" + printable( entityRefName )
-                        + "'", this, null );
-                }
-                // write into PC replacement text - do merge for replacement text!!!!
-                for ( char aResolvedEntity : resolvedEntity )
-                {
-                    if ( pcEnd >= pc.length )
-                    {
-                        ensurePC( pcEnd );
-                    }
-                    pc[pcEnd++] = aResolvedEntity;
-                }
+                extractEntityRef();
             }
             else if ( ch == '\t' || ch == '\n' || ch == '\r' )
             {
@@ -2759,11 +2722,22 @@ public class MXParser
                 }
             }
             posEnd = pos - 1;
-            try
+
+            int codePoint = Integer.parseInt( sb.toString(), isHex ? 16 : 10 );
+            boolean isValidCodePoint = isValidCodePoint( codePoint );
+            if ( isValidCodePoint )
             {
-                charRefOneCharBuf = Character.toChars( Integer.parseInt( sb.toString(), isHex ? 16 : 10 ) );
+                try
+                {
+                    charRefOneCharBuf = Character.toChars( codePoint );
+                }
+                catch ( IllegalArgumentException e )
+                {
+                    isValidCodePoint = false;
+                }
             }
-            catch ( IllegalArgumentException e )
+
+            if ( !isValidCodePoint )
             {
                 throw new XmlPullParserException( "character reference (with " + ( isHex ? "hex" : "decimal" )
                     + " value " + sb.toString() + ") is invalid", this, null );
@@ -2863,6 +2837,19 @@ public class MXParser
                 text = null;
             return null;
         }
+    }
+
+    /**
+     * Check if the provided parameter is a valid Char, according to: {@link https://www.w3.org/TR/REC-xml/#NT-Char}
+     *
+     * @param codePoint the numeric value to check
+     * @return true if it is a valid numeric character reference. False otherwise.
+     */
+    private static boolean isValidCodePoint( int codePoint )
+    {
+        // Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+        return codePoint == 0x9 || codePoint == 0xA || codePoint == 0xD || ( 0x20 <= codePoint && codePoint <= 0xD7FF )
+            || ( 0xE000 <= codePoint && codePoint <= 0xFFFD ) || ( 0x10000 <= codePoint && codePoint <= 0x10FFFF );
     }
 
     private char[] lookuEntityReplacement( int entityNameLen )
@@ -3423,10 +3410,14 @@ public class MXParser
             ch = more();
             if ( ch == '[' )
                 ++bracketLevel;
-            if ( ch == ']' )
+            else if ( ch == ']' )
                 --bracketLevel;
-            if ( ch == '>' && bracketLevel == 0 )
+            else if ( ch == '>' && bracketLevel == 0 )
                 break;
+            else if ( ch == '&' )
+            {
+                extractEntityRef();
+            }
             if ( normalizeIgnorableWS )
             {
                 if ( ch == '\r' )
@@ -3477,6 +3468,49 @@ public class MXParser
 
         }
         posEnd = pos - 1;
+    }
+
+    private void extractEntityRef()
+        throws XmlPullParserException, IOException
+    {
+        // extractEntityRef
+        posEnd = pos - 1;
+        if ( !usePC )
+        {
+            final boolean hadCharData = posEnd > posStart;
+            if ( hadCharData )
+            {
+                // posEnd is already set correctly!!!
+                joinPC();
+            }
+            else
+            {
+                usePC = true;
+                pcStart = pcEnd = 0;
+            }
+        }
+        // assert usePC == true;
+
+        final char[] resolvedEntity = parseEntityRef();
+        // check if replacement text can be resolved !!!
+        if ( resolvedEntity == null )
+        {
+            if ( entityRefName == null )
+            {
+                entityRefName = newString( buf, posStart, posEnd - posStart );
+            }
+            throw new XmlPullParserException( "could not resolve entity named '" + printable( entityRefName )
+                + "'", this, null );
+        }
+        // write into PC replacement text - do merge for replacement text!!!!
+        for ( char aResolvedEntity : resolvedEntity )
+        {
+            if ( pcEnd >= pc.length )
+            {
+                ensurePC( pcEnd );
+            }
+            pc[pcEnd++] = aResolvedEntity;
+        }
     }
 
     private void parseCDSect( boolean hadCharData )
