@@ -3274,9 +3274,21 @@ public class MXParser
 
         // [80] EncodingDecl ::= S 'encoding' Eq ('"' EncName '"' | "'" EncName "'" )
         char ch = more();
+        char prevCh = ch;
         ch = skipS( ch );
+
+        if ( ch != 'e' && ch != 's' && ch != '?' && ch != '>' )
+        {
+            throw new XmlPullParserException( "unexpected character " + printable( ch ), this, null );
+        }
+
         if ( ch == 'e' )
         {
+            if ( !isS( prevCh ) )
+            {
+                throw new XmlPullParserException( "expected a space after version and not " + printable( ch ), this,
+                                                  null );
+            }
             ch = more();
             ch = requireInput( ch, NCODING );
             ch = skipS( ch );
