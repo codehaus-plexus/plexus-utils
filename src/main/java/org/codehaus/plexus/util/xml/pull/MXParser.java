@@ -2534,44 +2534,7 @@ public class MXParser
             }
             if ( ch == '&' )
             {
-                // extractEntityRef
-                posEnd = pos - 1;
-                if ( !usePC )
-                {
-                    final boolean hadCharData = posEnd > posStart;
-                    if ( hadCharData )
-                    {
-                        // posEnd is already set correctly!!!
-                        joinPC();
-                    }
-                    else
-                    {
-                        usePC = true;
-                        pcStart = pcEnd = 0;
-                    }
-                }
-                // assert usePC == true;
-
-                final char[] resolvedEntity = parseEntityRef();
-                // check if replacement text can be resolved !!!
-                if ( resolvedEntity == null )
-                {
-                    if ( entityRefName == null )
-                    {
-                        entityRefName = newString( buf, posStart, posEnd - posStart );
-                    }
-                    throw new XmlPullParserException( "could not resolve entity named '" + printable( entityRefName )
-                        + "'", this, null );
-                }
-                // write into PC replacement text - do merge for replacement text!!!!
-                for ( char aResolvedEntity : resolvedEntity )
-                {
-                    if ( pcEnd >= pc.length )
-                    {
-                        ensurePC( pcEnd );
-                    }
-                    pc[pcEnd++] = aResolvedEntity;
-                }
+                extractEntityRef();
             }
             else if ( ch == '\t' || ch == '\n' || ch == '\r' )
             {
@@ -2759,11 +2722,22 @@ public class MXParser
                 }
             }
             posEnd = pos - 1;
-            try
+
+            int codePoint = Integer.parseInt( sb.toString(), isHex ? 16 : 10 );
+            boolean isValidCodePoint = isValidCodePoint( codePoint );
+            if ( isValidCodePoint )
             {
-                charRefOneCharBuf = Character.toChars( Integer.parseInt( sb.toString(), isHex ? 16 : 10 ) );
+                try
+                {
+                    charRefOneCharBuf = Character.toChars( codePoint );
+                }
+                catch ( IllegalArgumentException e )
+                {
+                    isValidCodePoint = false;
+                }
             }
-            catch ( IllegalArgumentException e )
+
+            if ( !isValidCodePoint )
             {
                 throw new XmlPullParserException( "character reference (with " + ( isHex ? "hex" : "decimal" )
                     + " value " + sb.toString() + ") is invalid", this, null );
@@ -3440,10 +3414,14 @@ public class MXParser
             ch = more();
             if ( ch == '[' )
                 ++bracketLevel;
-            if ( ch == ']' )
+            else if ( ch == ']' )
                 --bracketLevel;
-            if ( ch == '>' && bracketLevel == 0 )
+            else if ( ch == '>' && bracketLevel == 0 )
                 break;
+            else if ( ch == '&' )
+            {
+                extractEntityRef();
+            }
             if ( normalizeIgnorableWS )
             {
                 if ( ch == '\r' )
@@ -3494,6 +3472,49 @@ public class MXParser
 
         }
         posEnd = pos - 1;
+    }
+
+    private void extractEntityRef()
+        throws XmlPullParserException, IOException
+    {
+        // extractEntityRef
+        posEnd = pos - 1;
+        if ( !usePC )
+        {
+            final boolean hadCharData = posEnd > posStart;
+            if ( hadCharData )
+            {
+                // posEnd is already set correctly!!!
+                joinPC();
+            }
+            else
+            {
+                usePC = true;
+                pcStart = pcEnd = 0;
+            }
+        }
+        // assert usePC == true;
+
+        final char[] resolvedEntity = parseEntityRef();
+        // check if replacement text can be resolved !!!
+        if ( resolvedEntity == null )
+        {
+            if ( entityRefName == null )
+            {
+                entityRefName = newString( buf, posStart, posEnd - posStart );
+            }
+            throw new XmlPullParserException( "could not resolve entity named '" + printable( entityRefName )
+                + "'", this, null );
+        }
+        // write into PC replacement text - do merge for replacement text!!!!
+        for ( char aResolvedEntity : resolvedEntity )
+        {
+            if ( pcEnd >= pc.length )
+            {
+                ensurePC( pcEnd );
+            }
+            pc[pcEnd++] = aResolvedEntity;
+        }
     }
 
     private void parseCDSect( boolean hadCharData )
