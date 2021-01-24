@@ -132,7 +132,7 @@ import java.nio.channels.Channel;
  * method variants to specify buffer size and encoding, each row may correspond to up to 4 methods.
  */
 
-public final class IOUtil
+public final class IOUtil extends BaseIOUtil
 {
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 16;
 
@@ -156,7 +156,7 @@ public final class IOUtil
     public static void copy( final InputStream input, final OutputStream output )
         throws IOException
     {
-        VersionSpecifics.copy( input, output );
+        BaseIOUtil.copy( input, output );
     }
 
     /**
@@ -186,7 +186,7 @@ public final class IOUtil
     public static void copy( final Reader input, final Writer output )
         throws IOException
     {
-        VersionSpecifics.copy( input, output );
+        BaseIOUtil.copy( input, output );
     }
 
     /**
