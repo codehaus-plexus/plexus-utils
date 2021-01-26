@@ -105,7 +105,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "unexpected character S" ) );
       }
   }
 
