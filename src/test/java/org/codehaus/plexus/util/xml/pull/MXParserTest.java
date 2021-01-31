@@ -661,4 +661,44 @@ public class MXParserTest
         }
     }
 
+    @Test
+    public void testXMLDeclVersionOnly()
+        throws Exception
+    {
+        String input = "<?xml version='1.0'?><hello/>";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+        }
+        catch ( Exception e )
+        {
+            fail( "Should not throw Exception" );
+        }
+    }
+
+    @Test
+    public void testXMLDeclVersionEncodingStandaloneNoSpace()
+        throws Exception
+    {
+        String input = "<?xml version='1.0' encoding='ASCII'standalone='yes'?><hello/>";
+
+        MXParser parser = new MXParser();
+        parser.setInput( new StringReader( input ) );
+
+        try
+        {
+            parser.nextToken();
+        }
+        catch ( XmlPullParserException e )
+        {
+            assertTrue( e.getMessage().contains( "expected a space after encoding and not s" ));
+        }
+    }
+
 }

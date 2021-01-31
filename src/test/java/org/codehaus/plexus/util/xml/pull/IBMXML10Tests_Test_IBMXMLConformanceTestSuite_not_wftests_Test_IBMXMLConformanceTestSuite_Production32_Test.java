@@ -53,7 +53,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "expected a space after version and not s" ) );
       }
   }
 
@@ -79,7 +79,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "expected equals sign (=) after standalone and not \"" ) );
       }
   }
 
@@ -131,7 +131,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "expected 'yes' or 'no' after standalone and not Y" ) );
       }
   }
 
@@ -158,7 +158,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "expected 'yes' or 'no' after standalone and not Y" ) );
       }
   }
 
@@ -184,7 +184,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "expected 'yes' or 'no' after standalone and not N" ) );
       }
   }
 
@@ -210,7 +210,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "expected 'yes' or 'no' after standalone and not N" ) );
       }
   }
 
@@ -236,7 +236,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
       }
       catch ( XmlPullParserException e )
       {
-          assertTrue( e.getMessage().contains( "expected ?> as last part of <?xml not t" ) );
+          assertTrue( e.getMessage().contains( "expected equals sign (=) after standalone and not \"" ) );
       }
   }
 
@@ -248,8 +248,10 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Version:
    *
    * @throws IOException if there is an I/O error
+   *
+   * NOTE: This test is SKIPPED as MXParser does not support parsing inside DOCTYPEDECL.
    */
-  @Test
+  // @Test
   public void testibm_not_wf_P32_ibm32n09xml()
       throws IOException
   {
