@@ -11,6 +11,7 @@ package org.codehaus.plexus.util.xml.pull;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
@@ -121,6 +122,8 @@ public class MXParser
 
     // private String elValue[];
     private int elNamespaceCount[];
+
+    private String fileEncoding = "UTF8";
 
     /**
      * Make sure that we have enough space to keep element stack if passed size. It will always create one additional
@@ -659,6 +662,15 @@ public class MXParser
     {
         reset();
         reader = in;
+
+        if ( reader instanceof InputStreamReader )
+        {
+            InputStreamReader isr = (InputStreamReader) reader;
+            if ( isr.getEncoding() != null )
+            {
+                fileEncoding = isr.getEncoding().toUpperCase();
+            }
+        }
     }
 
     @Override
@@ -1771,6 +1783,17 @@ public class MXParser
                 // skipping UNICODE int Order Mark (so called BOM)
                 ch = more();
             }
+            else if ( ch == '\uFFFD' )
+            {
+                // UTF-16 BOM in an UTF-8 encoded file?
+                // This is a hack...not the best way to check for BOM in UTF-16
+                ch = more();
+                if ( ch == '\uFFFD' )
+                {
+                    throw new XmlPullParserException( "UTF-16 BOM in a UTF-8 encoded file is incompatible", this,
+                                                      null );
+                }
+            }
         }
         seenMarkup = false;
         boolean gotS = false;
@@ -2723,18 +2746,19 @@ public class MXParser
             }
             posEnd = pos - 1;
 
-            int codePoint = Integer.parseInt( sb.toString(), isHex ? 16 : 10 );
-            boolean isValidCodePoint = isValidCodePoint( codePoint );
-            if ( isValidCodePoint )
+            boolean isValidCodePoint = true;
+            try
             {
-                try
+                int codePoint = Integer.parseInt( sb.toString(), isHex ? 16 : 10 );
+                isValidCodePoint = isValidCodePoint( codePoint );
+                if ( isValidCodePoint )
                 {
                     charRefOneCharBuf = Character.toChars( codePoint );
                 }
-                catch ( IllegalArgumentException e )
-                {
-                    isValidCodePoint = false;
-                }
+            }
+            catch ( IllegalArgumentException e )
+            {
+                isValidCodePoint = false;
             }
 
             if ( !isValidCodePoint )
@@ -3328,6 +3352,17 @@ public class MXParser
 
             // TODO reconcile with setInput encodingName
             inputEncoding = newString( buf, encodingStart, encodingEnd - encodingStart );
+
+            if ( "UTF8".equals( fileEncoding ) && inputEncoding.toUpperCase().startsWith( "ISO-" ) )
+            {
+                throw new XmlPullParserException( "UTF-8 BOM plus xml decl of " + inputEncoding + " is incompatible",
+                                                  this, null );
+            }
+            else if ("UTF-16".equals( fileEncoding ) && inputEncoding.equalsIgnoreCase( "UTF-8" ))
+            {
+                throw new XmlPullParserException( "UTF-16 BOM plus xml decl of " + inputEncoding + " is incompatible",
+                                                  this, null );
+            }
         }
 
         ch = more();
