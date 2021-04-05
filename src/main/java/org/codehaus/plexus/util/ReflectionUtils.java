@@ -32,7 +32,6 @@ import java.util.Arrays;
  * @author <a href="mailto:michal@codehaus.org">Michal Maczka</a>
  * @author <a href="mailto:jesse@codehaus.org">Jesse McConnell</a>
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
- *
  */
 public final class ReflectionUtils
 {
@@ -126,7 +125,7 @@ public final class ReflectionUtils
 
     /**
      * @param method the method
-     * @return  the class of the argument to the setter. Will throw an RuntimeException if the method isn't a setter.
+     * @return the class of the argument to the setter. Will throw an RuntimeException if the method isn't a setter.
      */
     public static Class<?> getSetterType( Method method )
     {
@@ -163,6 +162,7 @@ public final class ReflectionUtils
 
     /**
      * Generates a map of the fields and values on a given object, also pulls from superclasses
+     * 
      * @param variable field name
      * @param object the object to generate the list of fields from
      * @return map containing the fields and their values
@@ -217,6 +217,14 @@ public final class ReflectionUtils
     {
 
         Class<?> clazz = object.getClass();
+
+        if ( Float.parseFloat( System.getProperty( "java.specification.version" ) ) >= 11
+            && Class.class.getCanonicalName().equals( clazz.getCanonicalName() ) )
+        {
+            // Updating Class fields accessibility is forbidden on Java 16 (and throws warning from version 11)
+            // No concrete use case to modify accessibility at this level
+            return;
+        }
 
         Field[] fields = clazz.getDeclaredFields();
 
