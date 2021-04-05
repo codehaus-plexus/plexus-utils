@@ -3296,6 +3296,8 @@ public class MXParser
         }
         xmlDeclVersion = newString( buf, versionStart, versionEnd - versionStart );
 
+        String lastParsedAttr = "version";
+
         // [80] EncodingDecl ::= S 'encoding' Eq ('"' EncName '"' | "'" EncName "'" )
         char ch = more();
         char prevCh = ch;
@@ -3310,8 +3312,8 @@ public class MXParser
         {
             if ( !isS( prevCh ) )
             {
-                throw new XmlPullParserException( "expected a space after version and not " + printable( ch ), this,
-                                                  null );
+                throw new XmlPullParserException( "expected a space after " + lastParsedAttr + " and not "
+                    + printable( ch ), this, null );
             }
             ch = more();
             ch = requireInput( ch, NCODING );
@@ -3363,13 +3365,23 @@ public class MXParser
                 throw new XmlPullParserException( "UTF-16 BOM plus xml decl of " + inputEncoding + " is incompatible",
                                                   this, null );
             }
+
+            lastParsedAttr = "encoding";
+
+            ch = more();
+            prevCh = ch;
+            ch = skipS( ch );
         }
 
-        ch = more();
-        ch = skipS( ch );
         // [32] SDDecl ::= S 'standalone' Eq (("'" ('yes' | 'no') "'") | ('"' ('yes' | 'no') '"'))
         if ( ch == 's' )
         {
+            if ( !isS( prevCh ) )
+            {
+                throw new XmlPullParserException( "expected a space after " + lastParsedAttr + " and not "
+                    + printable( ch ), this, null );
+            }
+
             ch = more();
             ch = requireInput( ch, TANDALONE );
             ch = skipS( ch );
@@ -3382,11 +3394,10 @@ public class MXParser
             ch = skipS( ch );
             if ( ch != '\'' && ch != '"' )
             {
-                throw new XmlPullParserException( "expected apostrophe (') or quotation mark (\") after encoding and not "
+                throw new XmlPullParserException( "expected apostrophe (') or quotation mark (\") after standalone and not "
                     + printable( ch ), this, null );
             }
             char quotChar = ch;
-            int standaloneStart = pos;
             ch = more();
             if ( ch == 'y' )
             {
@@ -3411,9 +3422,9 @@ public class MXParser
                     + printable( ch ), this, null );
             }
             ch = more();
+            ch = skipS( ch );
         }
 
-        ch = skipS( ch );
         if ( ch != '?' )
         {
             throw new XmlPullParserException( "expected ?> as last part of <?xml not " + printable( ch ), this, null );
