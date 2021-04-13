@@ -4,7 +4,7 @@ Plexus-Utils
 [![Build Status](https://travis-ci.org/codehaus-plexus/plexus-utils.svg?branch=master)](https://travis-ci.org/codehaus-plexus/plexus-utils)
 [![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.plexus/plexus-utils.svg?label=Maven%20Central)](http://search.maven.org/artifact/org.codehaus.plexus/plexus-utils)
 
-This library is historically used by the Apache Maven project so it's developed and maintained by the same `bad guys`
+This library is historically used by the Apache Maven project so it's developed and maintained by the same [`bad guys`](http://maven.apache.org/team.html)
 
 The current master is now at https://github.com/codehaus-plexus/plexus-utils
 
