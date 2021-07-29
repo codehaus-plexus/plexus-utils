@@ -22,7 +22,7 @@ limitations under the License.
   <parent>
     <groupId>org.codehaus.plexus</groupId>
     <artifactId>plexus</artifactId>
-    <version>7</version>
+    <version>8</version>
   </parent>
 
   <artifactId>plexus-utils</artifactId>
@@ -73,6 +73,12 @@ limitations under the License.
       <version>1.29</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -87,11 +93,6 @@ limitations under the License.
           https://issues.apache.org/jira/browse/MRESOURCES-237
           -->
           <version>2.7</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.2.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
