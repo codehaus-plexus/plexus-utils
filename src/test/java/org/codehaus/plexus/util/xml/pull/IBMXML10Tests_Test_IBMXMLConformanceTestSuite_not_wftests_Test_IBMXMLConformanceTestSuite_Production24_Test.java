@@ -18,6 +18,8 @@ import org.junit.Test;
  * XML test files base folder: <pre>xmlconf/ibm/</pre>
  *
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConformanceTestSuite_Production24_Test
 {
@@ -26,6 +28,9 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
 
     MXParser parser;
 
+    /**
+     * <p>setUp.</p>
+     */
     @Before
     public void setUp()
     {
@@ -33,14 +38,14 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
     }
 
     /**
-   * Test ID: <pre>ibm-not-wf-P24-ibm24n01.xml</pre>
-   * Test URI: <pre>not-wf/P24/ibm24n01.xml</pre>
-   * Comment: <pre>Tests VersionInfo with a required field missing. The VersionNum is     missing in the VersionInfo in the XMLDecl.</pre>
-   * Sections: <pre>2.8</pre>
-   * Version:
-   *
-   * @throws IOException if there is an I/O error
-   */
+     * Test ID: <pre>ibm-not-wf-P24-ibm24n01.xml</pre>
+     * Test URI: <pre>not-wf/P24/ibm24n01.xml</pre>
+     * Comment: <pre>Tests VersionInfo with a required field missing. The VersionNum is     missing in the VersionInfo in the XMLDecl.</pre>
+     * Sections: <pre>2.8</pre>
+     * Version:
+     *
+     * @throws java.io.IOException if there is an I/O error
+     */
     @Test
     public void testibm_not_wf_P24_ibm24n01xml()
         throws IOException
@@ -65,9 +70,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws XmlPullParserException if there is a problem parsing the XML file
-   * @throws FileNotFoundException if the testing XML file is not found
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n02xml()
@@ -93,7 +96,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n03xml()
@@ -119,7 +122,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n04xml()
@@ -145,7 +148,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n05xml()
@@ -171,7 +174,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n06xml()
@@ -197,7 +200,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n07xml()
@@ -223,7 +226,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n08xml()
@@ -249,7 +252,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.8</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P24_ibm24n09xml()

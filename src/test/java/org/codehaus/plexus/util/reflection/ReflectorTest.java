@@ -22,8 +22,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author J&ouml;rg Schaible
+ * <p>ReflectorTest class.</p>
  *
+ * @author J&ouml;rg Schaible
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class ReflectorTest
 {
@@ -31,6 +34,11 @@ public class ReflectorTest
 
     private Reflector reflector;
 
+    /**
+     * <p>setUp.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Before
     public void setUp()
         throws Exception
@@ -42,6 +50,11 @@ public class ReflectorTest
         reflector = new Reflector();
     }
 
+    /**
+     * <p>testObjectPropertyFromName.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testObjectPropertyFromName()
         throws Exception
@@ -49,6 +62,11 @@ public class ReflectorTest
         assertEquals( "1.0.0", reflector.getObjectProperty( project, "modelVersion" ) );
     }
 
+    /**
+     * <p>testObjectPropertyFromBean.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testObjectPropertyFromBean()
         throws Exception
@@ -56,6 +74,11 @@ public class ReflectorTest
         assertEquals( "Foo", reflector.getObjectProperty( project, "name" ) );
     }
 
+    /**
+     * <p>testObjectPropertyFromField.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testObjectPropertyFromField()
         throws Exception

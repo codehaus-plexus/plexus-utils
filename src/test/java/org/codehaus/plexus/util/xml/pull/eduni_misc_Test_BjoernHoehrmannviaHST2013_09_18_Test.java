@@ -20,6 +20,8 @@ import org.junit.Test;
  * XML test files base folder: <pre>xmlconf/eduni/misc/</pre>
  *
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
 {
@@ -28,6 +30,9 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
 
     MXParser parser;
 
+    /**
+     * <p>setUp.</p>
+     */
     @Before
     public void setUp()
     {
@@ -41,7 +46,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>2.2 [2], 4.1 [66]</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testhst_bh_001()
@@ -67,7 +72,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>2.2 [2], 4.1 [66]</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testhst_bh_002()
@@ -93,7 +98,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>2.2 [2], 4.1 [66]</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testhst_bh_003()
@@ -119,7 +124,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>2.2 [2], 4.1 [66]</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testhst_bh_004()
@@ -145,7 +150,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>3.1 [41]</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      *
      * NOTE: This test is SKIPPED as MXParser do not supports DOCDECL parsing.
      */
@@ -173,7 +178,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>3.1 [41]</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      *
      * NOTE: This test is SKIPPED as MXParser do not supports DOCDECL parsing.
      */
@@ -201,7 +206,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>4.3.3</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testhst_lhs_007()
@@ -228,7 +233,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>4.3.3</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testhst_lhs_008()
@@ -255,7 +260,7 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test
      * Sections: <pre>4.3.3</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testhst_lhs_009()

@@ -23,8 +23,20 @@ import java.io.StringReader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.junit.Test;
 
+/**
+ * <p>Xpp3DomUtilsTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class Xpp3DomUtilsTest
 {
+    /**
+     * <p>testCombineId.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testCombineId()
         throws Exception
@@ -60,6 +72,11 @@ public class Xpp3DomUtilsTest
         assertEquals( "right", p2.getChild( "value" ).getInputLocation() );
     }
 
+    /**
+     * <p>testCombineKeys.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testCombineKeys()
         throws Exception

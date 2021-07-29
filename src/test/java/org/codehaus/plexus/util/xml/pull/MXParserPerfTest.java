@@ -38,6 +38,13 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 
+/**
+ * <p>MXParserPerfTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 3, time = 3, timeUnit = TimeUnit.SECONDS)
@@ -59,12 +66,26 @@ public class MXParserPerfTest {
     }
 
 
+    /**
+     * <p>benchmarkBuild.</p>
+     *
+     * @param state a {@link org.codehaus.plexus.util.xml.pull.MXParserPerfTest.AdditionState} object.
+     * @return a {@link org.codehaus.plexus.util.xml.Xpp3Dom} object.
+     * @throws java.io.IOException if any.
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     */
     @Benchmark
     public Xpp3Dom benchmarkBuild( AdditionState state ) throws IOException, XmlPullParserException
     {
         return Xpp3DomBuilder.build( new ByteArrayInputStream( state.data ), null );
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args a {@link java.lang.String} object.
+     * @throws org.openjdk.jmh.runner.RunnerException if any.
+     */
     public static void main( String... args )
             throws RunnerException
     {

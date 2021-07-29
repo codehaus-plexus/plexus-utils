@@ -21,11 +21,17 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * <p>VertexTest class.</p>
  *
+ * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class VertexTest
 {
+    /**
+     * <p>testVertex.</p>
+     */
     @Test
     public void testVertex()
     {

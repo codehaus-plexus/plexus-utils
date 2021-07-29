@@ -67,12 +67,19 @@ import java.util.List;
 import org.junit.Test;
 
 /**
+ * <p>StreamPumperTest class.</p>
+ *
  * @author <a href="mailto:pj@thoughtworks.com">Paul Julius</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class StreamPumperTest
 {
     private String lineSeparator = System.lineSeparator();
 
+    /**
+     * <p>testPumping.</p>
+     */
     @Test
     public void testPumping()
     {
@@ -90,6 +97,9 @@ public class StreamPumperTest
         assertTrue( consumer.wasLineConsumed( line2, 1000 ) );
     }
 
+    /**
+     * <p>testPumpingWithPrintWriter.</p>
+     */
     @Test
     public void testPumpingWithPrintWriter()
     {
@@ -105,6 +115,9 @@ public class StreamPumperTest
         pumper.close();
     }
 
+    /**
+     * <p>testPumperReadsInputStreamUntilEndEvenIfConsumerFails.</p>
+     */
     @Test
     public void testPumperReadsInputStreamUntilEndEvenIfConsumerFails()
     {
@@ -221,6 +234,9 @@ public class StreamPumperTest
         }
     }
 
+    /**
+     * <p>testEnabled.</p>
+     */
     @Test
     public void testEnabled()
     {
@@ -231,6 +247,9 @@ public class StreamPumperTest
         assertEquals( 3, streamConsumer.lines.size() );
     }
 
+    /**
+     * <p>testDisabled.</p>
+     */
     @Test
     public void testDisabled()
     {

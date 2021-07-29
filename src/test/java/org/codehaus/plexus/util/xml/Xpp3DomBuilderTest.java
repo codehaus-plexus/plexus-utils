@@ -33,12 +33,18 @@ import org.junit.Test;
  * Test the Xpp3DomBuilder.
  *
  * @author <a href="mailto:brett@codehaus.org">Brett Porter</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class Xpp3DomBuilderTest
 {
     private static final String LS = System.lineSeparator();
 
+    /**
+     * <p>testBuildFromReader.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testBuildFromReader()
         throws Exception
@@ -52,6 +58,11 @@ public class Xpp3DomBuilderTest
         assertEquals( "check DOMs match", expectedDom, dom );
     }
 
+    /**
+     * <p>testBuildTrimming.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testBuildTrimming()
         throws Exception
@@ -67,6 +78,11 @@ public class Xpp3DomBuilderTest
         assertEquals( "test with trimming off", " element1\n ", dom.getChild( "el1" ).getValue() );
     }
 
+    /**
+     * <p>testBuildFromXpp3Dom.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testBuildFromXpp3Dom()
         throws Exception
@@ -145,6 +161,12 @@ public class Xpp3DomBuilderTest
         }
     }
 
+    /**
+     * <p>testEscapingInContent.</p>
+     *
+     * @throws java.io.IOException if any.
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     */
     @Test
     public void testEscapingInContent()
         throws IOException, XmlPullParserException
@@ -160,6 +182,12 @@ public class Xpp3DomBuilderTest
         assertEquals( "Compare stringified DOMs", getExpectedString(), w.toString() );
     }
 
+    /**
+     * <p>testEscapingInAttributes.</p>
+     *
+     * @throws java.io.IOException if any.
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     */
     @Test
     public void testEscapingInAttributes()
         throws IOException, XmlPullParserException
@@ -175,6 +203,12 @@ public class Xpp3DomBuilderTest
         assertEquals( "Compare stringified DOMs", newString, s );
     }
 
+    /**
+     * <p>testInputLocationTracking.</p>
+     *
+     * @throws java.io.IOException if any.
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     */
     @Test
     public void testInputLocationTracking()
         throws IOException, XmlPullParserException

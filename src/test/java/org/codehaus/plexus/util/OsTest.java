@@ -26,15 +26,25 @@ import org.junit.Test;
 
 /**
  * Test Case for Os
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class OsTest
 {
+    /**
+     * <p>testUndefinedFamily.</p>
+     */
     @Test
     public void testUndefinedFamily()
     {
         assertFalse( Os.isFamily( "bogus family" ) );
     }
 
+    /**
+     * <p>testOs.</p>
+     */
     @Test
     public void testOs()
     {
@@ -79,6 +89,9 @@ public class OsTest
         assertFalse( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, "myversion" ) );
     }
 
+    /**
+     * <p>testValidList.</p>
+     */
     @Test
     public void testValidList()
     {

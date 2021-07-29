@@ -24,11 +24,17 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
+ * <p>CycleDetectedExceptionTest class.</p>
  *
+ * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class CycleDetectedExceptionTest
 {
+    /**
+     * <p>testException.</p>
+     */
     @Test
     public void testException()
     {

@@ -32,13 +32,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
+ * <p>ReflectionValueExtractorTest class.</p>
  *
+ * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class ReflectionValueExtractorTest
 {
     private Project project;
 
+    /**
+     * <p>setUp.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Before
     public void setUp()
         throws Exception
@@ -66,6 +74,11 @@ public class ReflectionValueExtractorTest
         project.addArtifact( new Artifact( "g2", "a2", "v2", "e2", "c2" ) );
     }
 
+    /**
+     * <p>testValueExtraction.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testValueExtraction()
         throws Exception
@@ -149,6 +162,11 @@ public class ReflectionValueExtractorTest
         assertNotNull( build );
     }
 
+    /**
+     * <p>testValueExtractorWithAInvalidExpression.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testValueExtractorWithAInvalidExpression()
         throws Exception
@@ -158,6 +176,11 @@ public class ReflectionValueExtractorTest
         assertNull( ReflectionValueExtractor.evaluate( "project.dependencies[0].foo", project ) );
     }
 
+    /**
+     * <p>testMappedDottedKey.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMappedDottedKey()
         throws Exception
@@ -168,6 +191,11 @@ public class ReflectionValueExtractorTest
         assertEquals( "a.b-value", ReflectionValueExtractor.evaluate( "h.value(a.b)", new ValueHolder( map ) ) );
     }
 
+    /**
+     * <p>testIndexedMapped.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testIndexedMapped()
         throws Exception
@@ -180,6 +208,11 @@ public class ReflectionValueExtractorTest
         assertEquals( "a-value", ReflectionValueExtractor.evaluate( "h.value[0](a)", new ValueHolder( list ) ) );
     }
 
+    /**
+     * <p>testMappedIndexed.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMappedIndexed()
         throws Exception
@@ -191,6 +224,11 @@ public class ReflectionValueExtractorTest
         assertEquals( "a-value", ReflectionValueExtractor.evaluate( "h.value(a)[0]", new ValueHolder( map ) ) );
     }
 
+    /**
+     * <p>testMappedMissingDot.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMappedMissingDot()
         throws Exception
@@ -200,6 +238,11 @@ public class ReflectionValueExtractorTest
         assertNull( ReflectionValueExtractor.evaluate( "h.value(a)value", new ValueHolder( map ) ) );
     }
 
+    /**
+     * <p>testIndexedMissingDot.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testIndexedMissingDot()
         throws Exception
@@ -209,6 +252,11 @@ public class ReflectionValueExtractorTest
         assertNull( ReflectionValueExtractor.evaluate( "h.value[0]value", new ValueHolder( list ) ) );
     }
 
+    /**
+     * <p>testDotDot.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testDotDot()
         throws Exception
@@ -216,6 +264,11 @@ public class ReflectionValueExtractorTest
         assertNull( ReflectionValueExtractor.evaluate( "h..value", new ValueHolder( "value" ) ) );
     }
 
+    /**
+     * <p>testBadIndexedSyntax.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testBadIndexedSyntax()
         throws Exception
@@ -232,6 +285,11 @@ public class ReflectionValueExtractorTest
         assertNull( ReflectionValueExtractor.evaluate( "h.value[-1]", value ) );
     }
 
+    /**
+     * <p>testBadMappedSyntax.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testBadMappedSyntax()
         throws Exception
@@ -246,6 +304,11 @@ public class ReflectionValueExtractorTest
         assertNull( ReflectionValueExtractor.evaluate( "h.value(a]", value ) );
     }
 
+    /**
+     * <p>testIllegalIndexedType.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testIllegalIndexedType()
         throws Exception
@@ -260,6 +323,11 @@ public class ReflectionValueExtractorTest
         }
     }
 
+    /**
+     * <p>testIllegalMappedType.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testIllegalMappedType()
         throws Exception
@@ -274,6 +342,11 @@ public class ReflectionValueExtractorTest
         }
     }
 
+    /**
+     * <p>testTrimRootToken.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testTrimRootToken()
         throws Exception
@@ -281,6 +354,11 @@ public class ReflectionValueExtractorTest
         assertNull( ReflectionValueExtractor.evaluate( "project", project, true ) );
     }
 
+    /**
+     * <p>testArtifactMap.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testArtifactMap()
         throws Exception
@@ -543,6 +621,11 @@ public class ReflectionValueExtractorTest
         }
     }
 
+    /**
+     * <p>testRootPropertyRegression.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testRootPropertyRegression()
         throws Exception

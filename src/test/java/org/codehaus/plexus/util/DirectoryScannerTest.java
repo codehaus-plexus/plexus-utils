@@ -42,8 +42,10 @@ import org.junit.rules.TestName;
 
 /**
  * Base class for testcases doing tests with files.
- * 
+ *
  * @author Dan T. Tran
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class DirectoryScannerTest
     extends FileBasedTestCase
@@ -53,6 +55,9 @@ public class DirectoryScannerTest
     
     private static String testDir = getTestDirectory().getPath();
 
+    /**
+     * <p>setUp.</p>
+     */
     @Before
     public void setUp()
     {
@@ -66,6 +71,12 @@ public class DirectoryScannerTest
         }
     }
 
+    /**
+     * <p>testCrossPlatformIncludesString.</p>
+     *
+     * @throws java.io.IOException if any.
+     * @throws java.net.URISyntaxException if any.
+     */
     @Test
     public void testCrossPlatformIncludesString()
         throws IOException, URISyntaxException
@@ -91,6 +102,12 @@ public class DirectoryScannerTest
         assertEquals( 1, files.length );
     }
 
+    /**
+     * <p>testCrossPlatformExcludesString.</p>
+     *
+     * @throws java.io.IOException if any.
+     * @throws java.net.URISyntaxException if any.
+     */
     @Test
     public void testCrossPlatformExcludesString()
         throws IOException, URISyntaxException
@@ -184,6 +201,11 @@ public class DirectoryScannerTest
         }
     }
 
+    /**
+     * <p>testGeneral.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testGeneral()
         throws IOException
@@ -202,6 +224,11 @@ public class DirectoryScannerTest
 
     }
 
+    /**
+     * <p>testIncludesExcludesWithWhiteSpaces.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testIncludesExcludesWithWhiteSpaces()
         throws IOException
@@ -220,6 +247,9 @@ public class DirectoryScannerTest
         assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
     }
 
+    /**
+     * <p>testFollowSymlinksFalse.</p>
+     */
     @Test
     public void testFollowSymlinksFalse()
     {
@@ -254,6 +284,9 @@ public class DirectoryScannerTest
         assertTrue( included.contains( "symLinkToFileOnTheOutside" ) );
     }
 
+    /**
+     * <p>testFollowSymlinks.</p>
+     */
     @Test
     public void testFollowSymlinks()
     {
@@ -293,6 +326,11 @@ public class DirectoryScannerTest
             + File.separator + "file1.dat" ), 0 );
     }
 
+    /**
+     * <p>testDirectoriesWithHyphens.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testDirectoriesWithHyphens()
         throws IOException
@@ -312,6 +350,11 @@ public class DirectoryScannerTest
         assertEquals( "Wrong number of results.", 3, files.length );
     }
 
+    /**
+     * <p>testAntExcludesOverrideIncludes.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testAntExcludesOverrideIncludes()
         throws IOException
@@ -347,6 +390,11 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    /**
+     * <p>testAntExcludesOverrideIncludesWithExplicitAntPrefix.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testAntExcludesOverrideIncludesWithExplicitAntPrefix()
         throws IOException
@@ -383,6 +431,11 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    /**
+     * <p>testRegexIncludeWithExcludedPrefixDirs.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testRegexIncludeWithExcludedPrefixDirs()
         throws IOException
@@ -414,6 +467,11 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    /**
+     * <p>testRegexExcludeWithNegativeLookahead.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testRegexExcludeWithNegativeLookahead()
         throws IOException
@@ -453,6 +511,11 @@ public class DirectoryScannerTest
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
     }
 
+    /**
+     * <p>testRegexWithSlashInsideCharacterClass.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testRegexWithSlashInsideCharacterClass()
         throws IOException
@@ -497,7 +560,7 @@ public class DirectoryScannerTest
      * Test that the directory scanning does not enter into not matching directories.
      *
      * @see <a href="https://github.com/codehaus-plexus/plexus-utils/issues/63">Issue #63</a>
-     * @throws IOException if occurs an I/O error.
+     * @throws java.io.IOException if occurs an I/O error.
      */
     @Test
     public void testDoNotScanUnnecesaryDirectories()
@@ -562,6 +625,11 @@ public class DirectoryScannerTest
         assertEquals( expectedScannedDirSet, scannedDirSet );
     }
 
+    /**
+     * <p>testIsSymbolicLink.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testIsSymbolicLink()
         throws IOException
@@ -576,6 +644,11 @@ public class DirectoryScannerTest
         assertFalse( ds.isSymbolicLink( directory, "aRegularDir" ) );
     }
 
+    /**
+     * <p>testIsParentSymbolicLink.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testIsParentSymbolicLink()
         throws IOException

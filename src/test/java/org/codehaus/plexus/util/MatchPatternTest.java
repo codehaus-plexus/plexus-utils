@@ -22,10 +22,19 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
+ * <p>MatchPatternTest class.</p>
+ *
  * @author Kristian Rosenvold
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class MatchPatternTest
 {
+    /**
+     * <p>testMatchPath.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMatchPath()
         throws Exception
@@ -35,6 +44,8 @@ public class MatchPatternTest
     }
 
     /**
+     * <p>testMatchPatternStart.</p>
+     *
      * @see <a href="https://github.com/codehaus-plexus/plexus-utils/issues/63">Issue #63</a>
      */
     @Test

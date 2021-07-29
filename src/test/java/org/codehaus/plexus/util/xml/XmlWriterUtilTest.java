@@ -30,8 +30,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
+ * <p>XmlWriterUtilTest class.</p>
  *
+ * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class XmlWriterUtilTest
 {
@@ -41,6 +44,11 @@ public class XmlWriterUtilTest
 
     private XMLWriter xmlWriter;
 
+    /**
+     * <p>setUp.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Before
     public void setUp()
         throws Exception
@@ -50,6 +58,11 @@ public class XmlWriterUtilTest
         xmlWriter = new PrettyPrintXMLWriter( writer );
     }
 
+    /**
+     * <p>tearDown.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @After
     public void tearDown()
         throws Exception
@@ -63,7 +76,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteLineBreakXMLWriter()
@@ -78,7 +91,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteLineBreakXMLWriterInt()
@@ -93,7 +106,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteLineBreakXMLWriterIntInt()
@@ -111,7 +124,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int, int, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteLineBreakXMLWriterIntIntInt()
@@ -127,7 +140,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentLineBreak(org.codehaus.plexus.util.xml.XMLWriter)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentLineBreakXMLWriter()
@@ -145,7 +158,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentLineBreakXMLWriterInt()
@@ -167,7 +180,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentXMLWriterString()
@@ -208,7 +221,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentXMLWriterStringInt()
@@ -244,7 +257,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentXMLWriterStringIntInt()
@@ -280,7 +293,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentXMLWriterStringIntIntInt()
@@ -312,7 +325,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentText(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentTextXMLWriterStringInt()
@@ -355,7 +368,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentText(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentTextXMLWriterStringIntInt()
@@ -381,7 +394,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentText(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int, int)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentTextXMLWriterStringIntIntInt()
@@ -407,7 +420,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentNull()
@@ -424,7 +437,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentShort()
@@ -441,7 +454,7 @@ public class XmlWriterUtilTest
      * Test method for
      * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
      *
-     * @throws Exception if any
+     * @throws java.lang.Exception if any
      */
     @Test
     public void testWriteCommentLong()

@@ -26,7 +26,8 @@ import java.io.StringWriter;
  * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class Tracer
 {
@@ -41,6 +42,9 @@ public class Tracer
 
     /**
      * Return the throwable stack trace as a string
+     *
+     * @param t a {@link java.lang.Throwable} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String traceToString( Throwable t )
     {

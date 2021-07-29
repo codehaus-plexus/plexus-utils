@@ -24,8 +24,18 @@ import java.io.File;
 
 import org.junit.Test;
 
+/**
+ * <p>DirectoryWalkerTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class DirectoryWalkerTest
 {
+    /**
+     * <p>testDirectoryWalk.</p>
+     */
     @Test
     public void testDirectoryWalk()
     {

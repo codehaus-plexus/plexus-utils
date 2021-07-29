@@ -27,11 +27,19 @@ import java.io.StringReader;
 import org.junit.Test;
 
 /**
- * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
+ * <p>MXParserTest class.</p>
  *
+ * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class MXParserTest
 {
+    /**
+     * <p>testHexadecimalEntities.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testHexadecimalEntities()
         throws Exception
@@ -53,6 +61,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    /**
+     * <p>testDecimalEntities.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testDecimalEntities()
         throws Exception
@@ -74,6 +87,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    /**
+     * <p>testPredefinedEntities.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testPredefinedEntities()
         throws Exception
@@ -95,6 +113,12 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    /**
+     * <p>testEntityReplacementMap.</p>
+     *
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testEntityReplacementMap()
         throws XmlPullParserException, IOException
@@ -111,6 +135,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    /**
+     * <p>testCustomEntities.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testCustomEntities()
         throws Exception
@@ -136,6 +165,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.next() );
     }
 
+    /**
+     * <p>testUnicodeEntities.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testUnicodeEntities()
         throws Exception
@@ -159,6 +193,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    /**
+     * <p>testInvalidCharacterReferenceHexa.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testInvalidCharacterReferenceHexa()
         throws Exception
@@ -179,6 +218,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testValidCharacterReferenceHexa.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testValidCharacterReferenceHexa()
         throws Exception
@@ -222,6 +266,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testInvalidCharacterReferenceDecimal.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testInvalidCharacterReferenceDecimal()
         throws Exception
@@ -242,6 +291,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testValidCharacterReferenceDecimal.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testValidCharacterReferenceDecimal()
         throws Exception
@@ -286,6 +340,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testProcessingInstruction.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testProcessingInstruction()
         throws Exception
@@ -301,6 +360,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    /**
+     * <p>testProcessingInstructionsContainingXml.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testProcessingInstructionsContainingXml()
         throws Exception
@@ -326,6 +390,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    /**
+     * <p>testSubsequentProcessingInstructionShort.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testSubsequentProcessingInstructionShort()
         throws Exception
@@ -348,6 +417,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    /**
+     * <p>testSubsequentProcessingInstructionMoreThan8k.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testSubsequentProcessingInstructionMoreThan8k()
         throws Exception
@@ -391,6 +465,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    /**
+     * <p>testLargeText_NoOverflow.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testLargeText_NoOverflow()
         throws Exception
@@ -413,6 +492,11 @@ public class MXParserTest
         assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
     }
 
+    /**
+     * <p>testMalformedProcessingInstructionAfterTag.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedProcessingInstructionAfterTag()
         throws Exception
@@ -439,6 +523,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedProcessingInstructionBeforeTag.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedProcessingInstructionBeforeTag()
         throws Exception
@@ -465,6 +554,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedProcessingInstructionSpaceBeforeName.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedProcessingInstructionSpaceBeforeName()
         throws Exception
@@ -493,6 +587,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedProcessingInstructionNoClosingQuestionMark.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedProcessingInstructionNoClosingQuestionMark()
         throws Exception
@@ -521,6 +620,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testSubsequentMalformedProcessingInstructionNoClosingQuestionMark.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testSubsequentMalformedProcessingInstructionNoClosingQuestionMark()
         throws Exception
@@ -549,6 +653,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedXMLRootElement.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedXMLRootElement()
         throws Exception
@@ -570,6 +679,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedXMLRootElement2.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedXMLRootElement2()
         throws Exception
@@ -591,6 +705,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedXMLRootElement3.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedXMLRootElement3()
         throws Exception
@@ -613,6 +732,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedXMLRootElement4.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedXMLRootElement4()
         throws Exception
@@ -637,6 +761,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testMalformedXMLRootElement5.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMalformedXMLRootElement5()
         throws Exception
@@ -661,6 +790,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testXMLDeclVersionOnly.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testXMLDeclVersionOnly()
         throws Exception
@@ -682,6 +816,11 @@ public class MXParserTest
         }
     }
 
+    /**
+     * <p>testXMLDeclVersionEncodingStandaloneNoSpace.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testXMLDeclVersionEncodingStandaloneNoSpace()
         throws Exception

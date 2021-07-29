@@ -27,12 +27,18 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * <p>CycleDetectorTest class.</p>
  *
+ * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class CycleDetectorTest
 {
 
+    /**
+     * <p>testCycyleDetection.</p>
+     */
     @Test
     public void testCycyleDetection()
     {

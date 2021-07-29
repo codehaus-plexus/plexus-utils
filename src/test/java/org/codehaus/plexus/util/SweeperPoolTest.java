@@ -33,7 +33,8 @@ import org.junit.Test;
  * Created on 21/06/2003
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class SweeperPoolTest
 {
@@ -89,6 +90,9 @@ public class SweeperPoolTest
 
     }
 
+    /**
+     * <p>testSweepAndTrim1.</p>
+     */
     @Test
     public void testSweepAndTrim1()
     {
@@ -121,6 +125,11 @@ public class SweeperPoolTest
 
     }
 
+    /**
+     * <p>setUp.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Before
     public void setUp()
         throws Exception
@@ -133,6 +142,11 @@ public class SweeperPoolTest
         o6 = new Object();
     }
 
+    /**
+     * <p>tearDown.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @After
     public void tearDown()
         throws Exception

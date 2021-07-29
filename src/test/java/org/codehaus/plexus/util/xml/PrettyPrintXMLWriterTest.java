@@ -35,11 +35,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test of {@link PrettyPrintXMLWriter}
+ * Test of {@link org.codehaus.plexus.util.xml.PrettyPrintXMLWriter}
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class PrettyPrintXMLWriterTest
 {
@@ -47,12 +48,18 @@ public class PrettyPrintXMLWriterTest
 
     PrettyPrintXMLWriter writer;
 
+    /**
+     * <p>setUp.</p>
+     */
     @Before
     public void setUp()
     {
         initWriter();
     }
 
+    /**
+     * <p>tearDown.</p>
+     */
     @After
     public void tearDown()
     {
@@ -66,6 +73,9 @@ public class PrettyPrintXMLWriterTest
         writer = new PrettyPrintXMLWriter( w );
     }
 
+    /**
+     * <p>testDefaultPrettyPrintXMLWriter.</p>
+     */
     @Test
     public void testDefaultPrettyPrintXMLWriter()
     {
@@ -80,6 +90,9 @@ public class PrettyPrintXMLWriterTest
         assertEquals( expectedResult( PrettyPrintXMLWriter.LS ), w.toString() );
     }
 
+    /**
+     * <p>testPrettyPrintXMLWriterWithGivenLineSeparator.</p>
+     */
     @Test
     public void testPrettyPrintXMLWriterWithGivenLineSeparator()
     {
@@ -96,6 +109,9 @@ public class PrettyPrintXMLWriterTest
         assertEquals( expectedResult( "\n" ), w.toString() );
     }
 
+    /**
+     * <p>testPrettyPrintXMLWriterWithGivenLineIndenter.</p>
+     */
     @Test
     public void testPrettyPrintXMLWriterWithGivenLineIndenter()
     {
@@ -112,6 +128,9 @@ public class PrettyPrintXMLWriterTest
         assertEquals( expectedResult( "    ", PrettyPrintXMLWriter.LS ), w.toString() );
     }
 
+    /**
+     * <p>testEscapeXmlAttribute.</p>
+     */
     @Test
     public void testEscapeXmlAttribute()
     {
@@ -136,6 +155,9 @@ public class PrettyPrintXMLWriterTest
         assertEquals( "<div class=\"sect&#10;ion\"/>", w.toString() );
     }
 
+    /**
+     * <p>testendElementAlreadyClosed.</p>
+     */
     @Test
     public void testendElementAlreadyClosed()
     {
@@ -158,8 +180,8 @@ public class PrettyPrintXMLWriterTest
      * optimization bug is present. Target environment: Java 7 (u79 and u80 verified) running on Windows. Detection
      * strategy: Tries to build a big XML file (~750MB size) and with many nested tags to force the JVM to trigger the
      * concatenation string optimization bug that throws a NoSuchElementException when calling endElement() method.
-     * 
-     * @throws IOException if an I/O error occurs
+     *
+     * @throws java.io.IOException if an I/O error occurs
      */
     @Test
     public void testIssue51DetectJava7ConcatenationBug()

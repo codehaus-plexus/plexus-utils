@@ -18,8 +18,20 @@ package org.codehaus.plexus.util.cli;
 
 import org.junit.Test;
 
+/**
+ * <p>DefaultConsumerTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class DefaultConsumerTest
 {
+    /**
+     * <p>testConsumeLine.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testConsumeLine()
         throws Exception

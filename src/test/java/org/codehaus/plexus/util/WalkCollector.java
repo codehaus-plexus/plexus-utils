@@ -35,6 +35,9 @@ class WalkCollector
 
     public int percentageHigh;
 
+    /**
+     * <p>Constructor for WalkCollector.</p>
+     */
     public WalkCollector()
     {
         steps = new ArrayList<File>();
@@ -44,6 +47,7 @@ class WalkCollector
         percentageHigh = 0;
     }
 
+    /** {@inheritDoc} */
     public void directoryWalkStarting( File basedir )
     {
         debug( "Walk Starting: " + basedir );
@@ -51,6 +55,7 @@ class WalkCollector
         startingDir = basedir;
     }
 
+    /** {@inheritDoc} */
     public void directoryWalkStep( int percentage, File file )
     {
         percentageLow = Math.min( percentageLow, percentage );
@@ -59,12 +64,16 @@ class WalkCollector
         steps.add( file );
     }
 
+    /**
+     * <p>directoryWalkFinished.</p>
+     */
     public void directoryWalkFinished()
     {
         debug( "Walk Finished." );
         finishCount++;
     }
 
+    /** {@inheritDoc} */
     public void debug( String message )
     {
         System.out.println( message );

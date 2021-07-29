@@ -18,12 +18,22 @@ package org.codehaus.plexus.util;
 
 import org.junit.Test;
 
+/**
+ * <p>PerfTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class PerfTest
 {
     String src = "012345578901234556789012345678901234456789012345678901234567890";
 
     private final int oops = 100;
 
+    /**
+     * <p>testSubString.</p>
+     */
     @Test
     public void testSubString()
     {
@@ -40,6 +50,9 @@ public class PerfTest
         System.out.println( "i = " + i );
     }
 
+    /**
+     * <p>testResDir.</p>
+     */
     @Test
     public void testResDir()
     {

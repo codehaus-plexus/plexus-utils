@@ -27,10 +27,20 @@ import java.util.Properties;
 import org.codehaus.plexus.util.Os;
 import org.junit.Test;
 
+/**
+ * <p>CommandLineUtilsTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 @SuppressWarnings( { "JavaDoc", "deprecation" } )
 public class CommandLineUtilsTest
 {
 
+    /**
+     * <p>testQuoteArguments.</p>
+     */
     @Test
     public void testQuoteArguments()
     {
@@ -62,6 +72,8 @@ public class CommandLineUtilsTest
 
     /**
      * Tests that case-insensitive environment variables are normalized to upper case.
+     *
+     * @throws java.lang.Exception if any.
      */
     @Test
     public void testGetSystemEnvVarsCaseInsensitive()
@@ -77,6 +89,8 @@ public class CommandLineUtilsTest
 
     /**
      * Tests that environment variables on Windows are normalized to upper case. Does nothing on Unix platforms.
+     *
+     * @throws java.lang.Exception if any.
      */
     @Test
     public void testGetSystemEnvVarsWindows()
@@ -96,6 +110,8 @@ public class CommandLineUtilsTest
 
     /**
      * Tests the splitting of a command line into distinct arguments.
+     *
+     * @throws java.lang.Exception if any.
      */
     @Test
     public void testTranslateCommandline()

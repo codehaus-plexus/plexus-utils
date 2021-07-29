@@ -23,12 +23,19 @@ import java.io.StringWriter;
 import org.junit.Test;
 
 /**
+ * <p>Xpp3DomWriterTest class.</p>
+ *
  * @author Edwin Punzalan
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class Xpp3DomWriterTest
 {
     private static final String LS = System.getProperty( "line.separator" );
 
+    /**
+     * <p>testWriter.</p>
+     */
     @Test
     public void testWriter()
     {
@@ -39,6 +46,9 @@ public class Xpp3DomWriterTest
         assertEquals( "Check if output matches", createExpectedXML( true ), writer.toString() );
     }
 
+    /**
+     * <p>testWriterNoEscape.</p>
+     */
     @Test
     public void testWriterNoEscape()
     {

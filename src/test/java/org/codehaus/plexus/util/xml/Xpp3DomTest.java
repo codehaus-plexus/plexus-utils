@@ -31,8 +31,18 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.junit.Test;
 
+/**
+ * <p>Xpp3DomTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class Xpp3DomTest
 {
+    /**
+     * <p>testShouldPerformAppendAtFirstSubElementLevel.</p>
+     */
     @Test
     public void testShouldPerformAppendAtFirstSubElementLevel()
     {
@@ -69,6 +79,9 @@ public class Xpp3DomTest
         assertEquals( "t1s1", result.getChildren( "topsub1" )[1].getInputLocation() );
     }
 
+    /**
+     * <p>testShouldOverrideAppendAndDeepMerge.</p>
+     */
     @Test
     public void testShouldOverrideAppendAndDeepMerge()
     {
@@ -103,6 +116,9 @@ public class Xpp3DomTest
         assertEquals( "t1s1", result.getChildren( "topsub1" )[0].getInputLocation() );
     }
 
+    /**
+     * <p>testShouldPerformSelfOverrideAtTopLevel.</p>
+     */
     @Test
     public void testShouldPerformSelfOverrideAtTopLevel()
     {
@@ -127,6 +143,9 @@ public class Xpp3DomTest
         assertEquals( "t1top", result.getInputLocation() );
     }
 
+    /**
+     * <p>testShouldMergeValuesAtTopLevelByDefault.</p>
+     */
     @Test
     public void testShouldMergeValuesAtTopLevelByDefault()
     {
@@ -151,6 +170,9 @@ public class Xpp3DomTest
         assertEquals( "t2top", result.getInputLocation() );
     }
 
+    /**
+     * <p>testShouldMergeValuesAtTopLevel.</p>
+     */
     @Test
     public void testShouldMergeValuesAtTopLevel()
     {
@@ -172,6 +194,9 @@ public class Xpp3DomTest
         assertEquals( result.getValue(), t2.getValue() );
     }
 
+    /**
+     * <p>testNullAttributeNameOrValue.</p>
+     */
     @Test
     public void testNullAttributeNameOrValue()
     {
@@ -196,6 +221,9 @@ public class Xpp3DomTest
         t1.toString();
     }
 
+    /**
+     * <p>testEquals.</p>
+     */
     @Test
     public void testEquals()
     {
@@ -206,6 +234,12 @@ public class Xpp3DomTest
         assertFalse( dom.equals( new Xpp3Dom( (String) null ) ) );
     }
 
+    /**
+     * <p>testEqualsIsNullSafe.</p>
+     *
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testEqualsIsNullSafe()
         throws XmlPullParserException, IOException
@@ -233,6 +267,12 @@ public class Xpp3DomTest
         }
     }
 
+    /**
+     * <p>testShouldOverwritePluginConfigurationSubItemsByDefault.</p>
+     *
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testShouldOverwritePluginConfigurationSubItemsByDefault()
         throws XmlPullParserException, IOException
@@ -255,6 +295,12 @@ public class Xpp3DomTest
         assertEquals( "child", item.getInputLocation() );
     }
 
+    /**
+     * <p>testShouldMergePluginConfigurationSubItemsWithMergeAttributeSet.</p>
+     *
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testShouldMergePluginConfigurationSubItemsWithMergeAttributeSet()
         throws XmlPullParserException, IOException
@@ -283,6 +329,11 @@ public class Xpp3DomTest
         assertEquals( "child", item[2].getInputLocation() );
     }
 
+    /**
+     * <p>testShouldNotChangeUponMergeWithItselfWhenFirstOrLastSubItemIsEmpty.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testShouldNotChangeUponMergeWithItselfWhenFirstOrLastSubItemIsEmpty()
         throws Exception
@@ -301,6 +352,11 @@ public class Xpp3DomTest
         assertEquals( null, items.getChild( 2 ).getValue() );
     }
 
+    /**
+     * <p>testShouldCopyRecessiveChildrenNotPresentInTarget.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testShouldCopyRecessiveChildrenNotPresentInTarget()
         throws Exception
@@ -319,6 +375,12 @@ public class Xpp3DomTest
         assertNotSame( result.getChild( "bar" ), recessiveConfig.getChild( "bar" ) );
     }
 
+    /**
+     * <p>testDupeChildren.</p>
+     *
+     * @throws java.io.IOException if any.
+     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
+     */
     @Test
     public void testDupeChildren()
         throws IOException, XmlPullParserException
@@ -329,6 +391,11 @@ public class Xpp3DomTest
         assertEquals( "y", dom.getChild( "foo" ).getValue() );
     }
 
+    /**
+     * <p>testShouldRemoveEntireElementWithAttributesAndChildren.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testShouldRemoveEntireElementWithAttributesAndChildren()
         throws Exception
@@ -344,6 +411,11 @@ public class Xpp3DomTest
         assertEquals( "config", result.getName() );
     }
 
+    /**
+     * <p>testShouldRemoveDoNotRemoveTagWhenSwappedInputDOMs.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testShouldRemoveDoNotRemoveTagWhenSwappedInputDOMs()
         throws Exception

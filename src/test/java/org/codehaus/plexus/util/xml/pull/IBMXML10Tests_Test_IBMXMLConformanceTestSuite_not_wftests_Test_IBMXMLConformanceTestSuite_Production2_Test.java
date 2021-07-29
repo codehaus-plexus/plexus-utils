@@ -24,6 +24,8 @@ import org.junit.Test;
  * XML test files base folder: <pre>xmlconf/ibm/</pre>
  *
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConformanceTestSuite_Production2_Test {
 
@@ -31,6 +33,9 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
 
     MXParser parser;
 
+    /**
+     * <p>setUp.</p>
+     */
     @Before
     public void setUp() {
         parser = new MXParser();
@@ -43,7 +48,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n01xml()
@@ -70,7 +75,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n02xml()
@@ -96,7 +101,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n03xml()
@@ -122,7 +127,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n04xml()
@@ -148,7 +153,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n05xml()
@@ -174,7 +179,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n06xml()
@@ -200,7 +205,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n07xml() throws IOException {
@@ -223,7 +228,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n08xml()
@@ -249,7 +254,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n09xml()
@@ -275,7 +280,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n10xml()
@@ -301,7 +306,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n11xml()
@@ -327,7 +332,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n12xml()
@@ -353,7 +358,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n13xml()
@@ -379,7 +384,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n14xml()
@@ -405,7 +410,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n15xml()
@@ -431,7 +436,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n16xml()
@@ -457,7 +462,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n17xml()
@@ -483,7 +488,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n18xml()
@@ -509,7 +514,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n19xml()
@@ -535,7 +540,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n20xml()
@@ -561,7 +566,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n21xml()
@@ -587,7 +592,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n22xml()
@@ -613,7 +618,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n23xml()
@@ -639,7 +644,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n24xml()
@@ -665,7 +670,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n25xml()
@@ -691,7 +696,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n26xml()
@@ -717,7 +722,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n27xml()
@@ -743,7 +748,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n28xml()
@@ -769,7 +774,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n29xml()
@@ -795,7 +800,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      *
      * NOTE: This test file is malformed into the original test suite, so I skip it.
      */
@@ -825,7 +830,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      *
      * NOTE: This test file is malformed into the original test suite, so I skip it.
      */
@@ -854,7 +859,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n32xml()
@@ -881,7 +886,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
      * Sections: <pre>2.2</pre>
      * Version:
      *
-     * @throws IOException if there is an I/O error
+     * @throws java.io.IOException if there is an I/O error
      */
     @Test
     public void testibm_not_wf_P02_ibm02n33xml()

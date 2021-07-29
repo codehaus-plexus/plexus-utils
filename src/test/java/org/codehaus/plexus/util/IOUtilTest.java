@@ -47,6 +47,8 @@ import org.junit.Test;
  * Due to interdependencies in IOUtils and IOUtilsTestlet, one bug may cause multiple tests to fail.
  *
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public final class IOUtilTest
 {
@@ -62,6 +64,9 @@ public final class IOUtilTest
 
     private File testFile;
 
+    /**
+     * <p>setUp.</p>
+     */
     @Before
     public void setUp()
     {
@@ -83,6 +88,9 @@ public final class IOUtilTest
         }
     }
 
+    /**
+     * <p>tearDown.</p>
+     */
     public void tearDown()
     {
         testFile.delete();
@@ -152,6 +160,11 @@ public final class IOUtilTest
         is.close();
     }
 
+    /**
+     * <p>testInputStreamToOutputStream.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testInputStreamToOutputStream()
         throws Exception
@@ -171,6 +184,11 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    /**
+     * <p>testInputStreamToWriter.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testInputStreamToWriter()
         throws Exception
@@ -191,6 +209,11 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    /**
+     * <p>testInputStreamToString.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testInputStreamToString()
         throws Exception
@@ -203,6 +226,11 @@ public final class IOUtilTest
         fin.close();
     }
 
+    /**
+     * <p>testReaderToOutputStream.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testReaderToOutputStream()
         throws Exception
@@ -225,6 +253,11 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    /**
+     * <p>testReaderToWriter.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testReaderToWriter()
         throws Exception
@@ -242,6 +275,11 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    /**
+     * <p>testReaderToString.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testReaderToString()
         throws Exception
@@ -253,6 +291,11 @@ public final class IOUtilTest
         fin.close();
     }
 
+    /**
+     * <p>testStringToOutputStream.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testStringToOutputStream()
         throws Exception
@@ -277,6 +320,11 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    /**
+     * <p>testStringToWriter.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testStringToWriter()
         throws Exception
@@ -297,6 +345,11 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    /**
+     * <p>testInputStreamToByteArray.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testInputStreamToByteArray()
         throws Exception
@@ -310,6 +363,11 @@ public final class IOUtilTest
         fin.close();
     }
 
+    /**
+     * <p>testStringToByteArray.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testStringToByteArray()
         throws Exception
@@ -324,6 +382,11 @@ public final class IOUtilTest
         fin.close();
     }
 
+    /**
+     * <p>testByteArrayToWriter.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testByteArrayToWriter()
         throws Exception
@@ -343,6 +406,11 @@ public final class IOUtilTest
         deleteFile( destination );
     }
 
+    /**
+     * <p>testByteArrayToString.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testByteArrayToString()
         throws Exception
@@ -355,6 +423,11 @@ public final class IOUtilTest
         fin.close();
     }
 
+    /**
+     * <p>testByteArrayToOutputStream.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testByteArrayToOutputStream()
         throws Exception
@@ -381,6 +454,11 @@ public final class IOUtilTest
     // Test closeXXX()
     // ----------------------------------------------------------------------
 
+    /**
+     * <p>testCloseInputStream.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testCloseInputStream()
         throws Exception
@@ -394,6 +472,11 @@ public final class IOUtilTest
         assertTrue( inputStream.closed );
     }
 
+    /**
+     * <p>testCloseOutputStream.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testCloseOutputStream()
         throws Exception
@@ -407,6 +490,11 @@ public final class IOUtilTest
         assertTrue( outputStream.closed );
     }
 
+    /**
+     * <p>testCloseReader.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testCloseReader()
         throws Exception
@@ -420,6 +508,11 @@ public final class IOUtilTest
         assertTrue( reader.closed );
     }
 
+    /**
+     * <p>testCloseWriter.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testCloseWriter()
         throws Exception

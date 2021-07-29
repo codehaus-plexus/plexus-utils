@@ -35,15 +35,21 @@ import org.codehaus.plexus.util.WriterFactory;
 import org.junit.Test;
 
 /**
- * Test the {@link XmlUtil} class.
+ * Test the {@link org.codehaus.plexus.util.xml.XmlUtil} class.
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class XmlUtilTest
 {
     private String basedir;
 
+    /**
+     * <p>Getter for the field <code>basedir</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public final String getBasedir()
     {
         if ( null == basedir )
@@ -65,6 +71,11 @@ public class XmlUtilTest
         return file;
     }
 
+    /**
+     * <p>testPrettyFormatInputStreamOutputStream.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testPrettyFormatInputStreamOutputStream()
         throws Exception
@@ -91,6 +102,11 @@ public class XmlUtilTest
         }
     }
 
+    /**
+     * <p>testPrettyFormatReaderWriter.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testPrettyFormatReaderWriter()
         throws Exception
@@ -118,6 +134,11 @@ public class XmlUtilTest
         }
     }
 
+    /**
+     * <p>testPrettyFormatString.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testPrettyFormatString()
         throws Exception
@@ -149,6 +170,11 @@ public class XmlUtilTest
         assertTrue( countEOL < StringUtils.countMatches( writer.toString(), XmlUtil.DEFAULT_LINE_SEPARATOR ) );
     }
 
+    /**
+     * <p>testPrettyFormatReaderWriter2.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testPrettyFormatReaderWriter2()
         throws Exception

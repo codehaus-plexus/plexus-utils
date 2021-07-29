@@ -24,7 +24,8 @@ package org.codehaus.plexus.util;
  * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public abstract class AbstractTestThread
     implements Runnable
@@ -32,6 +33,7 @@ public abstract class AbstractTestThread
     // ~ Instance fields ----------------------------------------------------------------------------
     private String name;
 
+    /** Constant <code>DEBUG=true</code> */
     public static final boolean DEBUG = true;
 
     private boolean isRunning = false;
@@ -68,6 +70,11 @@ public abstract class AbstractTestThread
         super();
     }
 
+    /**
+     * <p>Constructor for AbstractTestThread.</p>
+     *
+     * @param registry a {@link org.codehaus.plexus.util.TestThreadManager} object.
+     */
     public AbstractTestThread( TestThreadManager registry )
     {
         super();
@@ -77,7 +84,9 @@ public abstract class AbstractTestThread
     // ~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * @return
+     * <p>Getter for the field <code>error</code>.</p>
+     *
+     * @return a {@link java.lang.Throwable} object.
      */
     public Throwable getError()
     {
@@ -129,7 +138,9 @@ public abstract class AbstractTestThread
     }
 
     /**
-     * @return
+     * <p>Getter for the field <code>errorMsg</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String getErrorMsg()
     {
@@ -137,7 +148,9 @@ public abstract class AbstractTestThread
     }
 
     /**
-     * @return
+     * <p>hasFailed.</p>
+     *
+     * @return a boolean.
      */
     public boolean hasFailed()
     {
@@ -189,7 +202,7 @@ public abstract class AbstractTestThread
     /**
      * Override this to run your custom test
      *
-     * @throws Throwable
+     * @throws java.lang.Throwable
      */
     public abstract void doRun()
         throws Throwable;
@@ -197,7 +210,7 @@ public abstract class AbstractTestThread
     /**
      * Set the registry this thread should notify when it has completed running
      *
-     * @param registry
+     * @param registry a {@link org.codehaus.plexus.util.TestThreadManager} object.
      */
     public void setThreadRegistry( TestThreadManager registry )
 
@@ -208,7 +221,7 @@ public abstract class AbstractTestThread
     /**
      * Test if the test has run
      *
-     * @return
+     * @return a boolean.
      */
     public boolean hasRun()
     {
@@ -216,7 +229,9 @@ public abstract class AbstractTestThread
     }
 
     /**
-     * @param throwable
+     * <p>Setter for the field <code>error</code>.</p>
+     *
+     * @param throwable a {@link java.lang.Throwable} object.
      */
     public void setError( Throwable throwable )
     {
@@ -224,7 +239,9 @@ public abstract class AbstractTestThread
     }
 
     /**
-     * @param string
+     * <p>Setter for the field <code>errorMsg</code>.</p>
+     *
+     * @param string a {@link java.lang.String} object.
      */
     public void setErrorMsg( String string )
     {
@@ -232,7 +249,9 @@ public abstract class AbstractTestThread
     }
 
     /**
-     * @param b
+     * <p>Setter for the field <code>passed</code>.</p>
+     *
+     * @param b a boolean.
      */
     public void setPassed( boolean b )
     {
@@ -240,7 +259,9 @@ public abstract class AbstractTestThread
     }
 
     /**
-     * @return
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
      */
     public String getName()
     {
@@ -248,7 +269,9 @@ public abstract class AbstractTestThread
     }
 
     /**
-     * @param string
+     * <p>Setter for the field <code>name</code>.</p>
+     *
+     * @param string a {@link java.lang.String} object.
      */
     public void setName( String string )
     {

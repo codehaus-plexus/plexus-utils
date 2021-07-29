@@ -21,13 +21,18 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
+ * <p>PathToolTest class.</p>
  *
+ * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class PathToolTest
 {
     /**
-     * @throws Exception
+     * <p>testGetRelativePath.</p>
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetRelativePath()
@@ -42,7 +47,9 @@ public class PathToolTest
     }
 
     /**
-     * @throws Exception
+     * <p>testGetDirectoryComponent.</p>
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetDirectoryComponent()
@@ -55,7 +62,9 @@ public class PathToolTest
     }
 
     /**
-     * @throws Exception
+     * <p>testCalculateLink.</p>
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testCalculateLink()
@@ -73,7 +82,9 @@ public class PathToolTest
     }
 
     /**
-     * @throws Exception
+     * <p>testGetRelativeWebPath.</p>
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetRelativeWebPath()
@@ -91,7 +102,9 @@ public class PathToolTest
     }
 
     /**
-     * @throws Exception
+     * <p>testGetRelativeFilePath.</p>
+     *
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetRelativeFilePath()

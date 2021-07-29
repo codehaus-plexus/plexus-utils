@@ -29,11 +29,15 @@ import org.junit.Test;
  * Test string utils.
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class StringUtilsTest
 {
 
+    /**
+     * <p>testIsEmpty.</p>
+     */
     @Test
     public void testIsEmpty()
     {
@@ -44,6 +48,9 @@ public class StringUtilsTest
         assertEquals( false, StringUtils.isEmpty( "  foo  " ) );
     }
 
+    /**
+     * <p>testIsNotEmpty.</p>
+     */
     @Test
     public void testIsNotEmpty()
     {
@@ -54,6 +61,9 @@ public class StringUtilsTest
         assertEquals( true, StringUtils.isNotEmpty( "  foo  " ) );
     }
 
+    /**
+     * <p>testIsBlank.</p>
+     */
     @Test
     public void testIsBlank()
     {
@@ -64,6 +74,9 @@ public class StringUtilsTest
         assertEquals( false, StringUtils.isBlank( "  foo  " ) );
     }
 
+    /**
+     * <p>testIsNotBlank.</p>
+     */
     @Test
     public void testIsNotBlank()
     {
@@ -74,6 +87,9 @@ public class StringUtilsTest
         assertEquals( true, StringUtils.isNotBlank( "  foo  " ) );
     }
 
+    /**
+     * <p>testCapitalizeFirstLetter.</p>
+     */
     @Test
     public void testCapitalizeFirstLetter()
     {
@@ -81,6 +97,9 @@ public class StringUtilsTest
         assertEquals( "Id", StringUtils.capitalizeFirstLetter( "Id" ) );
     }
 
+    /**
+     * <p>testCapitalizeFirstLetterTurkish.</p>
+     */
     @Test
     public void testCapitalizeFirstLetterTurkish()
     {
@@ -91,6 +110,9 @@ public class StringUtilsTest
         Locale.setDefault( l );
     }
 
+    /**
+     * <p>testLowerCaseFirstLetter.</p>
+     */
     @Test
     public void testLowerCaseFirstLetter()
     {
@@ -98,6 +120,9 @@ public class StringUtilsTest
         assertEquals( "id", StringUtils.lowercaseFirstLetter( "Id" ) );
     }
 
+    /**
+     * <p>testLowerCaseFirstLetterTurkish.</p>
+     */
     @Test
     public void testLowerCaseFirstLetterTurkish()
     {
@@ -108,6 +133,9 @@ public class StringUtilsTest
         Locale.setDefault( l );
     }
 
+    /**
+     * <p>testRemoveAndHump.</p>
+     */
     @Test
     public void testRemoveAndHump()
     {
@@ -115,6 +143,9 @@ public class StringUtilsTest
         assertEquals( "SomeId", StringUtils.removeAndHump( "some-id", "-" ) );
     }
 
+    /**
+     * <p>testRemoveAndHumpTurkish.</p>
+     */
     @Test
     public void testRemoveAndHumpTurkish()
     {
@@ -125,6 +156,9 @@ public class StringUtilsTest
         Locale.setDefault( l );
     }
 
+    /**
+     * <p>testQuote_EscapeEmbeddedSingleQuotes.</p>
+     */
     @Test
     public void testQuote_EscapeEmbeddedSingleQuotes()
     {
@@ -137,6 +171,9 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    /**
+     * <p>testQuote_EscapeEmbeddedSingleQuotesWithPattern.</p>
+     */
     @Test
     public void testQuote_EscapeEmbeddedSingleQuotesWithPattern()
     {
@@ -149,6 +186,9 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    /**
+     * <p>testQuote_EscapeEmbeddedDoubleQuotesAndSpaces.</p>
+     */
     @Test
     public void testQuote_EscapeEmbeddedDoubleQuotesAndSpaces()
     {
@@ -161,6 +201,9 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    /**
+     * <p>testQuote_DontQuoteIfUnneeded.</p>
+     */
     @Test
     public void testQuote_DontQuoteIfUnneeded()
     {
@@ -172,6 +215,9 @@ public class StringUtilsTest
         assertEquals( src, result );
     }
 
+    /**
+     * <p>testQuote_WrapWithSingleQuotes.</p>
+     */
     @Test
     public void testQuote_WrapWithSingleQuotes()
     {
@@ -184,6 +230,9 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    /**
+     * <p>testQuote_PreserveExistingQuotes.</p>
+     */
     @Test
     public void testQuote_PreserveExistingQuotes()
     {
@@ -195,6 +244,9 @@ public class StringUtilsTest
         assertEquals( src, result );
     }
 
+    /**
+     * <p>testQuote_WrapExistingQuotesWhenForceIsTrue.</p>
+     */
     @Test
     public void testQuote_WrapExistingQuotesWhenForceIsTrue()
     {
@@ -207,6 +259,9 @@ public class StringUtilsTest
         assertEquals( check, result );
     }
 
+    /**
+     * <p>testQuote_ShortVersion_SingleQuotesPreserved.</p>
+     */
     @Test
     public void testQuote_ShortVersion_SingleQuotesPreserved()
     {
@@ -217,6 +272,9 @@ public class StringUtilsTest
         assertEquals( src, result );
     }
 
+    /**
+     * <p>testSplit.</p>
+     */
     @Test
     public void testSplit()
     {
@@ -247,6 +305,11 @@ public class StringUtilsTest
         assertEquals( Arrays.asList( new String[] { "this", "is", "a", "test", "really" } ), Arrays.asList( tokens ) );
     }
 
+    /**
+     * <p>testRemoveDuplicateWhitespace.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testRemoveDuplicateWhitespace()
         throws Exception
@@ -262,6 +325,11 @@ public class StringUtilsTest
 
     }
 
+    /**
+     * <p>testUnifyLineSeparators.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testUnifyLineSeparators()
         throws Exception

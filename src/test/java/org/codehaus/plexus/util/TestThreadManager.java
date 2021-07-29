@@ -29,7 +29,8 @@ import java.util.logging.Logger;
  * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- *
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class TestThreadManager
 {
@@ -54,6 +55,11 @@ public class TestThreadManager
 
     // ~ Constructors -------------------------------------------------------------------------------
 
+    /**
+     * <p>Constructor for TestThreadManager.</p>
+     *
+     * @param notify a {@link java.lang.Object} object.
+     */
     public TestThreadManager( Object notify )
     {
         super();
@@ -63,13 +69,18 @@ public class TestThreadManager
     // ~ Methods ------------------------------------------------------------------------------------
 
     /**
-     * @return
+     * <p>Getter for the field <code>runThreads</code>.</p>
+     *
+     * @return a {@link java.util.Collection} object.
      */
     public Collection<AbstractTestThread> getRunThreads()
     {
         return runThreads;
     }
 
+    /**
+     * <p>runTestThreads.</p>
+     */
     public void runTestThreads()
     {
         failedThreads.clear();
@@ -83,6 +94,11 @@ public class TestThreadManager
         }
     }
 
+    /**
+     * <p>getFailedTests.</p>
+     *
+     * @return a {@link java.util.Collection} object.
+     */
     public Collection<AbstractTestThread> getFailedTests()
     {
         return failedThreads;
@@ -91,13 +107,18 @@ public class TestThreadManager
     /**
      * Return the object which threads can wait on to be notified when all the test threads have completed running
      *
-     * @return
+     * @return a {@link java.lang.Object} object.
      */
     public Object getNotifyObject()
     {
         return notify;
     }
 
+    /**
+     * <p>hasFailedThreads.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasFailedThreads()
     {
         return !failedThreads.isEmpty();
@@ -114,7 +135,9 @@ public class TestThreadManager
     }
 
     /**
-     * @return
+     * <p>Getter for the field <code>toRunThreads</code>.</p>
+     *
+     * @return a {@link java.util.Collection} object.
      */
     public Collection<AbstractTestThread> getToRunThreads()
     {
@@ -134,6 +157,11 @@ public class TestThreadManager
     /*
      * (non-Javadoc)
      * @see java.util.Collection#remove(java.lang.Object)
+     */
+    /**
+     * <p>completed.</p>
+     *
+     * @param thread a {@link org.codehaus.plexus.util.AbstractTestThread} object.
      */
     public synchronized void completed( AbstractTestThread thread )
     {
@@ -163,6 +191,11 @@ public class TestThreadManager
     {
     }
 
+    /**
+     * <p>registerThread.</p>
+     *
+     * @param thread a {@link org.codehaus.plexus.util.AbstractTestThread} object.
+     */
     public final void registerThread( AbstractTestThread thread )
     {
         thread.setThreadRegistry( this );

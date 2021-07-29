@@ -21,8 +21,20 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+/**
+ * <p>MatchPatternsTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class MatchPatternsTest
 {
+    /**
+     * <p>testMatches.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     @Test
     public void testMatches()
         throws Exception

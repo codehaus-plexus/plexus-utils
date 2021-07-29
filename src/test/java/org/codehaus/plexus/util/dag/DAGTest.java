@@ -27,11 +27,19 @@ import java.util.Set;
 import org.junit.Test;
 
 /**
- * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * <p>DAGTest class.</p>
  *
+ * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class DAGTest
 {
+    /**
+     * <p>testDAG.</p>
+     *
+     * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
+     */
     @Test
     public void testDAG()
         throws CycleDetectedException
@@ -135,6 +143,11 @@ public class DAGTest
         assertTrue( d.getParentLabels().contains( "c" ) );
     }
 
+    /**
+     * <p>testGetPredecessors.</p>
+     *
+     * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
+     */
     @Test
     public void testGetPredecessors()
         throws CycleDetectedException

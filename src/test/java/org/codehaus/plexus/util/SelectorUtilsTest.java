@@ -23,8 +23,18 @@ import java.io.File;
 
 import org.junit.Test;
 
+/**
+ * <p>SelectorUtilsTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class SelectorUtilsTest
 {
+    /**
+     * <p>testMatchPath_DefaultFileSeparator.</p>
+     */
     @Test
     public void testMatchPath_DefaultFileSeparator()
     {
@@ -41,6 +51,9 @@ public class SelectorUtilsTest
         assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt" ) );
     }
 
+    /**
+     * <p>testMatchPath_UnixFileSeparator.</p>
+     */
     @Test
     public void testMatchPath_UnixFileSeparator()
     {
@@ -59,6 +72,9 @@ public class SelectorUtilsTest
         assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false ) );
     }
 
+    /**
+     * <p>testMatchPath_WindowsFileSeparator.</p>
+     */
     @Test
     public void testMatchPath_WindowsFileSeparator()
     {

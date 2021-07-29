@@ -19,12 +19,18 @@ package org.codehaus.plexus.util;
 import junit.framework.TestCase;
 
 /**
- * @author Ben Walding
+ * <p>StringInputStreamTest class.</p>
  *
+ * @author Ben Walding
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class StringInputStreamTest
     extends TestCase
 {
+    /**
+     * <p>testFoo.</p>
+     */
     public void testFoo()
     {
     }

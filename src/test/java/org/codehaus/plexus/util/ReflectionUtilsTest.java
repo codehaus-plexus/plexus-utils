@@ -30,11 +30,17 @@ import java.util.HashMap;
  * @author Jesse McConnell
  * @version $Id:$
  * @see org.codehaus.plexus.util.ReflectionUtils
+ * @since 3.4.0
  */
 public final class ReflectionUtilsTest
 {
     public ReflectionUtilsTestClass testClass = new ReflectionUtilsTestClass();
 
+    /**
+     * <p>testSimpleVariableAccess.</p>
+     *
+     * @throws java.lang.IllegalAccessException if any.
+     */
     @Test
     public void testSimpleVariableAccess()
         throws IllegalAccessException
@@ -42,6 +48,11 @@ public final class ReflectionUtilsTest
         assertEquals( "woohoo", (String) ReflectionUtils.getValueIncludingSuperclasses( "myString", testClass ) );
     }
 
+    /**
+     * <p>testComplexVariableAccess.</p>
+     *
+     * @throws java.lang.IllegalAccessException if any.
+     */
     @Test
     public void testComplexVariableAccess()
         throws IllegalAccessException
@@ -55,6 +66,11 @@ public final class ReflectionUtilsTest
 
     }
 
+    /**
+     * <p>testSuperClassVariableAccess.</p>
+     *
+     * @throws java.lang.IllegalAccessException if any.
+     */
     @Test
     public void testSuperClassVariableAccess()
         throws IllegalAccessException
@@ -63,6 +79,11 @@ public final class ReflectionUtilsTest
                       (String) ReflectionUtils.getValueIncludingSuperclasses( "mySuperString", testClass ) );
     }
 
+    /**
+     * <p>testSettingVariableValue.</p>
+     *
+     * @throws java.lang.IllegalAccessException if any.
+     */
     @Test
     public void testSettingVariableValue()
         throws IllegalAccessException

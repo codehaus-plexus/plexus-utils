@@ -23,6 +23,13 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+/**
+ * <p>XmlStreamWriterTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class XmlStreamWriterTest
 {
     /** french */
@@ -72,6 +79,11 @@ public class XmlStreamWriterTest
         checkXmlContent( xml, effectiveEncoding );
     }
 
+    /**
+     * <p>testNoXmlHeader.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testNoXmlHeader()
         throws IOException
@@ -80,6 +92,11 @@ public class XmlStreamWriterTest
         checkXmlContent( xml, "UTF-8" );
     }
 
+    /**
+     * <p>testEmpty.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testEmpty()
         throws IOException
@@ -94,6 +111,11 @@ public class XmlStreamWriterTest
         writer.close();
     }
 
+    /**
+     * <p>testDefaultEncoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testDefaultEncoding()
         throws IOException
@@ -101,6 +123,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_UNICODE, null );
     }
 
+    /**
+     * <p>testUTF8Encoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testUTF8Encoding()
         throws IOException
@@ -108,6 +135,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_UNICODE, "UTF-8" );
     }
 
+    /**
+     * <p>testUTF16Encoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testUTF16Encoding()
         throws IOException
@@ -115,6 +147,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_UNICODE, "UTF-16" );
     }
 
+    /**
+     * <p>testUTF16BEEncoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testUTF16BEEncoding()
         throws IOException
@@ -122,6 +159,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_UNICODE, "UTF-16BE" );
     }
 
+    /**
+     * <p>testUTF16LEEncoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testUTF16LEEncoding()
         throws IOException
@@ -129,6 +171,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_UNICODE, "UTF-16LE" );
     }
 
+    /**
+     * <p>testLatin1Encoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testLatin1Encoding()
         throws IOException
@@ -136,6 +183,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_LATIN1, "ISO-8859-1" );
     }
 
+    /**
+     * <p>testLatin7Encoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testLatin7Encoding()
         throws IOException
@@ -143,6 +195,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_LATIN7, "ISO-8859-7" );
     }
 
+    /**
+     * <p>testLatin15Encoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testLatin15Encoding()
         throws IOException
@@ -150,6 +207,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_LATIN15, "ISO-8859-15" );
     }
 
+    /**
+     * <p>testEUC_JPEncoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testEUC_JPEncoding()
         throws IOException
@@ -157,6 +219,11 @@ public class XmlStreamWriterTest
         checkXmlWriter( TEXT_EUC_JP, "EUC-JP" );
     }
 
+    /**
+     * <p>testEBCDICEncoding.</p>
+     *
+     * @throws java.io.IOException if any.
+     */
     @Test
     public void testEBCDICEncoding()
         throws IOException

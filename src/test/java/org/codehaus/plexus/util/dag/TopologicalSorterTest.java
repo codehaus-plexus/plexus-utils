@@ -24,11 +24,19 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * <p>TopologicalSorterTest class.</p>
  *
+ * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class TopologicalSorterTest
 {
+    /**
+     * <p>testDfs.</p>
+     *
+     * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
+     */
     @Test
     public void testDfs()
         throws CycleDetectedException

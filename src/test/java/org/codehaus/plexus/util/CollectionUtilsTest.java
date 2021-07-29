@@ -28,8 +28,18 @@ import java.util.Properties;
 
 import org.junit.Test;
 
+/**
+ * <p>CollectionUtilsTest class.</p>
+ *
+ * @author herve
+ * @version $Id: $Id
+ * @since 3.4.0
+ */
 public class CollectionUtilsTest
 {
+    /**
+     * <p>testMergeMaps.</p>
+     */
     @Test
     public void testMergeMaps()
     {
@@ -66,6 +76,9 @@ public class CollectionUtilsTest
         assertEquals( "z", result.get( "z" ) );
     }
 
+    /**
+     * <p>testMergeMapArray.</p>
+     */
     @SuppressWarnings( "unchecked" )
     @Test
     public void testMergeMapArray()
@@ -119,6 +132,9 @@ public class CollectionUtilsTest
         assertEquals( "ccc", result5.get( "c" ) );
     }
 
+    /**
+     * <p>testMavenPropertiesLoading.</p>
+     */
     @Test
     public void testMavenPropertiesLoading()
     {
@@ -176,6 +192,9 @@ public class CollectionUtilsTest
         assertEquals( mavenRepoRemote, (String) result.get( "maven.repo.remote" ) );
     }
 
+    /**
+     * <p>testIteratorToListWithAPopulatedList.</p>
+     */
     @Test
     public void testIteratorToListWithAPopulatedList()
     {
@@ -196,6 +215,9 @@ public class CollectionUtilsTest
         assertEquals( "tre", copy.get( 2 ) );
     }
 
+    /**
+     * <p>testIteratorToListWithAEmptyList.</p>
+     */
     @Test
     public void testIteratorToListWithAEmptyList()
     {

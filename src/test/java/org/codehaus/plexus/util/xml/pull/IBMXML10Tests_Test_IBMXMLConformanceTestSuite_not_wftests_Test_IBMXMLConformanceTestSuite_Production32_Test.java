@@ -17,6 +17,8 @@ import org.junit.Test;
  * XML test files base folder: <pre>xmlconf/ibm/</pre>
  *
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
+ * @version $Id: $Id
+ * @since 3.4.0
  */
 public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConformanceTestSuite_Production32_Test
 {
@@ -25,6 +27,9 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
 
     MXParser parser;
 
+    /**
+     * <p>setUp.</p>
+     */
     @Before
     public void setUp()
     {
@@ -38,7 +43,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n01xml()
@@ -64,7 +69,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n02xml()
@@ -90,7 +95,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n03xml()
@@ -116,7 +121,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n04xml()
@@ -142,7 +147,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n05xml()
@@ -169,7 +174,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n06xml()
@@ -195,7 +200,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n07xml()
@@ -221,7 +226,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    */
   @Test
   public void testibm_not_wf_P32_ibm32n08xml()
@@ -247,7 +252,7 @@ public class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMX
    * Sections: <pre>2.9</pre>
    * Version:
    *
-   * @throws IOException if there is an I/O error
+   * @throws java.io.IOException if there is an I/O error
    *
    * NOTE: This test is SKIPPED as MXParser does not support parsing inside DOCTYPEDECL.
    */
