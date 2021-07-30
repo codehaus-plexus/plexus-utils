@@ -26,6 +26,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
         java: [8, 11, 16, 17-ea]
+        jdk: [adopt-hotspot, zulu, adopt-openj9]
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
@@ -46,6 +47,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2.1.0
         with:
+          distribution: ${{ matrix.jdk }}
           java-version: ${{ matrix.java }}
 
       - name: Build with Maven
