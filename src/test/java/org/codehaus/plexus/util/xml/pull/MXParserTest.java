@@ -21,9 +21,15 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import org.codehaus.plexus.util.ReaderFactory;
 import org.junit.Test;
 
 /**
@@ -837,6 +843,58 @@ public class MXParserTest
         catch ( XmlPullParserException e )
         {
             assertTrue( e.getMessage().contains( "expected a space after encoding and not s" ));
+        }
+    }
+
+    /**
+     * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
+     *
+     * @throws IOException if IO error.
+     *
+     * @since 3.4.1
+     */
+    @Test
+    public void testEncodingISO_8859_1setInputReader()
+        throws IOException
+    {
+        try ( Reader reader =
+            ReaderFactory.newXmlReader( new File( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( reader );
+            while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
+                ;
+            assertTrue( true );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    /**
+     * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
+     *
+     * @throws IOException if IO error.
+     *
+     * @since 3.4.1
+     */
+    @Test
+    public void testEncodingISO_8859_1_setInputStream()
+        throws IOException
+    {
+        try ( InputStream input =
+            Files.newInputStream( Paths.get( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( input, null );
+            while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
+                ;
+            assertTrue( true );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
         }
     }
 
