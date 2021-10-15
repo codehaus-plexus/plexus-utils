@@ -21,26 +21,7 @@ on: [push, pull_request]
 
 jobs:
   build:
+    name: Build it
+    uses: codehaus-plexus/.github/.github/workflows/maven.yml@v0.0.1
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        java: [8, 11, 16, 17-ea]
-        jdk: [temurin, zulu, adopt-openj9]
-      fail-fast: false
 
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2.3.1
-        with:
-          cache: 'maven'
-          distribution: ${{ matrix.jdk }}
-          java-version: ${{ matrix.java }}
-
-      - name: Build with Maven
-        run: mvn verify javadoc:javadoc -e -B -V
