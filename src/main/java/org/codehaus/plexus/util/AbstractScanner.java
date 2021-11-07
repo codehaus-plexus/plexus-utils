@@ -42,8 +42,8 @@ public abstract class AbstractScanner
      * <li>SurroundSCM: &#42;&#42;/.MySCMServerInfo</li>
      * <li>Mac: &#42;&#42;/.DS_Store</li>
      * <li>Serena Dimension: &#42;&#42;/.metadata, &#42;&#42;/.metadata/&#42;&#42;</li>
-     * <li>Mercurial: &#42;&#42;/.hg, &#42;&#42;/.hg/&#42;&#42;, &#42;&#42;/.hgignore</li>
-     * <li>GIT: &#42;&#42;/.git, &#42;&#42;/.gitignore, &#42;&#42;/.gitattributes, &#42;&#42;/.git/&#42;&#42;</li>
+     * <li>Mercurial: &#42;&#42;/.hg, &#42;&#42;/.hg/&#42;&#42;</li>
+     * <li>Git: &#42;&#42;/.git, &#42;&#42;/.git/&#42;&#42;</li>
      * <li>Bitkeeper: &#42;&#42;/BitKeeper, &#42;&#42;/BitKeeper/&#42;&#42;, &#42;&#42;/ChangeSet,
      * &#42;&#42;/ChangeSet/&#42;&#42;</li>
      * <li>Darcs: &#42;&#42;/_darcs, &#42;&#42;/_darcs/&#42;&#42;, &#42;&#42;/.darcsrepo,
@@ -90,10 +90,10 @@ public abstract class AbstractScanner
         "**/.metadata", "**/.metadata/**",
 
         // Mercurial
-        "**/.hg", "**/.hgignore", "**/.hg/**",
+        "**/.hg", "**/.hg/**",
 
         // git
-        "**/.git", "**/.gitignore", "**/.gitattributes", "**/.git/**",
+        "**/.git", "**/.git/**",
 
         // BitKeeper
         "**/BitKeeper", "**/BitKeeper/**", "**/ChangeSet", "**/ChangeSet/**",
@@ -124,7 +124,7 @@ public abstract class AbstractScanner
      * @since 3.3.0
      */
     protected Comparator<String> filenameComparator;
-    
+
     /**
      * Sets whether or not the file system should be regarded as case sensitive.
      *
@@ -137,7 +137,7 @@ public abstract class AbstractScanner
 
     /**
      * <p>Tests whether or not a given path matches the start of a given pattern up to the first "**".</p>
-     * 
+     *
      * <p>This is not a general purpose test and should only be used if you can live with false positives. For example,
      * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.</p>
      *
@@ -152,7 +152,7 @@ public abstract class AbstractScanner
 
     /**
      * <p>Tests whether or not a given path matches the start of a given pattern up to the first "**".</p>
-     * 
+     *
      * <p>This is not a general purpose test and should only be used if you can live with false positives. For example,
      * <code>pattern=**\a</code> and <code>str=b</code> will yield <code>true</code>.</p>
      *
@@ -223,7 +223,7 @@ public abstract class AbstractScanner
     /**
      * <p>Sets the list of include patterns to use. All '/' and '\' characters are replaced by
      * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.</p>
-     * 
+     *
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
@@ -253,7 +253,7 @@ public abstract class AbstractScanner
     /**
      * <p>Sets the list of exclude patterns to use. All '/' and '\' characters are replaced by
      * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.</p>
-     * 
+     *
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
