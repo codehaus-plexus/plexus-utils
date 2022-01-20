@@ -1726,11 +1726,9 @@ public class FileUtils
      * @param includes the includes pattern, comma separated
      * @param excludes the excludes pattern, comma separated
      * @return a list of File objects
-     * @throws IOException io issue
      * @see #getFileNames(File, String, String, boolean)
      */
     public static List<File> getFiles( File directory, String includes, String excludes )
-        throws IOException
     {
         return getFiles( directory, includes, excludes, true );
     }
@@ -1743,11 +1741,9 @@ public class FileUtils
      * @param excludes the excludes pattern, comma separated
      * @param includeBasedir true to include the base dir in each file
      * @return a list of File objects
-     * @throws IOException io issue
      * @see #getFileNames(File, String, String, boolean)
      */
     public static List<File> getFiles( File directory, String includes, String excludes, boolean includeBasedir )
-        throws IOException
     {
         List<String> fileNames = getFileNames( directory, includes, excludes, includeBasedir );
 
@@ -1769,10 +1765,8 @@ public class FileUtils
      * @param excludes the excludes pattern, comma separated
      * @param includeBasedir true to include the base dir in each String of file
      * @return a list of files as String
-     * @throws IOException io issue
      */
     public static List<String> getFileNames( File directory, String includes, String excludes, boolean includeBasedir )
-        throws IOException
     {
         return getFileNames( directory, includes, excludes, includeBasedir, true );
     }
@@ -1786,11 +1780,9 @@ public class FileUtils
      * @param includeBasedir true to include the base dir in each String of file
      * @param isCaseSensitive true if case sensitive
      * @return a list of files as String
-     * @throws IOException io issue
      */
     public static List<String> getFileNames( File directory, String includes, String excludes, boolean includeBasedir,
                                              boolean isCaseSensitive )
-        throws IOException
     {
         return getFileAndDirectoryNames( directory, includes, excludes, includeBasedir, isCaseSensitive, true, false );
     }
@@ -1803,11 +1795,9 @@ public class FileUtils
      * @param excludes the excludes pattern, comma separated
      * @param includeBasedir true to include the base dir in each String of file
      * @return a list of directories as String
-     * @throws IOException io issue
      */
     public static List<String> getDirectoryNames( File directory, String includes, String excludes,
                                                   boolean includeBasedir )
-        throws IOException
     {
         return getDirectoryNames( directory, includes, excludes, includeBasedir, true );
     }
@@ -1821,11 +1811,9 @@ public class FileUtils
      * @param includeBasedir true to include the base dir in each String of file
      * @param isCaseSensitive true if case sensitive
      * @return a list of directories as String
-     * @throws IOException io issue
      */
     public static List<String> getDirectoryNames( File directory, String includes, String excludes,
                                                   boolean includeBasedir, boolean isCaseSensitive )
-        throws IOException
     {
         return getFileAndDirectoryNames( directory, includes, excludes, includeBasedir, isCaseSensitive, false, true );
     }
@@ -1841,12 +1829,10 @@ public class FileUtils
      * @param getFiles true if get files
      * @param getDirectories true if get directories
      * @return a list of files as String
-     * @throws IOException io issue
      */
     public static List<String> getFileAndDirectoryNames( File directory, String includes, String excludes,
                                                          boolean includeBasedir, boolean isCaseSensitive,
                                                          boolean getFiles, boolean getDirectories )
-        throws IOException
     {
         DirectoryScanner scanner = new DirectoryScanner();
 
