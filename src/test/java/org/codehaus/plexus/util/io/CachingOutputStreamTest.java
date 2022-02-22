@@ -72,6 +72,7 @@ public class CachingOutputStreamTest
         assertArrayEquals( data, read );
         FileTime newModified = Files.getLastModifiedTime( path );
         assertEquals( modified, newModified );
+        modified = newModified;
 
         Thread.sleep( 250 );
 
