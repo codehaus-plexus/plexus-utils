@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
+import java.util.Objects;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +37,8 @@ public class CachingWriterTest
 {
 
     Path tempDir;
+    Path checkLastModified;
+    FileTime lm;
 
     @Before
     public void setup() throws IOException
@@ -43,6 +46,24 @@ public class CachingWriterTest
         Path dir = Paths.get( "target/io" );
         Files.createDirectories( dir );
         tempDir = Files.createTempDirectory( dir, "temp-" );
+        checkLastModified = tempDir.resolve( ".check" );
+        Files.newOutputStream( checkLastModified ).close();
+        lm = Files.getLastModifiedTime( checkLastModified );
+    }
+
+    private void waitLastModified() throws IOException, InterruptedException
+    {
+        while ( true )
+        {
+            Files.newOutputStream( checkLastModified ).close();
+            FileTime nlm = Files.getLastModifiedTime( checkLastModified );
+            if ( !Objects.equals( nlm, lm ) )
+            {
+                lm = nlm;
+                break;
+            }
+            Thread.sleep( 10 );
+        }
     }
 
     @Test
@@ -61,7 +82,7 @@ public class CachingWriterTest
         assertEquals( data, read );
         FileTime modified = Files.getLastModifiedTime( path );
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         try ( CachingWriter cos = new CachingWriter( path, StandardCharsets.UTF_8, 4 ) )
         {
@@ -74,7 +95,7 @@ public class CachingWriterTest
         assertEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         // write longer data
         data = "Good morning!";
@@ -89,7 +110,7 @@ public class CachingWriterTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         // different data same size
         data = "Good mornong!";
@@ -104,7 +125,7 @@ public class CachingWriterTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         // same data but shorter
         data = "Good mornon";

@@ -17,11 +17,13 @@ package org.codehaus.plexus.util.io;
  */
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
+import java.util.Objects;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,8 @@ public class CachingOutputStreamTest
 {
 
     Path tempDir;
+    Path checkLastModified;
+    FileTime lm;
 
     @Before
     public void setup() throws IOException
@@ -43,6 +47,24 @@ public class CachingOutputStreamTest
         Path dir = Paths.get( "target/io" );
         Files.createDirectories( dir );
         tempDir = Files.createTempDirectory( dir, "temp-" );
+        checkLastModified = tempDir.resolve( ".check" );
+        Files.newOutputStream( checkLastModified ).close();
+        lm = Files.getLastModifiedTime( checkLastModified );
+    }
+
+    private void waitLastModified() throws IOException, InterruptedException
+    {
+        while ( true )
+        {
+            Files.newOutputStream( checkLastModified ).close();
+            FileTime nlm = Files.getLastModifiedTime( checkLastModified );
+            if ( !Objects.equals( nlm, lm ) )
+            {
+                lm = nlm;
+                break;
+            }
+            Thread.sleep( 10 );
+        }
     }
 
     @Test
@@ -61,7 +83,7 @@ public class CachingOutputStreamTest
         assertArrayEquals( data, read );
         FileTime modified = Files.getLastModifiedTime( path );
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )
         {
@@ -74,7 +96,7 @@ public class CachingOutputStreamTest
         assertEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         // write longer data
         data = "Good morning!".getBytes( StandardCharsets.UTF_8 );
@@ -89,7 +111,7 @@ public class CachingOutputStreamTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         // different data same size
         data = "Good mornong!".getBytes( StandardCharsets.UTF_8 );
@@ -104,7 +126,7 @@ public class CachingOutputStreamTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 250 );
+        waitLastModified();
 
         // same data but shorter
         data = "Good mornon".getBytes( StandardCharsets.UTF_8 );
@@ -119,4 +141,5 @@ public class CachingOutputStreamTest
         assertNotEquals( modified, newModified );
         modified = newModified;
     }
+
 }
