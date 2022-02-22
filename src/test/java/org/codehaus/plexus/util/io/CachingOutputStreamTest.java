@@ -103,6 +103,8 @@ public class CachingOutputStreamTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
+        Thread.sleep( 100 );
+
         // same data but shorter
         data = "Good mornon".getBytes( StandardCharsets.UTF_8 );
         try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )

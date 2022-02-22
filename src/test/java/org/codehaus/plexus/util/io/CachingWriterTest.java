@@ -103,6 +103,8 @@ public class CachingWriterTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
+        Thread.sleep( 100 );
+
         // same data but shorter
         data = "Good mornon";
         try ( CachingWriter cos = new CachingWriter( path, StandardCharsets.UTF_8, 4 ) )
