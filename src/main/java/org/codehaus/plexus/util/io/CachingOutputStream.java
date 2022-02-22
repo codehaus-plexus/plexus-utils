@@ -19,6 +19,7 @@ package org.codehaus.plexus.util.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
@@ -61,9 +62,9 @@ public class CachingOutputStream extends OutputStream
     {
         if ( writeBuffer.remaining() < 1 )
         {
-            writeBuffer.flip();
+            ( ( Buffer ) writeBuffer ).flip();
             flushBuffer( writeBuffer );
-            writeBuffer.clear();
+            ( ( Buffer ) writeBuffer ).clear();
         }
         writeBuffer.put( ( byte ) b );
     }
@@ -79,9 +80,9 @@ public class CachingOutputStream extends OutputStream
     {
         if ( writeBuffer.remaining() < len )
         {
-            writeBuffer.flip();
+            ( ( Buffer ) writeBuffer ).flip();
             flushBuffer( writeBuffer );
-            writeBuffer.clear();
+            ( ( Buffer ) writeBuffer ).clear();
         }
         int capacity = writeBuffer.capacity();
         while ( len >= capacity )
@@ -99,9 +100,9 @@ public class CachingOutputStream extends OutputStream
     @Override
     public void flush() throws IOException
     {
-        writeBuffer.flip();
+        ( ( Buffer ) writeBuffer ).flip();
         flushBuffer( writeBuffer );
-        writeBuffer.clear();
+        ( ( Buffer ) writeBuffer ).clear();
         super.flush();
     }
 
@@ -118,7 +119,7 @@ public class CachingOutputStream extends OutputStream
             if ( this.readBuffer.capacity() >= len )
             {
                 readBuffer = this.readBuffer;
-                readBuffer.clear();
+                ( ( Buffer ) readBuffer ).clear();
             }
             else
             {
@@ -136,7 +137,7 @@ public class CachingOutputStream extends OutputStream
                 }
                 len -= read;
             }
-            readBuffer.flip();
+            ( ( Buffer ) readBuffer ).flip();
             if ( readBuffer.compareTo( writeBuffer ) != 0 )
             {
                 modified = true;
