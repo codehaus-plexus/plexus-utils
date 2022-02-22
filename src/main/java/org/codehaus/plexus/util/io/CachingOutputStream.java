@@ -16,47 +16,147 @@ package org.codehaus.plexus.util.io;
  * limitations under the License.
  */
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.nio.file.StandardOpenOption;
 import java.util.Objects;
 
 /**
  * Caching OutputStream to avoid overwriting a file with
  * the same content.
  */
-public class CachingOutputStream extends ByteArrayOutputStream
+public class CachingOutputStream extends OutputStream
 {
     private final Path path;
+    private FileChannel channel;
+    private ByteBuffer readBuffer;
+    private ByteBuffer writeBuffer;
     private boolean modified;
 
-    public CachingOutputStream( File path )
+    public CachingOutputStream( File path ) throws IOException
     {
         this( Objects.requireNonNull( path ).toPath() );
     }
 
-    public CachingOutputStream( Path path )
+    public CachingOutputStream( Path path ) throws IOException
+    {
+        this( path, 32 * 1024 );
+    }
+
+    public CachingOutputStream( Path path, int bufferSize ) throws IOException
     {
         this.path = Objects.requireNonNull( path );
+        this.channel = FileChannel.open( path,
+                StandardOpenOption.READ, StandardOpenOption.WRITE, StandardOpenOption.CREATE );
+        this.readBuffer = ByteBuffer.allocate( bufferSize );
+        this.writeBuffer = ByteBuffer.allocate( bufferSize );
+    }
+
+    @Override
+    public void write( int b ) throws IOException
+    {
+        if ( writeBuffer.remaining() < 1 )
+        {
+            writeBuffer.flip();
+            flushBuffer( writeBuffer );
+            writeBuffer.clear();
+        }
+        writeBuffer.put( ( byte ) b );
+    }
+
+    @Override
+    public void write( byte[] b ) throws IOException
+    {
+        write( b, 0, b.length );
+    }
+
+    @Override
+    public void write( byte[] b, int off, int len ) throws IOException
+    {
+        if ( writeBuffer.remaining() < len )
+        {
+            writeBuffer.flip();
+            flushBuffer( writeBuffer );
+            writeBuffer.clear();
+        }
+        int capacity = writeBuffer.capacity();
+        while ( len >= capacity )
+        {
+            flushBuffer( ByteBuffer.wrap( b, off, capacity ) );
+            off += capacity;
+            len -= capacity;
+        }
+        if ( len > 0 )
+        {
+            writeBuffer.put( b, off, len );
+        }
+    }
+
+    @Override
+    public void flush() throws IOException
+    {
+        writeBuffer.flip();
+        flushBuffer( writeBuffer );
+        writeBuffer.clear();
+        super.flush();
+    }
+
+    private void flushBuffer( ByteBuffer writeBuffer ) throws IOException
+    {
+        if ( modified )
+        {
+            channel.write( writeBuffer );
+        }
+        else
+        {
+            int len = writeBuffer.remaining();
+            ByteBuffer readBuffer;
+            if ( this.readBuffer.capacity() >= len )
+            {
+                readBuffer = this.readBuffer;
+                readBuffer.clear();
+            }
+            else
+            {
+                readBuffer = ByteBuffer.allocate( len );
+            }
+            while ( len > 0 )
+            {
+                int read = channel.read( readBuffer );
+                if ( read <= 0 )
+                {
+                    modified = true;
+                    channel.position( channel.position() - readBuffer.position() );
+                    channel.write( writeBuffer );
+                    return;
+                }
+                len -= read;
+            }
+            readBuffer.flip();
+            if ( readBuffer.compareTo( writeBuffer ) != 0 )
+            {
+                modified = true;
+                channel.position( channel.position() - readBuffer.remaining() );
+                channel.write( writeBuffer );
+            }
+        }
     }
 
     @Override
     public void close() throws IOException
     {
-        byte[] data = toByteArray();
-        if ( Files.exists( path ) && Files.size( path ) == data.length )
+        flush();
+        long position = channel.position();
+        if ( position != channel.size() )
         {
-            byte[] old = Files.readAllBytes( path );
-            if ( Arrays.equals( old, data ) )
-            {
-                return;
-            }
+            modified = true;
+            channel.truncate( position );
         }
-        Files.write( path, data );
-        modified = true;
+        channel.close();
     }
 
     public boolean isModified()
