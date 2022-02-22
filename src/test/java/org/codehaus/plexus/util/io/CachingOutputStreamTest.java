@@ -61,7 +61,7 @@ public class CachingOutputStreamTest
         assertArrayEquals( data, read );
         FileTime modified = Files.getLastModifiedTime( path );
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )
         {
@@ -73,7 +73,7 @@ public class CachingOutputStreamTest
         FileTime newModified = Files.getLastModifiedTime( path );
         assertEquals( modified, newModified );
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         // write longer data
         data = "Good morning!".getBytes( StandardCharsets.UTF_8 );
@@ -88,7 +88,7 @@ public class CachingOutputStreamTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         // different data same size
         data = "Good mornong!".getBytes( StandardCharsets.UTF_8 );
@@ -103,7 +103,7 @@ public class CachingOutputStreamTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         // same data but shorter
         data = "Good mornon".getBytes( StandardCharsets.UTF_8 );

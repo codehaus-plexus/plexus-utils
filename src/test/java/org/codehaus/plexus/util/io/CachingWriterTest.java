@@ -61,7 +61,7 @@ public class CachingWriterTest
         assertEquals( data, read );
         FileTime modified = Files.getLastModifiedTime( path );
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         try ( CachingWriter cos = new CachingWriter( path, StandardCharsets.UTF_8, 4 ) )
         {
@@ -73,7 +73,7 @@ public class CachingWriterTest
         FileTime newModified = Files.getLastModifiedTime( path );
         assertEquals( modified, newModified );
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         // write longer data
         data = "Good morning!";
@@ -88,7 +88,7 @@ public class CachingWriterTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         // different data same size
         data = "Good mornong!";
@@ -103,7 +103,7 @@ public class CachingWriterTest
         assertNotEquals( modified, newModified );
         modified = newModified;
 
-        Thread.sleep( 100 );
+        Thread.sleep( 250 );
 
         // same data but shorter
         data = "Good mornon";
