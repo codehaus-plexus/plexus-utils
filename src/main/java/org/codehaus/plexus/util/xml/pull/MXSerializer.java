@@ -460,15 +460,15 @@ public class MXSerializer
         if ( encoding != null )
         {
             out.write( " encoding=" );
-            out.write( attributeUseApostrophe ? '\'' : '"' );
+            out.write( apos );
             out.write( encoding );
-            out.write( attributeUseApostrophe ? '\'' : '"' );
+            out.write( apos );
             // out.write('\'');
         }
         if ( standalone != null )
         {
             out.write( " standalone=" );
-            out.write( attributeUseApostrophe ? '\'' : '"' );
+            out.write( apos );
             if ( standalone )
             {
                 out.write( "yes" );
@@ -477,7 +477,7 @@ public class MXSerializer
             {
                 out.write( "no" );
             }
-            out.write( attributeUseApostrophe ? '\'' : '"' );
+            out.write( apos );
             // if(standalone.booleanValue()) {
             // out.write(" standalone='yes'");
             // } else {
