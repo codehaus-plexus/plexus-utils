@@ -253,21 +253,32 @@ public final class SelectorUtils
     {
         if ( isRegexPrefixedPattern( pattern ) )
         {
-            pattern =
+            String localPattern =
                 pattern.substring( REGEX_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length() );
 
-            return str.matches( pattern );
+            return str.matches( localPattern );
         }
         else
         {
-            if ( isAntPrefixedPattern( pattern ) )
-            {
-                pattern = pattern.substring( ANT_HANDLER_PREFIX.length(),
-                                             pattern.length() - PATTERN_HANDLER_SUFFIX.length() );
-            }
-
-            return matchAntPathPattern( pattern, str, separator, isCaseSensitive );
+            String localPattern = isAntPrefixedPattern( pattern )
+                ? pattern.substring( ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length() )
+                : pattern;
+            final String osRelatedPath = toOSRelatedPath( str, separator );
+            final String osRelatedPattern = toOSRelatedPath( localPattern, separator );
+            return matchAntPathPattern( osRelatedPattern, osRelatedPath, separator, isCaseSensitive );
         }
+    }
+
+    private static String toOSRelatedPath( String pattern, String separator )
+    {
+        if ( "/".equals( separator ) )
+        {
+            return pattern.replace( "\\", separator );
+        }
+        if ( "\\".equals( separator ) ) {
+            return pattern.replace( "/", separator );
+        }
+        return pattern;
     }
 
     static boolean isRegexPrefixedPattern( String pattern )
