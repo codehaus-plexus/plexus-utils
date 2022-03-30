@@ -92,4 +92,55 @@ public class SelectorUtilsTest
         // Pattern and target don't start with file separator
         assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false ) );
     }
+
+    @Test
+    public void testPatternMatchSingleWildCardLinux()
+    {
+        assertFalse(SelectorUtils.matchPath(
+            "/com/test/*",
+            "/com/test/test/hallo"));
+    }
+
+
+    @Test
+    public void testPatternMatchDoubleWildCardCaseInLinux()
+    {
+        assertTrue(SelectorUtils.matchPath(
+            "/com/test/**",
+            "/com/test/test/hallo"));
+    }
+
+
+    @Test
+    public void testPatternMatchDoubleWildCardLinux()
+    {
+        assertTrue(SelectorUtils.matchPath(
+            "/com/test/**",
+            "/com/test/test/hallo"));
+    }
+
+
+    @Test
+    public void testPatternMatchSingleWildCardWindows()
+    {
+        assertFalse(SelectorUtils.matchPath(
+            "D:\\com\\test\\*",
+            "D:\\com\\test\\test\\hallo"));
+
+        assertFalse(SelectorUtils.matchPath(
+            "D:/com/test/*",
+            "D:/com/test/test/hallo"));
+    }
+
+    @Test
+    public void testPatternMatchDoubleWildCardWindows()
+    {
+        assertTrue(SelectorUtils.matchPath(
+            "D:\\com\\test\\**",
+            "D:\\com\\test\\test\\hallo"));
+
+        assertTrue(SelectorUtils.matchPath(
+            "D:\\com\\test\\**",
+            "D:/com/test/test/hallo"));
+    }
 }

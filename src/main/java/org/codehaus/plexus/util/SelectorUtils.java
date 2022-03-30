@@ -251,23 +251,38 @@ public final class SelectorUtils
 
     public static boolean matchPath( String pattern, String str, String separator, boolean isCaseSensitive )
     {
-        if ( isRegexPrefixedPattern( pattern ) )
+        /* 2022-03-30: Fixed: Caller parameter in a public method should be handled immutable. */
+        String localPattern = pattern;
+        if ( isRegexPrefixedPattern( localPattern ) )
         {
-            pattern =
-                pattern.substring( REGEX_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length() );
+            localPattern =
+                localPattern.substring( REGEX_HANDLER_PREFIX.length(), localPattern.length() - PATTERN_HANDLER_SUFFIX.length() );
 
-            return str.matches( pattern );
+            return str.matches( localPattern );
         }
         else
         {
-            if ( isAntPrefixedPattern( pattern ) )
+            if ( isAntPrefixedPattern( localPattern ) )
             {
-                pattern = pattern.substring( ANT_HANDLER_PREFIX.length(),
-                                             pattern.length() - PATTERN_HANDLER_SUFFIX.length() );
+                localPattern = localPattern.substring( ANT_HANDLER_PREFIX.length(),
+                                             localPattern.length() - PATTERN_HANDLER_SUFFIX.length() );
             }
-
-            return matchAntPathPattern( pattern, str, separator, isCaseSensitive );
+            final String osRelatedPath = toOSRelatedPath( str, separator );
+            final String osRelatedPattern = toOSRelatedPath( localPattern, separator );
+            return matchAntPathPattern( osRelatedPattern, osRelatedPath, separator, isCaseSensitive );
         }
+    }
+
+    private static String toOSRelatedPath( String pattern, String separator )
+    {
+        if ( "/".equals( separator ) )
+        {
+            return pattern.replace( "\\", separator );
+        }
+        if ( "\\".equals( separator ) ) {
+            return pattern.replace( "/", separator );
+        }
+        return pattern;
     }
 
     static boolean isRegexPrefixedPattern( String pattern )
