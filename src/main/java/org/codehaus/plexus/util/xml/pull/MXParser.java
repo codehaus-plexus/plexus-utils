@@ -124,7 +124,7 @@ public class MXParser
     // private String elValue[];
     private int elNamespaceCount[];
 
-    private String fileEncoding = "UTF8";
+    private String fileEncoding = null;
 
     /**
      * Make sure that we have enough space to keep element stack if passed size. It will always create one additional
@@ -587,8 +587,8 @@ public class MXParser
         }
     }
 
-    /** 
-     * Unknown properties are <strong>always</strong> returned as false 
+    /**
+     * Unknown properties are <strong>always</strong> returned as false
      */
     @Override
     public boolean getFeature( String name )
@@ -1596,11 +1596,11 @@ public class MXParser
                     }
                     final int oldStart = posStart + bufAbsoluteStart;
                     final int oldEnd = posEnd + bufAbsoluteStart;
-                    final char[] resolvedEntity = parseEntityRef();
+                    parseEntityRef();
                     if ( tokenize )
                         return eventType = ENTITY_REF;
                     // check if replacement text can be resolved !!!
-                    if ( resolvedEntity == null )
+                    if ( resolvedEntityRefCharBuf == BUF_NOT_RESOLVED )
                     {
                         if ( entityRefName == null )
                         {
@@ -1628,7 +1628,7 @@ public class MXParser
                     }
                     // assert usePC == true;
                     // write into PC replacement text - do merge for replacement text!!!!
-                    for ( char aResolvedEntity : resolvedEntity )
+                    for ( char aResolvedEntity : resolvedEntityRefCharBuf )
                     {
                         if ( pcEnd >= pc.length )
                         {
@@ -2675,9 +2675,28 @@ public class MXParser
         return ch;
     }
 
-    private char[] charRefOneCharBuf = new char[1];
+    // state representing that no entity ref have been resolved
+    private static final char[] BUF_NOT_RESOLVED = new char[0];
 
-    private char[] parseEntityRef()
+    // predefined entity refs
+    private static final char[] BUF_LT = new char[] { '<' };
+    private static final char[] BUF_AMP = new char[] { '&' };
+    private static final char[] BUF_GT = new char[] { '>' };
+    private static final char[] BUF_APO = new char[] { '\'' };
+    private static final char[] BUF_QUOT = new char[] { '"' };
+
+    private char[] resolvedEntityRefCharBuf = BUF_NOT_RESOLVED;
+
+    /**
+     * parse Entity Ref, either a character entity or one of the predefined name entities.
+     *
+     * @return the length of the valid found character reference, which may be one of the predefined character reference
+     *         names (resolvedEntityRefCharBuf contains the replaced chars). Returns the length of the not found entity
+     *         name, otherwise.
+     * @throws XmlPullParserException if invalid XML is detected.
+     * @throws IOException if an I/O error is found.
+     */
+    private int parseCharOrPredefinedEntityRef()
         throws XmlPullParserException, IOException
     {
         // entity reference http://www.w3.org/TR/2000/REC-xml-20001006#NT-Reference
@@ -2686,6 +2705,8 @@ public class MXParser
         // ASSUMPTION just after &
         entityRefName = null;
         posStart = pos;
+        int len = 0;
+        resolvedEntityRefCharBuf = BUF_NOT_RESOLVED;
         char ch = more();
         if ( ch == '#' )
         {
@@ -2750,7 +2771,6 @@ public class MXParser
                     ch = more();
                 }
             }
-            posEnd = pos - 1;
 
             boolean isValidCodePoint = true;
             try
@@ -2759,7 +2779,7 @@ public class MXParser
                 isValidCodePoint = isValidCodePoint( codePoint );
                 if ( isValidCodePoint )
                 {
-                    charRefOneCharBuf = Character.toChars( codePoint );
+                    resolvedEntityRefCharBuf = Character.toChars( codePoint );
                 }
             }
             catch ( IllegalArgumentException e )
@@ -2775,14 +2795,14 @@ public class MXParser
 
             if ( tokenize )
             {
-                text = newString( charRefOneCharBuf, 0, charRefOneCharBuf.length );
+                text = newString( resolvedEntityRefCharBuf, 0, resolvedEntityRefCharBuf.length );
             }
-            return charRefOneCharBuf;
+            len = resolvedEntityRefCharBuf.length;
         }
         else
         {
             // [68] EntityRef ::= '&' Name ';'
-            // scan anem until ;
+            // scan name until ;
             if ( !isNameStartChar( ch ) )
             {
                 throw new XmlPullParserException( "entity reference names can not start with character '"
@@ -2801,17 +2821,15 @@ public class MXParser
                         + printable( ch ) + "'", this, null );
                 }
             }
-            posEnd = pos - 1;
             // determine what name maps to
-            final int len = posEnd - posStart;
+            len = ( pos - 1 ) - posStart;
             if ( len == 2 && buf[posStart] == 'l' && buf[posStart + 1] == 't' )
             {
                 if ( tokenize )
                 {
                     text = "<";
                 }
-                charRefOneCharBuf[0] = '<';
-                return charRefOneCharBuf;
+                resolvedEntityRefCharBuf = BUF_LT;
                 // if(paramPC || isParserTokenizing) {
                 // if(pcEnd >= pc.length) ensurePC();
                 // pc[pcEnd++] = '<';
@@ -2823,8 +2841,7 @@ public class MXParser
                 {
                     text = "&";
                 }
-                charRefOneCharBuf[0] = '&';
-                return charRefOneCharBuf;
+                resolvedEntityRefCharBuf = BUF_AMP;
             }
             else if ( len == 2 && buf[posStart] == 'g' && buf[posStart + 1] == 't' )
             {
@@ -2832,8 +2849,7 @@ public class MXParser
                 {
                     text = ">";
                 }
-                charRefOneCharBuf[0] = '>';
-                return charRefOneCharBuf;
+                resolvedEntityRefCharBuf = BUF_GT;
             }
             else if ( len == 4 && buf[posStart] == 'a' && buf[posStart + 1] == 'p' && buf[posStart + 2] == 'o'
                 && buf[posStart + 3] == 's' )
@@ -2842,8 +2858,7 @@ public class MXParser
                 {
                     text = "'";
                 }
-                charRefOneCharBuf[0] = '\'';
-                return charRefOneCharBuf;
+                resolvedEntityRefCharBuf = BUF_APO;
             }
             else if ( len == 4 && buf[posStart] == 'q' && buf[posStart + 1] == 'u' && buf[posStart + 2] == 'o'
                 && buf[posStart + 3] == 't' )
@@ -2852,25 +2867,65 @@ public class MXParser
                 {
                     text = "\"";
                 }
-                charRefOneCharBuf[0] = '"';
-                return charRefOneCharBuf;
+                resolvedEntityRefCharBuf = BUF_QUOT;
             }
-            else
-            {
-                final char[] result = lookuEntityReplacement( len );
-                if ( result != null )
-                {
-                    return result;
-                }
-            }
-            if ( tokenize )
-                text = null;
-            return null;
         }
+
+        posEnd = pos;
+
+        return len;
     }
 
     /**
-     * Check if the provided parameter is a valid Char, according to: {@link https://www.w3.org/TR/REC-xml/#NT-Char}
+     * Parse an entity reference inside the DOCDECL section.
+     *
+     * @throws XmlPullParserException if invalid XML is detected.
+     * @throws IOException if an I/O error is found.
+     */
+    private void parseEntityRefInDocDecl()
+        throws XmlPullParserException, IOException
+    {
+        parseCharOrPredefinedEntityRef();
+        if (usePC) {
+            posStart--; // include in PC the starting '&' of the entity
+            joinPC();
+        }
+
+        if ( resolvedEntityRefCharBuf != BUF_NOT_RESOLVED )
+            return;
+        if ( tokenize )
+            text = null;
+    }
+
+    /**
+     * Parse an entity reference inside a tag or attribute.
+     *
+     * @throws XmlPullParserException if invalid XML is detected.
+     * @throws IOException if an I/O error is found.
+     */
+    private void parseEntityRef()
+        throws XmlPullParserException, IOException
+    {
+        final int len = parseCharOrPredefinedEntityRef();
+
+        posEnd--; // don't involve the final ';' from the entity in the search
+
+        if ( resolvedEntityRefCharBuf != BUF_NOT_RESOLVED ) {
+            return;
+        }
+
+        resolvedEntityRefCharBuf = lookuEntityReplacement( len );
+        if ( resolvedEntityRefCharBuf != BUF_NOT_RESOLVED )
+        {
+            return;
+        }
+        if ( tokenize )
+            text = null;
+    }
+
+    /**
+     * Check if the provided parameter is a valid Char. According to
+     * <a href="https://www.w3.org/TR/REC-xml/#NT-Char">https://www.w3.org/TR/REC-xml/#NT-Char</a>
      *
      * @param codePoint the numeric value to check
      * @return true if it is a valid numeric character reference. False otherwise.
@@ -2883,8 +2938,6 @@ public class MXParser
     }
 
     private char[] lookuEntityReplacement( int entityNameLen )
-        throws XmlPullParserException, IOException
-
     {
         if ( !allStringsInterned )
         {
@@ -2919,7 +2972,7 @@ public class MXParser
                 }
             }
         }
-        return null;
+        return BUF_NOT_RESOLVED;
     }
 
     private void parseComment()
@@ -2977,7 +3030,7 @@ public class MXParser
                 }
                 else
                 {
-                    throw new XmlPullParserException( "Illegal character 0x" + Integer.toHexString(((int) ch)) + " found in comment", this, null );
+                    throw new XmlPullParserException( "Illegal character 0x" + Integer.toHexString(ch) + " found in comment", this, null );
                 }
                 if ( normalizeIgnorableWS )
                 {
@@ -3484,7 +3537,8 @@ public class MXParser
                 break;
             else if ( ch == '&' )
             {
-                extractEntityRef();
+                extractEntityRefInDocDecl();
+                continue;
             }
             if ( normalizeIgnorableWS )
             {
@@ -3536,6 +3590,19 @@ public class MXParser
 
         }
         posEnd = pos - 1;
+        text = null;
+    }
+
+    private void extractEntityRefInDocDecl()
+        throws XmlPullParserException, IOException
+    {
+        // extractEntityRef
+        posEnd = pos - 1;
+
+        int prevPosStart = posStart;
+        parseEntityRefInDocDecl();
+
+        posStart = prevPosStart;
     }
 
     private void extractEntityRef()
@@ -3559,9 +3626,9 @@ public class MXParser
         }
         // assert usePC == true;
 
-        final char[] resolvedEntity = parseEntityRef();
+        parseEntityRef();
         // check if replacement text can be resolved !!!
-        if ( resolvedEntity == null )
+        if ( resolvedEntityRefCharBuf == BUF_NOT_RESOLVED )
         {
             if ( entityRefName == null )
             {
@@ -3571,7 +3638,7 @@ public class MXParser
                 + "'", this, null );
         }
         // write into PC replacement text - do merge for replacement text!!!!
-        for ( char aResolvedEntity : resolvedEntity )
+        for ( char aResolvedEntity : resolvedEntityRefCharBuf )
         {
             if ( pcEnd >= pc.length )
             {

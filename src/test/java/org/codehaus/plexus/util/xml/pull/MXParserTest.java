@@ -17,6 +17,7 @@ package org.codehaus.plexus.util.xml.pull;
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -29,6 +30,7 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.junit.Test;
 
@@ -898,4 +900,497 @@ public class MXParserTest
         }
     }
 
+    /**
+     * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
+     *
+     * Another case of bug #163: File encoding information is lost after the input file is copied to a String.
+     *
+     * @throws IOException if IO error.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testEncodingISO_8859_1setStringReader()
+        throws IOException
+    {
+        try ( Reader reader =
+            ReaderFactory.newXmlReader( new File( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
+        {
+            MXParser parser = new MXParser();
+            String xmlFileContents = IOUtil.toString( reader );
+            parser.setInput( new StringReader( xmlFileContents ) );
+            while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
+                ;
+            assertTrue( true );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    /**
+     * <p>
+     * Test custom Entity not found.
+     * </p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws java.lang.Exception if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testCustomEntityNotFoundInText()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        String input = "<root>&otherentity;</root>";
+        parser.setInput( new StringReader( input ) );
+        parser.defineEntityReplacementText( "myentity", "replacement" );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+            assertEquals( XmlPullParser.TEXT, parser.next() );
+            fail( "should raise exception" );
+        }
+        catch ( XmlPullParserException e )
+        {
+            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_TAG seen <root>&otherentity;... @1:19)" ) );
+            assertEquals( XmlPullParser.START_TAG, parser.getEventType() ); // not an ENTITY_REF
+            assertEquals( "otherentity", parser.getText() );
+        }
+    }
+
+    /**
+     * <p>
+     * Test custom Entity not found, with tokenize.
+     * </p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws java.lang.Exception if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testCustomEntityNotFoundInTextTokenize()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        String input = "<root>&otherentity;</root>";
+        parser.setInput( new StringReader( input ) );
+        parser.defineEntityReplacementText( "myentity", "replacement" );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertNull( parser.getText() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not throw exception if tokenize" );
+        }
+    }
+
+    /**
+     * <p>
+     * Test custom Entity not found in attribute.
+     * </p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws java.lang.Exception if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testCustomEntityNotFoundInAttr()
+        throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        String input = "<root name=\"&otherentity;\">sometext</root>";
+        parser.setInput( new StringReader( input ) );
+        parser.defineEntityReplacementText( "myentity", "replacement" );
+
+        try
+        {
+            assertEquals( XmlPullParser.START_TAG, parser.next() );
+            fail( "should raise exception" );
+        }
+        catch ( XmlPullParserException e )
+        {
+            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_DOCUMENT seen <root name=\"&otherentity;... @1:25)" ) );
+            assertEquals( XmlPullParser.START_DOCUMENT, parser.getEventType() ); // not an ENTITY_REF
+            assertNull( parser.getText() );
+        }
+    }
+
+    /**
+     * <p>
+     * Test custom Entity not found in attribute, with tokenize.
+     * </p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     * @throws XmlPullParserException
+     *
+     * @throws Exception if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testCustomEntityNotFoundInAttrTokenize() throws Exception
+    {
+        MXParser parser = new MXParser();
+
+        String input = "<root name=\"&otherentity;\">sometext</root>";
+
+        try
+        {
+            parser.setInput( new StringReader( input ) );
+            parser.defineEntityReplacementText( "myentity", "replacement" );
+
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            fail( "should raise exception" );
+        }
+        catch ( XmlPullParserException e )
+        {
+            assertTrue( e.getMessage().contains( "could not resolve entity named 'otherentity' (position: START_DOCUMENT seen <root name=\"&otherentity;... @1:25)" ) );
+            assertEquals( XmlPullParser.START_DOCUMENT, parser.getEventType() ); // not an ENTITY_REF
+            assertNull( parser.getText() );
+        }
+    }
+
+    /**
+     * <p>Issue #194: Incorrect getText() after parsing the DOCDECL section</>
+     *
+     * <p>test DOCDECL text with myCustomEntity that cannot be resolved, Unix line separator.</p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testDocdeclTextWithEntitiesUnix()
+        throws IOException
+    {
+        testDocdeclTextWithEntities( "test-entities.xml" );
+    }
+
+    /**
+     * <p>Issue #194: Incorrect getText() after parsing the DOCDECL section</>
+     *
+     * <p>test DOCDECL text with myCustomEntity that cannot be resolved, DOS line separator.</p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testDocdeclTextWithEntitiesDOS()
+        throws IOException
+    {
+        testDocdeclTextWithEntities( "test-entities-dos.xml" );
+    }
+
+    private void testDocdeclTextWithEntities( String filename )
+        throws IOException
+    {
+        try ( Reader reader = ReaderFactory.newXmlReader( new File( "src/test/resources/xml", filename ) ) )
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( reader );
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+            assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+            assertEquals( XmlPullParser.DOCDECL, parser.nextToken() );
+            assertEquals( " document [\n"
+                + "<!ENTITY flo \"&#x159;\">\n"
+                + "<!ENTITY myCustomEntity \"&flo;\">\n"
+                + "]", parser.getText() );
+            assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "document", parser.getName() );
+            assertEquals( XmlPullParser.TEXT, parser.next() );
+
+            fail( "should fail to resolve 'myCustomEntity' entity");
+        }
+        catch ( XmlPullParserException e )
+        {
+            assertTrue( e.getMessage().contains( "could not resolve entity named 'myCustomEntity'" ));
+        }
+    }
+
+    /**
+     * <p>Issue #194: Incorrect getText() after parsing the DOCDECL section</>
+     *
+     * <p>test DOCDECL text with entities appearing in attributes, Unix line separator.</p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testDocdeclTextWithEntitiesInAttributesUnix()
+        throws IOException
+    {
+        testDocdeclTextWithEntitiesInAttributes( "test-entities-in-attr.xml" );
+    }
+
+    /**
+     * <p>Issue #194: Incorrect getText() after parsing the DOCDECL section</>
+     *
+     * <p>test DOCDECL text with entities appearing in attributes, DOS line separator.</p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testDocdeclTextWithEntitiesInAttributesDOS()
+        throws IOException
+    {
+        testDocdeclTextWithEntitiesInAttributes( "test-entities-in-attr-dos.xml" );
+    }
+
+    private void testDocdeclTextWithEntitiesInAttributes( String filename )
+        throws IOException
+    {
+        try ( Reader reader = ReaderFactory.newXmlReader( new File( "src/test/resources/xml", filename ) ) )
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( reader );
+            parser.defineEntityReplacementText( "nbsp", "&#160;" );
+            parser.defineEntityReplacementText( "Alpha", "&#913;" );
+            parser.defineEntityReplacementText( "tritPos", "&#x1d7ed;" );
+            parser.defineEntityReplacementText( "flo", "&#x159;" );
+            parser.defineEntityReplacementText( "myCustomEntity", "&flo;" );
+            assertEquals( XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken() );
+            assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+            assertEquals( XmlPullParser.DOCDECL, parser.nextToken() );
+            assertEquals( " document [\n"
+                + "<!ENTITY nbsp   \"&#160;\"> <!-- no-break space = non-breaking space, U+00A0 ISOnum -->\n"
+                + "<!ENTITY Alpha    \"&#913;\"> <!-- greek capital letter alpha, U+0391 -->\n"
+                + "<!ENTITY tritPos  \"&#x1d7ed;\"> <!-- MATHEMATICAL SANS-SERIF BOLD DIGIT ONE -->\n"
+                + "<!ENTITY flo \"&#x159;\">\n"
+                + "<!ENTITY myCustomEntity \"&flo;\">\n"
+                + "]", parser.getText() );
+            assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "document", parser.getName() );
+            assertEquals( 1, parser.getAttributeCount() );
+            assertEquals( "name", parser.getAttributeName( 0 ) );
+            assertEquals( "section name with entities: '&' '&#913;' '<' '&#160;' '>' '&#x1d7ed;' ''' '&#x159;' '\"'",
+                          parser.getAttributeValue( 0 ) );
+
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "myCustomEntity", parser.getName() );
+            assertEquals( "&#x159;", parser.getText() );
+
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( XmlPullParser.END_DOCUMENT, parser.nextToken() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    /**
+     * <p>test entity ref with entities appearing in tags, Unix line separator.</p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testEntityRefTextUnix()
+        throws IOException
+    {
+        testEntityRefText( "\n" );
+    }
+
+    /**
+     * <p>test entity ref with entities appearing in tags, DOS line separator.</p>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testEntityRefTextDOS()
+        throws IOException
+    {
+        testEntityRefText( "\r\n" );
+    }
+
+    private void testEntityRefText( String newLine )
+        throws IOException
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append( "<!DOCTYPE test [" ).append( newLine );
+        sb.append( "<!ENTITY foo \"&#x159;\">" ).append( newLine );
+        sb.append( "<!ENTITY foo1 \"&nbsp;\">" ).append( newLine );
+        sb.append( "<!ENTITY foo2 \"&#x161;\">" ).append( newLine );
+        sb.append( "<!ENTITY tritPos \"&#x1d7ed;\">" ).append( newLine );
+        sb.append( "]>" ).append( newLine );
+        sb.append( "<b>&foo;&foo1;&foo2;&tritPos;</b>" );
+
+        try
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( new StringReader( sb.toString() ) );
+            parser.defineEntityReplacementText( "foo", "&#x159;" );
+            parser.defineEntityReplacementText( "nbsp", "&#160;" );
+            parser.defineEntityReplacementText( "foo1", "&nbsp;" );
+            parser.defineEntityReplacementText( "foo2", "&#x161;" );
+            parser.defineEntityReplacementText( "tritPos", "&#x1d7ed;" );
+
+            assertEquals( XmlPullParser.DOCDECL, parser.nextToken() );
+            assertEquals( " test [\n"
+                        + "<!ENTITY foo \"&#x159;\">\n"
+                        + "<!ENTITY foo1 \"&nbsp;\">\n"
+                        + "<!ENTITY foo2 \"&#x161;\">\n"
+                        + "<!ENTITY tritPos \"&#x1d7ed;\">\n"
+                        + "]", parser.getText() );
+            assertEquals( XmlPullParser.IGNORABLE_WHITESPACE, parser.nextToken() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "b", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&#x159;", parser.getText() );
+            assertEquals( "foo", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&#160;", parser.getText() );
+            assertEquals( "foo1", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&#x161;", parser.getText() );
+            assertEquals( "foo2", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&#x1d7ed;", parser.getText() );
+            assertEquals( "tritPos", parser.getName() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( "b", parser.getName() );
+            assertEquals( XmlPullParser.END_DOCUMENT, parser.nextToken() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    /**
+     * <b>Ensures that entity ref getText() and getName() return the correct value.</b>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testEntityReplacement() throws IOException {
+        String input = "<p><!-- a pagebreak: --><!-- PB -->&#160;&nbsp;<unknown /></p>";
+
+        try
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( new StringReader( input ) );
+            parser.defineEntityReplacementText( "nbsp", "&#160;" );
+
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "p", parser.getName() );
+            assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+            assertEquals( " a pagebreak: ", parser.getText() );
+            assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+            assertEquals( " PB ", parser.getText() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "\u00A0", parser.getText() );
+            assertEquals( "#160", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&#160;", parser.getText() );
+            assertEquals( "nbsp", parser.getName() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "unknown", parser.getName() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( "unknown", parser.getName() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( "p", parser.getName() );
+            assertEquals( XmlPullParser.END_DOCUMENT, parser.nextToken() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    /**
+     * <b>Ensures correct replacements inside the internal PC array when the new copied array size is shorter than
+     * previous ones.</b>
+     *
+     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
+     *
+     * @throws IOException if any.
+     *
+     * @since 3.4.2
+     */
+    @Test
+    public void testReplacementInPCArrayWithShorterCharArray()
+        throws IOException
+    {
+        String input = "<!DOCTYPE test [<!ENTITY foo \"&#x159;\"><!ENTITY tritPos  \"&#x1d7ed;\">]>"
+            + "<section name=\"&amp;&foo;&tritPos;\"><p>&amp;&foo;&tritPos;</p></section>";
+
+        try
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( new StringReader( new String(input.getBytes(), "ISO-8859-1" ) ) );
+            parser.defineEntityReplacementText( "foo", "&#x159;" );
+            parser.defineEntityReplacementText( "tritPos", "&#x1d7ed;" );
+
+            assertEquals( XmlPullParser.DOCDECL, parser.nextToken() );
+            assertEquals( " test [<!ENTITY foo \"&#x159;\"><!ENTITY tritPos  \"&#x1d7ed;\">]", parser.getText() );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "section", parser.getName() );
+            assertEquals( 1, parser.getAttributeCount() );
+            assertEquals( "name" , parser.getAttributeName( 0 ) );
+            assertEquals( "&&#x159;&#x1d7ed;" , parser.getAttributeValue( 0 ) );
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "<p>", parser.getText() );
+            assertEquals( "p", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&", parser.getText() );
+            assertEquals( "amp", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&#x159;", parser.getText() );
+            assertEquals( "foo", parser.getName() );
+            assertEquals( XmlPullParser.ENTITY_REF, parser.nextToken() );
+            assertEquals( "&#x1d7ed;", parser.getText() );
+            assertEquals( "tritPos", parser.getName() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( "p", parser.getName() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( "section", parser.getName() );
+            assertEquals( XmlPullParser.END_DOCUMENT, parser.nextToken() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
 }
