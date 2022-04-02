@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document [
+<!ENTITY nbsp   "&#160;"> <!-- no-break space = non-breaking space, U+00A0 ISOnum -->
+<!ENTITY Alpha    "&#913;"> <!-- greek capital letter alpha, U+0391 -->
+<!ENTITY tritPos  "&#x1d7ed;"> <!-- MATHEMATICAL SANS-SERIF BOLD DIGIT ONE -->
+<!ENTITY flo "&#x159;">
+<!ENTITY myCustomEntity "&flo;">
+]>
+<document name="section name with entities: '&amp;' '&Alpha;' '&lt;' '&nbsp;' '&gt;' '&tritPos;' '&apos;' '&flo;' '&quot;'">&myCustomEntity;</document>
