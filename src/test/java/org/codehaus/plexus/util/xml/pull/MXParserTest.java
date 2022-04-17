@@ -1081,7 +1081,7 @@ public class MXParserTest
     public void testDocdeclTextWithEntitiesUnix()
         throws IOException
     {
-        testDocdeclTextWithEntities( "test-entities.xml" );
+        testDocdeclTextWithEntities( "test-entities-UNIX.xml" );
     }
 
     /**
@@ -1099,7 +1099,7 @@ public class MXParserTest
     public void testDocdeclTextWithEntitiesDOS()
         throws IOException
     {
-        testDocdeclTextWithEntities( "test-entities-dos.xml" );
+        testDocdeclTextWithEntities( "test-entities-DOS.xml" );
     }
 
     private void testDocdeclTextWithEntities( String filename )
@@ -1144,7 +1144,7 @@ public class MXParserTest
     public void testDocdeclTextWithEntitiesInAttributesUnix()
         throws IOException
     {
-        testDocdeclTextWithEntitiesInAttributes( "test-entities-in-attr.xml" );
+        testDocdeclTextWithEntitiesInAttributes( "test-entities-in-attr-UNIX.xml" );
     }
 
     /**
@@ -1162,7 +1162,7 @@ public class MXParserTest
     public void testDocdeclTextWithEntitiesInAttributesDOS()
         throws IOException
     {
-        testDocdeclTextWithEntitiesInAttributes( "test-entities-in-attr-dos.xml" );
+        testDocdeclTextWithEntitiesInAttributes( "test-entities-in-attr-DOS.xml" );
     }
 
     private void testDocdeclTextWithEntitiesInAttributes( String filename )
