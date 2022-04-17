@@ -6,3 +6,7 @@
 *.css    text
 *.js     text
 *.sql    text
+
+# some files require the correct eol for proper testing
+*-DOS.xml  text eol=crlf
+*-UNIX.xml text eol=lf
