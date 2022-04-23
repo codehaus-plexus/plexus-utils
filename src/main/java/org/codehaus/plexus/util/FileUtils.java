@@ -55,14 +55,10 @@ package org.codehaus.plexus.util;
  *
  */
 
-import org.codehaus.plexus.util.io.InputStreamFacade;
-import org.codehaus.plexus.util.io.URLInputStreamFacade;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -70,14 +66,21 @@ import java.io.Writer;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import org.codehaus.plexus.util.io.InputStreamFacade;
+import org.codehaus.plexus.util.io.URLInputStreamFacade;
 
 /**
  * <p>This class provides basic facilities for manipulating files and file paths.</p>
@@ -169,7 +172,7 @@ public class FileUtils
      */
     public static String getDefaultExcludesAsString()
     {
-        return StringUtils.join( DirectoryScanner.DEFAULTEXCLUDES, "," );
+        return String.join( ",", DirectoryScanner.DEFAULTEXCLUDES);
     }
 
     /**
@@ -184,19 +187,19 @@ public class FileUtils
 
         if ( size / ONE_GB > 0 )
         {
-            displaySize = String.valueOf( size / ONE_GB ) + " GB";
+            displaySize = size / ONE_GB + " GB";
         }
         else if ( size / ONE_MB > 0 )
         {
-            displaySize = String.valueOf( size / ONE_MB ) + " MB";
+            displaySize = size / ONE_MB + " MB";
         }
         else if ( size / ONE_KB > 0 )
         {
-            displaySize = String.valueOf( size / ONE_KB ) + " KB";
+            displaySize = size / ONE_KB + " KB";
         }
         else
         {
-            displaySize = String.valueOf( size ) + " bytes";
+            displaySize = size + " bytes";
         }
 
         return displaySize;
@@ -304,8 +307,7 @@ public class FileUtils
      */
     public static boolean fileExists( String fileName )
     {
-        File file = new File( fileName );
-        return file.exists();
+        return new File( fileName ).exists();
     }
 
     /**
@@ -355,33 +357,16 @@ public class FileUtils
     public static String fileRead( File file, String encoding )
         throws IOException
     {
-        StringBuilder buf = new StringBuilder();
-
-        try ( Reader reader = getInputStreamReader( file, encoding ) )
+        if ( encoding == null )
         {
-            int count;
-            char[] b = new char[512];
-            while ( ( count = reader.read( b ) ) >= 0 ) // blocking read
-            {
-                buf.append( b, 0, count );
-            }
-        }
-
-        return buf.toString();
-    }
-
-    private static InputStreamReader getInputStreamReader( File file, String encoding ) throws IOException
-    {
-        if ( encoding != null )
-        {
-            return new InputStreamReader( Files.newInputStream( file.toPath() ), encoding );
+            return new String( Files.readAllBytes( file.toPath() ) );
         }
         else
         {
-            return new InputStreamReader( Files.newInputStream( file.toPath() ) );
+            return new String( Files.readAllBytes( file.toPath() ), encoding );
         }
     }
-    
+
     /**
      * Appends data to a file. The file will be created if it does not exist. Note: the data is written with platform
      * encoding
@@ -411,18 +396,10 @@ public class FileUtils
     public static void fileAppend( String fileName, String encoding, String data )
         throws IOException
     {
-        try ( OutputStream out = Files.newOutputStream( Paths.get(fileName),
-                StandardOpenOption.APPEND, StandardOpenOption.CREATE ) )
-        {
-            if ( encoding != null )
-            {
-                out.write( data.getBytes( encoding ) );
-            }
-            else
-            {
-                out.write( data.getBytes() );
-            }
-        }
+        byte[] bytes = encoding != null ? data.getBytes( encoding ) : data.getBytes();
+        Files.write( Paths.get( fileName ),
+                bytes,
+                StandardOpenOption.APPEND, StandardOpenOption.CREATE );
     }
 
     /**
@@ -486,7 +463,7 @@ public class FileUtils
             writer.write( data );
         }
     }
-    
+
     private static OutputStreamWriter getOutputStreamWriter( File file, String encoding ) throws IOException
     {
         OutputStream out = Files.newOutputStream( file.toPath() );
@@ -507,10 +484,9 @@ public class FileUtils
      */
     public static void fileDelete( String fileName )
     {
-        File file = new File( fileName );
         try
         {
-            NioFiles.deleteIfExists( file );
+            Files.deleteIfExists( new File( fileName ).toPath() );
         }
         catch ( IOException e )
         {
@@ -613,14 +589,12 @@ public class FileUtils
 
                 // ok... transverse into this directory and get all the files... then combine
                 // them with the current list.
-
                 String[] fetchFiles = getFilesFromExtension( currentFileName, extensions );
-                files = blendFilesToVector( files, fetchFiles );
+                Collections.addAll( files, fetchFiles );
             }
             else
             {
                 // ok... add the file
-
                 String add = currentFile.getAbsolutePath();
                 if ( isValidFile( add, extensions ) )
                 {
@@ -631,19 +605,6 @@ public class FileUtils
 
         // ok... move the Vector into the files list...
         return files.toArray( new String[0] );
-    }
-
-    /**
-     * Private helper method for getFilesFromExtension()
-     */
-    private static List<String> blendFilesToVector( List<String> v, String[] files )
-    {
-        for ( String file : files )
-        {
-            v.add( file );
-        }
-
-        return v;
     }
 
     /**
@@ -995,18 +956,23 @@ public class FileUtils
     public static void mkDirs( final File sourceBase, String[] dirs, final File destination )
         throws IOException
     {
+        Path root = sourceBase.toPath();
+        Path dest = destination.toPath();
         for ( String dir : dirs )
         {
-            File src = new File( sourceBase, dir );
-            File dst = new File( destination, dir );
-            if ( NioFiles.isSymbolicLink( src ) )
+            Path srcPath = root.resolve( dir );
+            Path dstPath = dest.resolve( dir );
+            if ( Files.isSymbolicLink( srcPath ) )
             {
-                File target = NioFiles.readSymbolicLink( src );
-                NioFiles.createSymbolicLink( dst, target );
+                if ( Files.exists( dstPath, LinkOption.NOFOLLOW_LINKS ) )
+                {
+                    Files.delete( dstPath );
+                }
+                Files.createSymbolicLink( dstPath, Files.readSymbolicLink( srcPath ) );
             }
             else
             {
-                dst.mkdirs();
+                Files.createDirectories( dstPath );
             }
         }
     }
@@ -1025,40 +991,24 @@ public class FileUtils
     public static void copyFile( final File source, final File destination )
         throws IOException
     {
+        Path srcPath = source.toPath();
+        Path dstPath = destination.toPath();
+
         // check source exists
-        if ( !source.exists() )
+        if ( !Files.exists( srcPath ) )
         {
-            final String message = "File " + source + " does not exist";
-            throw new IOException( message );
+            throw new IOException( "File " + srcPath + " does not exist" );
         }
 
-        // check source != destination, see PLXUTILS-10
-        if ( source.getCanonicalPath().equals( destination.getCanonicalPath() ) )
+        if ( Files.exists( dstPath ) && Files.isSameFile( srcPath, dstPath ) )
         {
             // if they are equal, we can exit the method without doing any work
             return;
         }
-        mkdirsFor( destination );
+        Files.createDirectories( dstPath.getParent() );
 
-        doCopyFile( source, destination );
-
-        if ( source.length() != destination.length() )
-        {
-            String message = "Failed to copy full contents from " + source + " to " + destination;
-            throw new IOException( message );
-        }
-    }
-
-    private static void doCopyFile( File source, File destination )
-        throws IOException
-    {
-        doCopyFileUsingNewIO( source, destination );
-    }
-
-    private static void doCopyFileUsingNewIO( File source, File destination )
-        throws IOException
-    {
-        NioFiles.copy( source, destination );
+        Files.copy( srcPath, dstPath,
+                StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES );
     }
 
     /**
@@ -1075,22 +1025,27 @@ public class FileUtils
     public static void linkFile( final File source, final File destination )
         throws IOException
     {
+        Path srcPath = source.toPath();
+        Path dstPath = destination.toPath();
+
         // check source exists
-        if ( !source.exists() )
+        if ( !Files.exists( srcPath ) )
         {
-            final String message = "File " + source + " does not exist";
-            throw new IOException( message );
+            throw new IOException( "File " + srcPath + " does not exist" );
         }
 
-        // check source != destination, see PLXUTILS-10
-        if ( source.getCanonicalPath().equals( destination.getCanonicalPath() ) )
+        if ( Files.exists( dstPath ) && Files.isSameFile( srcPath, dstPath ) )
         {
             // if they are equal, we can exit the method without doing any work
             return;
         }
-        mkdirsFor( destination );
+        Files.createDirectories( dstPath.getParent() );
 
-        NioFiles.createSymbolicLink( destination, source );
+        if ( Files.exists( dstPath, LinkOption.NOFOLLOW_LINKS ) )
+        {
+            Files.delete( dstPath );
+        }
+        Files.createSymbolicLink( dstPath, source.toPath() );
     }
 
     /**

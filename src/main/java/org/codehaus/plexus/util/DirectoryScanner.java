@@ -56,6 +56,7 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -663,15 +664,12 @@ public class DirectoryScanner
     public boolean isSymbolicLink( File parent, String name )
         throws IOException
     {
-        return NioFiles.isSymbolicLink( new File( parent, name ) );
+        return Files.isSymbolicLink( new File( parent, name ).toPath() );
     }
 
     /**
      * <p>Checks whether the parent of this file is a symbolic link.</p>
      * 
-     * <p>For java versions prior to 7 It doesn't really test for symbolic links but whether the canonical and absolute
-     * paths of the file are identical - this may lead to false positives on some platforms.</p>
-     *
      * @param parent the parent directory of the file to test
      * @param name the name of the file to test.
      * @return true if it's a symbolic link
@@ -681,6 +679,6 @@ public class DirectoryScanner
     public boolean isParentSymbolicLink( File parent, String name )
         throws IOException
     {
-        return NioFiles.isSymbolicLink( parent );
+        return Files.isSymbolicLink( parent.toPath() );
     }
 }
