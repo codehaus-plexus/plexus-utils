@@ -389,6 +389,8 @@ public class FileUtils
      * @param fileName The path of the file to write.
      * @param data The content to write to the file.
      * @throws IOException if any
+     * @deprecated use {@code java.nio.files.Files.write(filename, data.getBytes(encoding),
+     *     StandardOpenOption.APPEND, StandardOpenOption.CREATE)}
      */
     public static void fileAppend( String fileName, String data )
         throws IOException
@@ -403,11 +405,14 @@ public class FileUtils
      * @param encoding The encoding of the file.
      * @param data The content to write to the file.
      * @throws IOException if any
+     * @deprecated use {@code java.nio.files.Files.write(filename, data.getBytes(encoding),
+     *     StandardOpenOption.APPEND, StandardOpenOption.CREATE)}
      */
     public static void fileAppend( String fileName, String encoding, String data )
         throws IOException
     {
-        try ( OutputStream out = Files.newOutputStream( Paths.get(fileName), StandardOpenOption.APPEND ) )
+        try ( OutputStream out = Files.newOutputStream( Paths.get(fileName),
+                StandardOpenOption.APPEND, StandardOpenOption.CREATE ) )
         {
             if ( encoding != null )
             {
