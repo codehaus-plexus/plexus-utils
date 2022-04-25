@@ -22,8 +22,11 @@ import java.io.OutputStream;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.FileTime;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -154,7 +157,12 @@ public class CachingOutputStream extends OutputStream
         long position = channel.position();
         if ( position != channel.size() )
         {
-            modified = true;
+            if ( !modified )
+            {
+                FileTime now = FileTime.from( Instant.now() );
+                Files.setLastModifiedTime( path, now );
+                modified = true;
+            }
             channel.truncate( position );
         }
         channel.close();
