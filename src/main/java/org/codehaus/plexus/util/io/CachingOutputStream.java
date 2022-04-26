@@ -163,11 +163,6 @@ public class CachingOutputStream extends OutputStream
                 channel.truncate( position );
             }
             channel.close();
-//            if ( modified )
-//            {
-//                FileTime now = FileTime.from( Instant.now() );
-//                Files.setLastModifiedTime( path, now );
-//            }
         }
     }
 

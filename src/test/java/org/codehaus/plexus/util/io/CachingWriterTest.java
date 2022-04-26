@@ -27,7 +27,6 @@ import java.util.Objects;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -38,7 +37,6 @@ public class CachingWriterTest
 
     Path tempDir;
     Path checkLastModified;
-    FileTime lm;
 
     @Before
     public void setup() throws IOException
@@ -47,19 +45,18 @@ public class CachingWriterTest
         Files.createDirectories( dir );
         tempDir = Files.createTempDirectory( dir, "temp-" );
         checkLastModified = tempDir.resolve( ".check" );
-        Files.newOutputStream( checkLastModified ).close();
-        lm = Files.getLastModifiedTime( checkLastModified );
     }
 
     private void waitLastModified() throws IOException, InterruptedException
     {
+        Files.newOutputStream( checkLastModified ).close();
+        FileTime lm = Files.getLastModifiedTime( checkLastModified );
         while ( true )
         {
             Files.newOutputStream( checkLastModified ).close();
             FileTime nlm = Files.getLastModifiedTime( checkLastModified );
             if ( !Objects.equals( nlm, lm ) )
             {
-                lm = nlm;
                 break;
             }
             Thread.sleep( 10 );
