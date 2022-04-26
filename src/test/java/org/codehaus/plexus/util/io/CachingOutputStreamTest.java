@@ -17,7 +17,6 @@ package org.codehaus.plexus.util.io;
  */
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,7 +38,6 @@ public class CachingOutputStreamTest
 
     Path tempDir;
     Path checkLastModified;
-    FileTime lm;
 
     @Before
     public void setup() throws IOException
@@ -48,19 +46,18 @@ public class CachingOutputStreamTest
         Files.createDirectories( dir );
         tempDir = Files.createTempDirectory( dir, "temp-" );
         checkLastModified = tempDir.resolve( ".check" );
-        Files.newOutputStream( checkLastModified ).close();
-        lm = Files.getLastModifiedTime( checkLastModified );
     }
 
     private void waitLastModified() throws IOException, InterruptedException
     {
+        Files.newOutputStream( checkLastModified ).close();
+        FileTime lm = Files.getLastModifiedTime( checkLastModified );
         while ( true )
         {
             Files.newOutputStream( checkLastModified ).close();
             FileTime nlm = Files.getLastModifiedTime( checkLastModified );
             if ( !Objects.equals( nlm, lm ) )
             {
-                lm = nlm;
                 break;
             }
             Thread.sleep( 10 );

@@ -153,19 +153,17 @@ public class CachingOutputStream extends OutputStream
     @Override
     public void close() throws IOException
     {
-        flush();
-        long position = channel.position();
-        if ( position != channel.size() )
+        if ( channel.isOpen() )
         {
-            if ( !modified )
+            flush();
+            long position = channel.position();
+            if ( position != channel.size() )
             {
-                FileTime now = FileTime.from( Instant.now() );
-                Files.setLastModifiedTime( path, now );
                 modified = true;
+                channel.truncate( position );
             }
-            channel.truncate( position );
+            channel.close();
         }
-        channel.close();
     }
 
     public boolean isModified()
