@@ -54,13 +54,14 @@ public class CachingOutputStreamTest
 
     private void waitLastModified() throws IOException, InterruptedException
     {
+        Files.newOutputStream( checkLastModified ).close();
+        FileTime lm = Files.getLastModifiedTime( checkLastModified );
         while ( true )
         {
             Files.newOutputStream( checkLastModified ).close();
             FileTime nlm = Files.getLastModifiedTime( checkLastModified );
             if ( !Objects.equals( nlm, lm ) )
             {
-                lm = nlm;
                 break;
             }
             Thread.sleep( 10 );
