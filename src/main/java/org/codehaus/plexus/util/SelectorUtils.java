@@ -251,22 +251,18 @@ public final class SelectorUtils
 
     public static boolean matchPath( String pattern, String str, String separator, boolean isCaseSensitive )
     {
-        /* 2022-03-30: Fixed: Caller parameter in a public method should be handled immutable. */
-        String localPattern = pattern;
-        if ( isRegexPrefixedPattern( localPattern ) )
+        if ( isRegexPrefixedPattern( pattern ) )
         {
-            localPattern =
-                localPattern.substring( REGEX_HANDLER_PREFIX.length(), localPattern.length() - PATTERN_HANDLER_SUFFIX.length() );
+            String localPattern =
+                pattern.substring( REGEX_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length() );
 
             return str.matches( localPattern );
         }
         else
         {
-            if ( isAntPrefixedPattern( localPattern ) )
-            {
-                localPattern = localPattern.substring( ANT_HANDLER_PREFIX.length(),
-                                             localPattern.length() - PATTERN_HANDLER_SUFFIX.length() );
-            }
+            String localPattern = isAntPrefixedPattern( pattern )
+                ? pattern.substring( ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length() )
+                : pattern;
             final String osRelatedPath = toOSRelatedPath( str, separator );
             final String osRelatedPattern = toOSRelatedPath( localPattern, separator );
             return matchAntPathPattern( osRelatedPattern, osRelatedPath, separator, isCaseSensitive );
