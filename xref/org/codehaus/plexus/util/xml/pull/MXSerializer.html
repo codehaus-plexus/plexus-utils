@@ -468,15 +468,15 @@
 <a class="jxr_linenumber" name="L460" href="#L460">460</a>         <strong class="jxr_keyword">if</strong> ( encoding != <strong class="jxr_keyword">null</strong> )
 <a class="jxr_linenumber" name="L461" href="#L461">461</a>         {
 <a class="jxr_linenumber" name="L462" href="#L462">462</a>             out.write( <span class="jxr_string">" encoding="</span> );
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>             out.write( attributeUseApostrophe ? '\'' : '&quot;' );
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>             out.write( apos );
 <a class="jxr_linenumber" name="L464" href="#L464">464</a>             out.write( encoding );
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>             out.write( attributeUseApostrophe ? '\'' : '&quot;' );
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>             out.write( apos );
 <a class="jxr_linenumber" name="L466" href="#L466">466</a>             <em class="jxr_comment">// out.write('\'');</em>
 <a class="jxr_linenumber" name="L467" href="#L467">467</a>         }
 <a class="jxr_linenumber" name="L468" href="#L468">468</a>         <strong class="jxr_keyword">if</strong> ( standalone != <strong class="jxr_keyword">null</strong> )
 <a class="jxr_linenumber" name="L469" href="#L469">469</a>         {
 <a class="jxr_linenumber" name="L470" href="#L470">470</a>             out.write( <span class="jxr_string">" standalone="</span> );
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>             out.write( attributeUseApostrophe ? '\'' : '&quot;' );
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>             out.write( apos );
 <a class="jxr_linenumber" name="L472" href="#L472">472</a>             <strong class="jxr_keyword">if</strong> ( standalone )
 <a class="jxr_linenumber" name="L473" href="#L473">473</a>             {
 <a class="jxr_linenumber" name="L474" href="#L474">474</a>                 out.write( <span class="jxr_string">"yes"</span> );
@@ -485,7 +485,7 @@
 <a class="jxr_linenumber" name="L477" href="#L477">477</a>             {
 <a class="jxr_linenumber" name="L478" href="#L478">478</a>                 out.write( <span class="jxr_string">"no"</span> );
 <a class="jxr_linenumber" name="L479" href="#L479">479</a>             }
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>             out.write( attributeUseApostrophe ? '\'' : '&quot;' );
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>             out.write( apos );
 <a class="jxr_linenumber" name="L481" href="#L481">481</a>             <em class="jxr_comment">// if(standalone.booleanValue()) {</em>
 <a class="jxr_linenumber" name="L482" href="#L482">482</a>             <em class="jxr_comment">// out.write(" standalone='yes'");</em>
 <a class="jxr_linenumber" name="L483" href="#L483">483</a>             <em class="jxr_comment">// } else {</em>
@@ -1417,6 +1417,6 @@
 <a class="jxr_linenumber" name="L1409" href="#L1409">1409</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2021 <a href="https://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2001&#x2013;2022 <a href="https://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
 </body>
 </html>
