@@ -26,7 +26,7 @@ limitations under the License.
   </parent>
 
   <artifactId>plexus-utils</artifactId>
-  <version>3.4.2</version>
+  <version>3.4.3-SNAPSHOT</version>
 
   <name>Plexus Common Utilities</name>
   <description>A collection of various utility classes to ease working with strings, files, command lines, XML and
@@ -51,7 +51,7 @@ limitations under the License.
   </distributionManagement>
 
   <properties>
-    <project.build.outputTimestamp>2022-05-17T20:30:09Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2022-05-17T20:32:02Z</project.build.outputTimestamp>
   </properties>
 
   <dependencies>
