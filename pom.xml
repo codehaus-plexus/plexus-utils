@@ -56,12 +56,6 @@ limitations under the License.
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.maven.shared</groupId>
-      <artifactId>maven-plugin-testing-harness</artifactId>
-      <version>1.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
       <version>1.35</version>
