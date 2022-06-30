@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.maven.plugin.testing.stubs.MavenProjectStub;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -462,6 +461,7 @@ public class ReflectionValueExtractorTest
         private String version;
 
         private Map<String, Artifact> artifactMap = new HashMap<String, Artifact>();
+        private String description;
 
         public void setModelVersion( String modelVersion )
         {
@@ -569,6 +569,16 @@ public class ReflectionValueExtractorTest
         {
             return artifactMap;
         }
+
+        public void setDescription( String description )
+        {
+            this.description = description;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
     }
 
     public static class Build
@@ -630,7 +640,7 @@ public class ReflectionValueExtractorTest
     public void testRootPropertyRegression()
         throws Exception
     {
-        MavenProjectStub project = new MavenProjectStub();
+        Project project = new Project();
         project.setDescription( "c:\\\\org\\apache\\test" );
         Object evalued = ReflectionValueExtractor.evaluate( "description", project );
         assertNotNull( evalued );
