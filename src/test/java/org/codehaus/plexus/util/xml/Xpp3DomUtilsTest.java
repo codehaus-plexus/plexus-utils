@@ -18,9 +18,11 @@ package org.codehaus.plexus.util.xml;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.io.StringReader;
 
 import org.codehaus.plexus.util.xml.pull.XmlPullParser;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.junit.Test;
 
 /**
@@ -111,7 +113,29 @@ public class Xpp3DomUtilsTest
         assertEquals( "RHS", mergeResult.getChildren( "property" )[2].getChild( "value" ).getValue() );
         assertEquals( "right", p2.getChild( "value" ).getInputLocation() );
     }
-    
+
+    @Test
+    public void testOverwriteDominantBlankValue() throws XmlPullParserException, IOException {
+        String lhs = "<parameter xml:space=\"preserve\"> </parameter>";
+
+        String rhs = "<parameter>recessive</parameter>";
+
+        Xpp3Dom leftDom = Xpp3DomBuilder.build( new StringReader( lhs ), new FixedInputLocationBuilder( "left" ) );
+        Xpp3Dom rightDom = Xpp3DomBuilder.build( new StringReader( rhs ), new FixedInputLocationBuilder( "right" ) );
+
+        Xpp3Dom mergeResult = Xpp3DomUtils.mergeXpp3Dom( leftDom, rightDom, true );
+        assertEquals( " ", mergeResult.getValue() );
+    }
+
+    @Test
+    public void testIsNotEmptyNegatesIsEmpty()
+    {
+        assertEquals( !Xpp3DomUtils.isEmpty( null ), Xpp3DomUtils.isNotEmpty( null ) );
+        assertEquals( !Xpp3DomUtils.isEmpty( "" ), Xpp3DomUtils.isNotEmpty( "" ) );
+        assertEquals( !Xpp3DomUtils.isEmpty( " " ), Xpp3DomUtils.isNotEmpty( " " ) );
+        assertEquals( !Xpp3DomUtils.isEmpty( "someValue" ), Xpp3DomUtils.isNotEmpty( "someValue" ) );
+    }
+
     private static class FixedInputLocationBuilder
         implements Xpp3DomBuilder.InputLocationBuilder
     {
