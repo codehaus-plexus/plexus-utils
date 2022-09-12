@@ -43,7 +43,7 @@ public class StringUtilsTest
     {
         assertEquals( true, StringUtils.isEmpty( null ) );
         assertEquals( true, StringUtils.isEmpty( "" ) );
-        assertEquals( true, StringUtils.isEmpty( " " ) );
+        assertEquals( false, StringUtils.isEmpty( " " ) );
         assertEquals( false, StringUtils.isEmpty( "foo" ) );
         assertEquals( false, StringUtils.isEmpty( "  foo  " ) );
     }
@@ -59,6 +59,16 @@ public class StringUtilsTest
         assertEquals( true, StringUtils.isNotEmpty( " " ) );
         assertEquals( true, StringUtils.isNotEmpty( "foo" ) );
         assertEquals( true, StringUtils.isNotEmpty( "  foo  " ) );
+    }
+
+    @Test
+    public void testIsNotEmptyNegatesIsEmpty()
+    {
+        assertEquals( !StringUtils.isEmpty( null ), StringUtils.isNotEmpty( null ) );
+        assertEquals( !StringUtils.isEmpty( "" ), StringUtils.isNotEmpty( "" ) );
+        assertEquals( !StringUtils.isEmpty( " " ), StringUtils.isNotEmpty( " " ) );
+        assertEquals( !StringUtils.isEmpty( "foo" ), StringUtils.isNotEmpty( "foo" ) );
+        assertEquals( !StringUtils.isEmpty( "  foo  " ), StringUtils.isNotEmpty( "  foo  " ) );
     }
 
     /**
