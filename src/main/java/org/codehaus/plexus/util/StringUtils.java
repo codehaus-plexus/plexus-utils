@@ -156,9 +156,7 @@ public class StringUtils
     }
 
     /**
-     * <p>
      * Checks if a String is non <code>null</code> and is not empty (<code>length &gt; 0</code>).
-     * </p>
      *
      * @param str the String to check
      * @return true if the String is non-null, and not length zero
@@ -169,21 +167,18 @@ public class StringUtils
     }
 
     /**
+     * Checks if a String is <code>null</code> or empty.
      * <p>
-     * Checks if a (trimmed) String is <code>null</code> or empty.
-     * </p>
-     * <p>
-     * <strong>Note:</strong> In future releases, this method will no longer trim the input string such that it works
-     * complementary to {@link #isNotEmpty(String)}. Code that wants to test for whitespace-only strings should be
-     * migrated to use {@link #isBlank(String)} instead.
-     * </p>
+     * <strong>Note:</strong> In releases prior 3.5.0, this method trimmed the input string such that it worked
+     * the same as {@link #isBlank(String)}. Since release 3.5.0 it no longer returns {@code true} for strings
+     * containing only whitespace characters.
      *
      * @param str the String to check
-     * @return <code>true</code> if the String is <code>null</code>, or length zero once trimmed
+     * @return <code>true</code> if the String is <code>null</code>, or length zero
      */
     public static boolean isEmpty( String str )
     {
-        return ( ( str == null ) || ( str.trim().isEmpty() ) );
+        return ( ( str == null ) || ( str.isEmpty() ) );
     }
 
     /**
