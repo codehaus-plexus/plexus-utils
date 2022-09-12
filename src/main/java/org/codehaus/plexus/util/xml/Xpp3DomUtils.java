@@ -1,5 +1,9 @@
 package org.codehaus.plexus.util.xml;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -17,10 +21,6 @@ package org.codehaus.plexus.util.xml;
  */
 
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /** @author Jason van Zyl */
 public class Xpp3DomUtils
@@ -275,11 +275,19 @@ public class Xpp3DomUtils
         return recessive;
     }
 
+    /**
+     * @deprecated Use {@link org.codehaus.plexus.util.StringUtils#isNotEmpty(String)} instead
+     */
+    @Deprecated
     public static boolean isNotEmpty( String str )
     {
         return ( str != null && str.length() > 0 );
     }
 
+    /**
+     * @deprecated Use {@link org.codehaus.plexus.util.StringUtils#isEmpty(String)} instead
+     */
+    @Deprecated
     public static boolean isEmpty( String str )
     {
         return ( str == null || str.trim().length() == 0 );
