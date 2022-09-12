@@ -115,7 +115,7 @@ public class Xpp3DomUtilsTest
     }
 
     @Test
-    public void testOverwriteDominantBlankValue() throws XmlPullParserException, IOException {
+    public void testPreserveDominantBlankValue() throws XmlPullParserException, IOException {
         String lhs = "<parameter xml:space=\"preserve\"> </parameter>";
 
         String rhs = "<parameter>recessive</parameter>";
@@ -125,6 +125,20 @@ public class Xpp3DomUtilsTest
 
         Xpp3Dom mergeResult = Xpp3DomUtils.mergeXpp3Dom( leftDom, rightDom, true );
         assertEquals( " ", mergeResult.getValue() );
+    }
+
+    @Test
+    public void testPreserveDominantEmptyNode() throws XmlPullParserException, IOException
+    {
+        String lhs = "<parameter></parameter>";
+
+        String rhs = "<parameter>recessive</parameter>";
+
+        Xpp3Dom leftDom = Xpp3DomBuilder.build( new StringReader( lhs ), new FixedInputLocationBuilder( "left" ) );
+        Xpp3Dom rightDom = Xpp3DomBuilder.build( new StringReader( rhs ), new FixedInputLocationBuilder( "right" ) );
+
+        Xpp3Dom mergeResult = Xpp3DomUtils.mergeXpp3Dom( leftDom, rightDom, true );
+        assertEquals( "", mergeResult.getValue() );
     }
 
     @Test

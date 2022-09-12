@@ -95,8 +95,6 @@ public class Xpp3DomUtils
      *   </ol></li>
      * <li> If mergeSelf == true
      *   <ol type="A">
-     *   <li> if the dominant root node's value is empty, set it to the recessive root node's value</li>
-     *   <li> For each attribute in the recessive root node which is not set in the dominant root node, set it.</li>
      *   <li> Determine whether children from the recessive DOM will be merged or appended to the dominant DOM as
      *        siblings (flag=mergeChildren).
      *     <ol type="i">
@@ -140,12 +138,6 @@ public class Xpp3DomUtils
 
         if ( mergeSelf )
         {
-            if ( isEmpty( dominant.getValue() ) && !isEmpty( recessive.getValue() ) )
-            {
-                dominant.setValue( recessive.getValue() );
-                dominant.setInputLocation( recessive.getInputLocation() );
-            }
-
             String[] recessiveAttrs = recessive.getAttributeNames();
             for ( String attr : recessiveAttrs )
             {
