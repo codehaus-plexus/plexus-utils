@@ -110,7 +110,7 @@ public abstract class CommandLineUtils
 
     /**
      * Immediately forks a process, returns a callable that will block until process is complete.
-     * 
+     *
      * @param cl The command line to execute
      * @param systemIn The input to read from, must be thread safe
      * @param systemOut A consumer that receives output, must be thread safe
@@ -354,12 +354,10 @@ public abstract class CommandLineUtils
      * with case-insensitive environment variables like Windows, all variable names will be normalized to upper case.
      *
      * @return The shell environment variables, can be empty but never <code>null</code>.
-     * @throws IOException If the environment variables could not be queried from the shell.
      * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result <b>since 2.0.2 System#getenv()
      *      will be used if available in the current running jvm.</b>
      */
     public static Properties getSystemEnvVars()
-        throws IOException
     {
         return getSystemEnvVars( !Os.isFamily( Os.FAMILY_WINDOWS ) );
     }
@@ -370,12 +368,10 @@ public abstract class CommandLineUtils
      *
      * @param caseSensitive Whether environment variable keys should be treated case-sensitively.
      * @return Properties object of (possibly modified) envar keys mapped to their values.
-     * @throws IOException .
      * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result <b>since 2.0.2 System#getenv()
      *      will be used if available in the current running jvm.</b>
      */
     public static Properties getSystemEnvVars( boolean caseSensitive )
-        throws IOException
     {
         Properties envVars = new Properties();
         Map<String, String> envs = System.getenv();
