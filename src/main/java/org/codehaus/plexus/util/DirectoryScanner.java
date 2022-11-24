@@ -56,6 +56,7 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -236,9 +237,9 @@ public class DirectoryScanner
      * @return the base directory to be scanned
      */
     @Override
-    public File getBasedir()
+    public Path getBasedir()
     {
-        return basedir;
+        return basedir.toPath();
     }
 
     /**
