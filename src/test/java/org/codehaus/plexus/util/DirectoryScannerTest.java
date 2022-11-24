@@ -28,6 +28,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +83,8 @@ public class DirectoryScannerTest
         throws IOException, URISyntaxException
     {
         DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( getTestResourcesDir() + File.separator + "directory-scanner" ).getCanonicalFile() );
+		ds.setBasedir(
+				new File(getTestResourcesDir() + File.separator + "directory-scanner").getCanonicalFile().toPath());
 
         String fs;
         if ( File.separatorChar == '/' )
@@ -113,7 +115,8 @@ public class DirectoryScannerTest
         throws IOException, URISyntaxException
     {
         DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( getTestResourcesDir() + File.separator + "directory-scanner" ).getCanonicalFile() );
+		ds.setBasedir(
+				new File(getTestResourcesDir() + File.separator + "directory-scanner").getCanonicalFile().toPath());
         ds.setIncludes( new String[] { "**" } );
 
         String fs;
@@ -173,7 +176,8 @@ public class DirectoryScannerTest
         try
         {
             List<String> symlinks =
-                FileUtils.getFileAndDirectoryNames( symlinksDirectory, "sym*", null, true, true, true, true );
+					FileUtils.getFileAndDirectoryNames(symlinksDirectory.toPath(), "sym*", null, true, true, true,
+							true);
             if ( symlinks.isEmpty() )
             {
                 throw new IOException( "Symlinks files/directories are not present" );
@@ -215,7 +219,7 @@ public class DirectoryScannerTest
         String includes = "scanner1.dat,scanner2.dat,scanner3.dat,scanner4.dat,scanner5.dat";
         String excludes = "scanner1.dat,scanner2.dat";
 
-        List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
+		List<File> fileNames = FileUtils.getFiles(new File(testDir).toPath(), includes, excludes, false);
 
         assertEquals( "Wrong number of results.", 3, fileNames.size() );
         assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
@@ -239,7 +243,7 @@ public class DirectoryScannerTest
 
         String excludes = "scanner1.dat,\n  \n,scanner2.dat  \n\r,,";
 
-        List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
+		List<File> fileNames = FileUtils.getFiles(new File(testDir).toPath(), includes, excludes, false);
 
         assertEquals( "Wrong number of results.", 3, fileNames.size() );
         assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
@@ -248,15 +252,20 @@ public class DirectoryScannerTest
     }
 
     /**
-     * <p>testFollowSymlinksFalse.</p>
-     */
+	 * <p>
+	 * testFollowSymlinksFalse.
+	 * </p>
+	 * 
+	 * @throws IOException
+	 * @throws IllegalStateException
+	 */
     @Test
-    public void testFollowSymlinksFalse()
+	public void testFollowSymlinksFalse() throws IllegalStateException, IOException
     {
         assumeTrue( checkTestFilesSymlinks() );
         
         DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
+		ds.setBasedir(new File("src/test/resources/symlinks/src/").toPath());
         ds.setFollowSymlinks( false );
         ds.scan();
         List<String> included = Arrays.asList( ds.getIncludedFiles() );
@@ -285,15 +294,20 @@ public class DirectoryScannerTest
     }
 
     /**
-     * <p>testFollowSymlinks.</p>
-     */
+	 * <p>
+	 * testFollowSymlinks.
+	 * </p>
+	 * 
+	 * @throws IOException
+	 * @throws IllegalStateException
+	 */
     @Test
-    public void testFollowSymlinks()
+	public void testFollowSymlinks() throws IllegalStateException, IOException
     {
         assumeTrue( checkTestFilesSymlinks() );
         
         DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
+		ds.setBasedir(new File("src/test/resources/symlinks/src/").toPath());
         ds.setFollowSymlinks( true );
         ds.scan();
         List<String> included = Arrays.asList( ds.getIncludedFiles() );
@@ -342,7 +356,7 @@ public class DirectoryScannerTest
         String[] excludes = { "" };
         ds.setIncludes( includes );
         ds.setExcludes( excludes );
-        ds.setBasedir( new File( testDir + File.separator + "directoryTest" ) );
+		ds.setBasedir(new File(testDir + File.separator + "directoryTest").toPath());
         ds.setCaseSensitive( true );
         ds.scan();
 
@@ -384,7 +398,7 @@ public class DirectoryScannerTest
 
         ds.setIncludes( includes );
         ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+		ds.setBasedir(dir.toPath());
         ds.scan();
 
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
@@ -425,7 +439,7 @@ public class DirectoryScannerTest
 
         ds.setIncludes( includes );
         ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+		ds.setBasedir(dir.toPath());
         ds.scan();
 
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
@@ -461,7 +475,7 @@ public class DirectoryScannerTest
 
         String[] includes = { includeExpr };
         ds.setIncludes( includes );
-        ds.setBasedir( dir );
+		ds.setBasedir(dir.toPath());
         ds.scan();
 
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
@@ -505,7 +519,7 @@ public class DirectoryScannerTest
 
         String[] excludes = { excludeExpr };
         ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+		ds.setBasedir(dir.toPath());
         ds.scan();
 
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
@@ -550,7 +564,7 @@ public class DirectoryScannerTest
 
         String[] excludes = { excludeExpr };
         ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+		ds.setBasedir(dir.toPath());
         ds.scan();
 
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
@@ -603,9 +617,9 @@ public class DirectoryScannerTest
         DirectoryScanner ds = new DirectoryScanner()
         {
             @Override
-            protected void scandir( File dir, String vpath, boolean fast )
+			protected void scandir(Path dir, String vpath, boolean fast) throws IOException
             {
-                scannedDirSet.add( dir.getName() );
+				scannedDirSet.add(dir.getFileName().toString());
                 super.scandir( dir, vpath, fast );
             }
 
@@ -614,7 +628,7 @@ public class DirectoryScannerTest
         // one '*' matches only ONE directory level
         String[] includes = { "directoryTest" + File.separator + "*" + File.separator + "file1.dat" };
         ds.setIncludes( includes );
-        ds.setBasedir( new File( testDir ) );
+		ds.setBasedir(new File(testDir).toPath());
         ds.scan();
 
         assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
@@ -636,12 +650,12 @@ public class DirectoryScannerTest
     {
         assumeTrue( checkTestFilesSymlinks() );
 
-        final File directory = new File( "src/test/resources/symlinks/src" );
+		final Path directory = new File("src/test/resources/symlinks/src").toPath();
         DirectoryScanner ds = new DirectoryScanner();
-        assertTrue( ds.isSymbolicLink( directory, "symR" ) );
-        assertTrue( ds.isSymbolicLink( directory, "symDir" ) );
-        assertFalse( ds.isSymbolicLink( directory, "fileR.txt" ) );
-        assertFalse( ds.isSymbolicLink( directory, "aRegularDir" ) );
+		assertTrue(ds.isSymbolicLink(directory, "symR"));
+		assertTrue(ds.isSymbolicLink(directory, "symDir"));
+		assertFalse(ds.isSymbolicLink(directory, "fileR.txt"));
+		assertFalse(ds.isSymbolicLink(directory, "aRegularDir"));
     }
 
     /**
@@ -657,13 +671,13 @@ public class DirectoryScannerTest
 
         final File directory = new File( "src/test/resources/symlinks/src" );
         DirectoryScanner ds = new DirectoryScanner();
-        assertFalse( ds.isParentSymbolicLink( directory, "symR" ) );
-        assertFalse( ds.isParentSymbolicLink( directory, "symDir" ) );
-        assertFalse( ds.isParentSymbolicLink( directory, "fileR.txt" ) );
-        assertFalse( ds.isParentSymbolicLink( directory, "aRegularDir" ) );
-        assertFalse( ds.isParentSymbolicLink( new File( directory, "aRegularDir" ), "aRegulatFile.txt" ) );
-        assertTrue( ds.isParentSymbolicLink( new File( directory, "symDir" ), "targetFile.txt" ) );
-        assertTrue( ds.isParentSymbolicLink( new File( directory, "symLinkToDirOnTheOutside" ),
+		assertFalse(ds.isParentSymbolicLink(directory.toPath(), "symR"));
+		assertFalse(ds.isParentSymbolicLink(directory.toPath(), "symDir"));
+		assertFalse(ds.isParentSymbolicLink(directory.toPath(), "fileR.txt"));
+		assertFalse(ds.isParentSymbolicLink(directory.toPath(), "aRegularDir"));
+		assertFalse(ds.isParentSymbolicLink(new File(directory, "aRegularDir").toPath(), "aRegulatFile.txt"));
+		assertTrue(ds.isParentSymbolicLink(new File(directory, "symDir").toPath(), "targetFile.txt"));
+		assertTrue(ds.isParentSymbolicLink(new File(directory, "symLinkToDirOnTheOutside").toPath(),
                                              "FileInDirOnTheOutside.txt" ) );
     }
 

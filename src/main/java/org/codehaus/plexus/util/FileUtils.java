@@ -1,5 +1,29 @@
 package org.codehaus.plexus.util;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
+import java.security.SecureRandom;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,27 +81,6 @@ package org.codehaus.plexus.util;
 
 import org.codehaus.plexus.util.io.InputStreamFacade;
 import org.codehaus.plexus.util.io.URLInputStreamFacade;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.security.SecureRandom;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 /**
  * <p>This class provides basic facilities for manipulating files and file paths.</p>
@@ -392,7 +395,8 @@ public class FileUtils
      * @deprecated use {@code java.nio.files.Files.write(filename, data.getBytes(encoding),
      *     StandardOpenOption.APPEND, StandardOpenOption.CREATE)}
      */
-    public static void fileAppend( String fileName, String data )
+    @Deprecated
+	public static void fileAppend( String fileName, String data )
         throws IOException
     {
         fileAppend( fileName, null, data );
@@ -408,7 +412,8 @@ public class FileUtils
      * @deprecated use {@code java.nio.files.Files.write(filename, data.getBytes(encoding),
      *     StandardOpenOption.APPEND, StandardOpenOption.CREATE)}
      */
-    public static void fileAppend( String fileName, String encoding, String data )
+    @Deprecated
+	public static void fileAppend( String fileName, String encoding, String data )
         throws IOException
     {
         try ( OutputStream out = Files.newOutputStream( Paths.get(fileName),
@@ -510,7 +515,7 @@ public class FileUtils
         File file = new File( fileName );
         try
         {
-            NioFiles.deleteIfExists( file );
+			Files.deleteIfExists(file.toPath());
         }
         catch ( IOException e )
         {
@@ -999,10 +1004,14 @@ public class FileUtils
         {
             File src = new File( sourceBase, dir );
             File dst = new File( destination, dir );
-            if ( NioFiles.isSymbolicLink( src ) )
+			if (Files.isSymbolicLink(src.toPath()))
             {
-                File target = NioFiles.readSymbolicLink( src );
-                NioFiles.createSymbolicLink( dst, target );
+				Path target = Files.readSymbolicLink(src.toPath());
+				Path link = dst.toPath();
+				if (Files.exists(link, LinkOption.NOFOLLOW_LINKS)) {
+					Files.delete(link);
+				}
+				link = Files.createSymbolicLink(link, target);
             }
             else
             {
@@ -1040,25 +1049,14 @@ public class FileUtils
         }
         mkdirsFor( destination );
 
-        doCopyFile( source, destination );
+		Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING,
+				StandardCopyOption.COPY_ATTRIBUTES);
 
         if ( source.length() != destination.length() )
         {
             String message = "Failed to copy full contents from " + source + " to " + destination;
             throw new IOException( message );
         }
-    }
-
-    private static void doCopyFile( File source, File destination )
-        throws IOException
-    {
-        doCopyFileUsingNewIO( source, destination );
-    }
-
-    private static void doCopyFileUsingNewIO( File source, File destination )
-        throws IOException
-    {
-        NioFiles.copy( source, destination );
     }
 
     /**
@@ -1090,7 +1088,11 @@ public class FileUtils
         }
         mkdirsFor( destination );
 
-        NioFiles.createSymbolicLink( destination, source );
+		Path link = destination.toPath();
+		if (Files.exists(link, LinkOption.NOFOLLOW_LINKS)) {
+			Files.delete(link);
+		}
+		Files.createSymbolicLink(link, source.toPath());
     }
 
     /**
@@ -1734,7 +1736,7 @@ public class FileUtils
      * @throws IOException io issue
      * @see #getFileNames(File, String, String, boolean)
      */
-    public static List<File> getFiles( File directory, String includes, String excludes )
+	public static List<File> getFiles(Path directory, String includes, String excludes)
         throws IOException
     {
         return getFiles( directory, includes, excludes, true );
@@ -1751,7 +1753,7 @@ public class FileUtils
      * @throws IOException io issue
      * @see #getFileNames(File, String, String, boolean)
      */
-    public static List<File> getFiles( File directory, String includes, String excludes, boolean includeBasedir )
+	public static List<File> getFiles(Path directory, String includes, String excludes, boolean includeBasedir)
         throws IOException
     {
         List<String> fileNames = getFileNames( directory, includes, excludes, includeBasedir );
@@ -1776,7 +1778,7 @@ public class FileUtils
      * @return a list of files as String
      * @throws IOException io issue
      */
-    public static List<String> getFileNames( File directory, String includes, String excludes, boolean includeBasedir )
+	public static List<String> getFileNames(Path directory, String includes, String excludes, boolean includeBasedir)
         throws IOException
     {
         return getFileNames( directory, includes, excludes, includeBasedir, true );
@@ -1793,7 +1795,7 @@ public class FileUtils
      * @return a list of files as String
      * @throws IOException io issue
      */
-    public static List<String> getFileNames( File directory, String includes, String excludes, boolean includeBasedir,
+	public static List<String> getFileNames(Path directory, String includes, String excludes, boolean includeBasedir,
                                              boolean isCaseSensitive )
         throws IOException
     {
@@ -1810,7 +1812,7 @@ public class FileUtils
      * @return a list of directories as String
      * @throws IOException io issue
      */
-    public static List<String> getDirectoryNames( File directory, String includes, String excludes,
+	public static List<String> getDirectoryNames(Path directory, String includes, String excludes,
                                                   boolean includeBasedir )
         throws IOException
     {
@@ -1828,7 +1830,7 @@ public class FileUtils
      * @return a list of directories as String
      * @throws IOException io issue
      */
-    public static List<String> getDirectoryNames( File directory, String includes, String excludes,
+	public static List<String> getDirectoryNames(Path directory, String includes, String excludes,
                                                   boolean includeBasedir, boolean isCaseSensitive )
         throws IOException
     {
@@ -1848,7 +1850,7 @@ public class FileUtils
      * @return a list of files as String
      * @throws IOException io issue
      */
-    public static List<String> getFileAndDirectoryNames( File directory, String includes, String excludes,
+	public static List<String> getFileAndDirectoryNames(Path directory, String includes, String excludes,
                                                          boolean includeBasedir, boolean isCaseSensitive,
                                                          boolean getFiles, boolean getDirectories )
         throws IOException
@@ -1917,7 +1919,7 @@ public class FileUtils
      * @param destinationDirectory the target dir
      * @throws IOException if any
      */
-    public static void copyDirectory( File sourceDirectory, File destinationDirectory )
+	public static void copyDirectory(Path sourceDirectory, File destinationDirectory)
         throws IOException
     {
         copyDirectory( sourceDirectory, destinationDirectory, "**", null );
@@ -1933,11 +1935,11 @@ public class FileUtils
      * @throws IOException if any
      * @see #getFiles(File, String, String)
      */
-    public static void copyDirectory( File sourceDirectory, File destinationDirectory, String includes,
+	public static void copyDirectory(Path sourceDirectory, File destinationDirectory, String includes,
                                       String excludes )
         throws IOException
     {
-        if ( !sourceDirectory.exists() )
+		if (!Files.exists(sourceDirectory))
         {
             return;
         }
@@ -1966,7 +1968,7 @@ public class FileUtils
      * @throws IOException if any
      * @since 1.5.7
      */
-    public static void copyDirectoryLayout( File sourceDirectory, File destinationDirectory, String[] includes,
+	public static void copyDirectoryLayout(Path sourceDirectory, Path destinationDirectory, String[] includes,
                                             String[] excludes )
         throws IOException
     {
@@ -1985,9 +1987,9 @@ public class FileUtils
             throw new IOException( "source and destination are the same directory." );
         }
 
-        if ( !sourceDirectory.exists() )
+		if (!Files.exists(sourceDirectory))
         {
-            throw new IOException( "Source directory doesn't exists (" + sourceDirectory.getAbsolutePath() + ")." );
+			throw new IOException("Source directory doesn't exists (" + sourceDirectory.toAbsolutePath() + ").");
         }
 
         DirectoryScanner scanner = new DirectoryScanner();
@@ -2014,15 +2016,15 @@ public class FileUtils
 
         for ( String name : includedDirectories )
         {
-            File source = new File( sourceDirectory, name );
+			Path source = sourceDirectory.resolve(name);
 
             if ( source.equals( sourceDirectory ) )
             {
                 continue;
             }
 
-            File destination = new File( destinationDirectory, name );
-            destination.mkdirs();
+			Path destination = destinationDirectory.resolve(name);
+			Files.createDirectories(destination);
         }
     }
 
@@ -2198,7 +2200,7 @@ public class FileUtils
             parent = parentDir.getPath();
         }
         DecimalFormat fmt = new DecimalFormat( "#####" );
-        SecureRandom secureRandom = new SecureRandom();
+		SecureRandom secureRandom = new SecureRandom();
         long secureInitializer = secureRandom.nextLong();
         Random rand = new Random( secureInitializer + Runtime.getRuntime().freeMemory() );
         synchronized ( rand )

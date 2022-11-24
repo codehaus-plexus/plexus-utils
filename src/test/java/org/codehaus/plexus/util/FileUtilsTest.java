@@ -1238,7 +1238,8 @@ public final class FileUtilsTest
         // test ${token}
         FileUtils.FilterWrapper[] wrappers1 = new FileUtils.FilterWrapper[] { new FileUtils.FilterWrapper()
         {
-            public Reader getReader( Reader reader )
+            @Override
+			public Reader getReader( Reader reader )
             {
                 return new InterpolationFilterReader( reader, filterProperties, "${", "}" );
             }
@@ -1709,7 +1710,7 @@ public final class FileUtilsTest
 
         File source = new File( "src/test/resources/dir-layout-copy" );
 
-        FileUtils.copyDirectoryLayout( source, destination, null, null );
+		FileUtils.copyDirectoryLayout(source.toPath(), destination.toPath(), null, null);
 
         assertTrue( destination.exists() );
 
