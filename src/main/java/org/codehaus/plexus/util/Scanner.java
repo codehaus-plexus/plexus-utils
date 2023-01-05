@@ -1,22 +1,8 @@
 package org.codehaus.plexus.util;
 
-/*
- * Copyright The Codehaus Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
 import java.util.Comparator;
 
 /**
@@ -53,12 +39,16 @@ public interface Scanner
     void addDefaultExcludes();
 
     /**
-     * Scans the base directory for files which match at least one include pattern and don't match any exclude patterns.
-     *
-     * @exception IllegalStateException if the base directory was set incorrectly (i.e. if it is <code>null</code>,
-     *                doesn't exist, or isn't a directory).
-     */
-    void scan();
+	 * Scans the base directory for files which match at least one include pattern
+	 * and don't match any exclude patterns.
+	 * 
+	 * @throws IOException if any IO problem occurs while scanning
+	 *
+	 * @exception IllegalStateException if the base directory was set incorrectly
+	 *                                  (i.e. if it is <code>null</code>, doesn't
+	 *                                  exist, or isn't a directory).
+	 */
+	void scan() throws IllegalStateException, IOException;
 
     /**
      * Returns the names of the files which matched at least one of the include patterns and none of the exclude
@@ -83,7 +73,21 @@ public interface Scanner
      *
      * @return the base directory to be scanned
      */
-    File getBasedir();
+	Path getBasedir();
+
+	/**
+	 * Return the link options used for scanning operations
+	 * 
+	 * @return the link options used for scanning
+	 */
+	LinkOption[] getLinkOptions();
+
+	/**
+	 * set the link options to be used for scanning operations
+	 * 
+	 * @param options the nes link options
+	 */
+	void setLinkOptions(LinkOption[] options);
 
     /**
      * Use a filename comparator in each directory when scanning.

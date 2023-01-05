@@ -17,6 +17,7 @@ package org.codehaus.plexus.util;
  */
 
 import java.io.File;
+import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -124,6 +125,8 @@ public abstract class AbstractScanner
      * @since 3.3.0
      */
     protected Comparator<String> filenameComparator;
+
+	protected LinkOption[] options = new LinkOption[0];
 
     /**
      * Sets whether or not the file system should be regarded as case sensitive.
@@ -415,4 +418,14 @@ public abstract class AbstractScanner
     {
         this.filenameComparator = filenameComparator;
     }
+
+	@Override
+	public void setLinkOptions(LinkOption[] options) {
+		this.options = options;
+	}
+
+	@Override
+	public LinkOption[] getLinkOptions() {
+		return options;
+	}
 }
