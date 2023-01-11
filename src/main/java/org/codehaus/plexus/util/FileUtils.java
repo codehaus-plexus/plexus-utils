@@ -62,7 +62,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -70,6 +69,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.security.SecureRandom;
@@ -355,33 +355,16 @@ public class FileUtils
     public static String fileRead( File file, String encoding )
         throws IOException
     {
-        StringBuilder buf = new StringBuilder();
-
-        try ( Reader reader = getInputStreamReader( file, encoding ) )
-        {
-            int count;
-            char[] b = new char[512];
-            while ( ( count = reader.read( b ) ) >= 0 ) // blocking read
-            {
-                buf.append( b, 0, count );
-            }
-        }
-
-        return buf.toString();
+        return fileRead( file.toPath(), encoding );
     }
 
-    private static InputStreamReader getInputStreamReader( File file, String encoding ) throws IOException
+    private static String fileRead( Path path, String encoding )
+        throws IOException
     {
-        if ( encoding != null )
-        {
-            return new InputStreamReader( Files.newInputStream( file.toPath() ), encoding );
-        }
-        else
-        {
-            return new InputStreamReader( Files.newInputStream( file.toPath() ) );
-        }
+        byte[] bytes = Files.readAllBytes( path );
+        return encoding != null ? new String( bytes, encoding ) : new String( bytes );
     }
-    
+
     /**
      * Appends data to a file. The file will be created if it does not exist. Note: the data is written with platform
      * encoding
