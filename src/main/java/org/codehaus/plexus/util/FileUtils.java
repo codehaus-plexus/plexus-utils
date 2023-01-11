@@ -464,23 +464,14 @@ public class FileUtils
     public static void fileWrite( File file, String encoding, String data )
         throws IOException
     {
-        try ( Writer writer = getOutputStreamWriter( file, encoding ) )
-        {
-            writer.write( data );
-        }
+        fileWrite( file.toPath(), encoding, data );
     }
-    
-    private static OutputStreamWriter getOutputStreamWriter( File file, String encoding ) throws IOException
+
+    private static void fileWrite( Path path, String encoding, String data )
+        throws IOException
     {
-        OutputStream out = Files.newOutputStream( file.toPath() );
-        if ( encoding != null )
-        {
-            return new OutputStreamWriter( out, encoding );
-        }
-        else
-        {
-            return new OutputStreamWriter( out );
-        }
+        byte[] bytes = encoding != null ? data.getBytes( encoding ) : data.getBytes();
+        Files.write( path, bytes );
     }
 
     /**
