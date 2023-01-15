@@ -33,6 +33,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import org.junit.Before;
@@ -191,7 +192,7 @@ public final class FileUtilsTest
 
         for ( int i = 0; i < urls.length; i++ )
         {
-            assertEquals( files[i].toURL(), urls[i] );
+            assertEquals( files[i].toURI().toURL(), urls[i] );
         }
     }
 
@@ -885,14 +886,12 @@ public final class FileUtilsTest
         final URL url = this.getClass().getResource( path );
         assertNotNull( path + " was not found.", url );
 
-        String filename = url.getFile();
-        // The following line applies a fix for spaces in a path
-        filename = replaceAll( filename, "%20", " " );
+        final String filename = Paths.get(url.toURI()).toString();
         final String filename2 = "test2.txt";
 
         assertTrue( "test.txt extension == \"txt\"", FileUtils.getExtension( filename ).equals( "txt" ) );
 
-        assertTrue( "Test file does not exist: " + filename, FileUtils.fileExists( filename ) );
+        assertTrue( "Test file does exist: " + filename, FileUtils.fileExists( filename ) );
 
         assertTrue( "Second test file does not exist", !FileUtils.fileExists( filename2 ) );
 
