@@ -219,6 +219,36 @@ limitations under the License.
       </build>
     </profile>
     <profile>
+        <id>jdk11+</id>
+        <activation>
+          <jdk>[11,)</jdk>
+        </activation>
+        <build>
+          <pluginManagement>
+            <plugins>
+              <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>compile-java-11</id>
+                    <goals>
+                      <goal>compile</goal>
+                    </goals>
+                    <configuration>
+                      <release>11</release>
+                      <compileSourceRoots>
+                        <compileSourceRoot>${project.basedir}/src/main/java11</compileSourceRoot>
+                    </compileSourceRoots>
+                    <multiReleaseOutput>true</multiReleaseOutput>
+                    </configuration>
+                  </execution>
+                </executions>
+              </plugin>
+            </plugins>
+          </pluginManagement>
+        </build>
+      </profile>
+    <profile>
       <id>plexus-release</id>
       <build>
         <plugins>

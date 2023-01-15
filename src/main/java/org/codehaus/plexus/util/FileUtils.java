@@ -114,7 +114,7 @@ import java.util.Random;
  * @author <a href="mailto:jefft@codehaus.org">Jeff Turner</a>
  *
  */
-public class FileUtils
+public class FileUtils extends BaseFileUtils
 {
     /**
      * The number of bytes in a kilobyte.
@@ -330,7 +330,7 @@ public class FileUtils
     public static String fileRead( String file, String encoding )
         throws IOException
     {
-        return fileRead( new File( file ), encoding );
+        return fileRead( Paths.get( file ), encoding );
     }
 
     /**
@@ -356,13 +356,6 @@ public class FileUtils
         throws IOException
     {
         return fileRead( file.toPath(), encoding );
-    }
-
-    private static String fileRead( Path path, String encoding )
-        throws IOException
-    {
-        byte[] bytes = Files.readAllBytes( path );
-        return encoding != null ? new String( bytes, encoding ) : new String( bytes );
     }
 
     /**
@@ -433,7 +426,7 @@ public class FileUtils
     public static void fileWrite( String fileName, String encoding, String data )
         throws IOException
     {
-        File file = ( fileName == null ) ? null : new File( fileName );
+        Path file = ( fileName == null ) ? null : Paths.get( fileName );
         fileWrite( file, encoding, data );
     }
 
@@ -465,13 +458,6 @@ public class FileUtils
         throws IOException
     {
         fileWrite( file.toPath(), encoding, data );
-    }
-
-    private static void fileWrite( Path path, String encoding, String data )
-        throws IOException
-    {
-        byte[] bytes = encoding != null ? data.getBytes( encoding ) : data.getBytes();
-        Files.write( path, bytes );
     }
 
     /**
