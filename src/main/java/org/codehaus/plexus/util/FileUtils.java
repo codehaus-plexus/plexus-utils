@@ -387,18 +387,12 @@ public class FileUtils extends BaseFileUtils
     public static void fileAppend( String fileName, String encoding, String data )
         throws IOException
     {
-        try ( OutputStream out = Files.newOutputStream( Paths.get(fileName),
-                StandardOpenOption.APPEND, StandardOpenOption.CREATE ) )
-        {
-            if ( encoding != null )
-            {
-                out.write( data.getBytes( encoding ) );
-            }
-            else
-            {
-                out.write( data.getBytes() );
-            }
-        }
+        fileAppend( Paths.get( fileName), encoding, data );
+    }
+
+    private static void fileAppend( Path path, String encoding, String data ) throws IOException
+    {
+        fileWrite( path, encoding, data, StandardOpenOption.APPEND, StandardOpenOption.CREATE );
     }
 
     /**
