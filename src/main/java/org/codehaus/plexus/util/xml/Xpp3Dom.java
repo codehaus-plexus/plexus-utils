@@ -16,67 +16,46 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
+import org.apache.maven.api.xml.XmlNode;
+import org.apache.maven.internal.xml.XmlNodeImpl;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 /**
  *  NOTE: remove all the util code in here when separated, this class should be pure data.
  */
+@SuppressWarnings( "unused" )
 public class Xpp3Dom
     implements Serializable
 {
-    private static final long serialVersionUID = 2567894443061173996L;
 
-    protected String name;
+    public static final String CHILDREN_COMBINATION_MODE_ATTRIBUTE = XmlNode.CHILDREN_COMBINATION_MODE_ATTRIBUTE;
 
-    protected String value;
+    public static final String CHILDREN_COMBINATION_MERGE = XmlNode.CHILDREN_COMBINATION_MERGE;
 
-    protected Map<String, String> attributes;
-
-    protected final List<Xpp3Dom> childList;
-
-    protected Xpp3Dom parent;
-
-    /**
-     * @since 3.2.0
-     */
-    protected Object inputLocation;
-
-    private static final String[] EMPTY_STRING_ARRAY = new String[0];
-
-    private static final Xpp3Dom[] EMPTY_DOM_ARRAY = new Xpp3Dom[0];
-
-    public static final String CHILDREN_COMBINATION_MODE_ATTRIBUTE = "combine.children";
-
-    public static final String CHILDREN_COMBINATION_MERGE = "merge";
-
-    public static final String CHILDREN_COMBINATION_APPEND = "append";
+    public static final String CHILDREN_COMBINATION_APPEND = XmlNode.CHILDREN_COMBINATION_APPEND;
 
     /**
      * This default mode for combining children DOMs during merge means that where element names match, the process will
      * try to merge the element data, rather than putting the dominant and recessive elements (which share the same
      * element name) as siblings in the resulting DOM.
      */
-    public static final String DEFAULT_CHILDREN_COMBINATION_MODE = CHILDREN_COMBINATION_MERGE;
+    public static final String DEFAULT_CHILDREN_COMBINATION_MODE = XmlNode.DEFAULT_CHILDREN_COMBINATION_MODE;
 
-    public static final String SELF_COMBINATION_MODE_ATTRIBUTE = "combine.self";
+    public static final String SELF_COMBINATION_MODE_ATTRIBUTE = XmlNode.SELF_COMBINATION_MODE_ATTRIBUTE;
 
-    public static final String SELF_COMBINATION_OVERRIDE = "override";
+    public static final String SELF_COMBINATION_OVERRIDE = XmlNode.SELF_COMBINATION_OVERRIDE;
 
-    public static final String SELF_COMBINATION_MERGE = "merge";
+    public static final String SELF_COMBINATION_MERGE = XmlNode.SELF_COMBINATION_MERGE;
 
-    public static final String SELF_COMBINATION_REMOVE = "remove";
+    public static final String SELF_COMBINATION_REMOVE = XmlNode.SELF_COMBINATION_REMOVE;
 
     /**
      * This default mode for combining a DOM node during merge means that where element names match, the process will
@@ -84,12 +63,14 @@ public class Xpp3Dom
      * dominant one. This means that wherever the dominant element doesn't provide the value or a particular attribute,
      * that value or attribute will be set from the recessive DOM node.
      */
-    public static final String DEFAULT_SELF_COMBINATION_MODE = SELF_COMBINATION_MERGE;
+    public static final String DEFAULT_SELF_COMBINATION_MODE = XmlNode.SELF_COMBINATION_MERGE;
+
+    private ChildrenTracking childrenTracking;
+    private XmlNode dom;
 
     public Xpp3Dom( String name )
     {
-        this.name = name;
-        childList = new ArrayList<>();
+        this.dom = new XmlNodeImpl(name);
     }
 
     /**
@@ -99,8 +80,7 @@ public class Xpp3Dom
      */
     public Xpp3Dom( String name, Object inputLocation )
     {
-        this( name );
-        this.inputLocation = inputLocation;
+        this.dom = new XmlNodeImpl( name, null, null, null, inputLocation );
     }
 
     /**
@@ -119,25 +99,29 @@ public class Xpp3Dom
      */
     public Xpp3Dom( Xpp3Dom src, String name )
     {
-        this.name = name;
-        this.inputLocation = src.inputLocation;
+        this.dom = new XmlNodeImpl( src.dom, name );
+    }
 
-        int childCount = src.getChildCount();
+    public Xpp3Dom( XmlNode dom )
+    {
+        this.dom = dom;
+    }
 
-        childList = new ArrayList<Xpp3Dom>( childCount );
+    public Xpp3Dom( XmlNode dom, Xpp3Dom parent )
+    {
+        this.dom = dom;
+        this.childrenTracking = parent::replace;
+    }
 
-        setValue( src.getValue() );
+    public Xpp3Dom( XmlNode dom, ChildrenTracking childrenTracking )
+    {
+        this.dom = dom;
+        this.childrenTracking = childrenTracking;
+    }
 
-        String[] attributeNames = src.getAttributeNames();
-        for ( String attributeName : attributeNames )
-        {
-            setAttribute( attributeName, src.getAttribute( attributeName ) );
-        }
-
-        for ( int i = 0; i < childCount; i++ )
-        {
-            addChild( new Xpp3Dom( src.getChild( i ) ) );
-        }
+    public XmlNode getDom()
+    {
+        return dom;
     }
 
     // ----------------------------------------------------------------------
@@ -146,7 +130,7 @@ public class Xpp3Dom
 
     public String getName()
     {
-        return name;
+        return dom.getName();
     }
 
     // ----------------------------------------------------------------------
@@ -155,12 +139,12 @@ public class Xpp3Dom
 
     public String getValue()
     {
-        return value;
+        return dom.getValue();
     }
 
     public void setValue( String value )
     {
-        this.value = value;
+        update( new XmlNodeImpl( dom.getName(), value, dom.getAttributes(), dom.getChildren(), dom.getInputLocation() ) );
     }
 
     // ----------------------------------------------------------------------
@@ -169,19 +153,12 @@ public class Xpp3Dom
 
     public String[] getAttributeNames()
     {
-        if ( null == attributes || attributes.isEmpty() )
-        {
-            return EMPTY_STRING_ARRAY;
-        }
-        else
-        {
-            return attributes.keySet().toArray( EMPTY_STRING_ARRAY );
-        }
+        return dom.getAttributes().keySet().toArray(new String[0]);
     }
 
     public String getAttribute( String name )
     {
-        return ( null != attributes ) ? attributes.get( name ) : null;
+        return dom.getAttribute(name);
     }
 
     /**
@@ -192,7 +169,16 @@ public class Xpp3Dom
      */
     public boolean removeAttribute( String name )
     {
-        return StringUtils.isEmpty( name ) ? false: attributes.remove( name ) == null;
+        if (!StringUtils.isEmpty(name)) {
+            Map<String, String> attrs = new HashMap<>(dom.getAttributes());
+            boolean ret = attrs.remove(name) != null;
+            if (ret) {
+                update(new XmlNodeImpl(
+                        dom.getName(), dom.getValue(), attrs, dom.getChildren(), dom.getInputLocation()));
+            }
+            return ret;
+        }
+        return false;
     }
 
     /**
@@ -203,20 +189,15 @@ public class Xpp3Dom
      */
     public void setAttribute( String name, String value )
     {
-        if ( null == value )
-        {
-            throw new NullPointerException( "Attribute value can not be null" );
+        if (null == value) {
+            throw new NullPointerException("Attribute value can not be null");
         }
-        if ( null == name )
-        {
-            throw new NullPointerException( "Attribute name can not be null" );
+        if (null == name) {
+            throw new NullPointerException("Attribute name can not be null");
         }
-        if ( null == attributes )
-        {
-            attributes = new HashMap<String, String>();
-        }
-
-        attributes.put( name, value );
+        Map<String, String> attrs = new HashMap<>(dom.getAttributes());
+        attrs.put(name, value);
+        update(new XmlNodeImpl(dom.getName(), dom.getValue(), attrs, dom.getChildren(), dom.getInputLocation()));
     }
 
     // ----------------------------------------------------------------------
@@ -225,105 +206,53 @@ public class Xpp3Dom
 
     public Xpp3Dom getChild( int i )
     {
-        return childList.get( i );
+        return new Xpp3Dom(dom.getChildren().get(i), this);
     }
 
     public Xpp3Dom getChild( String name )
     {
-        if ( name != null )
-        {
-            ListIterator<Xpp3Dom> it = childList.listIterator( childList.size() );
-            while ( it.hasPrevious() )
-            {
-                Xpp3Dom child = it.previous();
-                if ( name.equals( child.getName() ) )
-                {
-                    return child;
-                }
-            }
-        }
-        return null;
+        XmlNode child = dom.getChild(name);
+        return child != null ? new Xpp3Dom(child, this) : null;
     }
 
     public void addChild( Xpp3Dom xpp3Dom )
     {
-        xpp3Dom.setParent( this );
-        childList.add( xpp3Dom );
+        List<XmlNode> children = new ArrayList<>(dom.getChildren());
+        children.add(xpp3Dom.dom);
+        xpp3Dom.childrenTracking = this::replace;
+        update(new XmlNodeImpl(dom.getName(), dom.getValue(), dom.getAttributes(), children, dom.getInputLocation()));
     }
 
     public Xpp3Dom[] getChildren()
     {
-        if ( null == childList || childList.isEmpty() )
-        {
-            return EMPTY_DOM_ARRAY;
-        }
-        else
-        {
-            return childList.toArray( EMPTY_DOM_ARRAY );
-        }
+        return dom.getChildren().stream().map(d -> new Xpp3Dom(d, this)).toArray(Xpp3Dom[]::new);
     }
 
     public Xpp3Dom[] getChildren( String name )
     {
-        return getChildrenAsList( name ).toArray( EMPTY_DOM_ARRAY );
-    }
-
-    private List<Xpp3Dom> getChildrenAsList( String name )
-    {
-        if ( null == childList )
-        {
-            return Collections.emptyList();
-        }
-        else
-        {
-            ArrayList<Xpp3Dom> children = null;
-
-            for ( Xpp3Dom configuration : childList )
-            {
-                if ( name.equals( configuration.getName() ) )
-                {
-                    if ( children == null )
-                    {
-                        children = new ArrayList<Xpp3Dom>();
-                    }
-                    children.add( configuration );
-                }
-            }
-
-            if ( children != null )
-            {
-                return children;
-            }
-            else
-            {
-                return Collections.emptyList();
-            }
-        }
+        return dom.getChildren().stream()
+                .filter(c -> c.getName().equals(name))
+                .map(d -> new Xpp3Dom(d, this))
+                .toArray(Xpp3Dom[]::new);
     }
 
     public int getChildCount()
     {
-        if ( null == childList )
-        {
-            return 0;
-        }
-
-        return childList.size();
+        return dom.getChildren().size();
     }
 
     public void removeChild( int i )
     {
-        Xpp3Dom child = getChild( i );
-        childList.remove( i );
-        // In case of any dangling references
-        child.setParent( null );
+        List<XmlNode> children = new ArrayList<>(dom.getChildren());
+        children.remove(i);
+        update(new XmlNodeImpl(dom.getName(), dom.getValue(), dom.getAttributes(), children, dom.getInputLocation()));
     }
 
     public void removeChild( Xpp3Dom child )
     {
-        childList.remove( child );
-        // In case of any dangling references
-        child.setParent( null );
+        List<XmlNode> children = new ArrayList<>(dom.getChildren());
+        children.remove(child.dom);
+        update(new XmlNodeImpl(dom.getName(), dom.getValue(), dom.getAttributes(), children, dom.getInputLocation()));
     }
 
     // ----------------------------------------------------------------------
@@ -332,12 +261,11 @@ public class Xpp3Dom
 
     public Xpp3Dom getParent()
     {
-        return parent;
+        throw new UnsupportedOperationException();
     }
 
     public void setParent( Xpp3Dom parent )
     {
-        this.parent = parent;
     }
 
     // ----------------------------------------------------------------------
@@ -350,7 +278,7 @@ public class Xpp3Dom
      */
     public Object getInputLocation()
     {
-        return inputLocation;
+        return dom.getInputLocation();
     }
 
     /**
@@ -359,7 +287,7 @@ public class Xpp3Dom
      */
     public void setInputLocation( Object inputLocation )
     {
-        this.inputLocation = inputLocation;
+        update(new XmlNodeImpl(dom.getName(), dom.getValue(), dom.getAttributes(), dom.getChildren(), inputLocation));
     }
 
     // ----------------------------------------------------------------------
@@ -423,109 +351,7 @@ public class Xpp3Dom
         {
             return;
         }
-
-        boolean mergeSelf = true;
-
-        String selfMergeMode = dominant.getAttribute( SELF_COMBINATION_MODE_ATTRIBUTE );
-
-        if ( SELF_COMBINATION_OVERRIDE.equals( selfMergeMode ) )
-        {
-            mergeSelf = false;
-        }
-
-        if ( mergeSelf )
-        {
-            if ( recessive.attributes != null )
-            {
-                for ( String attr : recessive.attributes.keySet() )
-                {
-                    if ( isEmpty( dominant.getAttribute( attr ) ) && !SELF_COMBINATION_MODE_ATTRIBUTE.equals( attr ) )
-                    {
-                        dominant.setAttribute( attr, recessive.getAttribute( attr ) );
-                    }
-                }
-            }
-
-            if ( recessive.getChildCount() > 0 )
-            {
-                boolean mergeChildren = true;
-
-                if ( childMergeOverride != null )
-                {
-                    mergeChildren = childMergeOverride;
-                }
-                else
-                {
-                    String childMergeMode = dominant.getAttribute( CHILDREN_COMBINATION_MODE_ATTRIBUTE );
-
-                    if ( CHILDREN_COMBINATION_APPEND.equals( childMergeMode ) )
-                    {
-                        mergeChildren = false;
-                    }
-                }
-
-                if ( !mergeChildren )
-                {
-                    Xpp3Dom[] dominantChildren = dominant.getChildren();
-                    // remove these now, so we can append them to the recessive list later.
-                    dominant.childList.clear();
-
-                    for ( int i = 0, recessiveChildCount = recessive.getChildCount(); i < recessiveChildCount; i++ )
-                    {
-                        Xpp3Dom recessiveChild = recessive.getChild( i );
-                        dominant.addChild( new Xpp3Dom( recessiveChild ) );
-                    }
-
-                    // now, re-add these children so they'll be appended to the recessive list.
-                    for ( Xpp3Dom aDominantChildren : dominantChildren )
-                    {
-                        dominant.addChild( aDominantChildren );
-                    }
-                }
-                else
-                {
-                    Map<String, Iterator<Xpp3Dom>> commonChildren = new HashMap<String, Iterator<Xpp3Dom>>();
-
-                    for ( Xpp3Dom recChild : recessive.childList )
-                    {
-                        if ( commonChildren.containsKey( recChild.name ) )
-                        {
-                            continue;
-                        }
-                        List<Xpp3Dom> dominantChildren = dominant.getChildrenAsList( recChild.name );
-                        if ( dominantChildren.size() > 0 )
-                        {
-                            commonChildren.put( recChild.name, dominantChildren.iterator() );
-                        }
-                    }
-
-                    for ( int i = 0, recessiveChildCount = recessive.getChildCount(); i < recessiveChildCount; i++ )
-                    {
-                        Xpp3Dom recessiveChild = recessive.getChild( i );
-                        Iterator<Xpp3Dom> it = commonChildren.get( recessiveChild.getName() );
-                        if ( it == null )
-                        {
-                            dominant.addChild( new Xpp3Dom( recessiveChild ) );
-                        }
-                        else if ( it.hasNext() )
-                        {
-                            Xpp3Dom dominantChild = it.next();
-
-                            String dominantChildCombinationMode =
-                                dominantChild.getAttribute( SELF_COMBINATION_MODE_ATTRIBUTE );
-                            if ( SELF_COMBINATION_REMOVE.equals( dominantChildCombinationMode ) )
-                            {
-                                dominant.removeChild( dominantChild );
-                            }
-                            else
-                            {
-                                mergeIntoXpp3Dom( dominantChild, recessiveChild, childMergeOverride );
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        dominant.dom = dominant.dom.merge(recessive.dom, childMergeOverride);
     }
 
     /**
@@ -587,59 +413,24 @@ public class Xpp3Dom
         }
 
         Xpp3Dom dom = (Xpp3Dom) obj;
-
-        if ( name == null ? dom.name != null : !name.equals( dom.name ) )
-        {
-            return false;
-        }
-        else if ( value == null ? dom.value != null : !value.equals( dom.value ) )
-        {
-            return false;
-        }
-        else if ( attributes == null ? dom.attributes != null : !attributes.equals( dom.attributes ) )
-        {
-            return false;
-        }
-        else if ( childList == null ? dom.childList != null : !childList.equals( dom.childList ) )
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return this.dom.equals( dom.dom );
     }
 
     @Override
     public int hashCode()
     {
-        int result = 17;
-        result = 37 * result + ( name != null ? name.hashCode() : 0 );
-        result = 37 * result + ( value != null ? value.hashCode() : 0 );
-        result = 37 * result + ( attributes != null ? attributes.hashCode() : 0 );
-        result = 37 * result + ( childList != null ? childList.hashCode() : 0 );
-        return result;
+        return dom.hashCode();
     }
 
     @Override
     public String toString()
     {
-        // TODO: WARNING! Later versions of plexus-utils psit out an <?xml ?> header due to thinking this is a new
-        // document - not the desired behaviour!
-        StringWriter writer = new StringWriter();
-        XMLWriter xmlWriter = new PrettyPrintXMLWriter( writer, "UTF-8", null );
-        Xpp3DomWriter.write( xmlWriter, this );
-        return writer.toString();
+        return dom.toString();
     }
 
     public String toUnescapedString()
     {
-        // TODO: WARNING! Later versions of plexus-utils psit out an <?xml ?> header due to thinking this is a new
-        // document - not the desired behaviour!
-        StringWriter writer = new StringWriter();
-        XMLWriter xmlWriter = new PrettyPrintXMLWriter( writer, "UTF-8", null );
-        Xpp3DomWriter.write( xmlWriter, this, false );
-        return writer.toString();
+        return ( ( Xpp3Dom ) dom ).toUnescapedString();
     }
 
     public static boolean isNotEmpty( String str )
@@ -652,4 +443,31 @@ public class Xpp3Dom
         return ( ( str == null ) || ( str.trim().length() == 0 ) );
     }
 
+    private void update( XmlNode dom )
+    {
+        if ( childrenTracking != null )
+        {
+            childrenTracking.replace( this.dom, dom );
+        }
+        this.dom = dom;
+    }
+
+    private boolean replace( Object prevChild, Object newChild )
+    {
+        List<XmlNode> children = new ArrayList<>( dom.getChildren() );
+        children.replaceAll( d -> d == prevChild ? (XmlNode) newChild : d );
+        update( new XmlNodeImpl( dom.getName(), dom.getValue(), dom.getAttributes(), children, dom.getInputLocation() ) );
+        return true;
+    }
+
+    public void setChildrenTracking( ChildrenTracking childrenTracking )
+    {
+        this.childrenTracking = childrenTracking;
+    }
+
+    @FunctionalInterface
+    public interface ChildrenTracking
+    {
+        boolean replace( Object oldDelegate, Object newDelegate );
+    }
 }

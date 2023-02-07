@@ -16,20 +16,20 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.maven.api.xml.XmlNode;
+import org.apache.maven.internal.xml.XmlNodeImpl;
 import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * <p>Xpp3DomTest class.</p>
@@ -201,24 +201,13 @@ public class Xpp3DomTest
     public void testNullAttributeNameOrValue()
     {
         Xpp3Dom t1 = new Xpp3Dom( "top" );
-        try
-        {
-            t1.setAttribute( "attr", null );
-            fail( "null attribute values shouldn't be allowed" );
-        }
-        catch ( NullPointerException e )
-        {
-        }
-        t1.toString();
-        try
-        {
-            t1.setAttribute( null, "value" );
-            fail( "null attribute names shouldn't be allowed" );
-        }
-        catch ( NullPointerException e )
-        {
-        }
-        t1.toString();
+
+        assertThrows( "null attribute values shouldn't be allowed",
+                NullPointerException.class,
+                () -> t1.setAttribute( "attr", null ) );
+        assertThrows( "null attribute names shouldn't be allowed",
+                NullPointerException.class,
+                () -> t1.setAttribute( null, "value" ) );
     }
 
     /**
@@ -230,8 +219,8 @@ public class Xpp3DomTest
         Xpp3Dom dom = new Xpp3Dom( "top" );
 
         assertEquals( dom, dom );
-        assertFalse( dom.equals( null ) );
-        assertFalse( dom.equals( new Xpp3Dom( (String) null ) ) );
+        assertNotEquals(dom, null);
+        assertNotEquals(dom, new Xpp3Dom("" ) );
     }
 
     /**
@@ -246,25 +235,16 @@ public class Xpp3DomTest
     {
         String testDom = "<configuration><items thing='blah'><item>one</item><item>two</item></items></configuration>";
         Xpp3Dom dom = Xpp3DomBuilder.build( new StringReader( testDom ) );
-        Xpp3Dom dom2 = Xpp3DomBuilder.build( new StringReader( testDom ) );
 
-        try
-        {
-            dom2.attributes = new HashMap();
-            dom2.attributes.put( "nullValue", null );
-            dom2.attributes.put( null, "nullKey" );
-            dom2.childList.clear();
-            dom2.childList.add( null );
+        Map<String,String> attributes = new HashMap<>();
+        attributes.put( "nullValue", null );
+        attributes.put( null, "nullKey" );
+        List<XmlNode> childList = new ArrayList<>();
+        childList.add( null );
+        Xpp3Dom dom2 = new Xpp3Dom( new XmlNodeImpl( dom.getName(), null, attributes, childList, null ) );
 
-            assertFalse( dom.equals( dom2 ) );
-            assertFalse( dom2.equals( dom ) );
-
-        }
-        catch ( NullPointerException ex )
-        {
-            ex.printStackTrace();
-            fail( "\nNullPointerExceptions should not be thrown." );
-        }
+        assertNotEquals( dom, dom2 );
+        assertNotEquals( dom2, dom );
     }
 
     /**
@@ -347,9 +327,9 @@ public class Xpp3DomTest
 
         assertEquals( 3, items.getChildCount() );
 
-        assertEquals( null, items.getChild( 0 ).getValue() );
+        assertNull( items.getChild( 0 ).getValue() );
         assertEquals( "test", items.getChild( 1 ).getValue() );
-        assertEquals( null, items.getChild( 2 ).getValue() );
+        assertNull( items.getChild( 2 ).getValue() );
     }
 
     /**
