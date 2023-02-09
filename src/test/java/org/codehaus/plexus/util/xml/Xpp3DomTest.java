@@ -147,7 +147,7 @@ public class Xpp3DomTest
      * <p>testShouldMergeValuesAtTopLevelByDefault.</p>
      */
     @Test
-    public void testShouldMergeValuesAtTopLevelByDefault()
+    public void testShouldNotMergeValuesAtTopLevelByDefault()
     {
         // create the dominant DOM
         Xpp3Dom t1 = new Xpp3Dom( "top" );
@@ -166,15 +166,15 @@ public class Xpp3DomTest
         // this is still 2, since we're not using the merge-control attribute.
         assertEquals( 2, result.getAttributeNames().length );
 
-        assertEquals( result.getValue(), t2.getValue() );
-        assertEquals( "t2top", result.getInputLocation() );
+        assertNull( result.getValue() );
+        assertEquals( "t1top", result.getInputLocation() );
     }
 
     /**
      * <p>testShouldMergeValuesAtTopLevel.</p>
      */
     @Test
-    public void testShouldMergeValuesAtTopLevel()
+    public void testShouldNotMergeValuesAtTopLevel()
     {
         // create the dominant DOM
         Xpp3Dom t1 = new Xpp3Dom( "top" );
@@ -191,7 +191,7 @@ public class Xpp3DomTest
         Xpp3Dom result = Xpp3Dom.mergeXpp3Dom( t1, t2 );
 
         assertEquals( 3, result.getAttributeNames().length );
-        assertEquals( result.getValue(), t2.getValue() );
+        assertNull( result.getValue() );
     }
 
     /**

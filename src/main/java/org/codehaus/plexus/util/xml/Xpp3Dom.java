@@ -435,12 +435,6 @@ public class Xpp3Dom
 
         if ( mergeSelf )
         {
-            if ( isEmpty( dominant.getValue() ) && !isEmpty( recessive.getValue() ) )
-            {
-                dominant.setValue( recessive.getValue() );
-                dominant.setInputLocation( recessive.getInputLocation() );
-            }
-
             if ( recessive.attributes != null )
             {
                 for ( String attr : recessive.attributes.keySet() )
