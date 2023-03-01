@@ -4191,18 +4191,25 @@ public class MXParser
         {
             return "\\u" + Integer.toHexString( ch );
         }
-        return Character.toString( ch );
+        if ( Character.isBmpCodePoint( ch ) )
+        {
+            return Character.toString( ( char ) ch );
+        }
+        else
+        {
+            return new String( new char[] { Character.highSurrogate( ch ), Character.lowSurrogate( ch ) } );
+        }
     }
 
     private static String printable( String s )
     {
         if ( s == null )
             return null;
-        final int sLen = s.length();
+        final int sLen = s.codePointCount(0, s.length());
         StringBuilder buf = new StringBuilder( sLen + 10 );
         for ( int i = 0; i < sLen; ++i )
         {
-            buf.append( printable( s.charAt( i ) ) );
+            buf.append( printable( s.codePointAt( i ) ) );
         }
         s = buf.toString();
         return s;
