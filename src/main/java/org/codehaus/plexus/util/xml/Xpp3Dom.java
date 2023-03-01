@@ -445,7 +445,7 @@ public class Xpp3Dom
             {
                 for ( String attr : recessive.attributes.keySet() )
                 {
-                    if ( isEmpty( dominant.getAttribute( attr ) ) && !SELF_COMBINATION_MODE_ATTRIBUTE.equals( attr ) )
+                    if ( isEmpty( dominant.getAttribute( attr ) ) )
                     {
                         dominant.setAttribute( attr, recessive.getAttribute( attr ) );
                     }
