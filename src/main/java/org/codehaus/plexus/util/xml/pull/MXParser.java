@@ -2981,8 +2981,8 @@ public class MXParser
         // implements XML 1.0 Section 2.5 Comments
 
         // ASSUMPTION: seen <!-
-        char ch = more();
-        if ( ch != '-' )
+        char cch = more();
+        if ( cch != '-' )
             throw new XmlPullParserException( "expected <!-- for comment start", this, null );
         if ( tokenize )
             posStart = pos;
@@ -2999,7 +2999,19 @@ public class MXParser
             while ( true )
             {
                 // scan until it hits -->
-                ch = more();
+                cch = more();
+                int ch;
+                char cch2;
+                if ( Character.isHighSurrogate( cch ) )
+                {
+                    cch2 = more();
+                    ch = Character.toCodePoint( cch, cch2 );
+                }
+                else
+                {
+                    cch2 = 0;
+                    ch = cch;
+                }
                 if ( seenDashDash && ch != '>' )
                 {
                     throw new XmlPullParserException( "in comment after two dashes (--) next character must be >"
@@ -3074,7 +3086,11 @@ public class MXParser
                         {
                             if ( pcEnd >= pc.length )
                                 ensurePC( pcEnd );
-                            pc[pcEnd++] = ch;
+                            pc[pcEnd++] = cch;
+                            if ( cch2 != 0 )
+                            {
+                                pc[pcEnd++] = cch2;
+                            }
                         }
                         normalizedCR = false;
                     }
@@ -4153,7 +4169,7 @@ public class MXParser
     // ch != '\u0000' ch < '\uFFFE'
 
     // private char printable(char ch) { return ch; }
-    private static String printable( char ch )
+    private static String printable( int ch )
     {
         if ( ch == '\n' )
         {
@@ -4175,7 +4191,7 @@ public class MXParser
         {
             return "\\u" + Integer.toHexString( ch );
         }
-        return "" + ch;
+        return Character.toString( ch );
     }
 
     private static String printable( String s )
