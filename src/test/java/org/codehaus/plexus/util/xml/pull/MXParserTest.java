@@ -1511,4 +1511,30 @@ public class MXParserTest
             fail( "should not raise exception: " + e );
         }
     }
+
+    /**
+     * Ensures emoji can be parsed correctly
+     */
+    @Test
+    public void testUnicode() throws IOException {
+        String input = "<project><!--ALL TEH BOMS!  \uD83D\uDCA3  --></project>";
+
+        try
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( new StringReader( input ) );
+
+            assertEquals( XmlPullParser.START_TAG, parser.nextToken() );
+            assertEquals( "project", parser.getName() );
+            assertEquals( XmlPullParser.COMMENT, parser.nextToken() );
+            assertEquals( "ALL TEH BOMS!  \uD83D\uDCA3  ", parser.getText() );
+            assertEquals( XmlPullParser.END_TAG, parser.nextToken() );
+            assertEquals( "project", parser.getName() );
+        }
+        catch ( XmlPullParserException e )
+        {
+            e.printStackTrace();
+            fail( "should not raise exception: " + e );
+        }
+    }
 }
