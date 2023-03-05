@@ -24,7 +24,6 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.WriterFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

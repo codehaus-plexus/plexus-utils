@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import org.codehaus.plexus.util.ReaderFactory;
+import org.codehaus.plexus.util.xml.ReaderFactory;
 import org.codehaus.plexus.util.xml.XmlReader;
 
 //import java.util.Hashtable;

@@ -31,7 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.codehaus.plexus.util.IOUtil;
-import org.codehaus.plexus.util.ReaderFactory;
+import org.codehaus.plexus.util.xml.ReaderFactory;
 import org.junit.Test;
 
 /**

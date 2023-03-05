@@ -25,23 +25,21 @@ limitations under the License.
     <version>10</version>
   </parent>
 
-  <artifactId>plexus-utils</artifactId>
-  <version>3.5.2-SNAPSHOT</version>
+  <artifactId>plexus-xml</artifactId>
+  <version>4.0.0-SNAPSHOT</version>
 
-  <name>Plexus Common Utilities</name>
-  <description>A collection of various utility classes to ease working with strings, files, command lines, XML and
-    more.
-  </description>
+  <name>Plexus XML Utilities</name>
+  <description>A collection of various utility classes to ease working with XML.</description>
 
   <scm>
-    <connection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</connection>
-    <developerConnection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</developerConnection>
-    <url>http://github.com/codehaus-plexus/plexus-utils</url>
-    <tag>plexus-utils-3.5.0</tag>
+    <connection>scm:git:git@github.com:codehaus-plexus/plexus-xml.git</connection>
+    <developerConnection>scm:git:git@github.com:codehaus-plexus/plexus-xml.git</developerConnection>
+    <url>http://github.com/codehaus-plexus/plexus-xml</url>
+    <tag>master</tag>
   </scm>
   <issueManagement>
     <system>github</system>
-    <url>http://github.com/codehaus-plexus/plexus-utils/issues</url>
+    <url>http://github.com/codehaus-plexus/plexus-xml/issues</url>
   </issueManagement>
   <distributionManagement>
     <site>
@@ -55,6 +53,12 @@ limitations under the License.
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>4.0.0-SNAPSHOT</version>
+    </dependency>
+
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
@@ -123,10 +127,6 @@ limitations under the License.
         <configuration>
           <!-- required to ensure the test classes are used, not surefire's plexus-utils -->
           <childDelegation>true</childDelegation>
-          <excludes>
-            <exclude>org/codehaus/plexus/util/FileBasedTestCase.java</exclude>
-            <exclude>**/Test*.java</exclude>
-          </excludes>
           <systemProperties>
             <property>
               <name>JAVA_HOME</name>
@@ -137,16 +137,6 @@ limitations under the License.
               <value>${M2_HOME}</value>
             </property>
           </systemProperties>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Multi-Release>true</Multi-Release>
-            </manifestEntries>
-          </archive>
         </configuration>
       </plugin>
     </plugins>
@@ -170,102 +160,13 @@ limitations under the License.
                     <goal>compile</goal>
                   </goals>
                   <configuration>
-                    <release>9</release>
-                    <compileSourceRoots>
-                      <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
-                  </compileSourceRoots>
-                  <multiReleaseOutput>true</multiReleaseOutput>
+                    <release>8</release>
                   </configuration>
                 </execution>
               </executions>
             </plugin>
           </plugins>
         </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-      <id>jdk10+</id>
-      <activation>
-        <jdk>[10,)</jdk>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <executions>
-                <execution>
-                  <id>compile-java-10</id>
-                  <goals>
-                    <goal>compile</goal>
-                  </goals>
-                  <configuration>
-                    <release>10</release>
-                    <compileSourceRoots>
-                      <compileSourceRoot>${project.basedir}/src/main/java10</compileSourceRoot>
-                  </compileSourceRoots>
-                  <multiReleaseOutput>true</multiReleaseOutput>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-        <id>jdk11+</id>
-        <activation>
-          <jdk>[11,)</jdk>
-        </activation>
-        <build>
-          <pluginManagement>
-            <plugins>
-              <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                  <execution>
-                    <id>compile-java-11</id>
-                    <goals>
-                      <goal>compile</goal>
-                    </goals>
-                    <configuration>
-                      <release>11</release>
-                      <compileSourceRoots>
-                        <compileSourceRoot>${project.basedir}/src/main/java11</compileSourceRoot>
-                    </compileSourceRoots>
-                    <multiReleaseOutput>true</multiReleaseOutput>
-                    </configuration>
-                  </execution>
-                </executions>
-              </plugin>
-            </plugins>
-          </pluginManagement>
-        </build>
-      </profile>
-    <profile>
-      <id>plexus-release</id>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-enforcer-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>enforce-java</id>
-                <goals>
-                  <goal>enforce</goal>
-                </goals>
-                <configuration>
-                  <rules>
-                    <requireJavaVersion>
-                      <version>11</version>
-                    </requireJavaVersion>
-                  </rules>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
       </build>
     </profile>
   </profiles>

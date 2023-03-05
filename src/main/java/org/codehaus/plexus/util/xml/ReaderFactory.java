@@ -1,4 +1,4 @@
-package org.codehaus.plexus.util;
+package org.codehaus.plexus.util.xml;
 
 /*
  * Copyright The Codehaus Foundation.
@@ -18,25 +18,24 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
-import org.codehaus.plexus.util.xml.XmlStreamWriter;
-
 /**
- * Utility to create Writers, with explicit encoding choice: platform default, XML, or specified.
+ * Utility to create Readers from streams, with explicit encoding choice: platform default, XML, or specified.
  *
  * @author <a href="mailto:hboutemy@codehaus.org">Herve Boutemy</a>
  * @see Charset
  * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
  *
- * @since 1.4.4
+ * @since 1.4.3
  */
-public class WriterFactory
+public class ReaderFactory
 {
     /**
      * ISO Latin Alphabet #1, also known as ISO-LATIN-1. Every implementation of the Java platform is required to
@@ -93,86 +92,130 @@ public class WriterFactory
     public static final String FILE_ENCODING = System.getProperty( "file.encoding" );
 
     /**
-     * Create a new Writer with XML encoding detection rules.
+     * Create a new Reader with XML encoding detection rules.
      *
-     * @param out not null output stream.
-     * @return an XML writer instance for the output stream.
+     * @param in not null input stream.
+     * @return an XML reader instance for the input stream.
      * @throws IOException if any.
-     * @see XmlStreamWriter
+     * @see XmlStreamReader
      */
-    public static XmlStreamWriter newXmlWriter( OutputStream out )
+    public static XmlStreamReader newXmlReader( InputStream in )
         throws IOException
     {
-        return new XmlStreamWriter( out );
+        return new XmlStreamReader( in );
     }
 
     /**
-     * Create a new Writer with XML encoding detection rules.
+     * Create a new Reader with XML encoding detection rules.
      *
      * @param file not null file.
-     * @return an XML writer instance for the output file.
+     * @return an XML reader instance for the input file.
      * @throws IOException if any.
-     * @see XmlStreamWriter
+     * @see XmlStreamReader
      */
-    public static XmlStreamWriter newXmlWriter( File file )
+    public static XmlStreamReader newXmlReader( File file )
         throws IOException
     {
-        return new XmlStreamWriter( file );
+        return new XmlStreamReader( file );
     }
 
     /**
-     * Create a new Writer with default platform encoding.
+     * Create a new Reader with XML encoding detection rules.
      *
-     * @param out not null output stream.
-     * @return a writer instance for the output stream using the default platform charset.
+     * @param url not null url.
+     * @return an XML reader instance for the input url.
+     * @throws IOException if any.
+     * @see XmlStreamReader
+     */
+    public static XmlStreamReader newXmlReader( URL url )
+        throws IOException
+    {
+        return new XmlStreamReader( url );
+    }
+
+    /**
+     * Create a new Reader with default platform encoding.
+     *
+     * @param in not null input stream.
+     * @return a reader instance for the input stream using the default platform charset.
      * @see Charset#defaultCharset()
      */
-    public static Writer newPlatformWriter( OutputStream out )
+    public static Reader newPlatformReader( InputStream in )
     {
-        return new OutputStreamWriter( out );
+        return new InputStreamReader( in );
     }
 
     /**
-     * Create a new Writer with default platform encoding.
+     * Create a new Reader with default platform encoding.
      *
      * @param file not null file.
-     * @return a writer instance for the output file using the default platform charset.
+     * @return a reader instance for the input file using the default platform charset.
      * @throws IOException if any.
      * @see Charset#defaultCharset()
      */
-    public static Writer newPlatformWriter( File file )
+    public static Reader newPlatformReader( File file )
         throws IOException
     {
-        return Files.newBufferedWriter( file.toPath() );
+        return Files.newBufferedReader( file.toPath() );
     }
 
     /**
-     * Create a new Writer with specified encoding.
+     * Create a new Reader with default platform encoding.
      *
-     * @param out not null output stream.
+     * @param url not null url.
+     * @return a reader instance for the input url using the default platform charset.
+     * @throws IOException if any.
+     * @see Charset#defaultCharset()
+     */
+    public static Reader newPlatformReader( URL url )
+        throws IOException
+    {
+        return new InputStreamReader( url.openStream() );
+    }
+
+    /**
+     * Create a new Reader with specified encoding.
+     *
+     * @param in not null input stream.
      * @param encoding not null supported encoding.
-     * @return a writer instance for the output stream using the given encoding.
+     * @return a reader instance for the input stream using the given encoding.
      * @throws UnsupportedEncodingException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
-    public static Writer newWriter( OutputStream out, String encoding )
+    public static Reader newReader( InputStream in, String encoding )
         throws UnsupportedEncodingException
     {
-        return new OutputStreamWriter( out, encoding );
+        return new InputStreamReader( in, encoding );
     }
 
     /**
-     * Create a new Writer with specified encoding.
+     * Create a new Reader with specified encoding. Note that there is no buffering on this reader, which favours
+     * clients that read into large buffers (8K+).
      *
      * @param file not null file.
      * @param encoding not null supported encoding.
-     * @return a writer instance for the output file using the given encoding.
+     * @return a reader instance for the input file using the given encoding.
      * @throws IOException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
-    public static Writer newWriter( File file, String encoding )
+    public static Reader newReader( File file, String encoding )
         throws IOException
     {
-        return newWriter( Files.newOutputStream( file.toPath() ), encoding );
+        return new InputStreamReader( Files.newInputStream( file.toPath() ), encoding );
+    }
+
+    /**
+     * Create a new Reader with specified encoding.
+     *
+     * @param url not null url.
+     * @param encoding not null supported encoding.
+     * @return a reader instance for the input url using the given encoding.
+     * @throws IOException if any.
+     * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
+     */
+    public static Reader newReader( URL url, String encoding )
+        throws IOException
+    {
+        return new InputStreamReader( url.openStream(), encoding );
     }
 }

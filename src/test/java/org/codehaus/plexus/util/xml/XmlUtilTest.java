@@ -29,9 +29,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 
 import org.codehaus.plexus.util.IOUtil;
-import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
-import org.codehaus.plexus.util.WriterFactory;
 import org.junit.Test;
 
 /**
