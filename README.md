@@ -14,3 +14,4 @@ For publishing [the site](https://codehaus-plexus.github.io/plexus-utils/) do th
 mvn -Preporting verify site site:stage scm-publish:publish-scm
 ```
 
+Starting with version 4, XML classes (in `org.codehaus.plexus.util.xml` and `org.codehaus.plexus.util.xml.pull`) have been extracted to a separate `plexus-xml` 4: if you need them, just use this new artifact.

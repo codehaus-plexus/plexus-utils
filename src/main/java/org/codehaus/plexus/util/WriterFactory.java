@@ -25,8 +25,6 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
-import org.codehaus.plexus.util.xml.XmlStreamWriter;
-
 /**
  * Utility to create Writers, with explicit encoding choice: platform default, XML, or specified.
  *
@@ -35,6 +33,7 @@ import org.codehaus.plexus.util.xml.XmlStreamWriter;
  * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
  *
  * @since 1.4.4
+ * @deprecated use org.codehaus.plexus.util.xml.WriterFactory from plexus-xml 4
  */
 public class WriterFactory
 {
@@ -91,34 +90,6 @@ public class WriterFactory
      * The <code>file.encoding</code> System Property.
      */
     public static final String FILE_ENCODING = System.getProperty( "file.encoding" );
-
-    /**
-     * Create a new Writer with XML encoding detection rules.
-     *
-     * @param out not null output stream.
-     * @return an XML writer instance for the output stream.
-     * @throws IOException if any.
-     * @see XmlStreamWriter
-     */
-    public static XmlStreamWriter newXmlWriter( OutputStream out )
-        throws IOException
-    {
-        return new XmlStreamWriter( out );
-    }
-
-    /**
-     * Create a new Writer with XML encoding detection rules.
-     *
-     * @param file not null file.
-     * @return an XML writer instance for the output file.
-     * @throws IOException if any.
-     * @see XmlStreamWriter
-     */
-    public static XmlStreamWriter newXmlWriter( File file )
-        throws IOException
-    {
-        return new XmlStreamWriter( file );
-    }
 
     /**
      * Create a new Writer with default platform encoding.

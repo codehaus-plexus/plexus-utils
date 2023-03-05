@@ -17,7 +17,6 @@ package org.codehaus.plexus.util;
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,8 +26,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
-import org.codehaus.plexus.util.xml.XmlStreamReader;
-
 /**
  * Utility to create Readers from streams, with explicit encoding choice: platform default, XML, or specified.
  *
@@ -37,6 +34,7 @@ import org.codehaus.plexus.util.xml.XmlStreamReader;
  * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
  *
  * @since 1.4.3
+ * @deprecated use org.codehaus.plexus.util.xml.ReaderFactory from plexus-xml 4
  */
 public class ReaderFactory
 {
@@ -93,48 +91,6 @@ public class ReaderFactory
      * The <code>file.encoding</code> System Property.
      */
     public static final String FILE_ENCODING = System.getProperty( "file.encoding" );
-
-    /**
-     * Create a new Reader with XML encoding detection rules.
-     *
-     * @param in not null input stream.
-     * @return an XML reader instance for the input stream.
-     * @throws IOException if any.
-     * @see XmlStreamReader
-     */
-    public static XmlStreamReader newXmlReader( InputStream in )
-        throws IOException
-    {
-        return new XmlStreamReader( in );
-    }
-
-    /**
-     * Create a new Reader with XML encoding detection rules.
-     *
-     * @param file not null file.
-     * @return an XML reader instance for the input file.
-     * @throws IOException if any.
-     * @see XmlStreamReader
-     */
-    public static XmlStreamReader newXmlReader( File file )
-        throws IOException
-    {
-        return new XmlStreamReader( file );
-    }
-
-    /**
-     * Create a new Reader with XML encoding detection rules.
-     *
-     * @param url not null url.
-     * @return an XML reader instance for the input url.
-     * @throws IOException if any.
-     * @see XmlStreamReader
-     */
-    public static XmlStreamReader newXmlReader( URL url )
-        throws IOException
-    {
-        return new XmlStreamReader( url );
-    }
 
     /**
      * Create a new Reader with default platform encoding.
