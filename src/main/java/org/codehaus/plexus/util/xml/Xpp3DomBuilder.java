@@ -16,7 +16,6 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.xml.pull.MXParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -76,7 +75,17 @@ public class Xpp3DomBuilder
         }
         finally
         {
-            IOUtil.close( is );
+            if ( is != null )
+            {
+                try
+                {
+                    is.close();
+                }
+                catch ( IOException ioe )
+                {
+                    // ignore
+                }
+            }
         }
     }
 
@@ -111,7 +120,17 @@ public class Xpp3DomBuilder
         }
         finally
         {
-            IOUtil.close( reader );
+            if ( reader != null )
+            {
+                try
+                {
+                    reader.close();
+                }
+                catch ( IOException ioe )
+                {
+                    // ignore
+                }
+            }
         }
     }
 

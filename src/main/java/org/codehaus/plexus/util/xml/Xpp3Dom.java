@@ -16,7 +16,6 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
 
 import java.io.IOException;

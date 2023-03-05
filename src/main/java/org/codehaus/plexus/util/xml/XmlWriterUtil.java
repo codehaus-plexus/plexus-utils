@@ -16,8 +16,6 @@ package org.codehaus.plexus.util.xml;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.StringUtils;
-
 /**
  * Utility class for the <code>XmlWriter</code> class.
  *

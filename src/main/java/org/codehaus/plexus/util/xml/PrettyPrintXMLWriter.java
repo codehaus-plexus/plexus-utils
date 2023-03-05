@@ -22,8 +22,6 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.codehaus.plexus.util.StringUtils;
-
 /**
  * Implementation of XMLWriter which emits nicely formatted documents.
  *
