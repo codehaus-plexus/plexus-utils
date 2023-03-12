@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -968,7 +969,7 @@ public class MXParserTest
      * @since 3.4.1
      */
     @Test
-    public void testEncodingISO_8859_1setInputReader()
+    public void testEncodingISO_8859_1_newXmlReader()
         throws IOException
     {
         try ( Reader reader =
@@ -994,7 +995,7 @@ public class MXParserTest
      * @since 3.4.1
      */
     @Test
-    public void testEncodingISO_8859_1_setInputStream()
+    public void testEncodingISO_8859_1_InputStream()
         throws IOException
     {
         try ( InputStream input =
@@ -1012,12 +1013,6 @@ public class MXParserTest
         }
     }
 
-    private static void assertPosition( int row, int col, MXParser parser )
-    {
-        assertEquals( "Current line", row, parser.getLineNumber() );
-        assertEquals( "Current column", col, parser.getColumnNumber() );
-    }
-
     /**
      * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
      *
@@ -1028,7 +1023,7 @@ public class MXParserTest
      * @since 3.4.2
      */
     @Test
-    public void testEncodingISO_8859_1setStringReader()
+    public void testEncodingISO_8859_1_StringReader()
         throws IOException
     {
         try ( Reader reader =
@@ -1045,6 +1040,93 @@ public class MXParserTest
         {
             fail( "should not raise exception: " + e );
         }
+    }
+
+    /**
+     * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
+     *
+     * Another case of bug #163: Reader generated with ReaderFactory.newReader and the right file encoding.
+     *
+     * @throws IOException if IO error.
+     *
+     * @since 3.5.2
+     */
+    @Test
+    public void testEncodingISO_8859_1_newReader()
+        throws IOException
+    {
+        try ( Reader reader =
+            ReaderFactory.newReader( new File( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ),
+                                     StandardCharsets.UTF_8.name() ) )
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( reader );
+            while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
+                ;
+            assertTrue( true );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    /**
+     * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
+     *
+     * Another case of bug #163: InputStream supplied with the right file encoding.
+     *
+     * @throws IOException if IO error.
+     *
+     * @since 3.5.2
+     */
+    @Test
+    public void testEncodingISO_8859_1_InputStream_encoded() throws IOException {
+        try ( InputStream input =
+                        Files.newInputStream( Paths.get( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( input, StandardCharsets.UTF_8.name() );
+            while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
+                ;
+            assertTrue( true );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    /**
+     * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
+     *
+     * @throws IOException if IO error.
+     *
+     * @since 3.4.1
+     */
+    @Test
+    public void testEncodingUTF8_newXmlReader()
+        throws IOException
+    {
+        try ( Reader reader =
+            ReaderFactory.newXmlReader( new File( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
+        {
+            MXParser parser = new MXParser();
+            parser.setInput( reader );
+            while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
+                ;
+            assertTrue( true );
+        }
+        catch ( XmlPullParserException e )
+        {
+            fail( "should not raise exception: " + e );
+        }
+    }
+
+    private static void assertPosition( int row, int col, MXParser parser )
+    {
+        assertEquals( "Current line", row, parser.getLineNumber() );
+        assertEquals( "Current column", col, parser.getColumnNumber() );
     }
 
     /**

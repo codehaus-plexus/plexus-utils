@@ -11,12 +11,10 @@ package org.codehaus.plexus.util.xml.pull;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import org.codehaus.plexus.util.ReaderFactory;
-import org.codehaus.plexus.util.xml.XmlReader;
 
 //import java.util.Hashtable;
 
@@ -124,7 +122,6 @@ public class MXParser
     // private String elValue[];
     private int elNamespaceCount[];
 
-    private String fileEncoding = null;
 
     /**
      * Make sure that we have enough space to keep element stack if passed size. It will always create one additional
@@ -663,20 +660,6 @@ public class MXParser
     {
         reset();
         reader = in;
-
-        if ( reader instanceof XmlReader ) {
-            // encoding already detected
-            XmlReader xsr = (XmlReader) reader;
-            fileEncoding = xsr.getEncoding();
-        }
-        else if ( reader instanceof InputStreamReader )
-        {
-            InputStreamReader isr = (InputStreamReader) reader;
-            if ( isr.getEncoding() != null )
-            {
-                fileEncoding = isr.getEncoding().toUpperCase();
-            }
-        }
     }
 
     @Override
@@ -3432,18 +3415,7 @@ public class MXParser
             final int encodingEnd = pos - 1;
 
             // TODO reconcile with setInput encodingName
-            inputEncoding = newString( buf, encodingStart, encodingEnd - encodingStart );
-
-            if ( "UTF8".equals( fileEncoding ) && inputEncoding.toUpperCase().startsWith( "ISO-" ) )
-            {
-                throw new XmlPullParserException( "UTF-8 BOM plus xml decl of " + inputEncoding + " is incompatible",
-                                                  this, null );
-            }
-            else if ("UTF-16".equals( fileEncoding ) && inputEncoding.equalsIgnoreCase( "UTF-8" ))
-            {
-                throw new XmlPullParserException( "UTF-16 BOM plus xml decl of " + inputEncoding + " is incompatible",
-                                                  this, null );
-            }
+            // inputEncoding = newString( buf, encodingStart, encodingEnd - encodingStart );
 
             lastParsedAttr = "encoding";
 
