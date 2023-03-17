@@ -11,10 +11,13 @@ package org.codehaus.plexus.util.xml.pull;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import org.codehaus.plexus.util.ReaderFactory;
+import org.codehaus.plexus.util.xml.XmlReader;
+import org.codehaus.plexus.util.xml.XmlStreamReader;
+import org.codehaus.plexus.util.xml.XmlStreamReaderException;
 
 //import java.util.Hashtable;
 
@@ -122,6 +125,7 @@ public class MXParser
     // private String elValue[];
     private int elNamespaceCount[];
 
+    private String fileEncoding = null;
 
     /**
      * Make sure that we have enough space to keep element stack if passed size. It will always create one additional
@@ -675,17 +679,29 @@ public class MXParser
         {
             if ( inputEncoding != null )
             {
-                reader = ReaderFactory.newReader( inputStream, inputEncoding );
+                reader = new InputStreamReader( inputStream, inputEncoding );
             }
             else
             {
-                reader = ReaderFactory.newXmlReader( inputStream );
+                reader = new XmlStreamReader( inputStream, false );
             }
         }
         catch ( UnsupportedEncodingException une )
         {
             throw new XmlPullParserException( "could not create reader for encoding " + inputEncoding + " : " + une,
                                               this, une );
+        }
+        catch ( XmlStreamReaderException e )
+        {
+            if ( "UTF-8".equals( e.getBomEncoding() ) )
+            {
+                throw new XmlPullParserException( "UTF-8 BOM plus xml decl of " + e.getXmlEncoding() + " is incompatible", this, e );
+            }
+            if ( e.getBomEncoding() != null && e.getBomEncoding().startsWith( "UTF-16" ) )
+            {
+                throw new XmlPullParserException( "UTF-16 BOM in a " + e.getXmlEncoding() + " encoded file is incompatible", this, e );
+            }
+            throw new XmlPullParserException( "could not create reader : " + e, this, e );
         }
         catch ( IOException e )
         {
@@ -3415,7 +3431,7 @@ public class MXParser
             final int encodingEnd = pos - 1;
 
             // TODO reconcile with setInput encodingName
-            // inputEncoding = newString( buf, encodingStart, encodingEnd - encodingStart );
+            inputEncoding = newString( buf, encodingStart, encodingEnd - encodingStart );
 
             lastParsedAttr = "encoding";
 

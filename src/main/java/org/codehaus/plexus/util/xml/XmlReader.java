@@ -504,11 +504,8 @@ public class XmlReader
         }
         else if ( bomEnc.equals( UTF_16BE ) || bomEnc.equals( UTF_16LE ) )
         {
-            if ( xmlGuessEnc != null && !xmlGuessEnc.equals( bomEnc ) )
-            {
-                throw new IOException( RAW_EX_1.format( new Object[] { bomEnc, xmlGuessEnc, xmlEnc } ) );
-            }
-            if ( xmlEnc != null && !xmlEnc.equals( UTF_16 ) && !xmlEnc.equals( bomEnc ) )
+            if ( xmlGuessEnc != null && !xmlGuessEnc.equals( bomEnc )
+                || xmlEnc != null && !xmlEnc.equals( UTF_16 ) && !xmlEnc.equals( bomEnc ) )
             {
                 throw new XmlStreamReaderException( RAW_EX_1.format( new Object[] { bomEnc, xmlGuessEnc, xmlEnc } ),
                                                     bomEnc, xmlGuessEnc, xmlEnc, is );
