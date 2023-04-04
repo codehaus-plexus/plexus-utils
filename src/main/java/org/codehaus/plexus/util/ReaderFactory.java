@@ -16,6 +16,8 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import org.codehaus.plexus.util.xml.XmlStreamReader;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,13 +31,18 @@ import java.nio.file.Files;
 /**
  * Utility to create Readers from streams, with explicit encoding choice: platform default, XML, or specified.
  *
+ * @deprecated This class has been deprecated. When reading XML, users are encouraged to pass the {@code InputStream}
+ *             directory to the {@link org.codehaus.plexus.util.xml.pull.MXParser#setInput(InputStream, String)},
+ *             giving a {@code null} encoding to let the parser figure it out. For non xml usages, use the JDK
+ *             {@link Files} utility methods.
+ *
  * @author <a href="mailto:hboutemy@codehaus.org">Herve Boutemy</a>
  * @see Charset
  * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
  *
  * @since 1.4.3
- * @deprecated use org.codehaus.plexus.util.xml.ReaderFactory from plexus-xml 4
  */
+@Deprecated
 public class ReaderFactory
 {
     /**
@@ -91,6 +98,48 @@ public class ReaderFactory
      * The <code>file.encoding</code> System Property.
      */
     public static final String FILE_ENCODING = System.getProperty( "file.encoding" );
+
+    /**
+     * Create a new Reader with XML encoding detection rules.
+     *
+     * @param in not null input stream.
+     * @return an XML reader instance for the input stream.
+     * @throws IOException if any.
+     * @see XmlStreamReader
+     */
+    public static XmlStreamReader newXmlReader( InputStream in )
+        throws IOException
+    {
+        return new XmlStreamReader( in );
+    }
+
+    /**
+     * Create a new Reader with XML encoding detection rules.
+     *
+     * @param file not null file.
+     * @return an XML reader instance for the input file.
+     * @throws IOException if any.
+     * @see XmlStreamReader
+     */
+    public static XmlStreamReader newXmlReader( File file )
+        throws IOException
+    {
+        return new XmlStreamReader( file );
+    }
+
+    /**
+     * Create a new Reader with XML encoding detection rules.
+     *
+     * @param url not null url.
+     * @return an XML reader instance for the input url.
+     * @throws IOException if any.
+     * @see XmlStreamReader
+     */
+    public static XmlStreamReader newXmlReader( URL url )
+        throws IOException
+    {
+        return new XmlStreamReader( url );
+    }
 
     /**
      * Create a new Reader with default platform encoding.
