@@ -28,6 +28,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.net.HttpURLConnection;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -112,6 +113,24 @@ public class XmlReader
     }
 
     /**
+     * Creates a Reader for a Path.
+     * <p>
+     * It looks for the UTF-8 BOM first, if none sniffs the XML prolog charset, if this is also missing defaults to
+     * UTF-8.
+     * <p>
+     * It does a lenient charset encoding detection, check the constructor with the lenient parameter for details.
+     * <p>
+     *
+     * @param path Path to create a Reader from.
+     * @throws IOException thrown if there is a problem reading the file.
+     */
+    public XmlReader( Path path )
+        throws IOException
+    {
+        this( Files.newInputStream( path ) );
+    }
+
+    /**
      * Creates a Reader for a File.
      * <p>
      * It looks for the UTF-8 BOM first, if none sniffs the XML prolog charset, if this is also missing defaults to
@@ -126,7 +145,7 @@ public class XmlReader
     public XmlReader( File file )
         throws IOException
     {
-        this( Files.newInputStream( file.toPath() ) );
+        this( file.toPath() );
     }
 
     /**

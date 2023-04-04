@@ -31,7 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.codehaus.plexus.util.IOUtil;
-import org.codehaus.plexus.util.xml.ReaderFactory;
+import org.codehaus.plexus.util.xml.XmlStreamReader;
 import org.junit.Test;
 
 /**
@@ -972,7 +972,7 @@ public class MXParserTest
         throws IOException
     {
         try ( Reader reader =
-            ReaderFactory.newXmlReader( new File( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
+            new XmlStreamReader( Paths.get( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
         {
             MXParser parser = new MXParser();
             parser.setInput( reader );
@@ -1031,11 +1031,14 @@ public class MXParserTest
     public void testEncodingISO_8859_1setStringReader()
         throws IOException
     {
+        String xmlFileContents;
         try ( Reader reader =
-            ReaderFactory.newXmlReader( new File( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) )
-        {
+            new XmlStreamReader( Paths.get( "src/test/resources/xml", "test-encoding-ISO-8859-1.xml" ) ) ) {
+            xmlFileContents = IOUtil.toString(reader);
+        }
+
+        try {
             MXParser parser = new MXParser();
-            String xmlFileContents = IOUtil.toString( reader );
             parser.setInput( new StringReader( xmlFileContents ) );
             while ( parser.nextToken() != XmlPullParser.END_DOCUMENT )
                 ;
@@ -1223,7 +1226,7 @@ public class MXParserTest
     private void testDocdeclTextWithEntities( String filename )
         throws IOException
     {
-        try ( Reader reader = ReaderFactory.newXmlReader( new File( "src/test/resources/xml", filename ) ) )
+        try ( Reader reader = new XmlStreamReader( new File( "src/test/resources/xml", filename ) ) )
         {
             MXParser parser = new MXParser();
             parser.setInput( reader );
@@ -1286,10 +1289,10 @@ public class MXParserTest
     private void testDocdeclTextWithEntitiesInAttributes( String filename )
         throws IOException
     {
-        try ( Reader reader = ReaderFactory.newXmlReader( new File( "src/test/resources/xml", filename ) ) )
+        try ( InputStream input = Files.newInputStream( Paths.get( "src/test/resources/xml", filename ) ) )
         {
             MXParser parser = new MXParser();
-            parser.setInput( reader );
+            parser.setInput( input, null );
             parser.defineEntityReplacementText( "nbsp", "&#160;" );
             parser.defineEntityReplacementText( "Alpha", "&#913;" );
             parser.defineEntityReplacementText( "tritPos", "&#x1d7ed;" );

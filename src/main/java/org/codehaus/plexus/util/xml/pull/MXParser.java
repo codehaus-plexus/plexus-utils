@@ -15,8 +15,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import org.codehaus.plexus.util.xml.ReaderFactory;
 import org.codehaus.plexus.util.xml.XmlReader;
+import org.codehaus.plexus.util.xml.XmlStreamReader;
 
 //import java.util.Hashtable;
 
@@ -692,11 +692,11 @@ public class MXParser
         {
             if ( inputEncoding != null )
             {
-                reader = ReaderFactory.newReader( inputStream, inputEncoding );
+                reader = new InputStreamReader( inputStream, inputEncoding );
             }
             else
             {
-                reader = ReaderFactory.newXmlReader( inputStream );
+                reader = new XmlStreamReader( inputStream );
             }
         }
         catch ( UnsupportedEncodingException une )

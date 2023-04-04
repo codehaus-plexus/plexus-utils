@@ -53,7 +53,7 @@ public class XmlWriterUtilTest
         throws Exception
     {
         output = new ByteArrayOutputStream();
-        writer = WriterFactory.newXmlWriter( output );
+        writer = new XmlStreamWriter( output );
         xmlWriter = new PrettyPrintXMLWriter( writer );
     }
 

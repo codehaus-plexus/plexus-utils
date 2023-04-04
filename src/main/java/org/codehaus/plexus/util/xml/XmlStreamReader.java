@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Path;
 
 /**
  * Character stream that handles (or at least attempts to) all the necessary Voodo to figure out the charset encoding of
@@ -50,6 +51,24 @@ public class XmlStreamReader
     extends XmlReader
 {
     /**
+     * Creates a Reader for a Path.
+     * <p>
+     * It looks for the UTF-8 BOM first, if none sniffs the XML prolog charset, if this is also missing defaults to
+     * UTF-8.
+     * <p>
+     * It does a lenient charset encoding detection, check the constructor with the lenient parameter for details.
+     * <p>
+     *
+     * @param path Path to create a Reader from.
+     * @throws IOException thrown if there is a problem reading the file.
+     */
+    public XmlStreamReader( Path path )
+        throws IOException
+    {
+        super( path );
+    }
+
+    /**
      * Creates a Reader for a File.
      * <p>
      * It looks for the UTF-8 BOM first, if none sniffs the XML prolog charset, if this is also missing defaults to
@@ -64,7 +83,7 @@ public class XmlStreamReader
     public XmlStreamReader( File file )
         throws IOException
     {
-        super( file );
+        this( file.toPath() );
     }
 
     /**

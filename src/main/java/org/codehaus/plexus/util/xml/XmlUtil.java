@@ -61,7 +61,7 @@ public class XmlUtil
             throw new IllegalArgumentException( "The file '" + f.getAbsolutePath() + "' is not a file." );
         }
 
-        try ( Reader reader = ReaderFactory.newXmlReader( f ) )
+        try ( Reader reader = new XmlStreamReader( f ) )
         {
             XmlPullParser parser = new MXParser();
             parser.setInput( reader );
@@ -93,8 +93,6 @@ public class XmlUtil
      * @param writer not null
      * @throws IOException if any or invalid xml content
      * @see #prettyFormat(Reader, Writer, int, String)
-     * @see ReaderFactory to read an xml content
-     * @see WriterFactory to write an xml content
      */
     public static void prettyFormat( Reader reader, Writer writer )
         throws IOException
@@ -122,8 +120,6 @@ public class XmlUtil
      * @param indentSize positive number for the indentation
      * @param lineSeparator the wanted line separator
      * @throws IOException if any or invalid xml content
-     * @see ReaderFactory to read an xml content
-     * @see WriterFactory to write an xml content
      */
     public static void prettyFormat( Reader reader, Writer writer, int indentSize, String lineSeparator )
         throws IOException
@@ -221,7 +217,7 @@ public class XmlUtil
             indentSize = 0;
         }
 
-        try ( Reader reader = ReaderFactory.newXmlReader( is );
+        try ( InputStream input = is;
               Writer writer = new OutputStreamWriter( os ) )
         {
             final PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter( writer );
@@ -229,7 +225,7 @@ public class XmlUtil
             xmlWriter.setLineSeparator( lineSeparator );
 
             final XmlPullParser parser = new MXParser();
-            parser.setInput( reader );
+            parser.setInput( input, null );
 
             prettyFormatInternal( parser, xmlWriter );
         }
