@@ -17,6 +17,7 @@ package org.codehaus.plexus.util.xml;
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -148,6 +149,57 @@ public class Xpp3DomUtilsTest
         assertEquals( !Xpp3DomUtils.isEmpty( "" ), Xpp3DomUtils.isNotEmpty( "" ) );
         assertEquals( !Xpp3DomUtils.isEmpty( " " ), Xpp3DomUtils.isNotEmpty( " " ) );
         assertEquals( !Xpp3DomUtils.isEmpty( "someValue" ), Xpp3DomUtils.isNotEmpty( "someValue" ) );
+    }
+
+    /**
+     * <p>testShouldMergeValuesAtTopLevelByDefault.</p>
+     */
+    @Test
+    public void testShouldNotMergeValuesAtTopLevelByDefault()
+    {
+        // create the dominant DOM
+        Xpp3Dom t1 = new Xpp3Dom( "top" );
+        t1.setAttribute( "attr", "value" );
+        t1.setInputLocation( "t1top" );
+
+        // create the recessive DOM
+        Xpp3Dom t2 = new Xpp3Dom( "top" );
+        t2.setAttribute( "attr2", "value2" );
+        t2.setValue( "t2Value" );
+        t2.setInputLocation( "t2top" );
+
+        // merge and check results.
+        Xpp3Dom result = Xpp3DomUtils.mergeXpp3Dom( t1, t2 );
+
+        // this is still 2, since we're not using the merge-control attribute.
+        assertEquals( 2, result.getAttributeNames().length );
+
+        assertEquals( result.getValue(), t1.getValue() );
+        assertEquals( "t1top", result.getInputLocation() );
+    }
+
+    /**
+     * <p>testShouldMergeValuesAtTopLevel.</p>
+     */
+    @Test
+    public void testShouldNotMergeValues()
+    {
+        // create the dominant DOM
+        Xpp3Dom t1 = new Xpp3Dom( "top" );
+        t1.setAttribute( "attr", "value" );
+
+        t1.setAttribute( Xpp3Dom.SELF_COMBINATION_MODE_ATTRIBUTE, Xpp3Dom.SELF_COMBINATION_MERGE );
+
+        // create the recessive DOM
+        Xpp3Dom t2 = new Xpp3Dom( "top" );
+        t2.setAttribute( "attr2", "value2" );
+        t2.setValue( "t2Value" );
+
+        // merge and check results.
+        Xpp3Dom result = Xpp3DomUtils.mergeXpp3Dom( t1, t2 );
+
+        assertEquals( 3, result.getAttributeNames().length );
+        assertNull( result.getValue(), t1.getValue() );
     }
 
     private static class FixedInputLocationBuilder
