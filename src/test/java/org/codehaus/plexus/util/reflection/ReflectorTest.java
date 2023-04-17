@@ -16,10 +16,10 @@ package org.codehaus.plexus.util.reflection;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>ReflectorTest class.</p>
@@ -39,7 +39,7 @@ public class ReflectorTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception
     {
@@ -67,7 +67,7 @@ public class ReflectorTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testObjectPropertyFromBean()
         throws Exception
     {

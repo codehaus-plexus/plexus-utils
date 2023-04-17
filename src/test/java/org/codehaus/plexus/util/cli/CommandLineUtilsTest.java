@@ -16,16 +16,16 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 
 import org.codehaus.plexus.util.Os;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>CommandLineUtilsTest class.</p>
@@ -113,7 +113,7 @@ public class CommandLineUtilsTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testTranslateCommandline()
         throws Exception
     {

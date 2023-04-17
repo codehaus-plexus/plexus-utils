@@ -16,9 +16,9 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>CollectionUtilsTest class.</p>
@@ -135,7 +135,7 @@ public class CollectionUtilsTest
     /**
      * <p>testMavenPropertiesLoading.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testMavenPropertiesLoading()
     {
         // Mimic MavenSession properties loading. Properties listed
@@ -195,7 +195,7 @@ public class CollectionUtilsTest
     /**
      * <p>testIteratorToListWithAPopulatedList.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testIteratorToListWithAPopulatedList()
     {
         List<String> original = new ArrayList<String>();
@@ -218,7 +218,7 @@ public class CollectionUtilsTest
     /**
      * <p>testIteratorToListWithAEmptyList.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testIteratorToListWithAEmptyList()
     {
         List<String> original = new ArrayList<String>();

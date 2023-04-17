@@ -16,12 +16,12 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>SelectorUtilsTest class.</p>
@@ -92,7 +92,7 @@ public class SelectorUtilsTest
         assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false ) );
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testPatternMatchSingleWildcardPosix()
     {
         assertFalse(SelectorUtils.matchPath(
@@ -119,7 +119,7 @@ public class SelectorUtilsTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testPatternMatchSingleWildcardWindows()
     {
         assertFalse(SelectorUtils.matchPath(

@@ -16,15 +16,14 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.Os;
@@ -32,8 +31,8 @@ import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.shell.BourneShell;
 import org.codehaus.plexus.util.cli.shell.CmdShell;
 import org.codehaus.plexus.util.cli.shell.Shell;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * <p>CommandlineTest class.</p>
@@ -51,7 +50,7 @@ public class CommandlineTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception
     {
@@ -118,7 +117,7 @@ public class CommandlineTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testExecute()
         throws Exception
     {
@@ -199,7 +198,7 @@ public class CommandlineTest
         cmd.addArguments( new String[] { "a", "b" } );
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals( "Command line size", 4, shellCommandline.length );
+        assertEquals( 4, shellCommandline.length, "Command line size" );
 
         assertEquals( "cmd.exe", shellCommandline[0] );
         assertEquals( "/X", shellCommandline[1] );
@@ -223,7 +222,7 @@ public class CommandlineTest
         cmd.addArguments( new String[] { "c:\\Documents and Settings\\whatever", "b" } );
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals( "Command line size", 4, shellCommandline.length );
+        assertEquals( 4, shellCommandline.length, "Command line size" );
 
         assertEquals( "cmd.exe", shellCommandline[0] );
         assertEquals( "/X", shellCommandline[1] );
@@ -249,7 +248,7 @@ public class CommandlineTest
 
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals( "Command line size", 3, shellCommandline.length );
+        assertEquals( 3, shellCommandline.length, "Command line size" );
 
         assertEquals( "/bin/sh", shellCommandline[0] );
         assertEquals( "-c", shellCommandline[1] );
@@ -279,7 +278,7 @@ public class CommandlineTest
 
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals( "Command line size", 3, shellCommandline.length );
+        assertEquals( 3, shellCommandline.length, "Command line size" );
 
         assertEquals( "/bin/sh", shellCommandline[0] );
         assertEquals( "-c", shellCommandline[1] );
@@ -306,7 +305,7 @@ public class CommandlineTest
 
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals( "Command line size", 3, shellCommandline.length );
+        assertEquals( 3, shellCommandline.length, "Command line size" );
 
         assertEquals( "/bin/sh", shellCommandline[0] );
         assertEquals( "-c", shellCommandline[1] );
@@ -332,7 +331,7 @@ public class CommandlineTest
         cmd.addArguments( new String[] { "a", "b" } );
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals( "Command line size", 3, shellCommandline.length );
+        assertEquals( 3, shellCommandline.length, "Command line size" );
 
         assertEquals( "/bin/sh", shellCommandline[0] );
         assertEquals( "-c", shellCommandline[1] );
@@ -508,7 +507,7 @@ public class CommandlineTest
         File dir = new File( System.getProperty( "basedir" ), "target/test" );
         if ( !dir.exists() )
         {
-            assertTrue( "Can't create dir:" + dir.getAbsolutePath(), dir.mkdirs() );
+            assertTrue( dir.mkdirs(), "Can't create dir:" + dir.getAbsolutePath() );
         }
 
         Writer writer = null;
@@ -627,7 +626,7 @@ public class CommandlineTest
     {
         if ( !dir.exists() )
         {
-            assertTrue( "Can't create dir:" + dir.getAbsolutePath(), dir.mkdirs() );
+            assertTrue( dir.mkdirs(), "Can't create dir:" + dir.getAbsolutePath() );
         }
 
         // Create a script file

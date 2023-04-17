@@ -16,18 +16,18 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Vector;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created on 21/06/2003
@@ -69,31 +69,31 @@ public class SweeperPoolTest
         pool = new TestObjectPool( maxSize, minSize, initialCapacity, sweepInterval, triggerSize );
 
         Object tmp = pool.get();
-        assertNull( "Expected object from pool to be null", tmp );
+        assertNull( tmp, "Expected object from pool to be null" );
         pool.put( o1 );
-        assertEquals( "Expected pool to contain 1 object", 1, pool.getSize() );
+        assertEquals( 1, pool.getSize(), "Expected pool to contain 1 object" );
         tmp = pool.get();
-        assertSame( "Expected returned pool object to be the same as the one put in", tmp, o1 );
+        assertSame( tmp, o1, "Expected returned pool object to be the same as the one put in" );
         pool.put( o1 );
         pool.put( o2 );
-        assertEquals( "Expected pool to contain 2 objects", 2, pool.getSize() );
+        assertEquals( 2, pool.getSize(), "Expected pool to contain 2 objects" );
         pool.put( o3 );
-        assertEquals( "Expected pool to contain only a maximum of 2 objects.", 2, pool.getSize() );
-        assertEquals( "Expected 1 disposed pool object", 1, pool.testGetDisposedObjects().size() );
+        assertEquals( 2, pool.getSize(), "Expected pool to contain only a maximum of 2 objects." );
+        assertEquals( 1, pool.testGetDisposedObjects().size(), "Expected 1 disposed pool object" );
         tmp = pool.testGetDisposedObjects().iterator().next();
 
         tmp = pool.get();
-        assertEquals( "Expected pool size to be 1 after removing one object", 1, pool.getSize() );
+        assertEquals( 1, pool.getSize(), "Expected pool size to be 1 after removing one object" );
         Object tmp2 = pool.get();
-        assertEquals( "Expected pool size to be 0 after removing 2 objects", 0, pool.getSize() );
-        assertNotSame( "Expected returned objects to be different", tmp, tmp2 );
+        assertEquals( 0, pool.getSize(), "Expected pool size to be 0 after removing 2 objects" );
+        assertNotSame( tmp, tmp2, "Expected returned objects to be different" );
 
     }
 
     /**
      * <p>testSweepAndTrim1.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testSweepAndTrim1()
     {
         // test trigger
@@ -120,8 +120,8 @@ public class SweeperPoolTest
                 fail( "Unexpected exception thrown. e=" + Tracer.traceToString( e ) );
             }
         }
-        assertEquals( "Expected pool to only contain 1 object", 1, pool.getSize() );
-        assertEquals( "Expected 3 disposed objects", 3, pool.testGetDisposedObjects().size() );
+        assertEquals( 1, pool.getSize(), "Expected pool to only contain 1 object" );
+        assertEquals( 3, pool.testGetDisposedObjects().size(), "Expected 3 disposed objects" );
 
     }
 
@@ -130,7 +130,7 @@ public class SweeperPoolTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception
     {
@@ -147,7 +147,7 @@ public class SweeperPoolTest
      *
      * @throws java.lang.Exception if any.
      */
-    @After
+    @AfterEach
     public void tearDown()
         throws Exception
     {

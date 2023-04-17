@@ -16,13 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>InterpolationFilterReaderTest class.</p>
@@ -62,7 +62,7 @@ public class InterpolationFilterReaderTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testShouldNotInterpolateExpressionWithMissingEndToken()
         throws Exception
     {

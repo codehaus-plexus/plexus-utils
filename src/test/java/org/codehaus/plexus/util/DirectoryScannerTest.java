@@ -16,11 +16,11 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,10 +35,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base class for testcases doing tests with files.
@@ -50,15 +48,12 @@ import org.junit.rules.TestName;
 public class DirectoryScannerTest
     extends FileBasedTestCase
 {
-    @Rule
-    public TestName name = new TestName();
-    
     private static String testDir = getTestDirectory().getPath();
 
     /**
      * <p>setUp.</p>
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         try
@@ -190,7 +185,7 @@ public class DirectoryScannerTest
         catch ( IOException e )
         {
             System.err.println( String.format( "The unit test '%s.%s' will be skipped, reason: %s",
-                                               this.getClass().getSimpleName(), name.getMethodName(),
+                                               this.getClass().getSimpleName(), getTestMethodName(),
                                                e.getMessage() ) );
             System.out.println( String.format( "This test requires symlinks files in '%s' directory.",
                                                symlinksDirectory.getPath() ) );
@@ -217,11 +212,10 @@ public class DirectoryScannerTest
 
         List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
 
-        assertEquals( "Wrong number of results.", 3, fileNames.size() );
-        assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
-        assertTrue( "4 not found.", fileNames.contains( new File( "scanner4.dat" ) ) );
-        assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
-
+        assertEquals( 3, fileNames.size(), "Wrong number of results." );
+        assertTrue( fileNames.contains( new File( "scanner3.dat" ) ), "3 not found." );
+        assertTrue( fileNames.contains( new File( "scanner4.dat" ) ), "4 not found." );
+        assertTrue( fileNames.contains( new File( "scanner5.dat" ) ), "5 not found." );
     }
 
     /**
@@ -241,10 +235,10 @@ public class DirectoryScannerTest
 
         List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
 
-        assertEquals( "Wrong number of results.", 3, fileNames.size() );
-        assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
-        assertTrue( "4 not found.", fileNames.contains( new File( "scanner4.dat" ) ) );
-        assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
+        assertEquals( 3, fileNames.size(), "Wrong number of results." );
+        assertTrue( fileNames.contains( new File( "scanner3.dat" ) ), "3 not found." );
+        assertTrue( fileNames.contains( new File( "scanner4.dat" ) ), "4 not found." );
+        assertTrue( fileNames.contains( new File( "scanner5.dat" ) ), "5 not found." );
     }
 
     /**
@@ -347,7 +341,7 @@ public class DirectoryScannerTest
         ds.scan();
 
         String[] files = ds.getIncludedFiles();
-        assertEquals( "Wrong number of results.", 3, files.length );
+        assertEquals( 3, files.length, "Wrong number of results." );
     }
 
     /**
@@ -395,7 +389,7 @@ public class DirectoryScannerTest
      *
      * @throws java.io.IOException if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testAntExcludesOverrideIncludesWithExplicitAntPrefix()
         throws IOException
     {
@@ -436,7 +430,7 @@ public class DirectoryScannerTest
      *
      * @throws java.io.IOException if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testRegexIncludeWithExcludedPrefixDirs()
         throws IOException
     {
@@ -472,7 +466,7 @@ public class DirectoryScannerTest
      *
      * @throws java.io.IOException if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testRegexExcludeWithNegativeLookahead()
         throws IOException
     {

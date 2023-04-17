@@ -24,14 +24,14 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.util.Objects;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CachingOutputStreamTest
 {
@@ -39,7 +39,7 @@ public class CachingOutputStreamTest
     Path tempDir;
     Path checkLastModified;
 
-    @Before
+    @BeforeEach
     public void setup() throws IOException
     {
         Path dir = Paths.get( "target/io" );

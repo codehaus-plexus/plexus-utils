@@ -17,15 +17,15 @@ package org.codehaus.plexus.util.cli.shell;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.Commandline;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>BourneShellTest class.</p>
@@ -50,7 +50,7 @@ public class BourneShellTest
     /**
      * <p>testQuoteWorkingDirectoryAndExecutable.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testQuoteWorkingDirectoryAndExecutable()
     {
         Shell sh = newShell();
@@ -82,7 +82,7 @@ public class BourneShellTest
     /**
      * <p>testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes_BackslashFileSep.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes_BackslashFileSep()
     {
         Shell sh = newShell();

@@ -52,9 +52,9 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -64,7 +64,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>StreamPumperTest class.</p>
@@ -100,7 +100,7 @@ public class StreamPumperTest
     /**
      * <p>testPumpingWithPrintWriter.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testPumpingWithPrintWriter()
     {
         String inputString = "This a test string";
@@ -125,7 +125,7 @@ public class StreamPumperTest
         GeneratorInputStream gis = new GeneratorInputStream( 1024 * 1024 * 4 );
         StreamPumper pumper = new StreamPumper( gis, new FailingConsumer() );
         pumper.run();
-        assertEquals( "input stream was not fully consumed, producer deadlocks", gis.size, gis.read );
+        assertEquals( gis.size, gis.read, "input stream was not fully consumed, producer deadlocks" );
         assertTrue( gis.closed );
         assertNotNull( pumper.getException() );
     }
@@ -237,7 +237,7 @@ public class StreamPumperTest
     /**
      * <p>testEnabled.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testEnabled()
     {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( "AB\nCE\nEF".getBytes() );

@@ -16,7 +16,7 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>DefaultConsumerTest class.</p>
