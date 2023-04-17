@@ -23,3 +23,9 @@ jobs:
   build:
     name: Build it
     uses: codehaus-plexus/.github/.github/workflows/maven.yml@v0.0.5
+
+  deploy:
+    name: Deploy
+    needs: build
+    uses: mojohaus/.github/.github/workflows/maven-deploy.yml@master
+    secrets: inherit
