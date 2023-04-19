@@ -22,7 +22,7 @@ limitations under the License.
   <parent>
     <groupId>org.codehaus.plexus</groupId>
     <artifactId>plexus</artifactId>
-    <version>10</version>
+    <version>12-SNAPSHOT</version>
   </parent>
 
   <artifactId>plexus-utils</artifactId>
