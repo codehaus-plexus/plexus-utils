@@ -71,8 +71,8 @@ public class CommandlineTest
     {
         Commandline cmd = new Commandline( new Shell() );
         cmd.setWorkingDirectory( baseDir );
-        cmd.createArgument().setValue( "cd" );
-        cmd.createArgument().setValue( "." );
+        cmd.createArg().setValue( "cd" );
+        cmd.createArg().setValue( "." );
 
         // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
         assertEquals( "cd .", cmd.toString() );
@@ -102,6 +102,29 @@ public class CommandlineTest
     {
         // Maven startup script on PATH is required for this test
         Commandline cmd = new Commandline();
+        String executable = "mvn";
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+        {
+            executable += ".cmd";
+        }
+        cmd.setWorkingDirectory( baseDir );
+        cmd.setExecutable( executable );
+        assertEquals( executable, cmd.getShell().getOriginalExecutable() );
+        cmd.createArg().setValue( "-version" );
+        Process process = cmd.execute();
+        String out = IOUtil.toString( process.getInputStream() );
+        assertTrue( out.contains( "Apache Maven" ) );
+        assertTrue( out.contains( "Maven home:" ) );
+        assertTrue( out.contains( "Java version:" ) );
+    }
+
+    @Test    
+    public void testExecuteBinaryOnPathWithOsShell()
+            throws Exception
+    {
+        // Maven startup script on PATH is required for this test
+        Commandline cmd = new Commandline();
+        cmd.setForceShellOsSpecific( true );
         cmd.setWorkingDirectory( baseDir );
         cmd.setExecutable( "mvn" );
         assertEquals( "mvn", cmd.getShell().getOriginalExecutable() );
@@ -122,12 +145,35 @@ public class CommandlineTest
     public void testExecute()
         throws Exception
     {
+        String executable = "echo";
+        Commandline cmd = new Commandline();
+        cmd.setWorkingDirectory( baseDir );
+        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
+        {
+            executable = "cmd";
+            cmd.createArg().setValue( "/X" );
+            cmd.createArg().setValue( "/C" );
+            cmd.createArg().setValue( "echo" );
+        }
+        cmd.setExecutable( executable );
+        assertEquals( executable, cmd.getShell().getOriginalExecutable() );
+        cmd.createArg().setValue( "Hello" );
+
+        Process process = cmd.execute();
+        assertEquals( "Hello", IOUtil.toString( process.getInputStream() ).trim() );
+    }    
+    
+    @Test
+    public void testExecuteWithOsShell()
+        throws Exception
+    {
         // allow it to detect the proper shell here.
         Commandline cmd = new Commandline();
+        cmd.setForceShellOsSpecific( true );
         cmd.setWorkingDirectory( baseDir );
         cmd.setExecutable( "echo" );
         assertEquals( "echo", cmd.getShell().getOriginalExecutable() );
-        cmd.createArgument().setValue( "Hello" );
+        cmd.createArg().setValue( "Hello" );
 
         Process process = cmd.execute();
         assertEquals( "Hello", IOUtil.toString( process.getInputStream() ).trim() );
@@ -142,8 +188,8 @@ public class CommandlineTest
         Commandline cmd = new Commandline( new Shell() );
         cmd.setWorkingDirectory( baseDir );
         cmd.setExecutable( "echo" );
-        cmd.createArgument().setLine( null );
-        cmd.createArgument().setLine( "Hello" );
+        cmd.createArg().setValue( null );
+        cmd.createArg().setLine( "Hello" );
 
         // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
         assertEquals( "echo Hello", cmd.toString() );
@@ -157,8 +203,8 @@ public class CommandlineTest
     {
         Commandline cmd = new Commandline( new Shell() );
         cmd.setWorkingDirectory( baseDir );
-        cmd.createArgument().setValue( "." );
-        cmd.createArgument( true ).setValue( "cd" );
+        cmd.createArg().setValue( "." );
+        cmd.createArg( true ).setValue( "cd" );
 
         // NOTE: cmd.toString() uses CommandLineUtils.toString( String[] ), which *quotes* the result.
         assertEquals( "cd .", cmd.toString() );
@@ -172,9 +218,9 @@ public class CommandlineTest
     {
         Commandline cmd = new Commandline( new Shell() );
         cmd.setWorkingDirectory( baseDir );
-        cmd.createArgument().setValue( "more" );
+        cmd.createArg().setValue( "more" );
         File f = new File( "test.txt" );
-        cmd.createArgument().setFile( f );
+        cmd.createArg().setFile( f );
         String fileName = f.getAbsolutePath();
         if ( fileName.contains( " " ) )
         {
@@ -523,7 +569,7 @@ public class CommandlineTest
         }
 
         Commandline cmd = new Commandline();
-        // cmd.getShell().setShellCommand( "/bin/sh" );
+        cmd.setForceShellOsSpecific( true );
         cmd.getShell().setQuotedArgumentsEnabled( true );
         cmd.setExecutable( "cat" );
         if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
