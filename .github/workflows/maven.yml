@@ -22,7 +22,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: Build it
-    uses: codehaus-plexus/.github/.github/workflows/maven.yml@v0.0.5
+    uses: codehaus-plexus/.github/.github/workflows/maven.yml@master
 
   deploy:
     name: Deploy
