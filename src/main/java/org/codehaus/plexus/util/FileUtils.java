@@ -995,12 +995,6 @@ public class FileUtils extends BaseFileUtils
         mkdirsFor( destination );
 
         doCopyFile( source, destination );
-
-        if ( source.length() != destination.length() )
-        {
-            String message = "Failed to copy full contents from " + source + " to " + destination;
-            throw new IOException( message );
-        }
     }
 
     private static void doCopyFile( File source, File destination )
