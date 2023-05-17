@@ -16,12 +16,12 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -36,10 +36,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is used to test FileUtils for correctness.
@@ -53,9 +51,6 @@ import org.junit.rules.TestName;
 public final class FileUtilsTest
     extends FileBasedTestCase
 {
-    @Rule
-    public TestName name = new TestName();
-
     // Test data
 
     /**
@@ -91,7 +86,7 @@ public final class FileUtilsTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception
     {
@@ -187,8 +182,9 @@ public final class FileUtilsTest
 
         URL[] urls = FileUtils.toURLs( files );
 
-        assertEquals( "The length of the generated URL's is not equals to the length of files. " + "Was " + files.length
-            + ", expected " + urls.length, files.length, urls.length );
+        assertEquals( files.length, urls.length,
+            "The length of the generated URL's is not equals to the length of files. " + "Was " + files.length
+            + ", expected " + urls.length );
 
         for ( int i = 0; i < urls.length; i++ )
         {
@@ -258,7 +254,7 @@ public final class FileUtilsTest
         throws Exception
     {
         // Non-existent files
-        final File file = new File( getTestDirectory(), name.getMethodName() );
+        final File file = new File( getTestDirectory(), getTestMethodName() );
         assertTrue( FileUtils.contentEquals( file, file ) );
 
         // TODO Should comparing 2 directories throw an Exception instead of returning false?
@@ -266,15 +262,15 @@ public final class FileUtilsTest
         assertTrue( !FileUtils.contentEquals( getTestDirectory(), getTestDirectory() ) );
 
         // Different files
-        final File objFile1 = new File( getTestDirectory(), name.getMethodName() + ".object" );
+        final File objFile1 = new File( getTestDirectory(), getTestMethodName() + ".object" );
         objFile1.deleteOnExit();
         FileUtils.copyURLToFile( getClass().getResource( "/java/lang/Object.class" ), objFile1 );
 
-        final File objFile2 = new File( getTestDirectory(), name.getMethodName() + ".collection" );
+        final File objFile2 = new File( getTestDirectory(), getTestMethodName() + ".collection" );
         objFile2.deleteOnExit();
         FileUtils.copyURLToFile( getClass().getResource( "/java/util/Collection.class" ), objFile2 );
 
-        assertTrue( "Files should not be equal.", !FileUtils.contentEquals( objFile1, objFile2 ) );
+        assertTrue( !FileUtils.contentEquals( objFile1, objFile2 ), "Files should not be equal." );
 
         // Equal files
         file.createNewFile();
@@ -290,8 +286,8 @@ public final class FileUtilsTest
     public void testRemovePath()
     {
         final String fileName =
-            FileUtils.removePath( new File( getTestDirectory(), name.getMethodName() ).getAbsolutePath() );
-        assertEquals( name.getMethodName(), fileName );
+            FileUtils.removePath( new File( getTestDirectory(), getTestMethodName() ).getAbsolutePath() );
+        assertEquals( getTestMethodName(), fileName );
     }
 
     // getPath
@@ -303,7 +299,7 @@ public final class FileUtilsTest
     public void testGetPath()
     {
         final String fileName =
-            FileUtils.getPath( new File( getTestDirectory(), name.getMethodName() ).getAbsolutePath() );
+            FileUtils.getPath( new File( getTestDirectory(), getTestMethodName() ).getAbsolutePath() );
         assertEquals( getTestDirectory().getAbsolutePath(), fileName );
     }
 
@@ -319,7 +315,7 @@ public final class FileUtilsTest
         throws Exception
     {
         // Creates file
-        final File file = new File( getTestDirectory(), name.getMethodName() );
+        final File file = new File( getTestDirectory(), getTestMethodName() );
         file.deleteOnExit();
 
         // Loads resource
@@ -330,8 +326,8 @@ public final class FileUtilsTest
         final InputStream fis = Files.newInputStream( file.toPath() );
         try
         {
-            assertTrue( "Content is not equal.",
-                        IOUtil.contentEquals( getClass().getResourceAsStream( resourceName ), fis ) );
+            assertTrue( IOUtil.contentEquals( getClass().getResourceAsStream( resourceName ), fis ),
+                       "Content is not equal.");
         }
         finally
         {
@@ -370,10 +366,10 @@ public final class FileUtilsTest
         FileUtils.forceMkdir( getTestDirectory() );
 
         // Creates test file
-        final File testFile = new File( getTestDirectory(), name.getMethodName() );
+        final File testFile = new File( getTestDirectory(), getTestMethodName() );
         testFile.deleteOnExit();
         testFile.createNewFile();
-        assertTrue( "Test file does not exist.", testFile.exists() );
+        assertTrue( testFile.exists(), "Test file does not exist." );
 
         // Tests with existing file
         try
@@ -389,7 +385,7 @@ public final class FileUtilsTest
 
         // Tests with non-existent directory
         FileUtils.forceMkdir( testFile );
-        assertTrue( "Directory was not created.", testFile.exists() );
+        assertTrue( testFile.exists(), "Directory was not created." );
 
         if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
         {
@@ -418,7 +414,7 @@ public final class FileUtilsTest
     public void testSizeOfDirectory()
         throws Exception
     {
-        final File file = new File( getTestDirectory(), name.getMethodName() );
+        final File file = new File( getTestDirectory(), getTestMethodName() );
 
         // Non-existent file
         try
@@ -448,7 +444,7 @@ public final class FileUtilsTest
         file.delete();
         file.mkdir();
 
-        assertEquals( "Unexpected directory size", TEST_DIRECTORY_SIZE, FileUtils.sizeOfDirectory( file ) );
+        assertEquals( TEST_DIRECTORY_SIZE, FileUtils.sizeOfDirectory( file ), "Unexpected directory size" );
     }
 
     // isFileNewer
@@ -474,8 +470,8 @@ public final class FileUtilsTest
     {
         final File destination = new File( getTestDirectory(), "copy1.txt" );
         FileUtils.copyFile( testFile1, destination );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check Full copy", destination.length() == testFile1Size );
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile1Size, "Check Full copy" );
     }
 
     /**
@@ -489,8 +485,8 @@ public final class FileUtilsTest
     {
         final File destination = new File( getTestDirectory(), "copy2.txt" );
         FileUtils.copyFile( testFile1, destination );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check Full copy", destination.length() == testFile2Size );
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile2Size, "Check Full copy" );
     }
 
     /**
@@ -509,8 +505,8 @@ public final class FileUtilsTest
         }
         final File destination = new File( destDirectory, "copy2.txt" );
         FileUtils.copyFile( testFile1, destination );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check Full copy", destination.length() == testFile2Size );
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile2Size, "Check Full copy" );
     }
 
     // linkFile
@@ -525,9 +521,9 @@ public final class FileUtilsTest
     {
         final File destination = new File( getTestDirectory(), "link1.txt" );
         FileUtils.linkFile( testFile1, destination );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check File length", destination.length() == testFile1Size );
-        assertTrue( "Check is link", Files.isSymbolicLink(destination.toPath()));
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile1Size, "Check File length" );
+        assertTrue( Files.isSymbolicLink(destination.toPath()), "Check is link" );
     }
 
     /**
@@ -541,9 +537,9 @@ public final class FileUtilsTest
     {
         final File destination = new File( getTestDirectory(), "link2.txt" );
         FileUtils.linkFile( testFile1, destination );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check File length", destination.length() == testFile2Size );
-        assertTrue( "Check is link", Files.isSymbolicLink(destination.toPath()));
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile2Size, "Check File length" );
+        assertTrue( Files.isSymbolicLink(destination.toPath()), "Check is link" );
     }
 
     /**
@@ -562,9 +558,9 @@ public final class FileUtilsTest
         }
         final File destination = new File( destDirectory, "link2.txt" );
         FileUtils.linkFile( testFile1, destination );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check File length", destination.length() == testFile2Size );
-        assertTrue( "Check is link", Files.isSymbolicLink(destination.toPath()));
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile2Size, "Check File length" );
+        assertTrue( Files.isSymbolicLink(destination.toPath()), "Check is link" );
     }
 
     // copyFileIfModified
@@ -593,8 +589,8 @@ public final class FileUtilsTest
         source.setLastModified( System.currentTimeMillis() );
 
         // Copy will occur when source is newer
-        assertTrue( "Failed copy. Target file should have been updated.",
-                    FileUtils.copyFileIfModified( source, destination ) );
+        assertTrue( FileUtils.copyFileIfModified( source, destination ),
+                   "Failed copy. Target file should have been updated." );
     }
 
     /**
@@ -620,7 +616,8 @@ public final class FileUtilsTest
         FileUtils.copyFile( testFile1, destination );
 
         // Copy will occur when destination is newer
-        assertFalse( "Source file should not have been copied.", FileUtils.copyFileIfModified( source, destination ) );
+        assertFalse( FileUtils.copyFileIfModified( source, destination ),
+                    "Source file should not have been copied." );
     }
 
     /**
@@ -643,7 +640,8 @@ public final class FileUtilsTest
         File destination = new File( getTestDirectory(), "temp/copy1.txt" );
 
         // Should copy the source to the non existing destination.
-        assertTrue( "Source file should have been copied.", FileUtils.copyFileIfModified( source, destination ) );
+        assertTrue( FileUtils.copyFileIfModified( source, destination ),
+                   "Source file should have been copied." );
     }
 
     // forceDelete
@@ -659,9 +657,9 @@ public final class FileUtilsTest
     {
         final File destination = new File( getTestDirectory(), "copy1.txt" );
         destination.createNewFile();
-        assertTrue( "Copy1.txt doesn't exist to delete", destination.exists() );
+        assertTrue( destination.exists(), "Copy1.txt doesn't exist to delete" );
         FileUtils.forceDelete( destination );
-        assertTrue( "Check No Exist", !destination.exists() );
+        assertTrue( !destination.exists(), "Check No Exist" );
     }
 
     /**
@@ -675,9 +673,9 @@ public final class FileUtilsTest
     {
         final File destination = new File( getTestDirectory(), "copy2.txt" );
         destination.createNewFile();
-        assertTrue( "Copy2.txt doesn't exist to delete", destination.exists() );
+        assertTrue( destination.exists(), "Copy2.txt doesn't exist to delete" );
         FileUtils.forceDelete( destination );
-        assertTrue( "Check No Exist", !destination.exists() );
+        assertTrue( !destination.exists(), "Check No Exist" );
     }
 
     // copyFileToDirectory
@@ -698,8 +696,8 @@ public final class FileUtilsTest
         }
         final File destination = new File( directory, testFile1.getName() );
         FileUtils.copyFileToDirectory( testFile1, directory );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check Full copy", destination.length() == testFile1Size );
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile1Size, "Check Full copy" );
     }
 
     /**
@@ -718,8 +716,8 @@ public final class FileUtilsTest
         }
         final File destination = new File( directory, testFile1.getName() );
         FileUtils.copyFileToDirectory( testFile1, directory );
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check Full copy", destination.length() == testFile2Size );
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile2Size, "Check Full copy" );
     }
 
     // copyFileToDirectoryIfModified
@@ -747,12 +745,12 @@ public final class FileUtilsTest
         final File target = new File( getTestDirectory() + "/subdir", testFile1.getName() );
         long timestamp = target.lastModified();
 
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check Full copy", destination.length() == testFile1Size );
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile1Size, "Check Full copy" );
 
         FileUtils.copyFileToDirectoryIfModified( testFile1, directory );
 
-        assertTrue( "Timestamp was changed", timestamp == target.lastModified() );
+        assertTrue( timestamp == target.lastModified(), "Timestamp was changed" );
     }
 
     /**
@@ -778,12 +776,12 @@ public final class FileUtilsTest
         final File target = new File( getTestDirectory() + "/subdir", testFile2.getName() );
         long timestamp = target.lastModified();
 
-        assertTrue( "Check Exist", destination.exists() );
-        assertTrue( "Check Full copy", destination.length() == testFile2Size );
+        assertTrue( destination.exists(), "Check Exist" );
+        assertTrue( destination.length() == testFile2Size, "Check Full copy" );
 
         FileUtils.copyFileToDirectoryIfModified( testFile2, directory );
 
-        assertTrue( "Timestamp was changed", timestamp == target.lastModified() );
+        assertTrue( timestamp == target.lastModified(), "Timestamp was changed" );
     }
 
     // forceDelete
@@ -793,12 +791,12 @@ public final class FileUtilsTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testForceDeleteDir()
         throws Exception
     {
         FileUtils.forceDelete( getTestDirectory().getParentFile() );
-        assertTrue( "Check No Exist", !getTestDirectory().getParentFile().exists() );
+        assertTrue( !getTestDirectory().getParentFile().exists(), "Check No Exist" );
     }
 
     // resolveFile
@@ -813,7 +811,7 @@ public final class FileUtilsTest
         throws Exception
     {
         final File file = FileUtils.resolveFile( getTestDirectory(), ".." );
-        assertEquals( "Check .. operator", file, getTestDirectory().getParentFile() );
+        assertEquals( file, getTestDirectory().getParentFile(), "Check .. operator" );
     }
 
     /**
@@ -826,7 +824,7 @@ public final class FileUtilsTest
         throws Exception
     {
         final File file = FileUtils.resolveFile( getTestDirectory(), "." );
-        assertEquals( "Check . operator", file, getTestDirectory() );
+        assertEquals( file, getTestDirectory(), "Check . operator" );
     }
 
     // normalize
@@ -847,12 +845,12 @@ public final class FileUtilsTest
         final String[] dest = { "", "/", "/", "/foo", "/foo/", "/", "/foo/", "/foo/bar", "/bar", "/baz", "/baz", "/",
             "/bar", "/bar/", "/foo/bar", null, null };
 
-        assertEquals( "Oops, test writer goofed", src.length, dest.length );
+        assertEquals( src.length, dest.length, "Oops, test writer goofed" );
 
         for ( int i = 0; i < src.length; i++ )
         {
-            assertEquals( "Check if '" + src[i] + "' normalized to '" + dest[i] + "'", dest[i],
-                          FileUtils.normalize( src[i] ) );
+            assertEquals( dest[i], FileUtils.normalize( src[i] ),
+                "Check if '" + src[i] + "' normalized to '" + dest[i] + "'" );
         }
     }
 
@@ -884,32 +882,32 @@ public final class FileUtilsTest
         // Loads file from classpath
         final String path = "/test.txt";
         final URL url = this.getClass().getResource( path );
-        assertNotNull( path + " was not found.", url );
+        assertNotNull( url, path + " was not found." );
 
         final String filename = Paths.get(url.toURI()).toString();
         final String filename2 = "test2.txt";
 
-        assertTrue( "test.txt extension == \"txt\"", FileUtils.getExtension( filename ).equals( "txt" ) );
+        assertTrue( FileUtils.getExtension( filename ).equals( "txt" ), "test.txt extension == \"txt\"" );
 
-        assertTrue( "Test file does exist: " + filename, FileUtils.fileExists( filename ) );
+        assertTrue( FileUtils.fileExists( filename ), "Test file does exist: " + filename );
 
-        assertTrue( "Second test file does not exist", !FileUtils.fileExists( filename2 ) );
+        assertTrue( !FileUtils.fileExists( filename2 ), "Second test file does not exist" );
 
         FileUtils.fileWrite( filename2, filename );
-        assertTrue( "Second file was written", FileUtils.fileExists( filename2 ) );
+        assertTrue( FileUtils.fileExists( filename2 ), "Second file was written" );
 
         final String file2contents = FileUtils.fileRead( filename2 );
-        assertTrue( "Second file's contents correct", FileUtils.fileRead( filename2 ).equals( file2contents ) );
+        assertTrue( FileUtils.fileRead( filename2 ).equals( file2contents ), "Second file's contents correct" );
 
         FileUtils.fileAppend( filename2, filename );
-        assertTrue( "Second file's contents correct",
-                    FileUtils.fileRead( filename2 ).equals( file2contents + file2contents ) );
+        assertTrue( FileUtils.fileRead( filename2 ).equals( file2contents + file2contents ),
+                    "Second file's contents correct" );
 
         FileUtils.fileDelete( filename2 );
-        assertTrue( "Second test file does not exist", !FileUtils.fileExists( filename2 ) );
+        assertTrue( !FileUtils.fileExists( filename2 ), "Second test file does not exist" );
 
         final String contents = FileUtils.fileRead( filename );
-        assertTrue( "FileUtils.fileRead()", contents.equals( "This is a test" ) );
+        assertTrue( contents.equals( "This is a test" ), "FileUtils.fileRead()" );
 
     }
 
@@ -933,7 +931,7 @@ public final class FileUtilsTest
     /**
      * <p>testGetExtensionWithPaths.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testGetExtensionWithPaths()
     {
         // Since the utilities are based on the separator for the platform
@@ -1155,18 +1153,18 @@ public final class FileUtilsTest
 
         FileUtils.copyDirectoryStructureIfModified( from, to );
 
-        assertTrue( "Unmodified file was overwritten", timestamps[0] == files[0].lastModified() );
-        assertTrue( "Unmodified file was overwritten", timestamps[1] == files[1].lastModified() );
-        assertTrue( "Unmodified file was overwritten", timestamps[2] == files[2].lastModified() );
+        assertTrue( timestamps[0] == files[0].lastModified(), "Unmodified file was overwritten" );
+        assertTrue( timestamps[1] == files[1].lastModified(), "Unmodified file was overwritten" );
+        assertTrue( timestamps[2] == files[2].lastModified(), "Unmodified file was overwritten" );
 
         files[1].setLastModified( f2.lastModified() - 5000L );
         timestamps[1] = files[1].lastModified();
 
         FileUtils.copyDirectoryStructureIfModified( from, to );
 
-        assertTrue( "Unmodified file was overwritten", timestamps[0] == files[0].lastModified() );
-        assertTrue( "Outdated file was not overwritten", timestamps[1] < files[1].lastModified() );
-        assertTrue( "Unmodified file was overwritten", timestamps[2] == files[2].lastModified() );
+        assertTrue( timestamps[0] == files[0].lastModified(), "Unmodified file was overwritten" );
+        assertTrue( timestamps[1] < files[1].lastModified(), "Outdated file was not overwritten" );
+        assertTrue( timestamps[2] == files[2].lastModified(), "Unmodified file was overwritten" );
 
     }
 
@@ -1247,7 +1245,7 @@ public final class FileUtilsTest
         FileUtils.fileWrite( srcFile.getAbsolutePath(), "UTF-8", "This is a test.  Test ${s}\n" );
 
         FileUtils.copyFile( srcFile, destFile, "UTF-8", wrappers1 );
-        assertTrue( "Files should be equal.", FileUtils.contentEquals( compareFile, destFile ) );
+        assertTrue( FileUtils.contentEquals( compareFile, destFile ), "Files should be equal." );
 
         srcFile.delete();
         destFile.delete();
@@ -1353,8 +1351,8 @@ public final class FileUtilsTest
         {
             IOUtil.close( writer );
         }
-        assertEquals( "testString should be equal", testString, FileUtils.fileRead( testFile ) );
-        assertEquals( "testString should be equal", testString, FileUtils.fileRead( testFileName ) );
+        assertEquals( testString, FileUtils.fileRead( testFile ), "testString should be equal" );
+        assertEquals( testString, FileUtils.fileRead( testFileName ), "testString should be equal" );
         testFile.delete();
     }
 
@@ -1383,8 +1381,8 @@ public final class FileUtilsTest
         {
             IOUtil.close( writer );
         }
-        assertEquals( "testString should be equal", testString, FileUtils.fileRead( testFile, "UTF-8" ) );
-        assertEquals( "testString should be equal", testString, FileUtils.fileRead( testFileName, "UTF-8" ) );
+        assertEquals( testString, FileUtils.fileRead( testFile, "UTF-8" ), "testString should be equal" );
+        assertEquals( testString, FileUtils.fileRead( testFileName, "UTF-8" ), "testString should be equal" );
         testFile.delete();
     }
 
@@ -1575,7 +1573,7 @@ public final class FileUtilsTest
             String fileName = values[i][0].replace( '/', File.separatorChar );
             String ext = values[i][1];
             String computed = FileUtils.extension( fileName );
-            assertEquals( "case [" + i + "]:" + fileName + " -> " + ext + ", computed : " + computed, ext, computed );
+            assertEquals( ext, computed, "case [" + i + "]:" + fileName + " -> " + ext + ", computed : " + computed );
         }
     }
 
@@ -1634,7 +1632,7 @@ public final class FileUtilsTest
              */
             symlink.delete();
         }
-        assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
+        assertTrue( !getTestDirectory().exists(), "Failed to delete test directory" );
     }
 
     /**
@@ -1661,7 +1659,7 @@ public final class FileUtilsTest
              */
             symlink.delete();
         }
-        assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
+        assertTrue( !getTestDirectory().exists(), "Failed to delete test directory" );
     }
 
     /**
@@ -1687,7 +1685,7 @@ public final class FileUtilsTest
              */
             symlink.delete();
         }
-        assertTrue( "Failed to delete test directory", !getTestDirectory().exists() );
+        assertTrue( !getTestDirectory().exists(), "Failed to delete test directory" );
     }
 
     /**
@@ -1745,7 +1743,7 @@ public final class FileUtilsTest
         for ( int i = 0; i < 10; i++ )
         {
             File current = FileUtils.createTempFile( "unique", ".tmp", null );
-            assertTrue( "No unique name: " + current.getName(), !current.getName().equals( last.getName() ) );
+            assertTrue( !current.getName().equals( last.getName() ), "No unique name: " + current.getName() );
             last = current;
         }
     }

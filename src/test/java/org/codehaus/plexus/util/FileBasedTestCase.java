@@ -16,7 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,10 +33,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.util.Arrays;
-
-import junit.framework.AssertionFailedError;
 
 /**
  * Base class for testcases doing tests with files.
@@ -42,6 +47,8 @@ import junit.framework.AssertionFailedError;
 public abstract class FileBasedTestCase
 {
     private static File testDir;
+
+    private TestInfo testInfo;
 
     /**
      * <p>getTestDirectory.</p>
@@ -186,7 +193,7 @@ public abstract class FileBasedTestCase
     protected void checkFile( final File file, final File referenceFile )
         throws Exception
     {
-        assertTrue( "Check existence of output file", file.exists() );
+        assertTrue( file.exists(), "Check existence of output file" );
         assertEqualContent( referenceFile, file );
     }
 
@@ -205,7 +212,7 @@ public abstract class FileBasedTestCase
         }
         catch ( final Throwable t )
         {
-            throw new AssertionFailedError( "The copy() method closed the stream " + "when it shouldn't have. "
+            fail( "The copy() method closed the stream " + "when it shouldn't have. "
                 + t.getMessage() );
         }
     }
@@ -225,7 +232,7 @@ public abstract class FileBasedTestCase
         }
         catch ( final Throwable t )
         {
-            throw new AssertionFailedError( "The copy() method closed the stream " + "when it shouldn't have. "
+            fail( "The copy() method closed the stream " + "when it shouldn't have. "
                 + t.getMessage() );
         }
     }
@@ -241,7 +248,7 @@ public abstract class FileBasedTestCase
     {
         if ( file.exists() )
         {
-            assertTrue( "Couldn't delete file: " + file, file.delete() );
+            assertTrue( file.delete(), "Couldn't delete file: " + file );
         }
     }
 
@@ -258,37 +265,10 @@ public abstract class FileBasedTestCase
          * + " and " + f1 + " have differing file sizes (" + f0.length() + " vs " + f1.length() + ")", ( f0.length() ==
          * f1.length() ) );
          */
-        final InputStream is0 = Files.newInputStream( f0.toPath() );
-        try
-        {
-            final InputStream is1 = Files.newInputStream( f1.toPath() );
-            try
-            {
-                final byte[] buf0 = new byte[1024];
-                final byte[] buf1 = new byte[1024];
-                int n0 = 0;
-                int n1 = 0;
-
-                while ( -1 != n0 )
-                {
-                    n0 = is0.read( buf0 );
-                    n1 = is1.read( buf1 );
-                    assertTrue( "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0
-                        + " vs " + n1 + ")", ( n0 == n1 ) );
-
-                    assertTrue( "The files " + f0 + " and " + f1 + " have different content",
-                                Arrays.equals( buf0, buf1 ) );
-                }
-            }
-            finally
-            {
-                is1.close();
-            }
-        }
-        finally
-        {
-            is0.close();
-        }
+        byte[] buf0 = Files.readAllBytes( f0.toPath() );
+        byte[] buf1 = Files.readAllBytes( f0.toPath() );
+        assertArrayEquals( buf0, buf1,
+                   "The files " + f0 + " and " + f1 + " have different content" );
     }
 
     /**
@@ -301,20 +281,8 @@ public abstract class FileBasedTestCase
     protected void assertEqualContent( final byte[] b0, final File file )
         throws IOException
     {
-        final InputStream is = Files.newInputStream( file.toPath() );
-        try
-        {
-            byte[] b1 = new byte[b0.length];
-            int numRead = is.read( b1 );
-            assertTrue( "Different number of bytes", numRead == b0.length && is.available() == 0 );
-            for ( int i = 0; i < numRead; assertTrue( "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")",
-                                                      b0[i] == b1[i] ), i++ )
-                ;
-        }
-        finally
-        {
-            is.close();
-        }
+        byte[] b1 = Files.readAllBytes( file.toPath() );
+        assertArrayEquals(b0, b1, "Content differs");
     }
 
     /**
@@ -324,9 +292,9 @@ public abstract class FileBasedTestCase
      */
     protected void assertIsDirectory( File file )
     {
-        assertTrue( "The File doesn't exists: " + file.getAbsolutePath(), file.exists() );
+        assertTrue( file.exists(), "The File doesn't exists: " + file.getAbsolutePath() );
 
-        assertTrue( "The File isn't a directory: " + file.getAbsolutePath(), file.isDirectory() );
+        assertTrue( file.isDirectory(), "The File isn't a directory: " + file.getAbsolutePath() );
     }
 
     /**
@@ -336,8 +304,18 @@ public abstract class FileBasedTestCase
      */
     protected void assertIsFile( File file )
     {
-        assertTrue( "The File doesn't exists: " + file.getAbsolutePath(), file.exists() );
+        assertTrue( file.exists(), "The File doesn't exists: " + file.getAbsolutePath() );
 
-        assertTrue( "The File isn't a file: " + file.getAbsolutePath(), file.isFile() );
+        assertTrue( file.isFile(), "The File isn't a file: " + file.getAbsolutePath() );
     }
+
+    @BeforeEach
+    void init(TestInfo testInfo) {
+        this.testInfo = testInfo;
+    }
+
+    protected String getTestMethodName() {
+        return testInfo.getTestMethod().map(Method::getName).orElse(null);
+    }
+
 }

@@ -16,9 +16,10 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -32,8 +33,8 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is used to test IOUtil for correctness. The following checks are performed:
@@ -67,7 +68,7 @@ public final class IOUtilTest
     /**
      * <p>setUp.</p>
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         try
@@ -113,51 +114,24 @@ public final class IOUtilTest
     /** Assert that the contents of two byte arrays are the same. */
     private void assertEqualContent( byte[] b0, byte[] b1 )
     {
-        assertTrue( "Content not equal according to java.util.Arrays#equals()", Arrays.equals( b0, b1 ) );
+        assertTrue( Arrays.equals( b0, b1 ), "Content not equal according to java.util.Arrays#equals()" );
     }
 
     /** Assert that the content of two files is the same. */
     private void assertEqualContent( File f0, File f1 )
         throws IOException
     {
-        InputStream is0 = Files.newInputStream( f0.toPath() );
-        InputStream is1 = Files.newInputStream( f1.toPath() );
-        byte[] buf0 = new byte[FILE_SIZE];
-        byte[] buf1 = new byte[FILE_SIZE];
-        int n0 = 0;
-        int n1 = 0;
-
-        try
-        {
-            while ( 0 <= n0 )
-            {
-                n0 = is0.read( buf0 );
-                n1 = is1.read( buf1 );
-                assertTrue( "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0
-                    + " vs " + n1 + ")", ( n0 == n1 ) );
-
-                assertTrue( "The files " + f0 + " and " + f1 + " have different content", Arrays.equals( buf0, buf1 ) );
-            }
-        }
-        finally
-        {
-            is0.close();
-            is1.close();
-        }
+        byte[] buf0 = Files.readAllBytes( f0.toPath() );
+        byte[] buf1 = Files.readAllBytes( f1.toPath() );
+        assertArrayEquals( buf0, buf1, "The files " + f0 + " and " + f1 + " have different content" );
     }
 
     /** Assert that the content of a file is equal to that in a byte[]. */
     private void assertEqualContent( byte[] b0, File file )
         throws IOException
     {
-        InputStream is = Files.newInputStream( file.toPath() );
-        byte[] b1 = new byte[b0.length];
-        int numRead = is.read( b1 );
-        assertTrue( "Different number of bytes", numRead == b0.length && is.available() == 0 );
-        for ( int i = 0; i < numRead; assertTrue( "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")",
-                                                  b0[i] == b1[i] ), i++ )
-            ;
-        is.close();
+        byte[] b1 = Files.readAllBytes( file.toPath() );
+        assertArrayEquals(b0, b1, "Content differs");
     }
 
     /**
@@ -174,7 +148,7 @@ public final class IOUtilTest
         OutputStream fout = Files.newOutputStream( destination.toPath() );
 
         IOUtil.copy( fin, fout );
-        assertTrue( "Not all bytes were read", fin.available() == 0 );
+        assertTrue( fin.available() == 0, "Not all bytes were read" );
         fout.flush();
 
         checkFile( destination );
@@ -189,7 +163,7 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testInputStreamToWriter()
         throws Exception
     {
@@ -199,7 +173,7 @@ public final class IOUtilTest
 
         IOUtil.copy( fin, fout );
 
-        assertTrue( "Not all bytes were read", fin.available() == 0 );
+        assertTrue( fin.available() == 0, "Not all bytes were read" );
         fout.flush();
 
         checkFile( destination );
@@ -221,8 +195,8 @@ public final class IOUtilTest
         InputStream fin = Files.newInputStream( testFile.toPath() );
         String out = IOUtil.toString( fin );
         assertNotNull( out );
-        assertTrue( "Not all bytes were read", fin.available() == 0 );
-        assertTrue( "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE, out.length() == FILE_SIZE );
+        assertTrue( fin.available() == 0, "Not all bytes were read" );
+        assertTrue( out.length() == FILE_SIZE, "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE );
         fin.close();
     }
 
@@ -258,7 +232,7 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testReaderToWriter()
         throws Exception
     {
@@ -280,14 +254,14 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testReaderToString()
         throws Exception
     {
         Reader fin = Files.newBufferedReader( testFile.toPath() );
         String out = IOUtil.toString( fin );
         assertNotNull( out );
-        assertTrue( "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE, out.length() == FILE_SIZE );
+        assertTrue( out.length() == FILE_SIZE, "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE );
         fin.close();
     }
 
@@ -296,7 +270,7 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testStringToOutputStream()
         throws Exception
     {
@@ -325,7 +299,7 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testStringToWriter()
         throws Exception
     {
@@ -357,8 +331,8 @@ public final class IOUtilTest
         InputStream fin = Files.newInputStream( testFile.toPath() );
         byte[] out = IOUtil.toByteArray( fin );
         assertNotNull( out );
-        assertTrue( "Not all bytes were read", fin.available() == 0 );
-        assertTrue( "Wrong output size: out.length=" + out.length + "!=" + FILE_SIZE, out.length == FILE_SIZE );
+        assertTrue( fin.available() == 0, "Not all bytes were read" );
+        assertTrue( out.length == FILE_SIZE, "Wrong output size: out.length=" + out.length + "!=" + FILE_SIZE );
         assertEqualContent( out, testFile );
         fin.close();
     }
@@ -411,7 +385,7 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testByteArrayToString()
         throws Exception
     {
@@ -459,7 +433,7 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testCloseInputStream()
         throws Exception
     {
@@ -477,7 +451,7 @@ public final class IOUtilTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testCloseOutputStream()
         throws Exception
     {
@@ -607,7 +581,7 @@ public final class IOUtilTest
         throws Exception
     {
         File destination = new File( testDirectory, filename );
-        assertTrue( filename + "Test output data file shouldn't previously exist", !destination.exists() );
+        assertTrue( !destination.exists(), filename + "Test output data file shouldn't previously exist" );
 
         return destination;
     }
@@ -615,7 +589,7 @@ public final class IOUtilTest
     private void checkFile( File file )
         throws Exception
     {
-        assertTrue( "Check existence of output file", file.exists() );
+        assertTrue( file.exists(), "Check existence of output file" );
         assertEqualContent( testFile, file );
     }
 
@@ -650,9 +624,8 @@ public final class IOUtilTest
     private void deleteFile( File file )
         throws Exception
     {
-        assertTrue( "Wrong output size: file.length()=" + file.length() + "!=" + FILE_SIZE + 1,
-                    file.length() == FILE_SIZE + 1 );
+        assertTrue( file.length() == FILE_SIZE + 1, "Wrong output size: file.length()=" + file.length() + "!=" + FILE_SIZE + 1 );
 
-        assertTrue( "File would not delete", ( file.delete() || ( !file.exists() ) ) );
+        assertTrue( ( file.delete() || ( !file.exists() ) ), "File would not delete" );
     }
 }

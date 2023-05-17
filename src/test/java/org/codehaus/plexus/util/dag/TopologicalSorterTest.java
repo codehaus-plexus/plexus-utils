@@ -16,12 +16,12 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>TopologicalSorterTest class.</p>
@@ -60,7 +60,7 @@ public class TopologicalSorterTest
 
         final List<String> actual1 = TopologicalSorter.sort( dag1 );
 
-        assertEquals( "Order is different then expected", expected1, actual1 );
+        assertEquals( expected1, actual1, "Order is different then expected" );
 
         //
         // a <-- b <---c
@@ -88,7 +88,7 @@ public class TopologicalSorterTest
 
         final List<String> actual2 = TopologicalSorter.sort( dag2 );
 
-        assertEquals( "Order is different then expected", expected2, actual2 );
+        assertEquals( expected2, actual2, "Order is different then expected" );
 
         //
         // a --> b --> c --> e
@@ -145,7 +145,7 @@ public class TopologicalSorterTest
 
         final List<String> actual3 = TopologicalSorter.sort( dag3 );
 
-        assertEquals( "Order is different then expected", expected3, actual3 );
+        assertEquals( expected3, actual3, "Order is different then expected" );
 
         //
         // a --> b --> c --> e
@@ -198,6 +198,6 @@ public class TopologicalSorterTest
 
         final List<String> actual4 = TopologicalSorter.sort( dag4 );
 
-        assertEquals( "Order is different then expected", expected4, actual4 );
+        assertEquals( expected4, actual4, "Order is different then expected" );
     }
 }

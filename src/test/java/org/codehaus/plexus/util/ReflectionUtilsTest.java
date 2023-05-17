@@ -16,11 +16,11 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
@@ -53,7 +53,7 @@ public final class ReflectionUtilsTest
      *
      * @throws java.lang.IllegalAccessException if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testComplexVariableAccess()
         throws IllegalAccessException
     {

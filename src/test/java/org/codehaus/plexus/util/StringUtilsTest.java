@@ -16,14 +16,14 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test string utils.
@@ -61,7 +61,7 @@ public class StringUtilsTest
         assertEquals( true, StringUtils.isNotEmpty( "  foo  " ) );
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void testIsNotEmptyNegatesIsEmpty()
     {
         assertEquals( !StringUtils.isEmpty( null ), StringUtils.isNotEmpty( null ) );
@@ -123,7 +123,7 @@ public class StringUtilsTest
     /**
      * <p>testLowerCaseFirstLetter.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testLowerCaseFirstLetter()
     {
         assertEquals( "id", StringUtils.lowercaseFirstLetter( "id" ) );
@@ -133,7 +133,7 @@ public class StringUtilsTest
     /**
      * <p>testLowerCaseFirstLetterTurkish.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testLowerCaseFirstLetterTurkish()
     {
         Locale l = Locale.getDefault();
@@ -146,7 +146,7 @@ public class StringUtilsTest
     /**
      * <p>testRemoveAndHump.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testRemoveAndHump()
     {
         assertEquals( "Id", StringUtils.removeAndHump( "id", "-" ) );
@@ -184,7 +184,7 @@ public class StringUtilsTest
     /**
      * <p>testQuote_EscapeEmbeddedSingleQuotesWithPattern.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testQuote_EscapeEmbeddedSingleQuotesWithPattern()
     {
         String src = "This \'is a\' test";
@@ -214,7 +214,7 @@ public class StringUtilsTest
     /**
      * <p>testQuote_DontQuoteIfUnneeded.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testQuote_DontQuoteIfUnneeded()
     {
         String src = "ThisIsATest";
@@ -243,7 +243,7 @@ public class StringUtilsTest
     /**
      * <p>testQuote_PreserveExistingQuotes.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testQuote_PreserveExistingQuotes()
     {
         String src = "\'This is a test\'";
@@ -257,7 +257,7 @@ public class StringUtilsTest
     /**
      * <p>testQuote_WrapExistingQuotesWhenForceIsTrue.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testQuote_WrapExistingQuotesWhenForceIsTrue()
     {
         String src = "\'This is a test\'";
@@ -272,7 +272,7 @@ public class StringUtilsTest
     /**
      * <p>testQuote_ShortVersion_SingleQuotesPreserved.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testQuote_ShortVersion_SingleQuotesPreserved()
     {
         String src = "\'This is a test\'";
@@ -285,7 +285,7 @@ public class StringUtilsTest
     /**
      * <p>testSplit.</p>
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testSplit()
     {
         String[] tokens;
@@ -320,7 +320,7 @@ public class StringUtilsTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testRemoveDuplicateWhitespace()
         throws Exception
     {
@@ -349,11 +349,11 @@ public class StringUtilsTest
         try
         {
             StringUtils.unifyLineSeparators( s, "abs" );
-            assertTrue( "Exception NOT catched", false );
+            assertTrue( false, "Exception NOT catched" );
         }
         catch ( IllegalArgumentException e )
         {
-            assertTrue( "Exception catched", true );
+            assertTrue( true, "Exception catched" );
         }
 
         assertEquals( "this\nis\na\ntest", StringUtils.unifyLineSeparators( s, "\n" ) );

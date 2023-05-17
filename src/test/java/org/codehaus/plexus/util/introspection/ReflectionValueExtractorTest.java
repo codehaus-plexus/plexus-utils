@@ -17,18 +17,18 @@ package org.codehaus.plexus.util.introspection;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>ReflectionValueExtractorTest class.</p>
@@ -46,7 +46,7 @@ public class ReflectionValueExtractorTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception
     {
@@ -180,7 +180,7 @@ public class ReflectionValueExtractorTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testMappedDottedKey()
         throws Exception
     {
@@ -228,7 +228,7 @@ public class ReflectionValueExtractorTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testMappedMissingDot()
         throws Exception
     {
@@ -289,7 +289,7 @@ public class ReflectionValueExtractorTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testBadMappedSyntax()
         throws Exception
     {
@@ -308,7 +308,7 @@ public class ReflectionValueExtractorTest
      *
      * @throws java.lang.Exception if any.
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testIllegalIndexedType()
         throws Exception
     {

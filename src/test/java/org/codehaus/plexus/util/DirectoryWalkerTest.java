@@ -16,13 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-
-import org.junit.Test;
 
 /**
  * <p>DirectoryWalkerTest class.</p>
@@ -50,11 +50,11 @@ public class DirectoryWalkerTest
 
         walker.scan();
 
-        assertEquals( "Walk Collector / Starting Count", 1, collector.startCount );
-        assertNotNull( "Walk Collector / Starting Dir", collector.startingDir );
-        assertEquals( "Walk Collector / Finish Count", 1, collector.finishCount );
-        assertEquals( "Walk Collector / Steps Count", 4, collector.steps.size() );
-        assertTrue( "Walk Collector / percentage low >= 0", collector.percentageLow >= 0 );
-        assertTrue( "Walk Collector / percentage high <= 100", collector.percentageHigh <= 100 );
+        assertEquals( 1, collector.startCount, "Walk Collector / Starting Count" );
+        assertNotNull( collector.startingDir, "Walk Collector / Starting Dir" );
+        assertEquals( 1, collector.finishCount, "Walk Collector / Finish Count" );
+        assertEquals( 4, collector.steps.size(), "Walk Collector / Steps Count" );
+        assertTrue( collector.percentageLow >= 0, "Walk Collector / percentage low >= 0" );
+        assertTrue( collector.percentageHigh <= 100, "Walk Collector / percentage high <= 100" );
     }
 }

@@ -16,12 +16,12 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Test;
 
 /**
  * <p>CycleDetectedExceptionTest class.</p>

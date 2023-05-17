@@ -16,9 +16,9 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>PathToolTest class.</p>
@@ -34,7 +34,7 @@ public class PathToolTest
      *
      * @throws java.lang.Exception
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testGetRelativePath()
         throws Exception
     {
@@ -66,7 +66,7 @@ public class PathToolTest
      *
      * @throws java.lang.Exception
      */
-    @Test
+    @org.junit.jupiter.api.Test
     public void testCalculateLink()
         throws Exception
     {

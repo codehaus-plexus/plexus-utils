@@ -16,7 +16,7 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>PerfTest class.</p>
