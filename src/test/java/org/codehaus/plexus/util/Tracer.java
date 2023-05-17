@@ -29,14 +29,12 @@ import java.io.StringWriter;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class Tracer
-{
+public class Tracer {
 
     /**
      * Constructor
      */
-    private Tracer()
-    {
+    private Tracer() {
         super();
     }
 
@@ -46,15 +44,12 @@ public class Tracer
      * @param t a {@link java.lang.Throwable} object.
      * @return a {@link java.lang.String} object.
      */
-    public static String traceToString( Throwable t )
-    {
-        if ( t == null )
-        {
+    public static String traceToString(Throwable t) {
+        if (t == null) {
             return null;
         }
         StringWriter sw = new StringWriter();
-        t.printStackTrace( new PrintWriter( sw ) );
+        t.printStackTrace(new PrintWriter(sw));
         return sw.toString();
     }
-
 }

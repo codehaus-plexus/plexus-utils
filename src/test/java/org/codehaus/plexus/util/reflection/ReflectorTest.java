@@ -16,10 +16,10 @@ package org.codehaus.plexus.util.reflection;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>ReflectorTest class.</p>
@@ -28,8 +28,7 @@ import org.junit.jupiter.api.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class ReflectorTest
-{
+public class ReflectorTest {
     private Project project;
 
     private Reflector reflector;
@@ -40,12 +39,10 @@ public class ReflectorTest
      * @throws java.lang.Exception if any.
      */
     @BeforeEach
-    public void setUp()
-        throws Exception
-    {
+    public void setUp() throws Exception {
         project = new Project();
-        project.setModelVersion( "1.0.0" );
-        project.setVersion( "42" );
+        project.setModelVersion("1.0.0");
+        project.setVersion("42");
 
         reflector = new Reflector();
     }
@@ -56,10 +53,8 @@ public class ReflectorTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testObjectPropertyFromName()
-        throws Exception
-    {
-        assertEquals( "1.0.0", reflector.getObjectProperty( project, "modelVersion" ) );
+    public void testObjectPropertyFromName() throws Exception {
+        assertEquals("1.0.0", reflector.getObjectProperty(project, "modelVersion"));
     }
 
     /**
@@ -68,10 +63,8 @@ public class ReflectorTest
      * @throws java.lang.Exception if any.
      */
     @org.junit.jupiter.api.Test
-    public void testObjectPropertyFromBean()
-        throws Exception
-    {
-        assertEquals( "Foo", reflector.getObjectProperty( project, "name" ) );
+    public void testObjectPropertyFromBean() throws Exception {
+        assertEquals("Foo", reflector.getObjectProperty(project, "name"));
     }
 
     /**
@@ -80,37 +73,30 @@ public class ReflectorTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testObjectPropertyFromField()
-        throws Exception
-    {
-        assertEquals( "42", reflector.getObjectProperty( project, "version" ) );
+    public void testObjectPropertyFromField() throws Exception {
+        assertEquals("42", reflector.getObjectProperty(project, "version"));
     }
 
-    public static class Project
-    {
+    public static class Project {
         private String model;
 
         private String name;
 
         private String version;
 
-        public void setModelVersion( String modelVersion )
-        {
+        public void setModelVersion(String modelVersion) {
             this.model = modelVersion;
         }
 
-        public void setVersion( String version )
-        {
+        public void setVersion(String version) {
             this.version = version;
         }
 
-        public String modelVersion()
-        {
+        public String modelVersion() {
             return model;
         }
 
-        public String getName()
-        {
+        public String getName() {
             return "Foo";
         }
     }

@@ -27,36 +27,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class VertexTest
-{
+public class VertexTest {
     /**
      * <p>testVertex.</p>
      */
     @Test
-    public void testVertex()
-    {
+    public void testVertex() {
 
-        final Vertex vertex1 = new Vertex( "a" );
+        final Vertex vertex1 = new Vertex("a");
 
-        assertEquals( "a", vertex1.getLabel() );
+        assertEquals("a", vertex1.getLabel());
 
-        assertEquals( 0, vertex1.getChildren().size() );
+        assertEquals(0, vertex1.getChildren().size());
 
-        assertEquals( 0, vertex1.getChildLabels().size() );
+        assertEquals(0, vertex1.getChildLabels().size());
 
-        final Vertex vertex2 = new Vertex( "b" );
+        final Vertex vertex2 = new Vertex("b");
 
-        assertEquals( "b", vertex2.getLabel() );
+        assertEquals("b", vertex2.getLabel());
 
-        vertex1.addEdgeTo( vertex2 );
+        vertex1.addEdgeTo(vertex2);
 
-        assertEquals( 1, vertex1.getChildren().size() );
+        assertEquals(1, vertex1.getChildren().size());
 
-        assertEquals( 1, vertex1.getChildLabels().size() );
+        assertEquals(1, vertex1.getChildLabels().size());
 
-        assertEquals( vertex2, vertex1.getChildren().get( 0 ) );
+        assertEquals(vertex2, vertex1.getChildren().get(0));
 
-        assertEquals( "b", vertex1.getChildLabels().get( 0 ) );
-
+        assertEquals("b", vertex1.getChildLabels().get(0));
     }
 }

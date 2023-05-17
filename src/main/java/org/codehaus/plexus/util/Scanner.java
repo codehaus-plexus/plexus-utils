@@ -22,8 +22,7 @@ import java.util.Comparator;
 /**
  * Scan a directory tree for files, with specified inclusions and exclusions.
  */
-public interface Scanner
-{
+public interface Scanner {
 
     /**
      * Sets the list of include patterns to use. All '/' and '\' characters are replaced by
@@ -34,7 +33,7 @@ public interface Scanner
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
      *            included. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
      */
-    void setIncludes( String[] includes );
+    void setIncludes(String[] includes);
 
     /**
      * Sets the list of exclude patterns to use. All '/' and '\' characters are replaced by
@@ -45,7 +44,7 @@ public interface Scanner
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
      *            excluded. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
      */
-    void setExcludes( String[] excludes );
+    void setExcludes(String[] excludes);
 
     /**
      * Adds default exclusions to the current exclusions set.
@@ -91,5 +90,5 @@ public interface Scanner
      * @param filenameComparator the Comparator instance to use
      * @since 3.3.0
      */
-    void setFilenameComparator( Comparator<String> filenameComparator );
+    void setFilenameComparator(Comparator<String> filenameComparator);
 }

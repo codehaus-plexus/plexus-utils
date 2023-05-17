@@ -25,74 +25,63 @@ import java.util.Map;
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  *
  */
-public class TopologicalSorter
-{
+public class TopologicalSorter {
 
-    private final static Integer NOT_VISITED = 0;
+    private static final Integer NOT_VISITED = 0;
 
-    private final static Integer VISITING = 1;
+    private static final Integer VISITING = 1;
 
-    private final static Integer VISITED = 2;
+    private static final Integer VISITED = 2;
 
     /**
      * @param graph the graph
      * @return List of String (vertex labels)
      */
-    public static List<String> sort( final DAG graph )
-    {
-        return dfs( graph );
+    public static List<String> sort(final DAG graph) {
+        return dfs(graph);
     }
 
-    public static List<String> sort( final Vertex vertex )
-    {
+    public static List<String> sort(final Vertex vertex) {
         // we need to use addFirst method so we will use LinkedList explicitly
         final List<String> retValue = new LinkedList<>();
 
-        dfsVisit( vertex, new HashMap<Vertex, Integer>(), retValue );
+        dfsVisit(vertex, new HashMap<Vertex, Integer>(), retValue);
 
         return retValue;
     }
 
-    private static List<String> dfs( final DAG graph )
-    {
+    private static List<String> dfs(final DAG graph) {
         // we need to use addFirst method so we will use LinkedList explicitly
         final List<String> retValue = new LinkedList<>();
         final Map<Vertex, Integer> vertexStateMap = new HashMap<>();
 
-        for ( Vertex vertex : graph.getVertices() )
-        {
-            if ( isNotVisited( vertex, vertexStateMap ) )
-            {
-                dfsVisit( vertex, vertexStateMap, retValue );
+        for (Vertex vertex : graph.getVertices()) {
+            if (isNotVisited(vertex, vertexStateMap)) {
+                dfsVisit(vertex, vertexStateMap, retValue);
             }
         }
 
         return retValue;
     }
 
-    private static boolean isNotVisited( final Vertex vertex, final Map<Vertex, Integer> vertexStateMap )
-    {
-        final Integer state = vertexStateMap.get( vertex );
+    private static boolean isNotVisited(final Vertex vertex, final Map<Vertex, Integer> vertexStateMap) {
+        final Integer state = vertexStateMap.get(vertex);
 
-        return ( state == null ) || NOT_VISITED.equals( state );
+        return (state == null) || NOT_VISITED.equals(state);
     }
 
-    private static void dfsVisit( final Vertex vertex, final Map<Vertex, Integer> vertexStateMap,
-                                  final List<String> list )
-    {
-        vertexStateMap.put( vertex, VISITING );
+    private static void dfsVisit(
+            final Vertex vertex, final Map<Vertex, Integer> vertexStateMap, final List<String> list) {
+        vertexStateMap.put(vertex, VISITING);
 
-        for ( Vertex v : vertex.getChildren() )
-        {
-            if ( isNotVisited( v, vertexStateMap ) )
-            {
-                dfsVisit( v, vertexStateMap, list );
+        for (Vertex v : vertex.getChildren()) {
+            if (isNotVisited(v, vertexStateMap)) {
+                dfsVisit(v, vertexStateMap, list);
             }
         }
 
-        vertexStateMap.put( vertex, VISITED );
+        vertexStateMap.put(vertex, VISITED);
 
-        list.add( vertex.getLabel() );
+        list.add(vertex.getLabel());
     }
-
 }

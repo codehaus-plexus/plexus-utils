@@ -61,39 +61,39 @@ import java.util.Arrays;
 
 /**
  * <p>Class for scanning a directory for files/directories which match certain criteria.</p>
- * 
+ *
  * <p>These criteria consist of selectors and patterns which have been specified. With the selectors you can select which
  * files you want to have included. Files which are not selected are excluded. With patterns you can include or exclude
  * files based on their filename.</p>
- * 
+ *
  * <p>The idea is simple. A given directory is recursively scanned for all files and directories. Each file/directory is
  * matched against a set of selectors, including special support for matching against filenames with include and and
  * exclude patterns. Only files/directories which match at least one pattern of the include pattern list or other file
  * selector, and don't match any pattern of the exclude pattern list or fail to match against a required selector will
  * be placed in the list of files/directories found.</p>
- * 
+ *
  * <p>When no list of include patterns is supplied, "**" will be used, which means that everything will be matched. When no
  * list of exclude patterns is supplied, an empty list is used, such that nothing will be excluded. When no selectors
  * are supplied, none are applied.</p>
- * 
+ *
  * <p>The filename pattern matching is done as follows: The name to be matched is split up in path segments. A path segment
  * is the name of a directory or file, which is bounded by <code>File.separator</code> ('/' under UNIX, '\' under
  * Windows). For example, "abc/def/ghi/xyz.java" is split up in the segments "abc", "def","ghi" and "xyz.java". The same
  * is done for the pattern against which should be matched.</p>
- * 
+ *
  * <p>The segments of the name and the pattern are then matched against each other. When '**' is used for a path segment in
  * the pattern, it matches zero or more path segments of the name.</p>
- * 
+ *
  * <p>There is a special case regarding the use of <code>File.separator</code>s at the beginning of the pattern and the
  * string to match:<br>
  * When a pattern starts with a <code>File.separator</code>, the string to match must also start with a
  * <code>File.separator</code>. When a pattern does not start with a <code>File.separator</code>, the string to match
  * may not start with a <code>File.separator</code>. When one of these rules is not obeyed, the string will not match.</p>
- * 
+ *
  * <p>When a name path segment is matched against a pattern path segment, the following special characters can be used:<br>
  * '*' matches zero or more characters<br>
  * '?' matches one character.</p>
- * 
+ *
  * Examples:
  * <ul>
  *   <li>"**\*.class" matches all .class files/dirs in a directory tree.</li>
@@ -103,7 +103,7 @@ import java.util.Arrays;
  *   <li>"**\test\**\XYZ*" matches all files/dirs which start with "XYZ" and where there is a parent directory called test
  * (e.g. "abc\test\def\ghi\XYZ123").</li>
  * </ul>
- * 
+ *
  * <p>Case sensitivity may be turned off if necessary. By default, it is turned on.</p>
  * Example of usage:
  * <pre>
@@ -122,7 +122,7 @@ import java.util.Arrays;
  *     System.out.println( files[i] );
  * }
  * </pre>
- * 
+ *
  * <p>This will scan a directory called test for .class files, but excludes all files in all proper subdirectories of a
  * directory called "modules"</p>
  *
@@ -131,9 +131,7 @@ import java.util.Arrays;
  * @author <a href="mailto:bruce@callenish.com">Bruce Atherton</a>
  * @author <a href="mailto:levylambert@tiscali-dsl.de">Antoine Levy-Lambert</a>
  */
-public class DirectoryScanner
-    extends AbstractScanner
-{
+public class DirectoryScanner extends AbstractScanner {
 
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
@@ -199,14 +197,12 @@ public class DirectoryScanner
      */
     protected boolean everythingIncluded = true;
 
-    private final char[][] tokenizedEmpty = MatchPattern.tokenizePathToCharArray( "", File.separator );
+    private final char[][] tokenizedEmpty = MatchPattern.tokenizePathToCharArray("", File.separator);
 
     /**
      * Sole constructor.
      */
-    public DirectoryScanner()
-    {
-    }
+    public DirectoryScanner() {}
 
     /**
      * Sets the base directory to be scanned. This is the directory which is scanned recursively. All '/' and '\'
@@ -215,9 +211,8 @@ public class DirectoryScanner
      *
      * @param basedir The base directory to scan. Must not be <code>null</code>.
      */
-    public void setBasedir( String basedir )
-    {
-        setBasedir( new File( basedir.replace( '/', File.separatorChar ).replace( '\\', File.separatorChar ) ) );
+    public void setBasedir(String basedir) {
+        setBasedir(new File(basedir.replace('/', File.separatorChar).replace('\\', File.separatorChar)));
     }
 
     /**
@@ -225,8 +220,7 @@ public class DirectoryScanner
      *
      * @param basedir The base directory for scanning. Should not be <code>null</code>.
      */
-    public void setBasedir( File basedir )
-    {
+    public void setBasedir(File basedir) {
         this.basedir = basedir;
     }
 
@@ -236,8 +230,7 @@ public class DirectoryScanner
      * @return the base directory to be scanned
      */
     @Override
-    public File getBasedir()
-    {
+    public File getBasedir() {
         return basedir;
     }
 
@@ -246,8 +239,7 @@ public class DirectoryScanner
      *
      * @param followSymlinks whether or not symbolic links should be followed
      */
-    public void setFollowSymlinks( boolean followSymlinks )
-    {
+    public void setFollowSymlinks(boolean followSymlinks) {
         this.followSymlinks = followSymlinks;
     }
 
@@ -256,8 +248,7 @@ public class DirectoryScanner
      *
      * @return <code>true</code> if all files and directories which have been found so far have been included.
      */
-    public boolean isEverythingIncluded()
-    {
+    public boolean isEverythingIncluded() {
         return everythingIncluded;
     }
 
@@ -269,20 +260,15 @@ public class DirectoryScanner
      *             exist, or isn't a directory).
      */
     @Override
-    public void scan()
-        throws IllegalStateException
-    {
-        if ( basedir == null )
-        {
-            throw new IllegalStateException( "No basedir set" );
+    public void scan() throws IllegalStateException {
+        if (basedir == null) {
+            throw new IllegalStateException("No basedir set");
         }
-        if ( !basedir.exists() )
-        {
-            throw new IllegalStateException( "basedir " + basedir + " does not exist" );
+        if (!basedir.exists()) {
+            throw new IllegalStateException("basedir " + basedir + " does not exist");
         }
-        if ( !basedir.isDirectory() )
-        {
-            throw new IllegalStateException( "basedir " + basedir + " is not a directory" );
+        if (!basedir.isDirectory()) {
+            throw new IllegalStateException("basedir " + basedir + " is not a directory");
         }
 
         setupDefaultFilters();
@@ -297,62 +283,47 @@ public class DirectoryScanner
         dirsExcluded = new ArrayList<String>();
         dirsDeselected = new ArrayList<String>();
 
-        if ( isIncluded( "", tokenizedEmpty ) )
-        {
+        if (isIncluded("", tokenizedEmpty)) {
 
-            if ( !isExcluded( "", tokenizedEmpty ) )
-            {
-                if ( isSelected( "", basedir ) )
-                {
-                    dirsIncluded.add( "" );
+            if (!isExcluded("", tokenizedEmpty)) {
+                if (isSelected("", basedir)) {
+                    dirsIncluded.add("");
+                } else {
+                    dirsDeselected.add("");
                 }
-                else
-                {
-                    dirsDeselected.add( "" );
-                }
+            } else {
+                dirsExcluded.add("");
             }
-            else
-            {
-                dirsExcluded.add( "" );
-            }
+        } else {
+            dirsNotIncluded.add("");
         }
-        else
-        {
-            dirsNotIncluded.add( "" );
-        }
-        scandir( basedir, "", true );
+        scandir(basedir, "", true);
     }
 
     /**
      * <p>Top level invocation for a slow scan. A slow scan builds up a full list of excluded/included files/directories,
      * whereas a fast scan will only have full results for included files, as it ignores directories which can't
      * possibly hold any included files/directories.</p>
-     * 
+     *
      * <p>Returns immediately if a slow scan has already been completed.</p>
      */
-    protected void slowScan()
-    {
-        if ( haveSlowResults )
-        {
+    protected void slowScan() {
+        if (haveSlowResults) {
             return;
         }
 
-        String[] excl = dirsExcluded.toArray( EMPTY_STRING_ARRAY );
-        String[] notIncl = dirsNotIncluded.toArray( EMPTY_STRING_ARRAY );
+        String[] excl = dirsExcluded.toArray(EMPTY_STRING_ARRAY);
+        String[] notIncl = dirsNotIncluded.toArray(EMPTY_STRING_ARRAY);
 
-        for ( String anExcl : excl )
-        {
-            if ( !couldHoldIncluded( anExcl ) )
-            {
-                scandir( new File( basedir, anExcl ), anExcl + File.separator, false );
+        for (String anExcl : excl) {
+            if (!couldHoldIncluded(anExcl)) {
+                scandir(new File(basedir, anExcl), anExcl + File.separator, false);
             }
         }
 
-        for ( String aNotIncl : notIncl )
-        {
-            if ( !couldHoldIncluded( aNotIncl ) )
-            {
-                scandir( new File( basedir, aNotIncl ), aNotIncl + File.separator, false );
+        for (String aNotIncl : notIncl) {
+            if (!couldHoldIncluded(aNotIncl)) {
+                scandir(new File(basedir, aNotIncl), aNotIncl + File.separator, false);
             }
         }
 
@@ -376,12 +347,10 @@ public class DirectoryScanner
      * @see #dirsExcluded
      * @see #slowScan
      */
-    protected void scandir( File dir, String vpath, boolean fast )
-    {
+    protected void scandir(File dir, String vpath, boolean fast) {
         String[] newfiles = dir.list();
 
-        if ( newfiles == null )
-        {
+        if (newfiles == null) {
             /*
              * two reasons are mentioned in the API docs for File.list (1) dir is not a directory. This is impossible as
              * we wouldn't get here in this case. (2) an IO error occurred (why doesn't it throw an exception then???)
@@ -401,122 +370,85 @@ public class DirectoryScanner
             // throw new IOException( "IO error scanning directory " + dir.getAbsolutePath() );
         }
 
-        if ( !followSymlinks )
-        {
-            try
-            {
-                if ( isParentSymbolicLink( dir, null ) )
-                {
-                    for ( String newfile : newfiles )
-                    {
+        if (!followSymlinks) {
+            try {
+                if (isParentSymbolicLink(dir, null)) {
+                    for (String newfile : newfiles) {
                         String name = vpath + newfile;
-                        File file = new File( dir, newfile );
-                        if ( file.isDirectory() )
-                        {
-                            dirsExcluded.add( name );
-                        }
-                        else
-                        {
-                            filesExcluded.add( name );
+                        File file = new File(dir, newfile);
+                        if (file.isDirectory()) {
+                            dirsExcluded.add(name);
+                        } else {
+                            filesExcluded.add(name);
                         }
                     }
                     return;
                 }
-            }
-            catch ( IOException ioe )
-            {
+            } catch (IOException ioe) {
                 String msg = "IOException caught while checking for links!";
                 // will be caught and redirected to Ant's logging system
-                System.err.println( msg );
+                System.err.println(msg);
             }
         }
 
-        if ( filenameComparator != null )
-        {
-            Arrays.sort( newfiles, filenameComparator );
+        if (filenameComparator != null) {
+            Arrays.sort(newfiles, filenameComparator);
         }
 
-        for ( String newfile : newfiles )
-        {
+        for (String newfile : newfiles) {
             String name = vpath + newfile;
-            char[][] tokenizedName = MatchPattern.tokenizePathToCharArray( name, File.separator );
-            File file = new File( dir, newfile );
-            if ( file.isDirectory() )
-            {
+            char[][] tokenizedName = MatchPattern.tokenizePathToCharArray(name, File.separator);
+            File file = new File(dir, newfile);
+            if (file.isDirectory()) {
 
-                if ( isIncluded( name, tokenizedName ) )
-                {
-                    if ( !isExcluded( name, tokenizedName ) )
-                    {
-                        if ( isSelected( name, file ) )
-                        {
-                            dirsIncluded.add( name );
-                            if ( fast )
-                            {
-                                scandir( file, name + File.separator, fast );
+                if (isIncluded(name, tokenizedName)) {
+                    if (!isExcluded(name, tokenizedName)) {
+                        if (isSelected(name, file)) {
+                            dirsIncluded.add(name);
+                            if (fast) {
+                                scandir(file, name + File.separator, fast);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             everythingIncluded = false;
-                            dirsDeselected.add( name );
-                            if ( fast && couldHoldIncluded( name ) )
-                            {
-                                scandir( file, name + File.separator, fast );
+                            dirsDeselected.add(name);
+                            if (fast && couldHoldIncluded(name)) {
+                                scandir(file, name + File.separator, fast);
                             }
                         }
 
-                    }
-                    else
-                    {
+                    } else {
                         everythingIncluded = false;
-                        dirsExcluded.add( name );
-                        if ( fast && couldHoldIncluded( name ) )
-                        {
-                            scandir( file, name + File.separator, fast );
+                        dirsExcluded.add(name);
+                        if (fast && couldHoldIncluded(name)) {
+                            scandir(file, name + File.separator, fast);
                         }
                     }
-                }
-                else
-                {
+                } else {
                     everythingIncluded = false;
-                    dirsNotIncluded.add( name );
-                    if ( fast && couldHoldIncluded( name ) )
-                    {
-                        scandir( file, name + File.separator, fast );
+                    dirsNotIncluded.add(name);
+                    if (fast && couldHoldIncluded(name)) {
+                        scandir(file, name + File.separator, fast);
                     }
                 }
-                if ( !fast )
-                {
-                    scandir( file, name + File.separator, fast );
+                if (!fast) {
+                    scandir(file, name + File.separator, fast);
                 }
-            }
-            else if ( file.isFile() )
-            {
-                if ( isIncluded( name, tokenizedName ) )
-                {
-                    if ( !isExcluded( name, tokenizedName ) )
-                    {
-                        if ( isSelected( name, file ) )
-                        {
-                            filesIncluded.add( name );
-                        }
-                        else
-                        {
+            } else if (file.isFile()) {
+                if (isIncluded(name, tokenizedName)) {
+                    if (!isExcluded(name, tokenizedName)) {
+                        if (isSelected(name, file)) {
+                            filesIncluded.add(name);
+                        } else {
                             everythingIncluded = false;
-                            filesDeselected.add( name );
+                            filesDeselected.add(name);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         everythingIncluded = false;
-                        filesExcluded.add( name );
+                        filesExcluded.add(name);
                     }
-                }
-                else
-                {
+                } else {
                     everythingIncluded = false;
-                    filesNotIncluded.add( name );
+                    filesNotIncluded.add(name);
                 }
             }
         }
@@ -530,8 +462,7 @@ public class DirectoryScanner
      * @return <code>false</code> when the selectors says that the file should not be selected, <code>true</code>
      *         otherwise.
      */
-    protected boolean isSelected( String name, File file )
-    {
+    protected boolean isSelected(String name, File file) {
         return true;
     }
 
@@ -543,9 +474,8 @@ public class DirectoryScanner
      *         patterns.
      */
     @Override
-    public String[] getIncludedFiles()
-    {
-        return filesIncluded.toArray( EMPTY_STRING_ARRAY );
+    public String[] getIncludedFiles() {
+        return filesIncluded.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
@@ -555,10 +485,9 @@ public class DirectoryScanner
      * @return the names of the files which matched none of the include patterns.
      * @see #slowScan
      */
-    public String[] getNotIncludedFiles()
-    {
+    public String[] getNotIncludedFiles() {
         slowScan();
-        return filesNotIncluded.toArray( EMPTY_STRING_ARRAY );
+        return filesNotIncluded.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
@@ -570,25 +499,23 @@ public class DirectoryScanner
      *         exclude patterns.
      * @see #slowScan
      */
-    public String[] getExcludedFiles()
-    {
+    public String[] getExcludedFiles() {
         slowScan();
-        return filesExcluded.toArray( EMPTY_STRING_ARRAY );
+        return filesExcluded.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
      * <p>Returns the names of the files which were selected out and therefore not ultimately included.</p>
-     * 
+     *
      * <p>The names are relative to the base directory. This involves performing a slow scan if one has not already been
      * completed.</p>
      *
      * @return the names of the files which were deselected.
      * @see #slowScan
      */
-    public String[] getDeselectedFiles()
-    {
+    public String[] getDeselectedFiles() {
         slowScan();
-        return filesDeselected.toArray( EMPTY_STRING_ARRAY );
+        return filesDeselected.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
@@ -599,9 +526,8 @@ public class DirectoryScanner
      *         patterns.
      */
     @Override
-    public String[] getIncludedDirectories()
-    {
-        return dirsIncluded.toArray( EMPTY_STRING_ARRAY );
+    public String[] getIncludedDirectories() {
+        return dirsIncluded.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
@@ -611,10 +537,9 @@ public class DirectoryScanner
      * @return the names of the directories which matched none of the include patterns.
      * @see #slowScan
      */
-    public String[] getNotIncludedDirectories()
-    {
+    public String[] getNotIncludedDirectories() {
         slowScan();
-        return dirsNotIncluded.toArray( EMPTY_STRING_ARRAY );
+        return dirsNotIncluded.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
@@ -626,30 +551,28 @@ public class DirectoryScanner
      *         exclude patterns.
      * @see #slowScan
      */
-    public String[] getExcludedDirectories()
-    {
+    public String[] getExcludedDirectories() {
         slowScan();
-        return dirsExcluded.toArray( EMPTY_STRING_ARRAY );
+        return dirsExcluded.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
      * <p>Returns the names of the directories which were selected out and therefore not ultimately included.</p>
-     * 
+     *
      * <p>The names are relative to the base directory. This involves performing a slow scan if one has not already been
      * completed.</p>
      *
      * @return the names of the directories which were deselected.
      * @see #slowScan
      */
-    public String[] getDeselectedDirectories()
-    {
+    public String[] getDeselectedDirectories() {
         slowScan();
-        return dirsDeselected.toArray( EMPTY_STRING_ARRAY );
+        return dirsDeselected.toArray(EMPTY_STRING_ARRAY);
     }
 
     /**
      * <p>Checks whether a given file is a symbolic link.</p>
-     * 
+     *
      * <p>It doesn't really test for symbolic links but whether the canonical and absolute paths of the file are identical
      * - this may lead to false positives on some platforms.
      * </p>
@@ -660,15 +583,13 @@ public class DirectoryScanner
      * @throws java.io.IOException .
      * @since Ant 1.5
      */
-    public boolean isSymbolicLink( File parent, String name )
-        throws IOException
-    {
-        return NioFiles.isSymbolicLink( new File( parent, name ) );
+    public boolean isSymbolicLink(File parent, String name) throws IOException {
+        return NioFiles.isSymbolicLink(new File(parent, name));
     }
 
     /**
      * <p>Checks whether the parent of this file is a symbolic link.</p>
-     * 
+     *
      * <p>For java versions prior to 7 It doesn't really test for symbolic links but whether the canonical and absolute
      * paths of the file are identical - this may lead to false positives on some platforms.</p>
      *
@@ -678,9 +599,7 @@ public class DirectoryScanner
      * @throws java.io.IOException .
      * @since Ant 1.5
      */
-    public boolean isParentSymbolicLink( File parent, String name )
-        throws IOException
-    {
-        return NioFiles.isSymbolicLink( parent );
+    public boolean isParentSymbolicLink(File parent, String name) throws IOException {
+        return NioFiles.isSymbolicLink(parent);
     }
 }

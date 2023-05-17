@@ -20,9 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-class WalkCollector
-    implements DirectoryWalkListener
-{
+class WalkCollector implements DirectoryWalkListener {
     public List<File> steps;
 
     public File startingDir;
@@ -38,8 +36,7 @@ class WalkCollector
     /**
      * <p>Constructor for WalkCollector.</p>
      */
-    public WalkCollector()
-    {
+    public WalkCollector() {
         steps = new ArrayList<File>();
         startCount = 0;
         finishCount = 0;
@@ -48,34 +45,30 @@ class WalkCollector
     }
 
     /** {@inheritDoc} */
-    public void directoryWalkStarting( File basedir )
-    {
-        debug( "Walk Starting: " + basedir );
+    public void directoryWalkStarting(File basedir) {
+        debug("Walk Starting: " + basedir);
         startCount++;
         startingDir = basedir;
     }
 
     /** {@inheritDoc} */
-    public void directoryWalkStep( int percentage, File file )
-    {
-        percentageLow = Math.min( percentageLow, percentage );
-        percentageHigh = Math.max( percentageHigh, percentage );
-        debug( "Walk Step: [" + percentage + "%] " + file );
-        steps.add( file );
+    public void directoryWalkStep(int percentage, File file) {
+        percentageLow = Math.min(percentageLow, percentage);
+        percentageHigh = Math.max(percentageHigh, percentage);
+        debug("Walk Step: [" + percentage + "%] " + file);
+        steps.add(file);
     }
 
     /**
      * <p>directoryWalkFinished.</p>
      */
-    public void directoryWalkFinished()
-    {
-        debug( "Walk Finished." );
+    public void directoryWalkFinished() {
+        debug("Walk Finished.");
         finishCount++;
     }
 
     /** {@inheritDoc} */
-    public void debug( String message )
-    {
-        System.out.println( message );
+    public void debug(String message) {
+        System.out.println(message);
     }
 }

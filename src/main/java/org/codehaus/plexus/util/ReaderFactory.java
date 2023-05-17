@@ -16,8 +16,6 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.xml.XmlStreamReader;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +25,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+
+import org.codehaus.plexus.util.xml.XmlStreamReader;
 
 /**
  * Utility to create Readers from streams, with explicit encoding choice: platform default, XML, or specified.
@@ -43,12 +43,11 @@ import java.nio.file.Files;
  * @since 1.4.3
  */
 @Deprecated
-public class ReaderFactory
-{
+public class ReaderFactory {
     /**
      * ISO Latin Alphabet #1, also known as ISO-LATIN-1. Every implementation of the Java platform is required to
      * support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String ISO_8859_1 = "ISO-8859-1";
@@ -56,7 +55,7 @@ public class ReaderFactory
     /**
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set. Every
      * implementation of the Java platform is required to support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String US_ASCII = "US-ASCII";
@@ -65,7 +64,7 @@ public class ReaderFactory
      * Sixteen-bit Unicode Transformation Format, byte order specified by a mandatory initial byte-order mark (either
      * order accepted on input, big-endian used on output). Every implementation of the Java platform is required to
      * support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_16 = "UTF-16";
@@ -73,7 +72,7 @@ public class ReaderFactory
     /**
      * Sixteen-bit Unicode Transformation Format, big-endian byte order. Every implementation of the Java platform is
      * required to support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_16BE = "UTF-16BE";
@@ -81,7 +80,7 @@ public class ReaderFactory
     /**
      * Sixteen-bit Unicode Transformation Format, little-endian byte order. Every implementation of the Java platform is
      * required to support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_16LE = "UTF-16LE";
@@ -89,7 +88,7 @@ public class ReaderFactory
     /**
      * Eight-bit Unicode Transformation Format. Every implementation of the Java platform is required to support this
      * character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_8 = "UTF-8";
@@ -97,7 +96,7 @@ public class ReaderFactory
     /**
      * The <code>file.encoding</code> System Property.
      */
-    public static final String FILE_ENCODING = System.getProperty( "file.encoding" );
+    public static final String FILE_ENCODING = System.getProperty("file.encoding");
 
     /**
      * Create a new Reader with XML encoding detection rules.
@@ -107,10 +106,8 @@ public class ReaderFactory
      * @throws IOException if any.
      * @see XmlStreamReader
      */
-    public static XmlStreamReader newXmlReader( InputStream in )
-        throws IOException
-    {
-        return new XmlStreamReader( in );
+    public static XmlStreamReader newXmlReader(InputStream in) throws IOException {
+        return new XmlStreamReader(in);
     }
 
     /**
@@ -121,10 +118,8 @@ public class ReaderFactory
      * @throws IOException if any.
      * @see XmlStreamReader
      */
-    public static XmlStreamReader newXmlReader( File file )
-        throws IOException
-    {
-        return new XmlStreamReader( file );
+    public static XmlStreamReader newXmlReader(File file) throws IOException {
+        return new XmlStreamReader(file);
     }
 
     /**
@@ -135,10 +130,8 @@ public class ReaderFactory
      * @throws IOException if any.
      * @see XmlStreamReader
      */
-    public static XmlStreamReader newXmlReader( URL url )
-        throws IOException
-    {
-        return new XmlStreamReader( url );
+    public static XmlStreamReader newXmlReader(URL url) throws IOException {
+        return new XmlStreamReader(url);
     }
 
     /**
@@ -148,9 +141,8 @@ public class ReaderFactory
      * @return a reader instance for the input stream using the default platform charset.
      * @see Charset#defaultCharset()
      */
-    public static Reader newPlatformReader( InputStream in )
-    {
-        return new InputStreamReader( in );
+    public static Reader newPlatformReader(InputStream in) {
+        return new InputStreamReader(in);
     }
 
     /**
@@ -161,10 +153,8 @@ public class ReaderFactory
      * @throws IOException if any.
      * @see Charset#defaultCharset()
      */
-    public static Reader newPlatformReader( File file )
-        throws IOException
-    {
-        return Files.newBufferedReader( file.toPath() );
+    public static Reader newPlatformReader(File file) throws IOException {
+        return Files.newBufferedReader(file.toPath());
     }
 
     /**
@@ -175,10 +165,8 @@ public class ReaderFactory
      * @throws IOException if any.
      * @see Charset#defaultCharset()
      */
-    public static Reader newPlatformReader( URL url )
-        throws IOException
-    {
-        return new InputStreamReader( url.openStream() );
+    public static Reader newPlatformReader(URL url) throws IOException {
+        return new InputStreamReader(url.openStream());
     }
 
     /**
@@ -190,10 +178,8 @@ public class ReaderFactory
      * @throws UnsupportedEncodingException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
-    public static Reader newReader( InputStream in, String encoding )
-        throws UnsupportedEncodingException
-    {
-        return new InputStreamReader( in, encoding );
+    public static Reader newReader(InputStream in, String encoding) throws UnsupportedEncodingException {
+        return new InputStreamReader(in, encoding);
     }
 
     /**
@@ -206,10 +192,8 @@ public class ReaderFactory
      * @throws IOException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
-    public static Reader newReader( File file, String encoding )
-        throws IOException
-    {
-        return new InputStreamReader( Files.newInputStream( file.toPath() ), encoding );
+    public static Reader newReader(File file, String encoding) throws IOException {
+        return new InputStreamReader(Files.newInputStream(file.toPath()), encoding);
     }
 
     /**
@@ -221,9 +205,7 @@ public class ReaderFactory
      * @throws IOException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
-    public static Reader newReader( URL url, String encoding )
-        throws IOException
-    {
-        return new InputStreamReader( url.openStream(), encoding );
+    public static Reader newReader(URL url, String encoding) throws IOException {
+        return new InputStreamReader(url.openStream(), encoding);
     }
 }
