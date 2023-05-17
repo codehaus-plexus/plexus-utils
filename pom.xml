@@ -34,10 +34,10 @@ limitations under the License.
   </description>
 
   <scm>
-    <connection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</connection>
-    <developerConnection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</developerConnection>
-    <url>http://github.com/codehaus-plexus/plexus-utils</url>
+    <connection>scm:git:https://github.com/codehaus-plexus/plexus-utils.git</connection>
+    <developerConnection>${project.scm.connection}</developerConnection>
     <tag>master</tag>
+    <url>https://github.com/codehaus-plexus/plexus-utils/tree/master/</url>
   </scm>
   <issueManagement>
     <system>github</system>
