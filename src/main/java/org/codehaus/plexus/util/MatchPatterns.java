@@ -9,88 +9,71 @@ import java.util.List;
  *
  * @author Kristian Rosenvold
  */
-public class MatchPatterns
-{
+public class MatchPatterns {
     private final MatchPattern[] patterns;
 
-    private MatchPatterns( MatchPattern[] patterns )
-    {
+    private MatchPatterns(MatchPattern[] patterns) {
         this.patterns = patterns;
     }
 
     /**
      * <p>Checks these MatchPatterns against a specified string.</p>
-     * 
+     *
      * <p>Uses far less string tokenization than any of the alternatives.</p>
      *
      * @param name The name to look for
      * @param isCaseSensitive If the comparison is case sensitive
      * @return true if any of the supplied patterns match
      */
-    public boolean matches( String name, boolean isCaseSensitive )
-    {
-        String[] tokenized = MatchPattern.tokenizePathToString( name, File.separator );
-        return matches( name, tokenized, isCaseSensitive );
+    public boolean matches(String name, boolean isCaseSensitive) {
+        String[] tokenized = MatchPattern.tokenizePathToString(name, File.separator);
+        return matches(name, tokenized, isCaseSensitive);
     }
 
-    public boolean matches( String name, String[] tokenizedName, boolean isCaseSensitive )
-    {
+    public boolean matches(String name, String[] tokenizedName, boolean isCaseSensitive) {
         char[][] tokenizedNameChar = new char[tokenizedName.length][];
-        for ( int i = 0; i < tokenizedName.length; i++ )
-        {
+        for (int i = 0; i < tokenizedName.length; i++) {
             tokenizedNameChar[i] = tokenizedName[i].toCharArray();
         }
         return matches(name, tokenizedNameChar, isCaseSensitive);
     }
 
-    public boolean matches(String name, char[][] tokenizedNameChar, boolean isCaseSensitive)
-    {
-        for ( MatchPattern pattern : patterns )
-        {
-            if ( pattern.matchPath( name, tokenizedNameChar, isCaseSensitive ) )
-            {
+    public boolean matches(String name, char[][] tokenizedNameChar, boolean isCaseSensitive) {
+        for (MatchPattern pattern : patterns) {
+            if (pattern.matchPath(name, tokenizedNameChar, isCaseSensitive)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean matchesPatternStart( String name, boolean isCaseSensitive )
-    {
-        for ( MatchPattern includesPattern : patterns )
-        {
-            if ( includesPattern.matchPatternStart( name, isCaseSensitive ) )
-            {
+    public boolean matchesPatternStart(String name, boolean isCaseSensitive) {
+        for (MatchPattern includesPattern : patterns) {
+            if (includesPattern.matchPatternStart(name, isCaseSensitive)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static MatchPatterns from( String... sources )
-    {
+    public static MatchPatterns from(String... sources) {
         final int length = sources.length;
         MatchPattern[] result = new MatchPattern[length];
-        for ( int i = 0; i < length; i++ )
-        {
-            result[i] = MatchPattern.fromString( sources[i] );
+        for (int i = 0; i < length; i++) {
+            result[i] = MatchPattern.fromString(sources[i]);
         }
-        return new MatchPatterns( result );
+        return new MatchPatterns(result);
     }
 
-    public static MatchPatterns from( Iterable<String> strings )
-    {
-        return new MatchPatterns( getMatchPatterns( strings ) );
+    public static MatchPatterns from(Iterable<String> strings) {
+        return new MatchPatterns(getMatchPatterns(strings));
     }
 
-    private static MatchPattern[] getMatchPatterns( Iterable<String> items )
-    {
+    private static MatchPattern[] getMatchPatterns(Iterable<String> items) {
         List<MatchPattern> result = new ArrayList<MatchPattern>();
-        for ( String string : items )
-        {
-            result.add( MatchPattern.fromString( string ) );
+        for (String string : items) {
+            result.add(MatchPattern.fromString(string));
         }
-        return result.toArray( new MatchPattern[0] );
+        return result.toArray(new MatchPattern[0]);
     }
-
 }

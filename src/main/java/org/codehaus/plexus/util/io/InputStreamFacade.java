@@ -23,13 +23,11 @@ import java.io.InputStream;
  * Interface of a wrapper for input streams. This facade is used by methods, which are being implemented for files,
  * URL's, or input streams.
  */
-public interface InputStreamFacade
-{
+public interface InputStreamFacade {
     /**
      * The caller must assume, that this method may be invoked only once.
      * @return Retrieves the actual {@link InputStream}.
      * @throws IOException if io issue
      */
-    InputStream getInputStream()
-        throws IOException;
+    InputStream getInputStream() throws IOException;
 }

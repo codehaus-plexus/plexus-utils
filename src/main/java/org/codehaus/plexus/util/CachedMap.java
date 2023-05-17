@@ -38,13 +38,11 @@ import java.util.Set;
  * <p>
  * <i> This class is <b>public domain</b> (not copyrighted).</i>
  * </p>
- * 
+ *
  * @author <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle</a>
  * @version 5.3, October 30, 2003
  */
-public final class CachedMap
-    implements Map
-{
+public final class CachedMap implements Map {
 
     /**
      * Holds the FastMap backing this collection (<code>null</code> if generic backing map).
@@ -80,9 +78,8 @@ public final class CachedMap
      * Creates a cached map backed by a {@link FastMap}. The default cache size and map capacity is set to
      * <code>256</code> entries.
      */
-    public CachedMap()
-    {
-        this( 256, new FastMap() );
+    public CachedMap() {
+        this(256, new FastMap());
     }
 
     /**
@@ -91,9 +88,8 @@ public final class CachedMap
      * @param cacheSize the cache size, the actual cache size is the first power of 2 greater or equal to
      *            <code>cacheSize</code>. This is also the initial capacity of the backing map.
      */
-    public CachedMap( int cacheSize )
-    {
-        this( cacheSize, new FastMap( cacheSize ) );
+    public CachedMap(int cacheSize) {
+        this(cacheSize, new FastMap(cacheSize));
     }
 
     /**
@@ -105,13 +101,11 @@ public final class CachedMap
      *            <code>cacheSize</code>.
      * @param backingMap the backing map to be "wrapped" in a cached map.
      */
-    public CachedMap( int cacheSize, Map backingMap )
-    {
+    public CachedMap(int cacheSize, Map backingMap) {
 
         // Find a power of 2 >= minimalCache
         int actualCacheSize = 1;
-        while ( actualCacheSize < cacheSize )
-        {
+        while (actualCacheSize < cacheSize) {
             actualCacheSize <<= 1;
         }
 
@@ -121,20 +115,16 @@ public final class CachedMap
         _mask = actualCacheSize - 1;
 
         // Sets backing map references.
-        if ( backingMap instanceof FastMap )
-        {
+        if (backingMap instanceof FastMap) {
             _backingFastMap = (FastMap) backingMap;
             _backingMap = _backingFastMap;
             _keysMap = null;
-        }
-        else
-        {
+        } else {
             _backingFastMap = null;
             _backingMap = backingMap;
-            _keysMap = new FastMap( backingMap.size() );
-            for ( Object key : backingMap.keySet() )
-            {
-                _keysMap.put( key, key );
+            _keysMap = new FastMap(backingMap.size());
+            for (Object key : backingMap.keySet()) {
+                _keysMap.put(key, key);
             }
         }
     }
@@ -144,8 +134,7 @@ public final class CachedMap
      *
      * @return the cache size (power of 2).
      */
-    public int getCacheSize()
-    {
+    public int getCacheSize() {
         return _keys.length;
     }
 
@@ -155,28 +144,23 @@ public final class CachedMap
      * @return the backing map.
      * @see #flush
      */
-    public Map getBackingMap()
-    {
-        return ( _backingFastMap != null ) ? _backingFastMap : _backingMap;
+    public Map getBackingMap() {
+        return (_backingFastMap != null) ? _backingFastMap : _backingMap;
     }
 
     /**
      * Flushes the key/value pairs being cached. This method should be called if the backing map is externally modified.
      */
-    public void flush()
-    {
-        for ( int i = 0; i < _keys.length; i++ )
-        {
+    public void flush() {
+        for (int i = 0; i < _keys.length; i++) {
             _keys[i] = null;
             _values[i] = null;
         }
 
-        if ( _keysMap != null )
-        {
+        if (_keysMap != null) {
             // Re-populates keys from backing map.
-            for ( Object key : _backingMap.keySet() )
-            {
-                _keysMap.put( key, key );
+            for (Object key : _backingMap.keySet()) {
+                _keysMap.put(key, key);
             }
         }
     }
@@ -192,41 +176,30 @@ public final class CachedMap
      * @throws NullPointerException if the key is <code>null</code>.
      */
     @Override
-    public Object get( Object key )
-    {
+    public Object get(Object key) {
         int index = key.hashCode() & _mask;
-        return key.equals( _keys[index] ) ? _values[index] : getCacheMissed( key, index );
+        return key.equals(_keys[index]) ? _values[index] : getCacheMissed(key, index);
     }
 
-    private Object getCacheMissed( Object key, int index )
-    {
-        if ( _backingFastMap != null )
-        {
-            Map.Entry entry = _backingFastMap.getEntry( key );
-            if ( entry != null )
-            {
+    private Object getCacheMissed(Object key, int index) {
+        if (_backingFastMap != null) {
+            Map.Entry entry = _backingFastMap.getEntry(key);
+            if (entry != null) {
                 _keys[index] = entry.getKey();
                 Object value = entry.getValue();
                 _values[index] = value;
                 return value;
-            }
-            else
-            {
+            } else {
                 return null;
             }
-        }
-        else
-        { // Generic backing map.
-            Object mapKey = _keysMap.get( key );
-            if ( mapKey != null )
-            {
+        } else { // Generic backing map.
+            Object mapKey = _keysMap.get(key);
+            if (mapKey != null) {
                 _keys[index] = mapKey;
-                Object value = _backingMap.get( key );
+                Object value = _backingMap.get(key);
                 _values[index] = value;
                 return value;
-            }
-            else
-            {
+            } else {
                 return null;
             }
         }
@@ -245,21 +218,17 @@ public final class CachedMap
      * @throws NullPointerException if the key is <code>null</code>.
      */
     @Override
-    public Object put( Object key, Object value )
-    {
+    public Object put(Object key, Object value) {
         // Updates the cache.
         int index = key.hashCode() & _mask;
-        if ( key.equals( _keys[index] ) )
-        {
+        if (key.equals(_keys[index])) {
             _values[index] = value;
-        }
-        else if ( _keysMap != null )
-        { // Possibly a new key.
-            _keysMap.put( key, key );
+        } else if (_keysMap != null) { // Possibly a new key.
+            _keysMap.put(key, key);
         }
 
         // Updates the backing map.
-        return _backingMap.put( key, value );
+        return _backingMap.put(key, value);
     }
 
     /**
@@ -272,21 +241,18 @@ public final class CachedMap
      * @throws UnsupportedOperationException if the <code>remove</code> method is not supported by the backing map.
      */
     @Override
-    public Object remove( Object key )
-    {
+    public Object remove(Object key) {
         // Removes from cache.
         int index = key.hashCode() & _mask;
-        if ( key.equals( _keys[index] ) )
-        {
+        if (key.equals(_keys[index])) {
             _keys[index] = null;
         }
         // Removes from key map.
-        if ( _keysMap != null )
-        {
-            _keysMap.remove( key );
+        if (_keysMap != null) {
+            _keysMap.remove(key);
         }
         // Removes from backing map.
-        return _backingMap.remove( key );
+        return _backingMap.remove(key);
     }
 
     /**
@@ -296,17 +262,13 @@ public final class CachedMap
      * @return <code>true</code> if this map contains a mapping for the specified key; <code>false</code> otherwise.
      */
     @Override
-    public boolean containsKey( Object key )
-    {
+    public boolean containsKey(Object key) {
         // Checks the cache.
         int index = key.hashCode() & _mask;
-        if ( key.equals( _keys[index] ) )
-        {
+        if (key.equals(_keys[index])) {
             return true;
-        }
-        else
-        { // Checks the backing map.
-            return _backingMap.containsKey( key );
+        } else { // Checks the backing map.
+            return _backingMap.containsKey(key);
         }
     }
 
@@ -317,8 +279,7 @@ public final class CachedMap
      * @return the number of key-value mappings in this map.
      */
     @Override
-    public int size()
-    {
+    public int size() {
         return _backingMap.size();
     }
 
@@ -328,8 +289,7 @@ public final class CachedMap
      * @return <code>true</code> if this map contains no key-value mappings.
      */
     @Override
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return _backingMap.isEmpty();
     }
 
@@ -343,9 +303,8 @@ public final class CachedMap
      *             <code>null</code> values.
      */
     @Override
-    public boolean containsValue( Object value )
-    {
-        return _backingMap.containsValue( value );
+    public boolean containsValue(Object value) {
+        return _backingMap.containsValue(value);
     }
 
     /**
@@ -362,9 +321,8 @@ public final class CachedMap
      *             <code>null</code> keys or values, and the specified map contains <code>null</code> keys or values.
      */
     @Override
-    public void putAll( Map map )
-    {
-        _backingMap.putAll( map );
+    public void putAll(Map map) {
+        _backingMap.putAll(map);
         flush();
     }
 
@@ -374,8 +332,7 @@ public final class CachedMap
      * @throws UnsupportedOperationException if clear is not supported by the backing map.
      */
     @Override
-    public void clear()
-    {
+    public void clear() {
         _backingMap.clear();
         flush();
     }
@@ -386,9 +343,8 @@ public final class CachedMap
      * @return an unmodifiable view of the keys contained in this map.
      */
     @Override
-    public Set keySet()
-    {
-        return Collections.unmodifiableSet( _backingMap.keySet() );
+    public Set keySet() {
+        return Collections.unmodifiableSet(_backingMap.keySet());
     }
 
     /**
@@ -397,9 +353,8 @@ public final class CachedMap
      * @return an unmodifiable view of the values contained in this map.
      */
     @Override
-    public Collection values()
-    {
-        return Collections.unmodifiableCollection( _backingMap.values() );
+    public Collection values() {
+        return Collections.unmodifiableCollection(_backingMap.values());
     }
 
     /**
@@ -409,9 +364,8 @@ public final class CachedMap
      * @return an unmodifiable view of the mappings contained in this map.
      */
     @Override
-    public Set entrySet()
-    {
-        return Collections.unmodifiableSet( _backingMap.entrySet() );
+    public Set entrySet() {
+        return Collections.unmodifiableSet(_backingMap.entrySet());
     }
 
     /**
@@ -422,9 +376,8 @@ public final class CachedMap
      * @return <code>true</code> if the specified object is equal to this map.
      */
     @Override
-    public boolean equals( Object o )
-    {
-        return _backingMap.equals( o );
+    public boolean equals(Object o) {
+        return _backingMap.equals(o);
     }
 
     /**
@@ -433,8 +386,7 @@ public final class CachedMap
      * @return the hash code value for this map.
      */
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return _backingMap.hashCode();
     }
 }

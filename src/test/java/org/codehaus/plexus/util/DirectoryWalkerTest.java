@@ -16,13 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import java.io.File;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.io.File;
 
 /**
  * <p>DirectoryWalkerTest class.</p>
@@ -31,30 +31,28 @@ import java.io.File;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class DirectoryWalkerTest
-{
+public class DirectoryWalkerTest {
     /**
      * <p>testDirectoryWalk.</p>
      */
     @Test
-    public void testDirectoryWalk()
-    {
+    public void testDirectoryWalk() {
         DirectoryWalker walker = new DirectoryWalker();
 
         walker.addSCMExcludes();
 
-        walker.setBaseDir( new File( "src/test/resources/directorywalker" ) );
+        walker.setBaseDir(new File("src/test/resources/directorywalker"));
 
         WalkCollector collector = new WalkCollector();
-        walker.addDirectoryWalkListener( collector );
+        walker.addDirectoryWalkListener(collector);
 
         walker.scan();
 
-        assertEquals( 1, collector.startCount, "Walk Collector / Starting Count" );
-        assertNotNull( collector.startingDir, "Walk Collector / Starting Dir" );
-        assertEquals( 1, collector.finishCount, "Walk Collector / Finish Count" );
-        assertEquals( 4, collector.steps.size(), "Walk Collector / Steps Count" );
-        assertTrue( collector.percentageLow >= 0, "Walk Collector / percentage low >= 0" );
-        assertTrue( collector.percentageHigh <= 100, "Walk Collector / percentage high <= 100" );
+        assertEquals(1, collector.startCount, "Walk Collector / Starting Count");
+        assertNotNull(collector.startingDir, "Walk Collector / Starting Dir");
+        assertEquals(1, collector.finishCount, "Walk Collector / Finish Count");
+        assertEquals(4, collector.steps.size(), "Walk Collector / Steps Count");
+        assertTrue(collector.percentageLow >= 0, "Walk Collector / percentage low >= 0");
+        assertTrue(collector.percentageHigh <= 100, "Walk Collector / percentage high <= 100");
     }
 }

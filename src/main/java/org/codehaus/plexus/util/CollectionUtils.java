@@ -30,8 +30,7 @@ import java.util.Set;
  * @author <a href="mailto:olamy@codehaus.org">olamy</a>
  *
  */
-public class CollectionUtils
-{
+public class CollectionUtils {
     // ----------------------------------------------------------------------
     // Static methods that can probably be moved to a real util class.
     // ----------------------------------------------------------------------
@@ -48,21 +47,17 @@ public class CollectionUtils
      * @param <V> type
      * @return The result map with combined dominant and recessive values.
      */
-    public static <K, V> Map<K, V> mergeMaps( Map<K, V> dominantMap, Map<K, V> recessiveMap )
-    {
+    public static <K, V> Map<K, V> mergeMaps(Map<K, V> dominantMap, Map<K, V> recessiveMap) {
 
-        if ( dominantMap == null && recessiveMap == null )
-        {
+        if (dominantMap == null && recessiveMap == null) {
             return null;
         }
 
-        if ( dominantMap != null && recessiveMap == null )
-        {
+        if (dominantMap != null && recessiveMap == null) {
             return dominantMap;
         }
 
-        if ( dominantMap == null )
-        {
+        if (dominantMap == null) {
             return recessiveMap;
         }
 
@@ -75,17 +70,15 @@ public class CollectionUtils
         // Create the set of keys that will be contributed by the
         // recessive Map by subtracting the intersection of keys
         // from the recessive Map's keys.
-        Collection<K> contributingRecessiveKeys =
-            CollectionUtils.subtract( recessiveMapKeys,
-                                      CollectionUtils.intersection( dominantMapKeys, recessiveMapKeys ) );
+        Collection<K> contributingRecessiveKeys = CollectionUtils.subtract(
+                recessiveMapKeys, CollectionUtils.intersection(dominantMapKeys, recessiveMapKeys));
 
-        result.putAll( dominantMap );
+        result.putAll(dominantMap);
 
         // Now take the keys we just found and extract the values from
         // the recessiveMap and put the key:value pairs into the dominantMap.
-        for ( K key : contributingRecessiveKeys )
-        {
-            result.put( key, recessiveMap.get( key ) );
+        for (K key : contributingRecessiveKeys) {
+            result.put(key, recessiveMap.get(key));
         }
 
         return result;
@@ -100,25 +93,18 @@ public class CollectionUtils
      * @param <V> type
      * @return Map The result Map produced after the merging process.
      */
-    public static <K, V> Map<K, V> mergeMaps( Map<K, V>[] maps )
-    {
+    public static <K, V> Map<K, V> mergeMaps(Map<K, V>[] maps) {
         Map<K, V> result;
 
-        if ( maps.length == 0 )
-        {
+        if (maps.length == 0) {
             result = null;
-        }
-        else if ( maps.length == 1 )
-        {
+        } else if (maps.length == 1) {
             result = maps[0];
-        }
-        else
-        {
-            result = mergeMaps( maps[0], maps[1] );
+        } else {
+            result = mergeMaps(maps[0], maps[1]);
 
-            for ( int i = 2; i < maps.length; i++ )
-            {
-                result = mergeMaps( result, maps[i] );
+            for (int i = 2; i < maps.length; i++) {
+                result = mergeMaps(result, maps[i]);
             }
         }
 
@@ -138,18 +124,15 @@ public class CollectionUtils
      * @see Collection#retainAll
      * @return The intersection of a and b, never null
      */
-    public static <E> Collection<E> intersection( final Collection<E> a, final Collection<E> b )
-    {
+    public static <E> Collection<E> intersection(final Collection<E> a, final Collection<E> b) {
         ArrayList<E> list = new ArrayList<>();
-        Map<E, Integer> mapa = getCardinalityMap( a );
-        Map<E, Integer> mapb = getCardinalityMap( b );
-        Set<E> elts = new HashSet<>( a );
-        elts.addAll( b );
-        for ( E obj : elts )
-        {
-            for ( int i = 0, m = Math.min( getFreq( obj, mapa ), getFreq( obj, mapb ) ); i < m; i++ )
-            {
-                list.add( obj );
+        Map<E, Integer> mapa = getCardinalityMap(a);
+        Map<E, Integer> mapb = getCardinalityMap(b);
+        Set<E> elts = new HashSet<>(a);
+        elts.addAll(b);
+        for (E obj : elts) {
+            for (int i = 0, m = Math.min(getFreq(obj, mapa), getFreq(obj, mapb)); i < m; i++) {
+                list.add(obj);
             }
         }
         return list;
@@ -166,12 +149,10 @@ public class CollectionUtils
      * @see Collection#removeAll
      * @return The result of the subtraction
      */
-    public static <T> Collection<T> subtract( final Collection<T> a, final Collection<T> b )
-    {
-        ArrayList<T> list = new ArrayList<>( a );
-        for ( T aB : b )
-        {
-            list.remove( aB );
+    public static <T> Collection<T> subtract(final Collection<T> a, final Collection<T> b) {
+        ArrayList<T> list = new ArrayList<>(a);
+        for (T aB : b) {
+            list.remove(aB);
         }
         return list;
     }
@@ -180,41 +161,33 @@ public class CollectionUtils
      * Returns a {@link Map} mapping each unique element in the given {@link Collection} to an {@link Integer}
      * representing the number of occurrences of that element in the {@link Collection}. An entry that maps to
      * <code>null</code> indicates that the element does not appear in the given {@link Collection}.
-     * 
+     *
      * @param col The collection to count cardinalities for
      * @param <E> the type
      * @return A map of counts, indexed on each element in the collection
      */
-    public static <E> Map<E, Integer> getCardinalityMap( final Collection<E> col )
-    {
+    public static <E> Map<E, Integer> getCardinalityMap(final Collection<E> col) {
         HashMap<E, Integer> count = new HashMap<>();
-        for ( E obj : col )
-        {
-            Integer c = count.get( obj );
-            if ( null == c )
-            {
-                count.put( obj, 1 );
-            }
-            else
-            {
-                count.put( obj, c + 1 );
+        for (E obj : col) {
+            Integer c = count.get(obj);
+            if (null == c) {
+                count.put(obj, 1);
+            } else {
+                count.put(obj, c + 1);
             }
         }
         return count;
     }
 
-    public static <E> List<E> iteratorToList( Iterator<E> it )
-    {
-        if ( it == null )
-        {
-            throw new NullPointerException( "it cannot be null." );
+    public static <E> List<E> iteratorToList(Iterator<E> it) {
+        if (it == null) {
+            throw new NullPointerException("it cannot be null.");
         }
 
         List<E> list = new ArrayList<E>();
 
-        while ( it.hasNext() )
-        {
-            list.add( it.next() );
+        while (it.hasNext()) {
+            list.add(it.next());
         }
 
         return list;
@@ -224,18 +197,14 @@ public class CollectionUtils
     //
     // ----------------------------------------------------------------------
 
-    private static <E> int getFreq( final E obj, final Map<E, Integer> freqMap )
-    {
-        try
-        {
-            Integer o = freqMap.get( obj );
-            if ( o != null ) // minimize NullPointerExceptions
+    private static <E> int getFreq(final E obj, final Map<E, Integer> freqMap) {
+        try {
+            Integer o = freqMap.get(obj);
+            if (o != null) // minimize NullPointerExceptions
             {
                 return o;
             }
-        }
-        catch ( NullPointerException | NoSuchElementException ignore )
-        {
+        } catch (NullPointerException | NoSuchElementException ignore) {
         }
         return 0;
     }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
 Copyright The Codehaus Foundation.
 
@@ -15,7 +14,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -30,8 +28,7 @@ limitations under the License.
 
   <name>Plexus Common Utilities</name>
   <description>A collection of various utility classes to ease working with strings, files, command lines and
-    more.
-  </description>
+    more.</description>
 
   <scm>
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-utils.git</connection>
@@ -71,14 +68,14 @@ limitations under the License.
 
   <repositories>
     <repository>
-      <id>oss.snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/plexus-snapshots/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
       <releases>
         <enabled>false</enabled>
       </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>oss.snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/plexus-snapshots/</url>
     </repository>
   </repositories>
 
@@ -112,15 +109,17 @@ limitations under the License.
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-publish-plugin</artifactId>
         <configuration>
-          <content>${project.reporting.outputDirectory}</content><!-- mono-module doesn't require site:stage -->
+          <content>${project.reporting.outputDirectory}</content>
+          <!-- mono-module doesn't require site:stage -->
         </configuration>
         <executions>
           <execution>
             <id>scm-publish</id>
-            <phase>site-deploy</phase><!-- deploy site with maven-scm-publish-plugin -->
+            <!-- deploy site with maven-scm-publish-plugin -->
             <goals>
               <goal>publish-scm</goal>
             </goals>
+            <phase>site-deploy</phase>
           </execution>
         </executions>
       </plugin>
@@ -180,8 +179,8 @@ limitations under the License.
                     <release>9</release>
                     <compileSourceRoots>
                       <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
-                  </compileSourceRoots>
-                  <multiReleaseOutput>true</multiReleaseOutput>
+                    </compileSourceRoots>
+                    <multiReleaseOutput>true</multiReleaseOutput>
                   </configuration>
                 </execution>
               </executions>
@@ -210,8 +209,8 @@ limitations under the License.
                     <release>10</release>
                     <compileSourceRoots>
                       <compileSourceRoot>${project.basedir}/src/main/java10</compileSourceRoot>
-                  </compileSourceRoots>
-                  <multiReleaseOutput>true</multiReleaseOutput>
+                    </compileSourceRoots>
+                    <multiReleaseOutput>true</multiReleaseOutput>
                   </configuration>
                 </execution>
               </executions>
@@ -221,35 +220,35 @@ limitations under the License.
       </build>
     </profile>
     <profile>
-        <id>jdk11+</id>
-        <activation>
-          <jdk>[11,)</jdk>
-        </activation>
-        <build>
-          <pluginManagement>
-            <plugins>
-              <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                  <execution>
-                    <id>compile-java-11</id>
-                    <goals>
-                      <goal>compile</goal>
-                    </goals>
-                    <configuration>
-                      <release>11</release>
-                      <compileSourceRoots>
-                        <compileSourceRoot>${project.basedir}/src/main/java11</compileSourceRoot>
+      <id>jdk11+</id>
+      <activation>
+        <jdk>[11,)</jdk>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>compile-java-11</id>
+                  <goals>
+                    <goal>compile</goal>
+                  </goals>
+                  <configuration>
+                    <release>11</release>
+                    <compileSourceRoots>
+                      <compileSourceRoot>${project.basedir}/src/main/java11</compileSourceRoot>
                     </compileSourceRoots>
                     <multiReleaseOutput>true</multiReleaseOutput>
-                    </configuration>
-                  </execution>
-                </executions>
-              </plugin>
-            </plugins>
-          </pluginManagement>
-        </build>
-      </profile>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
     <profile>
       <id>plexus-release</id>
       <build>

@@ -24,36 +24,21 @@ import java.security.AccessControlException;
  *
  * @author Kristian Rosenvold
  */
-class ShutdownHookUtils
-{
+class ShutdownHookUtils {
 
-    public static void addShutDownHook( Thread hook )
-    {
-        try
-        {
-            Runtime.getRuntime().addShutdownHook( hook );
-        }
-        catch ( IllegalStateException ignore )
-        {
-        }
-        catch ( AccessControlException ignore )
-        {
-        }
-
-    }
-
-    public static void removeShutdownHook( Thread hook )
-    {
-        try
-        {
-            Runtime.getRuntime().removeShutdownHook( hook );
-        }
-        catch ( IllegalStateException ignore )
-        {
-        }
-        catch ( AccessControlException ignore )
-        {
+    public static void addShutDownHook(Thread hook) {
+        try {
+            Runtime.getRuntime().addShutdownHook(hook);
+        } catch (IllegalStateException ignore) {
+        } catch (AccessControlException ignore) {
         }
     }
 
+    public static void removeShutdownHook(Thread hook) {
+        try {
+            Runtime.getRuntime().removeShutdownHook(hook);
+        } catch (IllegalStateException ignore) {
+        } catch (AccessControlException ignore) {
+        }
+    }
 }

@@ -52,7 +52,6 @@ package org.codehaus.plexus.util.cli;
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ********************************************************************************/
-
 import java.io.IOException;
 
 /**
@@ -64,14 +63,12 @@ import java.io.IOException;
  * @author <a href="mailto:pj@thoughtworks.com">Paul Julius</a>
  *
  */
-public interface StreamConsumer
-{
+public interface StreamConsumer {
     /**
      * Called when the StreamPumper pumps a line from the Stream.
-     * 
+     *
      * @param line The line to be consumed.
      * @throws IOException if consuming {@code line} fails.
      */
-    public void consumeLine( String line )
-        throws IOException;
+    public void consumeLine(String line) throws IOException;
 }

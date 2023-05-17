@@ -19,40 +19,30 @@ package org.codehaus.plexus.util.cli;
 /**
  * @author <a href="mailto:kristian.rosenvold@gmail.com">Kristian Rosenvold</a>
  */
-public class AbstractStreamHandler
-    extends Thread
-{
+public class AbstractStreamHandler extends Thread {
     private boolean done;
 
     private volatile boolean disabled;
 
-    public boolean isDone()
-    {
+    public boolean isDone() {
         return done;
     }
 
-    public synchronized void waitUntilDone()
-        throws InterruptedException
-    {
-        while ( !isDone() )
-        {
+    public synchronized void waitUntilDone() throws InterruptedException {
+        while (!isDone()) {
             wait();
         }
     }
 
-    protected boolean isDisabled()
-    {
+    protected boolean isDisabled() {
         return disabled;
     }
 
-    public void disable()
-    {
+    public void disable() {
         disabled = true;
     }
 
-    public void setDone()
-    {
+    public void setDone() {
         done = true;
     }
-
 }

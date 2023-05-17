@@ -19,44 +19,35 @@ package org.codehaus.plexus.util.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * Caching Writer to avoid overwriting a file with
  * the same content.
  */
-public class CachingWriter extends OutputStreamWriter
-{
+public class CachingWriter extends OutputStreamWriter {
     private final CachingOutputStream cos;
 
-    public CachingWriter( File path, Charset charset ) throws IOException
-    {
-        this( Objects.requireNonNull( path ).toPath(), charset );
+    public CachingWriter(File path, Charset charset) throws IOException {
+        this(Objects.requireNonNull(path).toPath(), charset);
     }
 
-    public CachingWriter( Path path, Charset charset ) throws IOException
-    {
-        this( path, charset, 32 * 1024 );
+    public CachingWriter(Path path, Charset charset) throws IOException {
+        this(path, charset, 32 * 1024);
     }
 
-    public CachingWriter( Path path, Charset charset, int bufferSize ) throws IOException
-    {
-        this( new CachingOutputStream( path, bufferSize ), charset );
+    public CachingWriter(Path path, Charset charset, int bufferSize) throws IOException {
+        this(new CachingOutputStream(path, bufferSize), charset);
     }
 
-    private CachingWriter( CachingOutputStream outputStream, Charset charset ) throws IOException
-    {
-        super( outputStream, charset );
+    private CachingWriter(CachingOutputStream outputStream, Charset charset) throws IOException {
+        super(outputStream, charset);
         this.cos = outputStream;
     }
 
-    public boolean isModified()
-    {
+    public boolean isModified() {
         return cos.isModified();
     }
 }

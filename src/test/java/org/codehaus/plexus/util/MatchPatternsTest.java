@@ -28,20 +28,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class MatchPatternsTest
-{
+public class MatchPatternsTest {
     /**
      * <p>testMatches.</p>
      *
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testMatches()
-        throws Exception
-    {
-        MatchPatterns from = MatchPatterns.from( "ABC**", "CDE**" );
-        assertTrue( from.matches( "ABCDE", true ) );
-        assertTrue( from.matches( "CDEF", true ) );
-        assertFalse( from.matches( "XYZ", true ) );
+    public void testMatches() throws Exception {
+        MatchPatterns from = MatchPatterns.from("ABC**", "CDE**");
+        assertTrue(from.matches("ABCDE", true));
+        assertTrue(from.matches("CDEF", true));
+        assertFalse(from.matches("XYZ", true));
     }
 }

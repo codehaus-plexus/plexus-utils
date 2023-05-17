@@ -16,12 +16,12 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.File;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * <p>SelectorUtilsTest class.</p>
@@ -29,117 +29,91 @@ import org.junit.jupiter.api.Test;
  * @author herve
  * @since 3.4.0
  */
-public class SelectorUtilsTest
-{
+public class SelectorUtilsTest {
     /**
      * <p>testMatchPath_DefaultFileSeparator.</p>
      */
     @Test
-    public void testMatchPath_DefaultFileSeparator()
-    {
+    public void testMatchPath_DefaultFileSeparator() {
         String separator = File.separator;
 
         // Pattern and target start with file separator
-        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt",
-                                             separator + "b" + separator + "a.txt" ) );
+        assertTrue(
+                SelectorUtils.matchPath(separator + "*" + separator + "a.txt", separator + "b" + separator + "a.txt"));
         // Pattern starts with file separator, target doesn't
-        assertFalse( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", "b" + separator + "a.txt" ) );
+        assertFalse(SelectorUtils.matchPath(separator + "*" + separator + "a.txt", "b" + separator + "a.txt"));
         // Pattern doesn't start with file separator, target does
-        assertFalse( SelectorUtils.matchPath( "*" + separator + "a.txt", separator + "b" + separator + "a.txt" ) );
+        assertFalse(SelectorUtils.matchPath("*" + separator + "a.txt", separator + "b" + separator + "a.txt"));
         // Pattern and target don't start with file separator
-        assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt" ) );
+        assertTrue(SelectorUtils.matchPath("*" + separator + "a.txt", "b" + separator + "a.txt"));
     }
 
     /**
      * <p>testMatchPath_UnixFileSeparator.</p>
      */
     @Test
-    public void testMatchPath_UnixFileSeparator()
-    {
+    public void testMatchPath_UnixFileSeparator() {
         String separator = "/";
 
         // Pattern and target start with file separator
-        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt",
-                                             separator + "b" + separator + "a.txt", separator, false ) );
+        assertTrue(SelectorUtils.matchPath(
+                separator + "*" + separator + "a.txt", separator + "b" + separator + "a.txt", separator, false));
         // Pattern starts with file separator, target doesn't
-        assertFalse( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", "b" + separator + "a.txt",
-                                              separator, false ) );
+        assertFalse(SelectorUtils.matchPath(
+                separator + "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false));
         // Pattern doesn't start with file separator, target does
-        assertFalse( SelectorUtils.matchPath( "*" + separator + "a.txt", separator + "b" + separator + "a.txt",
-                                              separator, false ) );
+        assertFalse(SelectorUtils.matchPath(
+                "*" + separator + "a.txt", separator + "b" + separator + "a.txt", separator, false));
         // Pattern and target don't start with file separator
-        assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false ) );
+        assertTrue(SelectorUtils.matchPath("*" + separator + "a.txt", "b" + separator + "a.txt", separator, false));
     }
 
     /**
      * <p>testMatchPath_WindowsFileSeparator.</p>
      */
     @Test
-    public void testMatchPath_WindowsFileSeparator()
-    {
+    public void testMatchPath_WindowsFileSeparator() {
         String separator = "\\";
 
         // Pattern and target start with file separator
-        assertTrue( SelectorUtils.matchPath( separator + "*" + separator + "a.txt",
-                                             separator + "b" + separator + "a.txt", separator, false ) );
+        assertTrue(SelectorUtils.matchPath(
+                separator + "*" + separator + "a.txt", separator + "b" + separator + "a.txt", separator, false));
         // Pattern starts with file separator, target doesn't
-        assertFalse( SelectorUtils.matchPath( separator + "*" + separator + "a.txt", "b" + separator + "a.txt",
-                                              separator, false ) );
+        assertFalse(SelectorUtils.matchPath(
+                separator + "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false));
         // Pattern doesn't start with file separator, target does
-        assertFalse( SelectorUtils.matchPath( "*" + separator + "a.txt", separator + "b" + separator + "a.txt",
-                                              separator, false ) );
+        assertFalse(SelectorUtils.matchPath(
+                "*" + separator + "a.txt", separator + "b" + separator + "a.txt", separator, false));
         // Pattern and target don't start with file separator
-        assertTrue( SelectorUtils.matchPath( "*" + separator + "a.txt", "b" + separator + "a.txt", separator, false ) );
+        assertTrue(SelectorUtils.matchPath("*" + separator + "a.txt", "b" + separator + "a.txt", separator, false));
     }
 
     @org.junit.jupiter.api.Test
-    public void testPatternMatchSingleWildcardPosix()
-    {
-        assertFalse(SelectorUtils.matchPath(
-            "/com/test/*",
-            "/com/test/test/hallo"));
+    public void testPatternMatchSingleWildcardPosix() {
+        assertFalse(SelectorUtils.matchPath("/com/test/*", "/com/test/test/hallo"));
     }
-
 
     @Test
-    public void testPatternMatchDoubleWildcardCaseInsensitivePosix()
-    {
-        assertTrue(SelectorUtils.matchPath(
-            "/com/test/**",
-            "/com/test/test/hallo"));
+    public void testPatternMatchDoubleWildcardCaseInsensitivePosix() {
+        assertTrue(SelectorUtils.matchPath("/com/test/**", "/com/test/test/hallo"));
     }
-
 
     @Test
-    public void testPatternMatchDoubleWildcardPosix()
-    {
-        assertTrue(SelectorUtils.matchPath(
-            "/com/test/**",
-            "/com/test/test/hallo"));
+    public void testPatternMatchDoubleWildcardPosix() {
+        assertTrue(SelectorUtils.matchPath("/com/test/**", "/com/test/test/hallo"));
     }
-
 
     @org.junit.jupiter.api.Test
-    public void testPatternMatchSingleWildcardWindows()
-    {
-        assertFalse(SelectorUtils.matchPath(
-            "D:\\com\\test\\*",
-            "D:\\com\\test\\test\\hallo"));
+    public void testPatternMatchSingleWildcardWindows() {
+        assertFalse(SelectorUtils.matchPath("D:\\com\\test\\*", "D:\\com\\test\\test\\hallo"));
 
-        assertFalse(SelectorUtils.matchPath(
-            "D:/com/test/*",
-            "D:/com/test/test/hallo"));
+        assertFalse(SelectorUtils.matchPath("D:/com/test/*", "D:/com/test/test/hallo"));
     }
 
     @Test
-    public void testPatternMatchDoubleWildcardWindows()
-    {
-        assertTrue(SelectorUtils.matchPath(
-            "D:\\com\\test\\**",
-            "D:\\com\\test\\test\\hallo"));
+    public void testPatternMatchDoubleWildcardWindows() {
+        assertTrue(SelectorUtils.matchPath("D:\\com\\test\\**", "D:\\com\\test\\test\\hallo"));
 
-        assertTrue(SelectorUtils.matchPath(
-            "D:\\com\\test\\**",
-            "D:/com/test/test/hallo"));
+        assertTrue(SelectorUtils.matchPath("D:\\com\\test\\**", "D:/com/test/test/hallo"));
     }
 }

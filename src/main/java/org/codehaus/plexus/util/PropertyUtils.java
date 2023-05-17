@@ -16,13 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import java.util.Objects;
-import java.util.Properties;
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
  * Static methods to create Properties loaded from various sources.
@@ -30,36 +30,27 @@ import java.nio.file.Files;
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  * @author <a href="mailto:mmaczka@interia.pl">Michal Maczka</a>
  */
-public class PropertyUtils
-{
+public class PropertyUtils {
 
-    public static Properties loadProperties( final URL url )
-        throws IOException
-    {
-        return loadProperties( Objects.requireNonNull( url, "url" ).openStream() );
+    public static Properties loadProperties(final URL url) throws IOException {
+        return loadProperties(Objects.requireNonNull(url, "url").openStream());
     }
 
-    public static Properties loadProperties( final File file )
-        throws IOException
-    {
-        return loadProperties( Files.newInputStream( Objects.requireNonNull( file, "file" ).toPath() ) );
+    public static Properties loadProperties(final File file) throws IOException {
+        return loadProperties(
+                Files.newInputStream(Objects.requireNonNull(file, "file").toPath()));
     }
 
-    public static Properties loadProperties( final InputStream is )
-        throws IOException
-    {
+    public static Properties loadProperties(final InputStream is) throws IOException {
         final Properties properties = new Properties();
-        
+
         // Make sure the properties stream is valid
-        if ( is != null )
-        {
-            try ( InputStream in = is ) 
-            {
-                properties.load( in );
+        if (is != null) {
+            try (InputStream in = is) {
+                properties.load(in);
             }
         }
 
         return properties;
     }
-
 }
