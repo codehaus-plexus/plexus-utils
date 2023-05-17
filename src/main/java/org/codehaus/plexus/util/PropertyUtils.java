@@ -1,7 +1,5 @@
 package org.codehaus.plexus.util;
 
-import java.util.Objects;
-
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -18,6 +16,7 @@ import java.util.Objects;
  * limitations under the License.
  */
 
+import java.util.Objects;
 import java.util.Properties;
 import java.io.File;
 import java.io.InputStream;
