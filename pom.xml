@@ -24,7 +24,7 @@ limitations under the License.
   </parent>
 
   <artifactId>plexus-utils</artifactId>
-  <version>4.0.0-SNAPSHOT</version>
+  <version>4.0.0</version>
 
   <name>Plexus Common Utilities</name>
   <description>A collection of various utility classes to ease working with strings, files, command lines and
@@ -33,7 +33,7 @@ limitations under the License.
   <scm>
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-utils.git</connection>
     <developerConnection>${project.scm.connection}</developerConnection>
-    <tag>master</tag>
+    <tag>plexus-utils-4.0.0</tag>
     <url>https://github.com/codehaus-plexus/plexus-utils/tree/master/</url>
   </scm>
   <issueManagement>
@@ -48,7 +48,7 @@ limitations under the License.
   </distributionManagement>
 
   <properties>
-    <project.build.outputTimestamp>2023-03-02T01:23:19Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-05-22T15:13:56Z</project.build.outputTimestamp>
   </properties>
 
   <dependencies>
