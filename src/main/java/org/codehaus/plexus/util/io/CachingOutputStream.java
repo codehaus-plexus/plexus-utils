@@ -123,6 +123,7 @@ public class CachingOutputStream extends OutputStream
             {
                 readBuffer = this.readBuffer;
                 ( ( Buffer ) readBuffer ).clear();
+                readBuffer.limit( len );
             }
             else
             {
