@@ -16,7 +16,7 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Comparator;
 
 /**
@@ -83,7 +83,7 @@ public interface Scanner
      *
      * @return the base directory to be scanned
      */
-    File getBasedir();
+    Path getBasedir();
 
     /**
      * Use a filename comparator in each directory when scanning.
