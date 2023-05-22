@@ -17,6 +17,7 @@ package org.codehaus.plexus.util.io;
  */
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -61,6 +62,32 @@ public class CachingWriterTest
             }
             Thread.sleep( 10 );
         }
+    }
+
+    @Test
+    public void testNoOverwriteWithFlush() throws IOException, InterruptedException
+    {
+        String data = "Hello world!";
+        Path path = tempDir.resolve("file-bigger.txt");
+        assertFalse( Files.exists(path));
+
+        try (Writer w = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
+            for (int i = 0; i < 10; i++) {
+                w.write(data);
+            }
+        }
+        FileTime modified = Files.getLastModifiedTime(path);
+
+        waitLastModified();
+
+        try (Writer w = new CachingWriter(path, StandardCharsets.UTF_8)) {
+            for (int i = 0; i < 10; i++) {
+                w.write(data);
+                w.flush();
+            }
+        }
+        FileTime newModified = Files.getLastModifiedTime(path);
+        assertEquals(modified, newModified);
     }
 
     @Test
