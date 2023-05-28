@@ -4,6 +4,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
   <body>
+    <breadcrumbs>
+      <item name="Plexus" href="https://codehaus-plexus.github.io/"/>
+      <item name="Plexus Utils" href="https://codehaus-plexus.github.io/plexus-utils/"/>
+    </breadcrumbs>
+    
     <menu name="Overview">
       <item name="Introduction" href="index.html"/>
       <item name="JavaDocs" href="apidocs/index.html"/>
