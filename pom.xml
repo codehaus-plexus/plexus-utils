@@ -29,16 +29,17 @@ limitations under the License.
   <name>Plexus Common Utilities</name>
   <description>A collection of various utility classes to ease working with strings, files, command lines and
     more.</description>
+  <url>https://codehaus-plexus.github.io/plexus-utils/</url>
 
   <scm>
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-utils.git</connection>
     <developerConnection>${project.scm.connection}</developerConnection>
     <tag>master</tag>
-    <url>https://github.com/codehaus-plexus/plexus-utils/tree/master/</url>
+    <url>https://github.com/codehaus-plexus/plexus-utils/tree/${project.scm.tag}/</url>
   </scm>
   <issueManagement>
     <system>github</system>
-    <url>http://github.com/codehaus-plexus/plexus-utils/issues</url>
+    <url>https://github.com/codehaus-plexus/plexus-utils/issues</url>
   </issueManagement>
   <distributionManagement>
     <site>
@@ -77,21 +78,6 @@ limitations under the License.
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <source>1.8</source>
-              <target>1.8</target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-publish-plugin</artifactId>
