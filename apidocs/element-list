@@ -1,0 +1,7 @@
+org.codehaus.plexus.util
+org.codehaus.plexus.util.cli
+org.codehaus.plexus.util.cli.shell
+org.codehaus.plexus.util.dag
+org.codehaus.plexus.util.introspection
+org.codehaus.plexus.util.io
+org.codehaus.plexus.util.reflection
