@@ -14,4 +14,6 @@ For publishing [the site](https://codehaus-plexus.github.io/plexus-utils/) do th
 mvn -Preporting verify site site:stage scm-publish:publish-scm
 ```
 
-Starting with version 4, XML classes (in `org.codehaus.plexus.util.xml` and `org.codehaus.plexus.util.xml.pull`) have been extracted to a separate [`plexus-xml`](https://github.com/codehaus-plexus/plexus-xml/) 4: if you need them, just use this new artifact.
+Starting with version 4, XML classes (in `org.codehaus.plexus.util.xml` and `org.codehaus.plexus.util.xml.pull`) have been extracted to a separate [`plexus-xml`](https://github.com/codehaus-plexus/plexus-xml/) library: if you need them, just use this new artifact.
+
+`plexus-utils` 4 keeps an optional dependency on `plexus-xml` to keep compatibility with the few XML-oriented methods of `ReaderFactory` and `WriterFactory`: these classes are deprecated, you should migrate as explained in javadoc.
