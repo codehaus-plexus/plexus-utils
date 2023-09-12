@@ -56,7 +56,8 @@ limitations under the License.
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-xml</artifactId>
-      <version>4.0.2</version>
+      <version>3.0.0</version>
+      <!-- this dependency is optional, only necessary for deprecated Reader/WriterFactory.newXmlReader/Writer(...) -->
       <optional>true</optional>
     </dependency>
     <dependency>
