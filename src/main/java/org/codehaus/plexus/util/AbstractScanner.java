@@ -41,7 +41,7 @@ public abstract class AbstractScanner implements Scanner {
      * <li>Mac: &#42;&#42;/.DS_Store</li>
      * <li>Serena Dimension: &#42;&#42;/.metadata, &#42;&#42;/.metadata/&#42;&#42;</li>
      * <li>Mercurial: &#42;&#42;/.hg, &#42;&#42;/.hg/&#42;&#42;</li>
-     * <li>Git: &#42;&#42;/.git, &#42;&#42;/.git/&#42;&#42;</li>
+     * <li>Git: &#42;&#42;/.git, &#42;&#42;/.git/&#42;&#42;, &#42;&#42;/.gitignore</li>
      * <li>Bitkeeper: &#42;&#42;/BitKeeper, &#42;&#42;/BitKeeper/&#42;&#42;, &#42;&#42;/ChangeSet,
      * &#42;&#42;/ChangeSet/&#42;&#42;</li>
      * <li>Darcs: &#42;&#42;/_darcs, &#42;&#42;/_darcs/&#42;&#42;, &#42;&#42;/.darcsrepo,
@@ -106,6 +106,7 @@ public abstract class AbstractScanner implements Scanner {
         // git
         "**/.git",
         "**/.git/**",
+        "**/.gitignore",
 
         // BitKeeper
         "**/BitKeeper",
