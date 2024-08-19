@@ -3,7 +3,7 @@ Plexus-Utils
 
 [![Build Status](https://github.com/codehaus-plexus/plexus-utils/actions/workflows/maven.yml/badge.svg)](https://github.com/codehaus-plexus/plexus-utils/actions)
 [![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.plexus/plexus-utils.svg?label=Maven%20Central)](https://search.maven.org/artifact/org.codehaus.plexus/plexus-utils)
-[![Reproducible Builds](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jvm-repo-rebuild/reproducible-central/master/content/org/codehaus/plexus/plexus-utils/badge.json)](https://github.com/jvm-repo-rebuild/reproducible-central/blob/master/content/content/org/codehaus/plexus/plexus-utils/README.md)
+[![Reproducible Builds](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jvm-repo-rebuild/reproducible-central/master/content/org/codehaus/plexus/plexus-utils/badge.json)](https://github.com/jvm-repo-rebuild/reproducible-central/blob/master/content/org/codehaus/plexus/plexus-utils/README.md)
 
 This library is historically used by the Apache Maven project so it's developed and maintained by the same [`bad guys`](http://maven.apache.org/team.html)
 
