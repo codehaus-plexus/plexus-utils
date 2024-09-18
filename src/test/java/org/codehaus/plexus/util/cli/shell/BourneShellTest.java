@@ -205,8 +205,9 @@ public class BourneShellTest {
 
         assertEquals("cmd.exe", lines[0]);
         assertEquals("/X", lines[1]);
-        assertEquals("/C", lines[2]);
-        assertEquals("\"--password ;password\"", lines[3]);
+        assertEquals("/D", lines[2]);
+        assertEquals("/C", lines[3]);
+        assertEquals("\"--password ;password\"", lines[4]);
     }
 
     /**

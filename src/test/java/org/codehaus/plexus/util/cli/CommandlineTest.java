@@ -182,14 +182,15 @@ public class CommandlineTest {
         cmd.addArguments(new String[] {"a", "b"});
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals(4, shellCommandline.length, "Command line size");
+        assertEquals(5, shellCommandline.length, "Command line size");
 
         assertEquals("cmd.exe", shellCommandline[0]);
         assertEquals("/X", shellCommandline[1]);
-        assertEquals("/C", shellCommandline[2]);
+        assertEquals("/D", shellCommandline[2]);
+        assertEquals("/C", shellCommandline[3]);
         String expectedShellCmd = "\"c:" + File.separator + "Program Files" + File.separator + "xxx\" a b";
         expectedShellCmd = "\"" + expectedShellCmd + "\"";
-        assertEquals(expectedShellCmd, shellCommandline[3]);
+        assertEquals(expectedShellCmd, shellCommandline[4]);
     }
 
     /**
@@ -204,15 +205,16 @@ public class CommandlineTest {
         cmd.addArguments(new String[] {"c:\\Documents and Settings\\whatever", "b"});
         String[] shellCommandline = cmd.getShellCommandline();
 
-        assertEquals(4, shellCommandline.length, "Command line size");
+        assertEquals(5, shellCommandline.length, "Command line size");
 
         assertEquals("cmd.exe", shellCommandline[0]);
         assertEquals("/X", shellCommandline[1]);
-        assertEquals("/C", shellCommandline[2]);
+        assertEquals("/D", shellCommandline[2]);
+        assertEquals("/C", shellCommandline[3]);
         String expectedShellCmd = "\"c:" + File.separator + "Program Files" + File.separator
                 + "xxx\" \"c:\\Documents and Settings\\whatever\" b";
         expectedShellCmd = "\"" + expectedShellCmd + "\"";
-        assertEquals(expectedShellCmd, shellCommandline[3]);
+        assertEquals(expectedShellCmd, shellCommandline[4]);
     }
 
     /**
