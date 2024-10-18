@@ -58,6 +58,14 @@ public class MatchPattern {
         }
     }
 
+    /**
+     * Gets the source pattern for this matchpattern.
+     * @return the source string without Ant or Regex pattern markers.
+     */
+    public String getSource() {
+        return source;
+    }
+
     public boolean matchPath(String str, boolean isCaseSensitive) {
         if (regexPattern != null) {
             return str.matches(regexPattern);
@@ -99,7 +107,7 @@ public class MatchPattern {
         return source.startsWith(string);
     }
 
-    static String[] tokenizePathToString(String path, String separator) {
+    public static String[] tokenizePathToString(String path, String separator) {
         List<String> ret = new ArrayList<String>();
         StringTokenizer st = new StringTokenizer(path, separator);
         while (st.hasMoreTokens()) {
