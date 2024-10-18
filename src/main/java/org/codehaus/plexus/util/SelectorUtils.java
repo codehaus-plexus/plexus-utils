@@ -149,7 +149,7 @@ public final class SelectorUtils
         }
     }
 
-    static boolean isAntPrefixedPattern( String pattern )
+    public static boolean isAntPrefixedPattern( String pattern )
     {
         return pattern.length() > ( ANT_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1 )
             && pattern.startsWith( ANT_HANDLER_PREFIX ) && pattern.endsWith( PATTERN_HANDLER_SUFFIX );
@@ -281,7 +281,7 @@ public final class SelectorUtils
         return pattern;
     }
 
-    static boolean isRegexPrefixedPattern( String pattern )
+    public static boolean isRegexPrefixedPattern( String pattern )
     {
         return pattern.length() > ( REGEX_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1 )
             && pattern.startsWith( REGEX_HANDLER_PREFIX ) && pattern.endsWith( PATTERN_HANDLER_SUFFIX );
@@ -833,5 +833,23 @@ public final class SelectorUtils
             }
         }
         return result.toString();
+    }
+
+    /**
+     * Extract the pattern without the Regex or Ant prefix.
+     * @param pattern the pattern to extract from.
+     * @param separator the file name separator in the pattern.
+     * @return The pattern without the Regex or Ant prefix.
+     */
+    public static String extractPattern(final String pattern, final String separator) {
+        if (isRegexPrefixedPattern(pattern)) {
+            return pattern.substring(
+                    REGEX_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length());
+        } else {
+            String localPattern = isAntPrefixedPattern(pattern)
+                    ? pattern.substring(ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length())
+                    : pattern;
+            return toOSRelatedPath(localPattern, separator);
+        }
     }
 }
