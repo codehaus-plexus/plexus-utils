@@ -243,6 +243,17 @@ public final class SelectorUtils {
         }
     }
 
+    public static String extractPattern(final String pattern, final String separator) {
+        if (isRegexPrefixedPattern(pattern)) {
+            return pattern.substring(REGEX_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length());
+        } else {
+            String localPattern = isAntPrefixedPattern(pattern)
+                    ? pattern.substring(ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length())
+                    : pattern;
+            return toOSRelatedPath(localPattern, separator);
+        }
+    }
+
     private static String toOSRelatedPath(String pattern, String separator) {
         if ("/".equals(separator)) {
             return pattern.replace("\\", separator);
@@ -253,7 +264,7 @@ public final class SelectorUtils {
         return pattern;
     }
 
-    static boolean isRegexPrefixedPattern(String pattern) {
+    public static boolean isRegexPrefixedPattern(String pattern) {
         return pattern.length() > (REGEX_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1)
                 && pattern.startsWith(REGEX_HANDLER_PREFIX)
                 && pattern.endsWith(PATTERN_HANDLER_SUFFIX);

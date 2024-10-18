@@ -17,6 +17,18 @@ public class MatchPatterns {
     }
 
     /**
+     * Gets a list of enclosed MatchPattern sources.
+     * @return A list of enclosed MatchPattern sources.
+     */
+    public List<String> getSources() {
+        List<String> sources = new ArrayList<>();
+        for (MatchPattern pattern : patterns) {
+            sources.add(pattern.getSource());
+        }
+        return sources;
+    }
+
+    /**
      * <p>Checks these MatchPatterns against a specified string.</p>
      *
      * <p>Uses far less string tokenization than any of the alternatives.</p>
