@@ -836,9 +836,10 @@ public final class SelectorUtils
     }
 
     /**
-     * Extract the pattern without the Regex or Ant prefix.
+     * Extract the pattern without the Regex or Ant prefix.  In the case of Ant style matches ensure
+     * that the path uses specified separator.
      * @param pattern the pattern to extract from.
-     * @param separator the file name separator in the pattern.
+     * @param separator the system file name separator in the pattern.
      * @return The pattern without the Regex or Ant prefix.
      */
     public static String extractPattern(final String pattern, final String separator) {
