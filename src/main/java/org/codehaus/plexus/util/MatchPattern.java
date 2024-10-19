@@ -59,7 +59,7 @@ public class MatchPattern {
     }
 
     /**
-     * Gets the source pattern for this matchpattern.
+     * Gets the source pattern for this match pattern.
      * @return the source string without Ant or Regex pattern markers.
      */
     public String getSource() {
