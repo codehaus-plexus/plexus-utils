@@ -16,6 +16,7 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -31,6 +32,41 @@ import org.junit.Test;
  */
 public class SelectorUtilsTest
 {
+    /**
+     * <p>testExtractPattern.</p>
+     */
+    @Test
+    public void testExtractPattern() {
+        assertEquals("[A-Z].*", SelectorUtils.extractPattern("%regex[[A-Z].*]", "/"));
+        assertEquals("ABC*", SelectorUtils.extractPattern("%ant[ABC*]", "/"));
+        assertEquals("some/ABC*", SelectorUtils.extractPattern("%ant[some/ABC*]", "/"));
+        assertEquals("some\\ABC*", SelectorUtils.extractPattern("%ant[some\\ABC*]", "\\"));
+        assertEquals("some/ABC*", SelectorUtils.extractPattern("%ant[some\\ABC*]", "/"));
+        assertEquals("some\\ABC*", SelectorUtils.extractPattern("%ant[some/ABC*]", "\\"));
+    }
+
+    /**
+     * <p>testIsAntPrefixedPattern.</p>
+     */
+    @Test
+    public void testIsAntPrefixedPattern() {
+        assertFalse(SelectorUtils.isAntPrefixedPattern("%ant[A]")); // single char not allowed
+        assertTrue(SelectorUtils.isAntPrefixedPattern("%ant[AB]"));
+        assertFalse(SelectorUtils.isAntPrefixedPattern("%ant[]"));
+        assertFalse(SelectorUtils.isAntPrefixedPattern("*"));
+    }
+
+    /**
+     * <p>testIsRegexPrefixedPattern.</p>
+     */
+    @Test
+    public void testIsRegexPrefixedPattern() {
+        assertFalse(SelectorUtils.isRegexPrefixedPattern("%regex[A]")); // single char not allowed
+        assertTrue(SelectorUtils.isRegexPrefixedPattern("%regex[.*]"));
+        assertFalse(SelectorUtils.isRegexPrefixedPattern("%regex[]"));
+        assertFalse(SelectorUtils.isRegexPrefixedPattern("*"));
+    }
+
     /**
      * <p>testMatchPath_DefaultFileSeparator.</p>
      */

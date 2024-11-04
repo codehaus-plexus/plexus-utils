@@ -65,7 +65,7 @@ public class MatchPattern
      * @return the source string without Ant or Regex pattern markers.
      */
     public String getSource() {
-        return source;
+        return regexPattern == null ? source : regexPattern;
     }
 
     public boolean matchPath( String str, boolean isCaseSensitive )

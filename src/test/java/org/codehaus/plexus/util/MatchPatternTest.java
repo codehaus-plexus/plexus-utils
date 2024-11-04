@@ -16,6 +16,8 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -30,6 +32,20 @@ import org.junit.Test;
  */
 public class MatchPatternTest
 {
+    /**
+     * <p>testGetSource</p>
+     */
+    @Test
+    public void testGetSource()
+    {
+        MatchPattern mp = MatchPattern.fromString( "ABC*" );
+        assertEquals("ABC*", mp.getSource());
+        mp = MatchPattern.fromString( "%ant[some/ABC*]" );
+        assertEquals("some/ABC*", mp.getSource());
+        mp = MatchPattern.fromString( "%regex[[ABC].*]" );
+        assertEquals("[ABC].*", mp.getSource());
+    }
+
     /**
      * <p>testMatchPath.</p>
      *
@@ -63,4 +79,20 @@ public class MatchPatternTest
         assertFalse( mp.matchPatternStart( "XXXX", false ) );
     }
 
+    /**
+     * <p>testTokenizePathToString.</p>
+     */
+    @Test
+    public void testTokenizePathToString()
+    {
+        String[] expected = {"hello", "world"};
+        String[] actual = MatchPattern.tokenizePathToString("hello/world", "/");
+        assertArrayEquals(expected, actual);
+
+        actual = MatchPattern.tokenizePathToString("/hello/world", "/");
+        assertArrayEquals(expected, actual);
+
+        actual = MatchPattern.tokenizePathToString("/hello/world/", "/");
+        assertArrayEquals(expected, actual);
+    }
 }
