@@ -20,6 +20,7 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,6 +31,41 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @since 3.4.0
  */
 public class SelectorUtilsTest {
+    /**
+     * <p>testExtractPattern.</p>
+     */
+    @Test
+    public void testExtractPattern() {
+        assertEquals("[A-Z].*", SelectorUtils.extractPattern("%regex[[A-Z].*]", "/"));
+        assertEquals("ABC*", SelectorUtils.extractPattern("%ant[ABC*]", "/"));
+        assertEquals("some/ABC*", SelectorUtils.extractPattern("%ant[some/ABC*]", "/"));
+        assertEquals("some\\ABC*", SelectorUtils.extractPattern("%ant[some\\ABC*]", "\\"));
+        assertEquals("some/ABC*", SelectorUtils.extractPattern("%ant[some\\ABC*]", "/"));
+        assertEquals("some\\ABC*", SelectorUtils.extractPattern("%ant[some/ABC*]", "\\"));
+    }
+
+    /**
+     * <p>testIsAntPrefixedPattern.</p>
+     */
+    @Test
+    public void testIsAntPrefixedPattern() {
+        assertFalse(SelectorUtils.isAntPrefixedPattern("%ant[A]")); // single char not allowed
+        assertTrue(SelectorUtils.isAntPrefixedPattern("%ant[AB]"));
+        assertFalse(SelectorUtils.isAntPrefixedPattern("%ant[]"));
+        assertFalse(SelectorUtils.isAntPrefixedPattern("*"));
+    }
+
+    /**
+     * <p>testIsRegexPrefixedPattern.</p>
+     */
+    @Test
+    public void testIsRegexPrefixedPattern() {
+        assertFalse(SelectorUtils.isRegexPrefixedPattern("%regex[A]")); // single char not allowed
+        assertTrue(SelectorUtils.isRegexPrefixedPattern("%regex[.*]"));
+        assertFalse(SelectorUtils.isRegexPrefixedPattern("%regex[]"));
+        assertFalse(SelectorUtils.isRegexPrefixedPattern("*"));
+    }
+
     /**
      * <p>testMatchPath_DefaultFileSeparator.</p>
      */
