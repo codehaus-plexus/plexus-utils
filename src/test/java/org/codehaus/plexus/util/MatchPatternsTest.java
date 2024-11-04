@@ -16,8 +16,12 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,6 +33,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @since 3.4.0
  */
 public class MatchPatternsTest {
+    /**
+     * <p>testGetSource</p>
+     */
+    @Test
+    public void testGetSources() {
+        List<String> expected = Arrays.asList("ABC**", "some/ABC*", "[ABC].*");
+        MatchPatterns from = MatchPatterns.from("ABC**", "%ant[some/ABC*]", "%regex[[ABC].*]");
+        List<String> actual = from.getSources();
+        assertEquals(expected, actual);
+    }
+
     /**
      * <p>testMatches.</p>
      *
