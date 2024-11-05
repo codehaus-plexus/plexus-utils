@@ -140,7 +140,7 @@ public final class SelectorUtils {
     }
 
     public static boolean isAntPrefixedPattern(String pattern) {
-        return pattern.length() > (ANT_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1)
+        return pattern.length() > (ANT_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length())
                 && pattern.startsWith(ANT_HANDLER_PREFIX)
                 && pattern.endsWith(PATTERN_HANDLER_SUFFIX);
     }
@@ -254,7 +254,7 @@ public final class SelectorUtils {
     }
 
     public static boolean isRegexPrefixedPattern(String pattern) {
-        return pattern.length() > (REGEX_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1)
+        return pattern.length() > (REGEX_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length())
                 && pattern.startsWith(REGEX_HANDLER_PREFIX)
                 && pattern.endsWith(PATTERN_HANDLER_SUFFIX);
     }
