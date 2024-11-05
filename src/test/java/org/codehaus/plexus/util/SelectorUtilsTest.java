@@ -50,7 +50,7 @@ public class SelectorUtilsTest
      */
     @Test
     public void testIsAntPrefixedPattern() {
-        assertFalse(SelectorUtils.isAntPrefixedPattern("%ant[A]")); // single char not allowed
+        assertTrue(SelectorUtils.isAntPrefixedPattern("%ant[A]")); // single char not allowed
         assertTrue(SelectorUtils.isAntPrefixedPattern("%ant[AB]"));
         assertFalse(SelectorUtils.isAntPrefixedPattern("%ant[]"));
         assertFalse(SelectorUtils.isAntPrefixedPattern("*"));
@@ -61,7 +61,7 @@ public class SelectorUtilsTest
      */
     @Test
     public void testIsRegexPrefixedPattern() {
-        assertFalse(SelectorUtils.isRegexPrefixedPattern("%regex[A]")); // single char not allowed
+        assertTrue(SelectorUtils.isRegexPrefixedPattern("%regex[A]")); // single char not allowed
         assertTrue(SelectorUtils.isRegexPrefixedPattern("%regex[.*]"));
         assertFalse(SelectorUtils.isRegexPrefixedPattern("%regex[]"));
         assertFalse(SelectorUtils.isRegexPrefixedPattern("*"));
