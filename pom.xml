@@ -48,6 +48,7 @@ limitations under the License.
   </distributionManagement>
 
   <properties>
+    <jmhVersion>1.36</jmhVersion>
     <project.build.outputTimestamp>2023-03-02T01:23:19Z</project.build.outputTimestamp>
   </properties>
 
@@ -55,19 +56,18 @@ limitations under the License.
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
-      <version>1.36</version>
+      <version>${jmhVersion}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-generator-annprocess</artifactId>
-      <version>1.36</version>
+      <version>${jmhVersion}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -97,8 +97,7 @@ limitations under the License.
               <goal>compile</goal>
             </goals>
             <configuration>
-              <source>1.8</source>
-              <target>1.8</target>
+              <release>8</release>
             </configuration>
           </execution>
         </executions>
@@ -131,16 +130,6 @@ limitations under the License.
             <exclude>org/codehaus/plexus/util/FileBasedTestCase.java</exclude>
             <exclude>**/Test*.java</exclude>
           </excludes>
-          <systemProperties>
-            <property>
-              <name>JAVA_HOME</name>
-              <value>${JAVA_HOME}</value>
-            </property>
-            <property>
-              <name>M2_HOME</name>
-              <value>${M2_HOME}</value>
-            </property>
-          </systemProperties>
         </configuration>
       </plugin>
       <plugin>

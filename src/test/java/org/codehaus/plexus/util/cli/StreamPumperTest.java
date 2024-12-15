@@ -60,11 +60,11 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * <p>StreamPumperTest class.</p>
@@ -73,14 +73,14 @@ import static org.junit.Assert.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class StreamPumperTest {
+class StreamPumperTest {
     private String lineSeparator = System.lineSeparator();
 
     /**
      * <p>testPumping.</p>
      */
     @Test
-    public void testPumping() {
+    void pumping() {
         String line1 = "line1";
         String line2 = "line2";
         String lines = line1 + "\n" + line2;
@@ -99,7 +99,7 @@ public class StreamPumperTest {
      * <p>testPumpingWithPrintWriter.</p>
      */
     @Test
-    public void testPumpingWithPrintWriter() {
+    void pumpingWithPrintWriter() {
         String inputString = "This a test string";
         ByteArrayInputStream bais = new ByteArrayInputStream(inputString.getBytes());
         StringWriter sw = new StringWriter();
@@ -116,12 +116,12 @@ public class StreamPumperTest {
      * <p>testPumperReadsInputStreamUntilEndEvenIfConsumerFails.</p>
      */
     @Test
-    public void testPumperReadsInputStreamUntilEndEvenIfConsumerFails() {
+    void pumperReadsInputStreamUntilEndEvenIfConsumerFails() {
         // the number of bytes generated should surely exceed the read buffer used by the pumper
         GeneratorInputStream gis = new GeneratorInputStream(1024 * 1024 * 4);
         StreamPumper pumper = new StreamPumper(gis, new FailingConsumer());
         pumper.run();
-        assertEquals("input stream was not fully consumed, producer deadlocks", gis.size, gis.read);
+        assertEquals(gis.size, gis.read, "input stream was not fully consumed, producer deadlocks");
         assertTrue(gis.closed);
         assertNotNull(pumper.getException());
     }
@@ -209,7 +209,7 @@ public class StreamPumperTest {
      * <p>testEnabled.</p>
      */
     @Test
-    public void testEnabled() {
+    void enabled() {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("AB\nCE\nEF".getBytes());
         TestConsumer streamConsumer = new TestConsumer();
         StreamPumper streamPumper = new StreamPumper(byteArrayInputStream, streamConsumer);
@@ -221,7 +221,7 @@ public class StreamPumperTest {
      * <p>testDisabled.</p>
      */
     @Test
-    public void testDisabled() {
+    void disabled() {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("AB\nCE\nEF".getBytes());
         TestConsumer streamConsumer = new TestConsumer();
         StreamPumper streamPumper = new StreamPumper(byteArrayInputStream, streamConsumer);

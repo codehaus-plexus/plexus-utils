@@ -19,9 +19,9 @@ package org.codehaus.plexus.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * This is used to test ReflectionUtils for correctness.
@@ -40,7 +40,7 @@ public final class ReflectionUtilsTest {
      * @throws java.lang.IllegalAccessException if any.
      */
     @Test
-    public void testSimpleVariableAccess() throws IllegalAccessException {
+    void simpleVariableAccess() throws IllegalAccessException {
         assertEquals("woohoo", (String) ReflectionUtils.getValueIncludingSuperclasses("myString", testClass));
     }
 
@@ -50,7 +50,7 @@ public final class ReflectionUtilsTest {
      * @throws java.lang.IllegalAccessException if any.
      */
     @Test
-    public void testComplexVariableAccess() throws IllegalAccessException {
+    void complexVariableAccess() throws IllegalAccessException {
         Map<String, Object> map = ReflectionUtils.getVariablesAndValuesIncludingSuperclasses(testClass);
 
         Map myMap = (Map) map.get("myMap");
@@ -65,7 +65,7 @@ public final class ReflectionUtilsTest {
      * @throws java.lang.IllegalAccessException if any.
      */
     @Test
-    public void testSuperClassVariableAccess() throws IllegalAccessException {
+    void superClassVariableAccess() throws IllegalAccessException {
         assertEquals("super-duper", (String) ReflectionUtils.getValueIncludingSuperclasses("mySuperString", testClass));
     }
 
@@ -75,7 +75,7 @@ public final class ReflectionUtilsTest {
      * @throws java.lang.IllegalAccessException if any.
      */
     @Test
-    public void testSettingVariableValue() throws IllegalAccessException {
+    void settingVariableValue() throws IllegalAccessException {
         ReflectionUtils.setVariableValueInObject(testClass, "mySettableString", "mySetString");
 
         assertEquals(

@@ -21,11 +21,12 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.codehaus.plexus.util.Os;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * <p>CommandLineUtilsTest class.</p>
@@ -35,14 +36,14 @@ import static org.junit.Assert.fail;
  * @since 3.4.0
  */
 @SuppressWarnings({"JavaDoc", "deprecation"})
-public class CommandLineUtilsTest {
+class CommandLineUtilsTest {
 
     /**
      * <p>testQuoteArguments.</p>
      */
     @Test
-    public void testQuoteArguments() {
-        try {
+    void quoteArguments() {
+        Assertions.assertDoesNotThrow(() -> {
             String result = CommandLineUtils.quote("Hello");
             System.out.println(result);
             assertEquals("Hello", result);
@@ -52,9 +53,7 @@ public class CommandLineUtilsTest {
             result = CommandLineUtils.quote("\"Hello World\"");
             System.out.println(result);
             assertEquals("\'\"Hello World\"\'", result);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+        });
         try {
             CommandLineUtils.quote("\"Hello \'World\'\'");
             fail();
@@ -68,7 +67,7 @@ public class CommandLineUtilsTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testGetSystemEnvVarsCaseInsensitive() throws Exception {
+    void getSystemEnvVarsCaseInsensitive() throws Exception {
         Properties vars = CommandLineUtils.getSystemEnvVars(false);
         for (Object o : vars.keySet()) {
             String variable = (String) o;
@@ -82,7 +81,7 @@ public class CommandLineUtilsTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testGetSystemEnvVarsWindows() throws Exception {
+    void getSystemEnvVarsWindows() throws Exception {
         if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
             return;
         }
@@ -99,7 +98,7 @@ public class CommandLineUtilsTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testTranslateCommandline() throws Exception {
+    void translateCommandline() throws Exception {
         assertCmdLineArgs(new String[] {}, null);
         assertCmdLineArgs(new String[] {}, "");
 

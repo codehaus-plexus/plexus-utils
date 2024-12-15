@@ -18,13 +18,14 @@ package org.codehaus.plexus.util.dag;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * <p>CycleDetectorTest class.</p>
@@ -33,28 +34,26 @@ import static org.junit.Assert.fail;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class CycleDetectorTest {
+class CycleDetectorTest {
 
     /**
      * <p>testCycyleDetection.</p>
      */
     @Test
-    public void testCycyleDetection() {
+    void cycyleDetection() {
         // No cycle
         //
         // a --> b --->c
         //
-        try {
-            final DAG dag1 = new DAG();
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    final DAG dag1 = new DAG();
 
-            dag1.addEdge("a", "b");
+                    dag1.addEdge("a", "b");
 
-            dag1.addEdge("b", "c");
-
-        } catch (CycleDetectedException e) {
-
-            fail("Cycle should not be detected");
-        }
+                    dag1.addEdge("b", "c");
+                },
+                "Cycle should not be detected");
 
         //
         // a --> b --->c
@@ -77,33 +76,32 @@ public class CycleDetectorTest {
 
             final List<String> cycle = e.getCycle();
 
-            assertNotNull("Cycle should be not null", cycle);
+            assertNotNull(cycle, "Cycle should be not null");
 
-            assertTrue("Cycle contains 'a'", cycle.contains("a"));
+            assertTrue(cycle.contains("a"), "Cycle contains 'a'");
 
-            assertTrue("Cycle contains 'b'", cycle.contains("b"));
+            assertTrue(cycle.contains("b"), "Cycle contains 'b'");
 
-            assertTrue("Cycle contains 'c'", cycle.contains("c"));
+            assertTrue(cycle.contains("c"), "Cycle contains 'c'");
         }
 
         // | --> c
         // a --> b
         // | | --> d
         // --------->
-        try {
-            final DAG dag3 = new DAG();
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    final DAG dag3 = new DAG();
 
-            dag3.addEdge("a", "b");
+                    dag3.addEdge("a", "b");
 
-            dag3.addEdge("b", "c");
+                    dag3.addEdge("b", "c");
 
-            dag3.addEdge("b", "d");
+                    dag3.addEdge("b", "d");
 
-            dag3.addEdge("a", "d");
-
-        } catch (CycleDetectedException e) {
-            fail("Cycle should not be detected");
-        }
+                    dag3.addEdge("a", "d");
+                },
+                "Cycle should not be detected");
 
         // ------------
         // | |
@@ -129,15 +127,15 @@ public class CycleDetectorTest {
         } catch (CycleDetectedException e) {
             final List<String> cycle = e.getCycle();
 
-            assertNotNull("Cycle should be not null", cycle);
+            assertNotNull(cycle, "Cycle should be not null");
 
-            assertEquals("Cycle contains 'a'", "a", (String) cycle.get(0));
+            assertEquals("a", (String) cycle.get(0), "Cycle contains 'a'");
 
-            assertEquals("Cycle contains 'b'", "b", cycle.get(1));
+            assertEquals("b", cycle.get(1), "Cycle contains 'b'");
 
-            assertEquals("Cycle contains 'c'", "c", cycle.get(2));
+            assertEquals("c", cycle.get(2), "Cycle contains 'c'");
 
-            assertEquals("Cycle contains 'a'", "a", (String) cycle.get(3));
+            assertEquals("a", (String) cycle.get(3), "Cycle contains 'a'");
         }
 
         // f --> g --> h
@@ -173,33 +171,33 @@ public class CycleDetectorTest {
         } catch (CycleDetectedException e) {
             final List<String> cycle = e.getCycle();
 
-            assertNotNull("Cycle should be not null", cycle);
+            assertNotNull(cycle, "Cycle should be not null");
 
-            assertEquals("Cycle contains 5 elements", 5, cycle.size());
+            assertEquals(5, cycle.size(), "Cycle contains 5 elements");
 
-            assertEquals("Cycle contains 'b'", "b", (String) cycle.get(0));
+            assertEquals("b", (String) cycle.get(0), "Cycle contains 'b'");
 
-            assertEquals("Cycle contains 'c'", "c", cycle.get(1));
+            assertEquals("c", cycle.get(1), "Cycle contains 'c'");
 
-            assertEquals("Cycle contains 'd'", "d", cycle.get(2));
+            assertEquals("d", cycle.get(2), "Cycle contains 'd'");
 
-            assertEquals("Cycle contains 'e'", "e", (String) cycle.get(3));
+            assertEquals("e", (String) cycle.get(3), "Cycle contains 'e'");
 
-            assertEquals("Cycle contains 'b'", "b", (String) cycle.get(4));
+            assertEquals("b", (String) cycle.get(4), "Cycle contains 'b'");
 
-            assertTrue("Edge exists", dag5.hasEdge("a", "b"));
+            assertTrue(dag5.hasEdge("a", "b"), "Edge exists");
 
-            assertTrue("Edge exists", dag5.hasEdge("b", "c"));
+            assertTrue(dag5.hasEdge("b", "c"), "Edge exists");
 
-            assertTrue("Edge exists", dag5.hasEdge("b", "f"));
+            assertTrue(dag5.hasEdge("b", "f"), "Edge exists");
 
-            assertTrue("Edge exists", dag5.hasEdge("f", "g"));
+            assertTrue(dag5.hasEdge("f", "g"), "Edge exists");
 
-            assertTrue("Edge exists", dag5.hasEdge("g", "h"));
+            assertTrue(dag5.hasEdge("g", "h"), "Edge exists");
 
-            assertTrue("Edge exists", dag5.hasEdge("c", "d"));
+            assertTrue(dag5.hasEdge("c", "d"), "Edge exists");
 
-            assertTrue("Edge exists", dag5.hasEdge("d", "e"));
+            assertTrue(dag5.hasEdge("d", "e"), "Edge exists");
 
             assertFalse(dag5.hasEdge("e", "b"));
         }

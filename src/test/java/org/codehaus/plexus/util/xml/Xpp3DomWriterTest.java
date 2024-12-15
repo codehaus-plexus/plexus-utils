@@ -18,9 +18,9 @@ package org.codehaus.plexus.util.xml;
 
 import java.io.StringWriter;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>Xpp3DomWriterTest class.</p>
@@ -29,31 +29,31 @@ import static org.junit.Assert.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class Xpp3DomWriterTest {
+class Xpp3DomWriterTest {
     private static final String LS = System.getProperty("line.separator");
 
     /**
      * <p>testWriter.</p>
      */
     @Test
-    public void testWriter() {
+    void writer() {
         StringWriter writer = new StringWriter();
 
         Xpp3DomWriter.write(writer, createXpp3Dom());
 
-        assertEquals("Check if output matches", createExpectedXML(true), writer.toString());
+        assertEquals(createExpectedXML(true), writer.toString(), "Check if output matches");
     }
 
     /**
      * <p>testWriterNoEscape.</p>
      */
     @Test
-    public void testWriterNoEscape() {
+    void writerNoEscape() {
         StringWriter writer = new StringWriter();
 
         Xpp3DomWriter.write(new PrettyPrintXMLWriter(writer), createXpp3Dom(), false);
 
-        assertEquals("Check if output matches", createExpectedXML(false), writer.toString());
+        assertEquals(createExpectedXML(false), writer.toString(), "Check if output matches");
     }
 
     private String createExpectedXML(boolean escape) {
