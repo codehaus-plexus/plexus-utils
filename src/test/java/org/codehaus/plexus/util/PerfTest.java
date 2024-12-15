@@ -23,7 +23,7 @@ class PerfTest {
         int len = src.length();
         for (int cnt = 0; cnt < oops; cnt++) {
             for (int i = 0; i < len - 5; i++) {
-                res.append(src.substring(i, i + 4));
+                res.append(src, i, i + 4);
             }
         }
         int i = res.length();

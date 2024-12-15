@@ -26,16 +26,11 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This is used to test IOUtil for correctness. The following checks are performed:
@@ -104,19 +99,18 @@ public final class IOUtilTest {
 
     /** Assert that the contents of two byte arrays are the same. */
     private void assertEqualContent(byte[] b0, byte[] b1) {
-        assertTrue(Arrays.equals(b0, b1), "Content not equal according to java.util.Arrays#equals()");
+        assertArrayEquals(b0, b1, "Content not equal according to java.util.Arrays#equals()");
     }
 
     /** Assert that the content of two files is the same. */
     private void assertEqualContent(File f0, File f1) throws IOException {
-        InputStream is0 = Files.newInputStream(f0.toPath());
-        InputStream is1 = Files.newInputStream(f1.toPath());
         byte[] buf0 = new byte[FILE_SIZE];
         byte[] buf1 = new byte[FILE_SIZE];
         int n0 = 0;
         int n1 = 0;
 
-        try {
+        try (InputStream is0 = Files.newInputStream(f0.toPath());
+                InputStream is1 = Files.newInputStream(f1.toPath())) {
             while (0 <= n0) {
                 n0 = is0.read(buf0);
                 n1 = is1.read(buf1);
@@ -125,11 +119,8 @@ public final class IOUtilTest {
                         "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0 + " vs "
                                 + n1 + ")");
 
-                assertTrue(Arrays.equals(buf0, buf1), "The files " + f0 + " and " + f1 + " have different content");
+                assertArrayEquals(buf0, buf1, "The files " + f0 + " and " + f1 + " have different content");
             }
-        } finally {
-            is0.close();
-            is1.close();
         }
     }
 

@@ -217,7 +217,7 @@ class Xpp3DomTest {
 
         assertEquals(dom, dom);
         assertNotEquals(null, dom);
-        assertNotEquals(dom, new Xpp3Dom((String) null));
+        assertNotEquals(new Xpp3Dom((String) null), dom);
     }
 
     /**
@@ -233,7 +233,7 @@ class Xpp3DomTest {
         Xpp3Dom dom2 = Xpp3DomBuilder.build(new StringReader(testDom));
 
         try {
-            dom2.attributes = new HashMap();
+            dom2.attributes = new HashMap<>();
             dom2.attributes.put("nullValue", null);
             dom2.attributes.put(null, "nullKey");
             dom2.childList.clear();

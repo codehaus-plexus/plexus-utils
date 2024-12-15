@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @since 3.4.0
  */
 class Xpp3DomWriterTest {
-    private static final String LS = System.getProperty("line.separator");
+    private static final String LS = System.lineSeparator();
 
     /**
      * <p>testWriter.</p>
@@ -77,7 +77,7 @@ class Xpp3DomWriterTest {
         if (escape) {
             buf.append("    <el7>element7").append(LS).append("&amp;&quot;&apos;&lt;&gt;</el7>");
         } else {
-            buf.append("    <el7>element7").append(LS).append("&\"\'<></el7>");
+            buf.append("    <el7>element7").append(LS).append("&\"'<></el7>");
         }
         buf.append(LS);
         buf.append("  </el6>");
@@ -116,7 +116,7 @@ class Xpp3DomWriterTest {
         dom.addChild(el6);
 
         Xpp3Dom el7 = new Xpp3Dom("el7");
-        el7.setValue("element7\n&\"\'<>");
+        el7.setValue("element7\n&\"'<>");
         el6.addChild(el7);
 
         return dom;

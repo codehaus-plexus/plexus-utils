@@ -234,7 +234,7 @@ class CommandlineTest {
         assertEquals("-c", shellCommandline[1]);
         String expectedShellCmd = "'/bin/echo' 'hello world'";
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            expectedShellCmd = "'\\bin\\echo' \'hello world\'";
+            expectedShellCmd = "'\\bin\\echo' 'hello world'";
         }
         assertEquals(expectedShellCmd, shellCommandline[2]);
     }
@@ -275,7 +275,7 @@ class CommandlineTest {
     void getShellCommandLineBashWithSingleQuotedArg() throws Exception {
         Commandline cmd = new Commandline(new BourneShell());
         cmd.setExecutable("/bin/echo");
-        cmd.addArguments(new String[] {"\'hello world\'"});
+        cmd.addArguments(new String[] {"'hello world'"});
 
         String[] shellCommandline = cmd.getShellCommandline();
 
@@ -418,7 +418,7 @@ class CommandlineTest {
      */
     @Test
     void onlyQuotedPath() throws Exception {
-        File dir = new File(System.getProperty("basedir"), "target/test/quotedpath\'test");
+        File dir = new File(System.getProperty("basedir"), "target/test/quotedpath'test");
 
         File javaHome = new File(System.getProperty("java.home"));
         File java;
@@ -586,8 +586,7 @@ class CommandlineTest {
             int exitCode = CommandLineUtils.executeCommandLine(cmd, new DefaultConsumer(), err);
 
             if (exitCode != 0) {
-                String msg = "Exit code: " + exitCode + " - " + err.getOutput();
-                throw new Exception(msg.toString());
+                throw new Exception("Exit code: " + exitCode + " - " + err.getOutput());
             }
         } catch (CommandLineException e) {
             throw new Exception("Unable to execute command: " + e.getMessage(), e);

@@ -17,14 +17,12 @@ package org.codehaus.plexus.util;
  */
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test string utils.
@@ -160,8 +158,8 @@ class StringUtilsTest {
      */
     @Test
     void quoteEscapeEmbeddedSingleQuotes() {
-        String src = "This \'is a\' test";
-        String check = "\'This \\\'is a\\\' test\'";
+        String src = "This 'is a' test";
+        String check = "'This \\'is a\\' test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -174,8 +172,8 @@ class StringUtilsTest {
      */
     @Test
     void quoteEscapeEmbeddedSingleQuotesWithPattern() {
-        String src = "This \'is a\' test";
-        String check = "\'This pre'postis apre'post test\'";
+        String src = "This 'is a' test";
+        String check = "'This pre'postis apre'post test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, new char[] {' '}, "pre%spost", false);
@@ -189,7 +187,7 @@ class StringUtilsTest {
     @Test
     void quoteEscapeEmbeddedDoubleQuotesAndSpaces() {
         String src = "This \"is a\" test";
-        String check = "\'This\\ \\\"is\\ a\\\"\\ test\'";
+        String check = "'This\\ \\\"is\\ a\\\"\\ test'";
 
         char[] escaped = {'\'', '\"', ' '};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -216,7 +214,7 @@ class StringUtilsTest {
     @Test
     void quoteWrapWithSingleQuotes() {
         String src = "This is a test";
-        String check = "\'This is a test\'";
+        String check = "'This is a test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -229,7 +227,7 @@ class StringUtilsTest {
      */
     @Test
     void quotePreserveExistingQuotes() {
-        String src = "\'This is a test\'";
+        String src = "'This is a test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -242,8 +240,8 @@ class StringUtilsTest {
      */
     @Test
     void quoteWrapExistingQuotesWhenForceIsTrue() {
-        String src = "\'This is a test\'";
-        String check = "\'\\\'This is a test\\\'\'";
+        String src = "'This is a test'";
+        String check = "'\\'This is a test\\''";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', true);
@@ -256,7 +254,7 @@ class StringUtilsTest {
      */
     @Test
     void quoteShortVersionSingleQuotesPreserved() {
-        String src = "\'This is a test\'";
+        String src = "'This is a test'";
 
         String result = StringUtils.quoteAndEscape(src, '\'');
 
@@ -272,27 +270,27 @@ class StringUtilsTest {
 
         tokens = StringUtils.split("", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[0]), Arrays.asList(tokens));
+        assertEquals(Collections.emptyList(), Arrays.asList(tokens));
 
         tokens = StringUtils.split(", ,,,   ,", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[0]), Arrays.asList(tokens));
+        assertEquals(Collections.emptyList(), Arrays.asList(tokens));
 
         tokens = StringUtils.split("this", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this"}), Arrays.asList(tokens));
+        assertEquals(Collections.singletonList("this"), Arrays.asList(tokens));
 
         tokens = StringUtils.split("this is a test", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test"}), Arrays.asList(tokens));
+        assertEquals(Arrays.asList("this", "is", "a", "test"), Arrays.asList(tokens));
 
         tokens = StringUtils.split("   this   is   a   test  ", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test"}), Arrays.asList(tokens));
+        assertEquals(Arrays.asList("this", "is", "a", "test"), Arrays.asList(tokens));
 
         tokens = StringUtils.split("this is a test, really", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test", "really"}), Arrays.asList(tokens));
+        assertEquals(Arrays.asList("this", "is", "a", "test", "really"), Arrays.asList(tokens));
     }
 
     /**
@@ -323,7 +321,7 @@ class StringUtilsTest {
 
         try {
             StringUtils.unifyLineSeparators(s, "abs");
-            assertTrue(false, "Exception NOT catched");
+            fail("Exception NOT catched");
         } catch (IllegalArgumentException e) {
             assertTrue(true, "Exception catched");
         }

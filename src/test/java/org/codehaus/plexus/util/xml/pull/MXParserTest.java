@@ -370,18 +370,15 @@ class MXParserTest {
      */
     @Test
     void processingInstructionsContainingXml() throws Exception {
-        StringBuffer sb = new StringBuffer();
-
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        sb.append("<project>\n");
-        sb.append(" <?pi\n");
-        sb.append("   <tag>\n");
-        sb.append("   </tag>\n");
-        sb.append(" ?>\n");
-        sb.append("</project>");
+        String sb = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<project>\n"
+                + " <?pi\n"
+                + "   <tag>\n"
+                + "   </tag>\n"
+                + " ?>\n"
+                + "</project>";
 
         MXParser parser = new MXParser();
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         assertEquals(XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken());
         assertEquals(XmlPullParser.START_TAG, parser.nextToken());
@@ -398,15 +395,13 @@ class MXParserTest {
      */
     @Test
     void malformedProcessingInstructionsContainingXmlNoClosingQuestionMark() throws Exception {
-        StringBuffer sb = new StringBuffer();
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        sb.append("<project />\n");
-        sb.append("<?pi\n");
-        sb.append("   <tag>\n");
-        sb.append("   </tag>>\n");
+        String sb = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<project />\n"
+                + "<?pi\n"
+                + "   <tag>\n"
+                + "   </tag>>\n";
 
         MXParser parser = new MXParser();
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         try {
             assertEquals(XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken());
@@ -425,16 +420,14 @@ class MXParserTest {
 
     @Test
     void subsequentProcessingInstructionShort() throws Exception {
-        StringBuffer sb = new StringBuffer();
 
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        sb.append("<project>");
-        sb.append("<!-- comment -->");
-        sb.append("<?m2e ignore?>");
-        sb.append("</project>");
+        String sb = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<project>"
+                + "<!-- comment -->"
+                + "<?m2e ignore?>"
+                + "</project>";
 
         MXParser parser = new MXParser();
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         assertEquals(XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken());
         assertEquals(XmlPullParser.START_TAG, parser.nextToken());
@@ -450,7 +443,7 @@ class MXParserTest {
      */
     @Test
     void subsequentProcessingInstructionMoreThan8k() throws Exception {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         sb.append("<project>");
@@ -494,17 +487,16 @@ class MXParserTest {
      */
     @Test
     void largeTextNoOverflow() throws Exception {
-        StringBuffer sb = new StringBuffer();
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        sb.append("<largetextblock>");
-        // Anything above 33,554,431 would fail without a fix for
-        // https://web.archive.org/web/20070831191548/http://www.extreme.indiana.edu/bugzilla/show_bug.cgi?id=228
-        // with java.io.IOException: error reading input, returned 0
-        sb.append(new String(new char[33554432]));
-        sb.append("</largetextblock>");
+        String sb = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<largetextblock>"
+                +
+                // Anything above 33,554,431 would fail without a fix for
+                // https://web.archive.org/web/20070831191548/http://www.extreme.indiana.edu/bugzilla/show_bug.cgi?id=228
+                // with java.io.IOException: error reading input, returned 0
+                new String(new char[33554432])
+                + "</largetextblock>";
 
         MXParser parser = new MXParser();
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         assertEquals(XmlPullParser.PROCESSING_INSTRUCTION, parser.nextToken());
         assertEquals(XmlPullParser.START_TAG, parser.nextToken());
@@ -573,11 +565,9 @@ class MXParserTest {
     void malformedProcessingInstructionSpaceBeforeName() throws Exception {
         MXParser parser = new MXParser();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("<? shouldhavenospace>");
-        sb.append("<project />");
+        String sb = "<? shouldhavenospace>" + "<project />";
 
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         try {
             assertEquals(XmlPullParser.PROCESSING_INSTRUCTION, parser.next());
@@ -603,11 +593,9 @@ class MXParserTest {
     void malformedProcessingInstructionNoClosingQuestionMark() throws Exception {
         MXParser parser = new MXParser();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("<?shouldhavenospace>");
-        sb.append("<project />");
+        String sb = "<?shouldhavenospace>" + "<project />";
 
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         try {
             assertEquals(XmlPullParser.PROCESSING_INSTRUCTION, parser.next());
@@ -632,11 +620,9 @@ class MXParserTest {
     void subsequentMalformedProcessingInstructionNoClosingQuestionMark() throws Exception {
         MXParser parser = new MXParser();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("<project />");
-        sb.append("<?shouldhavenospace>");
+        String sb = "<project />" + "<?shouldhavenospace>";
 
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         try {
             assertEquals(XmlPullParser.START_TAG, parser.next());
@@ -660,11 +646,9 @@ class MXParserTest {
     @Test
     void subsequentAbortedProcessingInstruction() throws Exception {
         MXParser parser = new MXParser();
-        StringBuilder sb = new StringBuilder();
-        sb.append("<project />");
-        sb.append("<?aborted");
+        String sb = "<project />" + "<?aborted";
 
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         try {
             assertEquals(XmlPullParser.START_TAG, parser.next());
@@ -682,11 +666,9 @@ class MXParserTest {
     @Test
     void subsequentAbortedComment() throws Exception {
         MXParser parser = new MXParser();
-        StringBuilder sb = new StringBuilder();
-        sb.append("<project />");
-        sb.append("<!-- aborted");
+        String sb = "<project />" + "<!-- aborted";
 
-        parser.setInput(new StringReader(sb.toString()));
+        parser.setInput(new StringReader(sb));
 
         try {
             assertEquals(XmlPullParser.START_TAG, parser.next());

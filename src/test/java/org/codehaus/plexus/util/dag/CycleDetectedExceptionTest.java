@@ -36,7 +36,7 @@ class CycleDetectedExceptionTest {
      */
     @Test
     void exception() {
-        final List<String> cycle = new ArrayList<String>();
+        final List<String> cycle = new ArrayList<>();
 
         cycle.add("a");
 

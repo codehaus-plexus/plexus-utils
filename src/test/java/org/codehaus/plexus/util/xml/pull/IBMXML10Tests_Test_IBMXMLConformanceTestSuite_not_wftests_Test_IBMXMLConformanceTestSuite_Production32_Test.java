@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -218,7 +219,8 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      *
      * NOTE: This test is SKIPPED as MXParser does not support parsing inside DOCTYPEDECL.
      */
-    // @Test
+    @Test
+    @Disabled
     public void testibm_not_wf_P32_ibm32n09xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n09.xml"))) {
             parser.setInput(reader);

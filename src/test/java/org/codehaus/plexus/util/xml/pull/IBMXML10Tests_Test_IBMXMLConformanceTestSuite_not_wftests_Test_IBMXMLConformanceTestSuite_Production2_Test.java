@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -662,7 +663,8 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      *
      * NOTE: This test file is malformed into the original test suite, so I skip it.
      */
-    // @Test
+    @Test
+    @Disabled
     public void testibm_not_wf_P02_ibm02n30xml() throws IOException {
         try (BufferedReader reader = Files.newBufferedReader(
                 Paths.get(testResourcesDir.getCanonicalPath(), "not-wf/P02/ibm02n30.xml"),
@@ -687,7 +689,8 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      *
      * NOTE: This test file is malformed into the original test suite, so I skip it.
      */
-    // @Test
+    @Test
+    @Disabled
     public void testibm_not_wf_P02_ibm02n31xml() throws IOException {
         try (FileInputStream is = new FileInputStream(new File(testResourcesDir, "not-wf/P02/ibm02n31.xml"));
                 InputStreamReader reader = new InputStreamReader(is, "ISO-8859-15")) {

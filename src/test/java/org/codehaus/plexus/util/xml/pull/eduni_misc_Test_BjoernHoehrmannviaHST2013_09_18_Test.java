@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -133,7 +134,8 @@ public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
      *
      * NOTE: This test is SKIPPED as MXParser do not supports DOCDECL parsing.
      */
-    // @Test
+    @Test
+    @Disabled
     public void testhst_bh_005() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "005.xml"))) {
             parser.setInput(reader);

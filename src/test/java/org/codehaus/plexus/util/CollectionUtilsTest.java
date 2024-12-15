@@ -41,7 +41,7 @@ class CollectionUtilsTest {
      */
     @Test
     void mergeMaps() {
-        Map<String, String> dominantMap = new HashMap<String, String>();
+        Map<String, String> dominantMap = new HashMap<>();
         dominantMap.put("a", "a");
         dominantMap.put("b", "b");
         dominantMap.put("c", "c");
@@ -49,7 +49,7 @@ class CollectionUtilsTest {
         dominantMap.put("e", "e");
         dominantMap.put("f", "f");
 
-        Map<String, String> recessiveMap = new HashMap<String, String>();
+        Map<String, String> recessiveMap = new HashMap<>();
         recessiveMap.put("a", "invalid");
         recessiveMap.put("b", "invalid");
         recessiveMap.put("c", "invalid");
@@ -60,7 +60,7 @@ class CollectionUtilsTest {
         Map<String, String> result = CollectionUtils.mergeMaps(dominantMap, recessiveMap);
 
         // We should have 9 elements
-        assertEquals(9, result.keySet().size());
+        assertEquals(9, result.size());
 
         // Check the elements.
         assertEquals("a", result.get("a"));
@@ -86,7 +86,7 @@ class CollectionUtilsTest {
         assertNull(result0);
 
         // Test with an array with a single element.
-        Map<String, String> map1 = new HashMap<String, String>();
+        Map<String, String> map1 = new HashMap<>();
         map1.put("a", "a");
 
         Map<String, String> result1 = CollectionUtils.mergeMaps(new Map[] {map1});
@@ -94,7 +94,7 @@ class CollectionUtilsTest {
         assertEquals("a", result1.get("a"));
 
         // Test with an array with two elements.
-        Map<String, String> map2 = new HashMap<String, String>();
+        Map<String, String> map2 = new HashMap<>();
         map2.put("a", "aa");
         map2.put("b", "bb");
 
@@ -110,7 +110,7 @@ class CollectionUtilsTest {
         assertEquals("bb", result3.get("b"));
 
         // Test with an array with three elements.
-        Map<String, String> map3 = new HashMap<String, String>();
+        Map<String, String> map3 = new HashMap<>();
         map3.put("a", "aaa");
         map3.put("b", "bbb");
         map3.put("c", "ccc");
@@ -175,18 +175,18 @@ class CollectionUtilsTest {
         });
 
         // Values that should be taken from systemProperties.
-        assertEquals("/projects/maven", (String) result.get("maven.home"));
+        assertEquals("/projects/maven", result.get("maven.home"));
 
         // Values that should be taken from userBuildProperties.
-        assertEquals("/opt/maven/artifact", (String) result.get("maven.repo.local"));
-        assertEquals("false", (String) result.get("maven.repo.remote.enabled"));
-        assertEquals("jvanzyl", (String) result.get("maven.username"));
+        assertEquals("/opt/maven/artifact", result.get("maven.repo.local"));
+        assertEquals("false", result.get("maven.repo.remote.enabled"));
+        assertEquals("jvanzyl", result.get("maven.username"));
 
         // Values take from projectBuildProperties.
-        assertEquals("maven", (String) result.get("maven.final.name"));
+        assertEquals("maven", result.get("maven.final.name"));
 
         // Values take from projectProperties.
-        assertEquals(mavenRepoRemote, (String) result.get("maven.repo.remote"));
+        assertEquals(mavenRepoRemote, result.get("maven.repo.remote"));
     }
 
     /**
@@ -194,7 +194,7 @@ class CollectionUtilsTest {
      */
     @Test
     void iteratorToListWithAPopulatedList() {
-        List<String> original = new ArrayList<String>();
+        List<String> original = new ArrayList<>();
 
         original.add("en");
         original.add("to");
@@ -216,7 +216,7 @@ class CollectionUtilsTest {
      */
     @Test
     void iteratorToListWithAEmptyList() {
-        List<String> original = new ArrayList<String>();
+        List<String> original = new ArrayList<>();
 
         List<String> copy = CollectionUtils.iteratorToList(original.iterator());
 
