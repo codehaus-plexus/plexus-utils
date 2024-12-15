@@ -52,10 +52,10 @@ class CommandLineUtilsTest {
             assertEquals("\"Hello World\"", result);
             result = CommandLineUtils.quote("\"Hello World\"");
             System.out.println(result);
-            assertEquals("\'\"Hello World\"\'", result);
+            assertEquals("'\"Hello World\"'", result);
         });
         try {
-            CommandLineUtils.quote("\"Hello \'World\'\'");
+            CommandLineUtils.quote("\"Hello 'World''");
             fail();
         } catch (Exception e) {
         }

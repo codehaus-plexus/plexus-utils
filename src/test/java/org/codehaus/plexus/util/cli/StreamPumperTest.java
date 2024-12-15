@@ -164,7 +164,7 @@ class StreamPumperTest {
      */
     static class TestConsumer implements StreamConsumer {
 
-        private List<String> lines = new ArrayList<String>();
+        private List<String> lines = new ArrayList<>();
 
         /**
          * Checks to see if this consumer consumed a particular line. This method will wait up to timeout number of

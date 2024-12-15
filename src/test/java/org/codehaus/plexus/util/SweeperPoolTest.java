@@ -144,7 +144,7 @@ class SweeperPoolTest {
     }
 
     class TestObjectPool extends SweeperPool {
-        private Vector<Object> disposedObjects = new Vector<Object>();
+        private Vector<Object> disposedObjects = new Vector<>();
 
         public TestObjectPool(int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize) {
             super(maxSize, minSize, intialCapacity, sweepInterval, triggerSize);

@@ -172,7 +172,7 @@ class ReflectionValueExtractorTest {
      */
     @Test
     void mappedDottedKey() throws Exception {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("a.b", "a.b-value");
 
         assertEquals("a.b-value", ReflectionValueExtractor.evaluate("h.value(a.b)", new ValueHolder(map)));
@@ -185,9 +185,9 @@ class ReflectionValueExtractorTest {
      */
     @Test
     void indexedMapped() throws Exception {
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        Map<Object, Object> map = new HashMap<>();
         map.put("a", "a-value");
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         list.add(map);
 
         assertEquals("a-value", ReflectionValueExtractor.evaluate("h.value[0](a)", new ValueHolder(list)));
@@ -200,9 +200,9 @@ class ReflectionValueExtractorTest {
      */
     @Test
     void mappedIndexed() throws Exception {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         list.add("a-value");
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        Map<Object, Object> map = new HashMap<>();
         map.put("a", list);
         assertEquals("a-value", ReflectionValueExtractor.evaluate("h.value(a)[0]", new ValueHolder(map)));
     }
@@ -214,7 +214,7 @@ class ReflectionValueExtractorTest {
      */
     @Test
     void mappedMissingDot() throws Exception {
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        Map<Object, Object> map = new HashMap<>();
         map.put("a", new ValueHolder("a-value"));
         assertNull(ReflectionValueExtractor.evaluate("h.value(a)value", new ValueHolder(map)));
     }
@@ -226,7 +226,7 @@ class ReflectionValueExtractorTest {
      */
     @Test
     void indexedMissingDot() throws Exception {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         list.add(new ValueHolder("a-value"));
         assertNull(ReflectionValueExtractor.evaluate("h.value[0]value", new ValueHolder(list)));
     }
@@ -248,7 +248,7 @@ class ReflectionValueExtractorTest {
      */
     @Test
     void badIndexedSyntax() throws Exception {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         list.add("a-value");
         Object value = new ValueHolder(list);
 
@@ -267,7 +267,7 @@ class ReflectionValueExtractorTest {
      */
     @Test
     void badMappedSyntax() throws Exception {
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        Map<Object, Object> map = new HashMap<>();
         map.put("a", "a-value");
         Object value = new ValueHolder(map);
 
@@ -412,7 +412,7 @@ class ReflectionValueExtractorTest {
 
         private String version;
 
-        private Map<String, Artifact> artifactMap = new HashMap<String, Artifact>();
+        private Map<String, Artifact> artifactMap = new HashMap<>();
         private String description;
 
         public void setModelVersion(String modelVersion) {

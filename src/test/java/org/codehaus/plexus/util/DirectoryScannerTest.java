@@ -551,7 +551,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
             "directoryTest" + File.separator + "test-dir-123" + File.separator + "file1.dat"
         };
 
-        final Set<String> scannedDirSet = new HashSet<String>();
+        final Set<String> scannedDirSet = new HashSet<>();
 
         DirectoryScanner ds = new DirectoryScanner() {
             @Override
@@ -570,7 +570,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
         assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
 
         Set<String> expectedScannedDirSet =
-                new HashSet<String>(Arrays.asList("io", "directoryTest", "testDir123", "test_dir_123", "test-dir-123"));
+                new HashSet<>(Arrays.asList("io", "directoryTest", "testDir123", "test_dir_123", "test-dir-123"));
 
         assertEquals(expectedScannedDirSet, scannedDirSet);
     }
@@ -626,7 +626,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
             System.out.println(file);
         }
 
-        List<String> failedToExclude = new ArrayList<String>();
+        List<String> failedToExclude = new ArrayList<>();
         for (String excludedPath : excludedPaths) {
             String alt = excludedPath.replace('/', '\\');
             System.out.println("Searching for exclusion as: " + excludedPath + "\nor: " + alt);
@@ -635,7 +635,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
             }
         }
 
-        List<String> failedToInclude = new ArrayList<String>();
+        List<String> failedToInclude = new ArrayList<>();
         for (String includedPath : includedPaths) {
             String alt = includedPath.replace('/', '\\');
             System.out.println("Searching for inclusion as: " + includedPath + "\nor: " + alt);

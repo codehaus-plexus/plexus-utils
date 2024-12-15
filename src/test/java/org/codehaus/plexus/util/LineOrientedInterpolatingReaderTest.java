@@ -78,7 +78,7 @@ class LineOrientedInterpolatingReaderTest {
     }
 
     private Map<String, String> getStandardMap() {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
         return m;

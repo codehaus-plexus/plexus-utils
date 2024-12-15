@@ -43,7 +43,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void shouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("test", "TestValue");
 
         String testStr = "This is a ${test";
@@ -61,7 +61,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void shouldNotInterpolateExpressionWithMissingEndToken() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("test", "TestValue");
 
         String testStr = "This is a ${test, really";
@@ -76,7 +76,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void shouldNotInterpolateWithMalformedStartToken() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("test", "testValue");
 
         String foo = "This is a $!test} again";
@@ -91,7 +91,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void shouldNotInterpolateWithMalformedEndToken() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("test", "testValue");
 
         String foo = "This is a ${test!} again";
@@ -106,7 +106,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void interpolationWithMulticharDelimiters() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("test", "testValue");
 
         String foo = "This is a ${test$} again";
@@ -121,7 +121,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void defaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
 
@@ -137,7 +137,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void defaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
 
@@ -153,7 +153,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void interpolationWithSpecifiedBoundaryTokens() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
 
@@ -169,7 +169,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void interpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
 
@@ -185,7 +185,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void interpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
 
@@ -201,7 +201,7 @@ class InterpolationFilterReaderTest {
      */
     @Test
     void interpolationWithSpecifiedBoundaryTokensAndAdditionalTokenCharacter() throws Exception {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
 

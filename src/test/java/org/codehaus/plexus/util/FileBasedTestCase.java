@@ -67,14 +67,9 @@ public abstract class FileBasedTestCase {
 
         byte[] data = generateTestData(size);
 
-        final BufferedOutputStream output = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
-
-        try {
+        try (BufferedOutputStream output = new BufferedOutputStream(Files.newOutputStream(file.toPath()))) {
             output.write(data);
-
             return data;
-        } finally {
-            output.close();
         }
     }
 

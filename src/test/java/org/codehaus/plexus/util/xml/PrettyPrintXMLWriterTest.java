@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.NoSuchElementException;
 
@@ -178,12 +179,10 @@ class PrettyPrintXMLWriterTest {
             assertTrue(dir.mkdir(), "cannot create directory test-xml");
         }
         File xmlFile = new File(dir, "test-issue-51.xml");
-        OutputStreamWriter osw = new OutputStreamWriter(Files.newOutputStream(xmlFile.toPath()), "UTF-8");
-        writer = new PrettyPrintXMLWriter(osw);
-
-        int iterations = 20000;
-
-        try {
+        try (OutputStreamWriter osw =
+                new OutputStreamWriter(Files.newOutputStream(xmlFile.toPath()), StandardCharsets.UTF_8); ) {
+            writer = new PrettyPrintXMLWriter(osw);
+            int iterations = 20000;
             for (int i = 0; i < iterations; ++i) {
                 writer.startElement(Tag.DIV.toString() + i);
                 writer.addAttribute("class", "someattribute");
@@ -193,10 +192,6 @@ class PrettyPrintXMLWriterTest {
             }
         } catch (NoSuchElementException e) {
             fail("Should not throw a NoSuchElementException");
-        } finally {
-            if (osw != null) {
-                osw.close();
-            }
         }
     }
 
@@ -235,34 +230,29 @@ class PrettyPrintXMLWriterTest {
     }
 
     private String expectedResult(String lineIndenter, String lineSeparator) {
-        StringBuilder expected = new StringBuilder();
-
-        expected.append("<html>").append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 1)).append("<head>").append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 2))
-                .append("<title>title</title>")
-                .append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 2))
-                .append("<meta name=\"author\" content=\"Author\"/>")
-                .append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 2))
-                .append("<meta name=\"date\" content=\"Date\"/>")
-                .append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 1)).append("</head>").append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 1)).append("<body>").append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 2))
-                .append("<p>Paragraph 1, line 1. Paragraph 1, line 2.</p>")
-                .append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 2))
-                .append("<div class=\"section\">")
-                .append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 3))
-                .append("<h2>Section title</h2>")
-                .append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 2)).append("</div>").append(lineSeparator);
-        expected.append(StringUtils.repeat(lineIndenter, 1)).append("</body>").append(lineSeparator);
-        expected.append("</html>");
-
-        return expected.toString();
+        return "<html>" + lineSeparator + StringUtils.repeat(lineIndenter, 1)
+                + "<head>" + lineSeparator + StringUtils.repeat(lineIndenter, 2)
+                + "<title>title</title>"
+                + lineSeparator
+                + StringUtils.repeat(lineIndenter, 2)
+                + "<meta name=\"author\" content=\"Author\"/>"
+                + lineSeparator
+                + StringUtils.repeat(lineIndenter, 2)
+                + "<meta name=\"date\" content=\"Date\"/>"
+                + lineSeparator
+                + StringUtils.repeat(lineIndenter, 1)
+                + "</head>" + lineSeparator + StringUtils.repeat(lineIndenter, 1)
+                + "<body>" + lineSeparator + StringUtils.repeat(lineIndenter, 2)
+                + "<p>Paragraph 1, line 1. Paragraph 1, line 2.</p>"
+                + lineSeparator
+                + StringUtils.repeat(lineIndenter, 2)
+                + "<div class=\"section\">"
+                + lineSeparator
+                + StringUtils.repeat(lineIndenter, 3)
+                + "<h2>Section title</h2>"
+                + lineSeparator
+                + StringUtils.repeat(lineIndenter, 2)
+                + "</div>" + lineSeparator + StringUtils.repeat(lineIndenter, 1)
+                + "</body>" + lineSeparator + "</html>";
     }
 }

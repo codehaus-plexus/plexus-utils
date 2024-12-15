@@ -184,11 +184,8 @@ class Xpp3DomBuilderTest {
      */
     @Test
     void inputLocationTracking() throws IOException, XmlPullParserException {
-        Xpp3DomBuilder.InputLocationBuilder ilb = new Xpp3DomBuilder.InputLocationBuilder() {
-            public Object toInputLocation(XmlPullParser parser) {
-                return parser.getLineNumber(); // store only line number as a simple Integer
-            }
-        };
+        // store only line number as a simple Integer
+        Xpp3DomBuilder.InputLocationBuilder ilb = XmlPullParser::getLineNumber;
         Xpp3Dom dom = Xpp3DomBuilder.build(new StringReader(createDomString()), true, ilb);
         Xpp3Dom expectedDom = createExpectedDom();
         assertEquals(expectedDom.getInputLocation(), dom.getInputLocation(), "root input location");
@@ -206,40 +203,31 @@ class Xpp3DomBuilderTest {
     }
 
     private static String getAttributeEncodedString() {
-        StringBuilder domString = new StringBuilder();
-        domString.append("<root>");
-        domString.append(LS);
-        domString.append("  <el att=\"&lt;foo&gt;\">bar</el>");
-        domString.append(LS);
-        domString.append("</root>");
+        String domString = "<root>" + LS + "  <el att=\"&lt;foo&gt;\">bar</el>" + LS + "</root>";
 
-        return domString.toString();
+        return domString;
     }
 
     private static String getEncodedString() {
-        StringBuilder domString = new StringBuilder();
-        domString.append("<root>\n");
-        domString.append("  <el>\"text\"</el>\n");
-        domString.append("  <ela><![CDATA[<b>\"text\"</b>]]></ela>\n");
-        domString.append("  <elb>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</elb>\n");
-        domString.append("</root>");
+        String domString = "<root>\n" + "  <el>\"text\"</el>\n"
+                + "  <ela><![CDATA[<b>\"text\"</b>]]></ela>\n"
+                + "  <elb>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</elb>\n"
+                + "</root>";
 
-        return domString.toString();
+        return domString;
     }
 
     private static String getExpectedString() {
-        StringBuilder domString = new StringBuilder();
-        domString.append("<root>");
-        domString.append(LS);
-        domString.append("  <el>&quot;text&quot;</el>");
-        domString.append(LS);
-        domString.append("  <ela>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</ela>");
-        domString.append(LS);
-        domString.append("  <elb>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</elb>");
-        domString.append(LS);
-        domString.append("</root>");
+        String domString = "<root>" + LS
+                + "  <el>&quot;text&quot;</el>"
+                + LS
+                + "  <ela>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</ela>"
+                + LS
+                + "  <elb>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</elb>"
+                + LS
+                + "</root>";
 
-        return domString.toString();
+        return domString;
     }
 
     //
@@ -247,18 +235,16 @@ class Xpp3DomBuilderTest {
     //
 
     private static String createDomString() {
-        StringBuilder buf = new StringBuilder();
-        buf.append("<root>\n");
-        buf.append(" <el1> element1\n </el1>\n");
-        buf.append(" <el2 att2='attribute2&#10;nextline'>\n");
-        buf.append("  <el3 att3='attribute3'>element3</el3>\n");
-        buf.append(" </el2>\n");
-        buf.append(" <el4></el4>\n");
-        buf.append(" <el5/>\n");
-        buf.append(" <el6 xml:space=\"preserve\">  do not trim  </el6>\n");
-        buf.append("</root>\n");
+        String buf = "<root>\n" + " <el1> element1\n </el1>\n"
+                + " <el2 att2='attribute2&#10;nextline'>\n"
+                + "  <el3 att3='attribute3'>element3</el3>\n"
+                + " </el2>\n"
+                + " <el4></el4>\n"
+                + " <el5/>\n"
+                + " <el6 xml:space=\"preserve\">  do not trim  </el6>\n"
+                + "</root>\n";
 
-        return buf.toString();
+        return buf;
     }
 
     private static Xpp3Dom createExpectedDom() {

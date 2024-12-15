@@ -129,13 +129,13 @@ class CycleDetectorTest {
 
             assertNotNull(cycle, "Cycle should be not null");
 
-            assertEquals("a", (String) cycle.get(0), "Cycle contains 'a'");
+            assertEquals("a", cycle.get(0), "Cycle contains 'a'");
 
             assertEquals("b", cycle.get(1), "Cycle contains 'b'");
 
             assertEquals("c", cycle.get(2), "Cycle contains 'c'");
 
-            assertEquals("a", (String) cycle.get(3), "Cycle contains 'a'");
+            assertEquals("a", cycle.get(3), "Cycle contains 'a'");
         }
 
         // f --> g --> h
@@ -175,15 +175,15 @@ class CycleDetectorTest {
 
             assertEquals(5, cycle.size(), "Cycle contains 5 elements");
 
-            assertEquals("b", (String) cycle.get(0), "Cycle contains 'b'");
+            assertEquals("b", cycle.get(0), "Cycle contains 'b'");
 
             assertEquals("c", cycle.get(1), "Cycle contains 'c'");
 
             assertEquals("d", cycle.get(2), "Cycle contains 'd'");
 
-            assertEquals("e", (String) cycle.get(3), "Cycle contains 'e'");
+            assertEquals("e", cycle.get(3), "Cycle contains 'e'");
 
-            assertEquals("b", (String) cycle.get(4), "Cycle contains 'b'");
+            assertEquals("b", cycle.get(4), "Cycle contains 'b'");
 
             assertTrue(dag5.hasEdge("a", "b"), "Edge exists");
 

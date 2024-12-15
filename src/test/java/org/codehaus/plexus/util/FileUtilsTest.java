@@ -26,6 +26,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -227,7 +228,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
                 File winFile = new File(getTestDirectory(), "bla*bla");
                 winFile.deleteOnExit();
                 FileUtils.mkdir(winFile.getAbsolutePath());
-                assertTrue(false);
+                fail();
             } catch (IllegalArgumentException e) {
                 assertTrue(true);
             }
@@ -307,12 +308,9 @@ public final class FileUtilsTest extends FileBasedTestCase {
         FileUtils.copyURLToFile(getClass().getResource(resourceName), file);
 
         // Tests that resource was copied correctly
-        final InputStream fis = Files.newInputStream(file.toPath());
-        try {
+        try (InputStream fis = Files.newInputStream(file.toPath())) {
             assertTrue(
                     IOUtil.contentEquals(getClass().getResourceAsStream(resourceName), fis), "Content is not equal.");
-        } finally {
-            fis.close();
         }
     }
 
@@ -367,7 +365,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
                 File winFile = new File(getTestDirectory(), "bla*bla");
                 winFile.deleteOnExit();
                 FileUtils.forceMkdir(winFile);
-                assertTrue(false);
+                fail();
             } catch (IllegalArgumentException e) {
                 assertTrue(true);
             }
@@ -883,9 +881,9 @@ public final class FileUtilsTest extends FileBasedTestCase {
         final String[][] testsWithPaths = {
             {sep + "tmp" + sep + "foo" + sep + "filename.ext", "ext"},
             {"C:" + sep + "temp" + sep + "foo" + sep + "filename.ext", "ext"},
-            {"" + sep + "tmp" + sep + "foo.bar" + sep + "filename.ext", "ext"},
+            {sep + "tmp" + sep + "foo.bar" + sep + "filename.ext", "ext"},
             {"C:" + sep + "temp" + sep + "foo.bar" + sep + "filename.ext", "ext"},
-            {"" + sep + "tmp" + sep + "foo.bar" + sep + "README", ""},
+            {sep + "tmp" + sep + "foo.bar" + sep + "README", ""},
             {"C:" + sep + "temp" + sep + "foo.bar" + sep + "README", ""},
             {".." + sep + "filename.ext", "ext"},
             {"blabla", ""}
@@ -1410,14 +1408,14 @@ public final class FileUtilsTest extends FileBasedTestCase {
         File a1 = new File(a, "a");
         a1.mkdir();
 
-        StringBuilder path = new StringBuilder("");
+        StringBuilder path = new StringBuilder();
         for (int i = 0; i < 100; i++) {
             path.append("../a/");
         }
 
         File f = new File(a1, path.toString() + "test.txt");
 
-        InputStream is = new ByteArrayInputStream("Blabla".getBytes("UTF-8"));
+        InputStream is = new ByteArrayInputStream("Blabla".getBytes(StandardCharsets.UTF_8));
         OutputStream os = Files.newOutputStream(f.getCanonicalFile().toPath());
         IOUtil.copy(is, os);
         IOUtil.close(is);
