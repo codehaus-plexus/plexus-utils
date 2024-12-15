@@ -25,21 +25,21 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.util.Objects;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CachingWriterTest {
+class CachingWriterTest {
 
     Path tempDir;
     Path checkLastModified;
 
-    @Before
-    public void setup() throws IOException {
+    @BeforeEach
+    void setup() throws IOException {
         Path dir = Paths.get("target/io");
         Files.createDirectories(dir);
         tempDir = Files.createTempDirectory(dir, "temp-");
@@ -60,7 +60,7 @@ public class CachingWriterTest {
     }
 
     @Test
-    public void testNoOverwriteWithFlush() throws IOException, InterruptedException {
+    void noOverwriteWithFlush() throws IOException, InterruptedException {
         String data = "Hello world!";
         Path path = tempDir.resolve("file-bigger.txt");
         assertFalse(Files.exists(path));
@@ -85,7 +85,7 @@ public class CachingWriterTest {
     }
 
     @Test
-    public void testWriteNoExistingFile() throws IOException, InterruptedException {
+    void writeNoExistingFile() throws IOException, InterruptedException {
         String data = "Hello world!";
         Path path = tempDir.resolve("file.txt");
         assertFalse(Files.exists(path));

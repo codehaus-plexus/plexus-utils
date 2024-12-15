@@ -1,22 +1,6 @@
 package org.codehaus.plexus.util;
 
-/*
- * Copyright 2011 The Codehaus Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * <p>PerfTest class.</p>
@@ -25,7 +9,7 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class PerfTest {
+class PerfTest {
     String src = "012345578901234556789012345678901234456789012345678901234567890";
 
     private final int oops = 100;
@@ -34,7 +18,7 @@ public class PerfTest {
      * <p>testSubString.</p>
      */
     @Test
-    public void testSubString() {
+    void subString() {
         StringBuilder res = new StringBuilder();
         int len = src.length();
         for (int cnt = 0; cnt < oops; cnt++) {
@@ -50,7 +34,7 @@ public class PerfTest {
      * <p>testResDir.</p>
      */
     @Test
-    public void testResDir() {
+    void resDir() {
         StringBuilder res = new StringBuilder();
         int len = src.length();
         for (int cnt = 0; cnt < oops; cnt++) {

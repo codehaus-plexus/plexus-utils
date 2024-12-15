@@ -1,25 +1,10 @@
 package org.codehaus.plexus.util.cli;
 
-/*
- * Copyright The Codehaus Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * <p>EnhancedStringTokenizerTest class.</p>
@@ -28,12 +13,12 @@ import static org.junit.Assert.fail;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class EnhancedStringTokenizerTest {
+class EnhancedStringTokenizerTest {
     /**
      * <p>test1.</p>
      */
     @Test
-    public void test1() {
+    void test1() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("this is a test string");
         StringBuilder sb = new StringBuilder();
         while (est.hasMoreTokens()) {
@@ -47,58 +32,58 @@ public class EnhancedStringTokenizerTest {
      * <p>test2.</p>
      */
     @Test
-    public void test2() {
+    void test2() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1,,,3,,4", ",");
-        assertEquals("Token 1", "1", est.nextToken());
-        assertEquals("Token 2", "", est.nextToken());
-        assertEquals("Token 3", "", est.nextToken());
-        assertEquals("Token 4", "3", est.nextToken());
-        assertEquals("Token 5", "", est.nextToken());
-        assertEquals("Token 6", "4", est.nextToken());
+        assertEquals("1", est.nextToken(), "Token 1");
+        assertEquals("", est.nextToken(), "Token 2");
+        assertEquals("", est.nextToken(), "Token 3");
+        assertEquals("3", est.nextToken(), "Token 4");
+        assertEquals("", est.nextToken(), "Token 5");
+        assertEquals("4", est.nextToken(), "Token 6");
     }
 
     /**
      * <p>test3.</p>
      */
     @Test
-    public void test3() {
+    void test3() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1,,,3,,4", ",", true);
-        assertEquals("Token 1", "1", est.nextToken());
-        assertEquals("Token 2", ",", est.nextToken());
-        assertEquals("Token 3", "", est.nextToken());
-        assertEquals("Token 4", ",", est.nextToken());
-        assertEquals("Token 5", "", est.nextToken());
-        assertEquals("Token 6", ",", est.nextToken());
-        assertEquals("Token 7", "3", est.nextToken());
-        assertEquals("Token 8", ",", est.nextToken());
-        assertEquals("Token 9", "", est.nextToken());
-        assertEquals("Token 10", ",", est.nextToken());
-        assertEquals("Token 11", "4", est.nextToken());
+        assertEquals("1", est.nextToken(), "Token 1");
+        assertEquals(",", est.nextToken(), "Token 2");
+        assertEquals("", est.nextToken(), "Token 3");
+        assertEquals(",", est.nextToken(), "Token 4");
+        assertEquals("", est.nextToken(), "Token 5");
+        assertEquals(",", est.nextToken(), "Token 6");
+        assertEquals("3", est.nextToken(), "Token 7");
+        assertEquals(",", est.nextToken(), "Token 8");
+        assertEquals("", est.nextToken(), "Token 9");
+        assertEquals(",", est.nextToken(), "Token 10");
+        assertEquals("4", est.nextToken(), "Token 11");
     }
 
     /**
      * <p>testMultipleDelim.</p>
      */
     @Test
-    public void testMultipleDelim() {
+    void multipleDelim() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1 2|3|4", " |", true);
-        assertEquals("Token 1", "1", est.nextToken());
-        assertEquals("Token 2", " ", est.nextToken());
-        assertEquals("Token 3", "2", est.nextToken());
-        assertEquals("Token 4", "|", est.nextToken());
-        assertEquals("Token 5", "3", est.nextToken());
-        assertEquals("Token 6", "|", est.nextToken());
-        assertEquals("Token 7", "4", est.nextToken());
-        assertEquals("est.hasMoreTokens()", false, est.hasMoreTokens());
+        assertEquals("1", est.nextToken(), "Token 1");
+        assertEquals(" ", est.nextToken(), "Token 2");
+        assertEquals("2", est.nextToken(), "Token 3");
+        assertEquals("|", est.nextToken(), "Token 4");
+        assertEquals("3", est.nextToken(), "Token 5");
+        assertEquals("|", est.nextToken(), "Token 6");
+        assertEquals("4", est.nextToken(), "Token 7");
+        assertFalse(est.hasMoreTokens(), "est.hasMoreTokens()");
     }
 
     /**
      * <p>testEmptyString.</p>
      */
     @Test
-    public void testEmptyString() {
+    void emptyString() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("");
-        assertEquals("est.hasMoreTokens()", false, est.hasMoreTokens());
+        assertFalse(est.hasMoreTokens(), "est.hasMoreTokens()");
         try {
             est.nextToken();
             fail();
@@ -110,10 +95,10 @@ public class EnhancedStringTokenizerTest {
      * <p>testSimpleString.</p>
      */
     @Test
-    public void testSimpleString() {
+    void simpleString() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("a ");
-        assertEquals("Token 1", "a", est.nextToken());
-        assertEquals("Token 2", "", est.nextToken());
-        assertEquals("est.hasMoreTokens()", false, est.hasMoreTokens());
+        assertEquals("a", est.nextToken(), "Token 1");
+        assertEquals("", est.nextToken(), "Token 2");
+        assertFalse(est.hasMoreTokens(), "est.hasMoreTokens()");
     }
 }

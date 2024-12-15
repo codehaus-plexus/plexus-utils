@@ -1,24 +1,8 @@
 package org.codehaus.plexus.util;
 
-/*
- * Copyright The Codehaus Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>PathToolTest class.</p>
@@ -27,20 +11,20 @@ import static org.junit.Assert.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class PathToolTest {
+class PathToolTest {
     /**
      * <p>testGetRelativePath.</p>
      *
      * @throws java.lang.Exception
      */
     @Test
-    public void testGetRelativePath() throws Exception {
-        assertEquals(PathTool.getRelativePath(null, null), "");
-        assertEquals(PathTool.getRelativePath(null, "/usr/local/java/bin"), "");
-        assertEquals(PathTool.getRelativePath("/usr/local/", null), "");
-        assertEquals(PathTool.getRelativePath("/usr/local/", "/usr/local/java/bin"), "..");
-        assertEquals(PathTool.getRelativePath("/usr/local/", "/usr/local/java/bin/java.sh"), "../..");
-        assertEquals(PathTool.getRelativePath("/usr/local/java/bin/java.sh", "/usr/local/"), "");
+    void getRelativePath() throws Exception {
+        assertEquals("", PathTool.getRelativePath(null, null));
+        assertEquals("", PathTool.getRelativePath(null, "/usr/local/java/bin"));
+        assertEquals("", PathTool.getRelativePath("/usr/local/", null));
+        assertEquals("..", PathTool.getRelativePath("/usr/local/", "/usr/local/java/bin"));
+        assertEquals("../..", PathTool.getRelativePath("/usr/local/", "/usr/local/java/bin/java.sh"));
+        assertEquals("", PathTool.getRelativePath("/usr/local/java/bin/java.sh", "/usr/local/"));
     }
 
     /**
@@ -49,11 +33,11 @@ public class PathToolTest {
      * @throws java.lang.Exception
      */
     @Test
-    public void testGetDirectoryComponent() throws Exception {
-        assertEquals(PathTool.getDirectoryComponent(null), "");
-        assertEquals(PathTool.getDirectoryComponent("/usr/local/java/bin"), "/usr/local/java");
-        assertEquals(PathTool.getDirectoryComponent("/usr/local/java/bin/"), "/usr/local/java/bin");
-        assertEquals(PathTool.getDirectoryComponent("/usr/local/java/bin/java.sh"), "/usr/local/java/bin");
+    void getDirectoryComponent() throws Exception {
+        assertEquals("", PathTool.getDirectoryComponent(null));
+        assertEquals("/usr/local/java", PathTool.getDirectoryComponent("/usr/local/java/bin"));
+        assertEquals("/usr/local/java/bin", PathTool.getDirectoryComponent("/usr/local/java/bin/"));
+        assertEquals("/usr/local/java/bin", PathTool.getDirectoryComponent("/usr/local/java/bin/java.sh"));
     }
 
     /**
@@ -62,18 +46,18 @@ public class PathToolTest {
      * @throws java.lang.Exception
      */
     @Test
-    public void testCalculateLink() throws Exception {
-        assertEquals(PathTool.calculateLink("/index.html", "../.."), "../../index.html");
+    void calculateLink() throws Exception {
+        assertEquals("../../index.html", PathTool.calculateLink("/index.html", "../.."));
         assertEquals(
-                PathTool.calculateLink("http://plexus.codehaus.org/plexus-utils/index.html", "../.."),
-                "http://plexus.codehaus.org/plexus-utils/index.html");
+                "http://plexus.codehaus.org/plexus-utils/index.html",
+                PathTool.calculateLink("http://plexus.codehaus.org/plexus-utils/index.html", "../.."));
         assertEquals(
-                PathTool.calculateLink("/usr/local/java/bin/java.sh", "../.."), "../../usr/local/java/bin/java.sh");
+                "../../usr/local/java/bin/java.sh", PathTool.calculateLink("/usr/local/java/bin/java.sh", "../.."));
         assertEquals(
-                PathTool.calculateLink("../index.html", "/usr/local/java/bin"), "/usr/local/java/bin/../index.html");
+                "/usr/local/java/bin/../index.html", PathTool.calculateLink("../index.html", "/usr/local/java/bin"));
         assertEquals(
-                PathTool.calculateLink("../index.html", "http://plexus.codehaus.org/plexus-utils"),
-                "http://plexus.codehaus.org/plexus-utils/../index.html");
+                "http://plexus.codehaus.org/plexus-utils/../index.html",
+                PathTool.calculateLink("../index.html", "http://plexus.codehaus.org/plexus-utils"));
     }
 
     /**
@@ -82,18 +66,18 @@ public class PathToolTest {
      * @throws java.lang.Exception
      */
     @Test
-    public void testGetRelativeWebPath() throws Exception {
-        assertEquals(PathTool.getRelativeWebPath(null, null), "");
-        assertEquals(PathTool.getRelativeWebPath(null, "http://plexus.codehaus.org/"), "");
-        assertEquals(PathTool.getRelativeWebPath("http://plexus.codehaus.org/", null), "");
+    void getRelativeWebPath() throws Exception {
+        assertEquals("", PathTool.getRelativeWebPath(null, null));
+        assertEquals("", PathTool.getRelativeWebPath(null, "http://plexus.codehaus.org/"));
+        assertEquals("", PathTool.getRelativeWebPath("http://plexus.codehaus.org/", null));
         assertEquals(
+                "plexus-utils/index.html",
                 PathTool.getRelativeWebPath(
-                        "http://plexus.codehaus.org/", "http://plexus.codehaus.org/plexus-utils/index.html"),
-                "plexus-utils/index.html");
+                        "http://plexus.codehaus.org/", "http://plexus.codehaus.org/plexus-utils/index.html"));
         assertEquals(
+                "../../",
                 PathTool.getRelativeWebPath(
-                        "http://plexus.codehaus.org/plexus-utils/index.html", "http://plexus.codehaus.org/"),
-                "../../");
+                        "http://plexus.codehaus.org/plexus-utils/index.html", "http://plexus.codehaus.org/"));
     }
 
     /**
@@ -102,34 +86,34 @@ public class PathToolTest {
      * @throws java.lang.Exception
      */
     @Test
-    public void testGetRelativeFilePath() throws Exception {
+    void getRelativeFilePath() throws Exception {
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            assertEquals(PathTool.getRelativeFilePath(null, null), "");
-            assertEquals(PathTool.getRelativeFilePath(null, "c:\\tools\\java\\bin"), "");
-            assertEquals(PathTool.getRelativeFilePath("c:\\tools\\java", null), "");
-            assertEquals(PathTool.getRelativeFilePath("c:\\tools", "c:\\tools\\java\\bin"), "java\\bin");
-            assertEquals(PathTool.getRelativeFilePath("c:\\tools", "c:\\tools\\java\\bin\\"), "java\\bin\\");
-            assertEquals(PathTool.getRelativeFilePath("c:\\tools\\java\\bin", "c:\\tools"), "..\\..");
+            assertEquals("", PathTool.getRelativeFilePath(null, null));
+            assertEquals("", PathTool.getRelativeFilePath(null, "c:\\tools\\java\\bin"));
+            assertEquals("", PathTool.getRelativeFilePath("c:\\tools\\java", null));
+            assertEquals("java\\bin", PathTool.getRelativeFilePath("c:\\tools", "c:\\tools\\java\\bin"));
+            assertEquals("java\\bin\\", PathTool.getRelativeFilePath("c:\\tools", "c:\\tools\\java\\bin\\"));
+            assertEquals("..\\..", PathTool.getRelativeFilePath("c:\\tools\\java\\bin", "c:\\tools"));
             assertEquals(
-                    PathTool.getRelativeFilePath("c:\\tools\\", "c:\\tools\\java\\bin\\java.exe"),
-                    "java\\bin\\java.exe");
-            assertEquals(PathTool.getRelativeFilePath("c:\\tools\\java\\bin\\java.sh", "c:\\tools"), "..\\..\\..");
-            assertEquals(PathTool.getRelativeFilePath("c:\\tools", "c:\\bin"), "..\\bin");
-            assertEquals(PathTool.getRelativeFilePath("c:\\bin", "c:\\tools"), "..\\tools");
-            assertEquals(PathTool.getRelativeFilePath("c:\\bin", "c:\\bin"), "");
+                    "java\\bin\\java.exe",
+                    PathTool.getRelativeFilePath("c:\\tools\\", "c:\\tools\\java\\bin\\java.exe"));
+            assertEquals("..\\..\\..", PathTool.getRelativeFilePath("c:\\tools\\java\\bin\\java.sh", "c:\\tools"));
+            assertEquals("..\\bin", PathTool.getRelativeFilePath("c:\\tools", "c:\\bin"));
+            assertEquals("..\\tools", PathTool.getRelativeFilePath("c:\\bin", "c:\\tools"));
+            assertEquals("", PathTool.getRelativeFilePath("c:\\bin", "c:\\bin"));
         } else {
-            assertEquals(PathTool.getRelativeFilePath(null, null), "");
-            assertEquals(PathTool.getRelativeFilePath(null, "/usr/local/java/bin"), "");
-            assertEquals(PathTool.getRelativeFilePath("/usr/local", null), "");
-            assertEquals(PathTool.getRelativeFilePath("/usr/local", "/usr/local/java/bin"), "java/bin");
-            assertEquals(PathTool.getRelativeFilePath("/usr/local", "/usr/local/java/bin/"), "java/bin/");
-            assertEquals(PathTool.getRelativeFilePath("/usr/local/java/bin", "/usr/local/"), "../../");
+            assertEquals("", PathTool.getRelativeFilePath(null, null));
+            assertEquals("", PathTool.getRelativeFilePath(null, "/usr/local/java/bin"));
+            assertEquals("", PathTool.getRelativeFilePath("/usr/local", null));
+            assertEquals("java/bin", PathTool.getRelativeFilePath("/usr/local", "/usr/local/java/bin"));
+            assertEquals("java/bin/", PathTool.getRelativeFilePath("/usr/local", "/usr/local/java/bin/"));
+            assertEquals("../../", PathTool.getRelativeFilePath("/usr/local/java/bin", "/usr/local/"));
             assertEquals(
-                    PathTool.getRelativeFilePath("/usr/local/", "/usr/local/java/bin/java.sh"), "java/bin/java.sh");
-            assertEquals(PathTool.getRelativeFilePath("/usr/local/java/bin/java.sh", "/usr/local/"), "../../../");
-            assertEquals(PathTool.getRelativeFilePath("/usr/local/", "/bin"), "../../bin");
-            assertEquals(PathTool.getRelativeFilePath("/bin", "/usr/local"), "../usr/local");
-            assertEquals(PathTool.getRelativeFilePath("/bin", "/bin"), "");
+                    "java/bin/java.sh", PathTool.getRelativeFilePath("/usr/local/", "/usr/local/java/bin/java.sh"));
+            assertEquals("../../../", PathTool.getRelativeFilePath("/usr/local/java/bin/java.sh", "/usr/local/"));
+            assertEquals("../../bin", PathTool.getRelativeFilePath("/usr/local/", "/bin"));
+            assertEquals("../usr/local", PathTool.getRelativeFilePath("/bin", "/usr/local"));
+            assertEquals("", PathTool.getRelativeFilePath("/bin", "/bin"));
         }
     }
 }

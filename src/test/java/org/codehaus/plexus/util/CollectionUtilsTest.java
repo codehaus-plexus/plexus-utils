@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * <p>CollectionUtilsTest class.</p>
@@ -35,12 +35,12 @@ import static org.junit.Assert.assertNull;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class CollectionUtilsTest {
+class CollectionUtilsTest {
     /**
      * <p>testMergeMaps.</p>
      */
     @Test
-    public void testMergeMaps() {
+    void mergeMaps() {
         Map<String, String> dominantMap = new HashMap<String, String>();
         dominantMap.put("a", "a");
         dominantMap.put("b", "b");
@@ -79,7 +79,7 @@ public class CollectionUtilsTest {
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testMergeMapArray() {
+    void mergeMapArray() {
         // Test empty array of Maps
         Map<String, String> result0 = CollectionUtils.mergeMaps(new Map[] {});
 
@@ -133,7 +133,7 @@ public class CollectionUtilsTest {
      * <p>testMavenPropertiesLoading.</p>
      */
     @Test
-    public void testMavenPropertiesLoading() {
+    void mavenPropertiesLoading() {
         // Mimic MavenSession properties loading. Properties listed
         // in dominant order.
         Properties systemProperties = new Properties();
@@ -193,7 +193,7 @@ public class CollectionUtilsTest {
      * <p>testIteratorToListWithAPopulatedList.</p>
      */
     @Test
-    public void testIteratorToListWithAPopulatedList() {
+    void iteratorToListWithAPopulatedList() {
         List<String> original = new ArrayList<String>();
 
         original.add("en");
@@ -215,7 +215,7 @@ public class CollectionUtilsTest {
      * <p>testIteratorToListWithAEmptyList.</p>
      */
     @Test
-    public void testIteratorToListWithAEmptyList() {
+    void iteratorToListWithAEmptyList() {
         List<String> original = new ArrayList<String>();
 
         List<String> copy = CollectionUtils.iteratorToList(original.iterator());

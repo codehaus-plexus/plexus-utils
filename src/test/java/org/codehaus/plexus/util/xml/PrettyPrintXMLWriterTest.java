@@ -26,13 +26,13 @@ import java.nio.file.Files;
 import java.util.NoSuchElementException;
 
 import org.codehaus.plexus.util.StringUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Test of {@link org.codehaus.plexus.util.xml.PrettyPrintXMLWriter}
@@ -42,7 +42,7 @@ import static org.junit.Assert.fail;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class PrettyPrintXMLWriterTest {
+class PrettyPrintXMLWriterTest {
     StringWriter w;
 
     PrettyPrintXMLWriter writer;
@@ -50,16 +50,16 @@ public class PrettyPrintXMLWriterTest {
     /**
      * <p>setUp.</p>
      */
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         initWriter();
     }
 
     /**
      * <p>tearDown.</p>
      */
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         writer = null;
         w = null;
     }
@@ -73,7 +73,7 @@ public class PrettyPrintXMLWriterTest {
      * <p>testDefaultPrettyPrintXMLWriter.</p>
      */
     @Test
-    public void testDefaultPrettyPrintXMLWriter() {
+    void defaultPrettyPrintXMLWriter() {
         writer.startElement(Tag.HTML.toString());
 
         writeXhtmlHead(writer);
@@ -89,7 +89,7 @@ public class PrettyPrintXMLWriterTest {
      * <p>testPrettyPrintXMLWriterWithGivenLineSeparator.</p>
      */
     @Test
-    public void testPrettyPrintXMLWriterWithGivenLineSeparator() {
+    void prettyPrintXMLWriterWithGivenLineSeparator() {
         writer.setLineSeparator("\n");
 
         writer.startElement(Tag.HTML.toString());
@@ -107,7 +107,7 @@ public class PrettyPrintXMLWriterTest {
      * <p>testPrettyPrintXMLWriterWithGivenLineIndenter.</p>
      */
     @Test
-    public void testPrettyPrintXMLWriterWithGivenLineIndenter() {
+    void prettyPrintXMLWriterWithGivenLineIndenter() {
         writer.setLineIndenter("    ");
 
         writer.startElement(Tag.HTML.toString());
@@ -125,7 +125,7 @@ public class PrettyPrintXMLWriterTest {
      * <p>testEscapeXmlAttribute.</p>
      */
     @Test
-    public void testEscapeXmlAttribute() {
+    void escapeXmlAttribute() {
         // Windows
         writer.startElement(Tag.DIV.toString());
         writer.addAttribute("class", "sect\r\nion");
@@ -151,7 +151,7 @@ public class PrettyPrintXMLWriterTest {
      * <p>testendElementAlreadyClosed.</p>
      */
     @Test
-    public void testendElementAlreadyClosed() {
+    void testendElementAlreadyClosed() {
         try {
             writer.startElement(Tag.DIV.toString());
             writer.addAttribute("class", "someattribute");
@@ -172,10 +172,10 @@ public class PrettyPrintXMLWriterTest {
      * @throws java.io.IOException if an I/O error occurs
      */
     @Test
-    public void testIssue51DetectJava7ConcatenationBug() throws IOException {
+    void issue51DetectJava7ConcatenationBug() throws IOException {
         File dir = new File("target/test-xml");
         if (!dir.exists()) {
-            assertTrue("cannot create directory test-xml", dir.mkdir());
+            assertTrue(dir.mkdir(), "cannot create directory test-xml");
         }
         File xmlFile = new File(dir, "test-issue-51.xml");
         OutputStreamWriter osw = new OutputStreamWriter(Files.newOutputStream(xmlFile.toPath()), "UTF-8");

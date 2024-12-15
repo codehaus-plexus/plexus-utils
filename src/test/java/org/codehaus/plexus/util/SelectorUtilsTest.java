@@ -18,11 +18,11 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * <p>SelectorUtilsTest class.</p>
@@ -30,12 +30,12 @@ import static org.junit.Assert.assertTrue;
  * @author herve
  * @since 3.4.0
  */
-public class SelectorUtilsTest {
+class SelectorUtilsTest {
     /**
      * <p>testExtractPattern.</p>
      */
     @Test
-    public void testExtractPattern() {
+    void extractPattern() {
         assertEquals("[A-Z].*", SelectorUtils.extractPattern("%regex[[A-Z].*]", "/"));
         assertEquals("ABC*", SelectorUtils.extractPattern("%ant[ABC*]", "/"));
         assertEquals("some/ABC*", SelectorUtils.extractPattern("%ant[some/ABC*]", "/"));
@@ -48,7 +48,7 @@ public class SelectorUtilsTest {
      * <p>testIsAntPrefixedPattern.</p>
      */
     @Test
-    public void testIsAntPrefixedPattern() {
+    void isAntPrefixedPattern() {
         assertTrue(SelectorUtils.isAntPrefixedPattern("%ant[A]")); // single char not allowed
         assertTrue(SelectorUtils.isAntPrefixedPattern("%ant[AB]"));
         assertFalse(SelectorUtils.isAntPrefixedPattern("%ant[]"));
@@ -59,7 +59,7 @@ public class SelectorUtilsTest {
      * <p>testIsRegexPrefixedPattern.</p>
      */
     @Test
-    public void testIsRegexPrefixedPattern() {
+    void isRegexPrefixedPattern() {
         assertTrue(SelectorUtils.isRegexPrefixedPattern("%regex[A]")); // single char not allowed
         assertTrue(SelectorUtils.isRegexPrefixedPattern("%regex[.*]"));
         assertFalse(SelectorUtils.isRegexPrefixedPattern("%regex[]"));
@@ -70,7 +70,7 @@ public class SelectorUtilsTest {
      * <p>testMatchPath_DefaultFileSeparator.</p>
      */
     @Test
-    public void testMatchPath_DefaultFileSeparator() {
+    void matchPathDefaultFileSeparator() {
         String separator = File.separator;
 
         // Pattern and target start with file separator
@@ -88,7 +88,7 @@ public class SelectorUtilsTest {
      * <p>testMatchPath_UnixFileSeparator.</p>
      */
     @Test
-    public void testMatchPath_UnixFileSeparator() {
+    void matchPathUnixFileSeparator() {
         String separator = "/";
 
         // Pattern and target start with file separator
@@ -108,7 +108,7 @@ public class SelectorUtilsTest {
      * <p>testMatchPath_WindowsFileSeparator.</p>
      */
     @Test
-    public void testMatchPath_WindowsFileSeparator() {
+    void matchPathWindowsFileSeparator() {
         String separator = "\\";
 
         // Pattern and target start with file separator
@@ -125,29 +125,29 @@ public class SelectorUtilsTest {
     }
 
     @Test
-    public void testPatternMatchSingleWildcardPosix() {
+    void patternMatchSingleWildcardPosix() {
         assertFalse(SelectorUtils.matchPath("/com/test/*", "/com/test/test/hallo"));
     }
 
     @Test
-    public void testPatternMatchDoubleWildcardCaseInsensitivePosix() {
+    void patternMatchDoubleWildcardCaseInsensitivePosix() {
         assertTrue(SelectorUtils.matchPath("/com/test/**", "/com/test/test/hallo"));
     }
 
     @Test
-    public void testPatternMatchDoubleWildcardPosix() {
+    void patternMatchDoubleWildcardPosix() {
         assertTrue(SelectorUtils.matchPath("/com/test/**", "/com/test/test/hallo"));
     }
 
     @Test
-    public void testPatternMatchSingleWildcardWindows() {
+    void patternMatchSingleWildcardWindows() {
         assertFalse(SelectorUtils.matchPath("D:\\com\\test\\*", "D:\\com\\test\\test\\hallo"));
 
         assertFalse(SelectorUtils.matchPath("D:/com/test/*", "D:/com/test/test/hallo"));
     }
 
     @Test
-    public void testPatternMatchDoubleWildcardWindows() {
+    void patternMatchDoubleWildcardWindows() {
         assertTrue(SelectorUtils.matchPath("D:\\com\\test\\**", "D:\\com\\test\\test\\hallo"));
 
         assertTrue(SelectorUtils.matchPath("D:\\com\\test\\**", "D:/com/test/test/hallo"));

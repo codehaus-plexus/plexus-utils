@@ -5,11 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Test class that execute a particular set of tests associated to a TESCASES tag from the XML W3C Conformance Tests.
@@ -20,7 +20,6 @@ import static org.junit.Assert.fail;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public
 class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConformanceTestSuite_Production24_Test {
 
     static final File testResourcesDir = new File("src/test/resources/", "xmlconf/ibm/");
@@ -30,8 +29,8 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     /**
      * <p>setUp.</p>
      */
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         parser = new MXParser();
     }
 
@@ -45,7 +44,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n01xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n01xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n01.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -68,7 +67,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n02xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n02xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n02.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -90,7 +89,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n03xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n03xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n03.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -112,7 +111,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n04xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n04xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n04.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -134,7 +133,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n05xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n05xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n05.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -156,7 +155,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n06xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n06xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n06.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -177,7 +176,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n07xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n07xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n07.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -198,7 +197,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n08xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n08xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n08.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
@@ -220,7 +219,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
      * @throws java.io.IOException if there is an I/O error
      */
     @Test
-    public void testibm_not_wf_P24_ibm24n09xml() throws IOException {
+    void testibm_not_wf_P24_ibm24n09xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P24/ibm24n09.xml"))) {
             parser.setInput(reader);
             while (parser.nextToken() != XmlPullParser.END_DOCUMENT)

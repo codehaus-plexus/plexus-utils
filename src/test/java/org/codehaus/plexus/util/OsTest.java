@@ -18,11 +18,11 @@ package org.codehaus.plexus.util;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test Case for Os
@@ -31,12 +31,12 @@ import static org.junit.Assert.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class OsTest {
+class OsTest {
     /**
      * <p>testUndefinedFamily.</p>
      */
     @Test
-    public void testUndefinedFamily() {
+    void undefinedFamily() {
         assertFalse(Os.isFamily("bogus family"));
     }
 
@@ -44,7 +44,7 @@ public class OsTest {
      * <p>testOs.</p>
      */
     @Test
-    public void testOs() {
+    void os() {
         Iterator<String> iter = Os.getValidFamilies().iterator();
         String currentFamily = null;
         String notCurrentFamily = null;
@@ -58,7 +58,7 @@ public class OsTest {
         }
 
         // make sure the OS_FAMILY is set right.
-        assertEquals(currentFamily, Os.OS_FAMILY);
+        assertEquals(Os.OS_FAMILY, currentFamily);
 
         // check the current family and one of the others
         assertTrue(Os.isOs(currentFamily, null, null, null));
@@ -86,7 +86,7 @@ public class OsTest {
      * <p>testValidList.</p>
      */
     @Test
-    public void testValidList() {
+    void validList() {
         assertTrue(Os.isValidFamily("dos"));
 
         assertFalse(Os.isValidFamily(""));

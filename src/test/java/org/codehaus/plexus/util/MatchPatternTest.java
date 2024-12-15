@@ -1,27 +1,11 @@
 package org.codehaus.plexus.util;
 
-/*
- * Copyright The Codehaus Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * <p>MatchPatternTest class.</p>
@@ -30,12 +14,12 @@ import static org.junit.Assert.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class MatchPatternTest {
+class MatchPatternTest {
     /**
      * <p>testGetSource</p>
      */
     @Test
-    public void testGetSource() {
+    void getSource() {
         MatchPattern mp = MatchPattern.fromString("ABC*");
         assertEquals("ABC*", mp.getSource());
         mp = MatchPattern.fromString("%ant[some/ABC*]");
@@ -50,7 +34,7 @@ public class MatchPatternTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testMatchPath() throws Exception {
+    void matchPath() throws Exception {
         MatchPattern mp = MatchPattern.fromString("ABC*");
         assertTrue(mp.matchPath("ABCD", true));
     }
@@ -61,7 +45,7 @@ public class MatchPatternTest {
      * @see <a href="https://github.com/codehaus-plexus/plexus-utils/issues/63">Issue #63</a>
      */
     @Test
-    public void testMatchPatternStart() {
+    void matchPatternStart() {
         MatchPattern mp = MatchPattern.fromString("ABC*");
 
         assertTrue(mp.matchPatternStart("ABCD", true));
@@ -78,7 +62,7 @@ public class MatchPatternTest {
      * <p>testTokenizePathToString.</p>
      */
     @Test
-    public void testTokenizePathToString() {
+    void tokenizePathToString() {
         String[] expected = {"hello", "world"};
         String[] actual = MatchPattern.tokenizePathToString("hello/world", "/");
         assertArrayEquals(expected, actual);

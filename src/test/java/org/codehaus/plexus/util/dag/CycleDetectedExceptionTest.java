@@ -19,9 +19,9 @@ package org.codehaus.plexus.util.dag;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>CycleDetectedExceptionTest class.</p>
@@ -30,12 +30,12 @@ import static org.junit.Assert.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class CycleDetectedExceptionTest {
+class CycleDetectedExceptionTest {
     /**
      * <p>testException.</p>
      */
     @Test
-    public void testException() {
+    void exception() {
         final List<String> cycle = new ArrayList<String>();
 
         cycle.add("a");

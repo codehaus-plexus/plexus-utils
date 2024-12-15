@@ -26,17 +26,15 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Files;
-import java.util.Arrays;
 
-import junit.framework.AssertionFailedError;
+import org.opentest4j.AssertionFailedError;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Base class for testcases doing tests with files.
  *
  * @author Jeremias Maerki
- * @version $Id: $Id
  * @since 3.4.0
  */
 public abstract class FileBasedTestCase {
@@ -83,23 +81,18 @@ public abstract class FileBasedTestCase {
     /**
      * <p>createSymlink.</p>
      *
-     * @param link a {@link java.io.File} object.
+     * @param link   a {@link java.io.File} object.
      * @param target a {@link java.io.File} object.
-     * @return a boolean.
      */
-    protected boolean createSymlink(final File link, final File target) {
+    protected void createSymlink(final File link, final File target) {
         try {
             String[] args = {"ln", "-s", target.getAbsolutePath(), link.getAbsolutePath()};
             Process process = Runtime.getRuntime().exec(args);
             process.waitFor();
-            if (0 != process.exitValue()) {
-                return false;
-            }
+            if (0 != process.exitValue()) {}
         } catch (Exception e) {
             // assume platform does not support "ln" command, tests should be skipped
-            return false;
         }
-        return true;
     }
 
     /**
@@ -160,7 +153,7 @@ public abstract class FileBasedTestCase {
      * @throws java.lang.Exception if any.
      */
     protected void checkFile(final File file, final File referenceFile) throws Exception {
-        assertTrue("Check existence of output file", file.exists());
+        assertTrue(file.exists(), "Check existence of output file");
         assertEqualContent(referenceFile, file);
     }
 
@@ -168,9 +161,8 @@ public abstract class FileBasedTestCase {
      * <p>checkWrite.</p>
      *
      * @param output a {@link java.io.OutputStream} object.
-     * @throws java.lang.Exception if any.
      */
-    protected void checkWrite(final OutputStream output) throws Exception {
+    protected void checkWrite(final OutputStream output) {
         try {
             new PrintStream(output).write(0);
         } catch (final Throwable t) {
@@ -202,7 +194,7 @@ public abstract class FileBasedTestCase {
      */
     protected void deleteFile(final File file) throws Exception {
         if (file.exists()) {
-            assertTrue("Couldn't delete file: " + file, file.delete());
+            assertTrue(file.delete(), "Couldn't delete file: " + file);
         }
     }
 
@@ -217,10 +209,8 @@ public abstract class FileBasedTestCase {
          * + " and " + f1 + " have differing file sizes (" + f0.length() + " vs " + f1.length() + ")", ( f0.length() ==
          * f1.length() ) );
          */
-        final InputStream is0 = Files.newInputStream(f0.toPath());
-        try {
-            final InputStream is1 = Files.newInputStream(f1.toPath());
-            try {
+        try (InputStream is0 = Files.newInputStream(f0.toPath())) {
+            try (InputStream is1 = Files.newInputStream(f1.toPath())) {
                 final byte[] buf0 = new byte[1024];
                 final byte[] buf1 = new byte[1024];
                 int n0 = 0;
@@ -230,17 +220,13 @@ public abstract class FileBasedTestCase {
                     n0 = is0.read(buf0);
                     n1 = is1.read(buf1);
                     assertTrue(
+                            (n0 == n1),
                             "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0
-                                    + " vs " + n1 + ")",
-                            (n0 == n1));
+                                    + " vs " + n1 + ")");
 
-                    assertTrue("The files " + f0 + " and " + f1 + " have different content", Arrays.equals(buf0, buf1));
+                    assertArrayEquals(buf0, buf1, "The files " + f0 + " and " + f1 + " have different content");
                 }
-            } finally {
-                is1.close();
             }
-        } finally {
-            is0.close();
         }
     }
 
@@ -252,17 +238,14 @@ public abstract class FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     protected void assertEqualContent(final byte[] b0, final File file) throws IOException {
-        final InputStream is = Files.newInputStream(file.toPath());
-        try {
+        try (InputStream is = Files.newInputStream(file.toPath())) {
             byte[] b1 = new byte[b0.length];
             int numRead = is.read(b1);
-            assertTrue("Different number of bytes", numRead == b0.length && is.available() == 0);
+            assertTrue(numRead == b0.length && is.available() == 0, "Different number of bytes");
             for (int i = 0;
                     i < numRead;
-                    assertTrue("Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")", b0[i] == b1[i]), i++)
+                    assertEquals(b0[i], b1[i], "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")"), i++)
                 ;
-        } finally {
-            is.close();
         }
     }
 
@@ -272,9 +255,9 @@ public abstract class FileBasedTestCase {
      * @param file a {@link java.io.File} object.
      */
     protected void assertIsDirectory(File file) {
-        assertTrue("The File doesn't exists: " + file.getAbsolutePath(), file.exists());
+        assertTrue(file.exists(), "The File doesn't exists: " + file.getAbsolutePath());
 
-        assertTrue("The File isn't a directory: " + file.getAbsolutePath(), file.isDirectory());
+        assertTrue(file.isDirectory(), "The File isn't a directory: " + file.getAbsolutePath());
     }
 
     /**
@@ -283,8 +266,8 @@ public abstract class FileBasedTestCase {
      * @param file a {@link java.io.File} object.
      */
     protected void assertIsFile(File file) {
-        assertTrue("The File doesn't exists: " + file.getAbsolutePath(), file.exists());
+        assertTrue(file.exists(), "The File doesn't exists: " + file.getAbsolutePath());
 
-        assertTrue("The File isn't a file: " + file.getAbsolutePath(), file.isFile());
+        assertTrue(file.isFile(), "The File isn't a file: " + file.getAbsolutePath());
     }
 }

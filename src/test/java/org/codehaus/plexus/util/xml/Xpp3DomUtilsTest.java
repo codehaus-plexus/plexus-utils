@@ -21,9 +21,9 @@ import java.io.StringReader;
 
 import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <p>Xpp3DomUtilsTest class.</p>
@@ -32,14 +32,14 @@ import static org.junit.Assert.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class Xpp3DomUtilsTest {
+class Xpp3DomUtilsTest {
     /**
      * <p>testCombineId.</p>
      *
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testCombineId() throws Exception {
+    void combineId() throws Exception {
         String lhs = "<props>" + "<property combine.id='LHS-ONLY'><name>LHS-ONLY</name><value>LHS</value></property>"
                 + "<property combine.id='TOOVERWRITE'><name>TOOVERWRITE</name><value>LHS</value></property>"
                 + "</props>";
@@ -85,7 +85,7 @@ public class Xpp3DomUtilsTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testCombineKeys() throws Exception {
+    void combineKeys() throws Exception {
         String lhs = "<props combine.keys='key'>"
                 + "<property key=\"LHS-ONLY\"><name>LHS-ONLY</name><value>LHS</value></property>"
                 + "<property combine.keys='name'><name>TOOVERWRITE</name><value>LHS</value></property>" + "</props>";
@@ -126,7 +126,7 @@ public class Xpp3DomUtilsTest {
     }
 
     @Test
-    public void testPreserveDominantBlankValue() throws XmlPullParserException, IOException {
+    void preserveDominantBlankValue() throws XmlPullParserException, IOException {
         String lhs = "<parameter xml:space=\"preserve\"> </parameter>";
 
         String rhs = "<parameter>recessive</parameter>";
@@ -139,7 +139,7 @@ public class Xpp3DomUtilsTest {
     }
 
     @Test
-    public void testPreserveDominantEmptyNode() throws XmlPullParserException, IOException {
+    void preserveDominantEmptyNode() throws XmlPullParserException, IOException {
         String lhs = "<parameter></parameter>";
 
         String rhs = "<parameter>recessive</parameter>";
@@ -152,7 +152,7 @@ public class Xpp3DomUtilsTest {
     }
 
     @Test
-    public void testIsNotEmptyNegatesIsEmpty() {
+    void isNotEmptyNegatesIsEmpty() {
         assertEquals(!Xpp3DomUtils.isEmpty(null), Xpp3DomUtils.isNotEmpty(null));
         assertEquals(!Xpp3DomUtils.isEmpty(""), Xpp3DomUtils.isNotEmpty(""));
         assertEquals(!Xpp3DomUtils.isEmpty(" "), Xpp3DomUtils.isNotEmpty(" "));
