@@ -139,6 +139,9 @@ public final class SelectorUtils {
         }
     }
 
+    /**
+     * @since 3.6
+     */
     public static boolean isAntPrefixedPattern(String pattern) {
         return pattern.length() > (ANT_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length())
                 && pattern.startsWith(ANT_HANDLER_PREFIX)
@@ -253,6 +256,9 @@ public final class SelectorUtils {
         return pattern;
     }
 
+    /**
+     * @since 3.6.0
+     */
     public static boolean isRegexPrefixedPattern(String pattern) {
         return pattern.length() > (REGEX_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length())
                 && pattern.startsWith(REGEX_HANDLER_PREFIX)
@@ -715,6 +721,7 @@ public final class SelectorUtils {
      * @param pattern the pattern to extract from.
      * @param separator the system file name separator in the pattern.
      * @return The pattern without the Regex or Ant prefix.
+     * @since 3.6.0
      */
     public static String extractPattern(final String pattern, final String separator) {
         if (isRegexPrefixedPattern(pattern)) {

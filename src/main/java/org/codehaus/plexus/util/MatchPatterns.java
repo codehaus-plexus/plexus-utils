@@ -19,6 +19,7 @@ public class MatchPatterns {
     /**
      * Gets a list of enclosed MatchPattern sources.
      * @return A list of enclosed MatchPattern sources.
+     * @since 3.6.0
      */
     public List<String> getSources() {
         List<String> sources = new ArrayList<>();
