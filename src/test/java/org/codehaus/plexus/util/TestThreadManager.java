@@ -17,7 +17,6 @@ package org.codehaus.plexus.util;
  */
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Logger;
 
@@ -32,8 +31,7 @@ import java.util.logging.Logger;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class TestThreadManager
-{
+public class TestThreadManager {
     // ~ Instance fields ----------------------------------------------------------------------------
 
     /** Test threads which have completed running */
@@ -60,8 +58,7 @@ public class TestThreadManager
      *
      * @param notify a {@link java.lang.Object} object.
      */
-    public TestThreadManager( Object notify )
-    {
+    public TestThreadManager(Object notify) {
         super();
         this.notify = notify;
     }
@@ -73,23 +70,20 @@ public class TestThreadManager
      *
      * @return a {@link java.util.Collection} object.
      */
-    public Collection<AbstractTestThread> getRunThreads()
-    {
+    public Collection<AbstractTestThread> getRunThreads() {
         return runThreads;
     }
 
     /**
      * <p>runTestThreads.</p>
      */
-    public void runTestThreads()
-    {
+    public void runTestThreads() {
         failedThreads.clear();
         // use an array as the tests may run very quickly
         // and modify the toRunThreads vector and hence
         // cause a Concurrent ModificationException on an
         // iterator
-        for ( AbstractTestThread toRunThread : toRunThreads )
-        {
+        for (AbstractTestThread toRunThread : toRunThreads) {
             toRunThread.start();
         }
     }
@@ -99,8 +93,7 @@ public class TestThreadManager
      *
      * @return a {@link java.util.Collection} object.
      */
-    public Collection<AbstractTestThread> getFailedTests()
-    {
+    public Collection<AbstractTestThread> getFailedTests() {
         return failedThreads;
     }
 
@@ -109,8 +102,7 @@ public class TestThreadManager
      *
      * @return a {@link java.lang.Object} object.
      */
-    public Object getNotifyObject()
-    {
+    public Object getNotifyObject() {
         return notify;
     }
 
@@ -119,8 +111,7 @@ public class TestThreadManager
      *
      * @return a boolean.
      */
-    public boolean hasFailedThreads()
-    {
+    public boolean hasFailedThreads() {
         return !failedThreads.isEmpty();
     }
 
@@ -129,8 +120,7 @@ public class TestThreadManager
      *
      * @return DOCUMENT ME!
      */
-    public boolean isStillRunningThreads()
-    {
+    public boolean isStillRunningThreads() {
         return !toRunThreads.isEmpty();
     }
 
@@ -139,16 +129,14 @@ public class TestThreadManager
      *
      * @return a {@link java.util.Collection} object.
      */
-    public Collection<AbstractTestThread> getToRunThreads()
-    {
+    public Collection<AbstractTestThread> getToRunThreads() {
         return toRunThreads;
     }
 
     /**
      * DOCUMENT ME!
      */
-    public void clear()
-    {
+    public void clear() {
         toRunThreads.clear();
         runThreads.clear();
         failedThreads.clear();
@@ -163,20 +151,16 @@ public class TestThreadManager
      *
      * @param thread a {@link org.codehaus.plexus.util.AbstractTestThread} object.
      */
-    public synchronized void completed( AbstractTestThread thread )
-    {
-        toRunThreads.remove( thread );
-        runThreads.add( thread );
-        if ( thread.hasFailed() )
-        {
-            failedThreads.add( thread );
+    public synchronized void completed(AbstractTestThread thread) {
+        toRunThreads.remove(thread);
+        runThreads.add(thread);
+        if (thread.hasFailed()) {
+            failedThreads.add(thread);
         }
         // wakeup thread which is waiting for the threads to complete
         // execution
-        if ( toRunThreads.isEmpty() )
-        {
-            synchronized ( notify )
-            {
+        if (toRunThreads.isEmpty()) {
+            synchronized (notify) {
                 notify.notify();
             }
         }
@@ -187,37 +171,30 @@ public class TestThreadManager
      *
      * @param thread DOCUMENT ME!
      */
-    public void doRegisterThread( AbstractTestThread thread )
-    {
-    }
+    public void doRegisterThread(AbstractTestThread thread) {}
 
     /**
      * <p>registerThread.</p>
      *
      * @param thread a {@link org.codehaus.plexus.util.AbstractTestThread} object.
      */
-    public final void registerThread( AbstractTestThread thread )
-    {
-        thread.setThreadRegistry( this );
-        if ( toRunThreads.contains( thread ) == false )
-        {
-            toRunThreads.add( thread );
-            doRegisterThread( thread );
+    public final void registerThread(AbstractTestThread thread) {
+        thread.setThreadRegistry(this);
+        if (toRunThreads.contains(thread) == false) {
+            toRunThreads.add(thread);
+            doRegisterThread(thread);
         }
-
     }
 
     /**
      * Put all the runThreads back in the que to be run again and clear the failedTest collection
      */
-    public void reset()
-    {
+    public void reset() {
         toRunThreads.clear();
-        for ( Object runThread : runThreads )
-        {
+        for (Object runThread : runThreads) {
             AbstractTestThread test = (AbstractTestThread) runThread;
             test.reset();
-            registerThread( test );
+            registerThread(test);
         }
 
         runThreads.clear();

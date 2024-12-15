@@ -16,14 +16,14 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>MatchPatternsTest class.</p>
@@ -32,16 +32,14 @@ import java.util.List;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class MatchPatternsTest
-{
+public class MatchPatternsTest {
     /**
      * <p>testGetSource</p>
      */
     @Test
-    public void testGetSources()
-    {
+    public void testGetSources() {
         List<String> expected = Arrays.asList("ABC**", "some/ABC*", "[ABC].*");
-        MatchPatterns from = MatchPatterns.from( "ABC**", "%ant[some/ABC*]", "%regex[[ABC].*]" );
+        MatchPatterns from = MatchPatterns.from("ABC**", "%ant[some/ABC*]", "%regex[[ABC].*]");
         List<String> actual = from.getSources();
         assertEquals(expected, actual);
     }
@@ -52,12 +50,10 @@ public class MatchPatternsTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testMatches()
-        throws Exception
-    {
-        MatchPatterns from = MatchPatterns.from( "ABC**", "CDE**" );
-        assertTrue( from.matches( "ABCDE", true ) );
-        assertTrue( from.matches( "CDEF", true ) );
-        assertFalse( from.matches( "XYZ", true ) );
+    public void testMatches() throws Exception {
+        MatchPatterns from = MatchPatterns.from("ABC**", "CDE**");
+        assertTrue(from.matches("ABCDE", true));
+        assertTrue(from.matches("CDEF", true));
+        assertFalse(from.matches("XYZ", true));
     }
 }

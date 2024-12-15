@@ -16,12 +16,12 @@ package org.codehaus.plexus.util.dag;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * <p>CycleDetectedExceptionTest class.</p>
@@ -30,24 +30,22 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class CycleDetectedExceptionTest
-{
+public class CycleDetectedExceptionTest {
     /**
      * <p>testException.</p>
      */
     @Test
-    public void testException()
-    {
+    public void testException() {
         final List<String> cycle = new ArrayList<String>();
 
-        cycle.add( "a" );
+        cycle.add("a");
 
-        cycle.add( "b" );
+        cycle.add("b");
 
-        cycle.add( "a" );
+        cycle.add("a");
 
-        final CycleDetectedException e = new CycleDetectedException( "Cycle detected", cycle );
+        final CycleDetectedException e = new CycleDetectedException("Cycle detected", cycle);
 
-        assertEquals( "Cycle detected a --> b --> a", e.getMessage() );
+        assertEquals("Cycle detected a --> b --> a", e.getMessage());
     }
 }

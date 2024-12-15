@@ -16,7 +16,6 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Map;
@@ -31,33 +30,27 @@ import org.codehaus.plexus.util.StringUtils;
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l </a>
  *
  */
-public abstract class CommandLineUtils
-{
+public abstract class CommandLineUtils {
 
     /**
      * A {@code StreamConsumer} providing consumed lines as a {@code String}.
      *
      * @see #getOutput()
      */
-    public static class StringStreamConsumer
-        implements StreamConsumer
-    {
+    public static class StringStreamConsumer implements StreamConsumer {
 
         private StringBuffer string = new StringBuffer();
 
-        private String ls = System.getProperty( "line.separator" );
+        private String ls = System.getProperty("line.separator");
 
         @Override
-        public void consumeLine( String line )
-        {
-            string.append( line ).append( ls );
+        public void consumeLine(String line) {
+            string.append(line).append(ls);
         }
 
-        public String getOutput()
-        {
+        public String getOutput() {
             return string.toString();
         }
-
     }
 
     /**
@@ -70,24 +63,21 @@ public abstract class CommandLineUtils
      */
     private static final long NANOS_PER_SECOND = 1000000000L;
 
-    public static int executeCommandLine( Commandline cl, StreamConsumer systemOut, StreamConsumer systemErr )
-        throws CommandLineException
-    {
-        return executeCommandLine( cl, null, systemOut, systemErr, 0 );
+    public static int executeCommandLine(Commandline cl, StreamConsumer systemOut, StreamConsumer systemErr)
+            throws CommandLineException {
+        return executeCommandLine(cl, null, systemOut, systemErr, 0);
     }
 
-    public static int executeCommandLine( Commandline cl, StreamConsumer systemOut, StreamConsumer systemErr,
-                                          int timeoutInSeconds )
-        throws CommandLineException
-    {
-        return executeCommandLine( cl, null, systemOut, systemErr, timeoutInSeconds );
+    public static int executeCommandLine(
+            Commandline cl, StreamConsumer systemOut, StreamConsumer systemErr, int timeoutInSeconds)
+            throws CommandLineException {
+        return executeCommandLine(cl, null, systemOut, systemErr, timeoutInSeconds);
     }
 
-    public static int executeCommandLine( Commandline cl, InputStream systemIn, StreamConsumer systemOut,
-                                          StreamConsumer systemErr )
-        throws CommandLineException
-    {
-        return executeCommandLine( cl, systemIn, systemOut, systemErr, 0 );
+    public static int executeCommandLine(
+            Commandline cl, InputStream systemIn, StreamConsumer systemOut, StreamConsumer systemErr)
+            throws CommandLineException {
+        return executeCommandLine(cl, systemIn, systemOut, systemErr, 0);
     }
 
     /**
@@ -99,12 +89,15 @@ public abstract class CommandLineUtils
      * @return A return value, see {@link Process#exitValue()}
      * @throws CommandLineException or CommandLineTimeOutException if time out occurs
      */
-    public static int executeCommandLine( Commandline cl, InputStream systemIn, StreamConsumer systemOut,
-                                          StreamConsumer systemErr, int timeoutInSeconds )
-        throws CommandLineException
-    {
+    public static int executeCommandLine(
+            Commandline cl,
+            InputStream systemIn,
+            StreamConsumer systemOut,
+            StreamConsumer systemErr,
+            int timeoutInSeconds)
+            throws CommandLineException {
         final CommandLineCallable future =
-            executeCommandLineAsCallable( cl, systemIn, systemOut, systemErr, timeoutInSeconds );
+                executeCommandLineAsCallable(cl, systemIn, systemOut, systemErr, timeoutInSeconds);
         return future.call();
     }
 
@@ -121,83 +114,70 @@ public abstract class CommandLineUtils
      *         internal state before after the completion of the call statements
      * @throws CommandLineException or CommandLineTimeOutException if time out occurs
      */
-    public static CommandLineCallable executeCommandLineAsCallable( final Commandline cl, final InputStream systemIn,
-                                                                    final StreamConsumer systemOut,
-                                                                    final StreamConsumer systemErr,
-                                                                    final int timeoutInSeconds )
-        throws CommandLineException
-    {
-        if ( cl == null )
-        {
-            throw new IllegalArgumentException( "cl cannot be null." );
+    public static CommandLineCallable executeCommandLineAsCallable(
+            final Commandline cl,
+            final InputStream systemIn,
+            final StreamConsumer systemOut,
+            final StreamConsumer systemErr,
+            final int timeoutInSeconds)
+            throws CommandLineException {
+        if (cl == null) {
+            throw new IllegalArgumentException("cl cannot be null.");
         }
 
         final Process p = cl.execute();
 
-        final Thread processHook = new Thread()
-        {
+        final Thread processHook = new Thread() {
 
             {
-                this.setName( "CommandLineUtils process shutdown hook" );
-                this.setContextClassLoader( null );
+                this.setName("CommandLineUtils process shutdown hook");
+                this.setContextClassLoader(null);
             }
 
             @Override
-            public void run()
-            {
+            public void run() {
                 p.destroy();
             }
-
         };
 
-        ShutdownHookUtils.addShutDownHook( processHook );
+        ShutdownHookUtils.addShutDownHook(processHook);
 
-        return new CommandLineCallable()
-        {
+        return new CommandLineCallable() {
 
             @Override
-            public Integer call()
-                throws CommandLineException
-            {
+            public Integer call() throws CommandLineException {
                 StreamFeeder inputFeeder = null;
                 StreamPumper outputPumper = null;
                 StreamPumper errorPumper = null;
                 boolean success = false;
-                try
-                {
-                    if ( systemIn != null )
-                    {
-                        inputFeeder = new StreamFeeder( systemIn, p.getOutputStream() );
+                try {
+                    if (systemIn != null) {
+                        inputFeeder = new StreamFeeder(systemIn, p.getOutputStream());
                         inputFeeder.start();
                     }
 
-                    outputPumper = new StreamPumper( p.getInputStream(), systemOut );
+                    outputPumper = new StreamPumper(p.getInputStream(), systemOut);
                     outputPumper.start();
 
-                    errorPumper = new StreamPumper( p.getErrorStream(), systemErr );
+                    errorPumper = new StreamPumper(p.getErrorStream(), systemErr);
                     errorPumper.start();
 
                     int returnValue;
-                    if ( timeoutInSeconds <= 0 )
-                    {
+                    if (timeoutInSeconds <= 0) {
                         returnValue = p.waitFor();
-                    }
-                    else
-                    {
+                    } else {
                         final long now = System.nanoTime();
                         final long timeout = now + NANOS_PER_SECOND * timeoutInSeconds;
 
-                        while ( isAlive( p ) && ( System.nanoTime() < timeout ) )
-                        {
+                        while (isAlive(p) && (System.nanoTime() < timeout)) {
                             // The timeout is specified in seconds. Therefore we must not sleep longer than one second
                             // but we should sleep as long as possible to reduce the number of iterations performed.
-                            Thread.sleep( MILLIS_PER_SECOND - 1L );
+                            Thread.sleep(MILLIS_PER_SECOND - 1L);
                         }
 
-                        if ( isAlive( p ) )
-                        {
-                            throw new InterruptedException( String.format( "Process timed out after %d seconds.",
-                                                                           timeoutInSeconds ) );
+                        if (isAlive(p)) {
+                            throw new InterruptedException(
+                                    String.format("Process timed out after %d seconds.", timeoutInSeconds));
                         }
 
                         returnValue = p.exitValue();
@@ -224,96 +204,72 @@ public abstract class CommandLineUtils
                     // errorPumper.waitUntilDone();
                     // }
                     // }
-                    if ( inputFeeder != null )
-                    {
+                    if (inputFeeder != null) {
                         inputFeeder.waitUntilDone();
                     }
 
                     outputPumper.waitUntilDone();
                     errorPumper.waitUntilDone();
 
-                    if ( inputFeeder != null )
-                    {
+                    if (inputFeeder != null) {
                         inputFeeder.close();
-                        handleException( inputFeeder, "stdin" );
+                        handleException(inputFeeder, "stdin");
                     }
 
                     outputPumper.close();
-                    handleException( outputPumper, "stdout" );
+                    handleException(outputPumper, "stdout");
 
                     errorPumper.close();
-                    handleException( errorPumper, "stderr" );
+                    handleException(errorPumper, "stderr");
 
                     success = true;
                     return returnValue;
-                }
-                catch ( InterruptedException ex )
-                {
-                    throw new CommandLineTimeOutException( "Error while executing external command, process killed.",
-                                                           ex );
+                } catch (InterruptedException ex) {
+                    throw new CommandLineTimeOutException(
+                            "Error while executing external command, process killed.", ex);
 
-                }
-                finally
-                {
-                    if ( inputFeeder != null )
-                    {
+                } finally {
+                    if (inputFeeder != null) {
                         inputFeeder.disable();
                     }
-                    if ( outputPumper != null )
-                    {
+                    if (outputPumper != null) {
                         outputPumper.disable();
                     }
-                    if ( errorPumper != null )
-                    {
+                    if (errorPumper != null) {
                         errorPumper.disable();
                     }
 
-                    try
-                    {
-                        ShutdownHookUtils.removeShutdownHook( processHook );
+                    try {
+                        ShutdownHookUtils.removeShutdownHook(processHook);
                         processHook.run();
-                    }
-                    finally
-                    {
-                        try
-                        {
-                            if ( inputFeeder != null )
-                            {
+                    } finally {
+                        try {
+                            if (inputFeeder != null) {
                                 inputFeeder.close();
 
-                                if ( success )
-                                {
+                                if (success) {
                                     success = false;
-                                    handleException( inputFeeder, "stdin" );
+                                    handleException(inputFeeder, "stdin");
                                     success = true; // Only reached when no exception has been thrown.
                                 }
                             }
-                        }
-                        finally
-                        {
-                            try
-                            {
-                                if ( outputPumper != null )
-                                {
+                        } finally {
+                            try {
+                                if (outputPumper != null) {
                                     outputPumper.close();
 
-                                    if ( success )
-                                    {
+                                    if (success) {
                                         success = false;
-                                        handleException( outputPumper, "stdout" );
+                                        handleException(outputPumper, "stdout");
                                         success = true; // Only reached when no exception has been thrown.
                                     }
                                 }
-                            }
-                            finally
-                            {
-                                if ( errorPumper != null )
-                                {
+                            } finally {
+                                if (errorPumper != null) {
                                     errorPumper.close();
 
-                                    if ( success )
-                                    {
-                                        handleException( errorPumper, "stderr" );
+                                    if (success) {
+                                        handleException(errorPumper, "stderr");
                                     }
                                 }
                             }
@@ -321,29 +277,22 @@ public abstract class CommandLineUtils
                     }
                 }
             }
-
         };
     }
 
-    private static void handleException( final StreamPumper streamPumper, final String streamName )
-        throws CommandLineException
-    {
-        if ( streamPumper.getException() != null )
-        {
-            throw new CommandLineException( String.format( "Failure processing %s.", streamName ),
-                                            streamPumper.getException() );
-
+    private static void handleException(final StreamPumper streamPumper, final String streamName)
+            throws CommandLineException {
+        if (streamPumper.getException() != null) {
+            throw new CommandLineException(
+                    String.format("Failure processing %s.", streamName), streamPumper.getException());
         }
     }
 
-    private static void handleException( final StreamFeeder streamFeeder, final String streamName )
-        throws CommandLineException
-    {
-        if ( streamFeeder.getException() != null )
-        {
-            throw new CommandLineException( String.format( "Failure processing %s.", streamName ),
-                                            streamFeeder.getException() );
-
+    private static void handleException(final StreamFeeder streamFeeder, final String streamName)
+            throws CommandLineException {
+        if (streamFeeder.getException() != null) {
+            throw new CommandLineException(
+                    String.format("Failure processing %s.", streamName), streamFeeder.getException());
         }
     }
 
@@ -357,9 +306,8 @@ public abstract class CommandLineUtils
      * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result <b>since 2.0.2 System#getenv()
      *      will be used if available in the current running jvm.</b>
      */
-    public static Properties getSystemEnvVars()
-    {
-        return getSystemEnvVars( !Os.isFamily( Os.FAMILY_WINDOWS ) );
+    public static Properties getSystemEnvVars() {
+        return getSystemEnvVars(!Os.isFamily(Os.FAMILY_WINDOWS));
     }
 
     /**
@@ -371,45 +319,34 @@ public abstract class CommandLineUtils
      * @see System#getenv() System.getenv() API, new in JDK 5.0, to get the same result <b>since 2.0.2 System#getenv()
      *      will be used if available in the current running jvm.</b>
      */
-    public static Properties getSystemEnvVars( boolean caseSensitive )
-    {
+    public static Properties getSystemEnvVars(boolean caseSensitive) {
         Properties envVars = new Properties();
         Map<String, String> envs = System.getenv();
-        for ( String key : envs.keySet() )
-        {
-            String value = envs.get( key );
-            if ( !caseSensitive )
-            {
-                key = key.toUpperCase( Locale.ENGLISH );
+        for (String key : envs.keySet()) {
+            String value = envs.get(key);
+            if (!caseSensitive) {
+                key = key.toUpperCase(Locale.ENGLISH);
             }
-            envVars.put( key, value );
+            envVars.put(key, value);
         }
         return envVars;
     }
 
-    public static boolean isAlive( Process p )
-    {
-        if ( p == null )
-        {
+    public static boolean isAlive(Process p) {
+        if (p == null) {
             return false;
         }
 
-        try
-        {
+        try {
             p.exitValue();
             return false;
-        }
-        catch ( IllegalThreadStateException e )
-        {
+        } catch (IllegalThreadStateException e) {
             return true;
         }
     }
 
-    public static String[] translateCommandline( String toProcess )
-        throws Exception
-    {
-        if ( ( toProcess == null ) || ( toProcess.length() == 0 ) )
-        {
+    public static String[] translateCommandline(String toProcess) throws Exception {
+        if ((toProcess == null) || (toProcess.length() == 0)) {
             return new String[0];
         }
 
@@ -419,72 +356,54 @@ public abstract class CommandLineUtils
         final int inQuote = 1;
         final int inDoubleQuote = 2;
         int state = normal;
-        StringTokenizer tok = new StringTokenizer( toProcess, "\"\' ", true );
+        StringTokenizer tok = new StringTokenizer(toProcess, "\"\' ", true);
         Vector<String> v = new Vector<String>();
         StringBuilder current = new StringBuilder();
 
-        while ( tok.hasMoreTokens() )
-        {
+        while (tok.hasMoreTokens()) {
             String nextTok = tok.nextToken();
-            switch ( state )
-            {
+            switch (state) {
                 case inQuote:
-                    if ( "\'".equals( nextTok ) )
-                    {
+                    if ("\'".equals(nextTok)) {
                         state = normal;
-                    }
-                    else
-                    {
-                        current.append( nextTok );
+                    } else {
+                        current.append(nextTok);
                     }
                     break;
                 case inDoubleQuote:
-                    if ( "\"".equals( nextTok ) )
-                    {
+                    if ("\"".equals(nextTok)) {
                         state = normal;
-                    }
-                    else
-                    {
-                        current.append( nextTok );
+                    } else {
+                        current.append(nextTok);
                     }
                     break;
                 default:
-                    if ( "\'".equals( nextTok ) )
-                    {
+                    if ("\'".equals(nextTok)) {
                         state = inQuote;
-                    }
-                    else if ( "\"".equals( nextTok ) )
-                    {
+                    } else if ("\"".equals(nextTok)) {
                         state = inDoubleQuote;
-                    }
-                    else if ( " ".equals( nextTok ) )
-                    {
-                        if ( current.length() != 0 )
-                        {
-                            v.addElement( current.toString() );
-                            current.setLength( 0 );
+                    } else if (" ".equals(nextTok)) {
+                        if (current.length() != 0) {
+                            v.addElement(current.toString());
+                            current.setLength(0);
                         }
-                    }
-                    else
-                    {
-                        current.append( nextTok );
+                    } else {
+                        current.append(nextTok);
                     }
                     break;
             }
         }
 
-        if ( current.length() != 0 )
-        {
-            v.addElement( current.toString() );
+        if (current.length() != 0) {
+            v.addElement(current.toString());
         }
 
-        if ( ( state == inQuote ) || ( state == inDoubleQuote ) )
-        {
-            throw new CommandLineException( "unbalanced quotes in " + toProcess );
+        if ((state == inQuote) || (state == inDoubleQuote)) {
+            throw new CommandLineException("unbalanced quotes in " + toProcess);
         }
 
         String[] args = new String[v.size()];
-        v.copyInto( args );
+        v.copyInto(args);
         return args;
     }
 
@@ -504,11 +423,9 @@ public abstract class CommandLineUtils
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
     @Deprecated
-    @SuppressWarnings( { "JavaDoc", "deprecation" } )
-    public static String quote( String argument )
-        throws CommandLineException
-    {
-        return quote( argument, false, false, true );
+    @SuppressWarnings({"JavaDoc", "deprecation"})
+    public static String quote(String argument) throws CommandLineException {
+        return quote(argument, false, false, true);
     }
 
     /**
@@ -528,11 +445,9 @@ public abstract class CommandLineUtils
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
     @Deprecated
-    @SuppressWarnings( { "JavaDoc", "UnusedDeclaration", "deprecation" } )
-    public static String quote( String argument, boolean wrapExistingQuotes )
-        throws CommandLineException
-    {
-        return quote( argument, false, false, wrapExistingQuotes );
+    @SuppressWarnings({"JavaDoc", "UnusedDeclaration", "deprecation"})
+    public static String quote(String argument, boolean wrapExistingQuotes) throws CommandLineException {
+        return quote(argument, false, false, wrapExistingQuotes);
     }
 
     /**
@@ -547,48 +462,30 @@ public abstract class CommandLineUtils
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
     @Deprecated
-    @SuppressWarnings( { "JavaDoc" } )
-    public static String quote( String argument, boolean escapeSingleQuotes, boolean escapeDoubleQuotes,
-                                boolean wrapExistingQuotes )
-        throws CommandLineException
-    {
-        if ( argument.contains( "\"" ) )
-        {
-            if ( argument.contains( "\'" ) )
-            {
-                throw new CommandLineException( "Can't handle single and double quotes in same argument" );
-            }
-            else
-            {
-                if ( escapeSingleQuotes )
-                {
+    @SuppressWarnings({"JavaDoc"})
+    public static String quote(
+            String argument, boolean escapeSingleQuotes, boolean escapeDoubleQuotes, boolean wrapExistingQuotes)
+            throws CommandLineException {
+        if (argument.contains("\"")) {
+            if (argument.contains("\'")) {
+                throw new CommandLineException("Can't handle single and double quotes in same argument");
+            } else {
+                if (escapeSingleQuotes) {
                     return "\\\'" + argument + "\\\'";
-                }
-                else if ( wrapExistingQuotes )
-                {
+                } else if (wrapExistingQuotes) {
                     return '\'' + argument + '\'';
                 }
             }
-        }
-        else if ( argument.contains( "\'" ) )
-        {
-            if ( escapeDoubleQuotes )
-            {
+        } else if (argument.contains("\'")) {
+            if (escapeDoubleQuotes) {
                 return "\\\"" + argument + "\\\"";
-            }
-            else if ( wrapExistingQuotes )
-            {
+            } else if (wrapExistingQuotes) {
                 return '\"' + argument + '\"';
             }
-        }
-        else if ( argument.contains( " " ) )
-        {
-            if ( escapeDoubleQuotes )
-            {
+        } else if (argument.contains(" ")) {
+            if (escapeDoubleQuotes) {
                 return "\\\"" + argument + "\\\"";
-            }
-            else
-            {
+            } else {
                 return '\"' + argument + '\"';
             }
         }
@@ -596,32 +493,24 @@ public abstract class CommandLineUtils
         return argument;
     }
 
-    public static String toString( String[] line )
-    {
+    public static String toString(String[] line) {
         // empty path return empty string
-        if ( ( line == null ) || ( line.length == 0 ) )
-        {
+        if ((line == null) || (line.length == 0)) {
             return "";
         }
 
         // path containing one or more elements
         final StringBuilder result = new StringBuilder();
-        for ( int i = 0; i < line.length; i++ )
-        {
-            if ( i > 0 )
-            {
-                result.append( ' ' );
+        for (int i = 0; i < line.length; i++) {
+            if (i > 0) {
+                result.append(' ');
             }
-            try
-            {
-                result.append( StringUtils.quoteAndEscape( line[i], '\"' ) );
-            }
-            catch ( Exception e )
-            {
-                System.err.println( "Error quoting argument: " + e.getMessage() );
+            try {
+                result.append(StringUtils.quoteAndEscape(line[i], '\"'));
+            } catch (Exception e) {
+                System.err.println("Error quoting argument: " + e.getMessage());
             }
         }
         return result.toString();
     }
-
 }

@@ -25,19 +25,15 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class DefaultConsumerTest
-{
+public class DefaultConsumerTest {
     /**
      * <p>testConsumeLine.</p>
      *
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testConsumeLine()
-        throws Exception
-    {
+    public void testConsumeLine() throws Exception {
         DefaultConsumer cons = new DefaultConsumer();
-        cons.consumeLine( "Test DefaultConsumer consumeLine" );
+        cons.consumeLine("Test DefaultConsumer consumeLine");
     }
-
 }

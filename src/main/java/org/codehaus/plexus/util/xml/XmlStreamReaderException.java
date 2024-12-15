@@ -31,9 +31,7 @@ import java.io.InputStream;
  * @version revision 1.1 taken on 26/06/2007 from Rome (see
  *          https://rome.dev.java.net/source/browse/rome/src/java/com/sun/syndication/io/XmlReaderException.java)
  */
-public class XmlStreamReaderException
-    extends XmlReaderException
-{
+public class XmlStreamReaderException extends XmlReaderException {
     /**
      * Creates an exception instance if the charset encoding could not be determined.
      * <p>
@@ -46,9 +44,8 @@ public class XmlStreamReaderException
      * @param xmlEnc XML prolog encoding.
      * @param is the unconsumed InputStream.
      */
-    public XmlStreamReaderException( String msg, String bomEnc, String xmlGuessEnc, String xmlEnc, InputStream is )
-    {
-        super( msg, bomEnc, xmlGuessEnc, xmlEnc, is );
+    public XmlStreamReaderException(String msg, String bomEnc, String xmlGuessEnc, String xmlEnc, InputStream is) {
+        super(msg, bomEnc, xmlGuessEnc, xmlEnc, is);
     }
 
     /**
@@ -65,9 +62,8 @@ public class XmlStreamReaderException
      * @param xmlEnc XML prolog encoding.
      * @param is the unconsumed InputStream.
      */
-    public XmlStreamReaderException( String msg, String ctMime, String ctEnc, String bomEnc, String xmlGuessEnc,
-                                     String xmlEnc, InputStream is )
-    {
-        super( msg, ctMime, ctEnc, bomEnc, xmlGuessEnc, xmlEnc, is );
+    public XmlStreamReaderException(
+            String msg, String ctMime, String ctEnc, String bomEnc, String xmlGuessEnc, String xmlEnc, InputStream is) {
+        super(msg, ctMime, ctEnc, bomEnc, xmlGuessEnc, xmlEnc, is);
     }
 }

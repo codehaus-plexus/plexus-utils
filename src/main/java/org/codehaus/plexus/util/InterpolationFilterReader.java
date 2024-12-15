@@ -75,12 +75,10 @@ import java.util.Map;
  * <li>if the enclosed string is <em>not</em> found in the keyword Map, then no substitution is made; the token text is
  * passed through unaltered.</li>
  * </ul>
- * 
+ *
  * @see LineOrientedInterpolatingReader s
  */
-public class InterpolationFilterReader
-    extends FilterReader
-{
+public class InterpolationFilterReader extends FilterReader {
     /** replacement text from a token */
     private String replaceData = null;
 
@@ -113,15 +111,14 @@ public class InterpolationFilterReader
 
     /**
      * Construct a Reader to interpolate values enclosed between the given delimiter tokens.
-     * 
+     *
      * @param in a Reader to be wrapped for interpolation.
      * @param variables name/value pairs to be interpolated into the character stream.
      * @param beginToken an interpolation target begins with this.
      * @param endToken an interpolation target ends with this.
      */
-    public InterpolationFilterReader( Reader in, Map<?, Object> variables, String beginToken, String endToken )
-    {
-        super( in );
+    public InterpolationFilterReader(Reader in, Map<?, Object> variables, String beginToken, String endToken) {
+        super(in);
 
         this.variables = variables;
         this.beginToken = beginToken;
@@ -133,13 +130,12 @@ public class InterpolationFilterReader
 
     /**
      * Construct a Reader using the default interpolation delimiter tokens "${" and "}".
-     * 
+     *
      * @param in a Reader to be wrapped for interpolation.
      * @param variables name/value pairs to be interpolated into the character stream.
      */
-    public InterpolationFilterReader( Reader in, Map<String, Object> variables )
-    {
-        this( in, variables, DEFAULT_BEGIN_TOKEN, DEFAULT_END_TOKEN );
+    public InterpolationFilterReader(Reader in, Map<String, Object> variables) {
+        this(in, variables, DEFAULT_BEGIN_TOKEN, DEFAULT_END_TOKEN);
     }
 
     /**
@@ -152,18 +148,13 @@ public class InterpolationFilterReader
      * @exception IOException If an I/O error occurs
      */
     @Override
-    public long skip( long n )
-        throws IOException
-    {
-        if ( n < 0L )
-        {
-            throw new IllegalArgumentException( "skip value is negative" );
+    public long skip(long n) throws IOException {
+        if (n < 0L) {
+            throw new IllegalArgumentException("skip value is negative");
         }
 
-        for ( long i = 0; i < n; i++ )
-        {
-            if ( read() == -1 )
-            {
+        for (long i = 0; i < n; i++) {
+            if (read() == -1) {
                 return i;
             }
         }
@@ -181,20 +172,13 @@ public class InterpolationFilterReader
      * @exception IOException If an I/O error occurs
      */
     @Override
-    public int read( char cbuf[], int off, int len )
-        throws IOException
-    {
-        for ( int i = 0; i < len; i++ )
-        {
+    public int read(char cbuf[], int off, int len) throws IOException {
+        for (int i = 0; i < len; i++) {
             int ch = read();
-            if ( ch == -1 )
-            {
-                if ( i == 0 )
-                {
+            if (ch == -1) {
+                if (i == 0) {
                     return -1;
-                }
-                else
-                {
+                } else {
                     return i;
                 }
             }
@@ -210,127 +194,94 @@ public class InterpolationFilterReader
      * @exception IOException if the underlying stream throws an IOException during reading
      */
     @Override
-    public int read()
-        throws IOException
-    {
-        if ( replaceIndex != -1 && replaceIndex < replaceData.length() )
-        {
-            int ch = replaceData.charAt( replaceIndex++ );
-            if ( replaceIndex >= replaceData.length() )
-            {
+    public int read() throws IOException {
+        if (replaceIndex != -1 && replaceIndex < replaceData.length()) {
+            int ch = replaceData.charAt(replaceIndex++);
+            if (replaceIndex >= replaceData.length()) {
                 replaceIndex = -1;
             }
             return ch;
         }
 
         int ch;
-        if ( previousIndex != -1 && previousIndex < endTokenLength )
-        {
-            ch = endToken.charAt( previousIndex++ );
-        }
-        else
-        {
+        if (previousIndex != -1 && previousIndex < endTokenLength) {
+            ch = endToken.charAt(previousIndex++);
+        } else {
             ch = in.read();
         }
 
-        if ( ch == beginToken.charAt( 0 ) )
-        {
+        if (ch == beginToken.charAt(0)) {
             StringBuilder key = new StringBuilder();
 
             int beginTokenMatchPos = 1;
 
-            do
-            {
-                if ( previousIndex != -1 && previousIndex < endTokenLength )
-                {
-                    ch = endToken.charAt( previousIndex++ );
-                }
-                else
-                {
+            do {
+                if (previousIndex != -1 && previousIndex < endTokenLength) {
+                    ch = endToken.charAt(previousIndex++);
+                } else {
                     ch = in.read();
                 }
-                if ( ch != -1 )
-                {
-                    key.append( (char) ch );
+                if (ch != -1) {
+                    key.append((char) ch);
 
-                    if ( ( beginTokenMatchPos < beginTokenLength )
-                        && ( ch != beginToken.charAt( beginTokenMatchPos++ ) ) )
-                    {
+                    if ((beginTokenMatchPos < beginTokenLength) && (ch != beginToken.charAt(beginTokenMatchPos++))) {
                         ch = -1; // not really EOF but to trigger code below
                         break;
                     }
-                }
-                else
-                {
+                } else {
                     break;
                 }
-            }
-            while ( ch != endToken.charAt( 0 ) );
+            } while (ch != endToken.charAt(0));
 
             // now test endToken
-            if ( ch != -1 && endTokenLength > 1 )
-            {
+            if (ch != -1 && endTokenLength > 1) {
                 int endTokenMatchPos = 1;
 
-                do
-                {
-                    if ( previousIndex != -1 && previousIndex < endTokenLength )
-                    {
-                        ch = endToken.charAt( previousIndex++ );
-                    }
-                    else
-                    {
+                do {
+                    if (previousIndex != -1 && previousIndex < endTokenLength) {
+                        ch = endToken.charAt(previousIndex++);
+                    } else {
                         ch = in.read();
                     }
 
-                    if ( ch != -1 )
-                    {
-                        key.append( (char) ch );
+                    if (ch != -1) {
+                        key.append((char) ch);
 
-                        if ( ch != endToken.charAt( endTokenMatchPos++ ) )
-                        {
+                        if (ch != endToken.charAt(endTokenMatchPos++)) {
                             ch = -1; // not really EOF but to trigger code below
                             break;
                         }
 
-                    }
-                    else
-                    {
+                    } else {
                         break;
                     }
-                }
-                while ( endTokenMatchPos < endTokenLength );
+                } while (endTokenMatchPos < endTokenLength);
             }
 
             // There is nothing left to read so we have the situation where the begin/end token
             // are in fact the same and as there is nothing left to read we have got ourselves
             // end of a token boundary so let it pass through.
-            if ( ch == -1 )
-            {
+            if (ch == -1) {
                 replaceData = key.toString();
                 replaceIndex = 0;
-                return beginToken.charAt( 0 );
+                return beginToken.charAt(0);
             }
 
-            String variableKey = key.substring( beginTokenLength - 1, key.length() - endTokenLength );
+            String variableKey = key.substring(beginTokenLength - 1, key.length() - endTokenLength);
 
-            Object o = variables.get( variableKey );
-            if ( o != null )
-            {
+            Object o = variables.get(variableKey);
+            if (o != null) {
                 String value = o.toString();
-                if ( value.length() != 0 )
-                {
+                if (value.length() != 0) {
                     replaceData = value;
                     replaceIndex = 0;
                 }
                 return read();
-            }
-            else
-            {
+            } else {
                 previousIndex = 0;
-                replaceData = key.substring( 0, key.length() - endTokenLength );
+                replaceData = key.substring(0, key.length() - endTokenLength);
                 replaceIndex = 0;
-                return beginToken.charAt( 0 );
+                return beginToken.charAt(0);
             }
         }
 

@@ -40,15 +40,13 @@ import java.net.URLConnection;
  * <a href="http://diveintomark.org/archives/2004/02/13/xml-media-types"> Determining the character encoding of a
  * feed</a>.
  * <p>
- * 
+ *
  * @author Alejandro Abdelnur
  * @version revision 1.17 taken on 26/06/2007 from Rome (see
  *          https://rome.dev.java.net/source/browse/rome/src/java/com/sun/syndication/io/XmlReader.java)
  * @since 1.4.4
  */
-public class XmlStreamReader
-    extends XmlReader
-{
+public class XmlStreamReader extends XmlReader {
     /**
      * Creates a Reader for a File.
      * <p>
@@ -57,14 +55,12 @@ public class XmlStreamReader
      * <p>
      * It does a lenient charset encoding detection, check the constructor with the lenient parameter for details.
      * <p>
-     * 
+     *
      * @param file File to create a Reader from.
      * @throws IOException thrown if there is a problem reading the file.
      */
-    public XmlStreamReader( File file )
-        throws IOException
-    {
-        super( file );
+    public XmlStreamReader(File file) throws IOException {
+        super(file);
     }
 
     /**
@@ -74,14 +70,12 @@ public class XmlStreamReader
      * <p>
      * It does a lenient charset encoding detection, check the constructor with the lenient parameter for details.
      * <p>
-     * 
+     *
      * @param is InputStream to create a Reader from.
      * @throws IOException thrown if there is a problem reading the stream.
      */
-    public XmlStreamReader( InputStream is )
-        throws IOException
-    {
-        super( is );
+    public XmlStreamReader(InputStream is) throws IOException {
+        super(is);
     }
 
     /**
@@ -102,16 +96,14 @@ public class XmlStreamReader
      * <p>
      * If lenient detection is indicated an XmlStreamReaderException is never thrown.
      * <p>
-     * 
+     *
      * @param is InputStream to create a Reader from.
      * @param lenient indicates if the charset encoding detection should be relaxed.
      * @throws IOException thrown if there is a problem reading the stream.
      * @throws XmlStreamReaderException thrown if the charset encoding could not be determined according to the specs.
      */
-    public XmlStreamReader( InputStream is, boolean lenient )
-        throws IOException, XmlStreamReaderException
-    {
-        super( is, lenient );
+    public XmlStreamReader(InputStream is, boolean lenient) throws IOException, XmlStreamReaderException {
+        super(is, lenient);
     }
 
     /**
@@ -125,14 +117,12 @@ public class XmlStreamReader
      * <p>
      * It does a lenient charset encoding detection, check the constructor with the lenient parameter for details.
      * <p>
-     * 
+     *
      * @param url URL to create a Reader from.
      * @throws IOException thrown if there is a problem reading the stream of the URL.
      */
-    public XmlStreamReader( URL url )
-        throws IOException
-    {
-        super( url );
+    public XmlStreamReader(URL url) throws IOException {
+        super(url);
     }
 
     /**
@@ -146,14 +136,12 @@ public class XmlStreamReader
      * <p>
      * It does a lenient charset encoding detection, check the constructor with the lenient parameter for details.
      * <p>
-     * 
+     *
      * @param conn URLConnection to create a Reader from.
      * @throws IOException thrown if there is a problem reading the stream of the URLConnection.
      */
-    public XmlStreamReader( URLConnection conn )
-        throws IOException
-    {
-        super( conn );
+    public XmlStreamReader(URLConnection conn) throws IOException {
+        super(conn);
     }
 
     /**
@@ -165,15 +153,13 @@ public class XmlStreamReader
      * <p>
      * It does a lenient charset encoding detection, check the constructor with the lenient parameter for details.
      * <p>
-     * 
+     *
      * @param is InputStream to create the reader from.
      * @param httpContentType content-type header to use for the resolution of the charset encoding.
      * @throws IOException thrown if there is a problem reading the file.
      */
-    public XmlStreamReader( InputStream is, String httpContentType )
-        throws IOException
-    {
-        super( is, httpContentType );
+    public XmlStreamReader(InputStream is, String httpContentType) throws IOException {
+        super(is, httpContentType);
     }
 
     /**
@@ -197,7 +183,7 @@ public class XmlStreamReader
      * <p>
      * If lenient detection is indicated an XmlStreamReaderException is never thrown.
      * <p>
-     * 
+     *
      * @param is InputStream to create the reader from.
      * @param httpContentType content-type header to use for the resolution of the charset encoding.
      * @param lenient indicates if the charset encoding detection should be relaxed.
@@ -205,10 +191,9 @@ public class XmlStreamReader
      * @throws IOException thrown if there is a problem reading the file.
      * @throws XmlStreamReaderException thrown if the charset encoding could not be determined according to the specs.
      */
-    public XmlStreamReader( InputStream is, String httpContentType, boolean lenient, String defaultEncoding )
-        throws IOException, XmlStreamReaderException
-    {
-        super( is, httpContentType, lenient, defaultEncoding );
+    public XmlStreamReader(InputStream is, String httpContentType, boolean lenient, String defaultEncoding)
+            throws IOException, XmlStreamReaderException {
+        super(is, httpContentType, lenient, defaultEncoding);
     }
 
     /**
@@ -232,16 +217,15 @@ public class XmlStreamReader
      * <p>
      * If lenient detection is indicated an XmlStreamReaderException is never thrown.
      * <p>
-     * 
+     *
      * @param is InputStream to create the reader from.
      * @param httpContentType content-type header to use for the resolution of the charset encoding.
      * @param lenient indicates if the charset encoding detection should be relaxed.
      * @throws IOException thrown if there is a problem reading the file.
      * @throws XmlStreamReaderException thrown if the charset encoding could not be determined according to the specs.
      */
-    public XmlStreamReader( InputStream is, String httpContentType, boolean lenient )
-        throws IOException, XmlStreamReaderException
-    {
-        super( is, httpContentType, lenient );
+    public XmlStreamReader(InputStream is, String httpContentType, boolean lenient)
+            throws IOException, XmlStreamReaderException {
+        super(is, httpContentType, lenient);
     }
 }

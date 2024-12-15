@@ -25,13 +25,9 @@ package org.codehaus.plexus.util.cli.shell;
  * @since 1.2
  *
  */
-public class CommandShell
-    extends Shell
-{
-    public CommandShell()
-    {
-        setShellCommand( "command.com" );
-        setShellArgs( new String[] { "/C" } );
+public class CommandShell extends Shell {
+    public CommandShell() {
+        setShellCommand("command.com");
+        setShellArgs(new String[] {"/C"});
     }
-
 }

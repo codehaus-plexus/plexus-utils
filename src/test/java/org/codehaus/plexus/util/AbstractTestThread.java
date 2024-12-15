@@ -27,9 +27,7 @@ package org.codehaus.plexus.util;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public abstract class AbstractTestThread
-    implements Runnable
-{
+public abstract class AbstractTestThread implements Runnable {
     // ~ Instance fields ----------------------------------------------------------------------------
     private String name;
 
@@ -65,8 +63,7 @@ public abstract class AbstractTestThread
      * <p>
      * Remember to call <code>setThreadRegistry(ThreadRegistry)</code>
      */
-    public AbstractTestThread()
-    {
+    public AbstractTestThread() {
         super();
     }
 
@@ -75,10 +72,9 @@ public abstract class AbstractTestThread
      *
      * @param registry a {@link org.codehaus.plexus.util.TestThreadManager} object.
      */
-    public AbstractTestThread( TestThreadManager registry )
-    {
+    public AbstractTestThread(TestThreadManager registry) {
         super();
-        setThreadRegistry( registry );
+        setThreadRegistry(registry);
     }
 
     // ~ Methods ------------------------------------------------------------------------------------
@@ -88,8 +84,7 @@ public abstract class AbstractTestThread
      *
      * @return a {@link java.lang.Throwable} object.
      */
-    public Throwable getError()
-    {
+    public Throwable getError() {
         return error;
     }
 
@@ -97,19 +92,13 @@ public abstract class AbstractTestThread
      * Resets the test back to it's state before starting. If the test is currently running this method will block until
      * the test has finished running. Subclasses should call this method if overriding it.
      */
-    public void reset()
-    {
+    public void reset() {
         // shouldn't reset until the test has finished running
-        synchronized ( this )
-        {
-            while ( isRunning )
-            {
-                try
-                {
+        synchronized (this) {
+            while (isRunning) {
+                try {
                     wait();
-                }
-                catch ( InterruptedException e )
-                {
+                } catch (InterruptedException e) {
 
                 }
             }
@@ -123,15 +112,12 @@ public abstract class AbstractTestThread
     /**
      * Start this TestThread running. If the test is currently running then this method does nothing.
      */
-    public final void start()
-    {
+    public final void start() {
         // shouldn't have multiple threads running this test at the same time
-        synchronized ( this )
-        {
-            if ( isRunning == false )
-            {
+        synchronized (this) {
+            if (isRunning == false) {
                 isRunning = true;
-                Thread t = new Thread( this );
+                Thread t = new Thread(this);
                 t.start();
             }
         }
@@ -142,8 +128,7 @@ public abstract class AbstractTestThread
      *
      * @return a {@link java.lang.String} object.
      */
-    public String getErrorMsg()
-    {
+    public String getErrorMsg() {
         return errorMsg;
     }
 
@@ -152,8 +137,7 @@ public abstract class AbstractTestThread
      *
      * @return a boolean.
      */
-    public boolean hasFailed()
-    {
+    public boolean hasFailed() {
         return !passed;
     }
 
@@ -162,8 +146,7 @@ public abstract class AbstractTestThread
      *
      * @return DOCUMENT ME!
      */
-    public boolean hasPassed()
-    {
+    public boolean hasPassed() {
         return passed;
     }
 
@@ -172,29 +155,24 @@ public abstract class AbstractTestThread
      *
      * @see java.lang.Runnable#run()
      */
-    public final void run()
-    {
-        if ( registry == null )
-        {
-            throw new IllegalArgumentException( "The ThreadRegistry is null. Ensure this is set before running this thread" );
+    public final void run() {
+        if (registry == null) {
+            throw new IllegalArgumentException(
+                    "The ThreadRegistry is null. Ensure this is set before running this thread");
         }
         passed = false;
-        try
-        {
+        try {
             doRun();
-        }
-        catch ( Throwable t )
-        {
+        } catch (Throwable t) {
             error = t;
         }
 
-        registry.completed( this );
+        registry.completed(this);
         hasRun = true;
         isRunning = false;
         // notify objects with blocked methods which are waiting
         // on this test to complete running
-        synchronized ( this )
-        {
+        synchronized (this) {
             notifyAll();
         }
     }
@@ -204,17 +182,15 @@ public abstract class AbstractTestThread
      *
      * @throws java.lang.Throwable
      */
-    public abstract void doRun()
-        throws Throwable;
+    public abstract void doRun() throws Throwable;
 
     /**
      * Set the registry this thread should notify when it has completed running
      *
      * @param registry a {@link org.codehaus.plexus.util.TestThreadManager} object.
      */
-    public void setThreadRegistry( TestThreadManager registry )
+    public void setThreadRegistry(TestThreadManager registry) {
 
-    {
         this.registry = registry;
     }
 
@@ -223,8 +199,7 @@ public abstract class AbstractTestThread
      *
      * @return a boolean.
      */
-    public boolean hasRun()
-    {
+    public boolean hasRun() {
         return hasRun;
     }
 
@@ -233,8 +208,7 @@ public abstract class AbstractTestThread
      *
      * @param throwable a {@link java.lang.Throwable} object.
      */
-    public void setError( Throwable throwable )
-    {
+    public void setError(Throwable throwable) {
         error = throwable;
     }
 
@@ -243,8 +217,7 @@ public abstract class AbstractTestThread
      *
      * @param string a {@link java.lang.String} object.
      */
-    public void setErrorMsg( String string )
-    {
+    public void setErrorMsg(String string) {
         errorMsg = string;
     }
 
@@ -253,8 +226,7 @@ public abstract class AbstractTestThread
      *
      * @param b a boolean.
      */
-    public void setPassed( boolean b )
-    {
+    public void setPassed(boolean b) {
         passed = b;
     }
 
@@ -263,8 +235,7 @@ public abstract class AbstractTestThread
      *
      * @return a {@link java.lang.String} object.
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -273,16 +244,13 @@ public abstract class AbstractTestThread
      *
      * @param string a {@link java.lang.String} object.
      */
-    public void setName( String string )
-    {
+    public void setName(String string) {
         name = string;
     }
 
-    private final void debug( String msg )
-    {
-        if ( DEBUG )
-        {
-            System.out.println( this + ":" + msg );
+    private final void debug(String msg) {
+        if (DEBUG) {
+            System.out.println(this + ":" + msg);
         }
     }
 }

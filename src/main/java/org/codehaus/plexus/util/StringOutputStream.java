@@ -28,37 +28,28 @@ import java.io.OutputStream;
  *             encoding. Instead, use {@link java.io.ByteArrayOutputStream#toString(String)}.
  */
 @Deprecated
-public class StringOutputStream
-    extends OutputStream
-{
+public class StringOutputStream extends OutputStream {
     private StringBuffer buf = new StringBuffer();
 
     @Override
-    public void write( byte[] b )
-        throws IOException
-    {
-        buf.append( new String( b ) );
+    public void write(byte[] b) throws IOException {
+        buf.append(new String(b));
     }
 
     @Override
-    public void write( byte[] b, int off, int len )
-        throws IOException
-    {
-        buf.append( new String( b, off, len ) );
+    public void write(byte[] b, int off, int len) throws IOException {
+        buf.append(new String(b, off, len));
     }
 
     @Override
-    public void write( int b )
-        throws IOException
-    {
+    public void write(int b) throws IOException {
         byte[] bytes = new byte[1];
         bytes[0] = (byte) b;
-        buf.append( new String( bytes ) );
+        buf.append(new String(bytes));
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return buf.toString();
     }
 }

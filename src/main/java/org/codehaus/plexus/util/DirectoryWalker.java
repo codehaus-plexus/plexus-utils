@@ -24,16 +24,14 @@ import java.util.Stack;
 
 /**
  * DirectoryWalker
- * 
+ *
  *
  */
-public class DirectoryWalker
-{
+public class DirectoryWalker {
     /**
      * DirStackEntry is an Item on the {@link DirectoryWalker#dirStack}
      */
-    class DirStackEntry
-    {
+    class DirStackEntry {
         /**
          * Count of files in the directory.
          */
@@ -65,8 +63,7 @@ public class DirectoryWalker
          * @param d the directory to track
          * @param length the length of entries in the directory.
          */
-        public DirStackEntry( File d, int length )
-        {
+        public DirStackEntry(File d, int length) {
             dir = d;
             count = length;
         }
@@ -76,9 +73,8 @@ public class DirectoryWalker
          *
          * @return the value for the next percentage offset.
          */
-        public double getNextPercentageOffset()
-        {
-            return percentageOffset + ( index * ( percentageSize / count ) );
+        public double getNextPercentageOffset() {
+            return percentageOffset + (index * (percentageSize / count));
         }
 
         /**
@@ -86,9 +82,8 @@ public class DirectoryWalker
          *
          * @return the value for the next percentage size.
          */
-        public double getNextPercentageSize()
-        {
-            return ( percentageSize / count );
+        public double getNextPercentageSize() {
+            return (percentageSize / count);
         }
 
         /**
@@ -96,19 +91,17 @@ public class DirectoryWalker
          *
          * @return the percentage right now.
          */
-        public int getPercentage()
-        {
+        public int getPercentage() {
             double percentageWithinDir = (double) index / (double) count;
-            return (int) Math.floor( percentageOffset + ( percentageWithinDir * percentageSize ) );
+            return (int) Math.floor(percentageOffset + (percentageWithinDir * percentageSize));
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "DirStackEntry[" + "dir=" + dir.getAbsolutePath() + ",count=" + count + ",index=" + index
-                + ",percentageOffset=" + percentageOffset + ",percentageSize=" + percentageSize + ",percentage()="
-                + getPercentage() + ",getNextPercentageOffset()=" + getNextPercentageOffset()
-                + ",getNextPercentageSize()=" + getNextPercentageSize() + "]";
+                    + ",percentageOffset=" + percentageOffset + ",percentageSize=" + percentageSize + ",percentage()="
+                    + getPercentage() + ",getNextPercentageOffset()=" + getNextPercentageOffset()
+                    + ",getNextPercentageSize()=" + getNextPercentageSize() + "]";
         }
     }
 
@@ -128,137 +121,111 @@ public class DirectoryWalker
 
     private boolean debugEnabled = false;
 
-    public DirectoryWalker()
-    {
+    public DirectoryWalker() {
         includes = new ArrayList<String>();
         excludes = new ArrayList<String>();
         listeners = new ArrayList<DirectoryWalkListener>();
     }
 
-    public void addDirectoryWalkListener( DirectoryWalkListener listener )
-    {
-        listeners.add( listener );
+    public void addDirectoryWalkListener(DirectoryWalkListener listener) {
+        listeners.add(listener);
     }
 
-    public void addExclude( String exclude )
-    {
-        excludes.add( fixPattern( exclude ) );
+    public void addExclude(String exclude) {
+        excludes.add(fixPattern(exclude));
     }
 
-    public void addInclude( String include )
-    {
-        includes.add( fixPattern( include ) );
+    public void addInclude(String include) {
+        includes.add(fixPattern(include));
     }
 
     /**
      * Add's to the Exclude List the default list of SCM excludes.
      */
-    public void addSCMExcludes()
-    {
+    public void addSCMExcludes() {
         String scmexcludes[] = AbstractScanner.DEFAULTEXCLUDES;
-        for ( String scmexclude : scmexcludes )
-        {
-            addExclude( scmexclude );
+        for (String scmexclude : scmexcludes) {
+            addExclude(scmexclude);
         }
     }
 
-    private void fireStep( File file )
-    {
+    private void fireStep(File file) {
         DirStackEntry dsEntry = dirStack.peek();
         int percentage = dsEntry.getPercentage();
-        for ( Object listener1 : listeners )
-        {
+        for (Object listener1 : listeners) {
             DirectoryWalkListener listener = (DirectoryWalkListener) listener1;
-            listener.directoryWalkStep( percentage, file );
+            listener.directoryWalkStep(percentage, file);
         }
     }
 
-    private void fireWalkFinished()
-    {
-        for ( DirectoryWalkListener listener1 : listeners )
-        {
+    private void fireWalkFinished() {
+        for (DirectoryWalkListener listener1 : listeners) {
             listener1.directoryWalkFinished();
         }
     }
 
-    private void fireWalkStarting()
-    {
-        for ( DirectoryWalkListener listener1 : listeners )
-        {
-            listener1.directoryWalkStarting( baseDir );
+    private void fireWalkStarting() {
+        for (DirectoryWalkListener listener1 : listeners) {
+            listener1.directoryWalkStarting(baseDir);
         }
     }
 
-    private void fireDebugMessage( String message )
-    {
-        for ( DirectoryWalkListener listener1 : listeners )
-        {
-            listener1.debug( message );
+    private void fireDebugMessage(String message) {
+        for (DirectoryWalkListener listener1 : listeners) {
+            listener1.debug(message);
         }
     }
 
-    private String fixPattern( String pattern )
-    {
+    private String fixPattern(String pattern) {
         String cleanPattern = pattern;
 
-        if ( File.separatorChar != '/' )
-        {
-            cleanPattern = cleanPattern.replace( '/', File.separatorChar );
+        if (File.separatorChar != '/') {
+            cleanPattern = cleanPattern.replace('/', File.separatorChar);
         }
 
-        if ( File.separatorChar != '\\' )
-        {
-            cleanPattern = cleanPattern.replace( '\\', File.separatorChar );
+        if (File.separatorChar != '\\') {
+            cleanPattern = cleanPattern.replace('\\', File.separatorChar);
         }
 
         return cleanPattern;
     }
 
-    public void setDebugMode( boolean debugEnabled )
-    {
+    public void setDebugMode(boolean debugEnabled) {
         this.debugEnabled = debugEnabled;
     }
 
     /**
      * @return Returns the baseDir.
      */
-    public File getBaseDir()
-    {
+    public File getBaseDir() {
         return baseDir;
     }
 
     /**
      * @return Returns the excludes.
      */
-    public List<String> getExcludes()
-    {
+    public List<String> getExcludes() {
         return excludes;
     }
 
     /**
      * @return Returns the includes.
      */
-    public List<String> getIncludes()
-    {
+    public List<String> getIncludes() {
         return includes;
     }
 
-    private boolean isExcluded( String name )
-    {
-        return isMatch( excludes, name );
+    private boolean isExcluded(String name) {
+        return isMatch(excludes, name);
     }
 
-    private boolean isIncluded( String name )
-    {
-        return isMatch( includes, name );
+    private boolean isIncluded(String name) {
+        return isMatch(includes, name);
     }
 
-    private boolean isMatch( List<String> patterns, String name )
-    {
-        for ( String pattern1 : patterns )
-        {
-            if ( SelectorUtils.matchPath( pattern1, name, isCaseSensitive ) )
-            {
+    private boolean isMatch(List<String> patterns, String name) {
+        for (String pattern1 : patterns) {
+            if (SelectorUtils.matchPath(pattern1, name, isCaseSensitive)) {
                 return true;
             }
         }
@@ -266,9 +233,8 @@ public class DirectoryWalker
         return false;
     }
 
-    private String relativeToBaseDir( File file )
-    {
-        return file.getAbsolutePath().substring( baseDirOffset + 1 );
+    private String relativeToBaseDir(File file) {
+        return file.getAbsolutePath().substring(baseDirOffset + 1);
     }
 
     /**
@@ -276,110 +242,90 @@ public class DirectoryWalker
      *
      * @param listener the listener to remove.
      */
-    public void removeDirectoryWalkListener( DirectoryWalkListener listener )
-    {
-        listeners.remove( listener );
+    public void removeDirectoryWalkListener(DirectoryWalkListener listener) {
+        listeners.remove(listener);
     }
 
     /**
      * Performs a Scan against the provided {@link #setBaseDir(File)}
      */
-    public void scan()
-    {
-        if ( baseDir == null )
-        {
-            throw new IllegalStateException( "Scan Failure.  BaseDir not specified." );
+    public void scan() {
+        if (baseDir == null) {
+            throw new IllegalStateException("Scan Failure.  BaseDir not specified.");
         }
 
-        if ( !baseDir.exists() )
-        {
-            throw new IllegalStateException( "Scan Failure.  BaseDir does not exist." );
+        if (!baseDir.exists()) {
+            throw new IllegalStateException("Scan Failure.  BaseDir does not exist.");
         }
 
-        if ( !baseDir.isDirectory() )
-        {
-            throw new IllegalStateException( "Scan Failure.  BaseDir is not a directory." );
+        if (!baseDir.isDirectory()) {
+            throw new IllegalStateException("Scan Failure.  BaseDir is not a directory.");
         }
 
-        if ( includes.isEmpty() )
-        {
+        if (includes.isEmpty()) {
             // default to include all.
-            addInclude( "**" );
+            addInclude("**");
         }
 
-        if ( debugEnabled )
-        {
+        if (debugEnabled) {
             Iterator<String> it;
             StringBuilder dbg = new StringBuilder();
-            dbg.append( "DirectoryWalker Scan" );
-            dbg.append( "\n  Base Dir: " ).append( baseDir.getAbsolutePath() );
-            dbg.append( "\n  Includes: " );
+            dbg.append("DirectoryWalker Scan");
+            dbg.append("\n  Base Dir: ").append(baseDir.getAbsolutePath());
+            dbg.append("\n  Includes: ");
             it = includes.iterator();
-            while ( it.hasNext() )
-            {
+            while (it.hasNext()) {
                 String include = it.next();
-                dbg.append( "\n    - \"" ).append( include ).append( "\"" );
+                dbg.append("\n    - \"").append(include).append("\"");
             }
-            dbg.append( "\n  Excludes: " );
+            dbg.append("\n  Excludes: ");
             it = excludes.iterator();
-            while ( it.hasNext() )
-            {
+            while (it.hasNext()) {
                 String exclude = it.next();
-                dbg.append( "\n    - \"" ).append( exclude ).append( "\"" );
+                dbg.append("\n    - \"").append(exclude).append("\"");
             }
-            fireDebugMessage( dbg.toString() );
+            fireDebugMessage(dbg.toString());
         }
 
         fireWalkStarting();
         dirStack = new Stack<DirStackEntry>();
-        scanDir( baseDir );
+        scanDir(baseDir);
         fireWalkFinished();
     }
 
-    private void scanDir( File dir )
-    {
+    private void scanDir(File dir) {
         File[] files = dir.listFiles();
 
-        if ( files == null )
-        {
+        if (files == null) {
             return;
         }
 
-        DirectoryWalker.DirStackEntry curStackEntry = new DirectoryWalker.DirStackEntry( dir, files.length );
-        if ( dirStack.isEmpty() )
-        {
+        DirectoryWalker.DirStackEntry curStackEntry = new DirectoryWalker.DirStackEntry(dir, files.length);
+        if (dirStack.isEmpty()) {
             curStackEntry.percentageOffset = 0;
             curStackEntry.percentageSize = 100;
-        }
-        else
-        {
+        } else {
             DirectoryWalker.DirStackEntry previousStackEntry = dirStack.peek();
             curStackEntry.percentageOffset = previousStackEntry.getNextPercentageOffset();
             curStackEntry.percentageSize = previousStackEntry.getNextPercentageSize();
         }
 
-        dirStack.push( curStackEntry );
+        dirStack.push(curStackEntry);
 
-        for ( int idx = 0; idx < files.length; idx++ )
-        {
+        for (int idx = 0; idx < files.length; idx++) {
             curStackEntry.index = idx;
-            String name = relativeToBaseDir( files[idx] );
+            String name = relativeToBaseDir(files[idx]);
 
-            if ( isExcluded( name ) )
-            {
-                fireDebugMessage( name + " is excluded." );
+            if (isExcluded(name)) {
+                fireDebugMessage(name + " is excluded.");
                 continue;
             }
 
-            if ( files[idx].isDirectory() )
-            {
-                scanDir( files[idx] );
-            }
-            else
-            {
-                if ( isIncluded( name ) )
-                {
-                    fireStep( files[idx] );
+            if (files[idx].isDirectory()) {
+                scanDir(files[idx]);
+            } else {
+                if (isIncluded(name)) {
+                    fireStep(files[idx]);
                 }
             }
         }
@@ -390,8 +336,7 @@ public class DirectoryWalker
     /**
      * @param baseDir The baseDir to set.
      */
-    public void setBaseDir( File baseDir )
-    {
+    public void setBaseDir(File baseDir) {
         this.baseDir = baseDir;
         baseDirOffset = baseDir.getAbsolutePath().length();
     }
@@ -399,14 +344,11 @@ public class DirectoryWalker
     /**
      * @param entries The excludes to set.
      */
-    public void setExcludes( List<String> entries )
-    {
+    public void setExcludes(List<String> entries) {
         excludes.clear();
-        if ( entries != null )
-        {
-            for ( String entry : entries )
-            {
-                excludes.add( fixPattern( entry ) );
+        if (entries != null) {
+            for (String entry : entries) {
+                excludes.add(fixPattern(entry));
             }
         }
     }
@@ -414,16 +356,12 @@ public class DirectoryWalker
     /**
      * @param entries The includes to set.
      */
-    public void setIncludes( List<String> entries )
-    {
+    public void setIncludes(List<String> entries) {
         includes.clear();
-        if ( entries != null )
-        {
-            for ( String entry : entries )
-            {
-                includes.add( fixPattern( entry ) );
+        if (entries != null) {
+            for (String entry : entries) {
+                includes.add(fixPattern(entry));
             }
         }
     }
-
 }

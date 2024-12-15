@@ -22,22 +22,17 @@ package org.codehaus.plexus.util.reflection;
  *
  * @author John Casey
  */
-public class ReflectorException
-    extends Exception
-{
-    @SuppressWarnings( { "UnusedDeclaration" } )
-    public ReflectorException()
-    {
-    }
+public class ReflectorException extends Exception {
+    @SuppressWarnings({"UnusedDeclaration"})
+    public ReflectorException() {}
 
     /**
      * Create a new ReflectorException with the specified message.
      *
      * @param msg The message.
      */
-    public ReflectorException( String msg )
-    {
-        super( msg );
+    public ReflectorException(String msg) {
+        super(msg);
     }
 
     /**
@@ -45,9 +40,8 @@ public class ReflectorException
      *
      * @param root The root cause.
      */
-    public ReflectorException( Throwable root )
-    {
-        super( root );
+    public ReflectorException(Throwable root) {
+        super(root);
     }
 
     /**
@@ -56,8 +50,7 @@ public class ReflectorException
      * @param msg The message.
      * @param root The root cause.
      */
-    public ReflectorException( String msg, Throwable root )
-    {
-        super( msg, root );
+    public ReflectorException(String msg, Throwable root) {
+        super(msg, root);
     }
 }

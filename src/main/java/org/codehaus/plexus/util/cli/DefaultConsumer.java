@@ -22,20 +22,14 @@ import java.io.IOException;
  * @author <a href="mailto:evenisse@apache.org">Emmanuel Venisse</a>
  *
  */
-public class DefaultConsumer
-    implements StreamConsumer
-{
+public class DefaultConsumer implements StreamConsumer {
 
     @Override
-    public void consumeLine( String line )
-        throws IOException
-    {
-        System.out.println( line );
+    public void consumeLine(String line) throws IOException {
+        System.out.println(line);
 
-        if ( System.out.checkError() )
-        {
-            throw new IOException( String.format( "Failure printing line '%s' to stdout.", line ) );
+        if (System.out.checkError()) {
+            throw new IOException(String.format("Failure printing line '%s' to stdout.", line));
         }
     }
-
 }

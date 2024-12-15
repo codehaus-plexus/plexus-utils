@@ -16,12 +16,12 @@ package org.codehaus.plexus.util.cli.shell;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.StringUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Class that abstracts the Shell functionality, with subclasses for shells that behave particularly, like
@@ -34,10 +34,8 @@ import java.util.List;
  * @since 1.2
  *
  */
-public class Shell
-    implements Cloneable
-{
-    private static final char[] DEFAULT_QUOTING_TRIGGER_CHARS = { ' ' };
+public class Shell implements Cloneable {
+    private static final char[] DEFAULT_QUOTING_TRIGGER_CHARS = {' '};
 
     private String shellCommand;
 
@@ -72,8 +70,7 @@ public class Shell
      *
      * @param unconditionallyQuote see name
      */
-    public void setUnconditionalQuoting( boolean unconditionallyQuote )
-    {
+    public void setUnconditionalQuoting(boolean unconditionallyQuote) {
         this.unconditionallyQuote = unconditionallyQuote;
     }
 
@@ -82,8 +79,7 @@ public class Shell
      *
      * @param shellCommand see name
      */
-    public void setShellCommand( String shellCommand )
-    {
+    public void setShellCommand(String shellCommand) {
         this.shellCommand = shellCommand;
     }
 
@@ -92,8 +88,7 @@ public class Shell
      *
      * @return the command
      */
-    public String getShellCommand()
-    {
+    public String getShellCommand() {
         return shellCommand;
     }
 
@@ -102,24 +97,19 @@ public class Shell
      *
      * @param shellArgs see name
      */
-    public void setShellArgs( String[] shellArgs )
-    {
+    public void setShellArgs(String[] shellArgs) {
         this.shellArgs.clear();
-        this.shellArgs.addAll( Arrays.asList( shellArgs ) );
+        this.shellArgs.addAll(Arrays.asList(shellArgs));
     }
 
     /**
      * @return the shell arguments
      */
-    public String[] getShellArgs()
-    {
-        if ( ( shellArgs == null ) || shellArgs.isEmpty() )
-        {
+    public String[] getShellArgs() {
+        if ((shellArgs == null) || shellArgs.isEmpty()) {
             return null;
-        }
-        else
-        {
-            return shellArgs.toArray( new String[0] );
+        } else {
+            return shellArgs.toArray(new String[0]);
         }
     }
 
@@ -130,139 +120,115 @@ public class Shell
      * @param arguments arguments for the executable, not the shell
      * @return List with one String object with executable and arguments quoted as needed
      */
-    public List<String> getCommandLine( String executable, String[] arguments )
-    {
-        return getRawCommandLine( executable, arguments );
+    public List<String> getCommandLine(String executable, String[] arguments) {
+        return getRawCommandLine(executable, arguments);
     }
 
-    protected String quoteOneItem( String inputString, boolean isExecutable )
-    {
-        char[] escapeChars = getEscapeChars( isSingleQuotedExecutableEscaped(), isDoubleQuotedExecutableEscaped() );
-        return StringUtils.quoteAndEscape( inputString,
-                                           isExecutable ? getExecutableQuoteDelimiter() : getArgumentQuoteDelimiter(),
-                                           escapeChars, getQuotingTriggerChars(), '\\', unconditionallyQuote );
+    protected String quoteOneItem(String inputString, boolean isExecutable) {
+        char[] escapeChars = getEscapeChars(isSingleQuotedExecutableEscaped(), isDoubleQuotedExecutableEscaped());
+        return StringUtils.quoteAndEscape(
+                inputString,
+                isExecutable ? getExecutableQuoteDelimiter() : getArgumentQuoteDelimiter(),
+                escapeChars,
+                getQuotingTriggerChars(),
+                '\\',
+                unconditionallyQuote);
     }
 
-    protected List<String> getRawCommandLine( String executable, String[] arguments )
-    {
+    protected List<String> getRawCommandLine(String executable, String[] arguments) {
         List<String> commandLine = new ArrayList<String>();
         StringBuilder sb = new StringBuilder();
 
-        if ( executable != null )
-        {
+        if (executable != null) {
             String preamble = getExecutionPreamble();
-            if ( preamble != null )
-            {
-                sb.append( preamble );
+            if (preamble != null) {
+                sb.append(preamble);
             }
 
-            if ( isQuotedExecutableEnabled() )
-            {
-                sb.append( quoteOneItem( getOriginalExecutable(), true ) );
-            }
-            else
-            {
-                sb.append( getExecutable() );
+            if (isQuotedExecutableEnabled()) {
+                sb.append(quoteOneItem(getOriginalExecutable(), true));
+            } else {
+                sb.append(getExecutable());
             }
         }
-        for ( String argument : arguments )
-        {
-            if ( sb.length() > 0 )
-            {
-                sb.append( " " );
+        for (String argument : arguments) {
+            if (sb.length() > 0) {
+                sb.append(" ");
             }
 
-            if ( isQuotedArgumentsEnabled() )
-            {
-                sb.append( quoteOneItem( argument, false ) );
-            }
-            else
-            {
-                sb.append( argument );
+            if (isQuotedArgumentsEnabled()) {
+                sb.append(quoteOneItem(argument, false));
+            } else {
+                sb.append(argument);
             }
         }
 
-        commandLine.add( sb.toString() );
+        commandLine.add(sb.toString());
 
         return commandLine;
     }
 
-    protected char[] getQuotingTriggerChars()
-    {
+    protected char[] getQuotingTriggerChars() {
         return DEFAULT_QUOTING_TRIGGER_CHARS;
     }
 
-    protected String getExecutionPreamble()
-    {
+    protected String getExecutionPreamble() {
         return null;
     }
 
-    protected char[] getEscapeChars( boolean includeSingleQuote, boolean includeDoubleQuote )
-    {
-        StringBuilder buf = new StringBuilder( 2 );
-        if ( includeSingleQuote )
-        {
-            buf.append( '\'' );
+    protected char[] getEscapeChars(boolean includeSingleQuote, boolean includeDoubleQuote) {
+        StringBuilder buf = new StringBuilder(2);
+        if (includeSingleQuote) {
+            buf.append('\'');
         }
 
-        if ( includeDoubleQuote )
-        {
-            buf.append( '\"' );
+        if (includeDoubleQuote) {
+            buf.append('\"');
         }
 
         char[] result = new char[buf.length()];
-        buf.getChars( 0, buf.length(), result, 0 );
+        buf.getChars(0, buf.length(), result, 0);
 
         return result;
     }
 
-    protected boolean isDoubleQuotedArgumentEscaped()
-    {
+    protected boolean isDoubleQuotedArgumentEscaped() {
         return doubleQuotedArgumentEscaped;
     }
 
-    protected boolean isSingleQuotedArgumentEscaped()
-    {
+    protected boolean isSingleQuotedArgumentEscaped() {
         return singleQuotedArgumentEscaped;
     }
 
-    protected boolean isDoubleQuotedExecutableEscaped()
-    {
+    protected boolean isDoubleQuotedExecutableEscaped() {
         return doubleQuotedExecutableEscaped;
     }
 
-    protected boolean isSingleQuotedExecutableEscaped()
-    {
+    protected boolean isSingleQuotedExecutableEscaped() {
         return singleQuotedExecutableEscaped;
     }
 
-    protected void setArgumentQuoteDelimiter( char argQuoteDelimiter )
-    {
+    protected void setArgumentQuoteDelimiter(char argQuoteDelimiter) {
         this.argQuoteDelimiter = argQuoteDelimiter;
     }
 
-    protected char getArgumentQuoteDelimiter()
-    {
+    protected char getArgumentQuoteDelimiter() {
         return argQuoteDelimiter;
     }
 
-    protected void setExecutableQuoteDelimiter( char exeQuoteDelimiter )
-    {
+    protected void setExecutableQuoteDelimiter(char exeQuoteDelimiter) {
         this.exeQuoteDelimiter = exeQuoteDelimiter;
     }
 
-    protected char getExecutableQuoteDelimiter()
-    {
+    protected char getExecutableQuoteDelimiter() {
         return exeQuoteDelimiter;
     }
 
-    protected void setArgumentEscapePattern( String argumentEscapePattern )
-    {
+    protected void setArgumentEscapePattern(String argumentEscapePattern) {
         this.argumentEscapePattern = argumentEscapePattern;
     }
 
-    protected String getArgumentEscapePattern()
-    {
+    protected String getArgumentEscapePattern() {
         return argumentEscapePattern;
     }
 
@@ -274,54 +240,44 @@ public class Shell
      * @return List of String objects, whose array version is suitable to be used as argument of
      *         Runtime.getRuntime().exec()
      */
-    public List<String> getShellCommandLine( String[] arguments )
-    {
+    public List<String> getShellCommandLine(String[] arguments) {
 
         List<String> commandLine = new ArrayList<String>();
 
-        if ( getShellCommand() != null )
-        {
-            commandLine.add( getShellCommand() );
+        if (getShellCommand() != null) {
+            commandLine.add(getShellCommand());
         }
 
-        if ( getShellArgs() != null )
-        {
-            commandLine.addAll( getShellArgsList() );
+        if (getShellArgs() != null) {
+            commandLine.addAll(getShellArgsList());
         }
 
-        commandLine.addAll( getCommandLine( getOriginalExecutable(), arguments ) );
+        commandLine.addAll(getCommandLine(getOriginalExecutable(), arguments));
 
         return commandLine;
-
     }
 
-    public List<String> getShellArgsList()
-    {
+    public List<String> getShellArgsList() {
         return shellArgs;
     }
 
-    public void addShellArg( String arg )
-    {
-        shellArgs.add( arg );
+    public void addShellArg(String arg) {
+        shellArgs.add(arg);
     }
 
-    public void setQuotedArgumentsEnabled( boolean quotedArgumentsEnabled )
-    {
+    public void setQuotedArgumentsEnabled(boolean quotedArgumentsEnabled) {
         this.quotedArgumentsEnabled = quotedArgumentsEnabled;
     }
 
-    public boolean isQuotedArgumentsEnabled()
-    {
+    public boolean isQuotedArgumentsEnabled() {
         return quotedArgumentsEnabled;
     }
 
-    public void setQuotedExecutableEnabled( boolean quotedExecutableEnabled )
-    {
+    public void setQuotedExecutableEnabled(boolean quotedExecutableEnabled) {
         this.quotedExecutableEnabled = quotedExecutableEnabled;
     }
 
-    public boolean isQuotedExecutableEnabled()
-    {
+    public boolean isQuotedExecutableEnabled() {
         return quotedExecutableEnabled;
     }
 
@@ -329,27 +285,22 @@ public class Shell
      *
      * @param executable Sets the executable to run.
      */
-    public void setExecutable( String executable )
-    {
-        if ( ( executable == null ) || ( executable.length() == 0 ) )
-        {
+    public void setExecutable(String executable) {
+        if ((executable == null) || (executable.length() == 0)) {
             return;
         }
-        this.executable = executable.replace( '/', File.separatorChar ).replace( '\\', File.separatorChar );
+        this.executable = executable.replace('/', File.separatorChar).replace('\\', File.separatorChar);
     }
 
-    public String getExecutable()
-    {
+    public String getExecutable() {
         return executable;
     }
 
     /**
      * @param path Sets execution directory.
      */
-    public void setWorkingDirectory( String path )
-    {
-        if ( path != null )
-        {
+    public void setWorkingDirectory(String path) {
+        if (path != null) {
             workingDir = path;
         }
     }
@@ -357,66 +308,54 @@ public class Shell
     /**
      * @param workingDir Sets execution directory.
      */
-    public void setWorkingDirectory( File workingDir )
-    {
-        if ( workingDir != null )
-        {
+    public void setWorkingDirectory(File workingDir) {
+        if (workingDir != null) {
             this.workingDir = workingDir.getAbsolutePath();
         }
     }
 
-    public File getWorkingDirectory()
-    {
-        return workingDir == null ? null : new File( workingDir );
+    public File getWorkingDirectory() {
+        return workingDir == null ? null : new File(workingDir);
     }
 
-    public String getWorkingDirectoryAsString()
-    {
+    public String getWorkingDirectoryAsString() {
         return workingDir;
     }
 
-    public void clearArguments()
-    {
+    public void clearArguments() {
         shellArgs.clear();
     }
 
     @Override
-    public Object clone()
-    {
+    public Object clone() {
         Shell shell = new Shell();
-        shell.setExecutable( getExecutable() );
-        shell.setWorkingDirectory( getWorkingDirectory() );
-        shell.setShellArgs( getShellArgs() );
+        shell.setExecutable(getExecutable());
+        shell.setWorkingDirectory(getWorkingDirectory());
+        shell.setShellArgs(getShellArgs());
         return shell;
     }
 
-    public String getOriginalExecutable()
-    {
+    public String getOriginalExecutable() {
         return executable;
     }
 
-    public List<String> getOriginalCommandLine( String executable, String[] arguments )
-    {
-        return getRawCommandLine( executable, arguments );
+    public List<String> getOriginalCommandLine(String executable, String[] arguments) {
+        return getRawCommandLine(executable, arguments);
     }
 
-    protected void setDoubleQuotedArgumentEscaped( boolean doubleQuotedArgumentEscaped )
-    {
+    protected void setDoubleQuotedArgumentEscaped(boolean doubleQuotedArgumentEscaped) {
         this.doubleQuotedArgumentEscaped = doubleQuotedArgumentEscaped;
     }
 
-    protected void setDoubleQuotedExecutableEscaped( boolean doubleQuotedExecutableEscaped )
-    {
+    protected void setDoubleQuotedExecutableEscaped(boolean doubleQuotedExecutableEscaped) {
         this.doubleQuotedExecutableEscaped = doubleQuotedExecutableEscaped;
     }
 
-    protected void setSingleQuotedArgumentEscaped( boolean singleQuotedArgumentEscaped )
-    {
+    protected void setSingleQuotedArgumentEscaped(boolean singleQuotedArgumentEscaped) {
         this.singleQuotedArgumentEscaped = singleQuotedArgumentEscaped;
     }
 
-    protected void setSingleQuotedExecutableEscaped( boolean singleQuotedExecutableEscaped )
-    {
+    protected void setSingleQuotedExecutableEscaped(boolean singleQuotedExecutableEscaped) {
         this.singleQuotedExecutableEscaped = singleQuotedExecutableEscaped;
     }
 }

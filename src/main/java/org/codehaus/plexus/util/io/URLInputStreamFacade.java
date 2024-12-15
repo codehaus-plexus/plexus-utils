@@ -23,20 +23,15 @@ import java.net.URL;
 /**
  * Implementation of {@link InputStreamFacade} for URL's.
  */
-public class URLInputStreamFacade
-    implements InputStreamFacade
-{
+public class URLInputStreamFacade implements InputStreamFacade {
     private final URL url;
 
-    public URLInputStreamFacade( URL url )
-    {
+    public URLInputStreamFacade(URL url) {
         this.url = url;
     }
 
     @Override
-    public InputStream getInputStream()
-        throws IOException
-    {
+    public InputStream getInputStream() throws IOException {
         return url.openStream();
     }
 }

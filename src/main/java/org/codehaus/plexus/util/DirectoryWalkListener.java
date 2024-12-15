@@ -20,18 +20,17 @@ import java.io.File;
 
 /**
  * Observes the actions of a {@link DirectoryWalker}.
- * 
+ *
  *
  * @see DirectoryWalker
  */
-public interface DirectoryWalkListener
-{
+public interface DirectoryWalkListener {
     /**
      * The directory walking has begun.
      *
      * @param basedir the basedir that walk started in.
      */
-    void directoryWalkStarting( File basedir );
+    void directoryWalkStarting(File basedir);
 
     /**
      * The included entry that was encountered.
@@ -39,12 +38,12 @@ public interface DirectoryWalkListener
      * @param percentage rough percentage of the walk completed. (inaccurate)
      * @param file the file that was included.
      */
-    void directoryWalkStep( int percentage, File file );
+    void directoryWalkStep(int percentage, File file);
 
     /**
      * The directory walking has finished.
      */
     void directoryWalkFinished();
 
-    void debug( String message );
+    void debug(String message);
 }

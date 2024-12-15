@@ -24,9 +24,7 @@ import java.util.List;
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
  *
  */
-public class Vertex
-    implements Cloneable, Serializable
-{
+public class Vertex implements Cloneable, Serializable {
     // ------------------------------------------------------------
     // Fields
     // ------------------------------------------------------------
@@ -40,8 +38,7 @@ public class Vertex
     // Constructors
     // ------------------------------------------------------------
 
-    public Vertex( final String label )
-    {
+    public Vertex(final String label) {
         this.label = label;
     }
 
@@ -49,33 +46,27 @@ public class Vertex
     // Accessors
     // ------------------------------------------------------------
 
-    public String getLabel()
-    {
+    public String getLabel() {
         return label;
     }
 
-    public void addEdgeTo( final Vertex vertex )
-    {
-        children.add( vertex );
+    public void addEdgeTo(final Vertex vertex) {
+        children.add(vertex);
     }
 
-    public void removeEdgeTo( final Vertex vertex )
-    {
-        children.remove( vertex );
+    public void removeEdgeTo(final Vertex vertex) {
+        children.remove(vertex);
     }
 
-    public void addEdgeFrom( final Vertex vertex )
-    {
-        parents.add( vertex );
+    public void addEdgeFrom(final Vertex vertex) {
+        parents.add(vertex);
     }
 
-    public void removeEdgeFrom( final Vertex vertex )
-    {
-        parents.remove( vertex );
+    public void removeEdgeFrom(final Vertex vertex) {
+        parents.remove(vertex);
     }
 
-    public List<Vertex> getChildren()
-    {
+    public List<Vertex> getChildren() {
         return children;
     }
 
@@ -84,13 +75,11 @@ public class Vertex
      *
      * @return the labels used by the most direct children.
      */
-    public List<String> getChildLabels()
-    {
-        final List<String> retValue = new ArrayList<>( children.size() );
+    public List<String> getChildLabels() {
+        final List<String> retValue = new ArrayList<>(children.size());
 
-        for ( Vertex vertex : children )
-        {
-            retValue.add( vertex.getLabel() );
+        for (Vertex vertex : children) {
+            retValue.add(vertex.getLabel());
         }
         return retValue;
     }
@@ -100,8 +89,7 @@ public class Vertex
      *
      * @return list of parents
      */
-    public List<Vertex> getParents()
-    {
+    public List<Vertex> getParents() {
         return parents;
     }
 
@@ -110,13 +98,11 @@ public class Vertex
      *
      * @return the labels used parents
      */
-    public List<String> getParentLabels()
-    {
-        final List<String> retValue = new ArrayList<>( parents.size() );
+    public List<String> getParentLabels() {
+        final List<String> retValue = new ArrayList<>(parents.size());
 
-        for ( Vertex vertex : parents )
-        {
-            retValue.add( vertex.getLabel() );
+        for (Vertex vertex : parents) {
+            retValue.add(vertex.getLabel());
         }
         return retValue;
     }
@@ -126,8 +112,7 @@ public class Vertex
      *
      * @return <code>true</code> if this vertex has no child, <code>false</code> otherwise
      */
-    public boolean isLeaf()
-    {
+    public boolean isLeaf() {
         return children.size() == 0;
     }
 
@@ -136,8 +121,7 @@ public class Vertex
      *
      * @return <code>true</code> if this vertex has no parent, <code>false</code> otherwise
      */
-    public boolean isRoot()
-    {
+    public boolean isRoot() {
         return parents.size() == 0;
     }
 
@@ -146,15 +130,12 @@ public class Vertex
      *
      * @return <code>true</code> if this vertex is connected with other vertex,<code>false</code> otherwise
      */
-    public boolean isConnected()
-    {
+    public boolean isConnected() {
         return isRoot() || isLeaf();
     }
 
     @Override
-    public Object clone()
-        throws CloneNotSupportedException
-    {
+    public Object clone() throws CloneNotSupportedException {
         // this is what's failing..
         final Object retValue = super.clone();
 
@@ -162,9 +143,7 @@ public class Vertex
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Vertex{" + "label='" + label + "'" + "}";
     }
-
 }

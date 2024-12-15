@@ -1,7 +1,5 @@
 package org.codehaus.plexus.util.xml;
 
-import static org.junit.Assert.assertEquals;
-
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -17,11 +15,12 @@ import static org.junit.Assert.assertEquals;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * <p>XmlStreamWriterTest class.</p>
@@ -30,8 +29,7 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class XmlStreamWriterTest
-{
+public class XmlStreamWriterTest {
     /** french */
     private static final String TEXT_LATIN1 = "eacute: \u00E9";
 
@@ -46,37 +44,31 @@ public class XmlStreamWriterTest
 
     /** Unicode: support everything */
     private static final String TEXT_UNICODE =
-        TEXT_LATIN1 + ", " + TEXT_LATIN7 + ", " + TEXT_LATIN15 + ", " + TEXT_EUC_JP;
+            TEXT_LATIN1 + ", " + TEXT_LATIN7 + ", " + TEXT_LATIN15 + ", " + TEXT_EUC_JP;
 
-    private static String createXmlContent( String text, String encoding )
-    {
+    private static String createXmlContent(String text, String encoding) {
         String xmlDecl = "<?xml version=\"1.0\"?>";
-        if ( encoding != null )
-        {
+        if (encoding != null) {
             xmlDecl = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>";
         }
         String xml = xmlDecl + "\n<text>" + text + "</text>";
         return xml;
     }
 
-    private static void checkXmlContent( String xml, String encoding )
-        throws IOException
-    {
+    private static void checkXmlContent(String xml, String encoding) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        XmlStreamWriter writer = new XmlStreamWriter( out );
-        writer.write( xml );
+        XmlStreamWriter writer = new XmlStreamWriter(out);
+        writer.write(xml);
         writer.close();
         byte[] xmlContent = out.toByteArray();
-        String result = new String( xmlContent, encoding );
-        assertEquals( xml, result );
+        String result = new String(xmlContent, encoding);
+        assertEquals(xml, result);
     }
 
-    private static void checkXmlWriter( String text, String encoding )
-        throws IOException
-    {
-        String xml = createXmlContent( text, encoding );
-        String effectiveEncoding = ( encoding == null ) ? "UTF-8" : encoding;
-        checkXmlContent( xml, effectiveEncoding );
+    private static void checkXmlWriter(String text, String encoding) throws IOException {
+        String xml = createXmlContent(text, encoding);
+        String effectiveEncoding = (encoding == null) ? "UTF-8" : encoding;
+        checkXmlContent(xml, effectiveEncoding);
     }
 
     /**
@@ -85,11 +77,9 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testNoXmlHeader()
-        throws IOException
-    {
+    public void testNoXmlHeader() throws IOException {
         String xml = "<text>text with no XML header</text>";
-        checkXmlContent( xml, "UTF-8" );
+        checkXmlContent(xml, "UTF-8");
     }
 
     /**
@@ -98,15 +88,13 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testEmpty()
-        throws IOException
-    {
+    public void testEmpty() throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        XmlStreamWriter writer = new XmlStreamWriter( out );
+        XmlStreamWriter writer = new XmlStreamWriter(out);
         writer.flush();
-        writer.write( "" );
+        writer.write("");
         writer.flush();
-        writer.write( "." );
+        writer.write(".");
         writer.flush();
         writer.close();
     }
@@ -117,10 +105,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testDefaultEncoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_UNICODE, null );
+    public void testDefaultEncoding() throws IOException {
+        checkXmlWriter(TEXT_UNICODE, null);
     }
 
     /**
@@ -129,10 +115,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testUTF8Encoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_UNICODE, "UTF-8" );
+    public void testUTF8Encoding() throws IOException {
+        checkXmlWriter(TEXT_UNICODE, "UTF-8");
     }
 
     /**
@@ -141,10 +125,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testUTF16Encoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_UNICODE, "UTF-16" );
+    public void testUTF16Encoding() throws IOException {
+        checkXmlWriter(TEXT_UNICODE, "UTF-16");
     }
 
     /**
@@ -153,10 +135,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testUTF16BEEncoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_UNICODE, "UTF-16BE" );
+    public void testUTF16BEEncoding() throws IOException {
+        checkXmlWriter(TEXT_UNICODE, "UTF-16BE");
     }
 
     /**
@@ -165,10 +145,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testUTF16LEEncoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_UNICODE, "UTF-16LE" );
+    public void testUTF16LEEncoding() throws IOException {
+        checkXmlWriter(TEXT_UNICODE, "UTF-16LE");
     }
 
     /**
@@ -177,10 +155,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testLatin1Encoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_LATIN1, "ISO-8859-1" );
+    public void testLatin1Encoding() throws IOException {
+        checkXmlWriter(TEXT_LATIN1, "ISO-8859-1");
     }
 
     /**
@@ -189,10 +165,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testLatin7Encoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_LATIN7, "ISO-8859-7" );
+    public void testLatin7Encoding() throws IOException {
+        checkXmlWriter(TEXT_LATIN7, "ISO-8859-7");
     }
 
     /**
@@ -201,10 +175,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testLatin15Encoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_LATIN15, "ISO-8859-15" );
+    public void testLatin15Encoding() throws IOException {
+        checkXmlWriter(TEXT_LATIN15, "ISO-8859-15");
     }
 
     /**
@@ -213,10 +185,8 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testEUC_JPEncoding()
-        throws IOException
-    {
-        checkXmlWriter( TEXT_EUC_JP, "EUC-JP" );
+    public void testEUC_JPEncoding() throws IOException {
+        checkXmlWriter(TEXT_EUC_JP, "EUC-JP");
     }
 
     /**
@@ -225,9 +195,7 @@ public class XmlStreamWriterTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testEBCDICEncoding()
-        throws IOException
-    {
-        checkXmlWriter( "simple text in EBCDIC", "CP1047" );
+    public void testEBCDICEncoding() throws IOException {
+        checkXmlWriter("simple text in EBCDIC", "CP1047");
     }
 }

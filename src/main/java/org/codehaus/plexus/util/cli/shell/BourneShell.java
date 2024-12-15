@@ -16,83 +16,71 @@ package org.codehaus.plexus.util.cli.shell;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.Os;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.codehaus.plexus.util.Os;
 
 /**
  * @author Jason van Zyl
  *
  */
-public class BourneShell
-    extends Shell
-{
+public class BourneShell extends Shell {
 
-    public BourneShell()
-    {
-        this( false );
+    public BourneShell() {
+        this(false);
     }
 
-    public BourneShell( boolean isLoginShell )
-    {
-        setUnconditionalQuoting( true );
-        setShellCommand( "/bin/sh" );
-        setArgumentQuoteDelimiter( '\'' );
-        setExecutableQuoteDelimiter( '\'' );
-        setSingleQuotedArgumentEscaped( true );
-        setSingleQuotedExecutableEscaped( false );
-        setQuotedExecutableEnabled( true );
-        setArgumentEscapePattern( "'\\%s'" );
+    public BourneShell(boolean isLoginShell) {
+        setUnconditionalQuoting(true);
+        setShellCommand("/bin/sh");
+        setArgumentQuoteDelimiter('\'');
+        setExecutableQuoteDelimiter('\'');
+        setSingleQuotedArgumentEscaped(true);
+        setSingleQuotedExecutableEscaped(false);
+        setQuotedExecutableEnabled(true);
+        setArgumentEscapePattern("'\\%s'");
 
-        if ( isLoginShell )
-        {
-            addShellArg( "-l" );
+        if (isLoginShell) {
+            addShellArg("-l");
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getExecutable()
-    {
-        if ( Os.isFamily( Os.FAMILY_WINDOWS ) )
-        {
+    public String getExecutable() {
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             return super.getExecutable();
         }
 
-        return quoteOneItem( super.getOriginalExecutable(), true );
+        return quoteOneItem(super.getOriginalExecutable(), true);
     }
 
     @Override
-    public List<String> getShellArgsList()
-    {
+    public List<String> getShellArgsList() {
         List<String> shellArgs = new ArrayList<String>();
         List<String> existingShellArgs = super.getShellArgsList();
 
-        if ( ( existingShellArgs != null ) && !existingShellArgs.isEmpty() )
-        {
-            shellArgs.addAll( existingShellArgs );
+        if ((existingShellArgs != null) && !existingShellArgs.isEmpty()) {
+            shellArgs.addAll(existingShellArgs);
         }
 
-        shellArgs.add( "-c" );
+        shellArgs.add("-c");
 
         return shellArgs;
     }
 
     @Override
-    public String[] getShellArgs()
-    {
+    public String[] getShellArgs() {
         String[] shellArgs = super.getShellArgs();
-        if ( shellArgs == null )
-        {
+        if (shellArgs == null) {
             shellArgs = new String[0];
         }
 
-        if ( ( shellArgs.length > 0 ) && !shellArgs[shellArgs.length - 1].equals( "-c" ) )
-        {
+        if ((shellArgs.length > 0) && !shellArgs[shellArgs.length - 1].equals("-c")) {
             String[] newArgs = new String[shellArgs.length + 1];
 
-            System.arraycopy( shellArgs, 0, newArgs, 0, shellArgs.length );
+            System.arraycopy(shellArgs, 0, newArgs, 0, shellArgs.length);
             newArgs[shellArgs.length] = "-c";
 
             shellArgs = newArgs;
@@ -102,19 +90,17 @@ public class BourneShell
     }
 
     @Override
-    protected String getExecutionPreamble()
-    {
-        if ( getWorkingDirectoryAsString() == null )
-        {
+    protected String getExecutionPreamble() {
+        if (getWorkingDirectoryAsString() == null) {
             return null;
         }
 
         String dir = getWorkingDirectoryAsString();
         StringBuilder sb = new StringBuilder();
-        sb.append( "cd " );
+        sb.append("cd ");
 
-        sb.append( quoteOneItem( dir, false ) );
-        sb.append( " && " );
+        sb.append(quoteOneItem(dir, false));
+        sb.append(" && ");
 
         return sb.toString();
     }
@@ -139,17 +125,15 @@ public class BourneShell
      * @return the path unified correctly for the Bourne shell.
      */
     @Override
-    protected String quoteOneItem( String path, boolean isExecutable )
-    {
-        if ( path == null )
-        {
+    protected String quoteOneItem(String path, boolean isExecutable) {
+        if (path == null) {
             return null;
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append( "'" );
-        sb.append( path.replace( "'", "'\"'\"'" ) );
-        sb.append( "'" );
+        sb.append("'");
+        sb.append(path.replace("'", "'\"'\"'"));
+        sb.append("'");
 
         return sb.toString();
     }
