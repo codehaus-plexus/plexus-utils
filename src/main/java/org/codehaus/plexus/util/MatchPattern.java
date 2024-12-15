@@ -61,6 +61,7 @@ public class MatchPattern {
     /**
      * Gets the source pattern for this matchpattern.
      * @return the source string without Ant or Regex pattern markers.
+     * @since 3.6.0
      */
     public String getSource() {
         return regexPattern == null ? source : regexPattern;
@@ -107,6 +108,9 @@ public class MatchPattern {
         return source.startsWith(string);
     }
 
+    /**
+     * @since 3.6.0
+     */
     public static String[] tokenizePathToString(String path, String separator) {
         List<String> ret = new ArrayList<String>();
         StringTokenizer st = new StringTokenizer(path, separator);
