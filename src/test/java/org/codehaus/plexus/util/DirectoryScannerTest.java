@@ -45,14 +45,14 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class DirectoryScannerTest extends FileBasedTestCase {
-    private static String testDir = getTestDirectory().getPath();
+class DirectoryScannerTest extends FileBasedTestCase {
+    private static final String testDir = getTestDirectory().getPath();
 
     /**
      * <p>setUp.</p>
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         try {
             FileUtils.deleteDirectory(testDir);
         } catch (IOException e) {
@@ -67,7 +67,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.net.URISyntaxException if any.
      */
     @Test
-    public void testCrossPlatformIncludesString() throws IOException, URISyntaxException {
+    void crossPlatformIncludesString() throws IOException, URISyntaxException {
         DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir(new File(getTestResourcesDir() + File.separator + "directory-scanner").getCanonicalFile());
 
@@ -93,7 +93,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.net.URISyntaxException if any.
      */
     @Test
-    public void testCrossPlatformExcludesString() throws IOException, URISyntaxException {
+    void crossPlatformExcludesString() throws IOException, URISyntaxException {
         DirectoryScanner ds = new DirectoryScanner();
         ds.setBasedir(new File(getTestResourcesDir() + File.separator + "directory-scanner").getCanonicalFile());
         ds.setIncludes(new String[] {"**"});
@@ -156,11 +156,10 @@ public class DirectoryScannerTest extends FileBasedTestCase {
             }
             return true;
         } catch (IOException e) {
-            System.err.println(String.format(
-                    "The unit test '%s.%s' will be skipped, reason: %s",
-                    this.getClass().getSimpleName(), getTestMethodName(), e.getMessage()));
-            System.out.println(
-                    String.format("This test requires symlinks files in '%s' directory.", symlinksDirectory.getPath()));
+            System.err.printf(
+                    "The unit test '%s.%s' will be skipped, reason: %s%n",
+                    this.getClass().getSimpleName(), getTestMethodName(), e.getMessage());
+            System.out.printf("This test requires symlinks files in '%s' directory.%n", symlinksDirectory.getPath());
             System.out.println("On some OS (like Windows 10), files are present only if the clone/checkout is done"
                     + " in administrator mode, and correct (symlinks and not flat file/directory)"
                     + " if symlinks option are used (for git: git clone -c core.symlinks=true [url])");
@@ -174,7 +173,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testGeneral() throws IOException {
+    void general() throws IOException {
         this.createTestFiles();
 
         String includes = "scanner1.dat,scanner2.dat,scanner3.dat,scanner4.dat,scanner5.dat";
@@ -194,7 +193,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testIncludesExcludesWithWhiteSpaces() throws IOException {
+    void includesExcludesWithWhiteSpaces() throws IOException {
         this.createTestFiles();
 
         String includes = "scanner1.dat,\n  \n,scanner2.dat  \n\r, scanner3.dat\n, \tscanner4.dat,scanner5.dat\n,";
@@ -213,7 +212,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * <p>testFollowSymlinksFalse.</p>
      */
     @Test
-    public void testFollowSymlinksFalse() {
+    void followSymlinksFalse() {
         assumeTrue(checkTestFilesSymlinks());
 
         DirectoryScanner ds = new DirectoryScanner();
@@ -248,7 +247,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * <p>testFollowSymlinks.</p>
      */
     @Test
-    public void testFollowSymlinks() {
+    void followSymlinks() {
         assumeTrue(checkTestFilesSymlinks());
 
         DirectoryScanner ds = new DirectoryScanner();
@@ -295,7 +294,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testDirectoriesWithHyphens() throws IOException {
+    void directoriesWithHyphens() throws IOException {
         this.createTestDirectories();
 
         DirectoryScanner ds = new DirectoryScanner();
@@ -317,7 +316,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testAntExcludesOverrideIncludes() throws IOException {
+    void antExcludesOverrideIncludes() throws IOException {
         printTestHeader();
 
         File dir = new File(testDir, "regex-dir");
@@ -354,8 +353,8 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      *
      * @throws java.io.IOException if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testAntExcludesOverrideIncludesWithExplicitAntPrefix() throws IOException {
+    @Test
+    void antExcludesOverrideIncludesWithExplicitAntPrefix() throws IOException {
         printTestHeader();
 
         File dir = new File(testDir, "regex-dir");
@@ -393,8 +392,8 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      *
      * @throws java.io.IOException if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testRegexIncludeWithExcludedPrefixDirs() throws IOException {
+    @Test
+    void regexIncludeWithExcludedPrefixDirs() throws IOException {
         printTestHeader();
 
         File dir = new File(testDir, "regex-dir");
@@ -427,14 +426,14 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      *
      * @throws java.io.IOException if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testRegexExcludeWithNegativeLookahead() throws IOException {
+    @Test
+    void regexExcludeWithNegativeLookahead() throws IOException {
         printTestHeader();
 
         File dir = new File(testDir, "regex-dir");
         try {
             FileUtils.deleteDirectory(dir);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         dir.mkdirs();
@@ -467,13 +466,13 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testRegexWithSlashInsideCharacterClass() throws IOException {
+    void regexWithSlashInsideCharacterClass() throws IOException {
         printTestHeader();
 
         File dir = new File(testDir, "regex-dir");
         try {
             FileUtils.deleteDirectory(dir);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         dir.mkdirs();
@@ -508,7 +507,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if occurs an I/O error.
      */
     @Test
-    public void testDoNotScanUnnecesaryDirectories() throws IOException {
+    void doNotScanUnnecesaryDirectories() throws IOException {
         createTestDirectories();
 
         // create additional directories 'anotherDir1', 'anotherDir2' and 'anotherDir3' with a 'file1.dat' file
@@ -547,7 +546,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
             "directoryTest" + File.separator + "test-dir-123" + File.separator + "file1.dat"
         };
 
-        final Set<String> scannedDirSet = new HashSet<String>();
+        final Set<String> scannedDirSet = new HashSet<>();
 
         DirectoryScanner ds = new DirectoryScanner() {
             @Override
@@ -566,7 +565,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
         assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
 
         Set<String> expectedScannedDirSet =
-                new HashSet<String>(Arrays.asList("io", "directoryTest", "testDir123", "test_dir_123", "test-dir-123"));
+                new HashSet<>(Arrays.asList("io", "directoryTest", "testDir123", "test_dir_123", "test-dir-123"));
 
         assertEquals(expectedScannedDirSet, scannedDirSet);
     }
@@ -577,7 +576,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testIsSymbolicLink() throws IOException {
+    void isSymbolicLink() throws IOException {
         assumeTrue(checkTestFilesSymlinks());
 
         final File directory = new File("src/test/resources/symlinks/src");
@@ -594,7 +593,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testIsParentSymbolicLink() throws IOException {
+    void isParentSymbolicLink() throws IOException {
         assumeTrue(checkTestFilesSymlinks());
 
         final File directory = new File("src/test/resources/symlinks/src");
@@ -622,7 +621,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
             System.out.println(file);
         }
 
-        List<String> failedToExclude = new ArrayList<String>();
+        List<String> failedToExclude = new ArrayList<>();
         for (String excludedPath : excludedPaths) {
             String alt = excludedPath.replace('/', '\\');
             System.out.println("Searching for exclusion as: " + excludedPath + "\nor: " + alt);
@@ -631,7 +630,7 @@ public class DirectoryScannerTest extends FileBasedTestCase {
             }
         }
 
-        List<String> failedToInclude = new ArrayList<String>();
+        List<String> failedToInclude = new ArrayList<>();
         for (String includedPath : includedPaths) {
             String alt = includedPath.replace('/', '\\');
             System.out.println("Searching for inclusion as: " + includedPath + "\nor: " + alt);

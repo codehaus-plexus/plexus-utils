@@ -30,13 +30,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class CycleDetectedExceptionTest {
+class CycleDetectedExceptionTest {
     /**
      * <p>testException.</p>
      */
     @Test
-    public void testException() {
-        final List<String> cycle = new ArrayList<String>();
+    void exception() {
+        final List<String> cycle = new ArrayList<>();
 
         cycle.add("a");
 

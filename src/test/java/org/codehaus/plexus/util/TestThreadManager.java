@@ -191,10 +191,9 @@ public class TestThreadManager {
      */
     public void reset() {
         toRunThreads.clear();
-        for (Object runThread : runThreads) {
-            AbstractTestThread test = (AbstractTestThread) runThread;
-            test.reset();
-            registerThread(test);
+        for (AbstractTestThread runThread : runThreads) {
+            runThread.reset();
+            registerThread(runThread);
         }
 
         runThreads.clear();

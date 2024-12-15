@@ -30,14 +30,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class TopologicalSorterTest {
+class TopologicalSorterTest {
     /**
      * <p>testDfs.</p>
      *
      * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
      */
     @Test
-    public void testDfs() throws CycleDetectedException {
+    void dfs() throws CycleDetectedException {
         // a --> b --->c
         //
         // result a,b,c
@@ -47,7 +47,7 @@ public class TopologicalSorterTest {
 
         dag1.addEdge("b", "c");
 
-        final List<String> expected1 = new ArrayList<String>();
+        final List<String> expected1 = new ArrayList<>();
 
         expected1.add("c");
 
@@ -75,7 +75,7 @@ public class TopologicalSorterTest {
 
         dag2.addEdge("c", "b");
 
-        final List<String> expected2 = new ArrayList<String>();
+        final List<String> expected2 = new ArrayList<>();
 
         expected2.add("a");
 
@@ -124,7 +124,7 @@ public class TopologicalSorterTest {
 
         dag3.addEdge("f", "g");
 
-        final List<String> expected3 = new ArrayList<String>();
+        final List<String> expected3 = new ArrayList<>();
 
         expected3.add("d");
 
@@ -179,7 +179,7 @@ public class TopologicalSorterTest {
 
         dag4.addEdge("e", "f");
 
-        final List<String> expected4 = new ArrayList<String>();
+        final List<String> expected4 = new ArrayList<>();
 
         expected4.add("d");
 

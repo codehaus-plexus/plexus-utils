@@ -32,12 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class MatchPatternsTest {
+class MatchPatternsTest {
     /**
      * <p>testGetSource</p>
      */
     @Test
-    public void testGetSources() {
+    void getSources() {
         List<String> expected = Arrays.asList("ABC**", "some/ABC*", "[ABC].*");
         MatchPatterns from = MatchPatterns.from("ABC**", "%ant[some/ABC*]", "%regex[[ABC].*]");
         List<String> actual = from.getSources();
@@ -50,7 +50,7 @@ public class MatchPatternsTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testMatches() throws Exception {
+    void matches() throws Exception {
         MatchPatterns from = MatchPatterns.from("ABC**", "CDE**");
         assertTrue(from.matches("ABCDE", true));
         assertTrue(from.matches("CDEF", true));

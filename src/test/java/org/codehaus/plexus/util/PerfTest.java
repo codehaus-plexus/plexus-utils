@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class PerfTest {
+class PerfTest {
     String src = "012345578901234556789012345678901234456789012345678901234567890";
 
     private final int oops = 100;
@@ -34,12 +34,12 @@ public class PerfTest {
      * <p>testSubString.</p>
      */
     @Test
-    public void testSubString() {
+    void subString() {
         StringBuilder res = new StringBuilder();
         int len = src.length();
         for (int cnt = 0; cnt < oops; cnt++) {
             for (int i = 0; i < len - 5; i++) {
-                res.append(src.substring(i, i + 4));
+                res.append(src, i, i + 4);
             }
         }
         int i = res.length();
@@ -50,7 +50,7 @@ public class PerfTest {
      * <p>testResDir.</p>
      */
     @Test
-    public void testResDir() {
+    void resDir() {
         StringBuilder res = new StringBuilder();
         int len = src.length();
         for (int cnt = 0; cnt < oops; cnt++) {

@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @since 3.4.0
  */
 public final class ReflectionUtilsTest {
-    public ReflectionUtilsTestClass testClass = new ReflectionUtilsTestClass();
+    private final ReflectionUtilsTestClass testClass = new ReflectionUtilsTestClass();
 
     /**
      * <p>testSimpleVariableAccess.</p>
@@ -40,8 +40,8 @@ public final class ReflectionUtilsTest {
      * @throws java.lang.IllegalAccessException if any.
      */
     @Test
-    public void testSimpleVariableAccess() throws IllegalAccessException {
-        assertEquals("woohoo", (String) ReflectionUtils.getValueIncludingSuperclasses("myString", testClass));
+    void simpleVariableAccess() throws IllegalAccessException {
+        assertEquals("woohoo", ReflectionUtils.getValueIncludingSuperclasses("myString", testClass));
     }
 
     /**
@@ -49,14 +49,14 @@ public final class ReflectionUtilsTest {
      *
      * @throws java.lang.IllegalAccessException if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testComplexVariableAccess() throws IllegalAccessException {
+    @Test
+    void complexVariableAccess() throws IllegalAccessException {
         Map<String, Object> map = ReflectionUtils.getVariablesAndValuesIncludingSuperclasses(testClass);
 
         Map myMap = (Map) map.get("myMap");
 
-        assertEquals("myValue", (String) myMap.get("myKey"));
-        assertEquals("myOtherValue", (String) myMap.get("myOtherKey"));
+        assertEquals("myValue", myMap.get("myKey"));
+        assertEquals("myOtherValue", myMap.get("myOtherKey"));
     }
 
     /**
@@ -65,8 +65,8 @@ public final class ReflectionUtilsTest {
      * @throws java.lang.IllegalAccessException if any.
      */
     @Test
-    public void testSuperClassVariableAccess() throws IllegalAccessException {
-        assertEquals("super-duper", (String) ReflectionUtils.getValueIncludingSuperclasses("mySuperString", testClass));
+    void superClassVariableAccess() throws IllegalAccessException {
+        assertEquals("super-duper", ReflectionUtils.getValueIncludingSuperclasses("mySuperString", testClass));
     }
 
     /**
@@ -75,15 +75,15 @@ public final class ReflectionUtilsTest {
      * @throws java.lang.IllegalAccessException if any.
      */
     @Test
-    public void testSettingVariableValue() throws IllegalAccessException {
+    void settingVariableValue() throws IllegalAccessException {
         ReflectionUtils.setVariableValueInObject(testClass, "mySettableString", "mySetString");
 
-        assertEquals(
-                "mySetString", (String) ReflectionUtils.getValueIncludingSuperclasses("mySettableString", testClass));
+        assertEquals("mySetString", ReflectionUtils.getValueIncludingSuperclasses("mySettableString", testClass));
 
         ReflectionUtils.setVariableValueInObject(testClass, "myParentsSettableString", "myParentsSetString");
 
-        assertEquals("myParentsSetString", (String)
+        assertEquals(
+                "myParentsSetString",
                 ReflectionUtils.getValueIncludingSuperclasses("myParentsSettableString", testClass));
     }
 
@@ -93,7 +93,7 @@ public final class ReflectionUtilsTest {
 
         private String mySettableString;
 
-        private Map<String, String> myMap = new HashMap<String, String>();
+        private Map<String, String> myMap = new HashMap<>();
 
         public ReflectionUtilsTestClass() {
             myMap.put("myKey", "myValue");

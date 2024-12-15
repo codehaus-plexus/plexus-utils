@@ -31,12 +31,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class DirectoryWalkerTest {
+class DirectoryWalkerTest {
     /**
      * <p>testDirectoryWalk.</p>
      */
     @Test
-    public void testDirectoryWalk() {
+    void directoryWalk() {
         DirectoryWalker walker = new DirectoryWalker();
 
         walker.addSCMExcludes();

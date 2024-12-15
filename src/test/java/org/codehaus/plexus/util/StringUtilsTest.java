@@ -17,13 +17,12 @@ package org.codehaus.plexus.util;
  */
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test string utils.
@@ -32,34 +31,34 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class StringUtilsTest {
+class StringUtilsTest {
 
     /**
      * <p>testIsEmpty.</p>
      */
     @Test
-    public void testIsEmpty() {
-        assertEquals(true, StringUtils.isEmpty(null));
-        assertEquals(true, StringUtils.isEmpty(""));
-        assertEquals(false, StringUtils.isEmpty(" "));
-        assertEquals(false, StringUtils.isEmpty("foo"));
-        assertEquals(false, StringUtils.isEmpty("  foo  "));
+    void isEmpty() {
+        assertTrue(StringUtils.isEmpty(null));
+        assertTrue(StringUtils.isEmpty(""));
+        assertFalse(StringUtils.isEmpty(" "));
+        assertFalse(StringUtils.isEmpty("foo"));
+        assertFalse(StringUtils.isEmpty("  foo  "));
     }
 
     /**
      * <p>testIsNotEmpty.</p>
      */
     @Test
-    public void testIsNotEmpty() {
-        assertEquals(false, StringUtils.isNotEmpty(null));
-        assertEquals(false, StringUtils.isNotEmpty(""));
-        assertEquals(true, StringUtils.isNotEmpty(" "));
-        assertEquals(true, StringUtils.isNotEmpty("foo"));
-        assertEquals(true, StringUtils.isNotEmpty("  foo  "));
+    void isNotEmpty() {
+        assertFalse(StringUtils.isNotEmpty(null));
+        assertFalse(StringUtils.isNotEmpty(""));
+        assertTrue(StringUtils.isNotEmpty(" "));
+        assertTrue(StringUtils.isNotEmpty("foo"));
+        assertTrue(StringUtils.isNotEmpty("  foo  "));
     }
 
-    @org.junit.jupiter.api.Test
-    public void testIsNotEmptyNegatesIsEmpty() {
+    @Test
+    void isNotEmptyNegatesIsEmpty() {
         assertEquals(!StringUtils.isEmpty(null), StringUtils.isNotEmpty(null));
         assertEquals(!StringUtils.isEmpty(""), StringUtils.isNotEmpty(""));
         assertEquals(!StringUtils.isEmpty(" "), StringUtils.isNotEmpty(" "));
@@ -71,31 +70,31 @@ public class StringUtilsTest {
      * <p>testIsBlank.</p>
      */
     @Test
-    public void testIsBlank() {
-        assertEquals(true, StringUtils.isBlank(null));
-        assertEquals(true, StringUtils.isBlank(""));
-        assertEquals(true, StringUtils.isBlank(" \t\r\n"));
-        assertEquals(false, StringUtils.isBlank("foo"));
-        assertEquals(false, StringUtils.isBlank("  foo  "));
+    void isBlank() {
+        assertTrue(StringUtils.isBlank(null));
+        assertTrue(StringUtils.isBlank(""));
+        assertTrue(StringUtils.isBlank(" \t\r\n"));
+        assertFalse(StringUtils.isBlank("foo"));
+        assertFalse(StringUtils.isBlank("  foo  "));
     }
 
     /**
      * <p>testIsNotBlank.</p>
      */
     @Test
-    public void testIsNotBlank() {
-        assertEquals(false, StringUtils.isNotBlank(null));
-        assertEquals(false, StringUtils.isNotBlank(""));
-        assertEquals(false, StringUtils.isNotBlank(" \t\r\n"));
-        assertEquals(true, StringUtils.isNotBlank("foo"));
-        assertEquals(true, StringUtils.isNotBlank("  foo  "));
+    void isNotBlank() {
+        assertFalse(StringUtils.isNotBlank(null));
+        assertFalse(StringUtils.isNotBlank(""));
+        assertFalse(StringUtils.isNotBlank(" \t\r\n"));
+        assertTrue(StringUtils.isNotBlank("foo"));
+        assertTrue(StringUtils.isNotBlank("  foo  "));
     }
 
     /**
      * <p>testCapitalizeFirstLetter.</p>
      */
     @Test
-    public void testCapitalizeFirstLetter() {
+    void capitalizeFirstLetter() {
         assertEquals("Id", StringUtils.capitalizeFirstLetter("id"));
         assertEquals("Id", StringUtils.capitalizeFirstLetter("Id"));
     }
@@ -104,7 +103,7 @@ public class StringUtilsTest {
      * <p>testCapitalizeFirstLetterTurkish.</p>
      */
     @Test
-    public void testCapitalizeFirstLetterTurkish() {
+    void capitalizeFirstLetterTurkish() {
         Locale l = Locale.getDefault();
         Locale.setDefault(new Locale("tr"));
         assertEquals("Id", StringUtils.capitalizeFirstLetter("id"));
@@ -115,8 +114,8 @@ public class StringUtilsTest {
     /**
      * <p>testLowerCaseFirstLetter.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testLowerCaseFirstLetter() {
+    @Test
+    void lowerCaseFirstLetter() {
         assertEquals("id", StringUtils.lowercaseFirstLetter("id"));
         assertEquals("id", StringUtils.lowercaseFirstLetter("Id"));
     }
@@ -124,8 +123,8 @@ public class StringUtilsTest {
     /**
      * <p>testLowerCaseFirstLetterTurkish.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testLowerCaseFirstLetterTurkish() {
+    @Test
+    void lowerCaseFirstLetterTurkish() {
         Locale l = Locale.getDefault();
         Locale.setDefault(new Locale("tr"));
         assertEquals("id", StringUtils.lowercaseFirstLetter("id"));
@@ -136,8 +135,8 @@ public class StringUtilsTest {
     /**
      * <p>testRemoveAndHump.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testRemoveAndHump() {
+    @Test
+    void removeAndHump() {
         assertEquals("Id", StringUtils.removeAndHump("id", "-"));
         assertEquals("SomeId", StringUtils.removeAndHump("some-id", "-"));
     }
@@ -146,7 +145,7 @@ public class StringUtilsTest {
      * <p>testRemoveAndHumpTurkish.</p>
      */
     @Test
-    public void testRemoveAndHumpTurkish() {
+    void removeAndHumpTurkish() {
         Locale l = Locale.getDefault();
         Locale.setDefault(new Locale("tr"));
         assertEquals("Id", StringUtils.removeAndHump("id", "-"));
@@ -158,9 +157,9 @@ public class StringUtilsTest {
      * <p>testQuote_EscapeEmbeddedSingleQuotes.</p>
      */
     @Test
-    public void testQuote_EscapeEmbeddedSingleQuotes() {
-        String src = "This \'is a\' test";
-        String check = "\'This \\\'is a\\\' test\'";
+    void quoteEscapeEmbeddedSingleQuotes() {
+        String src = "This 'is a' test";
+        String check = "'This \\'is a\\' test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -171,10 +170,10 @@ public class StringUtilsTest {
     /**
      * <p>testQuote_EscapeEmbeddedSingleQuotesWithPattern.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testQuote_EscapeEmbeddedSingleQuotesWithPattern() {
-        String src = "This \'is a\' test";
-        String check = "\'This pre'postis apre'post test\'";
+    @Test
+    void quoteEscapeEmbeddedSingleQuotesWithPattern() {
+        String src = "This 'is a' test";
+        String check = "'This pre'postis apre'post test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, new char[] {' '}, "pre%spost", false);
@@ -186,9 +185,9 @@ public class StringUtilsTest {
      * <p>testQuote_EscapeEmbeddedDoubleQuotesAndSpaces.</p>
      */
     @Test
-    public void testQuote_EscapeEmbeddedDoubleQuotesAndSpaces() {
+    void quoteEscapeEmbeddedDoubleQuotesAndSpaces() {
         String src = "This \"is a\" test";
-        String check = "\'This\\ \\\"is\\ a\\\"\\ test\'";
+        String check = "'This\\ \\\"is\\ a\\\"\\ test'";
 
         char[] escaped = {'\'', '\"', ' '};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -199,8 +198,8 @@ public class StringUtilsTest {
     /**
      * <p>testQuote_DontQuoteIfUnneeded.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testQuote_DontQuoteIfUnneeded() {
+    @Test
+    void quoteDontQuoteIfUnneeded() {
         String src = "ThisIsATest";
 
         char[] escaped = {'\'', '\"'};
@@ -213,9 +212,9 @@ public class StringUtilsTest {
      * <p>testQuote_WrapWithSingleQuotes.</p>
      */
     @Test
-    public void testQuote_WrapWithSingleQuotes() {
+    void quoteWrapWithSingleQuotes() {
         String src = "This is a test";
-        String check = "\'This is a test\'";
+        String check = "'This is a test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -226,9 +225,9 @@ public class StringUtilsTest {
     /**
      * <p>testQuote_PreserveExistingQuotes.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testQuote_PreserveExistingQuotes() {
-        String src = "\'This is a test\'";
+    @Test
+    void quotePreserveExistingQuotes() {
+        String src = "'This is a test'";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
@@ -239,10 +238,10 @@ public class StringUtilsTest {
     /**
      * <p>testQuote_WrapExistingQuotesWhenForceIsTrue.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testQuote_WrapExistingQuotesWhenForceIsTrue() {
-        String src = "\'This is a test\'";
-        String check = "\'\\\'This is a test\\\'\'";
+    @Test
+    void quoteWrapExistingQuotesWhenForceIsTrue() {
+        String src = "'This is a test'";
+        String check = "'\\'This is a test\\''";
 
         char[] escaped = {'\'', '\"'};
         String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', true);
@@ -253,9 +252,9 @@ public class StringUtilsTest {
     /**
      * <p>testQuote_ShortVersion_SingleQuotesPreserved.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testQuote_ShortVersion_SingleQuotesPreserved() {
-        String src = "\'This is a test\'";
+    @Test
+    void quoteShortVersionSingleQuotesPreserved() {
+        String src = "'This is a test'";
 
         String result = StringUtils.quoteAndEscape(src, '\'');
 
@@ -265,33 +264,33 @@ public class StringUtilsTest {
     /**
      * <p>testSplit.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testSplit() {
+    @Test
+    void split() {
         String[] tokens;
 
         tokens = StringUtils.split("", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[0]), Arrays.asList(tokens));
+        assertEquals(Collections.emptyList(), Arrays.asList(tokens));
 
         tokens = StringUtils.split(", ,,,   ,", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[0]), Arrays.asList(tokens));
+        assertEquals(Collections.emptyList(), Arrays.asList(tokens));
 
         tokens = StringUtils.split("this", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this"}), Arrays.asList(tokens));
+        assertEquals(Collections.singletonList("this"), Arrays.asList(tokens));
 
         tokens = StringUtils.split("this is a test", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test"}), Arrays.asList(tokens));
+        assertEquals(Arrays.asList("this", "is", "a", "test"), Arrays.asList(tokens));
 
         tokens = StringUtils.split("   this   is   a   test  ", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test"}), Arrays.asList(tokens));
+        assertEquals(Arrays.asList("this", "is", "a", "test"), Arrays.asList(tokens));
 
         tokens = StringUtils.split("this is a test, really", ", ");
         assertNotNull(tokens);
-        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test", "really"}), Arrays.asList(tokens));
+        assertEquals(Arrays.asList("this", "is", "a", "test", "really"), Arrays.asList(tokens));
     }
 
     /**
@@ -299,8 +298,8 @@ public class StringUtilsTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testRemoveDuplicateWhitespace() throws Exception {
+    @Test
+    void removeDuplicateWhitespace() throws Exception {
         String s = "this     is     test   ";
         assertEquals("this is test ", StringUtils.removeDuplicateWhitespace(s));
         s = "this  \r\n   is \n  \r  test   ";
@@ -317,12 +316,12 @@ public class StringUtilsTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testUnifyLineSeparators() throws Exception {
+    void unifyLineSeparators() throws Exception {
         String s = "this\r\nis\na\r\ntest";
 
         try {
             StringUtils.unifyLineSeparators(s, "abs");
-            assertTrue(false, "Exception NOT catched");
+            fail("Exception NOT catched");
         } catch (IllegalArgumentException e) {
             assertTrue(true, "Exception catched");
         }
