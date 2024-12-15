@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class LineOrientedInterpolatingReaderTest {
+class LineOrientedInterpolatingReaderTest {
     /*
      * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
      */
@@ -45,8 +45,8 @@ public class LineOrientedInterpolatingReaderTest {
      *
      * @throws java.io.IOException if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testShouldInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws IOException {
+    @Test
+    void shouldInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws IOException {
         String testStr = "This is a ${test";
         LineOrientedInterpolatingReader iReader = new LineOrientedInterpolatingReader(
                 new StringReader(testStr), Collections.singletonMap("test", "TestValue"));
@@ -63,7 +63,7 @@ public class LineOrientedInterpolatingReaderTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testDefaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
+    void defaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();
 
         String foo = "${name} is an ${noun}. ${not.interpolated}";
@@ -78,7 +78,7 @@ public class LineOrientedInterpolatingReaderTest {
     }
 
     private Map<String, String> getStandardMap() {
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> m = new HashMap<>();
         m.put("name", "jason");
         m.put("noun", "asshole");
         return m;
@@ -89,8 +89,8 @@ public class LineOrientedInterpolatingReaderTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testDefaultInterpolationWithEscapedExpression() throws Exception {
+    @Test
+    void defaultInterpolationWithEscapedExpression() throws Exception {
         Map<String, String> m = getStandardMap();
 
         String foo = "${name} is an ${noun}. \\${noun} value";
@@ -109,8 +109,8 @@ public class LineOrientedInterpolatingReaderTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testDefaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
+    @Test
+    void defaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();
 
         String foo = "${name} is an ${noun}";
@@ -129,8 +129,8 @@ public class LineOrientedInterpolatingReaderTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testInterpolationWithSpecifiedBoundaryTokens() throws Exception {
+    @Test
+    void interpolationWithSpecifiedBoundaryTokens() throws Exception {
         Map<String, String> m = getStandardMap();
 
         String foo = "@name@ is an @noun@. @not.interpolated@ baby @foo@. @bar@";
@@ -150,8 +150,8 @@ public class LineOrientedInterpolatingReaderTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testInterpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd() throws Exception {
+    @Test
+    void interpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();
 
         String foo = "@name@ is an @foobarred@";
@@ -171,8 +171,8 @@ public class LineOrientedInterpolatingReaderTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testInterpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd() throws Exception {
+    @Test
+    void interpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();
 
         String foo = "@name@ is an @noun@";

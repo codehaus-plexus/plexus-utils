@@ -35,13 +35,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class CollectionUtilsTest {
+class CollectionUtilsTest {
     /**
      * <p>testMergeMaps.</p>
      */
     @Test
-    public void testMergeMaps() {
-        Map<String, String> dominantMap = new HashMap<String, String>();
+    void mergeMaps() {
+        Map<String, String> dominantMap = new HashMap<>();
         dominantMap.put("a", "a");
         dominantMap.put("b", "b");
         dominantMap.put("c", "c");
@@ -49,7 +49,7 @@ public class CollectionUtilsTest {
         dominantMap.put("e", "e");
         dominantMap.put("f", "f");
 
-        Map<String, String> recessiveMap = new HashMap<String, String>();
+        Map<String, String> recessiveMap = new HashMap<>();
         recessiveMap.put("a", "invalid");
         recessiveMap.put("b", "invalid");
         recessiveMap.put("c", "invalid");
@@ -60,7 +60,7 @@ public class CollectionUtilsTest {
         Map<String, String> result = CollectionUtils.mergeMaps(dominantMap, recessiveMap);
 
         // We should have 9 elements
-        assertEquals(9, result.keySet().size());
+        assertEquals(9, result.size());
 
         // Check the elements.
         assertEquals("a", result.get("a"));
@@ -79,14 +79,14 @@ public class CollectionUtilsTest {
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void testMergeMapArray() {
+    void mergeMapArray() {
         // Test empty array of Maps
         Map<String, String> result0 = CollectionUtils.mergeMaps(new Map[] {});
 
         assertNull(result0);
 
         // Test with an array with a single element.
-        Map<String, String> map1 = new HashMap<String, String>();
+        Map<String, String> map1 = new HashMap<>();
         map1.put("a", "a");
 
         Map<String, String> result1 = CollectionUtils.mergeMaps(new Map[] {map1});
@@ -94,7 +94,7 @@ public class CollectionUtilsTest {
         assertEquals("a", result1.get("a"));
 
         // Test with an array with two elements.
-        Map<String, String> map2 = new HashMap<String, String>();
+        Map<String, String> map2 = new HashMap<>();
         map2.put("a", "aa");
         map2.put("b", "bb");
 
@@ -110,7 +110,7 @@ public class CollectionUtilsTest {
         assertEquals("bb", result3.get("b"));
 
         // Test with an array with three elements.
-        Map<String, String> map3 = new HashMap<String, String>();
+        Map<String, String> map3 = new HashMap<>();
         map3.put("a", "aaa");
         map3.put("b", "bbb");
         map3.put("c", "ccc");
@@ -132,8 +132,8 @@ public class CollectionUtilsTest {
     /**
      * <p>testMavenPropertiesLoading.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testMavenPropertiesLoading() {
+    @Test
+    void mavenPropertiesLoading() {
         // Mimic MavenSession properties loading. Properties listed
         // in dominant order.
         Properties systemProperties = new Properties();
@@ -175,26 +175,26 @@ public class CollectionUtilsTest {
         });
 
         // Values that should be taken from systemProperties.
-        assertEquals("/projects/maven", (String) result.get("maven.home"));
+        assertEquals("/projects/maven", result.get("maven.home"));
 
         // Values that should be taken from userBuildProperties.
-        assertEquals("/opt/maven/artifact", (String) result.get("maven.repo.local"));
-        assertEquals("false", (String) result.get("maven.repo.remote.enabled"));
-        assertEquals("jvanzyl", (String) result.get("maven.username"));
+        assertEquals("/opt/maven/artifact", result.get("maven.repo.local"));
+        assertEquals("false", result.get("maven.repo.remote.enabled"));
+        assertEquals("jvanzyl", result.get("maven.username"));
 
         // Values take from projectBuildProperties.
-        assertEquals("maven", (String) result.get("maven.final.name"));
+        assertEquals("maven", result.get("maven.final.name"));
 
         // Values take from projectProperties.
-        assertEquals(mavenRepoRemote, (String) result.get("maven.repo.remote"));
+        assertEquals(mavenRepoRemote, result.get("maven.repo.remote"));
     }
 
     /**
      * <p>testIteratorToListWithAPopulatedList.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testIteratorToListWithAPopulatedList() {
-        List<String> original = new ArrayList<String>();
+    @Test
+    void iteratorToListWithAPopulatedList() {
+        List<String> original = new ArrayList<>();
 
         original.add("en");
         original.add("to");
@@ -214,9 +214,9 @@ public class CollectionUtilsTest {
     /**
      * <p>testIteratorToListWithAEmptyList.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testIteratorToListWithAEmptyList() {
-        List<String> original = new ArrayList<String>();
+    @Test
+    void iteratorToListWithAEmptyList() {
+        List<String> original = new ArrayList<>();
 
         List<String> copy = CollectionUtils.iteratorToList(original.iterator());
 

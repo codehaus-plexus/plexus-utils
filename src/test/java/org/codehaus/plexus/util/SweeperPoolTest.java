@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class SweeperPoolTest {
+class SweeperPoolTest {
     /** The pool under test */
     TestObjectPool pool;
 
@@ -57,7 +57,7 @@ public class SweeperPoolTest {
      * Test the pool limits it's size, and disposes unneeded objects correctly
      */
     @Test
-    public void testMaxSize() {
+    void maxSize() {
         int sweepInterval = 0;
         int initialCapacity = 5;
         int maxSize = 2;
@@ -90,8 +90,8 @@ public class SweeperPoolTest {
     /**
      * <p>testSweepAndTrim1.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testSweepAndTrim1() {
+    @Test
+    void sweepAndTrim1() {
         // test trigger
         int sweepInterval = 1;
         int initialCapacity = 5;
@@ -122,7 +122,7 @@ public class SweeperPoolTest {
      * @throws java.lang.Exception if any.
      */
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         o1 = new Object();
         o2 = new Object();
         o3 = new Object();
@@ -137,14 +137,14 @@ public class SweeperPoolTest {
      * @throws java.lang.Exception if any.
      */
     @AfterEach
-    public void tearDown() throws Exception {
+    void tearDown() throws Exception {
         pool.dispose();
         assertTrue(pool.isDisposed());
         pool = null;
     }
 
     class TestObjectPool extends SweeperPool {
-        private Vector<Object> disposedObjects = new Vector<Object>();
+        private final Vector<Object> disposedObjects = new Vector<>();
 
         public TestObjectPool(int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize) {
             super(maxSize, minSize, intialCapacity, sweepInterval, triggerSize);

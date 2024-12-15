@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class ReflectorTest {
+class ReflectorTest {
     private Project project;
 
     private Reflector reflector;
@@ -39,7 +39,7 @@ public class ReflectorTest {
      * @throws java.lang.Exception if any.
      */
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         project = new Project();
         project.setModelVersion("1.0.0");
         project.setVersion("42");
@@ -53,7 +53,7 @@ public class ReflectorTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testObjectPropertyFromName() throws Exception {
+    void objectPropertyFromName() throws Exception {
         assertEquals("1.0.0", reflector.getObjectProperty(project, "modelVersion"));
     }
 
@@ -62,8 +62,8 @@ public class ReflectorTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testObjectPropertyFromBean() throws Exception {
+    @Test
+    void objectPropertyFromBean() throws Exception {
         assertEquals("Foo", reflector.getObjectProperty(project, "name"));
     }
 
@@ -73,7 +73,7 @@ public class ReflectorTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testObjectPropertyFromField() throws Exception {
+    void objectPropertyFromField() throws Exception {
         assertEquals("42", reflector.getObjectProperty(project, "version"));
     }
 

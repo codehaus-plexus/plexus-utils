@@ -30,13 +30,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class MatchPatternTest {
+class MatchPatternTest {
 
     /**
      * <p>testGetSource</p>
      */
     @Test
-    public void testGetSource() {
+    void getSource() {
         MatchPattern mp = MatchPattern.fromString("ABC*");
         assertEquals("ABC*", mp.getSource());
         mp = MatchPattern.fromString("%ant[some/ABC*]");
@@ -51,7 +51,7 @@ public class MatchPatternTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testMatchPath() throws Exception {
+    void matchPath() throws Exception {
         MatchPattern mp = MatchPattern.fromString("ABC*");
         assertTrue(mp.matchPath("ABCD", true));
     }
@@ -61,8 +61,8 @@ public class MatchPatternTest {
      *
      * @see <a href="https://github.com/codehaus-plexus/plexus-utils/issues/63">Issue #63</a>
      */
-    @org.junit.jupiter.api.Test
-    public void testMatchPatternStart() {
+    @Test
+    void matchPatternStart() {
         MatchPattern mp = MatchPattern.fromString("ABC*");
 
         assertTrue(mp.matchPatternStart("ABCD", true));
@@ -79,7 +79,7 @@ public class MatchPatternTest {
      * <p>testTokenizePathToString.</p>
      */
     @Test
-    public void testTokenizePathToString() {
+    void tokenizePathToString() {
         String[] expected = {"hello", "world"};
         String[] actual = MatchPattern.tokenizePathToString("hello/world", "/");
         assertArrayEquals(expected, actual);

@@ -33,13 +33,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CachingWriterTest {
+class CachingWriterTest {
 
     Path tempDir;
     Path checkLastModified;
 
     @BeforeEach
-    public void setup() throws IOException {
+    void setup() throws IOException {
         Path dir = Paths.get("target/io");
         Files.createDirectories(dir);
         tempDir = Files.createTempDirectory(dir, "temp-");
@@ -60,7 +60,7 @@ public class CachingWriterTest {
     }
 
     @Test
-    public void testNoOverwriteWithFlush() throws IOException, InterruptedException {
+    void noOverwriteWithFlush() throws IOException, InterruptedException {
         String data = "Hello world!";
         Path path = tempDir.resolve("file-bigger.txt");
         assertFalse(Files.exists(path));
@@ -85,7 +85,7 @@ public class CachingWriterTest {
     }
 
     @Test
-    public void testWriteNoExistingFile() throws IOException, InterruptedException {
+    void writeNoExistingFile() throws IOException, InterruptedException {
         String data = "Hello world!";
         Path path = tempDir.resolve("file.txt");
         assertFalse(Files.exists(path));

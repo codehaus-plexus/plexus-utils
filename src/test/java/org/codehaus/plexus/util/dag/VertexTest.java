@@ -27,12 +27,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class VertexTest {
+class VertexTest {
     /**
      * <p>testVertex.</p>
      */
     @Test
-    public void testVertex() {
+    void vertex() {
 
         final Vertex vertex1 = new Vertex("a");
 

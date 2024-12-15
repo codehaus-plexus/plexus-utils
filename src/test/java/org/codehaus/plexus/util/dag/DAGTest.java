@@ -33,14 +33,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class DAGTest {
+class DAGTest {
     /**
      * <p>testDAG.</p>
      *
      * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
      */
     @Test
-    public void testDAG() throws CycleDetectedException {
+    void dag() throws CycleDetectedException {
         final DAG dag = new DAG();
 
         dag.addVertex("a");
@@ -146,7 +146,7 @@ public class DAGTest {
      * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
      */
     @Test
-    public void testGetPredecessors() throws CycleDetectedException {
+    void getPredecessors() throws CycleDetectedException {
         final DAG dag = new DAG();
 
         dag.addEdge("a", "b");

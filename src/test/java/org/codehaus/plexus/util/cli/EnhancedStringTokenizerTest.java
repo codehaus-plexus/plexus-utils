@@ -29,12 +29,12 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class EnhancedStringTokenizerTest {
+class EnhancedStringTokenizerTest {
     /**
      * <p>test1.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void test1() {
+    @Test
+    void test1() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("this is a test string");
         StringBuilder sb = new StringBuilder();
         while (est.hasMoreTokens()) {
@@ -48,7 +48,7 @@ public class EnhancedStringTokenizerTest {
      * <p>test2.</p>
      */
     @Test
-    public void test2() {
+    void test2() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1,,,3,,4", ",");
         assertEquals("1", est.nextToken(), "Token 1");
         assertEquals("", est.nextToken(), "Token 2");
@@ -61,8 +61,8 @@ public class EnhancedStringTokenizerTest {
     /**
      * <p>test3.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void test3() {
+    @Test
+    void test3() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1,,,3,,4", ",", true);
         assertEquals("1", est.nextToken(), "Token 1");
         assertEquals(",", est.nextToken(), "Token 2");
@@ -80,8 +80,8 @@ public class EnhancedStringTokenizerTest {
     /**
      * <p>testMultipleDelim.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testMultipleDelim() {
+    @Test
+    void multipleDelim() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1 2|3|4", " |", true);
         assertEquals("1", est.nextToken(), "Token 1");
         assertEquals(" ", est.nextToken(), "Token 2");
@@ -96,22 +96,22 @@ public class EnhancedStringTokenizerTest {
     /**
      * <p>testEmptyString.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testEmptyString() {
+    @Test
+    void emptyString() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("");
         assertFalse(est.hasMoreTokens(), "est.hasMoreTokens()");
         try {
             est.nextToken();
             fail();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
     /**
      * <p>testSimpleString.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testSimpleString() {
+    @Test
+    void simpleString() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("a ");
         assertEquals("a", est.nextToken(), "Token 1");
         assertEquals("", est.nextToken(), "Token 2");

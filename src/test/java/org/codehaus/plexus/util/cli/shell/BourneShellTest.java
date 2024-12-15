@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class BourneShellTest {
+class BourneShellTest {
 
     /**
      * <p>newShell.</p>
@@ -47,8 +47,8 @@ public class BourneShellTest {
     /**
      * <p>testQuoteWorkingDirectoryAndExecutable.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testQuoteWorkingDirectoryAndExecutable() {
+    @Test
+    void quoteWorkingDirectoryAndExecutable() {
         Shell sh = newShell();
 
         sh.setWorkingDirectory("/usr/local/bin");
@@ -64,7 +64,7 @@ public class BourneShellTest {
      * <p>testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes.</p>
      */
     @Test
-    public void testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes() {
+    void quoteWorkingDirectoryAndExecutableWDPathWithSingleQuotes() {
         Shell sh = newShell();
 
         sh.setWorkingDirectory("/usr/local/'something else'");
@@ -79,8 +79,8 @@ public class BourneShellTest {
     /**
      * <p>testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes_BackslashFileSep.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes_BackslashFileSep() {
+    @Test
+    void quoteWorkingDirectoryAndExecutableWDPathWithSingleQuotesBackslashFileSep() {
         Shell sh = newShell();
 
         sh.setWorkingDirectory("\\usr\\local\\'something else'");
@@ -89,20 +89,20 @@ public class BourneShellTest {
         String executable =
                 StringUtils.join(sh.getShellCommandLine(new String[] {}).iterator(), " ");
 
-        assertEquals("/bin/sh -c cd '\\usr\\local\\\'\"'\"'something else'\"'\"'' && 'chmod'", executable);
+        assertEquals("/bin/sh -c cd '\\usr\\local\\'\"'\"'something else'\"'\"'' && 'chmod'", executable);
     }
 
     /**
      * <p>testPreserveSingleQuotesOnArgument.</p>
      */
     @Test
-    public void testPreserveSingleQuotesOnArgument() {
+    void preserveSingleQuotesOnArgument() {
         Shell sh = newShell();
 
         sh.setWorkingDirectory("/usr/bin");
         sh.setExecutable("chmod");
 
-        String[] args = {"\'some arg with spaces\'"};
+        String[] args = {"'some arg with spaces'"};
 
         List<String> shellCommandLine = sh.getShellCommandLine(args);
 
@@ -115,7 +115,7 @@ public class BourneShellTest {
      * <p>testAddSingleQuotesOnArgumentWithSpaces.</p>
      */
     @Test
-    public void testAddSingleQuotesOnArgumentWithSpaces() {
+    void addSingleQuotesOnArgumentWithSpaces() {
         Shell sh = newShell();
 
         sh.setWorkingDirectory("/usr/bin");
@@ -127,14 +127,14 @@ public class BourneShellTest {
 
         String cli = StringUtils.join(shellCommandLine.iterator(), " ");
         System.out.println(cli);
-        assertTrue(cli.endsWith("\'" + args[0] + "\'"));
+        assertTrue(cli.endsWith("'" + args[0] + "'"));
     }
 
     /**
      * <p>testEscapeSingleQuotesOnArgument.</p>
      */
     @Test
-    public void testEscapeSingleQuotesOnArgument() {
+    void escapeSingleQuotesOnArgument() {
         Shell sh = newShell();
 
         sh.setWorkingDirectory("/usr/bin");
@@ -154,7 +154,7 @@ public class BourneShellTest {
      * <p>testArgumentsWithsemicolon.</p>
      */
     @Test
-    public void testArgumentsWithsemicolon() {
+    void argumentsWithsemicolon() {
 
         System.out.println("---- semi colon tests ----");
 
@@ -169,7 +169,7 @@ public class BourneShellTest {
 
         String cli = StringUtils.join(shellCommandLine.iterator(), " ");
         System.out.println(cli);
-        assertTrue(cli.endsWith("\'" + args[0] + "\'"));
+        assertTrue(cli.endsWith("'" + args[0] + "'"));
 
         Commandline commandline = new Commandline(newShell());
         commandline.setExecutable("chmod");
@@ -216,7 +216,7 @@ public class BourneShellTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testBourneShellQuotingCharacters() throws Exception {
+    void bourneShellQuotingCharacters() throws Exception {
         // { ' ', '$', ';', '&', '|', '<', '>', '*', '?', '(', ')' };
         // test with values http://steve-parker.org/sh/bourne.shtml Appendix B - Meta-characters and Reserved Words
         Commandline commandline = new Commandline(newShell());

@@ -73,14 +73,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class StreamPumperTest {
-    private String lineSeparator = System.lineSeparator();
+class StreamPumperTest {
+    private final String lineSeparator = System.lineSeparator();
 
     /**
      * <p>testPumping.</p>
      */
     @Test
-    public void testPumping() {
+    void pumping() {
         String line1 = "line1";
         String line2 = "line2";
         String lines = line1 + "\n" + line2;
@@ -98,8 +98,8 @@ public class StreamPumperTest {
     /**
      * <p>testPumpingWithPrintWriter.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testPumpingWithPrintWriter() {
+    @Test
+    void pumpingWithPrintWriter() {
         String inputString = "This a test string";
         ByteArrayInputStream bais = new ByteArrayInputStream(inputString.getBytes());
         StringWriter sw = new StringWriter();
@@ -107,7 +107,7 @@ public class StreamPumperTest {
         StreamPumper pumper = new StreamPumper(bais, pw);
         pumper.run();
         pumper.flush();
-        System.out.println("aaa" + sw.toString());
+        System.out.println("aaa" + sw);
         assertEquals("This a test string" + lineSeparator, sw.toString());
         pumper.close();
     }
@@ -116,7 +116,7 @@ public class StreamPumperTest {
      * <p>testPumperReadsInputStreamUntilEndEvenIfConsumerFails.</p>
      */
     @Test
-    public void testPumperReadsInputStreamUntilEndEvenIfConsumerFails() {
+    void pumperReadsInputStreamUntilEndEvenIfConsumerFails() {
         // the number of bytes generated should surely exceed the read buffer used by the pumper
         GeneratorInputStream gis = new GeneratorInputStream(1024 * 1024 * 4);
         StreamPumper pumper = new StreamPumper(gis, new FailingConsumer());
@@ -164,7 +164,7 @@ public class StreamPumperTest {
      */
     static class TestConsumer implements StreamConsumer {
 
-        private List<String> lines = new ArrayList<String>();
+        private final List<String> lines = new ArrayList<>();
 
         /**
          * Checks to see if this consumer consumed a particular line. This method will wait up to timeout number of
@@ -208,8 +208,8 @@ public class StreamPumperTest {
     /**
      * <p>testEnabled.</p>
      */
-    @org.junit.jupiter.api.Test
-    public void testEnabled() {
+    @Test
+    void enabled() {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("AB\nCE\nEF".getBytes());
         TestConsumer streamConsumer = new TestConsumer();
         StreamPumper streamPumper = new StreamPumper(byteArrayInputStream, streamConsumer);
@@ -221,7 +221,7 @@ public class StreamPumperTest {
      * <p>testDisabled.</p>
      */
     @Test
-    public void testDisabled() {
+    void disabled() {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("AB\nCE\nEF".getBytes());
         TestConsumer streamConsumer = new TestConsumer();
         StreamPumper streamPumper = new StreamPumper(byteArrayInputStream, streamConsumer);

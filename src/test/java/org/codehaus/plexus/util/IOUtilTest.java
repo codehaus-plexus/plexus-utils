@@ -26,12 +26,13 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -58,7 +59,7 @@ public final class IOUtilTest {
      * methods are called. (JT)
      */
 
-    private int FILE_SIZE = 1024 * 4 + 1;
+    private final int FILE_SIZE = 1024 * 4 + 1;
 
     private File testDirectory;
 
@@ -68,7 +69,7 @@ public final class IOUtilTest {
      * <p>setUp.</p>
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         try {
             testDirectory = (new File("target/test/io/")).getAbsoluteFile();
             if (!testDirectory.exists()) {
@@ -103,7 +104,7 @@ public final class IOUtilTest {
 
     /** Assert that the contents of two byte arrays are the same. */
     private void assertEqualContent(byte[] b0, byte[] b1) {
-        assertTrue(Arrays.equals(b0, b1), "Content not equal according to java.util.Arrays#equals()");
+        assertArrayEquals(b0, b1, "Content not equal according to java.util.Arrays#equals()");
     }
 
     /** Assert that the content of two files is the same. */
@@ -125,13 +126,13 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInputStreamToOutputStream() throws Exception {
+    void inputStreamToOutputStream() throws Exception {
         File destination = newFile("copy1.txt");
         InputStream fin = Files.newInputStream(testFile.toPath());
         OutputStream fout = Files.newOutputStream(destination.toPath());
 
         IOUtil.copy(fin, fout);
-        assertTrue(fin.available() == 0, "Not all bytes were read");
+        assertEquals(0, fin.available(), "Not all bytes were read");
         fout.flush();
 
         checkFile(destination);
@@ -146,15 +147,15 @@ public final class IOUtilTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testInputStreamToWriter() throws Exception {
+    @Test
+    void inputStreamToWriter() throws Exception {
         File destination = newFile("copy2.txt");
         InputStream fin = Files.newInputStream(testFile.toPath());
         Writer fout = Files.newBufferedWriter(destination.toPath());
 
         IOUtil.copy(fin, fout);
 
-        assertTrue(fin.available() == 0, "Not all bytes were read");
+        assertEquals(0, fin.available(), "Not all bytes were read");
         fout.flush();
 
         checkFile(destination);
@@ -170,12 +171,12 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInputStreamToString() throws Exception {
+    void inputStreamToString() throws Exception {
         InputStream fin = Files.newInputStream(testFile.toPath());
         String out = IOUtil.toString(fin);
         assertNotNull(out);
-        assertTrue(fin.available() == 0, "Not all bytes were read");
-        assertTrue(out.length() == FILE_SIZE, "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE);
+        assertEquals(0, fin.available(), "Not all bytes were read");
+        assertEquals(out.length(), FILE_SIZE, "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE);
         fin.close();
     }
 
@@ -185,7 +186,7 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testReaderToOutputStream() throws Exception {
+    void readerToOutputStream() throws Exception {
         File destination = newFile("copy3.txt");
         Reader fin = Files.newBufferedReader(testFile.toPath());
         OutputStream fout = Files.newOutputStream(destination.toPath());
@@ -209,8 +210,8 @@ public final class IOUtilTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testReaderToWriter() throws Exception {
+    @Test
+    void readerToWriter() throws Exception {
         File destination = newFile("copy4.txt");
         Reader fin = Files.newBufferedReader(testFile.toPath());
         Writer fout = Files.newBufferedWriter(destination.toPath());
@@ -229,12 +230,12 @@ public final class IOUtilTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testReaderToString() throws Exception {
+    @Test
+    void readerToString() throws Exception {
         Reader fin = Files.newBufferedReader(testFile.toPath());
         String out = IOUtil.toString(fin);
         assertNotNull(out);
-        assertTrue(out.length() == FILE_SIZE, "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE);
+        assertEquals(out.length(), FILE_SIZE, "Wrong output size: out.length()=" + out.length() + "!=" + FILE_SIZE);
         fin.close();
     }
 
@@ -243,8 +244,8 @@ public final class IOUtilTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testStringToOutputStream() throws Exception {
+    @Test
+    void stringToOutputStream() throws Exception {
         File destination = newFile("copy5.txt");
         Reader fin = Files.newBufferedReader(testFile.toPath());
         // Create our String. Rely on testReaderToString() to make sure this is valid.
@@ -270,8 +271,8 @@ public final class IOUtilTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testStringToWriter() throws Exception {
+    @Test
+    void stringToWriter() throws Exception {
         File destination = newFile("copy6.txt");
         Reader fin = Files.newBufferedReader(testFile.toPath());
         // Create our String. Rely on testReaderToString() to make sure this is valid.
@@ -294,12 +295,12 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInputStreamToByteArray() throws Exception {
+    void inputStreamToByteArray() throws Exception {
         InputStream fin = Files.newInputStream(testFile.toPath());
         byte[] out = IOUtil.toByteArray(fin);
         assertNotNull(out);
-        assertTrue(fin.available() == 0, "Not all bytes were read");
-        assertTrue(out.length == FILE_SIZE, "Wrong output size: out.length=" + out.length + "!=" + FILE_SIZE);
+        assertEquals(0, fin.available(), "Not all bytes were read");
+        assertEquals(out.length, FILE_SIZE, "Wrong output size: out.length=" + out.length + "!=" + FILE_SIZE);
         assertEqualContent(out, testFile);
         fin.close();
     }
@@ -310,7 +311,7 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testStringToByteArray() throws Exception {
+    void stringToByteArray() throws Exception {
         Reader fin = Files.newBufferedReader(testFile.toPath());
 
         // Create our String. Rely on testReaderToString() to make sure this is valid.
@@ -327,7 +328,7 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testByteArrayToWriter() throws Exception {
+    void byteArrayToWriter() throws Exception {
         File destination = newFile("copy7.txt");
         Writer fout = Files.newBufferedWriter(destination.toPath());
         InputStream fin = Files.newInputStream(testFile.toPath());
@@ -348,8 +349,8 @@ public final class IOUtilTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testByteArrayToString() throws Exception {
+    @Test
+    void byteArrayToString() throws Exception {
         InputStream fin = Files.newInputStream(testFile.toPath());
         byte[] in = IOUtil.toByteArray(fin);
         // Create our byte[]. Rely on testInputStreamToByteArray() to make sure this is valid.
@@ -364,7 +365,7 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testByteArrayToOutputStream() throws Exception {
+    void byteArrayToOutputStream() throws Exception {
         File destination = newFile("copy8.txt");
         OutputStream fout = Files.newOutputStream(destination.toPath());
         InputStream fin = Files.newInputStream(testFile.toPath());
@@ -390,10 +391,9 @@ public final class IOUtilTest {
     /**
      * <p>testCloseInputStream.</p>
      *
-     * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testCloseInputStream() throws Exception {
+    @Test
+    void closeInputStream() {
         IOUtil.close((InputStream) null);
 
         TestInputStream inputStream = new TestInputStream();
@@ -408,8 +408,8 @@ public final class IOUtilTest {
      *
      * @throws java.lang.Exception if any.
      */
-    @org.junit.jupiter.api.Test
-    public void testCloseOutputStream() throws Exception {
+    @Test
+    void closeOutputStream() throws Exception {
         IOUtil.close((OutputStream) null);
 
         TestOutputStream outputStream = new TestOutputStream();
@@ -425,7 +425,7 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testCloseReader() throws Exception {
+    void closeReader() throws Exception {
         IOUtil.close((Reader) null);
 
         TestReader reader = new TestReader();
@@ -441,7 +441,7 @@ public final class IOUtilTest {
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testCloseWriter() throws Exception {
+    void closeWriter() throws Exception {
         IOUtil.close((Writer) null);
 
         TestWriter writer = new TestWriter();
@@ -484,21 +484,21 @@ public final class IOUtilTest {
             closed = true;
         }
 
-        public int read(char cbuf[], int off, int len) {
+        public int read(char[] cbuf, int off, int len) {
             fail("This method shouldn't be called");
 
             return 0;
         }
     }
 
-    private class TestWriter extends Writer {
+    private static class TestWriter extends Writer {
         boolean closed;
 
         public void close() {
             closed = true;
         }
 
-        public void write(char cbuf[], int off, int len) {
+        public void write(char[] cbuf, int off, int len) {
             fail("This method shouldn't be called");
         }
 
@@ -513,7 +513,7 @@ public final class IOUtilTest {
 
     private File newFile(String filename) throws Exception {
         File destination = new File(testDirectory, filename);
-        assertTrue(!destination.exists(), filename + "Test output data file shouldn't previously exist");
+        assertFalse(destination.exists(), filename + "Test output data file shouldn't previously exist");
 
         return destination;
     }
@@ -540,8 +540,9 @@ public final class IOUtilTest {
     }
 
     private void deleteFile(File file) throws Exception {
-        assertTrue(
-                file.length() == FILE_SIZE + 1,
+        assertEquals(
+                file.length(),
+                FILE_SIZE + 1,
                 "Wrong output size: file.length()=" + file.length() + "!=" + FILE_SIZE + 1);
 
         assertTrue((file.delete() || (!file.exists())), "File would not delete");
