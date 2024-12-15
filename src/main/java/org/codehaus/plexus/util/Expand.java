@@ -73,12 +73,11 @@ import java.util.zip.ZipInputStream;
  * @since Ant 1.1 @ant.task category="packaging" name="unzip" name="unjar" name="unwar"
  *
  */
-public class Expand
-{
+public class Expand {
 
-    private File dest;// req
+    private File dest; // req
 
-    private File source;// req
+    private File source; // req
 
     private boolean overwrite = true;
 
@@ -87,44 +86,37 @@ public class Expand
      *
      * @exception Exception Thrown in unrecoverable error.
      */
-    public void execute()
-        throws Exception
-    {
-        expandFile( source, dest );
+    public void execute() throws Exception {
+        expandFile(source, dest);
     }
 
-    protected void expandFile( final File srcF, final File dir )
-        throws Exception
-    {
+    protected void expandFile(final File srcF, final File dir) throws Exception {
         // code from WarExpand
-        try ( ZipInputStream zis = new ZipInputStream( Files.newInputStream( srcF.toPath() ) ) )
-        {
-            for ( ZipEntry ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry() )
-            {
-                extractFile( srcF, dir, zis, ze.getName(), new Date( ze.getTime() ), ze.isDirectory() );
+        try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(srcF.toPath()))) {
+            for (ZipEntry ze = zis.getNextEntry(); ze != null; ze = zis.getNextEntry()) {
+                extractFile(srcF, dir, zis, ze.getName(), new Date(ze.getTime()), ze.isDirectory());
             }
-        }
-        catch ( IOException ioe )
-        {
-            throw new Exception( "Error while expanding " + srcF.getPath(), ioe );
+        } catch (IOException ioe) {
+            throw new Exception("Error while expanding " + srcF.getPath(), ioe);
         }
     }
 
-    protected void extractFile( File srcF, File dir, InputStream compressedInputStream, String entryName,
-                                Date entryDate, boolean isDirectory )
-        throws Exception
-    {
-        File f = FileUtils.resolveFile( dir, entryName );
+    protected void extractFile(
+            File srcF,
+            File dir,
+            InputStream compressedInputStream,
+            String entryName,
+            Date entryDate,
+            boolean isDirectory)
+            throws Exception {
+        File f = FileUtils.resolveFile(dir, entryName);
 
-        if ( !f.getAbsolutePath().startsWith( dir.getAbsolutePath() ) )
-        {
-            throw new IOException( "Entry '" + entryName + "' outside the target directory." );
+        if (!f.getAbsolutePath().startsWith(dir.getAbsolutePath())) {
+            throw new IOException("Entry '" + entryName + "' outside the target directory.");
         }
 
-        try
-        {
-            if ( !overwrite && f.exists() && f.lastModified() >= entryDate.getTime() )
-            {
+        try {
+            if (!overwrite && f.exists() && f.lastModified() >= entryDate.getTime()) {
                 return;
             }
 
@@ -132,30 +124,23 @@ public class Expand
             File dirF = f.getParentFile();
             dirF.mkdirs();
 
-            if ( isDirectory )
-            {
+            if (isDirectory) {
                 f.mkdirs();
-            }
-            else
-            {
+            } else {
                 byte[] buffer = new byte[65536];
-                
-                try ( OutputStream fos = Files.newOutputStream( f.toPath() ) )
-                {
-                    for ( int length = compressedInputStream.read( buffer ); 
-                          length >= 0; 
-                          fos.write( buffer, 0, length ), length = compressedInputStream.read( buffer ) )
+
+                try (OutputStream fos = Files.newOutputStream(f.toPath())) {
+                    for (int length = compressedInputStream.read(buffer);
+                            length >= 0;
+                            fos.write(buffer, 0, length), length = compressedInputStream.read(buffer))
                         ;
                 }
             }
 
-            f.setLastModified( entryDate.getTime() );
+            f.setLastModified(entryDate.getTime());
+        } catch (FileNotFoundException ex) {
+            throw new Exception("Can't extract file " + srcF.getPath(), ex);
         }
-        catch ( FileNotFoundException ex )
-        {
-            throw new Exception( "Can't extract file " + srcF.getPath(), ex );
-        }
-
     }
 
     /**
@@ -163,8 +148,7 @@ public class Expand
      *
      * @param d Path to the directory.
      */
-    public void setDest( File d )
-    {
+    public void setDest(File d) {
         this.dest = d;
     }
 
@@ -173,17 +157,14 @@ public class Expand
      *
      * @param s Path to zip-file.
      */
-    public void setSrc( File s )
-    {
+    public void setSrc(File s) {
         this.source = s;
     }
 
     /**
      * @param b Should we overwrite files in dest, even if they are newer than the corresponding entries in the archive?
      */
-    public void setOverwrite( boolean b )
-    {
+    public void setOverwrite(boolean b) {
         overwrite = b;
     }
-
 }

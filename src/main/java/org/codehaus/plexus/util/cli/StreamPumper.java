@@ -84,9 +84,7 @@ import java.io.PrintWriter;
  *
  * @since June 11, 2001
  */
-public class StreamPumper
-    extends AbstractStreamHandler
-{
+public class StreamPumper extends AbstractStreamHandler {
     private final BufferedReader in;
 
     private final StreamConsumer consumer;
@@ -97,93 +95,68 @@ public class StreamPumper
 
     private static final int SIZE = 1024;
 
-    public StreamPumper( InputStream in )
-    {
-        this( in, (StreamConsumer) null );
+    public StreamPumper(InputStream in) {
+        this(in, (StreamConsumer) null);
     }
 
-    public StreamPumper( InputStream in, StreamConsumer consumer )
-    {
-        this( in, null, consumer );
+    public StreamPumper(InputStream in, StreamConsumer consumer) {
+        this(in, null, consumer);
     }
 
-    public StreamPumper( InputStream in, PrintWriter writer )
-    {
-        this( in, writer, null );
+    public StreamPumper(InputStream in, PrintWriter writer) {
+        this(in, writer, null);
     }
 
-    public StreamPumper( InputStream in, PrintWriter writer, StreamConsumer consumer )
-    {
+    public StreamPumper(InputStream in, PrintWriter writer, StreamConsumer consumer) {
         super();
-        this.in = new BufferedReader( new InputStreamReader( in ), SIZE );
+        this.in = new BufferedReader(new InputStreamReader(in), SIZE);
         this.out = writer;
         this.consumer = consumer;
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         boolean outError = out != null ? out.checkError() : false;
 
-        try
-        {
-            for ( String line = in.readLine(); line != null; line = in.readLine() )
-            {
-                try
-                {
-                    if ( exception == null && consumer != null && !isDisabled() )
-                    {
-                        consumer.consumeLine( line );
+        try {
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
+                try {
+                    if (exception == null && consumer != null && !isDisabled()) {
+                        consumer.consumeLine(line);
                     }
-                }
-                catch ( Exception t )
-                {
+                } catch (Exception t) {
                     exception = t;
                 }
 
-                if ( out != null && !outError )
-                {
-                    out.println( line );
+                if (out != null && !outError) {
+                    out.println(line);
 
                     out.flush();
 
-                    if ( out.checkError() )
-                    {
+                    if (out.checkError()) {
                         outError = true;
 
-                        try
-                        {
+                        try {
                             // Thrown to fill in stack trace elements.
-                            throw new IOException( String.format( "Failure printing line '%s'.", line ) );
-                        }
-                        catch ( final IOException e )
-                        {
+                            throw new IOException(String.format("Failure printing line '%s'.", line));
+                        } catch (final IOException e) {
                             exception = e;
                         }
                     }
                 }
             }
-        }
-        catch ( IOException e )
-        {
+        } catch (IOException e) {
             exception = e;
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 in.close();
-            }
-            catch ( final IOException e2 )
-            {
-                if ( exception == null )
-                {
+            } catch (final IOException e2) {
+                if (exception == null) {
                     exception = e2;
                 }
             }
 
-            synchronized ( this )
-            {
+            synchronized (this) {
                 setDone();
 
                 this.notifyAll();
@@ -191,50 +164,37 @@ public class StreamPumper
         }
     }
 
-    public void flush()
-    {
-        if ( out != null )
-        {
+    public void flush() {
+        if (out != null) {
             out.flush();
 
-            if ( out.checkError() && exception == null )
-            {
-                try
-                {
+            if (out.checkError() && exception == null) {
+                try {
                     // Thrown to fill in stack trace elements.
-                    throw new IOException( "Failure flushing output." );
-                }
-                catch ( final IOException e )
-                {
+                    throw new IOException("Failure flushing output.");
+                } catch (final IOException e) {
                     exception = e;
                 }
             }
         }
     }
 
-    public void close()
-    {
-        if ( out != null )
-        {
+    public void close() {
+        if (out != null) {
             out.close();
 
-            if ( out.checkError() && exception == null )
-            {
-                try
-                {
+            if (out.checkError() && exception == null) {
+                try {
                     // Thrown to fill in stack trace elements.
-                    throw new IOException( "Failure closing output." );
-                }
-                catch ( final IOException e )
-                {
+                    throw new IOException("Failure closing output.");
+                } catch (final IOException e) {
                     exception = e;
                 }
             }
         }
     }
 
-    public Exception getException()
-    {
+    public Exception getException() {
         return exception;
     }
 }

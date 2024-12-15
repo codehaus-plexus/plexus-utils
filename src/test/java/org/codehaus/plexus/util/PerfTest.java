@@ -25,8 +25,7 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class PerfTest
-{
+public class PerfTest {
     String src = "012345578901234556789012345678901234456789012345678901234567890";
 
     private final int oops = 100;
@@ -35,37 +34,31 @@ public class PerfTest
      * <p>testSubString.</p>
      */
     @Test
-    public void testSubString()
-    {
+    public void testSubString() {
         StringBuilder res = new StringBuilder();
         int len = src.length();
-        for ( int cnt = 0; cnt < oops; cnt++ )
-        {
-            for ( int i = 0; i < len - 5; i++ )
-            {
-                res.append( src.substring( i, i + 4 ) );
+        for (int cnt = 0; cnt < oops; cnt++) {
+            for (int i = 0; i < len - 5; i++) {
+                res.append(src.substring(i, i + 4));
             }
         }
         int i = res.length();
-        System.out.println( "i = " + i );
+        System.out.println("i = " + i);
     }
 
     /**
      * <p>testResDir.</p>
      */
     @Test
-    public void testResDir()
-    {
+    public void testResDir() {
         StringBuilder res = new StringBuilder();
         int len = src.length();
-        for ( int cnt = 0; cnt < oops; cnt++ )
-        {
-            for ( int i = 0; i < len - 5; i++ )
-            {
-                res.append( src, i, i + 4 );
+        for (int cnt = 0; cnt < oops; cnt++) {
+            for (int i = 0; i < len - 5; i++) {
+                res.append(src, i, i + 4);
             }
         }
         int i = res.length();
-        System.out.println( "i = " + i );
+        System.out.println("i = " + i);
     }
 }

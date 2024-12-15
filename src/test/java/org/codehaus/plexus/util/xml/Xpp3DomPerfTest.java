@@ -46,21 +46,20 @@ import org.openjdk.jmh.runner.options.TimeValue;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 3, time = 3, timeUnit = TimeUnit.SECONDS)
-public class Xpp3DomPerfTest
-{
+public class Xpp3DomPerfTest {
     @State(Scope.Benchmark)
-    static public class AdditionState {
+    public static class AdditionState {
         Xpp3Dom dom1;
         Xpp3Dom dom2;
 
         @Setup(Level.Iteration)
         public void setUp() throws IOException, XmlPullParserException {
-            String testDom = "<configuration><items thing='blah'><item>one</item><item>two</item></items></configuration>";
-            dom1 = Xpp3DomBuilder.build( new StringReader( testDom ) );
-            dom2 = new Xpp3Dom( dom1 );
+            String testDom =
+                    "<configuration><items thing='blah'><item>one</item><item>two</item></items></configuration>";
+            dom1 = Xpp3DomBuilder.build(new StringReader(testDom));
+            dom2 = new Xpp3Dom(dom1);
         }
     }
-
 
     /**
      * <p>benchmarkClone.</p>
@@ -69,9 +68,8 @@ public class Xpp3DomPerfTest
      * @return a {@link org.codehaus.plexus.util.xml.Xpp3Dom} object.
      */
     @Benchmark
-    public Xpp3Dom benchmarkClone(AdditionState state)
-    {
-        return new Xpp3Dom( state.dom1 );
+    public Xpp3Dom benchmarkClone(AdditionState state) {
+        return new Xpp3Dom(state.dom1);
     }
 
     /**
@@ -80,9 +78,8 @@ public class Xpp3DomPerfTest
      * @param state a {@link org.codehaus.plexus.util.xml.Xpp3DomPerfTest.AdditionState} object.
      */
     @Benchmark
-    public void benchmarkMerge(AdditionState state)
-    {
-        Xpp3Dom.mergeXpp3Dom( state.dom1, state.dom2 );
+    public void benchmarkMerge(AdditionState state) {
+        Xpp3Dom.mergeXpp3Dom(state.dom1, state.dom2);
     }
 
     /**
@@ -91,14 +88,12 @@ public class Xpp3DomPerfTest
      * @param args a {@link java.lang.String} object.
      * @throws org.openjdk.jmh.runner.RunnerException if any.
      */
-    public static void main( String... args )
-        throws RunnerException
-    {
+    public static void main(String... args) throws RunnerException {
         Options opts = new OptionsBuilder()
-                .measurementIterations( 3 )
-                .measurementTime( TimeValue.milliseconds( 3000 ) )
-                .forks( 1 )
+                .measurementIterations(3)
+                .measurementTime(TimeValue.milliseconds(3000))
+                .forks(1)
                 .build();
-        new Runner( opts ).run();
+        new Runner(opts).run();
     }
 }

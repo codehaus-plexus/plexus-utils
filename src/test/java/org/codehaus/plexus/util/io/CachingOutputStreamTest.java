@@ -33,110 +33,98 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-public class CachingOutputStreamTest
-{
+public class CachingOutputStreamTest {
 
     Path tempDir;
     Path checkLastModified;
 
     @Before
-    public void setup() throws IOException
-    {
-        Path dir = Paths.get( "target/io" );
-        Files.createDirectories( dir );
-        tempDir = Files.createTempDirectory( dir, "temp-" );
-        checkLastModified = tempDir.resolve( ".check" );
+    public void setup() throws IOException {
+        Path dir = Paths.get("target/io");
+        Files.createDirectories(dir);
+        tempDir = Files.createTempDirectory(dir, "temp-");
+        checkLastModified = tempDir.resolve(".check");
     }
 
-    private void waitLastModified() throws IOException, InterruptedException
-    {
-        Files.newOutputStream( checkLastModified ).close();
-        FileTime lm = Files.getLastModifiedTime( checkLastModified );
-        while ( true )
-        {
-            Files.newOutputStream( checkLastModified ).close();
-            FileTime nlm = Files.getLastModifiedTime( checkLastModified );
-            if ( !Objects.equals( nlm, lm ) )
-            {
+    private void waitLastModified() throws IOException, InterruptedException {
+        Files.newOutputStream(checkLastModified).close();
+        FileTime lm = Files.getLastModifiedTime(checkLastModified);
+        while (true) {
+            Files.newOutputStream(checkLastModified).close();
+            FileTime nlm = Files.getLastModifiedTime(checkLastModified);
+            if (!Objects.equals(nlm, lm)) {
                 break;
             }
-            Thread.sleep( 10 );
+            Thread.sleep(10);
         }
     }
 
     @Test
-    public void testWriteNoExistingFile() throws IOException, InterruptedException
-    {
-        byte[] data = "Hello world!".getBytes( StandardCharsets.UTF_8 );
-        Path path = tempDir.resolve( "file.txt" );
-        assertFalse( Files.exists( path ) );
+    public void testWriteNoExistingFile() throws IOException, InterruptedException {
+        byte[] data = "Hello world!".getBytes(StandardCharsets.UTF_8);
+        Path path = tempDir.resolve("file.txt");
+        assertFalse(Files.exists(path));
 
-        try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )
-        {
-            cos.write( data );
+        try (CachingOutputStream cos = new CachingOutputStream(path, 4)) {
+            cos.write(data);
         }
-        assertTrue( Files.exists( path ) );
-        byte[] read = Files.readAllBytes( path );
-        assertArrayEquals( data, read );
-        FileTime modified = Files.getLastModifiedTime( path );
+        assertTrue(Files.exists(path));
+        byte[] read = Files.readAllBytes(path);
+        assertArrayEquals(data, read);
+        FileTime modified = Files.getLastModifiedTime(path);
 
         waitLastModified();
 
-        try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )
-        {
-            cos.write( data );
+        try (CachingOutputStream cos = new CachingOutputStream(path, 4)) {
+            cos.write(data);
         }
-        assertTrue( Files.exists( path ) );
-        read = Files.readAllBytes( path );
-        assertArrayEquals( data, read );
-        FileTime newModified = Files.getLastModifiedTime( path );
-        assertEquals( modified, newModified );
+        assertTrue(Files.exists(path));
+        read = Files.readAllBytes(path);
+        assertArrayEquals(data, read);
+        FileTime newModified = Files.getLastModifiedTime(path);
+        assertEquals(modified, newModified);
         modified = newModified;
 
         waitLastModified();
 
         // write longer data
-        data = "Good morning!".getBytes( StandardCharsets.UTF_8 );
-        try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )
-        {
-            cos.write( data );
+        data = "Good morning!".getBytes(StandardCharsets.UTF_8);
+        try (CachingOutputStream cos = new CachingOutputStream(path, 4)) {
+            cos.write(data);
         }
-        assertTrue( Files.exists( path ) );
-        read = Files.readAllBytes( path );
-        assertArrayEquals( data, read );
-        newModified = Files.getLastModifiedTime( path );
-        assertNotEquals( modified, newModified );
+        assertTrue(Files.exists(path));
+        read = Files.readAllBytes(path);
+        assertArrayEquals(data, read);
+        newModified = Files.getLastModifiedTime(path);
+        assertNotEquals(modified, newModified);
         modified = newModified;
 
         waitLastModified();
 
         // different data same size
-        data = "Good mornong!".getBytes( StandardCharsets.UTF_8 );
-        try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )
-        {
-            cos.write( data );
+        data = "Good mornong!".getBytes(StandardCharsets.UTF_8);
+        try (CachingOutputStream cos = new CachingOutputStream(path, 4)) {
+            cos.write(data);
         }
-        assertTrue( Files.exists( path ) );
-        read = Files.readAllBytes( path );
-        assertArrayEquals( data, read );
-        newModified = Files.getLastModifiedTime( path );
-        assertNotEquals( modified, newModified );
+        assertTrue(Files.exists(path));
+        read = Files.readAllBytes(path);
+        assertArrayEquals(data, read);
+        newModified = Files.getLastModifiedTime(path);
+        assertNotEquals(modified, newModified);
         modified = newModified;
 
         waitLastModified();
 
         // same data but shorter
-        data = "Good mornon".getBytes( StandardCharsets.UTF_8 );
-        try ( CachingOutputStream cos = new CachingOutputStream( path, 4 ) )
-        {
-            cos.write( data );
+        data = "Good mornon".getBytes(StandardCharsets.UTF_8);
+        try (CachingOutputStream cos = new CachingOutputStream(path, 4)) {
+            cos.write(data);
         }
-        assertTrue( Files.exists( path ) );
-        read = Files.readAllBytes( path );
-        assertArrayEquals( data, read );
-        newModified = Files.getLastModifiedTime( path );
-        assertNotEquals( modified, newModified );
+        assertTrue(Files.exists(path));
+        read = Files.readAllBytes(path);
+        assertArrayEquals(data, read);
+        newModified = Files.getLastModifiedTime(path);
+        assertNotEquals(modified, newModified);
         modified = newModified;
     }
-
 }

@@ -52,10 +52,6 @@ package org.codehaus.plexus.util.cli;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,6 +62,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 /**
  * <p>StreamPumperTest class.</p>
  *
@@ -73,45 +73,42 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class StreamPumperTest
-{
+public class StreamPumperTest {
     private String lineSeparator = System.lineSeparator();
 
     /**
      * <p>testPumping.</p>
      */
     @Test
-    public void testPumping()
-    {
+    public void testPumping() {
         String line1 = "line1";
         String line2 = "line2";
         String lines = line1 + "\n" + line2;
-        ByteArrayInputStream inputStream = new ByteArrayInputStream( lines.getBytes() );
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(lines.getBytes());
 
         TestConsumer consumer = new TestConsumer();
-        StreamPumper pumper = new StreamPumper( inputStream, consumer );
-        new Thread( pumper ).run();
+        StreamPumper pumper = new StreamPumper(inputStream, consumer);
+        new Thread(pumper).run();
 
         // Check the consumer to see if it got both lines.
-        assertTrue( consumer.wasLineConsumed( line1, 1000 ) );
-        assertTrue( consumer.wasLineConsumed( line2, 1000 ) );
+        assertTrue(consumer.wasLineConsumed(line1, 1000));
+        assertTrue(consumer.wasLineConsumed(line2, 1000));
     }
 
     /**
      * <p>testPumpingWithPrintWriter.</p>
      */
     @Test
-    public void testPumpingWithPrintWriter()
-    {
+    public void testPumpingWithPrintWriter() {
         String inputString = "This a test string";
-        ByteArrayInputStream bais = new ByteArrayInputStream( inputString.getBytes() );
+        ByteArrayInputStream bais = new ByteArrayInputStream(inputString.getBytes());
         StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter( sw );
-        StreamPumper pumper = new StreamPumper( bais, pw );
+        PrintWriter pw = new PrintWriter(sw);
+        StreamPumper pumper = new StreamPumper(bais, pw);
         pumper.run();
         pumper.flush();
-        System.out.println( "aaa" + sw.toString() );
-        assertEquals( "This a test string" + lineSeparator, sw.toString() );
+        System.out.println("aaa" + sw.toString());
+        assertEquals("This a test string" + lineSeparator, sw.toString());
         pumper.close();
     }
 
@@ -119,20 +116,17 @@ public class StreamPumperTest
      * <p>testPumperReadsInputStreamUntilEndEvenIfConsumerFails.</p>
      */
     @Test
-    public void testPumperReadsInputStreamUntilEndEvenIfConsumerFails()
-    {
+    public void testPumperReadsInputStreamUntilEndEvenIfConsumerFails() {
         // the number of bytes generated should surely exceed the read buffer used by the pumper
-        GeneratorInputStream gis = new GeneratorInputStream( 1024 * 1024 * 4 );
-        StreamPumper pumper = new StreamPumper( gis, new FailingConsumer() );
+        GeneratorInputStream gis = new GeneratorInputStream(1024 * 1024 * 4);
+        StreamPumper pumper = new StreamPumper(gis, new FailingConsumer());
         pumper.run();
-        assertEquals( "input stream was not fully consumed, producer deadlocks", gis.size, gis.read );
-        assertTrue( gis.closed );
-        assertNotNull( pumper.getException() );
+        assertEquals("input stream was not fully consumed, producer deadlocks", gis.size, gis.read);
+        assertTrue(gis.closed);
+        assertNotNull(pumper.getException());
     }
 
-    static class GeneratorInputStream
-        extends InputStream
-    {
+    static class GeneratorInputStream extends InputStream {
 
         final int size;
 
@@ -140,50 +134,35 @@ public class StreamPumperTest
 
         boolean closed = false;
 
-        public GeneratorInputStream( int size )
-        {
+        public GeneratorInputStream(int size) {
             this.size = size;
         }
 
-        public int read()
-            throws IOException
-        {
-            if ( read < size )
-            {
+        public int read() throws IOException {
+            if (read < size) {
                 read++;
                 return '\n';
-            }
-            else
-            {
+            } else {
                 return -1;
             }
         }
 
-        public void close()
-            throws IOException
-        {
+        public void close() throws IOException {
             closed = true;
         }
-
     }
 
-    static class FailingConsumer
-        implements StreamConsumer
-    {
+    static class FailingConsumer implements StreamConsumer {
 
-        public void consumeLine( String line )
-        {
-            throw new NullPointerException( "too bad, the consumer is badly implemented..." );
+        public void consumeLine(String line) {
+            throw new NullPointerException("too bad, the consumer is badly implemented...");
         }
-
     }
 
     /**
      * Used by the test to track whether a line actually got consumed or not.
      */
-    static class TestConsumer
-        implements StreamConsumer
-    {
+    static class TestConsumer implements StreamConsumer {
 
         private List<String> lines = new ArrayList<String>();
 
@@ -195,42 +174,34 @@ public class StreamPumperTest
          * @param timeout Number of milliseconds to wait for the line.
          * @return true if the line gets consumed, else false.
          */
-        public boolean wasLineConsumed( String testLine, long timeout )
-        {
+        public boolean wasLineConsumed(String testLine, long timeout) {
 
             long start = System.currentTimeMillis();
             long trialTime = 0;
 
-            do
-            {
-                if ( lines.contains( testLine ) )
-                {
+            do {
+                if (lines.contains(testLine)) {
                     return true;
                 }
 
                 // Sleep a bit.
-                try
-                {
-                    Thread.sleep( 10 );
-                }
-                catch ( InterruptedException e )
-                {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
                     // ignoring...
                 }
 
                 // How long have been waiting for the line?
                 trialTime = System.currentTimeMillis() - start;
 
-            }
-            while ( trialTime < timeout );
+            } while (trialTime < timeout);
 
             // If we got here, then the line wasn't consumed within the timeout
             return false;
         }
 
-        public void consumeLine( String line )
-        {
-            lines.add( line );
+        public void consumeLine(String line) {
+            lines.add(line);
         }
     }
 
@@ -238,26 +209,24 @@ public class StreamPumperTest
      * <p>testEnabled.</p>
      */
     @Test
-    public void testEnabled()
-    {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( "AB\nCE\nEF".getBytes() );
+    public void testEnabled() {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("AB\nCE\nEF".getBytes());
         TestConsumer streamConsumer = new TestConsumer();
-        StreamPumper streamPumper = new StreamPumper( byteArrayInputStream, streamConsumer );
+        StreamPumper streamPumper = new StreamPumper(byteArrayInputStream, streamConsumer);
         streamPumper.run();
-        assertEquals( 3, streamConsumer.lines.size() );
+        assertEquals(3, streamConsumer.lines.size());
     }
 
     /**
      * <p>testDisabled.</p>
      */
     @Test
-    public void testDisabled()
-    {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( "AB\nCE\nEF".getBytes() );
+    public void testDisabled() {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("AB\nCE\nEF".getBytes());
         TestConsumer streamConsumer = new TestConsumer();
-        StreamPumper streamPumper = new StreamPumper( byteArrayInputStream, streamConsumer );
+        StreamPumper streamPumper = new StreamPumper(byteArrayInputStream, streamConsumer);
         streamPumper.disable();
         streamPumper.run();
-        assertEquals( 0, streamConsumer.lines.size() );
+        assertEquals(0, streamConsumer.lines.size());
     }
 }

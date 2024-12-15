@@ -16,14 +16,14 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 import java.util.Locale;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test string utils.
@@ -32,287 +32,266 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class StringUtilsTest
-{
+public class StringUtilsTest {
 
     /**
      * <p>testIsEmpty.</p>
      */
     @Test
-    public void testIsEmpty()
-    {
-        assertEquals( true, StringUtils.isEmpty( null ) );
-        assertEquals( true, StringUtils.isEmpty( "" ) );
-        assertEquals( false, StringUtils.isEmpty( " " ) );
-        assertEquals( false, StringUtils.isEmpty( "foo" ) );
-        assertEquals( false, StringUtils.isEmpty( "  foo  " ) );
+    public void testIsEmpty() {
+        assertEquals(true, StringUtils.isEmpty(null));
+        assertEquals(true, StringUtils.isEmpty(""));
+        assertEquals(false, StringUtils.isEmpty(" "));
+        assertEquals(false, StringUtils.isEmpty("foo"));
+        assertEquals(false, StringUtils.isEmpty("  foo  "));
     }
 
     /**
      * <p>testIsNotEmpty.</p>
      */
     @Test
-    public void testIsNotEmpty()
-    {
-        assertEquals( false, StringUtils.isNotEmpty( null ) );
-        assertEquals( false, StringUtils.isNotEmpty( "" ) );
-        assertEquals( true, StringUtils.isNotEmpty( " " ) );
-        assertEquals( true, StringUtils.isNotEmpty( "foo" ) );
-        assertEquals( true, StringUtils.isNotEmpty( "  foo  " ) );
+    public void testIsNotEmpty() {
+        assertEquals(false, StringUtils.isNotEmpty(null));
+        assertEquals(false, StringUtils.isNotEmpty(""));
+        assertEquals(true, StringUtils.isNotEmpty(" "));
+        assertEquals(true, StringUtils.isNotEmpty("foo"));
+        assertEquals(true, StringUtils.isNotEmpty("  foo  "));
     }
 
     @Test
-    public void testIsNotEmptyNegatesIsEmpty()
-    {
-        assertEquals( !StringUtils.isEmpty( null ), StringUtils.isNotEmpty( null ) );
-        assertEquals( !StringUtils.isEmpty( "" ), StringUtils.isNotEmpty( "" ) );
-        assertEquals( !StringUtils.isEmpty( " " ), StringUtils.isNotEmpty( " " ) );
-        assertEquals( !StringUtils.isEmpty( "foo" ), StringUtils.isNotEmpty( "foo" ) );
-        assertEquals( !StringUtils.isEmpty( "  foo  " ), StringUtils.isNotEmpty( "  foo  " ) );
+    public void testIsNotEmptyNegatesIsEmpty() {
+        assertEquals(!StringUtils.isEmpty(null), StringUtils.isNotEmpty(null));
+        assertEquals(!StringUtils.isEmpty(""), StringUtils.isNotEmpty(""));
+        assertEquals(!StringUtils.isEmpty(" "), StringUtils.isNotEmpty(" "));
+        assertEquals(!StringUtils.isEmpty("foo"), StringUtils.isNotEmpty("foo"));
+        assertEquals(!StringUtils.isEmpty("  foo  "), StringUtils.isNotEmpty("  foo  "));
     }
 
     /**
      * <p>testIsBlank.</p>
      */
     @Test
-    public void testIsBlank()
-    {
-        assertEquals( true, StringUtils.isBlank( null ) );
-        assertEquals( true, StringUtils.isBlank( "" ) );
-        assertEquals( true, StringUtils.isBlank( " \t\r\n" ) );
-        assertEquals( false, StringUtils.isBlank( "foo" ) );
-        assertEquals( false, StringUtils.isBlank( "  foo  " ) );
+    public void testIsBlank() {
+        assertEquals(true, StringUtils.isBlank(null));
+        assertEquals(true, StringUtils.isBlank(""));
+        assertEquals(true, StringUtils.isBlank(" \t\r\n"));
+        assertEquals(false, StringUtils.isBlank("foo"));
+        assertEquals(false, StringUtils.isBlank("  foo  "));
     }
 
     /**
      * <p>testIsNotBlank.</p>
      */
     @Test
-    public void testIsNotBlank()
-    {
-        assertEquals( false, StringUtils.isNotBlank( null ) );
-        assertEquals( false, StringUtils.isNotBlank( "" ) );
-        assertEquals( false, StringUtils.isNotBlank( " \t\r\n" ) );
-        assertEquals( true, StringUtils.isNotBlank( "foo" ) );
-        assertEquals( true, StringUtils.isNotBlank( "  foo  " ) );
+    public void testIsNotBlank() {
+        assertEquals(false, StringUtils.isNotBlank(null));
+        assertEquals(false, StringUtils.isNotBlank(""));
+        assertEquals(false, StringUtils.isNotBlank(" \t\r\n"));
+        assertEquals(true, StringUtils.isNotBlank("foo"));
+        assertEquals(true, StringUtils.isNotBlank("  foo  "));
     }
 
     /**
      * <p>testCapitalizeFirstLetter.</p>
      */
     @Test
-    public void testCapitalizeFirstLetter()
-    {
-        assertEquals( "Id", StringUtils.capitalizeFirstLetter( "id" ) );
-        assertEquals( "Id", StringUtils.capitalizeFirstLetter( "Id" ) );
+    public void testCapitalizeFirstLetter() {
+        assertEquals("Id", StringUtils.capitalizeFirstLetter("id"));
+        assertEquals("Id", StringUtils.capitalizeFirstLetter("Id"));
     }
 
     /**
      * <p>testCapitalizeFirstLetterTurkish.</p>
      */
     @Test
-    public void testCapitalizeFirstLetterTurkish()
-    {
+    public void testCapitalizeFirstLetterTurkish() {
         Locale l = Locale.getDefault();
-        Locale.setDefault( new Locale( "tr" ) );
-        assertEquals( "Id", StringUtils.capitalizeFirstLetter( "id" ) );
-        assertEquals( "Id", StringUtils.capitalizeFirstLetter( "Id" ) );
-        Locale.setDefault( l );
+        Locale.setDefault(new Locale("tr"));
+        assertEquals("Id", StringUtils.capitalizeFirstLetter("id"));
+        assertEquals("Id", StringUtils.capitalizeFirstLetter("Id"));
+        Locale.setDefault(l);
     }
 
     /**
      * <p>testLowerCaseFirstLetter.</p>
      */
     @Test
-    public void testLowerCaseFirstLetter()
-    {
-        assertEquals( "id", StringUtils.lowercaseFirstLetter( "id" ) );
-        assertEquals( "id", StringUtils.lowercaseFirstLetter( "Id" ) );
+    public void testLowerCaseFirstLetter() {
+        assertEquals("id", StringUtils.lowercaseFirstLetter("id"));
+        assertEquals("id", StringUtils.lowercaseFirstLetter("Id"));
     }
 
     /**
      * <p>testLowerCaseFirstLetterTurkish.</p>
      */
     @Test
-    public void testLowerCaseFirstLetterTurkish()
-    {
+    public void testLowerCaseFirstLetterTurkish() {
         Locale l = Locale.getDefault();
-        Locale.setDefault( new Locale( "tr" ) );
-        assertEquals( "id", StringUtils.lowercaseFirstLetter( "id" ) );
-        assertEquals( "id", StringUtils.lowercaseFirstLetter( "Id" ) );
-        Locale.setDefault( l );
+        Locale.setDefault(new Locale("tr"));
+        assertEquals("id", StringUtils.lowercaseFirstLetter("id"));
+        assertEquals("id", StringUtils.lowercaseFirstLetter("Id"));
+        Locale.setDefault(l);
     }
 
     /**
      * <p>testRemoveAndHump.</p>
      */
     @Test
-    public void testRemoveAndHump()
-    {
-        assertEquals( "Id", StringUtils.removeAndHump( "id", "-" ) );
-        assertEquals( "SomeId", StringUtils.removeAndHump( "some-id", "-" ) );
+    public void testRemoveAndHump() {
+        assertEquals("Id", StringUtils.removeAndHump("id", "-"));
+        assertEquals("SomeId", StringUtils.removeAndHump("some-id", "-"));
     }
 
     /**
      * <p>testRemoveAndHumpTurkish.</p>
      */
     @Test
-    public void testRemoveAndHumpTurkish()
-    {
+    public void testRemoveAndHumpTurkish() {
         Locale l = Locale.getDefault();
-        Locale.setDefault( new Locale( "tr" ) );
-        assertEquals( "Id", StringUtils.removeAndHump( "id", "-" ) );
-        assertEquals( "SomeId", StringUtils.removeAndHump( "some-id", "-" ) );
-        Locale.setDefault( l );
+        Locale.setDefault(new Locale("tr"));
+        assertEquals("Id", StringUtils.removeAndHump("id", "-"));
+        assertEquals("SomeId", StringUtils.removeAndHump("some-id", "-"));
+        Locale.setDefault(l);
     }
 
     /**
      * <p>testQuote_EscapeEmbeddedSingleQuotes.</p>
      */
     @Test
-    public void testQuote_EscapeEmbeddedSingleQuotes()
-    {
+    public void testQuote_EscapeEmbeddedSingleQuotes() {
         String src = "This \'is a\' test";
         String check = "\'This \\\'is a\\\' test\'";
 
-        char[] escaped = { '\'', '\"' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, '\\', false );
+        char[] escaped = {'\'', '\"'};
+        String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
 
-        assertEquals( check, result );
+        assertEquals(check, result);
     }
 
     /**
      * <p>testQuote_EscapeEmbeddedSingleQuotesWithPattern.</p>
      */
     @Test
-    public void testQuote_EscapeEmbeddedSingleQuotesWithPattern()
-    {
+    public void testQuote_EscapeEmbeddedSingleQuotesWithPattern() {
         String src = "This \'is a\' test";
         String check = "\'This pre'postis apre'post test\'";
 
-        char[] escaped = { '\'', '\"' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, new char[] { ' ' }, "pre%spost", false );
+        char[] escaped = {'\'', '\"'};
+        String result = StringUtils.quoteAndEscape(src, '\'', escaped, new char[] {' '}, "pre%spost", false);
 
-        assertEquals( check, result );
+        assertEquals(check, result);
     }
 
     /**
      * <p>testQuote_EscapeEmbeddedDoubleQuotesAndSpaces.</p>
      */
     @Test
-    public void testQuote_EscapeEmbeddedDoubleQuotesAndSpaces()
-    {
+    public void testQuote_EscapeEmbeddedDoubleQuotesAndSpaces() {
         String src = "This \"is a\" test";
         String check = "\'This\\ \\\"is\\ a\\\"\\ test\'";
 
-        char[] escaped = { '\'', '\"', ' ' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, '\\', false );
+        char[] escaped = {'\'', '\"', ' '};
+        String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
 
-        assertEquals( check, result );
+        assertEquals(check, result);
     }
 
     /**
      * <p>testQuote_DontQuoteIfUnneeded.</p>
      */
     @Test
-    public void testQuote_DontQuoteIfUnneeded()
-    {
+    public void testQuote_DontQuoteIfUnneeded() {
         String src = "ThisIsATest";
 
-        char[] escaped = { '\'', '\"' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, '\\', false );
+        char[] escaped = {'\'', '\"'};
+        String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
 
-        assertEquals( src, result );
+        assertEquals(src, result);
     }
 
     /**
      * <p>testQuote_WrapWithSingleQuotes.</p>
      */
     @Test
-    public void testQuote_WrapWithSingleQuotes()
-    {
+    public void testQuote_WrapWithSingleQuotes() {
         String src = "This is a test";
         String check = "\'This is a test\'";
 
-        char[] escaped = { '\'', '\"' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, '\\', false );
+        char[] escaped = {'\'', '\"'};
+        String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
 
-        assertEquals( check, result );
+        assertEquals(check, result);
     }
 
     /**
      * <p>testQuote_PreserveExistingQuotes.</p>
      */
     @Test
-    public void testQuote_PreserveExistingQuotes()
-    {
+    public void testQuote_PreserveExistingQuotes() {
         String src = "\'This is a test\'";
 
-        char[] escaped = { '\'', '\"' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, '\\', false );
+        char[] escaped = {'\'', '\"'};
+        String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', false);
 
-        assertEquals( src, result );
+        assertEquals(src, result);
     }
 
     /**
      * <p>testQuote_WrapExistingQuotesWhenForceIsTrue.</p>
      */
     @Test
-    public void testQuote_WrapExistingQuotesWhenForceIsTrue()
-    {
+    public void testQuote_WrapExistingQuotesWhenForceIsTrue() {
         String src = "\'This is a test\'";
         String check = "\'\\\'This is a test\\\'\'";
 
-        char[] escaped = { '\'', '\"' };
-        String result = StringUtils.quoteAndEscape( src, '\'', escaped, '\\', true );
+        char[] escaped = {'\'', '\"'};
+        String result = StringUtils.quoteAndEscape(src, '\'', escaped, '\\', true);
 
-        assertEquals( check, result );
+        assertEquals(check, result);
     }
 
     /**
      * <p>testQuote_ShortVersion_SingleQuotesPreserved.</p>
      */
     @Test
-    public void testQuote_ShortVersion_SingleQuotesPreserved()
-    {
+    public void testQuote_ShortVersion_SingleQuotesPreserved() {
         String src = "\'This is a test\'";
 
-        String result = StringUtils.quoteAndEscape( src, '\'' );
+        String result = StringUtils.quoteAndEscape(src, '\'');
 
-        assertEquals( src, result );
+        assertEquals(src, result);
     }
 
     /**
      * <p>testSplit.</p>
      */
     @Test
-    public void testSplit()
-    {
+    public void testSplit() {
         String[] tokens;
 
-        tokens = StringUtils.split( "", ", " );
-        assertNotNull( tokens );
-        assertEquals( Arrays.asList( new String[0] ), Arrays.asList( tokens ) );
+        tokens = StringUtils.split("", ", ");
+        assertNotNull(tokens);
+        assertEquals(Arrays.asList(new String[0]), Arrays.asList(tokens));
 
-        tokens = StringUtils.split( ", ,,,   ,", ", " );
-        assertNotNull( tokens );
-        assertEquals( Arrays.asList( new String[0] ), Arrays.asList( tokens ) );
+        tokens = StringUtils.split(", ,,,   ,", ", ");
+        assertNotNull(tokens);
+        assertEquals(Arrays.asList(new String[0]), Arrays.asList(tokens));
 
-        tokens = StringUtils.split( "this", ", " );
-        assertNotNull( tokens );
-        assertEquals( Arrays.asList( new String[] { "this" } ), Arrays.asList( tokens ) );
+        tokens = StringUtils.split("this", ", ");
+        assertNotNull(tokens);
+        assertEquals(Arrays.asList(new String[] {"this"}), Arrays.asList(tokens));
 
-        tokens = StringUtils.split( "this is a test", ", " );
-        assertNotNull( tokens );
-        assertEquals( Arrays.asList( new String[] { "this", "is", "a", "test" } ), Arrays.asList( tokens ) );
+        tokens = StringUtils.split("this is a test", ", ");
+        assertNotNull(tokens);
+        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test"}), Arrays.asList(tokens));
 
-        tokens = StringUtils.split( "   this   is   a   test  ", ", " );
-        assertNotNull( tokens );
-        assertEquals( Arrays.asList( new String[] { "this", "is", "a", "test" } ), Arrays.asList( tokens ) );
+        tokens = StringUtils.split("   this   is   a   test  ", ", ");
+        assertNotNull(tokens);
+        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test"}), Arrays.asList(tokens));
 
-        tokens = StringUtils.split( "this is a test, really", ", " );
-        assertNotNull( tokens );
-        assertEquals( Arrays.asList( new String[] { "this", "is", "a", "test", "really" } ), Arrays.asList( tokens ) );
+        tokens = StringUtils.split("this is a test, really", ", ");
+        assertNotNull(tokens);
+        assertEquals(Arrays.asList(new String[] {"this", "is", "a", "test", "really"}), Arrays.asList(tokens));
     }
 
     /**
@@ -321,18 +300,15 @@ public class StringUtilsTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testRemoveDuplicateWhitespace()
-        throws Exception
-    {
+    public void testRemoveDuplicateWhitespace() throws Exception {
         String s = "this     is     test   ";
-        assertEquals( "this is test ", StringUtils.removeDuplicateWhitespace( s ) );
+        assertEquals("this is test ", StringUtils.removeDuplicateWhitespace(s));
         s = "this  \r\n   is \n  \r  test   ";
-        assertEquals( "this is test ", StringUtils.removeDuplicateWhitespace( s ) );
+        assertEquals("this is test ", StringUtils.removeDuplicateWhitespace(s));
         s = "     this  \r\n   is \n  \r  test";
-        assertEquals( " this is test", StringUtils.removeDuplicateWhitespace( s ) );
+        assertEquals(" this is test", StringUtils.removeDuplicateWhitespace(s));
         s = "this  \r\n   is \n  \r  test   \n ";
-        assertEquals( "this is test ", StringUtils.removeDuplicateWhitespace( s ) );
-
+        assertEquals("this is test ", StringUtils.removeDuplicateWhitespace(s));
     }
 
     /**
@@ -341,22 +317,17 @@ public class StringUtilsTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testUnifyLineSeparators()
-        throws Exception
-    {
+    public void testUnifyLineSeparators() throws Exception {
         String s = "this\r\nis\na\r\ntest";
 
-        try
-        {
-            StringUtils.unifyLineSeparators( s, "abs" );
-            assertTrue( "Exception NOT catched", false );
-        }
-        catch ( IllegalArgumentException e )
-        {
-            assertTrue( "Exception catched", true );
+        try {
+            StringUtils.unifyLineSeparators(s, "abs");
+            assertTrue("Exception NOT catched", false);
+        } catch (IllegalArgumentException e) {
+            assertTrue("Exception catched", true);
         }
 
-        assertEquals( "this\nis\na\ntest", StringUtils.unifyLineSeparators( s, "\n" ) );
-        assertEquals( "this\r\nis\r\na\r\ntest", StringUtils.unifyLineSeparators( s, "\r\n" ) );
+        assertEquals("this\nis\na\ntest", StringUtils.unifyLineSeparators(s, "\n"));
+        assertEquals("this\r\nis\r\na\r\ntest", StringUtils.unifyLineSeparators(s, "\r\n"));
     }
 }

@@ -16,12 +16,6 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeTrue;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -40,6 +34,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
+
 /**
  * Base class for testcases doing tests with files.
  *
@@ -47,27 +47,21 @@ import org.junit.rules.TestName;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class DirectoryScannerTest
-    extends FileBasedTestCase
-{
+public class DirectoryScannerTest extends FileBasedTestCase {
     @Rule
     public TestName name = new TestName();
-    
+
     private static String testDir = getTestDirectory().getPath();
 
     /**
      * <p>setUp.</p>
      */
     @Before
-    public void setUp()
-    {
-        try
-        {
-            FileUtils.deleteDirectory( testDir );
-        }
-        catch ( IOException e )
-        {
-            fail( "Could not delete directory " + testDir );
+    public void setUp() {
+        try {
+            FileUtils.deleteDirectory(testDir);
+        } catch (IOException e) {
+            fail("Could not delete directory " + testDir);
         }
     }
 
@@ -78,28 +72,23 @@ public class DirectoryScannerTest
      * @throws java.net.URISyntaxException if any.
      */
     @Test
-    public void testCrossPlatformIncludesString()
-        throws IOException, URISyntaxException
-    {
+    public void testCrossPlatformIncludesString() throws IOException, URISyntaxException {
         DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( getTestResourcesDir() + File.separator + "directory-scanner" ).getCanonicalFile() );
+        ds.setBasedir(new File(getTestResourcesDir() + File.separator + "directory-scanner").getCanonicalFile());
 
         String fs;
-        if ( File.separatorChar == '/' )
-        {
+        if (File.separatorChar == '/') {
             fs = "\\";
-        }
-        else
-        {
+        } else {
             fs = "/";
         }
 
-        ds.setIncludes( new String[] { "foo" + fs } );
+        ds.setIncludes(new String[] {"foo" + fs});
         ds.addDefaultExcludes();
         ds.scan();
 
         String[] files = ds.getIncludedFiles();
-        assertEquals( 1, files.length );
+        assertEquals(1, files.length);
     }
 
     /**
@@ -109,94 +98,77 @@ public class DirectoryScannerTest
      * @throws java.net.URISyntaxException if any.
      */
     @Test
-    public void testCrossPlatformExcludesString()
-        throws IOException, URISyntaxException
-    {
+    public void testCrossPlatformExcludesString() throws IOException, URISyntaxException {
         DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( getTestResourcesDir() + File.separator + "directory-scanner" ).getCanonicalFile() );
-        ds.setIncludes( new String[] { "**" } );
+        ds.setBasedir(new File(getTestResourcesDir() + File.separator + "directory-scanner").getCanonicalFile());
+        ds.setIncludes(new String[] {"**"});
 
         String fs;
-        if ( File.separatorChar == '/' )
-        {
+        if (File.separatorChar == '/') {
             fs = "\\";
-        }
-        else
-        {
+        } else {
             fs = "/";
         }
 
-        ds.setExcludes( new String[] { "foo" + fs } );
+        ds.setExcludes(new String[] {"foo" + fs});
         ds.addDefaultExcludes();
         ds.scan();
 
         String[] files = ds.getIncludedFiles();
-        assertEquals( 0, files.length );
+        assertEquals(0, files.length);
     }
 
-    private String getTestResourcesDir()
-        throws URISyntaxException
-    {
+    private String getTestResourcesDir() throws URISyntaxException {
         ClassLoader cloader = Thread.currentThread().getContextClassLoader();
-        URL resource = cloader.getResource( "test.txt" );
-        if ( resource == null )
-        {
-            fail( "Cannot locate test-resources directory containing 'test.txt' in the classloader." );
+        URL resource = cloader.getResource("test.txt");
+        if (resource == null) {
+            fail("Cannot locate test-resources directory containing 'test.txt' in the classloader.");
         }
 
-        File file = new File( new URI( resource.toExternalForm() ).normalize().getPath() );
+        File file = new File(new URI(resource.toExternalForm()).normalize().getPath());
 
         return file.getParent();
     }
 
-    private void createTestFiles()
-        throws IOException
-    {
-        FileUtils.mkdir( testDir );
-        this.createFile( new File( testDir + "/scanner1.dat" ), 0 );
-        this.createFile( new File( testDir + "/scanner2.dat" ), 0 );
-        this.createFile( new File( testDir + "/scanner3.dat" ), 0 );
-        this.createFile( new File( testDir + "/scanner4.dat" ), 0 );
-        this.createFile( new File( testDir + "/scanner5.dat" ), 0 );
+    private void createTestFiles() throws IOException {
+        FileUtils.mkdir(testDir);
+        this.createFile(new File(testDir + "/scanner1.dat"), 0);
+        this.createFile(new File(testDir + "/scanner2.dat"), 0);
+        this.createFile(new File(testDir + "/scanner3.dat"), 0);
+        this.createFile(new File(testDir + "/scanner4.dat"), 0);
+        this.createFile(new File(testDir + "/scanner5.dat"), 0);
     }
-    
+
     /**
      * Check if 'src/test/resources/symlinks/src/sym*' test files (start with 'sym') exist and are symlinks.<br>
      * On some OS (like Windows 10), the 'git clone' requires to be executed with admin permissions and the
      * 'core.symlinks=true' git option.
-     * 
+     *
      * @return true If files here and symlinks, false otherwise
      */
-    private boolean checkTestFilesSymlinks()
-    {
-        File symlinksDirectory = new File( "src/test/resources/symlinks/src" );
-        try
-        {
+    private boolean checkTestFilesSymlinks() {
+        File symlinksDirectory = new File("src/test/resources/symlinks/src");
+        try {
             List<String> symlinks =
-                FileUtils.getFileAndDirectoryNames( symlinksDirectory, "sym*", null, true, true, true, true );
-            if ( symlinks.isEmpty() )
-            {
-                throw new IOException( "Symlinks files/directories are not present" );
+                    FileUtils.getFileAndDirectoryNames(symlinksDirectory, "sym*", null, true, true, true, true);
+            if (symlinks.isEmpty()) {
+                throw new IOException("Symlinks files/directories are not present");
             }
-            for ( String symLink : symlinks )
-            {
-                if ( !Files.isSymbolicLink( Paths.get( symLink ) ) )
-                {
-                    throw new IOException( String.format( "Path is not a symlink: %s", symLink ) );
+            for (String symLink : symlinks) {
+                if (!Files.isSymbolicLink(Paths.get(symLink))) {
+                    throw new IOException(String.format("Path is not a symlink: %s", symLink));
                 }
             }
             return true;
-        }
-        catch ( IOException e )
-        {
-            System.err.println( String.format( "The unit test '%s.%s' will be skipped, reason: %s",
-                                               this.getClass().getSimpleName(), name.getMethodName(),
-                                               e.getMessage() ) );
-            System.out.println( String.format( "This test requires symlinks files in '%s' directory.",
-                                               symlinksDirectory.getPath() ) );
-            System.out.println( "On some OS (like Windows 10), files are present only if the clone/checkout is done"
-                + " in administrator mode, and correct (symlinks and not flat file/directory)"
-                + " if symlinks option are used (for git: git clone -c core.symlinks=true [url])" );
+        } catch (IOException e) {
+            System.err.println(String.format(
+                    "The unit test '%s.%s' will be skipped, reason: %s",
+                    this.getClass().getSimpleName(), name.getMethodName(), e.getMessage()));
+            System.out.println(
+                    String.format("This test requires symlinks files in '%s' directory.", symlinksDirectory.getPath()));
+            System.out.println("On some OS (like Windows 10), files are present only if the clone/checkout is done"
+                    + " in administrator mode, and correct (symlinks and not flat file/directory)"
+                    + " if symlinks option are used (for git: git clone -c core.symlinks=true [url])");
             return false;
         }
     }
@@ -207,21 +179,18 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testGeneral()
-        throws IOException
-    {
+    public void testGeneral() throws IOException {
         this.createTestFiles();
 
         String includes = "scanner1.dat,scanner2.dat,scanner3.dat,scanner4.dat,scanner5.dat";
         String excludes = "scanner1.dat,scanner2.dat";
 
-        List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
+        List<File> fileNames = FileUtils.getFiles(new File(testDir), includes, excludes, false);
 
-        assertEquals( "Wrong number of results.", 3, fileNames.size() );
-        assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
-        assertTrue( "4 not found.", fileNames.contains( new File( "scanner4.dat" ) ) );
-        assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
-
+        assertEquals("Wrong number of results.", 3, fileNames.size());
+        assertTrue("3 not found.", fileNames.contains(new File("scanner3.dat")));
+        assertTrue("4 not found.", fileNames.contains(new File("scanner4.dat")));
+        assertTrue("5 not found.", fileNames.contains(new File("scanner5.dat")));
     }
 
     /**
@@ -230,100 +199,99 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testIncludesExcludesWithWhiteSpaces()
-        throws IOException
-    {
+    public void testIncludesExcludesWithWhiteSpaces() throws IOException {
         this.createTestFiles();
 
         String includes = "scanner1.dat,\n  \n,scanner2.dat  \n\r, scanner3.dat\n, \tscanner4.dat,scanner5.dat\n,";
 
         String excludes = "scanner1.dat,\n  \n,scanner2.dat  \n\r,,";
 
-        List<File> fileNames = FileUtils.getFiles( new File( testDir ), includes, excludes, false );
+        List<File> fileNames = FileUtils.getFiles(new File(testDir), includes, excludes, false);
 
-        assertEquals( "Wrong number of results.", 3, fileNames.size() );
-        assertTrue( "3 not found.", fileNames.contains( new File( "scanner3.dat" ) ) );
-        assertTrue( "4 not found.", fileNames.contains( new File( "scanner4.dat" ) ) );
-        assertTrue( "5 not found.", fileNames.contains( new File( "scanner5.dat" ) ) );
+        assertEquals("Wrong number of results.", 3, fileNames.size());
+        assertTrue("3 not found.", fileNames.contains(new File("scanner3.dat")));
+        assertTrue("4 not found.", fileNames.contains(new File("scanner4.dat")));
+        assertTrue("5 not found.", fileNames.contains(new File("scanner5.dat")));
     }
 
     /**
      * <p>testFollowSymlinksFalse.</p>
      */
     @Test
-    public void testFollowSymlinksFalse()
-    {
-        assumeTrue( checkTestFilesSymlinks() );
-        
+    public void testFollowSymlinksFalse() {
+        assumeTrue(checkTestFilesSymlinks());
+
         DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
-        ds.setFollowSymlinks( false );
+        ds.setBasedir(new File("src/test/resources/symlinks/src/"));
+        ds.setFollowSymlinks(false);
         ds.scan();
-        List<String> included = Arrays.asList( ds.getIncludedFiles() );
-        assertAlwaysIncluded( included );
-        assertEquals( 9, included.size() );
-        List<String> includedDirs = Arrays.asList( ds.getIncludedDirectories() );
-        assertTrue( includedDirs.contains( "" ) ); // w00t !
-        assertTrue( includedDirs.contains( "aRegularDir" ) );
-        assertTrue( includedDirs.contains( "symDir" ) );
-        assertTrue( includedDirs.contains( "symLinkToDirOnTheOutside" ) );
-        assertTrue( includedDirs.contains( "targetDir" ) );
-        assertEquals( 5, includedDirs.size() );
+        List<String> included = Arrays.asList(ds.getIncludedFiles());
+        assertAlwaysIncluded(included);
+        assertEquals(9, included.size());
+        List<String> includedDirs = Arrays.asList(ds.getIncludedDirectories());
+        assertTrue(includedDirs.contains("")); // w00t !
+        assertTrue(includedDirs.contains("aRegularDir"));
+        assertTrue(includedDirs.contains("symDir"));
+        assertTrue(includedDirs.contains("symLinkToDirOnTheOutside"));
+        assertTrue(includedDirs.contains("targetDir"));
+        assertEquals(5, includedDirs.size());
     }
 
-    private void assertAlwaysIncluded( List<String> included )
-    {
-        assertTrue( included.contains( "aRegularDir" + File.separator + "aRegularFile.txt" ) );
-        assertTrue( included.contains( "targetDir" + File.separator + "targetFile.txt" ) );
-        assertTrue( included.contains( "fileR.txt" ) );
-        assertTrue( included.contains( "fileW.txt" ) );
-        assertTrue( included.contains( "fileX.txt" ) );
-        assertTrue( included.contains( "symR" ) );
-        assertTrue( included.contains( "symW" ) );
-        assertTrue( included.contains( "symX" ) );
-        assertTrue( included.contains( "symLinkToFileOnTheOutside" ) );
+    private void assertAlwaysIncluded(List<String> included) {
+        assertTrue(included.contains("aRegularDir" + File.separator + "aRegularFile.txt"));
+        assertTrue(included.contains("targetDir" + File.separator + "targetFile.txt"));
+        assertTrue(included.contains("fileR.txt"));
+        assertTrue(included.contains("fileW.txt"));
+        assertTrue(included.contains("fileX.txt"));
+        assertTrue(included.contains("symR"));
+        assertTrue(included.contains("symW"));
+        assertTrue(included.contains("symX"));
+        assertTrue(included.contains("symLinkToFileOnTheOutside"));
     }
 
     /**
      * <p>testFollowSymlinks.</p>
      */
     @Test
-    public void testFollowSymlinks()
-    {
-        assumeTrue( checkTestFilesSymlinks() );
-        
-        DirectoryScanner ds = new DirectoryScanner();
-        ds.setBasedir( new File( "src/test/resources/symlinks/src/" ) );
-        ds.setFollowSymlinks( true );
-        ds.scan();
-        List<String> included = Arrays.asList( ds.getIncludedFiles() );
-        assertAlwaysIncluded( included );
-        assertTrue( included.contains( "symDir" + File.separator + "targetFile.txt" ) );
-        assertTrue( included.contains( "symLinkToDirOnTheOutside" + File.separator + "FileInDirOnTheOutside.txt" ) );
-        assertEquals( 11, included.size() );
+    public void testFollowSymlinks() {
+        assumeTrue(checkTestFilesSymlinks());
 
-        List<String> includedDirs = Arrays.asList( ds.getIncludedDirectories() );
-        assertTrue( includedDirs.contains( "" ) ); // w00t !
-        assertTrue( includedDirs.contains( "aRegularDir" ) );
-        assertTrue( includedDirs.contains( "symDir" ) );
-        assertTrue( includedDirs.contains( "symLinkToDirOnTheOutside" ) );
-        assertTrue( includedDirs.contains( "targetDir" ) );
-        assertEquals( 5, includedDirs.size() );
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir(new File("src/test/resources/symlinks/src/"));
+        ds.setFollowSymlinks(true);
+        ds.scan();
+        List<String> included = Arrays.asList(ds.getIncludedFiles());
+        assertAlwaysIncluded(included);
+        assertTrue(included.contains("symDir" + File.separator + "targetFile.txt"));
+        assertTrue(included.contains("symLinkToDirOnTheOutside" + File.separator + "FileInDirOnTheOutside.txt"));
+        assertEquals(11, included.size());
+
+        List<String> includedDirs = Arrays.asList(ds.getIncludedDirectories());
+        assertTrue(includedDirs.contains("")); // w00t !
+        assertTrue(includedDirs.contains("aRegularDir"));
+        assertTrue(includedDirs.contains("symDir"));
+        assertTrue(includedDirs.contains("symLinkToDirOnTheOutside"));
+        assertTrue(includedDirs.contains("targetDir"));
+        assertEquals(5, includedDirs.size());
     }
 
-    private void createTestDirectories()
-        throws IOException
-    {
-        FileUtils.mkdir( testDir + File.separator + "directoryTest" );
-        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "testDir123" );
-        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "test_dir_123" );
-        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "test-dir-123" );
-        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "testDir123"
-            + File.separator + "file1.dat" ), 0 );
-        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "test_dir_123"
-            + File.separator + "file1.dat" ), 0 );
-        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "test-dir-123"
-            + File.separator + "file1.dat" ), 0 );
+    private void createTestDirectories() throws IOException {
+        FileUtils.mkdir(testDir + File.separator + "directoryTest");
+        FileUtils.mkdir(testDir + File.separator + "directoryTest" + File.separator + "testDir123");
+        FileUtils.mkdir(testDir + File.separator + "directoryTest" + File.separator + "test_dir_123");
+        FileUtils.mkdir(testDir + File.separator + "directoryTest" + File.separator + "test-dir-123");
+        this.createFile(
+                new File(testDir + File.separator + "directoryTest" + File.separator + "testDir123" + File.separator
+                        + "file1.dat"),
+                0);
+        this.createFile(
+                new File(testDir + File.separator + "directoryTest" + File.separator + "test_dir_123" + File.separator
+                        + "file1.dat"),
+                0);
+        this.createFile(
+                new File(testDir + File.separator + "directoryTest" + File.separator + "test-dir-123" + File.separator
+                        + "file1.dat"),
+                0);
     }
 
     /**
@@ -332,22 +300,20 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testDirectoriesWithHyphens()
-        throws IOException
-    {
+    public void testDirectoriesWithHyphens() throws IOException {
         this.createTestDirectories();
 
         DirectoryScanner ds = new DirectoryScanner();
-        String[] includes = { "**/*.dat" };
-        String[] excludes = { "" };
-        ds.setIncludes( includes );
-        ds.setExcludes( excludes );
-        ds.setBasedir( new File( testDir + File.separator + "directoryTest" ) );
-        ds.setCaseSensitive( true );
+        String[] includes = {"**/*.dat"};
+        String[] excludes = {""};
+        ds.setIncludes(includes);
+        ds.setExcludes(excludes);
+        ds.setBasedir(new File(testDir + File.separator + "directoryTest"));
+        ds.setCaseSensitive(true);
         ds.scan();
 
         String[] files = ds.getIncludedFiles();
-        assertEquals( "Wrong number of results.", 3, files.length );
+        assertEquals("Wrong number of results.", 3, files.length);
     }
 
     /**
@@ -356,38 +322,36 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testAntExcludesOverrideIncludes()
-        throws IOException
-    {
+    public void testAntExcludesOverrideIncludes() throws IOException {
         printTestHeader();
 
-        File dir = new File( testDir, "regex-dir" );
+        File dir = new File(testDir, "regex-dir");
         dir.mkdirs();
 
-        String[] excludedPaths = { "target/foo.txt" };
+        String[] excludedPaths = {"target/foo.txt"};
 
-        createFiles( dir, excludedPaths );
+        createFiles(dir, excludedPaths);
 
-        String[] includedPaths = { "src/main/resources/project/target/foo.txt" };
+        String[] includedPaths = {"src/main/resources/project/target/foo.txt"};
 
-        createFiles( dir, includedPaths );
+        createFiles(dir, includedPaths);
 
         DirectoryScanner ds = new DirectoryScanner();
 
-        String[] includes = { "**/target/*" };
-        String[] excludes = { "target/*" };
+        String[] includes = {"**/target/*"};
+        String[] excludes = {"target/*"};
 
         // This doesn't work, since excluded patterns refine included ones, meaning they operate on
         // the list of paths that passed the included patterns, and can override them.
         // String[] includes = {"**src/**/target/**/*" };
         // String[] excludes = { "**/target/**/*" };
 
-        ds.setIncludes( includes );
-        ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+        ds.setIncludes(includes);
+        ds.setExcludes(excludes);
+        ds.setBasedir(dir);
         ds.scan();
 
-        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+        assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
     }
 
     /**
@@ -396,39 +360,37 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testAntExcludesOverrideIncludesWithExplicitAntPrefix()
-        throws IOException
-    {
+    public void testAntExcludesOverrideIncludesWithExplicitAntPrefix() throws IOException {
         printTestHeader();
 
-        File dir = new File( testDir, "regex-dir" );
+        File dir = new File(testDir, "regex-dir");
         dir.mkdirs();
 
-        String[] excludedPaths = { "target/foo.txt" };
+        String[] excludedPaths = {"target/foo.txt"};
 
-        createFiles( dir, excludedPaths );
+        createFiles(dir, excludedPaths);
 
-        String[] includedPaths = { "src/main/resources/project/target/foo.txt" };
+        String[] includedPaths = {"src/main/resources/project/target/foo.txt"};
 
-        createFiles( dir, includedPaths );
+        createFiles(dir, includedPaths);
 
         DirectoryScanner ds = new DirectoryScanner();
 
-        String[] includes =
-            { SelectorUtils.ANT_HANDLER_PREFIX + "**/target/**/*" + SelectorUtils.PATTERN_HANDLER_SUFFIX };
-        String[] excludes = { SelectorUtils.ANT_HANDLER_PREFIX + "target/**/*" + SelectorUtils.PATTERN_HANDLER_SUFFIX };
+        String[] includes = {SelectorUtils.ANT_HANDLER_PREFIX + "**/target/**/*" + SelectorUtils.PATTERN_HANDLER_SUFFIX
+        };
+        String[] excludes = {SelectorUtils.ANT_HANDLER_PREFIX + "target/**/*" + SelectorUtils.PATTERN_HANDLER_SUFFIX};
 
         // This doesn't work, since excluded patterns refine included ones, meaning they operate on
         // the list of paths that passed the included patterns, and can override them.
         // String[] includes = {"**src/**/target/**/*" };
         // String[] excludes = { "**/target/**/*" };
 
-        ds.setIncludes( includes );
-        ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+        ds.setIncludes(includes);
+        ds.setExcludes(excludes);
+        ds.setBasedir(dir);
         ds.scan();
 
-        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+        assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
     }
 
     /**
@@ -437,21 +399,19 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testRegexIncludeWithExcludedPrefixDirs()
-        throws IOException
-    {
+    public void testRegexIncludeWithExcludedPrefixDirs() throws IOException {
         printTestHeader();
 
-        File dir = new File( testDir, "regex-dir" );
+        File dir = new File(testDir, "regex-dir");
         dir.mkdirs();
 
-        String[] excludedPaths = { "src/main/foo.txt" };
+        String[] excludedPaths = {"src/main/foo.txt"};
 
-        createFiles( dir, excludedPaths );
+        createFiles(dir, excludedPaths);
 
-        String[] includedPaths = { "src/main/resources/project/target/foo.txt" };
+        String[] includedPaths = {"src/main/resources/project/target/foo.txt"};
 
-        createFiles( dir, includedPaths );
+        createFiles(dir, includedPaths);
 
         String regex = ".+/target.*";
 
@@ -459,12 +419,12 @@ public class DirectoryScannerTest
 
         String includeExpr = SelectorUtils.REGEX_HANDLER_PREFIX + regex + SelectorUtils.PATTERN_HANDLER_SUFFIX;
 
-        String[] includes = { includeExpr };
-        ds.setIncludes( includes );
-        ds.setBasedir( dir );
+        String[] includes = {includeExpr};
+        ds.setIncludes(includes);
+        ds.setBasedir(dir);
         ds.scan();
 
-        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+        assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
     }
 
     /**
@@ -473,29 +433,24 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testRegexExcludeWithNegativeLookahead()
-        throws IOException
-    {
+    public void testRegexExcludeWithNegativeLookahead() throws IOException {
         printTestHeader();
 
-        File dir = new File( testDir, "regex-dir" );
-        try
-        {
-            FileUtils.deleteDirectory( dir );
-        }
-        catch ( IOException e )
-        {
+        File dir = new File(testDir, "regex-dir");
+        try {
+            FileUtils.deleteDirectory(dir);
+        } catch (IOException e) {
         }
 
         dir.mkdirs();
 
-        String[] excludedPaths = { "target/foo.txt" };
+        String[] excludedPaths = {"target/foo.txt"};
 
-        createFiles( dir, excludedPaths );
+        createFiles(dir, excludedPaths);
 
-        String[] includedPaths = { "src/main/resources/project/target/foo.txt" };
+        String[] includedPaths = {"src/main/resources/project/target/foo.txt"};
 
-        createFiles( dir, includedPaths );
+        createFiles(dir, includedPaths);
 
         String regex = "(?!.*src/).*target.*";
 
@@ -503,12 +458,12 @@ public class DirectoryScannerTest
 
         String excludeExpr = SelectorUtils.REGEX_HANDLER_PREFIX + regex + SelectorUtils.PATTERN_HANDLER_SUFFIX;
 
-        String[] excludes = { excludeExpr };
-        ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+        String[] excludes = {excludeExpr};
+        ds.setExcludes(excludes);
+        ds.setBasedir(dir);
         ds.scan();
 
-        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+        assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
     }
 
     /**
@@ -517,29 +472,24 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testRegexWithSlashInsideCharacterClass()
-        throws IOException
-    {
+    public void testRegexWithSlashInsideCharacterClass() throws IOException {
         printTestHeader();
 
-        File dir = new File( testDir, "regex-dir" );
-        try
-        {
-            FileUtils.deleteDirectory( dir );
-        }
-        catch ( IOException e )
-        {
+        File dir = new File(testDir, "regex-dir");
+        try {
+            FileUtils.deleteDirectory(dir);
+        } catch (IOException e) {
         }
 
         dir.mkdirs();
 
-        String[] excludedPaths = { "target/foo.txt", "target/src/main/target/foo.txt" };
+        String[] excludedPaths = {"target/foo.txt", "target/src/main/target/foo.txt"};
 
-        createFiles( dir, excludedPaths );
+        createFiles(dir, excludedPaths);
 
-        String[] includedPaths = { "module/src/main/target/foo.txt" };
+        String[] includedPaths = {"module/src/main/target/foo.txt"};
 
-        createFiles( dir, includedPaths );
+        createFiles(dir, includedPaths);
 
         // NOTE: The portion "[^/]" is the interesting part of this pattern.
         String regex = "(?!((?!target/)[^/]+/)*src/).*target.*";
@@ -548,12 +498,12 @@ public class DirectoryScannerTest
 
         String excludeExpr = SelectorUtils.REGEX_HANDLER_PREFIX + regex + SelectorUtils.PATTERN_HANDLER_SUFFIX;
 
-        String[] excludes = { excludeExpr };
-        ds.setExcludes( excludes );
-        ds.setBasedir( dir );
+        String[] excludes = {excludeExpr};
+        ds.setExcludes(excludes);
+        ds.setBasedir(dir);
         ds.scan();
 
-        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+        assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
     }
 
     /**
@@ -563,33 +513,37 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if occurs an I/O error.
      */
     @Test
-    public void testDoNotScanUnnecesaryDirectories()
-        throws IOException
-    {
+    public void testDoNotScanUnnecesaryDirectories() throws IOException {
         createTestDirectories();
 
         // create additional directories 'anotherDir1', 'anotherDir2' and 'anotherDir3' with a 'file1.dat' file
-        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "testDir123" + File.separator
-            + "anotherDir1" );
-        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "test_dir_123" + File.separator
-            + "anotherDir2" );
-        FileUtils.mkdir( testDir + File.separator + "directoryTest" + File.separator + "test-dir-123" + File.separator
-            + "anotherDir3" );
+        FileUtils.mkdir(testDir + File.separator + "directoryTest" + File.separator + "testDir123" + File.separator
+                + "anotherDir1");
+        FileUtils.mkdir(testDir + File.separator + "directoryTest" + File.separator + "test_dir_123" + File.separator
+                + "anotherDir2");
+        FileUtils.mkdir(testDir + File.separator + "directoryTest" + File.separator + "test-dir-123" + File.separator
+                + "anotherDir3");
 
-        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "testDir123"
-            + File.separator + "anotherDir1" + File.separator + "file1.dat" ), 0 );
-        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "test_dir_123"
-            + File.separator + "anotherDir2" + File.separator + "file1.dat" ), 0 );
-        this.createFile( new File( testDir + File.separator + "directoryTest" + File.separator + "test-dir-123"
-            + File.separator + "anotherDir3" + File.separator + "file1.dat" ), 0 );
+        this.createFile(
+                new File(testDir + File.separator + "directoryTest" + File.separator + "testDir123" + File.separator
+                        + "anotherDir1" + File.separator + "file1.dat"),
+                0);
+        this.createFile(
+                new File(testDir + File.separator + "directoryTest" + File.separator + "test_dir_123" + File.separator
+                        + "anotherDir2" + File.separator + "file1.dat"),
+                0);
+        this.createFile(
+                new File(testDir + File.separator + "directoryTest" + File.separator + "test-dir-123" + File.separator
+                        + "anotherDir3" + File.separator + "file1.dat"),
+                0);
 
         String[] excludedPaths = {
             "directoryTest" + File.separator + "testDir123" + File.separator + "anotherDir1" + File.separator
-                + "file1.dat",
+                    + "file1.dat",
             "directoryTest" + File.separator + "test_dir_123" + File.separator + "anotherDir2" + File.separator
-                + "file1.dat",
+                    + "file1.dat",
             "directoryTest" + File.separator + "test-dir-123" + File.separator + "anotherDir3" + File.separator
-                + "file1.dat"
+                    + "file1.dat"
         };
 
         String[] includedPaths = {
@@ -600,29 +554,26 @@ public class DirectoryScannerTest
 
         final Set<String> scannedDirSet = new HashSet<String>();
 
-        DirectoryScanner ds = new DirectoryScanner()
-        {
+        DirectoryScanner ds = new DirectoryScanner() {
             @Override
-            protected void scandir( File dir, String vpath, boolean fast )
-            {
-                scannedDirSet.add( dir.getName() );
-                super.scandir( dir, vpath, fast );
+            protected void scandir(File dir, String vpath, boolean fast) {
+                scannedDirSet.add(dir.getName());
+                super.scandir(dir, vpath, fast);
             }
-
         };
 
         // one '*' matches only ONE directory level
-        String[] includes = { "directoryTest" + File.separator + "*" + File.separator + "file1.dat" };
-        ds.setIncludes( includes );
-        ds.setBasedir( new File( testDir ) );
+        String[] includes = {"directoryTest" + File.separator + "*" + File.separator + "file1.dat"};
+        ds.setIncludes(includes);
+        ds.setBasedir(new File(testDir));
         ds.scan();
 
-        assertInclusionsAndExclusions( ds.getIncludedFiles(), excludedPaths, includedPaths );
+        assertInclusionsAndExclusions(ds.getIncludedFiles(), excludedPaths, includedPaths);
 
         Set<String> expectedScannedDirSet =
-            new HashSet<String>( Arrays.asList( "io", "directoryTest", "testDir123", "test_dir_123", "test-dir-123" ) );
+                new HashSet<String>(Arrays.asList("io", "directoryTest", "testDir123", "test_dir_123", "test-dir-123"));
 
-        assertEquals( expectedScannedDirSet, scannedDirSet );
+        assertEquals(expectedScannedDirSet, scannedDirSet);
     }
 
     /**
@@ -631,17 +582,15 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testIsSymbolicLink()
-        throws IOException
-    {
-        assumeTrue( checkTestFilesSymlinks() );
+    public void testIsSymbolicLink() throws IOException {
+        assumeTrue(checkTestFilesSymlinks());
 
-        final File directory = new File( "src/test/resources/symlinks/src" );
+        final File directory = new File("src/test/resources/symlinks/src");
         DirectoryScanner ds = new DirectoryScanner();
-        assertTrue( ds.isSymbolicLink( directory, "symR" ) );
-        assertTrue( ds.isSymbolicLink( directory, "symDir" ) );
-        assertFalse( ds.isSymbolicLink( directory, "fileR.txt" ) );
-        assertFalse( ds.isSymbolicLink( directory, "aRegularDir" ) );
+        assertTrue(ds.isSymbolicLink(directory, "symR"));
+        assertTrue(ds.isSymbolicLink(directory, "symDir"));
+        assertFalse(ds.isSymbolicLink(directory, "fileR.txt"));
+        assertFalse(ds.isSymbolicLink(directory, "aRegularDir"));
     }
 
     /**
@@ -650,105 +599,83 @@ public class DirectoryScannerTest
      * @throws java.io.IOException if any.
      */
     @Test
-    public void testIsParentSymbolicLink()
-        throws IOException
-    {
-        assumeTrue( checkTestFilesSymlinks() );
+    public void testIsParentSymbolicLink() throws IOException {
+        assumeTrue(checkTestFilesSymlinks());
 
-        final File directory = new File( "src/test/resources/symlinks/src" );
+        final File directory = new File("src/test/resources/symlinks/src");
         DirectoryScanner ds = new DirectoryScanner();
-        assertFalse( ds.isParentSymbolicLink( directory, "symR" ) );
-        assertFalse( ds.isParentSymbolicLink( directory, "symDir" ) );
-        assertFalse( ds.isParentSymbolicLink( directory, "fileR.txt" ) );
-        assertFalse( ds.isParentSymbolicLink( directory, "aRegularDir" ) );
-        assertFalse( ds.isParentSymbolicLink( new File( directory, "aRegularDir" ), "aRegulatFile.txt" ) );
-        assertTrue( ds.isParentSymbolicLink( new File( directory, "symDir" ), "targetFile.txt" ) );
-        assertTrue( ds.isParentSymbolicLink( new File( directory, "symLinkToDirOnTheOutside" ),
-                                             "FileInDirOnTheOutside.txt" ) );
+        assertFalse(ds.isParentSymbolicLink(directory, "symR"));
+        assertFalse(ds.isParentSymbolicLink(directory, "symDir"));
+        assertFalse(ds.isParentSymbolicLink(directory, "fileR.txt"));
+        assertFalse(ds.isParentSymbolicLink(directory, "aRegularDir"));
+        assertFalse(ds.isParentSymbolicLink(new File(directory, "aRegularDir"), "aRegulatFile.txt"));
+        assertTrue(ds.isParentSymbolicLink(new File(directory, "symDir"), "targetFile.txt"));
+        assertTrue(
+                ds.isParentSymbolicLink(new File(directory, "symLinkToDirOnTheOutside"), "FileInDirOnTheOutside.txt"));
     }
 
-    private void printTestHeader()
-    {
+    private void printTestHeader() {
         StackTraceElement ste = new Throwable().getStackTrace()[1];
-        System.out.println( "Test: " + ste.getMethodName() );
+        System.out.println("Test: " + ste.getMethodName());
     }
 
-    private void assertInclusionsAndExclusions( String[] files, String[] excludedPaths, String... includedPaths )
-    {
-        Arrays.sort( files );
+    private void assertInclusionsAndExclusions(String[] files, String[] excludedPaths, String... includedPaths) {
+        Arrays.sort(files);
 
-        System.out.println( "Included files: " );
-        for ( String file : files )
-        {
-            System.out.println( file );
+        System.out.println("Included files: ");
+        for (String file : files) {
+            System.out.println(file);
         }
 
         List<String> failedToExclude = new ArrayList<String>();
-        for ( String excludedPath : excludedPaths )
-        {
-            String alt = excludedPath.replace( '/', '\\' );
-            System.out.println( "Searching for exclusion as: " + excludedPath + "\nor: " + alt );
-            if ( Arrays.binarySearch( files, excludedPath ) > -1 || Arrays.binarySearch( files, alt ) > -1 )
-            {
-                failedToExclude.add( excludedPath );
+        for (String excludedPath : excludedPaths) {
+            String alt = excludedPath.replace('/', '\\');
+            System.out.println("Searching for exclusion as: " + excludedPath + "\nor: " + alt);
+            if (Arrays.binarySearch(files, excludedPath) > -1 || Arrays.binarySearch(files, alt) > -1) {
+                failedToExclude.add(excludedPath);
             }
         }
 
         List<String> failedToInclude = new ArrayList<String>();
-        for ( String includedPath : includedPaths )
-        {
-            String alt = includedPath.replace( '/', '\\' );
-            System.out.println( "Searching for inclusion as: " + includedPath + "\nor: " + alt );
-            if ( Arrays.binarySearch( files, includedPath ) < 0 && Arrays.binarySearch( files, alt ) < 0 )
-            {
-                failedToInclude.add( includedPath );
+        for (String includedPath : includedPaths) {
+            String alt = includedPath.replace('/', '\\');
+            System.out.println("Searching for inclusion as: " + includedPath + "\nor: " + alt);
+            if (Arrays.binarySearch(files, includedPath) < 0 && Arrays.binarySearch(files, alt) < 0) {
+                failedToInclude.add(includedPath);
             }
         }
 
         StringBuilder buffer = new StringBuilder();
-        if ( !failedToExclude.isEmpty() )
-        {
-            buffer.append( "Should NOT have included:\n" ).append( StringUtils.join( failedToExclude.iterator(),
-                                                                                     "\n\t- " ) );
+        if (!failedToExclude.isEmpty()) {
+            buffer.append("Should NOT have included:\n").append(StringUtils.join(failedToExclude.iterator(), "\n\t- "));
         }
 
-        if ( !failedToInclude.isEmpty() )
-        {
-            if ( buffer.length() > 0 )
-            {
-                buffer.append( "\n\n" );
+        if (!failedToInclude.isEmpty()) {
+            if (buffer.length() > 0) {
+                buffer.append("\n\n");
             }
 
-            buffer.append( "Should have included:\n" ).append( StringUtils.join( failedToInclude.iterator(),
-                                                                                 "\n\t- " ) );
+            buffer.append("Should have included:\n").append(StringUtils.join(failedToInclude.iterator(), "\n\t- "));
         }
 
-        if ( buffer.length() > 0 )
-        {
-            fail( buffer.toString() );
+        if (buffer.length() > 0) {
+            fail(buffer.toString());
         }
     }
 
-    private void createFiles( File dir, String... paths )
-        throws IOException
-    {
-        for ( String path1 : paths )
-        {
-            String path = path1.replace( '/', File.separatorChar ).replace( '\\', File.separatorChar );
-            File file = new File( dir, path );
+    private void createFiles(File dir, String... paths) throws IOException {
+        for (String path1 : paths) {
+            String path = path1.replace('/', File.separatorChar).replace('\\', File.separatorChar);
+            File file = new File(dir, path);
 
-            if ( path.endsWith( File.separator ) )
-            {
+            if (path.endsWith(File.separator)) {
                 file.mkdirs();
-            }
-            else
-            {
-                if ( file.getParentFile() != null )
-                {
+            } else {
+                if (file.getParentFile() != null) {
                     file.getParentFile().mkdirs();
                 }
 
-                createFile( file, 0 );
+                createFile(file, 0);
             }
         }
     }

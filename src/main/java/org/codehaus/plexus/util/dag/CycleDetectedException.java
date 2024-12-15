@@ -19,43 +19,34 @@ package org.codehaus.plexus.util.dag;
 import java.util.Iterator;
 import java.util.List;
 
-public class CycleDetectedException
-    extends Exception
-{
+public class CycleDetectedException extends Exception {
     private List<String> cycle;
 
-    public CycleDetectedException( final String message, final List<String> cycle )
-    {
-        super( message );
+    public CycleDetectedException(final String message, final List<String> cycle) {
+        super(message);
 
         this.cycle = cycle;
-
     }
 
-    public List<String> getCycle()
-    {
+    public List<String> getCycle() {
         return cycle;
     }
 
-    public String cycleToString()
-    {
+    public String cycleToString() {
         final StringBuilder buffer = new StringBuilder();
 
-        for ( Iterator<String> iterator = cycle.iterator(); iterator.hasNext(); )
-        {
-            buffer.append( iterator.next() );
+        for (Iterator<String> iterator = cycle.iterator(); iterator.hasNext(); ) {
+            buffer.append(iterator.next());
 
-            if ( iterator.hasNext() )
-            {
-                buffer.append( " --> " );
+            if (iterator.hasNext()) {
+                buffer.append(" --> ");
             }
         }
         return buffer.toString();
     }
 
     @Override
-    public String getMessage()
-    {
+    public String getMessage() {
         return super.getMessage() + " " + cycleToString();
     }
 }

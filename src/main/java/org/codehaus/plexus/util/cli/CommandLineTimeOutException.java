@@ -24,18 +24,13 @@ package org.codehaus.plexus.util.cli;
  * @since 1.5.9
  *
  */
-public class CommandLineTimeOutException
-    extends CommandLineException
-{
+public class CommandLineTimeOutException extends CommandLineException {
 
-    public CommandLineTimeOutException( String message )
-    {
-        super( message );
+    public CommandLineTimeOutException(String message) {
+        super(message);
     }
 
-    public CommandLineTimeOutException( String message, Throwable cause )
-    {
-        super( message, cause );
+    public CommandLineTimeOutException(String message, Throwable cause) {
+        super(message, cause);
     }
-
 }

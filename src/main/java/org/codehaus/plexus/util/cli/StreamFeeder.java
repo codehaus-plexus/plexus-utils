@@ -26,9 +26,7 @@ import java.io.OutputStream;
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
  *
  */
-public class StreamFeeder
-    extends AbstractStreamHandler
-{
+public class StreamFeeder extends AbstractStreamHandler {
 
     private InputStream input;
 
@@ -42,33 +40,24 @@ public class StreamFeeder
      * @param input Stream to read from
      * @param output Stream to write to
      */
-    public StreamFeeder( InputStream input, OutputStream output )
-    {
+    public StreamFeeder(InputStream input, OutputStream output) {
         super();
         this.input = input;
         this.output = output;
     }
 
     @Override
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             feed();
-        }
-        catch ( Throwable ex )
-        {
-            if ( exception == null )
-            {
+        } catch (Throwable ex) {
+            if (exception == null) {
                 exception = ex;
             }
-        }
-        finally
-        {
+        } finally {
             close();
 
-            synchronized ( this )
-            {
+            synchronized (this) {
                 setDone();
 
                 this.notifyAll();
@@ -76,20 +65,13 @@ public class StreamFeeder
         }
     }
 
-    public void close()
-    {
-        if ( input != null )
-        {
-            synchronized ( input )
-            {
-                try
-                {
+    public void close() {
+        if (input != null) {
+            synchronized (input) {
+                try {
                     input.close();
-                }
-                catch ( IOException ex )
-                {
-                    if ( exception == null )
-                    {
+                } catch (IOException ex) {
+                    if (exception == null) {
                         exception = ex;
                     }
                 }
@@ -98,18 +80,12 @@ public class StreamFeeder
             }
         }
 
-        if ( output != null )
-        {
-            synchronized ( output )
-            {
-                try
-                {
+        if (output != null) {
+            synchronized (output) {
+                try {
                     output.close();
-                }
-                catch ( IOException ex )
-                {
-                    if ( exception == null )
-                    {
+                } catch (IOException ex) {
+                    if (exception == null) {
                         exception = ex;
                     }
                 }
@@ -123,24 +99,18 @@ public class StreamFeeder
      * @since 3.1.0
      * @return the Exception
      */
-    public Throwable getException()
-    {
+    public Throwable getException() {
         return exception;
     }
 
-    private void feed()
-        throws IOException
-    {
+    private void feed() throws IOException {
         boolean flush = false;
         int data = input.read();
 
-        while ( !isDone() && data != -1 )
-        {
-            synchronized ( output )
-            {
-                if ( !isDisabled() )
-                {
-                    output.write( data );
+        while (!isDone() && data != -1) {
+            synchronized (output) {
+                if (!isDisabled()) {
+                    output.write(data);
                     flush = true;
                 }
 
@@ -148,10 +118,8 @@ public class StreamFeeder
             }
         }
 
-        if ( flush )
-        {
+        if (flush) {
             output.flush();
         }
     }
-
 }

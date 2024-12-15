@@ -20,13 +20,10 @@ import java.util.concurrent.Callable;
 
 /**
  * Callable wrapper that exposes the proper exception type to the client.
- * 
+ *
  * @author Kristian Rosenvold
  */
-public interface CommandLineCallable
-    extends Callable<Integer>
-{
+public interface CommandLineCallable extends Callable<Integer> {
     @Override
-    Integer call()
-        throws CommandLineException;
+    Integer call() throws CommandLineException;
 }

@@ -1,9 +1,5 @@
 package org.codehaus.plexus.util.xml;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  * Copyright The Codehaus Foundation.
  *
@@ -19,12 +15,14 @@ import java.util.Map;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
 
 /** @author Jason van Zyl */
-public class Xpp3DomUtils
-{
+public class Xpp3DomUtils {
     public static final String CHILDREN_COMBINATION_MODE_ATTRIBUTE = "combine.children";
 
     public static final String CHILDREN_COMBINATION_MERGE = "merge";
@@ -46,15 +44,15 @@ public class Xpp3DomUtils
 
     /**
      * In case of complex XML structures, combining can be done based on id.
-     * 
+     *
      * @since 3.0.22
      */
     public static final String ID_COMBINATION_MODE_ATTRIBUTE = "combine.id";
-    
+
     /**
      * In case of complex XML structures, combining can be done based on keys.
      * This is a comma separated list of attribute names.
-     * 
+     *
      * @since 3.4.0
      */
     public static final String KEYS_COMBINATION_MODE_ATTRIBUTE = "combine.keys";
@@ -67,16 +65,13 @@ public class Xpp3DomUtils
      */
     public static final String DEFAULT_SELF_COMBINATION_MODE = SELF_COMBINATION_MERGE;
 
-    public void writeToSerializer( String namespace, XmlSerializer serializer, Xpp3Dom dom )
-        throws IOException
-    {
+    public void writeToSerializer(String namespace, XmlSerializer serializer, Xpp3Dom dom) throws IOException {
         // TODO: WARNING! Later versions of plexus-utils psit out an <?xml ?> header due to thinking this is a new
         // document - not the desired behaviour!
-        SerializerXMLWriter xmlWriter = new SerializerXMLWriter( namespace, serializer );
-        Xpp3DomWriter.write( xmlWriter, dom );
-        if ( xmlWriter.getExceptions().size() > 0 )
-        {
-            throw (IOException) xmlWriter.getExceptions().get( 0 );
+        SerializerXMLWriter xmlWriter = new SerializerXMLWriter(namespace, serializer);
+        Xpp3DomWriter.write(xmlWriter, dom);
+        if (xmlWriter.getExceptions().size() > 0) {
+            throw (IOException) xmlWriter.getExceptions().get(0);
         }
     }
 
@@ -119,108 +114,83 @@ public class Xpp3DomUtils
      *   </ol></li>
      * </ol>
      */
-    private static void mergeIntoXpp3Dom( Xpp3Dom dominant, Xpp3Dom recessive, Boolean childMergeOverride )
-    {
+    private static void mergeIntoXpp3Dom(Xpp3Dom dominant, Xpp3Dom recessive, Boolean childMergeOverride) {
         // TODO: share this as some sort of assembler, implement a walk interface?
-        if ( recessive == null )
-        {
+        if (recessive == null) {
             return;
         }
 
         boolean mergeSelf = true;
 
-        String selfMergeMode = dominant.getAttribute( SELF_COMBINATION_MODE_ATTRIBUTE );
+        String selfMergeMode = dominant.getAttribute(SELF_COMBINATION_MODE_ATTRIBUTE);
 
-        if ( isNotEmpty( selfMergeMode ) && SELF_COMBINATION_OVERRIDE.equals( selfMergeMode ) )
-        {
+        if (isNotEmpty(selfMergeMode) && SELF_COMBINATION_OVERRIDE.equals(selfMergeMode)) {
             mergeSelf = false;
         }
 
-        if ( mergeSelf )
-        {
+        if (mergeSelf) {
             String[] recessiveAttrs = recessive.getAttributeNames();
-            for ( String attr : recessiveAttrs )
-            {
-                if ( isEmpty( dominant.getAttribute( attr ) ) )
-                {
-                    dominant.setAttribute( attr, recessive.getAttribute( attr ) );
+            for (String attr : recessiveAttrs) {
+                if (isEmpty(dominant.getAttribute(attr))) {
+                    dominant.setAttribute(attr, recessive.getAttribute(attr));
                 }
             }
 
             boolean mergeChildren = true;
 
-            if ( childMergeOverride != null )
-            {
+            if (childMergeOverride != null) {
                 mergeChildren = childMergeOverride;
-            }
-            else
-            {
-                String childMergeMode = dominant.getAttribute( CHILDREN_COMBINATION_MODE_ATTRIBUTE );
+            } else {
+                String childMergeMode = dominant.getAttribute(CHILDREN_COMBINATION_MODE_ATTRIBUTE);
 
-                if ( isNotEmpty( childMergeMode ) && CHILDREN_COMBINATION_APPEND.equals( childMergeMode ) )
-                {
+                if (isNotEmpty(childMergeMode) && CHILDREN_COMBINATION_APPEND.equals(childMergeMode)) {
                     mergeChildren = false;
                 }
             }
 
-            final String keysValue = recessive.getAttribute( KEYS_COMBINATION_MODE_ATTRIBUTE );
+            final String keysValue = recessive.getAttribute(KEYS_COMBINATION_MODE_ATTRIBUTE);
 
             Xpp3Dom[] children = recessive.getChildren();
-            for ( Xpp3Dom recessiveChild : children )
-            {
-                String idValue = recessiveChild.getAttribute( ID_COMBINATION_MODE_ATTRIBUTE );
+            for (Xpp3Dom recessiveChild : children) {
+                String idValue = recessiveChild.getAttribute(ID_COMBINATION_MODE_ATTRIBUTE);
 
                 Xpp3Dom childDom = null;
-                if ( isNotEmpty( idValue ) )
-                {
-                    for ( Xpp3Dom dominantChild : dominant.getChildren() )
-                    {
-                        if ( idValue.equals( dominantChild.getAttribute( ID_COMBINATION_MODE_ATTRIBUTE ) ) )
-                        {
+                if (isNotEmpty(idValue)) {
+                    for (Xpp3Dom dominantChild : dominant.getChildren()) {
+                        if (idValue.equals(dominantChild.getAttribute(ID_COMBINATION_MODE_ATTRIBUTE))) {
                             childDom = dominantChild;
                             // we have a match, so don't append but merge
                             mergeChildren = true;
                         }
                     }
-                }
-                else if ( isNotEmpty( keysValue ) ) 
-                {
-                    String[] keys = keysValue.split( "," );
-                    Map<String, String> recessiveKeyValues = new HashMap<>( keys.length );
-                    for ( String key : keys )
-                    {
-                        recessiveKeyValues.put( key, recessiveChild.getAttribute( key ) );
+                } else if (isNotEmpty(keysValue)) {
+                    String[] keys = keysValue.split(",");
+                    Map<String, String> recessiveKeyValues = new HashMap<>(keys.length);
+                    for (String key : keys) {
+                        recessiveKeyValues.put(key, recessiveChild.getAttribute(key));
                     }
-                    
-                    for ( Xpp3Dom dominantChild : dominant.getChildren() )
-                    {
-                        Map<String, String> dominantKeyValues = new HashMap<>( keys.length );
-                        for ( String key : keys )
-                        {
-                            dominantKeyValues.put( key, dominantChild.getAttribute( key ) );
+
+                    for (Xpp3Dom dominantChild : dominant.getChildren()) {
+                        Map<String, String> dominantKeyValues = new HashMap<>(keys.length);
+                        for (String key : keys) {
+                            dominantKeyValues.put(key, dominantChild.getAttribute(key));
                         }
 
-                        if ( recessiveKeyValues.equals( dominantKeyValues ) )
-                        {
+                        if (recessiveKeyValues.equals(dominantKeyValues)) {
                             childDom = dominantChild;
                             // we have a match, so don't append but merge
                             mergeChildren = true;
                         }
                     }
-                    
-                }
-                else
-                {
-                    childDom = dominant.getChild( recessiveChild.getName() );
+
+                } else {
+                    childDom = dominant.getChild(recessiveChild.getName());
                 }
 
-                if ( mergeChildren && childDom != null )
-                {
-                    mergeIntoXpp3Dom( childDom, recessiveChild, childMergeOverride );
-                }
-                else
-                {
-                    dominant.addChild( new Xpp3Dom( recessiveChild ) );
+                if (mergeChildren && childDom != null) {
+                    mergeIntoXpp3Dom(childDom, recessiveChild, childMergeOverride);
+                } else {
+                    dominant.addChild(new Xpp3Dom(recessiveChild));
                 }
             }
         }
@@ -237,11 +207,9 @@ public class Xpp3DomUtils
      *            dominant DOM
      * @return merged DOM
      */
-    public static Xpp3Dom mergeXpp3Dom( Xpp3Dom dominant, Xpp3Dom recessive, Boolean childMergeOverride )
-    {
-        if ( dominant != null )
-        {
-            mergeIntoXpp3Dom( dominant, recessive, childMergeOverride );
+    public static Xpp3Dom mergeXpp3Dom(Xpp3Dom dominant, Xpp3Dom recessive, Boolean childMergeOverride) {
+        if (dominant != null) {
+            mergeIntoXpp3Dom(dominant, recessive, childMergeOverride);
             return dominant;
         }
         return recessive;
@@ -257,11 +225,9 @@ public class Xpp3DomUtils
      * @param recessive The recessive DOM, which will be merged into the dominant DOM
      * @return merged DOM
      */
-    public static Xpp3Dom mergeXpp3Dom( Xpp3Dom dominant, Xpp3Dom recessive )
-    {
-        if ( dominant != null )
-        {
-            mergeIntoXpp3Dom( dominant, recessive, null );
+    public static Xpp3Dom mergeXpp3Dom(Xpp3Dom dominant, Xpp3Dom recessive) {
+        if (dominant != null) {
+            mergeIntoXpp3Dom(dominant, recessive, null);
             return dominant;
         }
         return recessive;
@@ -271,17 +237,15 @@ public class Xpp3DomUtils
      * @deprecated Use {@link org.codehaus.plexus.util.StringUtils#isNotEmpty(String)} instead
      */
     @Deprecated
-    public static boolean isNotEmpty( String str )
-    {
-        return ( str != null && str.length() > 0 );
+    public static boolean isNotEmpty(String str) {
+        return (str != null && str.length() > 0);
     }
 
     /**
      * @deprecated Use {@link org.codehaus.plexus.util.StringUtils#isEmpty(String)} instead
      */
     @Deprecated
-    public static boolean isEmpty( String str )
-    {
-        return ( str == null || str.length() == 0 );
+    public static boolean isEmpty(String str) {
+        return (str == null || str.length() == 0);
     }
 }

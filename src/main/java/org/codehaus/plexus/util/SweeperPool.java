@@ -25,8 +25,7 @@ import java.util.ArrayList;
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
  *
  */
-public class SweeperPool
-{
+public class SweeperPool {
     /***/
     private static final boolean DEBUG = false;
 
@@ -66,41 +65,34 @@ public class SweeperPool
      * @param intialCapacity the intial capacity
      * <p>Any value less than 0 is automatically converted to 0</p>
      */
-    public SweeperPool( int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize )
-    {
+    public SweeperPool(int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize) {
         super();
-        this.maxSize = saneConvert( maxSize );
-        this.minSize = saneConvert( minSize );
-        this.triggerSize = saneConvert( triggerSize );
-        pooledObjects = new ArrayList( intialCapacity );
+        this.maxSize = saneConvert(maxSize);
+        this.minSize = saneConvert(minSize);
+        this.triggerSize = saneConvert(triggerSize);
+        pooledObjects = new ArrayList(intialCapacity);
 
         // only run a sweeper if sweep interval is positive
-        if ( sweepInterval > 0 )
-        {
-            sweeper = new Sweeper( this, sweepInterval );
+        if (sweepInterval > 0) {
+            sweeper = new Sweeper(this, sweepInterval);
             sweeper.start();
         }
     }
 
-    private int saneConvert( int value )
-    {
-        return Math.max( value, 0 );
+    private int saneConvert(int value) {
+        return Math.max(value, 0);
     }
 
     /**
      * Return the pooled object
      * @return first available object from the pool
      */
-    public synchronized Object get()
-    {
-        if ( ( pooledObjects.size() == 0 ) || shuttingDown )
-        {
+    public synchronized Object get() {
+        if ((pooledObjects.size() == 0) || shuttingDown) {
             return null;
-        }
-        else
-        {
-            Object obj = pooledObjects.remove( 0 );
-            objectRetrieved( obj );
+        } else {
+            Object obj = pooledObjects.remove(0);
+            objectRetrieved(obj);
 
             // used.add(obj);
             return obj;
@@ -113,20 +105,16 @@ public class SweeperPool
      * @param obj the object to pool. Can be null.
      * @return true if the object was added to the pool, false if it was disposed or null
      */
-    public synchronized boolean put( Object obj )
-    {
-        objectAdded( obj );
+    public synchronized boolean put(Object obj) {
+        objectAdded(obj);
 
-        if ( ( obj != null ) && ( pooledObjects.size() < maxSize ) && ( shuttingDown == false ) )
-        {
-            pooledObjects.add( obj );
+        if ((obj != null) && (pooledObjects.size() < maxSize) && (shuttingDown == false)) {
+            pooledObjects.add(obj);
 
             return true;
-        }
-        else if ( obj != null )
-        {
+        } else if (obj != null) {
             // no longer need the object, so dispose it
-            objectDisposed( obj );
+            objectDisposed(obj);
         }
 
         return false;
@@ -137,41 +125,33 @@ public class SweeperPool
      *
      * @return the number of pooled objects
      */
-    public synchronized int getSize()
-    {
+    public synchronized int getSize() {
         return pooledObjects.size();
     }
 
     /**
      * Dispose of this pool. Stops the sweeper and disposes each object in the pool
      */
-    public void dispose()
-    {
+    public void dispose() {
         shuttingDown = true;
 
-        if ( sweeper != null )
-        {
+        if (sweeper != null) {
             sweeper.stop();
-            try
-            {
+            try {
                 sweeper.join();
-            }
-            catch ( InterruptedException e )
-            {
-                System.err.println( "Unexpected exception occurred: " );
+            } catch (InterruptedException e) {
+                System.err.println("Unexpected exception occurred: ");
                 e.printStackTrace();
             }
         }
 
-        synchronized ( this )
-        {
+        synchronized (this) {
             // use an array here as objects may still be being put back in the pool
             // and we don't want to throw a ConcurrentModificationException
             Object[] objects = pooledObjects.toArray();
 
-            for ( Object object : objects )
-            {
-                objectDisposed( object );
+            for (Object object : objects) {
+                objectDisposed(object);
             }
 
             pooledObjects.clear();
@@ -183,16 +163,13 @@ public class SweeperPool
      *
      * @return true if the pool has been disposed, false otherwise
      */
-    boolean isDisposed()
-    {
-        if ( !shuttingDown )
-        {
+    boolean isDisposed() {
+        if (!shuttingDown) {
             return false;
         }
 
         // A null sweeper means one was never started.
-        if ( sweeper == null )
-        {
+        if (sweeper == null) {
             return true;
         }
 
@@ -202,14 +179,11 @@ public class SweeperPool
     /**
      * Trim the pool down to min size
      */
-    public synchronized void trim()
-    {
-        if ( ( ( triggerSize > 0 ) && ( pooledObjects.size() >= triggerSize ) )
-            || ( ( maxSize > 0 ) && ( pooledObjects.size() >= maxSize ) ) )
-        {
-            while ( pooledObjects.size() > minSize )
-            {
-                objectDisposed( pooledObjects.remove( 0 ) );
+    public synchronized void trim() {
+        if (((triggerSize > 0) && (pooledObjects.size() >= triggerSize))
+                || ((maxSize > 0) && (pooledObjects.size() >= maxSize))) {
+            while (pooledObjects.size() > minSize) {
+                objectDisposed(pooledObjects.remove(0));
             }
         }
     }
@@ -220,18 +194,14 @@ public class SweeperPool
      *
      * @param obj the Object
      */
-    public void objectDisposed( Object obj )
-    {
-    }
+    public void objectDisposed(Object obj) {}
 
     /**
      * Override this to be notified of object addition. Called before object is to be added.
      *
      * @param obj the Object
      */
-    public void objectAdded( Object obj )
-    {
-    }
+    public void objectAdded(Object obj) {}
 
     /**
      * Override this to be notified of object retrieval. Called after object removed from the pool, but before returned
@@ -239,18 +209,14 @@ public class SweeperPool
      *
      * @param obj the Object
      */
-    public void objectRetrieved( Object obj )
-    {
-    }
+    public void objectRetrieved(Object obj) {}
 
     /**
      * Periodically at <code>sweepInterval</code> goes through and tests if the pool should be trimmed.
      *
      * @author bert
      */
-    private static class Sweeper
-        implements Runnable
-    {
+    private static class Sweeper implements Runnable {
         private final transient SweeperPool pool;
 
         private transient boolean service = false;
@@ -262,8 +228,7 @@ public class SweeperPool
         /**
          *
          */
-        public Sweeper( SweeperPool pool, int sweepInterval )
-        {
+        public Sweeper(SweeperPool pool, int sweepInterval) {
             super();
             this.sweepInterval = sweepInterval;
             this.pool = pool;
@@ -275,72 +240,56 @@ public class SweeperPool
          * @see java.lang.Runnable#run()
          */
         @Override
-        public void run()
-        {
-            debug( "started" );
+        public void run() {
+            debug("started");
 
-            if ( sweepInterval > 0 )
-            {
-                synchronized ( this )
-                {
-                    while ( service )
-                    {
-                        try
-                        {
+            if (sweepInterval > 0) {
+                synchronized (this) {
+                    while (service) {
+                        try {
                             // wait specified number of seconds
                             // before running next sweep
-                            wait( sweepInterval * 1000 );
-                        }
-                        catch ( InterruptedException e )
-                        {
+                            wait(sweepInterval * 1000);
+                        } catch (InterruptedException e) {
                         }
                         runSweep();
                     }
                 }
             }
 
-            debug( "stopped" );
+            debug("stopped");
         }
 
-        public void start()
-        {
-            if ( !service )
-            {
+        public void start() {
+            if (!service) {
                 service = true;
-                t = new Thread( this );
-                t.setName( "Sweeper" );
+                t = new Thread(this);
+                t.setName("Sweeper");
                 t.start();
             }
         }
 
-        public synchronized void stop()
-        {
+        public synchronized void stop() {
             service = false;
             notifyAll();
         }
 
-        void join()
-            throws InterruptedException
-        {
+        void join() throws InterruptedException {
             t.join();
         }
 
-        boolean hasStopped()
-        {
+        boolean hasStopped() {
             return !service && !t.isAlive();
         }
 
-        private final void debug( String msg )
-        {
-            if ( DEBUG )
-            {
-                System.err.println( this + ":" + msg );
+        private final void debug(String msg) {
+            if (DEBUG) {
+                System.err.println(this + ":" + msg);
             }
         }
 
-        private void runSweep()
-        {
-            debug( "runningSweep. time=" + System.currentTimeMillis() );
+        private void runSweep() {
+            debug("runningSweep. time=" + System.currentTimeMillis());
             pool.trim();
         }
     }

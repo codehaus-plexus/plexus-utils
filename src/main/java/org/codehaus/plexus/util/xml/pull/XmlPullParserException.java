@@ -8,9 +8,7 @@ package org.codehaus.plexus.util.xml.pull;
  *
  * @author <a href="http://www.extreme.indiana.edu/~aslom/">Aleksander Slominski</a>
  */
-public class XmlPullParserException
-    extends Exception
-{
+public class XmlPullParserException extends Exception {
     /**
      * @deprecated use generic getCause() method
      */
@@ -25,9 +23,8 @@ public class XmlPullParserException
      * public XmlPullParserException() { }
      */
 
-    public XmlPullParserException( String s )
-    {
-        super( s );
+    public XmlPullParserException(String s) {
+        super(s);
     }
 
     /*
@@ -35,14 +32,14 @@ public class XmlPullParserException
      * XmlPullParserException(String s, int row, int column) { super(s); this.row = row; this.column = column; }
      */
 
-    public XmlPullParserException( String msg, XmlPullParser parser, Throwable chain )
-    {
-        super( ( msg == null ? "" : msg + " " )
-            + ( parser == null ? "" : "(position:" + parser.getPositionDescription() + ") " )
-            + ( chain == null ? "" : "caused by: " + chain ), chain );
+    public XmlPullParserException(String msg, XmlPullParser parser, Throwable chain) {
+        super(
+                (msg == null ? "" : msg + " ")
+                        + (parser == null ? "" : "(position:" + parser.getPositionDescription() + ") ")
+                        + (chain == null ? "" : "caused by: " + chain),
+                chain);
 
-        if ( parser != null )
-        {
+        if (parser != null) {
             this.row = parser.getLineNumber();
             this.column = parser.getColumnNumber();
         }
@@ -54,19 +51,16 @@ public class XmlPullParserException
      * @return the cause
      */
     @Deprecated
-    public Throwable getDetail()
-    {
+    public Throwable getDetail() {
         return getCause();
     }
 
     // public void setDetail(Throwable cause) { this.detail = cause; }
-    public int getLineNumber()
-    {
+    public int getLineNumber() {
         return row;
     }
 
-    public int getColumnNumber()
-    {
+    public int getColumnNumber() {
         return column;
     }
 
@@ -77,20 +71,14 @@ public class XmlPullParserException
 
     // NOTE: code that prints this and detail is difficult in J2ME
     @Override
-    public void printStackTrace()
-    {
-        if ( getCause() == null )
-        {
+    public void printStackTrace() {
+        if (getCause() == null) {
             super.printStackTrace();
-        }
-        else
-        {
-            synchronized ( System.err )
-            {
-                System.err.println( super.getMessage() + "; nested exception is:" );
+        } else {
+            synchronized (System.err) {
+                System.err.println(super.getMessage() + "; nested exception is:");
                 getCause().printStackTrace();
             }
         }
     }
-
 }

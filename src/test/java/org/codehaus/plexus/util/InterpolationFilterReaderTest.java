@@ -16,13 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * <p>InterpolationFilterReaderTest class.</p>
@@ -31,8 +31,7 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class InterpolationFilterReaderTest
-{
+public class InterpolationFilterReaderTest {
     /*
      * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
      * kenneyw@15-04-2005 fixed the bug.
@@ -43,15 +42,13 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "test", "TestValue" );
+        m.put("test", "TestValue");
 
         String testStr = "This is a ${test";
 
-        assertEquals( "This is a ${test", interpolate( testStr, m ) );
+        assertEquals("This is a ${test", interpolate(testStr, m));
     }
 
     /*
@@ -63,15 +60,13 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testShouldNotInterpolateExpressionWithMissingEndToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateExpressionWithMissingEndToken() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "test", "TestValue" );
+        m.put("test", "TestValue");
 
         String testStr = "This is a ${test, really";
 
-        assertEquals( "This is a ${test, really", interpolate( testStr, m ) );
+        assertEquals("This is a ${test, really", interpolate(testStr, m));
     }
 
     /**
@@ -80,15 +75,13 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testShouldNotInterpolateWithMalformedStartToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateWithMalformedStartToken() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "test", "testValue" );
+        m.put("test", "testValue");
 
         String foo = "This is a $!test} again";
 
-        assertEquals( "This is a $!test} again", interpolate( foo, m ) );
+        assertEquals("This is a $!test} again", interpolate(foo, m));
     }
 
     /**
@@ -97,15 +90,13 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testShouldNotInterpolateWithMalformedEndToken()
-        throws Exception
-    {
+    public void testShouldNotInterpolateWithMalformedEndToken() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "test", "testValue" );
+        m.put("test", "testValue");
 
         String foo = "This is a ${test!} again";
 
-        assertEquals( "This is a ${test!} again", interpolate( foo, m, "${", "$}" ) );
+        assertEquals("This is a ${test!} again", interpolate(foo, m, "${", "$}"));
     }
 
     /**
@@ -114,15 +105,13 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInterpolationWithMulticharDelimiters()
-        throws Exception
-    {
+    public void testInterpolationWithMulticharDelimiters() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "test", "testValue" );
+        m.put("test", "testValue");
 
         String foo = "This is a ${test$} again";
 
-        assertEquals( "This is a testValue again", interpolate( foo, m, "${", "$}" ) );
+        assertEquals("This is a testValue again", interpolate(foo, m, "${", "$}"));
     }
 
     /**
@@ -131,16 +120,14 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testDefaultInterpolationWithNonInterpolatedValueAtEnd()
-        throws Exception
-    {
+    public void testDefaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "${name} is an ${noun}. ${not.interpolated}";
 
-        assertEquals( "jason is an asshole. ${not.interpolated}", interpolate( foo, m ) );
+        assertEquals("jason is an asshole. ${not.interpolated}", interpolate(foo, m));
     }
 
     /**
@@ -149,16 +136,14 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testDefaultInterpolationWithInterpolatedValueAtEnd()
-        throws Exception
-    {
+    public void testDefaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "${name} is an ${noun}";
 
-        assertEquals( "jason is an asshole", interpolate( foo, m ) );
+        assertEquals("jason is an asshole", interpolate(foo, m));
     }
 
     /**
@@ -167,16 +152,14 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInterpolationWithSpecifiedBoundaryTokens()
-        throws Exception
-    {
+    public void testInterpolationWithSpecifiedBoundaryTokens() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "@name@ is an @noun@. @not.interpolated@ baby @foo@. @bar@";
 
-        assertEquals( "jason is an asshole. @not.interpolated@ baby @foo@. @bar@", interpolate( foo, m, "@", "@" ) );
+        assertEquals("jason is an asshole. @not.interpolated@ baby @foo@. @bar@", interpolate(foo, m, "@", "@"));
     }
 
     /**
@@ -185,16 +168,14 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInterpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd()
-        throws Exception
-    {
+    public void testInterpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "@name@ is an @foobarred@";
 
-        assertEquals( "jason is an @foobarred@", interpolate( foo, m, "@", "@" ) );
+        assertEquals("jason is an @foobarred@", interpolate(foo, m, "@", "@"));
     }
 
     /**
@@ -203,16 +184,14 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInterpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd()
-        throws Exception
-    {
+    public void testInterpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "@name@ is an @noun@";
 
-        assertEquals( "jason is an asshole", interpolate( foo, m, "@", "@" ) );
+        assertEquals("jason is an asshole", interpolate(foo, m, "@", "@"));
     }
 
     /**
@@ -221,32 +200,25 @@ public class InterpolationFilterReaderTest
      * @throws java.lang.Exception if any.
      */
     @Test
-    public void testInterpolationWithSpecifiedBoundaryTokensAndAdditionalTokenCharacter()
-        throws Exception
-    {
+    public void testInterpolationWithSpecifiedBoundaryTokensAndAdditionalTokenCharacter() throws Exception {
         Map<String, String> m = new HashMap<String, String>();
-        m.put( "name", "jason" );
-        m.put( "noun", "asshole" );
+        m.put("name", "jason");
+        m.put("noun", "asshole");
 
         String foo = "@name@ (known as jason@somewhere) is an @noun@";
 
-        assertEquals( "jason (known as jason@somewhere) is an asshole", interpolate( foo, m, "@", "@" ) );
+        assertEquals("jason (known as jason@somewhere) is an asshole", interpolate(foo, m, "@", "@"));
     }
 
     // ----------------------------------------------------------------------
     //
     // ----------------------------------------------------------------------
 
-    private String interpolate( String input, Map context )
-        throws Exception
-    {
-        return IOUtil.toString( new InterpolationFilterReader( new StringReader( input ), context ) );
+    private String interpolate(String input, Map context) throws Exception {
+        return IOUtil.toString(new InterpolationFilterReader(new StringReader(input), context));
     }
 
-    private String interpolate( String input, Map context, String startToken, String endToken )
-        throws Exception
-    {
-        return IOUtil.toString( new InterpolationFilterReader( new StringReader( input ), context, startToken,
-                                                               endToken ) );
+    private String interpolate(String input, Map context, String startToken, String endToken) throws Exception {
+        return IOUtil.toString(new InterpolationFilterReader(new StringReader(input), context, startToken, endToken));
     }
 }

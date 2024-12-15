@@ -25,27 +25,25 @@ import java.io.Writer;
  * <li>PROPERTY_SERIALIZER_LINE_SEPARATOR
  * </ul>
  */
-public class MXSerializer
-    implements XmlSerializer
-{
-    protected final static String XML_URI = "http://www.w3.org/XML/1998/namespace";
+public class MXSerializer implements XmlSerializer {
+    protected static final String XML_URI = "http://www.w3.org/XML/1998/namespace";
 
-    protected final static String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
+    protected static final String XMLNS_URI = "http://www.w3.org/2000/xmlns/";
 
     private static final boolean TRACE_SIZING = false;
 
     protected final String FEATURE_SERIALIZER_ATTVALUE_USE_APOSTROPHE =
-        "http://xmlpull.org/v1/doc/features.html#serializer-attvalue-use-apostrophe";
+            "http://xmlpull.org/v1/doc/features.html#serializer-attvalue-use-apostrophe";
 
     protected final String FEATURE_NAMES_INTERNED = "http://xmlpull.org/v1/doc/features.html#names-interned";
 
     protected final String PROPERTY_SERIALIZER_INDENTATION =
-        "http://xmlpull.org/v1/doc/properties.html#serializer-indentation";
+            "http://xmlpull.org/v1/doc/properties.html#serializer-indentation";
 
     protected final String PROPERTY_SERIALIZER_LINE_SEPARATOR =
-        "http://xmlpull.org/v1/doc/properties.html#serializer-line-separator";
+            "http://xmlpull.org/v1/doc/properties.html#serializer-line-separator";
 
-    protected final static String PROPERTY_LOCATION = "http://xmlpull.org/v1/doc/properties.html#location";
+    protected static final String PROPERTY_LOCATION = "http://xmlpull.org/v1/doc/properties.html#location";
 
     // properties/features
     protected boolean namesInterned;
@@ -101,36 +99,30 @@ public class MXSerializer
 
     protected static final String precomputedPrefixes[];
 
-    static
-    {
+    static {
         precomputedPrefixes = new String[32]; // arbitrary number ...
-        for ( int i = 0; i < precomputedPrefixes.length; i++ )
-        {
-            precomputedPrefixes[i] = ( "n" + i ).intern();
+        for (int i = 0; i < precomputedPrefixes.length; i++) {
+            precomputedPrefixes[i] = ("n" + i).intern();
         }
     }
 
     private boolean checkNamesInterned = false;
 
-    private void checkInterning( String name )
-    {
-        if ( namesInterned && name != name.intern() )
-        {
-            throw new IllegalArgumentException( "all names passed as arguments must be interned"
-                + "when NAMES INTERNED feature is enabled" );
+    private void checkInterning(String name) {
+        if (namesInterned && name != name.intern()) {
+            throw new IllegalArgumentException(
+                    "all names passed as arguments must be interned" + "when NAMES INTERNED feature is enabled");
         }
     }
 
-    protected void reset()
-    {
+    protected void reset() {
         location = null;
         out = null;
         autoDeclaredPrefixes = 0;
         depth = 0;
 
         // nullify references on all levels to allow it to be GCed
-        for ( int i = 0; i < elNamespaceCount.length; i++ )
-        {
+        for (int i = 0; i < elNamespaceCount.length; i++) {
             elName[i] = null;
             elNamespace[i] = null;
             elNamespaceCount[i] = 2;
@@ -165,59 +157,49 @@ public class MXSerializer
         seenBracketBracket = false;
     }
 
-    protected void ensureElementsCapacity()
-    {
+    protected void ensureElementsCapacity() {
         final int elStackSize = elName.length;
         // assert (depth + 1) >= elName.length;
         // we add at least one extra slot ...
-        final int newSize = ( depth >= 7 ? 2 * depth : 8 ) + 2; // = lucky 7 + 1 //25
-        if ( TRACE_SIZING )
-        {
-            System.err.println( getClass().getName() + " elStackSize " + elStackSize + " ==> " + newSize );
+        final int newSize = (depth >= 7 ? 2 * depth : 8) + 2; // = lucky 7 + 1 //25
+        if (TRACE_SIZING) {
+            System.err.println(getClass().getName() + " elStackSize " + elStackSize + " ==> " + newSize);
         }
         final boolean needsCopying = elStackSize > 0;
         String[] arr = null;
         // reuse arr local variable slot
         arr = new String[newSize];
-        if ( needsCopying )
-            System.arraycopy( elName, 0, arr, 0, elStackSize );
+        if (needsCopying) System.arraycopy(elName, 0, arr, 0, elStackSize);
         elName = arr;
         arr = new String[newSize];
-        if ( needsCopying )
-            System.arraycopy( elNamespace, 0, arr, 0, elStackSize );
+        if (needsCopying) System.arraycopy(elNamespace, 0, arr, 0, elStackSize);
         elNamespace = arr;
 
         final int[] iarr = new int[newSize];
-        if ( needsCopying )
-        {
-            System.arraycopy( elNamespaceCount, 0, iarr, 0, elStackSize );
-        }
-        else
-        {
+        if (needsCopying) {
+            System.arraycopy(elNamespaceCount, 0, iarr, 0, elStackSize);
+        } else {
             // special initialization
             iarr[0] = 0;
         }
         elNamespaceCount = iarr;
     }
 
-    protected void ensureNamespacesCapacity()
-    { // int size) {
+    protected void ensureNamespacesCapacity() { // int size) {
         // int namespaceSize = namespacePrefix != null ? namespacePrefix.length : 0;
         // assert (namespaceEnd >= namespacePrefix.length);
 
         // if(size >= namespaceSize) {
         // int newSize = size > 7 ? 2 * size : 8; // = lucky 7 + 1 //25
         final int newSize = namespaceEnd > 7 ? 2 * namespaceEnd : 8;
-        if ( TRACE_SIZING )
-        {
-            System.err.println( getClass().getName() + " namespaceSize " + namespacePrefix.length + " ==> " + newSize );
+        if (TRACE_SIZING) {
+            System.err.println(getClass().getName() + " namespaceSize " + namespacePrefix.length + " ==> " + newSize);
         }
         final String[] newNamespacePrefix = new String[newSize];
         final String[] newNamespaceUri = new String[newSize];
-        if ( namespacePrefix != null )
-        {
-            System.arraycopy( namespacePrefix, 0, newNamespacePrefix, 0, namespaceEnd );
-            System.arraycopy( namespaceUri, 0, newNamespaceUri, 0, namespaceEnd );
+        if (namespacePrefix != null) {
+            System.arraycopy(namespacePrefix, 0, newNamespacePrefix, 0, namespaceEnd);
+            System.arraycopy(namespaceUri, 0, newNamespaceUri, 0, namespaceEnd);
         }
         namespacePrefix = newNamespacePrefix;
         namespaceUri = newNamespaceUri;
@@ -237,45 +219,29 @@ public class MXSerializer
     }
 
     @Override
-    public void setFeature( String name, boolean state )
-        throws IllegalArgumentException, IllegalStateException
-    {
-        if ( name == null )
-        {
-            throw new IllegalArgumentException( "feature name can not be null" );
+    public void setFeature(String name, boolean state) throws IllegalArgumentException, IllegalStateException {
+        if (name == null) {
+            throw new IllegalArgumentException("feature name can not be null");
         }
-        if ( FEATURE_NAMES_INTERNED.equals( name ) )
-        {
+        if (FEATURE_NAMES_INTERNED.equals(name)) {
             namesInterned = state;
-        }
-        else if ( FEATURE_SERIALIZER_ATTVALUE_USE_APOSTROPHE.equals( name ) )
-        {
+        } else if (FEATURE_SERIALIZER_ATTVALUE_USE_APOSTROPHE.equals(name)) {
             attributeUseApostrophe = state;
-        }
-        else
-        {
-            throw new IllegalStateException( "unsupported feature " + name );
+        } else {
+            throw new IllegalStateException("unsupported feature " + name);
         }
     }
 
     @Override
-    public boolean getFeature( String name )
-        throws IllegalArgumentException
-    {
-        if ( name == null )
-        {
-            throw new IllegalArgumentException( "feature name can not be null" );
+    public boolean getFeature(String name) throws IllegalArgumentException {
+        if (name == null) {
+            throw new IllegalArgumentException("feature name can not be null");
         }
-        if ( FEATURE_NAMES_INTERNED.equals( name ) )
-        {
+        if (FEATURE_NAMES_INTERNED.equals(name)) {
             return namesInterned;
-        }
-        else if ( FEATURE_SERIALIZER_ATTVALUE_USE_APOSTROPHE.equals( name ) )
-        {
+        } else if (FEATURE_SERIALIZER_ATTVALUE_USE_APOSTROPHE.equals(name)) {
             return attributeUseApostrophe;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -297,86 +263,64 @@ public class MXSerializer
      * For maximum efficiency when writing indents the required output is pre-computed This is internal function that
      * recomputes buffer after user requested changes.
      */
-    protected void rebuildIndentationBuf()
-    {
-        if ( doIndent == false )
-            return;
+    protected void rebuildIndentationBuf() {
+        if (doIndent == false) return;
         final int maxIndent = 65; // hardcoded maximum indentation size in characters
         int bufSize = 0;
         offsetNewLine = 0;
-        if ( writeLineSeparator )
-        {
+        if (writeLineSeparator) {
             offsetNewLine = lineSeparator.length();
             bufSize += offsetNewLine;
         }
         maxIndentLevel = 0;
-        if ( writeIndentation )
-        {
+        if (writeIndentation) {
             indentationJump = indentationString.length();
             maxIndentLevel = maxIndent / indentationJump;
             bufSize += maxIndentLevel * indentationJump;
         }
-        if ( indentationBuf == null || indentationBuf.length < bufSize )
-        {
+        if (indentationBuf == null || indentationBuf.length < bufSize) {
             indentationBuf = new char[bufSize + 8];
         }
         int bufPos = 0;
-        if ( writeLineSeparator )
-        {
-            for ( int i = 0; i < lineSeparator.length(); i++ )
-            {
-                indentationBuf[bufPos++] = lineSeparator.charAt( i );
+        if (writeLineSeparator) {
+            for (int i = 0; i < lineSeparator.length(); i++) {
+                indentationBuf[bufPos++] = lineSeparator.charAt(i);
             }
         }
-        if ( writeIndentation )
-        {
-            for ( int i = 0; i < maxIndentLevel; i++ )
-            {
-                for ( int j = 0; j < indentationString.length(); j++ )
-                {
-                    indentationBuf[bufPos++] = indentationString.charAt( j );
+        if (writeIndentation) {
+            for (int i = 0; i < maxIndentLevel; i++) {
+                for (int j = 0; j < indentationString.length(); j++) {
+                    indentationBuf[bufPos++] = indentationString.charAt(j);
                 }
             }
         }
     }
 
     // if(doIndent) writeIndent();
-    protected void writeIndent()
-        throws IOException
-    {
+    protected void writeIndent() throws IOException {
         final int start = writeLineSeparator ? 0 : offsetNewLine;
-        final int level = ( depth > maxIndentLevel ) ? maxIndentLevel : depth;
-        out.write( indentationBuf, start, ( level * indentationJump ) + offsetNewLine );
+        final int level = (depth > maxIndentLevel) ? maxIndentLevel : depth;
+        out.write(indentationBuf, start, (level * indentationJump) + offsetNewLine);
     }
 
     @Override
-    public void setProperty( String name, Object value )
-        throws IllegalArgumentException, IllegalStateException
-    {
-        if ( name == null )
-        {
-            throw new IllegalArgumentException( "property name can not be null" );
+    public void setProperty(String name, Object value) throws IllegalArgumentException, IllegalStateException {
+        if (name == null) {
+            throw new IllegalArgumentException("property name can not be null");
         }
-        if ( PROPERTY_SERIALIZER_INDENTATION.equals( name ) )
-        {
+        if (PROPERTY_SERIALIZER_INDENTATION.equals(name)) {
             indentationString = (String) value;
-        }
-        else if ( PROPERTY_SERIALIZER_LINE_SEPARATOR.equals( name ) )
-        {
+        } else if (PROPERTY_SERIALIZER_LINE_SEPARATOR.equals(name)) {
             lineSeparator = (String) value;
-        }
-        else if ( PROPERTY_LOCATION.equals( name ) )
-        {
+        } else if (PROPERTY_LOCATION.equals(name)) {
             location = (String) value;
-        }
-        else
-        {
-            throw new IllegalStateException( "unsupported property " + name );
+        } else {
+            throw new IllegalStateException("unsupported property " + name);
         }
         writeLineSeparator = lineSeparator != null && lineSeparator.length() > 0;
         writeIndentation = indentationString != null && indentationString.length() > 0;
         // optimize - do not write when nothing to write ...
-        doIndent = indentationString != null && ( writeLineSeparator || writeIndentation );
+        doIndent = indentationString != null && (writeLineSeparator || writeIndentation);
         // NOTE: when indentationString == null there is no indentation
         // (even though writeLineSeparator may be true ...)
         rebuildIndentationBuf();
@@ -384,125 +328,91 @@ public class MXSerializer
     }
 
     @Override
-    public Object getProperty( String name )
-        throws IllegalArgumentException
-    {
-        if ( name == null )
-        {
-            throw new IllegalArgumentException( "property name can not be null" );
+    public Object getProperty(String name) throws IllegalArgumentException {
+        if (name == null) {
+            throw new IllegalArgumentException("property name can not be null");
         }
-        if ( PROPERTY_SERIALIZER_INDENTATION.equals( name ) )
-        {
+        if (PROPERTY_SERIALIZER_INDENTATION.equals(name)) {
             return indentationString;
-        }
-        else if ( PROPERTY_SERIALIZER_LINE_SEPARATOR.equals( name ) )
-        {
+        } else if (PROPERTY_SERIALIZER_LINE_SEPARATOR.equals(name)) {
             return lineSeparator;
-        }
-        else if ( PROPERTY_LOCATION.equals( name ) )
-        {
+        } else if (PROPERTY_LOCATION.equals(name)) {
             return location;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
-    private String getLocation()
-    {
+    private String getLocation() {
         return location != null ? " @" + location : "";
     }
 
     // this is special method that can be accessed directly to retrieve Writer serializer is using
-    public Writer getWriter()
-    {
+    public Writer getWriter() {
         return out;
     }
 
     @Override
-    public void setOutput( Writer writer )
-    {
+    public void setOutput(Writer writer) {
         reset();
         out = writer;
     }
 
     @Override
-    public void setOutput( OutputStream os, String encoding )
-        throws IOException
-    {
-        if ( os == null )
-            throw new IllegalArgumentException( "output stream can not be null" );
+    public void setOutput(OutputStream os, String encoding) throws IOException {
+        if (os == null) throw new IllegalArgumentException("output stream can not be null");
         reset();
-        if ( encoding != null )
-        {
-            out = new OutputStreamWriter( os, encoding );
-        }
-        else
-        {
-            out = new OutputStreamWriter( os );
+        if (encoding != null) {
+            out = new OutputStreamWriter(os, encoding);
+        } else {
+            out = new OutputStreamWriter(os);
         }
     }
 
     @Override
-    public void startDocument( String encoding, Boolean standalone )
-        throws IOException
-    {
+    public void startDocument(String encoding, Boolean standalone) throws IOException {
         char apos = attributeUseApostrophe ? '\'' : '"';
-        if ( attributeUseApostrophe )
-        {
-            out.write( "<?xml version='1.0'" );
+        if (attributeUseApostrophe) {
+            out.write("<?xml version='1.0'");
+        } else {
+            out.write("<?xml version=\"1.0\"");
         }
-        else
-        {
-            out.write( "<?xml version=\"1.0\"" );
-        }
-        if ( encoding != null )
-        {
-            out.write( " encoding=" );
-            out.write( apos );
-            out.write( encoding );
-            out.write( apos );
+        if (encoding != null) {
+            out.write(" encoding=");
+            out.write(apos);
+            out.write(encoding);
+            out.write(apos);
             // out.write('\'');
         }
-        if ( standalone != null )
-        {
-            out.write( " standalone=" );
-            out.write( apos );
-            if ( standalone )
-            {
-                out.write( "yes" );
+        if (standalone != null) {
+            out.write(" standalone=");
+            out.write(apos);
+            if (standalone) {
+                out.write("yes");
+            } else {
+                out.write("no");
             }
-            else
-            {
-                out.write( "no" );
-            }
-            out.write( apos );
+            out.write(apos);
             // if(standalone.booleanValue()) {
             // out.write(" standalone='yes'");
             // } else {
             // out.write(" standalone='no'");
             // }
         }
-        out.write( "?>" );
-        if ( writeLineSeparator )
-        {
-            out.write( lineSeparator );
+        out.write("?>");
+        if (writeLineSeparator) {
+            out.write(lineSeparator);
         }
     }
 
     @Override
-    public void endDocument()
-        throws IOException
-    {
+    public void endDocument() throws IOException {
         // close all unclosed tag;
-        while ( depth > 0 )
-        {
-            endTag( elNamespace[depth], elName[depth] );
+        while (depth > 0) {
+            endTag(elNamespace[depth], elName[depth]);
         }
-        if ( writeLineSeparator )
-        {
-            out.write( lineSeparator );
+        if (writeLineSeparator) {
+            out.write(lineSeparator);
         }
         // assert depth == 0;
         // assert startTagIncomplete == false;
@@ -511,54 +421,37 @@ public class MXSerializer
     }
 
     @Override
-    public void setPrefix( String prefix, String namespace )
-        throws IOException
-    {
-        if ( startTagIncomplete )
-            closeStartTag();
+    public void setPrefix(String prefix, String namespace) throws IOException {
+        if (startTagIncomplete) closeStartTag();
         // assert prefix != null;
         // assert namespace != null;
-        if ( prefix == null )
-        {
+        if (prefix == null) {
             prefix = "";
         }
-        if ( !namesInterned )
-        {
+        if (!namesInterned) {
             prefix = prefix.intern(); // will throw NPE if prefix==null
-        }
-        else if ( checkNamesInterned )
-        {
-            checkInterning( prefix );
-        }
-        else if ( prefix == null )
-        {
-            throw new IllegalArgumentException( "prefix must be not null" + getLocation() );
+        } else if (checkNamesInterned) {
+            checkInterning(prefix);
+        } else if (prefix == null) {
+            throw new IllegalArgumentException("prefix must be not null" + getLocation());
         }
 
         // check that prefix is not duplicated ...
-        for ( int i = elNamespaceCount[depth]; i < namespaceEnd; i++ )
-        {
-            if ( prefix == namespacePrefix[i] )
-            {
-                throw new IllegalStateException( "duplicated prefix " + printable( prefix ) + getLocation() );
+        for (int i = elNamespaceCount[depth]; i < namespaceEnd; i++) {
+            if (prefix == namespacePrefix[i]) {
+                throw new IllegalStateException("duplicated prefix " + printable(prefix) + getLocation());
             }
         }
 
-        if ( !namesInterned )
-        {
+        if (!namesInterned) {
             namespace = namespace.intern();
-        }
-        else if ( checkNamesInterned )
-        {
-            checkInterning( namespace );
-        }
-        else if ( namespace == null )
-        {
-            throw new IllegalArgumentException( "namespace must be not null" + getLocation() );
+        } else if (checkNamesInterned) {
+            checkInterning(namespace);
+        } else if (namespace == null) {
+            throw new IllegalArgumentException("namespace must be not null" + getLocation());
         }
 
-        if ( namespaceEnd >= namespacePrefix.length )
-        {
+        if (namespaceEnd >= namespacePrefix.length) {
             ensureNamespacesCapacity();
         }
         namespacePrefix[namespaceEnd] = prefix;
@@ -567,44 +460,33 @@ public class MXSerializer
         setPrefixCalled = true;
     }
 
-    protected String lookupOrDeclarePrefix( String namespace )
-    {
-        return getPrefix( namespace, true );
+    protected String lookupOrDeclarePrefix(String namespace) {
+        return getPrefix(namespace, true);
     }
 
     @Override
-    public String getPrefix( String namespace, boolean generatePrefix )
-    {
+    public String getPrefix(String namespace, boolean generatePrefix) {
         // assert namespace != null;
-        if ( !namesInterned )
-        {
+        if (!namesInterned) {
             // when String is interned we can do much faster namespace stack lookups ...
             namespace = namespace.intern();
-        }
-        else if ( checkNamesInterned )
-        {
-            checkInterning( namespace );
+        } else if (checkNamesInterned) {
+            checkInterning(namespace);
             // assert namespace != namespace.intern();
         }
-        if ( namespace == null )
-        {
-            throw new IllegalArgumentException( "namespace must be not null" + getLocation() );
-        }
-        else if ( namespace.length() == 0 )
-        {
-            throw new IllegalArgumentException( "default namespace cannot have prefix" + getLocation() );
+        if (namespace == null) {
+            throw new IllegalArgumentException("namespace must be not null" + getLocation());
+        } else if (namespace.length() == 0) {
+            throw new IllegalArgumentException("default namespace cannot have prefix" + getLocation());
         }
 
         // first check if namespace is already in scope
-        for ( int i = namespaceEnd - 1; i >= 0; --i )
-        {
-            if ( namespace == namespaceUri[i] )
-            {
+        for (int i = namespaceEnd - 1; i >= 0; --i) {
+            if (namespace == namespaceUri[i]) {
                 final String prefix = namespacePrefix[i];
                 // now check that prefix is still in scope
-                for ( int p = namespaceEnd - 1; p > i; --p )
-                {
-                    if ( prefix == namespacePrefix[p] )
+                for (int p = namespaceEnd - 1; p > i; --p) {
+                    if (prefix == namespacePrefix[p])
                         continue; // too bad - prefix is redeclared with different namespace
                 }
                 return prefix;
@@ -612,35 +494,29 @@ public class MXSerializer
         }
 
         // so not found it ...
-        if ( !generatePrefix )
-        {
+        if (!generatePrefix) {
             return null;
         }
-        return generatePrefix( namespace );
+        return generatePrefix(namespace);
     }
 
-    private String generatePrefix( String namespace )
-    {
+    private String generatePrefix(String namespace) {
         // assert namespace == namespace.intern();
-        while ( true )
-        {
+        while (true) {
             ++autoDeclaredPrefixes;
             // fast lookup uses table that was pre-initialized in static{} ....
-            final String prefix =
-                autoDeclaredPrefixes < precomputedPrefixes.length ? precomputedPrefixes[autoDeclaredPrefixes]
-                                : ( "n" + autoDeclaredPrefixes ).intern();
+            final String prefix = autoDeclaredPrefixes < precomputedPrefixes.length
+                    ? precomputedPrefixes[autoDeclaredPrefixes]
+                    : ("n" + autoDeclaredPrefixes).intern();
             // make sure this prefix is not declared in any scope (avoid hiding in-scope prefixes)!
-            for ( int i = namespaceEnd - 1; i >= 0; --i )
-            {
-                if ( prefix == namespacePrefix[i] )
-                {
+            for (int i = namespaceEnd - 1; i >= 0; --i) {
+                if (prefix == namespacePrefix[i]) {
                     continue; // prefix is already declared - generate new and try again
                 }
             }
             // declare prefix
 
-            if ( namespaceEnd >= namespacePrefix.length )
-            {
+            if (namespaceEnd >= namespacePrefix.length) {
                 ensureNamespacesCapacity();
             }
             namespacePrefix[namespaceEnd] = prefix;
@@ -652,84 +528,66 @@ public class MXSerializer
     }
 
     @Override
-    public int getDepth()
-    {
+    public int getDepth() {
         return depth;
     }
 
     @Override
-    public String getNamespace()
-    {
+    public String getNamespace() {
         return elNamespace[depth];
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return elName[depth];
     }
 
     @Override
-    public XmlSerializer startTag( String namespace, String name )
-        throws IOException
-    {
+    public XmlSerializer startTag(String namespace, String name) throws IOException {
 
-        if ( startTagIncomplete )
-        {
+        if (startTagIncomplete) {
             closeStartTag();
         }
         seenBracket = seenBracketBracket = false;
-        if ( doIndent && depth > 0 && seenTag )
-        {
+        if (doIndent && depth > 0 && seenTag) {
             writeIndent();
         }
         seenTag = true;
         setPrefixCalled = false;
         startTagIncomplete = true;
         ++depth;
-        if ( ( depth + 1 ) >= elName.length )
-        {
+        if ((depth + 1) >= elName.length) {
             ensureElementsCapacity();
         }
         //// assert namespace != null;
 
-        if ( checkNamesInterned && namesInterned )
-            checkInterning( namespace );
-        elNamespace[depth] = ( namesInterned || namespace == null ) ? namespace : namespace.intern();
+        if (checkNamesInterned && namesInterned) checkInterning(namespace);
+        elNamespace[depth] = (namesInterned || namespace == null) ? namespace : namespace.intern();
         // assert name != null;
         // elName[ depth ] = name;
-        if ( checkNamesInterned && namesInterned )
-            checkInterning( name );
-        elName[depth] = ( namesInterned || name == null ) ? name : name.intern();
-        if ( out == null )
-        {
-            throw new IllegalStateException( "setOutput() must called set before serialization can start" );
+        if (checkNamesInterned && namesInterned) checkInterning(name);
+        elName[depth] = (namesInterned || name == null) ? name : name.intern();
+        if (out == null) {
+            throw new IllegalStateException("setOutput() must called set before serialization can start");
         }
-        out.write( '<' );
-        if ( namespace != null )
-        {
+        out.write('<');
+        if (namespace != null) {
 
-            if ( namespace.length() > 0 )
-            {
+            if (namespace.length() > 0) {
                 // ALEK: in future make it as feature on serializer
                 String prefix = null;
-                if ( depth > 0 && ( namespaceEnd - elNamespaceCount[depth - 1] ) == 1 )
-                {
+                if (depth > 0 && (namespaceEnd - elNamespaceCount[depth - 1]) == 1) {
                     // if only one prefix was declared un-declare it if prefix is already declared on parent el with the
                     // same URI
                     String uri = namespaceUri[namespaceEnd - 1];
-                    if ( uri == namespace || uri.equals( namespace ) )
-                    {
+                    if (uri == namespace || uri.equals(namespace)) {
                         String elPfx = namespacePrefix[namespaceEnd - 1];
                         // 2 == to skip predefined namespaces (xml and xmlns ...)
-                        for ( int pos = elNamespaceCount[depth - 1] - 1; pos >= 2; --pos )
-                        {
+                        for (int pos = elNamespaceCount[depth - 1] - 1; pos >= 2; --pos) {
                             String pf = namespacePrefix[pos];
-                            if ( pf == elPfx || pf.equals( elPfx ) )
-                            {
+                            if (pf == elPfx || pf.equals(elPfx)) {
                                 String n = namespaceUri[pos];
-                                if ( n == uri || n.equals( uri ) )
-                                {
+                                if (n == uri || n.equals(uri)) {
                                     --namespaceEnd; // un-declare namespace
                                     prefix = elPfx;
                                 }
@@ -738,224 +596,175 @@ public class MXSerializer
                         }
                     }
                 }
-                if ( prefix == null )
-                {
-                    prefix = lookupOrDeclarePrefix( namespace );
+                if (prefix == null) {
+                    prefix = lookupOrDeclarePrefix(namespace);
                 }
                 // assert prefix != null;
                 // make sure that default ("") namespace to not print ":"
-                if ( prefix.length() > 0 )
-                {
-                    out.write( prefix );
-                    out.write( ':' );
+                if (prefix.length() > 0) {
+                    out.write(prefix);
+                    out.write(':');
                 }
-            }
-            else
-            {
+            } else {
                 // make sure that default namespace can be declared
-                for ( int i = namespaceEnd - 1; i >= 0; --i )
-                {
-                    if ( namespacePrefix[i] == "" )
-                    {
+                for (int i = namespaceEnd - 1; i >= 0; --i) {
+                    if (namespacePrefix[i] == "") {
                         final String uri = namespaceUri[i];
-                        if ( uri == null )
-                        {
+                        if (uri == null) {
                             // declare default namespace
-                            setPrefix( "", "" );
-                        }
-                        else if ( uri.length() > 0 )
-                        {
-                            throw new IllegalStateException( "start tag can not be written in empty default namespace "
-                                + "as default namespace is currently bound to '" + uri + "'" + getLocation() );
+                            setPrefix("", "");
+                        } else if (uri.length() > 0) {
+                            throw new IllegalStateException("start tag can not be written in empty default namespace "
+                                    + "as default namespace is currently bound to '" + uri + "'" + getLocation());
                         }
                         break;
                     }
                 }
             }
-
         }
-        out.write( name );
+        out.write(name);
         return this;
     }
 
     @Override
-    public XmlSerializer attribute( String namespace, String name, String value )
-        throws IOException
-    {
-        if ( !startTagIncomplete )
-        {
-            throw new IllegalArgumentException( "startTag() must be called before attribute()" + getLocation() );
+    public XmlSerializer attribute(String namespace, String name, String value) throws IOException {
+        if (!startTagIncomplete) {
+            throw new IllegalArgumentException("startTag() must be called before attribute()" + getLocation());
         }
         // assert setPrefixCalled == false;
-        out.write( ' ' );
+        out.write(' ');
         //// assert namespace != null;
-        if ( namespace != null && namespace.length() > 0 )
-        {
+        if (namespace != null && namespace.length() > 0) {
             // namespace = namespace.intern();
-            if ( !namesInterned )
-            {
+            if (!namesInterned) {
                 namespace = namespace.intern();
+            } else if (checkNamesInterned) {
+                checkInterning(namespace);
             }
-            else if ( checkNamesInterned )
-            {
-                checkInterning( namespace );
-            }
-            String prefix = lookupOrDeclarePrefix( namespace );
+            String prefix = lookupOrDeclarePrefix(namespace);
             // assert( prefix != null);
-            if ( prefix.length() == 0 )
-            {
+            if (prefix.length() == 0) {
                 // needs to declare prefix to hold default namespace
                 // NOTE: attributes such as a='b' are in NO namespace
-                prefix = generatePrefix( namespace );
+                prefix = generatePrefix(namespace);
             }
-            out.write( prefix );
-            out.write( ':' );
+            out.write(prefix);
+            out.write(':');
             // if(prefix.length() > 0) {
             // out.write(prefix);
             // out.write(':');
             // }
         }
         // assert name != null;
-        out.write( name );
-        out.write( '=' );
+        out.write(name);
+        out.write('=');
         // assert value != null;
-        out.write( attributeUseApostrophe ? '\'' : '"' );
-        writeAttributeValue( value, out );
-        out.write( attributeUseApostrophe ? '\'' : '"' );
+        out.write(attributeUseApostrophe ? '\'' : '"');
+        writeAttributeValue(value, out);
+        out.write(attributeUseApostrophe ? '\'' : '"');
         return this;
     }
 
-    protected void closeStartTag()
-        throws IOException
-    {
-        if ( finished )
-        {
-            throw new IllegalArgumentException( "trying to write past already finished output" + getLocation() );
+    protected void closeStartTag() throws IOException {
+        if (finished) {
+            throw new IllegalArgumentException("trying to write past already finished output" + getLocation());
         }
-        if ( seenBracket )
-        {
+        if (seenBracket) {
             seenBracket = seenBracketBracket = false;
         }
-        if ( startTagIncomplete || setPrefixCalled )
-        {
-            if ( setPrefixCalled )
-            {
-                throw new IllegalArgumentException( "startTag() must be called immediately after setPrefix()"
-                    + getLocation() );
+        if (startTagIncomplete || setPrefixCalled) {
+            if (setPrefixCalled) {
+                throw new IllegalArgumentException(
+                        "startTag() must be called immediately after setPrefix()" + getLocation());
             }
-            if ( !startTagIncomplete )
-            {
-                throw new IllegalArgumentException( "trying to close start tag that is not opened" + getLocation() );
+            if (!startTagIncomplete) {
+                throw new IllegalArgumentException("trying to close start tag that is not opened" + getLocation());
             }
 
             // write all namespace declarations!
             writeNamespaceDeclarations();
-            out.write( '>' );
+            out.write('>');
             elNamespaceCount[depth] = namespaceEnd;
             startTagIncomplete = false;
         }
     }
 
-    private void writeNamespaceDeclarations()
-        throws IOException
-    {
+    private void writeNamespaceDeclarations() throws IOException {
         // int start = elNamespaceCount[ depth - 1 ];
-        for ( int i = elNamespaceCount[depth - 1]; i < namespaceEnd; i++ )
-        {
-            if ( doIndent && namespaceUri[i].length() > 40 )
-            {
+        for (int i = elNamespaceCount[depth - 1]; i < namespaceEnd; i++) {
+            if (doIndent && namespaceUri[i].length() > 40) {
                 writeIndent();
-                out.write( " " );
+                out.write(" ");
             }
-            if ( namespacePrefix[i] != "" )
-            {
-                out.write( " xmlns:" );
-                out.write( namespacePrefix[i] );
-                out.write( '=' );
+            if (namespacePrefix[i] != "") {
+                out.write(" xmlns:");
+                out.write(namespacePrefix[i]);
+                out.write('=');
+            } else {
+                out.write(" xmlns=");
             }
-            else
-            {
-                out.write( " xmlns=" );
-            }
-            out.write( attributeUseApostrophe ? '\'' : '"' );
+            out.write(attributeUseApostrophe ? '\'' : '"');
 
             // NOTE: escaping of namespace value the same way as attributes!!!!
-            writeAttributeValue( namespaceUri[i], out );
+            writeAttributeValue(namespaceUri[i], out);
 
-            out.write( attributeUseApostrophe ? '\'' : '"' );
+            out.write(attributeUseApostrophe ? '\'' : '"');
         }
     }
 
     @Override
-    public XmlSerializer endTag( String namespace, String name )
-        throws IOException
-    {
+    public XmlSerializer endTag(String namespace, String name) throws IOException {
         // check that level is valid
         //// assert namespace != null;
         // if(namespace != null) {
         // namespace = namespace.intern();
         // }
         seenBracket = seenBracketBracket = false;
-        if ( namespace != null )
-        {
-            if ( !namesInterned )
-            {
+        if (namespace != null) {
+            if (!namesInterned) {
                 namespace = namespace.intern();
-            }
-            else if ( checkNamesInterned )
-            {
-                checkInterning( namespace );
+            } else if (checkNamesInterned) {
+                checkInterning(namespace);
             }
         }
 
-        if ( namespace != elNamespace[depth] )
-        {
-            throw new IllegalArgumentException( "expected namespace " + printable( elNamespace[depth] ) + " and not "
-                + printable( namespace ) + getLocation() );
+        if (namespace != elNamespace[depth]) {
+            throw new IllegalArgumentException("expected namespace " + printable(elNamespace[depth]) + " and not "
+                    + printable(namespace) + getLocation());
         }
-        if ( name == null )
-        {
-            throw new IllegalArgumentException( "end tag name can not be null" + getLocation() );
+        if (name == null) {
+            throw new IllegalArgumentException("end tag name can not be null" + getLocation());
         }
-        if ( checkNamesInterned && namesInterned )
-        {
-            checkInterning( name );
+        if (checkNamesInterned && namesInterned) {
+            checkInterning(name);
         }
 
-        if ( ( !namesInterned && !name.equals( elName[depth] ) ) || ( namesInterned && name != elName[depth] ) )
-        {
-            throw new IllegalArgumentException( "expected element name " + printable( elName[depth] ) + " and not "
-                + printable( name ) + getLocation() );
+        if ((!namesInterned && !name.equals(elName[depth])) || (namesInterned && name != elName[depth])) {
+            throw new IllegalArgumentException("expected element name " + printable(elName[depth]) + " and not "
+                    + printable(name) + getLocation());
         }
-        if ( startTagIncomplete )
-        {
+        if (startTagIncomplete) {
             writeNamespaceDeclarations();
-            out.write( " />" ); // space is added to make it easier to work in XHTML!!!
+            out.write(" />"); // space is added to make it easier to work in XHTML!!!
             --depth;
-        }
-        else
-        {
+        } else {
             --depth;
             // assert startTagIncomplete == false;
-            if ( doIndent && seenTag )
-            {
+            if (doIndent && seenTag) {
                 writeIndent();
             }
-            out.write( "</" );
-            if ( namespace != null && namespace.length() > 0 )
-            {
+            out.write("</");
+            if (namespace != null && namespace.length() > 0) {
                 // TODO prefix should be already known from matching start tag ...
-                final String prefix = lookupOrDeclarePrefix( namespace );
+                final String prefix = lookupOrDeclarePrefix(namespace);
                 // assert( prefix != null);
-                if ( prefix.length() > 0 )
-                {
-                    out.write( prefix );
-                    out.write( ':' );
+                if (prefix.length() > 0) {
+                    out.write(prefix);
+                    out.write(':');
                 }
             }
-            out.write( name );
-            out.write( '>' );
-
+            out.write(name);
+            out.write('>');
         }
         namespaceEnd = elNamespaceCount[depth];
         startTagIncomplete = false;
@@ -964,171 +773,118 @@ public class MXSerializer
     }
 
     @Override
-    public XmlSerializer text( String text )
-        throws IOException
-    {
+    public XmlSerializer text(String text) throws IOException {
         // assert text != null;
-        if ( startTagIncomplete || setPrefixCalled )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        writeElementContent( text, out );
+        if (startTagIncomplete || setPrefixCalled) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        writeElementContent(text, out);
         return this;
     }
 
     @Override
-    public XmlSerializer text( char[] buf, int start, int len )
-        throws IOException
-    {
-        if ( startTagIncomplete || setPrefixCalled )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        writeElementContent( buf, start, len, out );
+    public XmlSerializer text(char[] buf, int start, int len) throws IOException {
+        if (startTagIncomplete || setPrefixCalled) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        writeElementContent(buf, start, len, out);
         return this;
     }
 
     @Override
-    public void cdsect( String text )
-        throws IOException
-    {
-        if ( startTagIncomplete || setPrefixCalled || seenBracket )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        out.write( "<![CDATA[" );
-        out.write( text ); // escape?
-        out.write( "]]>" );
+    public void cdsect(String text) throws IOException {
+        if (startTagIncomplete || setPrefixCalled || seenBracket) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        out.write("<![CDATA[");
+        out.write(text); // escape?
+        out.write("]]>");
     }
 
     @Override
-    public void entityRef( String text )
-        throws IOException
-    {
-        if ( startTagIncomplete || setPrefixCalled || seenBracket )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        out.write( '&' );
-        out.write( text ); // escape?
-        out.write( ';' );
+    public void entityRef(String text) throws IOException {
+        if (startTagIncomplete || setPrefixCalled || seenBracket) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        out.write('&');
+        out.write(text); // escape?
+        out.write(';');
     }
 
     @Override
-    public void processingInstruction( String text )
-        throws IOException
-    {
-        if ( startTagIncomplete || setPrefixCalled || seenBracket )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        out.write( "<?" );
-        out.write( text ); // escape?
-        out.write( "?>" );
+    public void processingInstruction(String text) throws IOException {
+        if (startTagIncomplete || setPrefixCalled || seenBracket) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        out.write("<?");
+        out.write(text); // escape?
+        out.write("?>");
     }
 
     @Override
-    public void comment( String text )
-        throws IOException
-    {
-        if ( startTagIncomplete || setPrefixCalled || seenBracket )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        out.write( "<!--" );
-        out.write( text ); // escape?
-        out.write( "-->" );
+    public void comment(String text) throws IOException {
+        if (startTagIncomplete || setPrefixCalled || seenBracket) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        out.write("<!--");
+        out.write(text); // escape?
+        out.write("-->");
     }
 
     @Override
-    public void docdecl( String text )
-        throws IOException
-    {
-        if ( startTagIncomplete || setPrefixCalled || seenBracket )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        out.write( "<!DOCTYPE " );
-        out.write( text ); // escape?
-        out.write( ">" );
+    public void docdecl(String text) throws IOException {
+        if (startTagIncomplete || setPrefixCalled || seenBracket) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        out.write("<!DOCTYPE ");
+        out.write(text); // escape?
+        out.write(">");
     }
 
     @Override
-    public void ignorableWhitespace( String text )
-        throws IOException
-    {
-        if ( startTagIncomplete || setPrefixCalled || seenBracket )
-            closeStartTag();
-        if ( doIndent && seenTag )
-            seenTag = false;
-        if ( text.length() == 0 )
-        {
-            throw new IllegalArgumentException( "empty string is not allowed for ignorable whitespace"
-                + getLocation() );
+    public void ignorableWhitespace(String text) throws IOException {
+        if (startTagIncomplete || setPrefixCalled || seenBracket) closeStartTag();
+        if (doIndent && seenTag) seenTag = false;
+        if (text.length() == 0) {
+            throw new IllegalArgumentException("empty string is not allowed for ignorable whitespace" + getLocation());
         }
-        out.write( text ); // no escape?
+        out.write(text); // no escape?
     }
 
     @Override
-    public void flush()
-        throws IOException
-    {
-        if ( !finished && startTagIncomplete )
-            closeStartTag();
+    public void flush() throws IOException {
+        if (!finished && startTagIncomplete) closeStartTag();
         out.flush();
     }
 
     // --- utility methods
 
-    protected void writeAttributeValue( String value, Writer out )
-        throws IOException
-    {
+    protected void writeAttributeValue(String value, Writer out) throws IOException {
         // .[apostrophe and <, & escaped],
         final char quot = attributeUseApostrophe ? '\'' : '"';
         final String quotEntity = attributeUseApostrophe ? "&apos;" : "&quot;";
 
         int pos = 0;
-        for ( int i = 0; i < value.length(); i++ )
-        {
-            char ch = value.charAt( i );
-            if ( ch == '&' )
-            {
-                if ( i > pos )
-                    out.write( value.substring( pos, i ) );
-                out.write( "&amp;" );
+        for (int i = 0; i < value.length(); i++) {
+            char ch = value.charAt(i);
+            if (ch == '&') {
+                if (i > pos) out.write(value.substring(pos, i));
+                out.write("&amp;");
                 pos = i + 1;
             }
-            if ( ch == '<' )
-            {
-                if ( i > pos )
-                    out.write( value.substring( pos, i ) );
-                out.write( "&lt;" );
+            if (ch == '<') {
+                if (i > pos) out.write(value.substring(pos, i));
+                out.write("&lt;");
                 pos = i + 1;
-            }
-            else if ( ch == quot )
-            {
-                if ( i > pos )
-                    out.write( value.substring( pos, i ) );
-                out.write( quotEntity );
+            } else if (ch == quot) {
+                if (i > pos) out.write(value.substring(pos, i));
+                out.write(quotEntity);
                 pos = i + 1;
-            }
-            else if ( ch < 32 )
-            {
+            } else if (ch < 32) {
                 // in XML 1.0 only legal character are #x9 | #xA | #xD
                 // and they must be escaped otherwise in attribute value they are normalized to spaces
-                if ( ch == 13 || ch == 10 || ch == 9 )
-                {
-                    if ( i > pos )
-                        out.write( value.substring( pos, i ) );
-                    out.write( "&#" );
-                    out.write( Integer.toString( ch ) );
-                    out.write( ';' );
+                if (ch == 13 || ch == 10 || ch == 9) {
+                    if (i > pos) out.write(value.substring(pos, i));
+                    out.write("&#");
+                    out.write(Integer.toString(ch));
+                    out.write(';');
                     pos = i + 1;
-                }
-                else
-                {
-                    throw new IllegalStateException( "character " + Integer.toString( ch ) + " is not allowed in output"
-                        + getLocation() );
+                } else {
+                    throw new IllegalStateException(
+                            "character " + Integer.toString(ch) + " is not allowed in output" + getLocation());
                     // in XML 1.1 legal are [#x1-#xD7FF]
                     // if(ch > 0) {
                     // if(i > pos) out.write(text.substring(pos, i));
@@ -1143,65 +899,41 @@ public class MXSerializer
                 }
             }
         }
-        if ( pos > 0 )
-        {
-            out.write( value.substring( pos ) );
+        if (pos > 0) {
+            out.write(value.substring(pos));
+        } else {
+            out.write(value); // this is shortcut to the most common case
         }
-        else
-        {
-            out.write( value ); // this is shortcut to the most common case
-        }
-
     }
 
-    protected void writeElementContent( String text, Writer out )
-        throws IOException
-    {
+    protected void writeElementContent(String text, Writer out) throws IOException {
         // escape '<', '&', ']]>', <32 if necessary
         int pos = 0;
-        for ( int i = 0; i < text.length(); i++ )
-        {
+        for (int i = 0; i < text.length(); i++) {
             // TODO: check if doing char[] text.getChars() would be faster than getCharAt(i) ...
-            char ch = text.charAt( i );
-            if ( ch == ']' )
-            {
-                if ( seenBracket )
-                {
+            char ch = text.charAt(i);
+            if (ch == ']') {
+                if (seenBracket) {
                     seenBracketBracket = true;
-                }
-                else
-                {
+                } else {
                     seenBracket = true;
                 }
-            }
-            else
-            {
-                if ( ch == '&' )
-                {
-                    if ( i > pos )
-                        out.write( text.substring( pos, i ) );
-                    out.write( "&amp;" );
+            } else {
+                if (ch == '&') {
+                    if (i > pos) out.write(text.substring(pos, i));
+                    out.write("&amp;");
                     pos = i + 1;
-                }
-                else if ( ch == '<' )
-                {
-                    if ( i > pos )
-                        out.write( text.substring( pos, i ) );
-                    out.write( "&lt;" );
+                } else if (ch == '<') {
+                    if (i > pos) out.write(text.substring(pos, i));
+                    out.write("&lt;");
                     pos = i + 1;
-                }
-                else if ( seenBracketBracket && ch == '>' )
-                {
-                    if ( i > pos )
-                        out.write( text.substring( pos, i ) );
-                    out.write( "&gt;" );
+                } else if (seenBracketBracket && ch == '>') {
+                    if (i > pos) out.write(text.substring(pos, i));
+                    out.write("&gt;");
                     pos = i + 1;
-                }
-                else if ( ch < 32 )
-                {
+                } else if (ch < 32) {
                     // in XML 1.0 only legal character are #x9 | #xA | #xD
-                    if ( ch == 9 || ch == 10 || ch == 13 )
-                    {
+                    if (ch == 9 || ch == 10 || ch == 13) {
                         // pass through
 
                         // } else if(ch == 13) { //escape
@@ -1210,11 +942,9 @@ public class MXSerializer
                         // out.write(Integer.toString(ch));
                         // out.write(';');
                         // pos = i + 1;
-                    }
-                    else
-                    {
-                        throw new IllegalStateException( "character " + Integer.toString( ch )
-                            + " is not allowed in output" + getLocation() );
+                    } else {
+                        throw new IllegalStateException(
+                                "character " + Integer.toString(ch) + " is not allowed in output" + getLocation());
                         // in XML 1.1 legal are [#x1-#xD7FF]
                         // if(ch > 0) {
                         // if(i > pos) out.write(text.substring(pos, i));
@@ -1228,79 +958,53 @@ public class MXSerializer
                         // }
                     }
                 }
-                if ( seenBracket )
-                {
+                if (seenBracket) {
                     seenBracketBracket = seenBracket = false;
                 }
-
             }
         }
-        if ( pos > 0 )
-        {
-            out.write( text.substring( pos ) );
+        if (pos > 0) {
+            out.write(text.substring(pos));
+        } else {
+            out.write(text); // this is shortcut to the most common case
         }
-        else
-        {
-            out.write( text ); // this is shortcut to the most common case
-        }
-
     }
 
-    protected void writeElementContent( char[] buf, int off, int len, Writer out )
-        throws IOException
-    {
+    protected void writeElementContent(char[] buf, int off, int len, Writer out) throws IOException {
         // escape '<', '&', ']]>'
         final int end = off + len;
         int pos = off;
-        for ( int i = off; i < end; i++ )
-        {
+        for (int i = off; i < end; i++) {
             final char ch = buf[i];
-            if ( ch == ']' )
-            {
-                if ( seenBracket )
-                {
+            if (ch == ']') {
+                if (seenBracket) {
                     seenBracketBracket = true;
-                }
-                else
-                {
+                } else {
                     seenBracket = true;
                 }
-            }
-            else
-            {
-                if ( ch == '&' )
-                {
-                    if ( i > pos )
-                    {
-                        out.write( buf, pos, i - pos );
+            } else {
+                if (ch == '&') {
+                    if (i > pos) {
+                        out.write(buf, pos, i - pos);
                     }
-                    out.write( "&amp;" );
+                    out.write("&amp;");
                     pos = i + 1;
-                }
-                else if ( ch == '<' )
-                {
-                    if ( i > pos )
-                    {
-                        out.write( buf, pos, i - pos );
+                } else if (ch == '<') {
+                    if (i > pos) {
+                        out.write(buf, pos, i - pos);
                     }
-                    out.write( "&lt;" );
+                    out.write("&lt;");
                     pos = i + 1;
 
-                }
-                else if ( seenBracketBracket && ch == '>' )
-                {
-                    if ( i > pos )
-                    {
-                        out.write( buf, pos, i - pos );
+                } else if (seenBracketBracket && ch == '>') {
+                    if (i > pos) {
+                        out.write(buf, pos, i - pos);
                     }
-                    out.write( "&gt;" );
+                    out.write("&gt;");
                     pos = i + 1;
-                }
-                else if ( ch < 32 )
-                {
+                } else if (ch < 32) {
                     // in XML 1.0 only legal character are #x9 | #xA | #xD
-                    if ( ch == 9 || ch == 10 || ch == 13 )
-                    {
+                    if (ch == 9 || ch == 10 || ch == 13) {
                         // pass through
 
                         // } else if(ch == 13 ) { //if(ch == '\r') {
@@ -1311,11 +1015,9 @@ public class MXSerializer
                         // out.write(Integer.toString(ch));
                         // out.write(';');
                         // pos = i + 1;
-                    }
-                    else
-                    {
-                        throw new IllegalStateException( "character " + Integer.toString( ch )
-                            + " is not allowed in output" + getLocation() );
+                    } else {
+                        throw new IllegalStateException(
+                                "character " + Integer.toString(ch) + " is not allowed in output" + getLocation());
                         // in XML 1.1 legal are [#x1-#xD7FF]
                         // if(ch > 0) {
                         // if(i > pos) out.write(text.substring(pos, i));
@@ -1329,81 +1031,69 @@ public class MXSerializer
                         // }
                     }
                 }
-                if ( seenBracket )
-                {
+                if (seenBracket) {
                     seenBracketBracket = seenBracket = false;
                 }
                 // assert seenBracketBracket == seenBracket == false;
             }
         }
-        if ( end > pos )
-        {
-            out.write( buf, pos, end - pos );
+        if (end > pos) {
+            out.write(buf, pos, end - pos);
         }
     }
 
     // simple utility method -- good for debugging
-    protected static final String printable( String s )
-    {
-        if ( s == null )
-            return "null";
-        StringBuilder retval = new StringBuilder( s.length() + 16 );
-        retval.append( "'" );
+    protected static final String printable(String s) {
+        if (s == null) return "null";
+        StringBuilder retval = new StringBuilder(s.length() + 16);
+        retval.append("'");
         char ch;
-        for ( int i = 0; i < s.length(); i++ )
-        {
-            addPrintable( retval, s.charAt( i ) );
+        for (int i = 0; i < s.length(); i++) {
+            addPrintable(retval, s.charAt(i));
         }
-        retval.append( "'" );
+        retval.append("'");
         return retval.toString();
     }
 
-    protected static final String printable( char ch )
-    {
+    protected static final String printable(char ch) {
         StringBuilder retval = new StringBuilder();
-        addPrintable( retval, ch );
+        addPrintable(retval, ch);
         return retval.toString();
     }
 
-    private static void addPrintable( StringBuilder retval, char ch )
-    {
-        switch ( ch )
-        {
+    private static void addPrintable(StringBuilder retval, char ch) {
+        switch (ch) {
             case '\b':
-                retval.append( "\\b" );
+                retval.append("\\b");
                 break;
             case '\t':
-                retval.append( "\\t" );
+                retval.append("\\t");
                 break;
             case '\n':
-                retval.append( "\\n" );
+                retval.append("\\n");
                 break;
             case '\f':
-                retval.append( "\\f" );
+                retval.append("\\f");
                 break;
             case '\r':
-                retval.append( "\\r" );
+                retval.append("\\r");
                 break;
             case '\"':
-                retval.append( "\\\"" );
+                retval.append("\\\"");
                 break;
             case '\'':
-                retval.append( "\\\'" );
+                retval.append("\\\'");
                 break;
             case '\\':
-                retval.append( "\\\\" );
+                retval.append("\\\\");
                 break;
             default:
-                if ( ch < 0x20 || ch > 0x7e )
-                {
-                    final String ss = "0000" + Integer.toString( ch, 16 );
-                    retval.append( "\\u" ).append( ss, ss.length() - 4, ss.length() );
-                }
-                else
-                {
-                    retval.append( ch );
+                if (ch < 0x20 || ch > 0x7e) {
+                    final String ss = "0000" + Integer.toString(ch, 16);
+                    retval.append("\\u").append(ss, ss.length() - 4, ss.length());
+                } else {
+                    retval.append(ch);
                 }
         }
     }
-
 }

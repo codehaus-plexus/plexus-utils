@@ -16,18 +16,18 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
+import java.util.Vector;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.util.Vector;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Created on 21/06/2003
@@ -36,8 +36,7 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class SweeperPoolTest
-{
+public class SweeperPoolTest {
     /** The pool under test */
     TestObjectPool pool;
 
@@ -58,44 +57,44 @@ public class SweeperPoolTest
      * Test the pool limits it's size, and disposes unneeded objects correctly
      */
     @Test
-    public void testMaxSize()
-    {
+    public void testMaxSize() {
         int sweepInterval = 0;
         int initialCapacity = 5;
         int maxSize = 2;
         int minSize = 1;
         int triggerSize = 2;
 
-        pool = new TestObjectPool( maxSize, minSize, initialCapacity, sweepInterval, triggerSize );
+        pool = new TestObjectPool(maxSize, minSize, initialCapacity, sweepInterval, triggerSize);
 
         Object tmp = pool.get();
-        assertNull( "Expected object from pool to be null", tmp );
-        pool.put( o1 );
-        assertEquals( "Expected pool to contain 1 object", 1, pool.getSize() );
+        assertNull("Expected object from pool to be null", tmp);
+        pool.put(o1);
+        assertEquals("Expected pool to contain 1 object", 1, pool.getSize());
         tmp = pool.get();
-        assertSame( "Expected returned pool object to be the same as the one put in", tmp, o1 );
-        pool.put( o1 );
-        pool.put( o2 );
-        assertEquals( "Expected pool to contain 2 objects", 2, pool.getSize() );
-        pool.put( o3 );
-        assertEquals( "Expected pool to contain only a maximum of 2 objects.", 2, pool.getSize() );
-        assertEquals( "Expected 1 disposed pool object", 1, pool.testGetDisposedObjects().size() );
+        assertSame("Expected returned pool object to be the same as the one put in", tmp, o1);
+        pool.put(o1);
+        pool.put(o2);
+        assertEquals("Expected pool to contain 2 objects", 2, pool.getSize());
+        pool.put(o3);
+        assertEquals("Expected pool to contain only a maximum of 2 objects.", 2, pool.getSize());
+        assertEquals(
+                "Expected 1 disposed pool object",
+                1,
+                pool.testGetDisposedObjects().size());
         tmp = pool.testGetDisposedObjects().iterator().next();
 
         tmp = pool.get();
-        assertEquals( "Expected pool size to be 1 after removing one object", 1, pool.getSize() );
+        assertEquals("Expected pool size to be 1 after removing one object", 1, pool.getSize());
         Object tmp2 = pool.get();
-        assertEquals( "Expected pool size to be 0 after removing 2 objects", 0, pool.getSize() );
-        assertNotSame( "Expected returned objects to be different", tmp, tmp2 );
-
+        assertEquals("Expected pool size to be 0 after removing 2 objects", 0, pool.getSize());
+        assertNotSame("Expected returned objects to be different", tmp, tmp2);
     }
 
     /**
      * <p>testSweepAndTrim1.</p>
      */
     @Test
-    public void testSweepAndTrim1()
-    {
+    public void testSweepAndTrim1() {
         // test trigger
         int sweepInterval = 1;
         int initialCapacity = 5;
@@ -103,26 +102,22 @@ public class SweeperPoolTest
         int minSize = 1;
         int triggerSize = 2;
 
-        pool = new TestObjectPool( maxSize, minSize, initialCapacity, sweepInterval, triggerSize );
-        pool.put( o1 );
-        pool.put( o2 );
-        pool.put( o3 );
-        pool.put( o4 );
+        pool = new TestObjectPool(maxSize, minSize, initialCapacity, sweepInterval, triggerSize);
+        pool.put(o1);
+        pool.put(o2);
+        pool.put(o3);
+        pool.put(o4);
         // give the sweeper some time to run
-        synchronized ( this )
-        {
-            try
-            {
-                wait( 2 * 1000 );
-            }
-            catch ( InterruptedException e )
-            {
-                fail( "Unexpected exception thrown. e=" + Tracer.traceToString( e ) );
+        synchronized (this) {
+            try {
+                wait(2 * 1000);
+            } catch (InterruptedException e) {
+                fail("Unexpected exception thrown. e=" + Tracer.traceToString(e));
             }
         }
-        assertEquals( "Expected pool to only contain 1 object", 1, pool.getSize() );
-        assertEquals( "Expected 3 disposed objects", 3, pool.testGetDisposedObjects().size() );
-
+        assertEquals("Expected pool to only contain 1 object", 1, pool.getSize());
+        assertEquals(
+                "Expected 3 disposed objects", 3, pool.testGetDisposedObjects().size());
     }
 
     /**
@@ -131,9 +126,7 @@ public class SweeperPoolTest
      * @throws java.lang.Exception if any.
      */
     @Before
-    public void setUp()
-        throws Exception
-    {
+    public void setUp() throws Exception {
         o1 = new Object();
         o2 = new Object();
         o3 = new Object();
@@ -148,43 +141,32 @@ public class SweeperPoolTest
      * @throws java.lang.Exception if any.
      */
     @After
-    public void tearDown()
-        throws Exception
-    {
+    public void tearDown() throws Exception {
         pool.dispose();
-        assertTrue( pool.isDisposed() );
+        assertTrue(pool.isDisposed());
         pool = null;
-
     }
 
-    class TestObjectPool
-        extends SweeperPool
-    {
+    class TestObjectPool extends SweeperPool {
         private Vector<Object> disposedObjects = new Vector<Object>();
 
-        public TestObjectPool( int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize )
-        {
-            super( maxSize, minSize, intialCapacity, sweepInterval, triggerSize );
+        public TestObjectPool(int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize) {
+            super(maxSize, minSize, intialCapacity, sweepInterval, triggerSize);
         }
 
-        public void reset()
-        {
+        public void reset() {
             disposedObjects.clear();
         }
 
         /**
          * @see nz.co.bonzo.beans.castor.pool.ObjectPool#objectDisposed(java.lang.Object)
          */
-        public void objectDisposed( Object obj )
-        {
-            disposedObjects.add( obj );
+        public void objectDisposed(Object obj) {
+            disposedObjects.add(obj);
         }
 
-        public Vector<Object> testGetDisposedObjects()
-        {
+        public Vector<Object> testGetDisposedObjects() {
             return disposedObjects;
         }
-
     }
-
 }

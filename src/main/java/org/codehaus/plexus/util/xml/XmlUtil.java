@@ -38,13 +38,12 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
  *
  * @since 1.5.7
  */
-public class XmlUtil
-{
+public class XmlUtil {
     /** The default line indenter size i.e. 2. */
     public static final int DEFAULT_INDENTATION_SIZE = 2;
 
     /** The default line separator ("\n" on UNIX) */
-    public static final String DEFAULT_LINE_SEPARATOR = System.getProperty( "line.separator" );
+    public static final String DEFAULT_LINE_SEPARATOR = System.getProperty("line.separator");
 
     /**
      * Determines if a given File shall be handled as XML.
@@ -52,40 +51,34 @@ public class XmlUtil
      * @param f not null file
      * @return <code>true</code> if the given file has XML content, <code>false</code> otherwise.
      */
-    public static boolean isXml( File f )
-    {
-        if ( f == null )
-        {
-            throw new IllegalArgumentException( "f could not be null." );
+    public static boolean isXml(File f) {
+        if (f == null) {
+            throw new IllegalArgumentException("f could not be null.");
         }
 
-        if ( !f.isFile() )
-        {
-            throw new IllegalArgumentException( "The file '" + f.getAbsolutePath() + "' is not a file." );
+        if (!f.isFile()) {
+            throw new IllegalArgumentException("The file '" + f.getAbsolutePath() + "' is not a file.");
         }
 
-        try ( Reader reader = ReaderFactory.newXmlReader( f ) )
-        {
+        try (Reader reader = ReaderFactory.newXmlReader(f)) {
             XmlPullParser parser = new MXParser();
-            parser.setInput( reader );
+            parser.setInput(reader);
             parser.nextToken();
             return true;
-        }
-        catch ( Exception e )
-        {
+        } catch (Exception e) {
             return false;
         }
     }
 
     /**
      * Pretty format the input reader. For instance, the following input:
-     * 
+     *
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
-     * 
+     *
      * becomes
-     * 
+     *
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;
@@ -99,21 +92,19 @@ public class XmlUtil
      * @see ReaderFactory to read an xml content
      * @see WriterFactory to write an xml content
      */
-    public static void prettyFormat( Reader reader, Writer writer )
-        throws IOException
-    {
-        prettyFormat( reader, writer, DEFAULT_INDENTATION_SIZE, DEFAULT_LINE_SEPARATOR );
+    public static void prettyFormat(Reader reader, Writer writer) throws IOException {
+        prettyFormat(reader, writer, DEFAULT_INDENTATION_SIZE, DEFAULT_LINE_SEPARATOR);
     }
 
     /**
      * Pretty format the input reader. For instance, the following input:
-     * 
+     *
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
-     * 
+     *
      * becomes
-     * 
+     *
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;
@@ -128,48 +119,41 @@ public class XmlUtil
      * @see ReaderFactory to read an xml content
      * @see WriterFactory to write an xml content
      */
-    public static void prettyFormat( Reader reader, Writer writer, int indentSize, String lineSeparator )
-        throws IOException
-    {
-        if ( reader == null )
-        {
-            throw new IllegalArgumentException( "The reader is null" );
+    public static void prettyFormat(Reader reader, Writer writer, int indentSize, String lineSeparator)
+            throws IOException {
+        if (reader == null) {
+            throw new IllegalArgumentException("The reader is null");
         }
-        if ( writer == null )
-        {
-            throw new IllegalArgumentException( "The writer is null" );
+        if (writer == null) {
+            throw new IllegalArgumentException("The writer is null");
         }
-        if ( indentSize < 0 )
-        {
+        if (indentSize < 0) {
             indentSize = 0;
         }
 
-        PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter( writer );
-        xmlWriter.setLineIndenter( StringUtils.repeat( " ", indentSize ) );
-        xmlWriter.setLineSeparator( lineSeparator );
+        PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter(writer);
+        xmlWriter.setLineIndenter(StringUtils.repeat(" ", indentSize));
+        xmlWriter.setLineSeparator(lineSeparator);
 
         XmlPullParser parser = new MXParser();
-        try
-        {
-            parser.setInput( reader );
+        try {
+            parser.setInput(reader);
 
-            prettyFormatInternal( parser, xmlWriter );
-        }
-        catch ( XmlPullParserException e )
-        {
-            throw new IOException( "Unable to parse the XML: " + e.getMessage() );
+            prettyFormatInternal(parser, xmlWriter);
+        } catch (XmlPullParserException e) {
+            throw new IOException("Unable to parse the XML: " + e.getMessage());
         }
     }
 
     /**
      * Pretty format the input stream. For instance, the following input:
-     * 
+     *
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
-     * 
+     *
      * becomes
-     * 
+     *
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;
@@ -181,21 +165,19 @@ public class XmlUtil
      * @throws IOException if any or invalid xml content
      * @see #prettyFormat(InputStream, OutputStream, int, String)
      */
-    public static void prettyFormat( InputStream is, OutputStream os )
-        throws IOException
-    {
-        prettyFormat( is, os, DEFAULT_INDENTATION_SIZE, DEFAULT_LINE_SEPARATOR );
+    public static void prettyFormat(InputStream is, OutputStream os) throws IOException {
+        prettyFormat(is, os, DEFAULT_INDENTATION_SIZE, DEFAULT_LINE_SEPARATOR);
     }
 
     /**
      * Pretty format the input stream. For instance, the following input:
-     * 
+     *
      * <pre>
      * &lt;div&gt;&lt;b&gt;content&lt;/b&gt;&lt;/div&gt;
      * </pre>
-     * 
+     *
      * becomes
-     * 
+     *
      * <pre>
      * &lt;div&gt;
      *   &lt;b&gt;content&lt;/b&gt;
@@ -208,37 +190,30 @@ public class XmlUtil
      * @param lineSeparator the wanted line separator
      * @throws IOException if any or invalid xml content
      */
-    public static void prettyFormat( InputStream is, OutputStream os, int indentSize, String lineSeparator )
-        throws IOException
-    {
-        if ( is == null )
-        {
-            throw new IllegalArgumentException( "The is is null" );
+    public static void prettyFormat(InputStream is, OutputStream os, int indentSize, String lineSeparator)
+            throws IOException {
+        if (is == null) {
+            throw new IllegalArgumentException("The is is null");
         }
-        if ( os == null )
-        {
-            throw new IllegalArgumentException( "The os is null" );
+        if (os == null) {
+            throw new IllegalArgumentException("The os is null");
         }
-        if ( indentSize < 0 )
-        {
+        if (indentSize < 0) {
             indentSize = 0;
         }
 
-        try ( Reader reader = ReaderFactory.newXmlReader( is );
-              Writer writer = new OutputStreamWriter( os ) )
-        {
-            final PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter( writer );
-            xmlWriter.setLineIndenter( StringUtils.repeat( " ", indentSize ) );
-            xmlWriter.setLineSeparator( lineSeparator );
+        try (Reader reader = ReaderFactory.newXmlReader(is);
+                Writer writer = new OutputStreamWriter(os)) {
+            final PrettyPrintXMLWriter xmlWriter = new PrettyPrintXMLWriter(writer);
+            xmlWriter.setLineIndenter(StringUtils.repeat(" ", indentSize));
+            xmlWriter.setLineSeparator(lineSeparator);
 
             final XmlPullParser parser = new MXParser();
-            parser.setInput( reader );
+            parser.setInput(reader);
 
-            prettyFormatInternal( parser, xmlWriter );
-        }
-        catch ( XmlPullParserException e )
-        {
-            throw new IOException( "Unable to parse the XML: " + e.getMessage() );
+            prettyFormatInternal(parser, xmlWriter);
+        } catch (XmlPullParserException e) {
+            throw new IOException("Unable to parse the XML: " + e.getMessage());
         }
     }
 
@@ -248,82 +223,58 @@ public class XmlUtil
      * @throws XmlPullParserException if any
      * @throws IOException if any
      */
-    private static void prettyFormatInternal( XmlPullParser parser, PrettyPrintXMLWriter writer )
-        throws XmlPullParserException, IOException
-    {
+    private static void prettyFormatInternal(XmlPullParser parser, PrettyPrintXMLWriter writer)
+            throws XmlPullParserException, IOException {
         boolean hasTag = false;
         boolean hasComment = false;
         int eventType = parser.getEventType();
-        while ( eventType != XmlPullParser.END_DOCUMENT )
-        {
-            if ( eventType == XmlPullParser.START_TAG )
-            {
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            if (eventType == XmlPullParser.START_TAG) {
                 hasTag = true;
-                if ( hasComment )
-                {
-                    writer.writeText( writer.getLineIndenter() );
+                if (hasComment) {
+                    writer.writeText(writer.getLineIndenter());
                     hasComment = false;
                 }
-                writer.startElement( parser.getName() );
-                for ( int i = 0; i < parser.getAttributeCount(); i++ )
-                {
-                    String key = parser.getAttributeName( i );
-                    String value = parser.getAttributeValue( i );
-                    writer.addAttribute( key, value );
+                writer.startElement(parser.getName());
+                for (int i = 0; i < parser.getAttributeCount(); i++) {
+                    String key = parser.getAttributeName(i);
+                    String value = parser.getAttributeValue(i);
+                    writer.addAttribute(key, value);
                 }
-            }
-            else if ( eventType == XmlPullParser.TEXT )
-            {
+            } else if (eventType == XmlPullParser.TEXT) {
                 String text = parser.getText();
-                if ( !text.trim().equals( "" ) )
-                {
-                    text = StringUtils.removeDuplicateWhitespace( text );
-                    writer.writeText( text );
+                if (!text.trim().equals("")) {
+                    text = StringUtils.removeDuplicateWhitespace(text);
+                    writer.writeText(text);
                 }
-            }
-            else if ( eventType == XmlPullParser.END_TAG )
-            {
+            } else if (eventType == XmlPullParser.END_TAG) {
                 hasTag = false;
                 writer.endElement();
-            }
-            else if ( eventType == XmlPullParser.COMMENT )
-            {
+            } else if (eventType == XmlPullParser.COMMENT) {
                 hasComment = true;
-                if ( !hasTag )
-                {
-                    writer.writeMarkup( writer.getLineSeparator() );
-                    for ( int i = 0; i < writer.getDepth(); i++ )
-                    {
-                        writer.writeMarkup( writer.getLineIndenter() );
+                if (!hasTag) {
+                    writer.writeMarkup(writer.getLineSeparator());
+                    for (int i = 0; i < writer.getDepth(); i++) {
+                        writer.writeMarkup(writer.getLineIndenter());
                     }
                 }
-                writer.writeMarkup( "<!--" + parser.getText().trim() + " -->" );
-                if ( !hasTag )
-                {
-                    writer.writeMarkup( writer.getLineSeparator() );
-                    for ( int i = 0; i < writer.getDepth() - 1; i++ )
-                    {
-                        writer.writeMarkup( writer.getLineIndenter() );
+                writer.writeMarkup("<!--" + parser.getText().trim() + " -->");
+                if (!hasTag) {
+                    writer.writeMarkup(writer.getLineSeparator());
+                    for (int i = 0; i < writer.getDepth() - 1; i++) {
+                        writer.writeMarkup(writer.getLineIndenter());
                     }
                 }
-            }
-            else if ( eventType == XmlPullParser.DOCDECL )
-            {
-                writer.writeMarkup( "<!DOCTYPE" + parser.getText() + ">" );
+            } else if (eventType == XmlPullParser.DOCDECL) {
+                writer.writeMarkup("<!DOCTYPE" + parser.getText() + ">");
                 writer.endOfLine();
-            }
-            else if ( eventType == XmlPullParser.PROCESSING_INSTRUCTION )
-            {
-                writer.writeMarkup( "<?" + parser.getText() + "?>" );
+            } else if (eventType == XmlPullParser.PROCESSING_INSTRUCTION) {
+                writer.writeMarkup("<?" + parser.getText() + "?>");
                 writer.endOfLine();
-            }
-            else if ( eventType == XmlPullParser.CDSECT )
-            {
-                writer.writeMarkup( "<![CDATA[" + parser.getText() + "]]>" );
-            }
-            else if ( eventType == XmlPullParser.ENTITY_REF )
-            {
-                writer.writeMarkup( "&" + parser.getName() + ";" );
+            } else if (eventType == XmlPullParser.CDSECT) {
+                writer.writeMarkup("<![CDATA[" + parser.getText() + "]]>");
+            } else if (eventType == XmlPullParser.ENTITY_REF) {
+                writer.writeMarkup("&" + parser.getName() + ";");
             }
 
             eventType = parser.nextToken();

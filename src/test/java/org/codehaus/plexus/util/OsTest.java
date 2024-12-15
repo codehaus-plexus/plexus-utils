@@ -16,13 +16,13 @@ package org.codehaus.plexus.util;
  * limitations under the License.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Iterator;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test Case for Os
@@ -31,74 +31,66 @@ import org.junit.Test;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class OsTest
-{
+public class OsTest {
     /**
      * <p>testUndefinedFamily.</p>
      */
     @Test
-    public void testUndefinedFamily()
-    {
-        assertFalse( Os.isFamily( "bogus family" ) );
+    public void testUndefinedFamily() {
+        assertFalse(Os.isFamily("bogus family"));
     }
 
     /**
      * <p>testOs.</p>
      */
     @Test
-    public void testOs()
-    {
+    public void testOs() {
         Iterator<String> iter = Os.getValidFamilies().iterator();
         String currentFamily = null;
         String notCurrentFamily = null;
-        while ( iter.hasNext() && ( currentFamily == null || notCurrentFamily == null ) )
-        {
+        while (iter.hasNext() && (currentFamily == null || notCurrentFamily == null)) {
             String fam = iter.next();
-            if ( Os.isFamily( fam ) )
-            {
+            if (Os.isFamily(fam)) {
                 currentFamily = fam;
-            }
-            else
-            {
+            } else {
                 notCurrentFamily = fam;
             }
         }
 
         // make sure the OS_FAMILY is set right.
-        assertEquals( currentFamily, Os.OS_FAMILY );
+        assertEquals(currentFamily, Os.OS_FAMILY);
 
         // check the current family and one of the others
-        assertTrue( Os.isOs( currentFamily, null, null, null ) );
-        assertFalse( Os.isOs( notCurrentFamily, null, null, null ) );
+        assertTrue(Os.isOs(currentFamily, null, null, null));
+        assertFalse(Os.isOs(notCurrentFamily, null, null, null));
 
         // check for junk
-        assertFalse( Os.isOs( "junk", null, null, null ) );
+        assertFalse(Os.isOs("junk", null, null, null));
 
         // check the current name
-        assertTrue( Os.isOs( currentFamily, Os.OS_NAME, null, null ) );
+        assertTrue(Os.isOs(currentFamily, Os.OS_NAME, null, null));
 
         // check some other name
-        assertFalse( Os.isOs( currentFamily, "myos", null, null ) );
+        assertFalse(Os.isOs(currentFamily, "myos", null, null));
 
         // check the arch
-        assertTrue( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, null ) );
-        assertFalse( Os.isOs( currentFamily, Os.OS_NAME, "myarch", null ) );
+        assertTrue(Os.isOs(currentFamily, Os.OS_NAME, Os.OS_ARCH, null));
+        assertFalse(Os.isOs(currentFamily, Os.OS_NAME, "myarch", null));
 
         // check the version
-        assertTrue( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, Os.OS_VERSION ) );
-        assertFalse( Os.isOs( currentFamily, Os.OS_NAME, Os.OS_ARCH, "myversion" ) );
+        assertTrue(Os.isOs(currentFamily, Os.OS_NAME, Os.OS_ARCH, Os.OS_VERSION));
+        assertFalse(Os.isOs(currentFamily, Os.OS_NAME, Os.OS_ARCH, "myversion"));
     }
 
     /**
      * <p>testValidList.</p>
      */
     @Test
-    public void testValidList()
-    {
-        assertTrue( Os.isValidFamily( "dos" ) );
+    public void testValidList() {
+        assertTrue(Os.isValidFamily("dos"));
 
-        assertFalse( Os.isValidFamily( "" ) );
-        assertFalse( Os.isValidFamily( null ) );
-        assertFalse( Os.isValidFamily( "something" ) );
+        assertFalse(Os.isValidFamily(""));
+        assertFalse(Os.isValidFamily(null));
+        assertFalse(Os.isValidFamily("something"));
     }
 }

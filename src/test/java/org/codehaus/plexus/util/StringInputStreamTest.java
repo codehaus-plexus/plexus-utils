@@ -25,13 +25,9 @@ import junit.framework.TestCase;
  * @version $Id: $Id
  * @since 3.4.0
  */
-public class StringInputStreamTest
-    extends TestCase
-{
+public class StringInputStreamTest extends TestCase {
     /**
      * <p>testFoo.</p>
      */
-    public void testFoo()
-    {
-    }
+    public void testFoo() {}
 }

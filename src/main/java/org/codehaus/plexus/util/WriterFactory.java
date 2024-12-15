@@ -36,12 +36,11 @@ import org.codehaus.plexus.util.xml.XmlStreamWriter;
  *
  * @since 1.4.4
  */
-public class WriterFactory
-{
+public class WriterFactory {
     /**
      * ISO Latin Alphabet #1, also known as ISO-LATIN-1. Every implementation of the Java platform is required to
      * support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String ISO_8859_1 = "ISO-8859-1";
@@ -49,7 +48,7 @@ public class WriterFactory
     /**
      * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin block of the Unicode character set. Every
      * implementation of the Java platform is required to support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String US_ASCII = "US-ASCII";
@@ -58,7 +57,7 @@ public class WriterFactory
      * Sixteen-bit Unicode Transformation Format, byte order specified by a mandatory initial byte-order mark (either
      * order accepted on input, big-endian used on output). Every implementation of the Java platform is required to
      * support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_16 = "UTF-16";
@@ -66,7 +65,7 @@ public class WriterFactory
     /**
      * Sixteen-bit Unicode Transformation Format, big-endian byte order. Every implementation of the Java platform is
      * required to support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_16BE = "UTF-16BE";
@@ -74,7 +73,7 @@ public class WriterFactory
     /**
      * Sixteen-bit Unicode Transformation Format, little-endian byte order. Every implementation of the Java platform is
      * required to support this character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_16LE = "UTF-16LE";
@@ -82,7 +81,7 @@ public class WriterFactory
     /**
      * Eight-bit Unicode Transformation Format. Every implementation of the Java platform is required to support this
      * character encoding.
-     * 
+     *
      * @see Charset
      */
     public static final String UTF_8 = "UTF-8";
@@ -90,7 +89,7 @@ public class WriterFactory
     /**
      * The <code>file.encoding</code> System Property.
      */
-    public static final String FILE_ENCODING = System.getProperty( "file.encoding" );
+    public static final String FILE_ENCODING = System.getProperty("file.encoding");
 
     /**
      * Create a new Writer with XML encoding detection rules.
@@ -100,10 +99,8 @@ public class WriterFactory
      * @throws IOException if any.
      * @see XmlStreamWriter
      */
-    public static XmlStreamWriter newXmlWriter( OutputStream out )
-        throws IOException
-    {
-        return new XmlStreamWriter( out );
+    public static XmlStreamWriter newXmlWriter(OutputStream out) throws IOException {
+        return new XmlStreamWriter(out);
     }
 
     /**
@@ -114,10 +111,8 @@ public class WriterFactory
      * @throws IOException if any.
      * @see XmlStreamWriter
      */
-    public static XmlStreamWriter newXmlWriter( File file )
-        throws IOException
-    {
-        return new XmlStreamWriter( file );
+    public static XmlStreamWriter newXmlWriter(File file) throws IOException {
+        return new XmlStreamWriter(file);
     }
 
     /**
@@ -127,9 +122,8 @@ public class WriterFactory
      * @return a writer instance for the output stream using the default platform charset.
      * @see Charset#defaultCharset()
      */
-    public static Writer newPlatformWriter( OutputStream out )
-    {
-        return new OutputStreamWriter( out );
+    public static Writer newPlatformWriter(OutputStream out) {
+        return new OutputStreamWriter(out);
     }
 
     /**
@@ -140,10 +134,8 @@ public class WriterFactory
      * @throws IOException if any.
      * @see Charset#defaultCharset()
      */
-    public static Writer newPlatformWriter( File file )
-        throws IOException
-    {
-        return Files.newBufferedWriter( file.toPath() );
+    public static Writer newPlatformWriter(File file) throws IOException {
+        return Files.newBufferedWriter(file.toPath());
     }
 
     /**
@@ -155,10 +147,8 @@ public class WriterFactory
      * @throws UnsupportedEncodingException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
-    public static Writer newWriter( OutputStream out, String encoding )
-        throws UnsupportedEncodingException
-    {
-        return new OutputStreamWriter( out, encoding );
+    public static Writer newWriter(OutputStream out, String encoding) throws UnsupportedEncodingException {
+        return new OutputStreamWriter(out, encoding);
     }
 
     /**
@@ -170,9 +160,7 @@ public class WriterFactory
      * @throws IOException if any.
      * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/encoding.doc.html">Supported encodings</a>
      */
-    public static Writer newWriter( File file, String encoding )
-        throws IOException
-    {
-        return newWriter( Files.newOutputStream( file.toPath() ), encoding );
+    public static Writer newWriter(File file, String encoding) throws IOException {
+        return newWriter(Files.newOutputStream(file.toPath()), encoding);
     }
 }

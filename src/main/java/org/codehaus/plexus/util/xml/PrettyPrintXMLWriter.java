@@ -29,11 +29,9 @@ import org.codehaus.plexus.util.StringUtils;
  *
  *
  */
-public class PrettyPrintXMLWriter
-    implements XMLWriter
-{
+public class PrettyPrintXMLWriter implements XMLWriter {
     /** Line separator ("\n" on UNIX) */
-    protected static final String LS = System.getProperty( "line.separator" );
+    protected static final String LS = System.getProperty("line.separator");
 
     private PrintWriter writer;
 
@@ -59,34 +57,30 @@ public class PrettyPrintXMLWriter
      * @param writer not null
      * @param lineIndenter could be null, but the normal way is some spaces.
      */
-    public PrettyPrintXMLWriter( PrintWriter writer, String lineIndenter )
-    {
-        this( writer, lineIndenter, null, null );
+    public PrettyPrintXMLWriter(PrintWriter writer, String lineIndenter) {
+        this(writer, lineIndenter, null, null);
     }
 
     /**
      * @param writer not null
      * @param lineIndenter could be null, but the normal way is some spaces.
      */
-    public PrettyPrintXMLWriter( Writer writer, String lineIndenter )
-    {
-        this( new PrintWriter( writer ), lineIndenter );
+    public PrettyPrintXMLWriter(Writer writer, String lineIndenter) {
+        this(new PrintWriter(writer), lineIndenter);
     }
 
     /**
      * @param writer not null
      */
-    public PrettyPrintXMLWriter( PrintWriter writer )
-    {
-        this( writer, null, null );
+    public PrettyPrintXMLWriter(PrintWriter writer) {
+        this(writer, null, null);
     }
 
     /**
      * @param writer not null
      */
-    public PrettyPrintXMLWriter( Writer writer )
-    {
-        this( new PrintWriter( writer ) );
+    public PrettyPrintXMLWriter(Writer writer) {
+        this(new PrintWriter(writer));
     }
 
     /**
@@ -95,9 +89,8 @@ public class PrettyPrintXMLWriter
      * @param encoding could be null or invalid.
      * @param doctype could be null.
      */
-    public PrettyPrintXMLWriter( PrintWriter writer, String lineIndenter, String encoding, String doctype )
-    {
-        this( writer, lineIndenter, LS, encoding, doctype );
+    public PrettyPrintXMLWriter(PrintWriter writer, String lineIndenter, String encoding, String doctype) {
+        this(writer, lineIndenter, LS, encoding, doctype);
     }
 
     /**
@@ -106,9 +99,8 @@ public class PrettyPrintXMLWriter
      * @param encoding could be null or invalid.
      * @param doctype could be null.
      */
-    public PrettyPrintXMLWriter( Writer writer, String lineIndenter, String encoding, String doctype )
-    {
-        this( new PrintWriter( writer ), lineIndenter, encoding, doctype );
+    public PrettyPrintXMLWriter(Writer writer, String lineIndenter, String encoding, String doctype) {
+        this(new PrintWriter(writer), lineIndenter, encoding, doctype);
     }
 
     /**
@@ -116,9 +108,8 @@ public class PrettyPrintXMLWriter
      * @param encoding could be null or invalid.
      * @param doctype could be null.
      */
-    public PrettyPrintXMLWriter( PrintWriter writer, String encoding, String doctype )
-    {
-        this( writer, "  ", encoding, doctype );
+    public PrettyPrintXMLWriter(PrintWriter writer, String encoding, String doctype) {
+        this(writer, "  ", encoding, doctype);
     }
 
     /**
@@ -126,9 +117,8 @@ public class PrettyPrintXMLWriter
      * @param encoding could be null or invalid.
      * @param doctype could be null.
      */
-    public PrettyPrintXMLWriter( Writer writer, String encoding, String doctype )
-    {
-        this( new PrintWriter( writer ), encoding, doctype );
+    public PrettyPrintXMLWriter(Writer writer, String encoding, String doctype) {
+        this(new PrintWriter(writer), encoding, doctype);
     }
 
     /**
@@ -138,42 +128,39 @@ public class PrettyPrintXMLWriter
      * @param encoding could be null or invalid.
      * @param doctype could be null.
      */
-    public PrettyPrintXMLWriter( PrintWriter writer, String lineIndenter, String lineSeparator, String encoding,
-                                 String doctype )
-    {
-        setWriter( writer );
+    public PrettyPrintXMLWriter(
+            PrintWriter writer, String lineIndenter, String lineSeparator, String encoding, String doctype) {
+        setWriter(writer);
 
-        setLineIndenter( lineIndenter );
+        setLineIndenter(lineIndenter);
 
-        setLineSeparator( lineSeparator );
+        setLineSeparator(lineSeparator);
 
-        setEncoding( encoding );
+        setEncoding(encoding);
 
-        setDocType( doctype );
+        setDocType(doctype);
 
-        if ( doctype != null || encoding != null )
-        {
+        if (doctype != null || encoding != null) {
             writeDocumentHeaders();
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public void startElement( String name )
-    {
+    public void startElement(String name) {
         tagIsEmpty = false;
 
         finishTag();
 
-        write( "<" );
+        write("<");
 
-        write( name );
+        write(name);
 
-        elementStack.addLast( name );
+        elementStack.addLast(name);
 
         tagInProgress = true;
 
-        setDepth( getDepth() + 1 );
+        setDepth(getDepth() + 1);
 
         readyForNewLine = true;
 
@@ -182,65 +169,55 @@ public class PrettyPrintXMLWriter
 
     /** {@inheritDoc} */
     @Override
-    public void writeText( String text )
-    {
-        writeText( text, true );
+    public void writeText(String text) {
+        writeText(text, true);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void writeMarkup( String text )
-    {
-        writeText( text, false );
+    public void writeMarkup(String text) {
+        writeText(text, false);
     }
 
-    private void writeText( String text, boolean escapeXml )
-    {
+    private void writeText(String text, boolean escapeXml) {
         readyForNewLine = false;
 
         tagIsEmpty = false;
 
         finishTag();
 
-        if ( escapeXml )
-        {
-            text = escapeXml( text );
+        if (escapeXml) {
+            text = escapeXml(text);
         }
 
-        write( StringUtils.unifyLineSeparators( text, lineSeparator ) );
+        write(StringUtils.unifyLineSeparators(text, lineSeparator));
     }
 
-    private static final Pattern amp = Pattern.compile( "&" );
+    private static final Pattern amp = Pattern.compile("&");
 
-    private static final Pattern lt = Pattern.compile( "<" );
+    private static final Pattern lt = Pattern.compile("<");
 
-    private static final Pattern gt = Pattern.compile( ">" );
+    private static final Pattern gt = Pattern.compile(">");
 
-    private static final Pattern dqoute = Pattern.compile( "\"" );
+    private static final Pattern dqoute = Pattern.compile("\"");
 
-    private static final Pattern sqoute = Pattern.compile( "\'" );
+    private static final Pattern sqoute = Pattern.compile("\'");
 
-    private static String escapeXml( String text )
-    {
-        if ( text.indexOf( '&' ) >= 0 )
-        {
-            text = amp.matcher( text ).replaceAll( "&amp;" );
+    private static String escapeXml(String text) {
+        if (text.indexOf('&') >= 0) {
+            text = amp.matcher(text).replaceAll("&amp;");
         }
-        if ( text.indexOf( '<' ) >= 0 )
-        {
-            text = lt.matcher( text ).replaceAll( "&lt;" );
+        if (text.indexOf('<') >= 0) {
+            text = lt.matcher(text).replaceAll("&lt;");
         }
-        if ( text.indexOf( '>' ) >= 0 )
-        {
-            text = gt.matcher( text ).replaceAll( "&gt;" );
+        if (text.indexOf('>') >= 0) {
+            text = gt.matcher(text).replaceAll("&gt;");
         }
-        if ( text.indexOf( '"' ) >= 0 )
-        {
-            text = dqoute.matcher( text ).replaceAll( "&quot;" );
+        if (text.indexOf('"') >= 0) {
+            text = dqoute.matcher(text).replaceAll("&quot;");
         }
-        if ( text.indexOf( '\'' ) >= 0 )
-        {
-            text = sqoute.matcher( text ).replaceAll( "&apos;" );
+        if (text.indexOf('\'') >= 0) {
+            text = sqoute.matcher(text).replaceAll("&apos;");
         }
 
         return text;
@@ -248,65 +225,57 @@ public class PrettyPrintXMLWriter
 
     private static final String crlf_str = "\r\n";
 
-    private static final Pattern crlf = Pattern.compile( crlf_str );
+    private static final Pattern crlf = Pattern.compile(crlf_str);
 
-    private static final Pattern lowers = Pattern.compile( "([\000-\037])" );
+    private static final Pattern lowers = Pattern.compile("([\000-\037])");
 
-    private static String escapeXmlAttribute( String text )
-    {
-        text = escapeXml( text );
+    private static String escapeXmlAttribute(String text) {
+        text = escapeXml(text);
 
         // Windows
-        Matcher crlfmatcher = crlf.matcher( text );
-        if ( text.contains( crlf_str ) )
-        {
-            text = crlfmatcher.replaceAll( "&#10;" );
+        Matcher crlfmatcher = crlf.matcher(text);
+        if (text.contains(crlf_str)) {
+            text = crlfmatcher.replaceAll("&#10;");
         }
 
-        Matcher m = lowers.matcher( text );
+        Matcher m = lowers.matcher(text);
         StringBuffer b = new StringBuffer();
-        while ( m.find() )
-        {
-            m = m.appendReplacement( b, "&#" + Integer.toString( m.group( 1 ).charAt( 0 ) ) + ";" );
+        while (m.find()) {
+            m = m.appendReplacement(b, "&#" + Integer.toString(m.group(1).charAt(0)) + ";");
         }
-        m.appendTail( b );
+        m.appendTail(b);
 
         return b.toString();
     }
 
     /** {@inheritDoc} */
     @Override
-    public void addAttribute( String key, String value )
-    {
-        write( " " );
+    public void addAttribute(String key, String value) {
+        write(" ");
 
-        write( key );
+        write(key);
 
-        write( "=\"" );
+        write("=\"");
 
-        write( escapeXmlAttribute( value ) );
+        write(escapeXmlAttribute(value));
 
-        write( "\"" );
+        write("\"");
     }
 
     /** {@inheritDoc} */
     @Override
-    public void endElement()
-    {
-        setDepth( getDepth() - 1 );
+    public void endElement() {
+        setDepth(getDepth() - 1);
 
-        if ( tagIsEmpty )
-        {
-            write( "/" );
+        if (tagIsEmpty) {
+            write("/");
 
             readyForNewLine = false;
 
             finishTag();
 
             elementStack.removeLast();
-        }
-        else
-        {
+        } else {
             finishTag();
 
             // see issue #51: https://github.com/codehaus-plexus/plexus-utils/issues/51
@@ -314,9 +283,9 @@ public class PrettyPrintXMLWriter
             // (this avoids the string concatenation optimization bug detected in Java 7)
             // TODO: change the below code to a more efficient expression when the library
             // be ready to target Java 8.
-            write( "</" );
-            write( elementStack.removeLast() );
-            write( ">" );
+            write("</");
+            write(elementStack.removeLast());
+            write(">");
         }
 
         readyForNewLine = true;
@@ -324,25 +293,21 @@ public class PrettyPrintXMLWriter
 
     /**
      * Write a string to the underlying writer
-     * 
+     *
      * @param str
      */
-    private void write( String str )
-    {
-        getWriter().write( str );
+    private void write(String str) {
+        getWriter().write(str);
     }
 
-    private void finishTag()
-    {
-        if ( tagInProgress )
-        {
-            write( ">" );
+    private void finishTag() {
+        if (tagInProgress) {
+            write(">");
         }
 
         tagInProgress = false;
 
-        if ( readyForNewLine )
-        {
+        if (readyForNewLine) {
             endOfLine();
         }
         readyForNewLine = false;
@@ -355,8 +320,7 @@ public class PrettyPrintXMLWriter
      *
      * @return the line indenter
      */
-    protected String getLineIndenter()
-    {
+    protected String getLineIndenter() {
         return lineIndenter;
     }
 
@@ -365,8 +329,7 @@ public class PrettyPrintXMLWriter
      *
      * @param lineIndenter new line indenter, could be null, but the normal way is some spaces.
      */
-    protected void setLineIndenter( String lineIndenter )
-    {
+    protected void setLineIndenter(String lineIndenter) {
         this.lineIndenter = lineIndenter;
     }
 
@@ -376,8 +339,7 @@ public class PrettyPrintXMLWriter
      * @return the line separator
      * @see #LS
      */
-    protected String getLineSeparator()
-    {
+    protected String getLineSeparator() {
         return lineSeparator;
     }
 
@@ -386,8 +348,7 @@ public class PrettyPrintXMLWriter
      *
      * @param lineSeparator new line separator, could be null but the normal way is valid line separator ("\n" on UNIX).
      */
-    protected void setLineSeparator( String lineSeparator )
-    {
+    protected void setLineSeparator(String lineSeparator) {
         this.lineSeparator = lineSeparator;
     }
 
@@ -397,36 +358,31 @@ public class PrettyPrintXMLWriter
      * @see #getLineIndenter()
      * @see #getLineSeparator()
      */
-    protected void endOfLine()
-    {
-        write( getLineSeparator() );
+    protected void endOfLine() {
+        write(getLineSeparator());
 
-        for ( int i = 0; i < getDepth(); i++ )
-        {
-            write( getLineIndenter() );
+        for (int i = 0; i < getDepth(); i++) {
+            write(getLineIndenter());
         }
     }
 
-    private void writeDocumentHeaders()
-    {
-        write( "<?xml version=\"1.0\"" );
+    private void writeDocumentHeaders() {
+        write("<?xml version=\"1.0\"");
 
-        if ( getEncoding() != null )
-        {
-            write( " encoding=\"" + getEncoding() + "\"" );
+        if (getEncoding() != null) {
+            write(" encoding=\"" + getEncoding() + "\"");
         }
 
-        write( "?>" );
+        write("?>");
 
         endOfLine();
 
-        if ( getDocType() != null )
-        {
-            write( "<!DOCTYPE " );
+        if (getDocType() != null) {
+            write("<!DOCTYPE ");
 
-            write( getDocType() );
+            write(getDocType());
 
-            write( ">" );
+            write(">");
 
             endOfLine();
         }
@@ -437,11 +393,9 @@ public class PrettyPrintXMLWriter
      *
      * @param writer not null writer
      */
-    protected void setWriter( PrintWriter writer )
-    {
-        if ( writer == null )
-        {
-            throw new IllegalArgumentException( "writer could not be null" );
+    protected void setWriter(PrintWriter writer) {
+        if (writer == null) {
+            throw new IllegalArgumentException("writer could not be null");
         }
 
         this.writer = writer;
@@ -452,8 +406,7 @@ public class PrettyPrintXMLWriter
      *
      * @return the underlying writer
      */
-    protected PrintWriter getWriter()
-    {
+    protected PrintWriter getWriter() {
         return writer;
     }
 
@@ -462,8 +415,7 @@ public class PrettyPrintXMLWriter
      *
      * @param depth new depth
      */
-    protected void setDepth( int depth )
-    {
+    protected void setDepth(int depth) {
         this.depth = depth;
     }
 
@@ -472,8 +424,7 @@ public class PrettyPrintXMLWriter
      *
      * @return the current depth
      */
-    protected int getDepth()
-    {
+    protected int getDepth() {
         return depth;
     }
 
@@ -482,8 +433,7 @@ public class PrettyPrintXMLWriter
      *
      * @param encoding new encoding
      */
-    protected void setEncoding( String encoding )
-    {
+    protected void setEncoding(String encoding) {
         this.encoding = encoding;
     }
 
@@ -492,8 +442,7 @@ public class PrettyPrintXMLWriter
      *
      * @return the current encoding
      */
-    protected String getEncoding()
-    {
+    protected String getEncoding() {
         return encoding;
     }
 
@@ -502,8 +451,7 @@ public class PrettyPrintXMLWriter
      *
      * @param docType new docType
      */
-    protected void setDocType( String docType )
-    {
+    protected void setDocType(String docType) {
         this.docType = docType;
     }
 
@@ -512,16 +460,14 @@ public class PrettyPrintXMLWriter
      *
      * @return the current docType
      */
-    protected String getDocType()
-    {
+    protected String getDocType() {
         return docType;
     }
 
     /**
      * @return the current elementStack;
      */
-    protected LinkedList<String> getElementStack()
-    {
+    protected LinkedList<String> getElementStack() {
         return elementStack;
     }
 }

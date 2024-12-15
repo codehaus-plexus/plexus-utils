@@ -70,9 +70,7 @@ import java.io.StringReader;
  *             {@link java.io.ByteArrayInputStream}.
  */
 @Deprecated
-public class StringInputStream
-    extends InputStream
-{
+public class StringInputStream extends InputStream {
     /** Source string, stored as a StringReader */
     private StringReader in;
 
@@ -81,9 +79,8 @@ public class StringInputStream
      *
      * @param source The string to read from. Must not be <code>null</code>.
      */
-    public StringInputStream( String source )
-    {
-        in = new StringReader( source );
+    public StringInputStream(String source) {
+        in = new StringReader(source);
     }
 
     /**
@@ -94,9 +91,7 @@ public class StringInputStream
      * @exception IOException if the original StringReader fails to be read
      */
     @Override
-    public int read()
-        throws IOException
-    {
+    public int read() throws IOException {
         return in.read();
     }
 
@@ -106,9 +101,7 @@ public class StringInputStream
      * @exception IOException if the original StringReader fails to be closed
      */
     @Override
-    public void close()
-        throws IOException
-    {
+    public void close() throws IOException {
         in.close();
     }
 
@@ -118,15 +111,11 @@ public class StringInputStream
      * @param limit the maximum limit of bytes that can be read before the mark position becomes invalid
      */
     @Override
-    public synchronized void mark( final int limit )
-    {
-        try
-        {
-            in.mark( limit );
-        }
-        catch ( IOException ioe )
-        {
-            throw new RuntimeException( ioe.getMessage() );
+    public synchronized void mark(final int limit) {
+        try {
+            in.mark(limit);
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe.getMessage());
         }
     }
 
@@ -136,9 +125,7 @@ public class StringInputStream
      * @exception IOException if the StringReader fails to be reset
      */
     @Override
-    public synchronized void reset()
-        throws IOException
-    {
+    public synchronized void reset() throws IOException {
         in.reset();
     }
 
@@ -146,8 +133,7 @@ public class StringInputStream
      * @see InputStream#markSupported
      */
     @Override
-    public boolean markSupported()
-    {
+    public boolean markSupported() {
         return in.markSupported();
     }
 }
