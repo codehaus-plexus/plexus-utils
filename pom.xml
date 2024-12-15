@@ -29,16 +29,17 @@ limitations under the License.
   <name>Plexus Common Utilities</name>
   <description>A collection of various utility classes to ease working with strings, files, command lines, XML and
     more.</description>
+  <url>https://codehaus-plexus.github.io/plexus-utils/</url>
 
   <scm>
-    <connection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</connection>
-    <developerConnection>scm:git:git@github.com:codehaus-plexus/plexus-utils.git</developerConnection>
+    <connection>scm:git:https://github.com/codehaus-plexus/plexus-utils.git</connection>
+    <developerConnection>${project.scm.connection}</developerConnection>
     <tag>plexus-utils-3.5.0</tag>
-    <url>http://github.com/codehaus-plexus/plexus-utils</url>
+    <url>https://github.com/codehaus-plexus/plexus-utils/tree/${project.scm.tag}/</url>
   </scm>
   <issueManagement>
     <system>github</system>
-    <url>http://github.com/codehaus-plexus/plexus-utils/issues</url>
+    <url>https://github.com/codehaus-plexus/plexus-utils/issues</url>
   </issueManagement>
   <distributionManagement>
     <site>
@@ -73,35 +74,7 @@ limitations under the License.
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <!--
-          maven totally change his way to copy symlink
-          this mean the symlink is copied as a symlink and not anymore as a new file
-          https://issues.apache.org/jira/browse/MRESOURCES-237
-          -->
-          <version>2.7</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <release>8</release>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-publish-plugin</artifactId>
