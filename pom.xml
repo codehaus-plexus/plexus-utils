@@ -49,7 +49,7 @@ limitations under the License.
   </distributionManagement>
 
   <properties>
-    <jmhVersion>1.36</jmhVersion>
+    <jmhVersion>1.37</jmhVersion>
     <project.build.outputTimestamp>2024-12-15T21:37:41Z</project.build.outputTimestamp>
   </properties>
 
