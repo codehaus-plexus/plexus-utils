@@ -111,8 +111,18 @@ public class Expand {
             throws Exception {
         File f = FileUtils.resolveFile(dir, entryName);
 
-        if (!f.getAbsolutePath().startsWith(dir.getAbsolutePath())) {
-            throw new IOException("Entry '" + entryName + "' outside the target directory.");
+        // Use canonical paths to prevent bypasses via symlinks, and add separator check
+        // to prevent partial prefix matches (e.g., /tmp/app matching /tmp/app-data)
+        try {
+            String canonicalDirPath = dir.getCanonicalPath();
+            String canonicalFilePath = f.getCanonicalPath();
+
+            if (!canonicalFilePath.equals(canonicalDirPath)
+                    && !canonicalFilePath.startsWith(canonicalDirPath + File.separator)) {
+                throw new IOException("Entry '" + entryName + "' outside the target directory.");
+            }
+        } catch (IOException e) {
+            throw new IOException("Failed to validate path for entry '" + entryName + "'", e);
         }
 
         try {
