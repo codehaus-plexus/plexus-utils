@@ -89,7 +89,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         getTestDirectory().mkdirs();
         createFile(testFile1, testFile1Size);
         createFile(testFile2, testFile2Size);
-        FileUtils.deleteDirectory(getTestDirectory());
+        org.apache.commons.io.FileUtils.deleteDirectory(getTestDirectory());
         getTestDirectory().mkdirs();
         createFile(testFile1, testFile1Size);
         createFile(testFile2, testFile2Size);
@@ -942,7 +942,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
     void copyDirectoryStructureWithAEmptyDirectoryStructure() throws Exception {
         File from = new File(getTestDirectory(), "from");
 
-        FileUtils.deleteDirectory(from);
+        org.apache.commons.io.FileUtils.deleteDirectory(from);
 
         assertTrue(from.mkdirs());
 
@@ -963,7 +963,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         // Make a structure to copy
         File from = new File(getTestDirectory(), "from");
 
-        FileUtils.deleteDirectory(from);
+        org.apache.commons.io.FileUtils.deleteDirectory(from);
 
         File fRoot = new File(from, "root.txt");
 
@@ -1026,7 +1026,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         // Make a structure to copy
         File from = new File(getTestDirectory(), "from");
 
-        FileUtils.deleteDirectory(from);
+        org.apache.commons.io.FileUtils.deleteDirectory(from);
 
         File fRoot = new File(from, "root.txt");
 
@@ -1108,7 +1108,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         // Make a structure to copy
         File toFrom = new File(getTestDirectory(), "tofrom");
 
-        FileUtils.deleteDirectory(toFrom);
+        org.apache.commons.io.FileUtils.deleteDirectory(toFrom);
 
         File fRoot = new File(toFrom, "root.txt");
 
@@ -1505,7 +1505,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         File symlink = new File(getTestDirectory(), "fileSymlink");
         createSymlink(symlink, symlinkTarget);
         try {
-            FileUtils.deleteDirectory(getTestDirectory());
+            org.apache.commons.io.FileUtils.deleteDirectory(getTestDirectory());
         } finally {
             /*
              * Ensure to cleanup problematic symlink or "mvn clean" will fail
@@ -1527,7 +1527,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         File symlink = new File(getTestDirectory(), "dirSymlink");
         createSymlink(symlink, symlinkTarget);
         try {
-            FileUtils.deleteDirectory(getTestDirectory());
+            org.apache.commons.io.FileUtils.deleteDirectory(getTestDirectory());
         } finally {
             /*
              * Ensure to cleanup problematic symlink or "mvn clean" will fail
@@ -1548,7 +1548,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         File symlink = new File(getTestDirectory(), "danglingSymlink");
         createSymlink(symlink, symlinkTarget);
         try {
-            FileUtils.deleteDirectory(getTestDirectory());
+            org.apache.commons.io.FileUtils.deleteDirectory(getTestDirectory());
         } finally {
             /*
              * Ensure to cleanup problematic symlink or "mvn clean" will fail

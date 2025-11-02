@@ -432,7 +432,7 @@ class DirectoryScannerTest extends FileBasedTestCase {
 
         File dir = new File(testDir, "regex-dir");
         try {
-            FileUtils.deleteDirectory(dir);
+            org.apache.commons.io.FileUtils.deleteDirectory(dir);
         } catch (IOException ignored) {
         }
 
@@ -471,7 +471,7 @@ class DirectoryScannerTest extends FileBasedTestCase {
 
         File dir = new File(testDir, "regex-dir");
         try {
-            FileUtils.deleteDirectory(dir);
+            org.apache.commons.io.FileUtils.deleteDirectory(dir);
         } catch (IOException ignored) {
         }
 

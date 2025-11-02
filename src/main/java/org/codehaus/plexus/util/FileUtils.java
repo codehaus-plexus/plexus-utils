@@ -1174,7 +1174,7 @@ public class FileUtils extends BaseFileUtils {
      */
     public static void forceDelete(final File file) throws IOException {
         if (file.isDirectory()) {
-            deleteDirectory(file);
+            org.apache.commons.io.FileUtils.deleteDirectory(file);
         } else {
             /*
              * NOTE: Always try to delete the file even if it appears to be non-existent. This will ensure that a
@@ -1321,7 +1321,7 @@ public class FileUtils extends BaseFileUtils {
      * @throws IOException if any
      */
     public static void deleteDirectory(final String directory) throws IOException {
-        deleteDirectory(new File(directory));
+        org.apache.commons.io.FileUtils.deleteDirectory(new File(directory));
     }
 
     /**
