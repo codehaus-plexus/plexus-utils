@@ -21,12 +21,9 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.codehaus.plexus.util.Os;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * <p>CommandLineUtilsTest class.</p>
@@ -43,7 +40,7 @@ class CommandLineUtilsTest {
      */
     @Test
     void quoteArguments() {
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             String result = CommandLineUtils.quote("Hello");
             System.out.println(result);
             assertEquals("Hello", result);

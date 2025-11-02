@@ -37,7 +37,7 @@ class TopologicalSorterTest {
      * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
      */
     @Test
-    void dfs() throws CycleDetectedException {
+    void dfs() throws Exception {
         // a --> b --->c
         //
         // result a,b,c

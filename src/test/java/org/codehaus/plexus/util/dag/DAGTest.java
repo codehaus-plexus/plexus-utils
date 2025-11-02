@@ -40,7 +40,7 @@ class DAGTest {
      * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
      */
     @Test
-    void dag() throws CycleDetectedException {
+    void dag() throws Exception {
         final DAG dag = new DAG();
 
         dag.addVertex("a");
@@ -146,7 +146,7 @@ class DAGTest {
      * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
      */
     @Test
-    void getPredecessors() throws CycleDetectedException {
+    void getPredecessors() throws Exception {
         final DAG dag = new DAG();
 
         dag.addEdge("a", "b");

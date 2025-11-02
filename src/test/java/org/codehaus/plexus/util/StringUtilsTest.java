@@ -323,7 +323,6 @@ class StringUtilsTest {
             StringUtils.unifyLineSeparators(s, "abs");
             fail("Exception NOT catched");
         } catch (IllegalArgumentException e) {
-            assertTrue(true, "Exception catched");
         }
 
         assertEquals("this\nis\na\ntest", StringUtils.unifyLineSeparators(s, "\n"));

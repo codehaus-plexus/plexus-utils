@@ -220,7 +220,6 @@ public final class FileUtilsTest extends FileBasedTestCase {
                 FileUtils.mkdir(winFile.getAbsolutePath());
                 fail();
             } catch (IllegalArgumentException e) {
-                assertTrue(true);
             }
         }
     }
@@ -358,7 +357,6 @@ public final class FileUtilsTest extends FileBasedTestCase {
                 FileUtils.forceMkdir(winFile);
                 fail();
             } catch (IllegalArgumentException e) {
-                assertTrue(true);
             }
         }
     }
@@ -1243,7 +1241,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    void fileRead() throws IOException {
+    void fileRead() throws Exception {
         File testFile = new File(getTestDirectory(), "testFileRead.txt");
         String testFileName = testFile.getAbsolutePath();
         /*
@@ -1272,7 +1270,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    void fileReadWithEncoding() throws IOException {
+    void fileReadWithEncoding() throws Exception {
         String encoding = "UTF-8";
         File testFile = new File(getTestDirectory(), "testFileRead.txt");
         String testFileName = testFile.getAbsolutePath();
@@ -1297,7 +1295,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    void fileAppend() throws IOException {
+    void fileAppend() throws Exception {
         String baseString = "abc";
         File testFile = new File(getTestDirectory(), "testFileAppend.txt");
         String testFileName = testFile.getAbsolutePath();
@@ -1322,7 +1320,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    void fileAppendWithEncoding() throws IOException {
+    void fileAppendWithEncoding() throws Exception {
         String baseString = "abc";
         String encoding = "UTF-8";
         File testFile = new File(getTestDirectory(), "testFileAppend.txt");
@@ -1348,7 +1346,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    void fileWrite() throws IOException {
+    void fileWrite() throws Exception {
         File testFile = new File(getTestDirectory(), "testFileWrite.txt");
         String testFileName = testFile.getAbsolutePath();
         // unicode escaped Japanese hiragana, "aiueo" + Umlaut a
@@ -1364,7 +1362,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    void fileWriteWithEncoding() throws IOException {
+    void fileWriteWithEncoding() throws Exception {
         String encoding = "UTF-8";
         File testFile = new File(getTestDirectory(), "testFileWrite.txt");
         String testFileName = testFile.getAbsolutePath();
@@ -1422,7 +1420,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
      * @throws java.io.IOException if any.
      */
     @Test
-    void copyFileOnSameFile() throws IOException {
+    void copyFileOnSameFile() throws Exception {
         String content = "ggrgreeeeeeeeeeeeeeeeeeeeeeeoierjgioejrgiojregioejrgufcdxivbsdibgfizgerfyaezgv!zeez";
         final File theFile = File.createTempFile("test", ".txt");
         theFile.deleteOnExit();

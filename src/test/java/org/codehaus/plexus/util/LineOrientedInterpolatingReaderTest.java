@@ -46,7 +46,7 @@ class LineOrientedInterpolatingReaderTest {
      * @throws java.io.IOException if any.
      */
     @Test
-    void shouldInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws IOException {
+    void shouldInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
         String testStr = "This is a ${test";
         LineOrientedInterpolatingReader iReader = new LineOrientedInterpolatingReader(
                 new StringReader(testStr), Collections.singletonMap("test", "TestValue"));
