@@ -40,7 +40,6 @@ import static org.junit.jupiter.api.Assertions.fail;
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class PrettyPrintXMLWriterTest {
@@ -48,17 +47,11 @@ class PrettyPrintXMLWriterTest {
 
     PrettyPrintXMLWriter writer;
 
-    /**
-     * <p>setUp.</p>
-     */
     @BeforeEach
     void setUp() {
         initWriter();
     }
 
-    /**
-     * <p>tearDown.</p>
-     */
     @AfterEach
     void tearDown() {
         writer = null;
@@ -70,9 +63,6 @@ class PrettyPrintXMLWriterTest {
         writer = new PrettyPrintXMLWriter(w);
     }
 
-    /**
-     * <p>testDefaultPrettyPrintXMLWriter.</p>
-     */
     @Test
     void defaultPrettyPrintXMLWriter() {
         writer.startElement(Tag.HTML.toString());
@@ -86,9 +76,6 @@ class PrettyPrintXMLWriterTest {
         assertEquals(expectedResult(PrettyPrintXMLWriter.LS), w.toString());
     }
 
-    /**
-     * <p>testPrettyPrintXMLWriterWithGivenLineSeparator.</p>
-     */
     @Test
     void prettyPrintXMLWriterWithGivenLineSeparator() {
         writer.setLineSeparator("\n");
@@ -104,9 +91,6 @@ class PrettyPrintXMLWriterTest {
         assertEquals(expectedResult("\n"), w.toString());
     }
 
-    /**
-     * <p>testPrettyPrintXMLWriterWithGivenLineIndenter.</p>
-     */
     @Test
     void prettyPrintXMLWriterWithGivenLineIndenter() {
         writer.setLineIndenter("    ");
@@ -122,9 +106,6 @@ class PrettyPrintXMLWriterTest {
         assertEquals(expectedResult("    ", PrettyPrintXMLWriter.LS), w.toString());
     }
 
-    /**
-     * <p>testEscapeXmlAttribute.</p>
-     */
     @Test
     void escapeXmlAttribute() {
         // Windows
@@ -148,9 +129,6 @@ class PrettyPrintXMLWriterTest {
         assertEquals("<div class=\"sect&#10;ion\"/>", w.toString());
     }
 
-    /**
-     * <p>testendElementAlreadyClosed.</p>
-     */
     @Test
     void testendElementAlreadyClosed() {
         try {

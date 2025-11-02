@@ -42,7 +42,6 @@ import org.openjdk.jmh.runner.options.TimeValue;
  * <p>MXParserPerfTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 @BenchmarkMode(Mode.Throughput)

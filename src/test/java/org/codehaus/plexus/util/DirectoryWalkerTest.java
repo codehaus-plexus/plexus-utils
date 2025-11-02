@@ -28,13 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>DirectoryWalkerTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class DirectoryWalkerTest {
-    /**
-     * <p>testDirectoryWalk.</p>
-     */
+
     @Test
     void directoryWalk() {
         DirectoryWalker walker = new DirectoryWalker();

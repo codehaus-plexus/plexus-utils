@@ -3,8 +3,6 @@
  * Copyright (c) 2003 Extreme! Lab, Indiana University. All rights reserved.
  *
  * This software is open source. See the bottom of this file for the licence.
- *
- * $Id$
  */
 
 package org.codehaus.plexus.util.xml.pull;

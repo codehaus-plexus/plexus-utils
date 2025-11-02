@@ -29,6 +29,8 @@ import org.codehaus.plexus.util.cli.shell.CmdShell;
 import org.codehaus.plexus.util.cli.shell.Shell;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -38,17 +40,11 @@ import static org.junit.jupiter.api.Assertions.fail;
  * <p>CommandlineTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class CommandlineTest {
     private String baseDir;
 
-    /**
-     * <p>setUp.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @BeforeEach
     void setUp() throws Exception {
         baseDir = System.getProperty("basedir");
@@ -58,9 +54,7 @@ class CommandlineTest {
         }
     }
 
-    /**
-     * <p>testCommandlineWithoutCommandInConstructor.</p>
-     */
+    @SuppressWarnings("deprecation")
     @Test
     void commandlineWithoutCommandInConstructor() {
         Commandline cmd = new Commandline(new Shell());
@@ -72,9 +66,6 @@ class CommandlineTest {
         assertEquals("cd .", cmd.toString());
     }
 
-    /**
-     * <p>testCommandlineWithCommandInConstructor.</p>
-     */
     @Test
     void commandlineWithCommandInConstructor() {
         Commandline cmd = new Commandline("cd .", new Shell());
@@ -84,11 +75,6 @@ class CommandlineTest {
         assertEquals("cd .", cmd.toString());
     }
 
-    /**
-     * <p>testExecuteBinaryOnPath.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void executeBinaryOnPath() throws Exception {
         // Maven startup script on PATH is required for this test
@@ -104,11 +90,7 @@ class CommandlineTest {
         assertTrue(out.contains("Java version:"));
     }
 
-    /**
-     * <p>testExecute.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
+    @SuppressWarnings("deprecation")
     @Test
     void execute() throws Exception {
         // allow it to detect the proper shell here.
@@ -122,9 +104,7 @@ class CommandlineTest {
         assertEquals("Hello", IOUtil.toString(process.getInputStream()).trim());
     }
 
-    /**
-     * <p>testSetLine.</p>
-     */
+    @SuppressWarnings("deprecation")
     @Test
     void setLine() {
         Commandline cmd = new Commandline(new Shell());
@@ -137,9 +117,7 @@ class CommandlineTest {
         assertEquals("echo Hello", cmd.toString());
     }
 
-    /**
-     * <p>testCreateCommandInReverseOrder.</p>
-     */
+    @SuppressWarnings("deprecation")
     @Test
     void createCommandInReverseOrder() {
         Commandline cmd = new Commandline(new Shell());
@@ -151,9 +129,7 @@ class CommandlineTest {
         assertEquals("cd .", cmd.toString());
     }
 
-    /**
-     * <p>testSetFile.</p>
-     */
+    @SuppressWarnings("deprecation")
     @Test
     void setFile() {
         Commandline cmd = new Commandline(new Shell());
@@ -170,13 +146,8 @@ class CommandlineTest {
         assertEquals("more " + fileName, cmd.toString());
     }
 
-    /**
-     * <p>testGetShellCommandLineWindows.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
-    void getShellCommandLineWindows() throws Exception {
+    void getShellCommandLineWindows() {
         Commandline cmd = new Commandline(new CmdShell());
         cmd.setExecutable("c:\\Program Files\\xxx");
         cmd.addArguments(new String[] {"a", "b"});
@@ -192,13 +163,8 @@ class CommandlineTest {
         assertEquals(expectedShellCmd, shellCommandline[3]);
     }
 
-    /**
-     * <p>testGetShellCommandLineWindowsWithSeveralQuotes.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
-    void getShellCommandLineWindowsWithSeveralQuotes() throws Exception {
+    void getShellCommandLineWindowsWithSeveralQuotes() {
         Commandline cmd = new Commandline(new CmdShell());
         cmd.setExecutable("c:\\Program Files\\xxx");
         cmd.addArguments(new String[] {"c:\\Documents and Settings\\whatever", "b"});
@@ -217,11 +183,9 @@ class CommandlineTest {
 
     /**
      * Test the command line generated for the bash shell
-     *
-     * @throws java.lang.Exception
      */
     @Test
-    void getShellCommandLineBash() throws Exception {
+    void getShellCommandLineBash() {
         Commandline cmd = new Commandline(new BourneShell());
         cmd.setExecutable("/bin/echo");
         cmd.addArguments(new String[] {"hello world"});
@@ -241,11 +205,9 @@ class CommandlineTest {
 
     /**
      * Test the command line generated for the bash shell
-     *
-     * @throws java.lang.Exception
      */
     @Test
-    void getShellCommandLineBashWithWorkingDirectory() throws Exception {
+    void getShellCommandLineBashWithWorkingDirectory() {
         Commandline cmd = new Commandline(new BourneShell());
         cmd.setExecutable("/bin/echo");
         cmd.addArguments(new String[] {"hello world"});
@@ -268,11 +230,9 @@ class CommandlineTest {
 
     /**
      * Test the command line generated for the bash shell
-     *
-     * @throws java.lang.Exception
      */
     @Test
-    void getShellCommandLineBashWithSingleQuotedArg() throws Exception {
+    void getShellCommandLineBashWithSingleQuotedArg() {
         Commandline cmd = new Commandline(new BourneShell());
         cmd.setExecutable("/bin/echo");
         cmd.addArguments(new String[] {"'hello world'"});
@@ -290,13 +250,8 @@ class CommandlineTest {
         assertEquals(expectedShellCmd, shellCommandline[2]);
     }
 
-    /**
-     * <p>testGetShellCommandLineNonWindows.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
-    void getShellCommandLineNonWindows() throws Exception {
+    void getShellCommandLineNonWindows() {
         Commandline cmd = new Commandline(new BourneShell());
         cmd.setExecutable("/usr/bin");
         cmd.addArguments(new String[] {"a", "b"});
@@ -314,11 +269,6 @@ class CommandlineTest {
         }
     }
 
-    /**
-     * <p>testEnvironment.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void environment() throws Exception {
         Commandline cmd = new Commandline();
@@ -326,11 +276,6 @@ class CommandlineTest {
         assertEquals("name=value", cmd.getEnvironmentVariables()[0]);
     }
 
-    /**
-     * <p>testEnvironmentWitOverrideSystemEnvironment.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void environmentWitOverrideSystemEnvironment() throws Exception {
         Commandline cmd = new Commandline();
@@ -349,8 +294,6 @@ class CommandlineTest {
 
     /**
      * Test an executable with a single apostrophe <code>'</code> in its path
-     *
-     * @throws java.lang.Exception
      */
     @Test
     void quotedPathWithSingleApostrophe() throws Exception {
@@ -363,8 +306,6 @@ class CommandlineTest {
 
     /**
      * Test an executable with shell-expandable content in its path.
-     *
-     * @throws java.lang.Exception
      */
     @Test
     void pathWithShellExpansionStrings() throws Exception {
@@ -374,16 +315,10 @@ class CommandlineTest {
 
     /**
      * Test an executable with a single quotation mark <code>\"</code> in its path only for non Windows box.
-     *
-     * @throws java.lang.Exception
      */
     @Test
+    @DisabledOnOs(OS.WINDOWS)
     void quotedPathWithQuotationMark() throws Exception {
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            System.out.println("testQuotedPathWithQuotationMark() skipped on Windows");
-            return;
-        }
-
         File dir = new File(System.getProperty("basedir"), "target/test/quotedpath\"test");
         createAndCallScript(dir, "echo Quoted");
 
@@ -394,16 +329,10 @@ class CommandlineTest {
     /**
      * Test an executable with a single quotation mark <code>\"</code> and <code>'</code> in its path only for non
      * Windows box.
-     *
-     * @throws java.lang.Exception
      */
     @Test
+    @DisabledOnOs(OS.WINDOWS)
     void quotedPathWithQuotationMarkAndApostrophe() throws Exception {
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            System.out.println("testQuotedPathWithQuotationMarkAndApostrophe() skipped on Windows");
-            return;
-        }
-
         File dir = new File(System.getProperty("basedir"), "target/test/quotedpath\"'test");
         createAndCallScript(dir, "echo Quoted");
 
@@ -413,8 +342,6 @@ class CommandlineTest {
 
     /**
      * Test an executable with a quote in its path and no space
-     *
-     * @throws java.lang.Exception
      */
     @Test
     void onlyQuotedPath() throws Exception {
@@ -440,11 +367,6 @@ class CommandlineTest {
         createAndCallScript(dir, javaBinStr + " -version");
     }
 
-    /**
-     * <p>testDollarSignInArgumentPath.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void dollarSignInArgumentPath() throws Exception {
         File dir = new File(System.getProperty("basedir"), "target/test");
@@ -452,12 +374,8 @@ class CommandlineTest {
             assertTrue(dir.mkdirs(), "Can't create dir:" + dir.getAbsolutePath());
         }
 
-        Writer writer = null;
-        try {
-            writer = Files.newBufferedWriter(dir.toPath().resolve("test$1.txt"));
+        try (Writer writer = Files.newBufferedWriter(dir.toPath().resolve("test$1.txt"))) {
             IOUtil.copy("Success", writer);
-        } finally {
-            IOUtil.close(writer);
         }
 
         Commandline cmd = new Commandline();
@@ -473,11 +391,6 @@ class CommandlineTest {
         executeCommandLine(cmd);
     }
 
-    /**
-     * <p>testTimeOutException.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void timeOutException() throws Exception {
         File javaHome = new File(System.getProperty("java.home"));
@@ -553,11 +466,8 @@ class CommandlineTest {
             bat = new File(dir, "echo");
         }
 
-        Writer w = Files.newBufferedWriter(bat.toPath());
-        try {
+        try (Writer w = Files.newBufferedWriter(bat.toPath())) {
             IOUtil.copy(content, w);
-        } finally {
-            IOUtil.close(w);
         }
 
         // Change permission

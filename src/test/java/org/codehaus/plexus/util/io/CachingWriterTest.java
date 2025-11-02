@@ -60,7 +60,7 @@ class CachingWriterTest {
     }
 
     @Test
-    void noOverwriteWithFlush() throws IOException, InterruptedException {
+    void noOverwriteWithFlush() throws Exception {
         String data = "Hello world!";
         Path path = tempDir.resolve("file-bigger.txt");
         assertFalse(Files.exists(path));
@@ -85,7 +85,7 @@ class CachingWriterTest {
     }
 
     @Test
-    void writeNoExistingFile() throws IOException, InterruptedException {
+    void writeNoExistingFile() throws Exception {
         String data = "Hello world!";
         Path path = tempDir.resolve("file.txt");
         assertFalse(Files.exists(path));

@@ -27,13 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>CycleDetectedExceptionTest class.</p>
  *
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class CycleDetectedExceptionTest {
-    /**
-     * <p>testException.</p>
-     */
+
     @Test
     void exception() {
         final List<String> cycle = new ArrayList<>();

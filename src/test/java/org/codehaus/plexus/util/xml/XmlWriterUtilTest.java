@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>XmlWriterUtilTest class.</p>
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class XmlWriterUtilTest {
@@ -43,11 +42,6 @@ class XmlWriterUtilTest {
 
     private XMLWriter xmlWriter;
 
-    /**
-     * <p>setUp.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @BeforeEach
     void setUp() throws Exception {
         output = new ByteArrayOutputStream();
@@ -55,11 +49,6 @@ class XmlWriterUtilTest {
         xmlWriter = new PrettyPrintXMLWriter(writer);
     }
 
-    /**
-     * <p>tearDown.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @AfterEach
     void tearDown() throws Exception {
         xmlWriter = null;
@@ -67,12 +56,6 @@ class XmlWriterUtilTest {
         output = null;
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeLineBreakXMLWriter() throws Exception {
         XmlWriterUtil.writeLineBreak(xmlWriter);
@@ -80,12 +63,6 @@ class XmlWriterUtilTest {
         assertEquals(1, StringUtils.countMatches(output.toString(), XmlWriterUtil.LS));
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeLineBreakXMLWriterInt() throws Exception {
         XmlWriterUtil.writeLineBreak(xmlWriter, 10);
@@ -93,12 +70,6 @@ class XmlWriterUtilTest {
         assertEquals(10, StringUtils.countMatches(output.toString(), XmlWriterUtil.LS));
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeLineBreakXMLWriterIntInt() throws Exception {
         XmlWriterUtil.writeLineBreak(xmlWriter, 10, 2);
@@ -110,12 +81,6 @@ class XmlWriterUtilTest {
                         output.toString(), StringUtils.repeat(" ", 2 * XmlWriterUtil.DEFAULT_INDENTATION_SIZE)));
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int, int, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeLineBreakXMLWriterIntIntInt() throws Exception {
         XmlWriterUtil.writeLineBreak(xmlWriter, 10, 2, 4);
@@ -124,12 +89,6 @@ class XmlWriterUtilTest {
         assertEquals(1, StringUtils.countMatches(output.toString(), StringUtils.repeat(" ", 2 * 4)));
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentLineBreak(org.codehaus.plexus.util.xml.XMLWriter)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentLineBreakXMLWriter() throws Exception {
         XmlWriterUtil.writeCommentLineBreak(xmlWriter);
@@ -140,12 +99,6 @@ class XmlWriterUtilTest {
         assertEquals(output.toString().length(), XmlWriterUtil.DEFAULT_COLUMN_LINE - 1 + XmlWriterUtil.LS.length());
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentLineBreak(org.codehaus.plexus.util.xml.XMLWriter, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentLineBreakXMLWriterInt() throws Exception {
         XmlWriterUtil.writeCommentLineBreak(xmlWriter, 20);
@@ -160,12 +113,6 @@ class XmlWriterUtilTest {
         assertEquals("<!--  -->" + XmlWriterUtil.LS, output.toString(), output.toString());
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentXMLWriterString() throws Exception {
         XmlWriterUtil.writeComment(xmlWriter, "hello");
@@ -203,12 +150,6 @@ class XmlWriterUtilTest {
                 output.toString().length(), 2 * (XmlWriterUtil.DEFAULT_COLUMN_LINE - 1 + XmlWriterUtil.LS.length()));
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentXMLWriterStringInt() throws Exception {
         String indent = StringUtils.repeat(" ", 2 * XmlWriterUtil.DEFAULT_INDENTATION_SIZE);
@@ -245,12 +186,6 @@ class XmlWriterUtilTest {
                 2 * (XmlWriterUtil.DEFAULT_COLUMN_LINE - 1 + XmlWriterUtil.LS.length()) + 2 * indent.length());
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentXMLWriterStringIntInt() throws Exception {
         String repeat = StringUtils.repeat(" ", 2 * 4);
@@ -283,12 +218,6 @@ class XmlWriterUtilTest {
                 2 * (XmlWriterUtil.DEFAULT_COLUMN_LINE - 1 + XmlWriterUtil.LS.length()) + 2 * repeat.length());
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentXMLWriterStringIntIntInt() throws Exception {
         String indent = StringUtils.repeat(" ", 2 * 4);
@@ -313,12 +242,6 @@ class XmlWriterUtilTest {
         assertTrue(output.toString().length() >= 10 + 2 * 4);
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentText(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentTextXMLWriterStringInt() throws Exception {
         XmlWriterUtil.writeCommentText(xmlWriter, "hello", 0);
@@ -372,12 +295,6 @@ class XmlWriterUtilTest {
         assertEquals(output.toString(), sb.toString());
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentText(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentTextXMLWriterStringIntInt() throws Exception {
         String indent = StringUtils.repeat(" ", 2 * 4);
@@ -401,12 +318,6 @@ class XmlWriterUtilTest {
                 3 * (80 - 1 + XmlWriterUtil.LS.length()) + 4 * 2 * 4 + 2 * XmlWriterUtil.LS.length());
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeCommentText(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String, int, int, int)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentTextXMLWriterStringIntIntInt() throws Exception {
         String indent = StringUtils.repeat(" ", 2 * 4);
@@ -430,12 +341,6 @@ class XmlWriterUtilTest {
                 3 * (50 - 1 + XmlWriterUtil.LS.length()) + 4 * 2 * 4 + 2 * XmlWriterUtil.LS.length());
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentNull() throws Exception {
         XmlWriterUtil.writeComment(xmlWriter, null);
@@ -445,12 +350,6 @@ class XmlWriterUtilTest {
         assertEquals(output.toString(), sb);
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentShort() throws Exception {
         XmlWriterUtil.writeComment(xmlWriter, "This is a short text");
@@ -460,12 +359,6 @@ class XmlWriterUtilTest {
         assertEquals(output.toString(), sb);
     }
 
-    /**
-     * Test method for
-     * {@link org.codehaus.plexus.util.xml.XmlWriterUtil#writeComment(org.codehaus.plexus.util.xml.XMLWriter, java.lang.String)}.
-     *
-     * @throws java.lang.Exception if any
-     */
     @Test
     void writeCommentLong() throws Exception {
         XmlWriterUtil.writeComment(
