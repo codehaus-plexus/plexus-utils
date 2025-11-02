@@ -30,23 +30,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>BourneShellTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class BourneShellTest {
 
-    /**
-     * <p>newShell.</p>
-     *
-     * @return a {@link org.codehaus.plexus.util.cli.shell.Shell} object.
-     */
     protected Shell newShell() {
         return new BourneShell();
     }
 
-    /**
-     * <p>testQuoteWorkingDirectoryAndExecutable.</p>
-     */
     @Test
     void quoteWorkingDirectoryAndExecutable() {
         Shell sh = newShell();
@@ -60,9 +51,6 @@ class BourneShellTest {
         assertEquals("/bin/sh -c cd '/usr/local/bin' && 'chmod'", executable);
     }
 
-    /**
-     * <p>testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes.</p>
-     */
     @Test
     void quoteWorkingDirectoryAndExecutableWDPathWithSingleQuotes() {
         Shell sh = newShell();
@@ -76,9 +64,6 @@ class BourneShellTest {
         assertEquals("/bin/sh -c cd '/usr/local/'\"'\"'something else'\"'\"'' && 'chmod'", executable);
     }
 
-    /**
-     * <p>testQuoteWorkingDirectoryAndExecutable_WDPathWithSingleQuotes_BackslashFileSep.</p>
-     */
     @Test
     void quoteWorkingDirectoryAndExecutableWDPathWithSingleQuotesBackslashFileSep() {
         Shell sh = newShell();
@@ -92,9 +77,6 @@ class BourneShellTest {
         assertEquals("/bin/sh -c cd '\\usr\\local\\'\"'\"'something else'\"'\"'' && 'chmod'", executable);
     }
 
-    /**
-     * <p>testPreserveSingleQuotesOnArgument.</p>
-     */
     @Test
     void preserveSingleQuotesOnArgument() {
         Shell sh = newShell();
@@ -111,9 +93,6 @@ class BourneShellTest {
         assertTrue(cli.endsWith("''\"'\"'some arg with spaces'\"'\"''"));
     }
 
-    /**
-     * <p>testAddSingleQuotesOnArgumentWithSpaces.</p>
-     */
     @Test
     void addSingleQuotesOnArgumentWithSpaces() {
         Shell sh = newShell();
@@ -130,9 +109,6 @@ class BourneShellTest {
         assertTrue(cli.endsWith("'" + args[0] + "'"));
     }
 
-    /**
-     * <p>testEscapeSingleQuotesOnArgument.</p>
-     */
     @Test
     void escapeSingleQuotesOnArgument() {
         Shell sh = newShell();
@@ -150,9 +126,6 @@ class BourneShellTest {
                 "cd '/usr/bin' && 'chmod' 'arg'\"'\"'withquote'", shellCommandLine.get(shellCommandLine.size() - 1));
     }
 
-    /**
-     * <p>testArgumentsWithsemicolon.</p>
-     */
     @Test
     void argumentsWithsemicolon() {
 
@@ -210,11 +183,6 @@ class BourneShellTest {
         assertEquals("\"--password ;password\"", lines[4]);
     }
 
-    /**
-     * <p>testBourneShellQuotingCharacters.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void bourneShellQuotingCharacters() throws Exception {
         // { ' ', '$', ';', '&', '|', '<', '>', '*', '?', '(', ')' };

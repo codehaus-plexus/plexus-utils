@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Created on 21/06/2003
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class SweeperPoolTest {
@@ -87,9 +86,6 @@ class SweeperPoolTest {
         assertNotSame(tmp, tmp2, "Expected returned objects to be different");
     }
 
-    /**
-     * <p>testSweepAndTrim1.</p>
-     */
     @Test
     void sweepAndTrim1() {
         // test trigger
@@ -116,13 +112,8 @@ class SweeperPoolTest {
         assertEquals(3, pool.testGetDisposedObjects().size(), "Expected 3 disposed objects");
     }
 
-    /**
-     * <p>setUp.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         o1 = new Object();
         o2 = new Object();
         o3 = new Object();
@@ -131,19 +122,14 @@ class SweeperPoolTest {
         o6 = new Object();
     }
 
-    /**
-     * <p>tearDown.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @AfterEach
-    void tearDown() throws Exception {
+    void tearDown() {
         pool.dispose();
         assertTrue(pool.isDisposed());
         pool = null;
     }
 
-    class TestObjectPool extends SweeperPool {
+    static class TestObjectPool extends SweeperPool {
         private final Vector<Object> disposedObjects = new Vector<>();
 
         public TestObjectPool(int maxSize, int minSize, int intialCapacity, int sweepInterval, int triggerSize) {
@@ -154,9 +140,6 @@ class SweeperPoolTest {
             disposedObjects.clear();
         }
 
-        /**
-         * @see nz.co.bonzo.beans.castor.pool.ObjectPool#objectDisposed(java.lang.Object)
-         */
         public void objectDisposed(Object obj) {
             disposedObjects.add(obj);
         }

@@ -31,9 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @since 3.4.0
  */
 class SelectorUtilsTest {
-    /**
-     * <p>testExtractPattern.</p>
-     */
+
     @Test
     void extractPattern() {
         assertEquals("[A-Z].*", SelectorUtils.extractPattern("%regex[[A-Z].*]", "/"));
@@ -44,9 +42,6 @@ class SelectorUtilsTest {
         assertEquals("some\\ABC*", SelectorUtils.extractPattern("%ant[some/ABC*]", "\\"));
     }
 
-    /**
-     * <p>testIsAntPrefixedPattern.</p>
-     */
     @Test
     void isAntPrefixedPattern() {
         assertTrue(SelectorUtils.isAntPrefixedPattern("%ant[A]")); // single char not allowed
@@ -55,9 +50,6 @@ class SelectorUtilsTest {
         assertFalse(SelectorUtils.isAntPrefixedPattern("*"));
     }
 
-    /**
-     * <p>testIsRegexPrefixedPattern.</p>
-     */
     @Test
     void isRegexPrefixedPattern() {
         assertTrue(SelectorUtils.isRegexPrefixedPattern("%regex[A]")); // single char not allowed
@@ -66,9 +58,6 @@ class SelectorUtilsTest {
         assertFalse(SelectorUtils.isRegexPrefixedPattern("*"));
     }
 
-    /**
-     * <p>testMatchPath_DefaultFileSeparator.</p>
-     */
     @Test
     void matchPathDefaultFileSeparator() {
         String separator = File.separator;
@@ -84,9 +73,6 @@ class SelectorUtilsTest {
         assertTrue(SelectorUtils.matchPath("*" + separator + "a.txt", "b" + separator + "a.txt"));
     }
 
-    /**
-     * <p>testMatchPath_UnixFileSeparator.</p>
-     */
     @Test
     void matchPathUnixFileSeparator() {
         String separator = "/";
@@ -104,9 +90,6 @@ class SelectorUtilsTest {
         assertTrue(SelectorUtils.matchPath("*" + separator + "a.txt", "b" + separator + "a.txt", separator, false));
     }
 
-    /**
-     * <p>testMatchPath_WindowsFileSeparator.</p>
-     */
     @Test
     void matchPathWindowsFileSeparator() {
         String separator = "\\";

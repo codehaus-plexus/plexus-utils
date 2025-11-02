@@ -20,19 +20,16 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 
-import org.codehaus.plexus.util.Os;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * <p>CommandLineUtilsTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 @SuppressWarnings({"deprecation"})
@@ -43,7 +40,7 @@ class CommandLineUtilsTest {
      */
     @Test
     void quoteArguments() {
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             String result = CommandLineUtils.quote("Hello");
             System.out.println(result);
             assertEquals("Hello", result);
@@ -54,20 +51,15 @@ class CommandLineUtilsTest {
             System.out.println(result);
             assertEquals("'\"Hello World\"'", result);
         });
-        try {
-            CommandLineUtils.quote("\"Hello 'World''");
-            fail();
-        } catch (Exception ignored) {
-        }
+
+        assertThrows(CommandLineException.class, () -> CommandLineUtils.quote("\"Hello 'World''"));
     }
 
     /**
      * Tests that case-insensitive environment variables are normalized to upper case.
-     *
-     * @throws java.lang.Exception if any.
      */
     @Test
-    void getSystemEnvVarsCaseInsensitive() throws Exception {
+    void getSystemEnvVarsCaseInsensitive() {
         Properties vars = CommandLineUtils.getSystemEnvVars(false);
         for (Object o : vars.keySet()) {
             String variable = (String) o;
@@ -77,14 +69,10 @@ class CommandLineUtilsTest {
 
     /**
      * Tests that environment variables on Windows are normalized to upper case. Does nothing on Unix platforms.
-     *
-     * @throws java.lang.Exception if any.
      */
     @Test
-    void getSystemEnvVarsWindows() throws Exception {
-        if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
-            return;
-        }
+    @EnabledOnOs(OS.WINDOWS)
+    void getSystemEnvVarsWindows() {
         Properties vars = CommandLineUtils.getSystemEnvVars();
         for (Object o : vars.keySet()) {
             String variable = (String) o;
@@ -94,8 +82,6 @@ class CommandLineUtilsTest {
 
     /**
      * Tests the splitting of a command line into distinct arguments.
-     *
-     * @throws java.lang.Exception if any.
      */
     @Test
     void translateCommandline() throws Exception {

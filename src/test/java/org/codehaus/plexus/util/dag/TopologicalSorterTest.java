@@ -27,17 +27,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>TopologicalSorterTest class.</p>
  *
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class TopologicalSorterTest {
-    /**
-     * <p>testDfs.</p>
-     *
-     * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
-     */
+
     @Test
-    void dfs() throws CycleDetectedException {
+    void dfs() throws Exception {
         // a --> b --->c
         //
         // result a,b,c

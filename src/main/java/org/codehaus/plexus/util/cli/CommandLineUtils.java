@@ -423,7 +423,7 @@ public abstract class CommandLineUtils {
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
     @Deprecated
-    @SuppressWarnings({"JavaDoc", "deprecation"})
+    @SuppressWarnings({"JavaDoc"})
     public static String quote(String argument) throws CommandLineException {
         return quote(argument, false, false, true);
     }
@@ -445,7 +445,7 @@ public abstract class CommandLineUtils {
      *             {@link StringUtils#quoteAndEscape(String, char)} instead.
      */
     @Deprecated
-    @SuppressWarnings({"JavaDoc", "UnusedDeclaration", "deprecation"})
+    @SuppressWarnings({"JavaDoc", "UnusedDeclaration"})
     public static String quote(String argument, boolean wrapExistingQuotes) throws CommandLineException {
         return quote(argument, false, false, wrapExistingQuotes);
     }
