@@ -816,12 +816,12 @@ public final class FileUtilsTest extends FileBasedTestCase {
 
         assertEquals("txt", FileUtils.getExtension(filename), "test.txt extension == \"txt\"");
 
-        assertTrue(FileUtils.fileExists(filename), "Test file does exist: " + filename);
+        assertTrue(new File(filename).exists(), "Test file does exist: " + filename);
 
-        assertFalse(FileUtils.fileExists(filename2), "Second test file does not exist");
+        assertFalse(new File(filename2).exists(), "Second test file does not exist");
 
         FileUtils.fileWrite(filename2, filename);
-        assertTrue(FileUtils.fileExists(filename2), "Second file was written");
+        assertTrue(new File(filename2).exists(), "Second file was written");
 
         final String file2contents = FileUtils.fileRead(filename2);
         assertEquals(FileUtils.fileRead(filename2), file2contents, "Second file's contents correct");
@@ -830,7 +830,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         assertEquals(FileUtils.fileRead(filename2), file2contents + file2contents, "Second file's contents correct");
 
         FileUtils.fileDelete(filename2);
-        assertFalse(FileUtils.fileExists(filename2), "Second test file does not exist");
+        assertFalse(new File(filename2).exists(), "Second test file does not exist");
 
         final String contents = FileUtils.fileRead(filename);
         assertEquals("This is a test", contents, "FileUtils.fileRead()");
