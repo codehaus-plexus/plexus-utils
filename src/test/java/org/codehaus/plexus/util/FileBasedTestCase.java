@@ -22,12 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.nio.file.Files;
-
-import org.opentest4j.AssertionFailedError;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,11 +35,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class FileBasedTestCase {
     private static File testDir;
 
-    /**
-     * <p>getTestDirectory.</p>
-     *
-     * @return a {@link java.io.File} object.
-     */
     public static File getTestDirectory() {
         if (testDir == null) {
             testDir = (new File("target/test/io/")).getAbsoluteFile();
@@ -57,10 +47,9 @@ public abstract class FileBasedTestCase {
      *
      * @param file a {@link java.io.File} object.
      * @param size a long.
-     * @return an array of {@link byte} objects.
      * @throws java.io.IOException if any.
      */
-    protected byte[] createFile(final File file, final long size) throws IOException {
+    protected void createFile(final File file, final long size) throws IOException {
         if (!file.getParentFile().exists()) {
             throw new IOException("Cannot create file " + file + " as the parent directory does not exist");
         }
@@ -69,7 +58,6 @@ public abstract class FileBasedTestCase {
 
         try (BufferedOutputStream output = new BufferedOutputStream(Files.newOutputStream(file.toPath()))) {
             output.write(data);
-            return data;
         }
     }
 
@@ -84,18 +72,11 @@ public abstract class FileBasedTestCase {
             String[] args = {"ln", "-s", target.getAbsolutePath(), link.getAbsolutePath()};
             Process process = Runtime.getRuntime().exec(args);
             process.waitFor();
-            if (0 != process.exitValue()) {}
         } catch (Exception e) {
             // assume platform does not support "ln" command, tests should be skipped
         }
     }
 
-    /**
-     * <p>generateTestData.</p>
-     *
-     * @param size a long.
-     * @return an array of {@link byte} objects.
-     */
     protected byte[] generateTestData(final long size) {
         try {
             ByteArrayOutputStream baout = new ByteArrayOutputStream();
@@ -106,13 +87,6 @@ public abstract class FileBasedTestCase {
         }
     }
 
-    /**
-     * <p>generateTestData.</p>
-     *
-     * @param out a {@link java.io.OutputStream} object.
-     * @param size a long.
-     * @throws java.io.IOException if any.
-     */
     protected void generateTestData(final OutputStream out, final long size) throws IOException {
         for (int i = 0; i < size; i++) {
             // output.write((byte)'X');
@@ -122,80 +96,10 @@ public abstract class FileBasedTestCase {
         }
     }
 
-    /**
-     * <p>newFile.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     * @return a {@link java.io.File} object.
-     * @throws java.io.IOException if any.
-     */
-    protected File newFile(String filename) throws IOException {
-        final File destination = new File(getTestDirectory(), filename);
-        /*
-         * assertTrue( filename + "Test output data file shouldn't previously exist", !destination.exists() );
-         */
-        if (destination.exists()) {
-            FileUtils.forceDelete(destination);
-        }
-        return destination;
-    }
-
-    /**
-     * <p>checkFile.</p>
-     *
-     * @param file a {@link java.io.File} object.
-     * @param referenceFile a {@link java.io.File} object.
-     * @throws java.lang.Exception if any.
-     */
     protected void checkFile(final File file, final File referenceFile) throws Exception {
         assertTrue(file.exists(), "Check existence of output file");
         assertEqualContent(referenceFile, file);
     }
-
-    /**
-     * <p>checkWrite.</p>
-     *
-     * @param output a {@link java.io.OutputStream} object.
-     */
-    protected void checkWrite(final OutputStream output) {
-        try {
-            new PrintStream(output).write(0);
-        } catch (final Throwable t) {
-            throw new AssertionFailedError(
-                    "The copy() method closed the stream " + "when it shouldn't have. " + t.getMessage());
-        }
-    }
-
-    /**
-     * <p>checkWrite.</p>
-     *
-     * @param output a {@link java.io.Writer} object.
-     * @throws java.lang.Exception if any.
-     */
-    protected void checkWrite(final Writer output) throws Exception {
-        try {
-            new PrintWriter(output).write('a');
-        } catch (final Throwable t) {
-            throw new AssertionFailedError(
-                    "The copy() method closed the stream " + "when it shouldn't have. " + t.getMessage());
-        }
-    }
-
-    /**
-     * <p>deleteFile.</p>
-     *
-     * @param file a {@link java.io.File} object.
-     * @throws java.lang.Exception if any.
-     */
-    protected void deleteFile(final File file) throws Exception {
-        if (file.exists()) {
-            assertTrue(file.delete(), "Couldn't delete file: " + file);
-        }
-    }
-
-    // ----------------------------------------------------------------------
-    // Assertions
-    // ----------------------------------------------------------------------
 
     /** Assert that the content of two files is the same. */
     private void assertEqualContent(final File f0, final File f1) throws IOException {
@@ -244,25 +148,9 @@ public abstract class FileBasedTestCase {
         }
     }
 
-    /**
-     * <p>assertIsDirectory.</p>
-     *
-     * @param file a {@link java.io.File} object.
-     */
     protected void assertIsDirectory(File file) {
         assertTrue(file.exists(), "The File doesn't exists: " + file.getAbsolutePath());
 
         assertTrue(file.isDirectory(), "The File isn't a directory: " + file.getAbsolutePath());
-    }
-
-    /**
-     * <p>assertIsFile.</p>
-     *
-     * @param file a {@link java.io.File} object.
-     */
-    protected void assertIsFile(File file) {
-        assertTrue(file.exists(), "The File doesn't exists: " + file.getAbsolutePath());
-
-        assertTrue(file.isFile(), "The File isn't a file: " + file.getAbsolutePath());
     }
 }

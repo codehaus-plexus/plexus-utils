@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.fail;
  * XML test files base folder: <pre>xmlconf/ibm/</pre>
  *
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 public

@@ -33,17 +33,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test the Xpp3DomBuilder.
  *
  * @author <a href="mailto:brett@codehaus.org">Brett Porter</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class Xpp3DomBuilderTest {
     private static final String LS = System.lineSeparator();
 
-    /**
-     * <p>testBuildFromReader.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void buildFromReader() throws Exception {
         String domString = createDomString();
@@ -55,11 +49,6 @@ class Xpp3DomBuilderTest {
         assertEquals(expectedDom, dom, "check DOMs match");
     }
 
-    /**
-     * <p>testBuildTrimming.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void buildTrimming() throws Exception {
         String domString = createDomString();
@@ -73,11 +62,6 @@ class Xpp3DomBuilderTest {
         assertEquals(" element1\n ", dom.getChild("el1").getValue(), "test with trimming off");
     }
 
-    /**
-     * <p>testBuildFromXpp3Dom.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void buildFromXpp3Dom() throws Exception {
         Xpp3Dom expectedDom = createExpectedDom();
@@ -121,9 +105,6 @@ class Xpp3DomBuilderTest {
         assertTrue(newRootClosed, "Check continued to parse newRoot");
     }
 
-    /**
-     * Test we get an error from the parser, and don't hit the IllegalStateException.
-     */
     @Test
     void unclosedXml() {
         String domString = "<newRoot>" + createDomString();
@@ -138,12 +119,6 @@ class Xpp3DomBuilderTest {
         }
     }
 
-    /**
-     * <p>testEscapingInContent.</p>
-     *
-     * @throws java.io.IOException if any.
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     */
     @Test
     void escapingInContent() throws IOException, XmlPullParserException {
         Xpp3Dom dom = Xpp3DomBuilder.build(new StringReader(getEncodedString()));
@@ -157,12 +132,6 @@ class Xpp3DomBuilderTest {
         assertEquals(getExpectedString(), w.toString(), "Compare stringified DOMs");
     }
 
-    /**
-     * <p>testEscapingInAttributes.</p>
-     *
-     * @throws java.io.IOException if any.
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     */
     @Test
     void escapingInAttributes() throws IOException, XmlPullParserException {
         String s = getAttributeEncodedString();
@@ -176,12 +145,6 @@ class Xpp3DomBuilderTest {
         assertEquals(newString, s, "Compare stringified DOMs");
     }
 
-    /**
-     * <p>testInputLocationTracking.</p>
-     *
-     * @throws java.io.IOException if any.
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     */
     @Test
     void inputLocationTracking() throws IOException, XmlPullParserException {
         // store only line number as a simple Integer
@@ -203,22 +166,18 @@ class Xpp3DomBuilderTest {
     }
 
     private static String getAttributeEncodedString() {
-        String domString = "<root>" + LS + "  <el att=\"&lt;foo&gt;\">bar</el>" + LS + "</root>";
-
-        return domString;
+        return "<root>" + LS + "  <el att=\"&lt;foo&gt;\">bar</el>" + LS + "</root>";
     }
 
     private static String getEncodedString() {
-        String domString = "<root>\n" + "  <el>\"text\"</el>\n"
+        return "<root>\n" + "  <el>\"text\"</el>\n"
                 + "  <ela><![CDATA[<b>\"text\"</b>]]></ela>\n"
                 + "  <elb>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</elb>\n"
                 + "</root>";
-
-        return domString;
     }
 
     private static String getExpectedString() {
-        String domString = "<root>" + LS
+        return "<root>" + LS
                 + "  <el>&quot;text&quot;</el>"
                 + LS
                 + "  <ela>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</ela>"
@@ -226,16 +185,10 @@ class Xpp3DomBuilderTest {
                 + "  <elb>&lt;b&gt;&quot;text&quot;&lt;/b&gt;</elb>"
                 + LS
                 + "</root>";
-
-        return domString;
     }
 
-    //
-    // HELPER METHODS
-    //
-
     private static String createDomString() {
-        String buf = "<root>\n" + " <el1> element1\n </el1>\n"
+        return "<root>\n" + " <el1> element1\n </el1>\n"
                 + " <el2 att2='attribute2&#10;nextline'>\n"
                 + "  <el3 att3='attribute3'>element3</el3>\n"
                 + " </el2>\n"
@@ -243,8 +196,6 @@ class Xpp3DomBuilderTest {
                 + " <el5/>\n"
                 + " <el6 xml:space=\"preserve\">  do not trim  </el6>\n"
                 + "</root>\n";
-
-        return buf;
     }
 
     private static Xpp3Dom createExpectedDom() {

@@ -35,13 +35,10 @@ import static org.junit.jupiter.api.Assertions.fail;
  * <p>Xpp3DomTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class Xpp3DomTest {
-    /**
-     * <p>testShouldPerformAppendAtFirstSubElementLevel.</p>
-     */
+
     @Test
     void shouldPerformAppendAtFirstSubElementLevel() {
         // create the dominant DOM
@@ -77,9 +74,6 @@ class Xpp3DomTest {
         assertEquals("t1s1", result.getChildren("topsub1")[1].getInputLocation());
     }
 
-    /**
-     * <p>testShouldOverrideAppendAndDeepMerge.</p>
-     */
     @Test
     void shouldOverrideAppendAndDeepMerge() {
         // create the dominant DOM
@@ -113,9 +107,6 @@ class Xpp3DomTest {
         assertEquals("t1s1", result.getChildren("topsub1")[0].getInputLocation());
     }
 
-    /**
-     * <p>testShouldPerformSelfOverrideAtTopLevel.</p>
-     */
     @Test
     void shouldPerformSelfOverrideAtTopLevel() {
         // create the dominant DOM
@@ -139,9 +130,6 @@ class Xpp3DomTest {
         assertEquals("t1top", result.getInputLocation());
     }
 
-    /**
-     * <p>testShouldMergeValuesAtTopLevelByDefault.</p>
-     */
     @Test
     void shouldMergeValuesAtTopLevelByDefault() {
         // create the dominant DOM
@@ -165,9 +153,6 @@ class Xpp3DomTest {
         assertEquals("t2top", result.getInputLocation());
     }
 
-    /**
-     * <p>testShouldMergeValuesAtTopLevel.</p>
-     */
     @Test
     void shouldMergeValuesAtTopLevel() {
         // create the dominant DOM
@@ -188,9 +173,6 @@ class Xpp3DomTest {
         assertEquals(result.getValue(), t2.getValue());
     }
 
-    /**
-     * <p>testNullAttributeNameOrValue.</p>
-     */
     @Test
     void nullAttributeNameOrValue() {
         Xpp3Dom t1 = new Xpp3Dom("top");
@@ -208,9 +190,6 @@ class Xpp3DomTest {
         t1.toString();
     }
 
-    /**
-     * <p>testEquals.</p>
-     */
     @Test
     void equals() {
         Xpp3Dom dom = new Xpp3Dom("top");
@@ -220,12 +199,6 @@ class Xpp3DomTest {
         assertNotEquals(new Xpp3Dom((String) null), dom);
     }
 
-    /**
-     * <p>testEqualsIsNullSafe.</p>
-     *
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     * @throws java.io.IOException if any.
-     */
     @Test
     void equalsIsNullSafe() throws XmlPullParserException, IOException {
         String testDom = "<configuration><items thing='blah'><item>one</item><item>two</item></items></configuration>";
@@ -248,12 +221,6 @@ class Xpp3DomTest {
         }
     }
 
-    /**
-     * <p>testShouldOverwritePluginConfigurationSubItemsByDefault.</p>
-     *
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     * @throws java.io.IOException if any.
-     */
     @Test
     void shouldOverwritePluginConfigurationSubItemsByDefault() throws XmlPullParserException, IOException {
         String parentConfigStr = "<configuration><items><item>one</item><item>two</item></items></configuration>";
@@ -274,12 +241,6 @@ class Xpp3DomTest {
         assertEquals("child", item.getInputLocation());
     }
 
-    /**
-     * <p>testShouldMergePluginConfigurationSubItemsWithMergeAttributeSet.</p>
-     *
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     * @throws java.io.IOException if any.
-     */
     @Test
     void shouldMergePluginConfigurationSubItemsWithMergeAttributeSet() throws XmlPullParserException, IOException {
         String parentConfigStr = "<configuration><items><item>one</item><item>two</item></items></configuration>";
@@ -306,11 +267,6 @@ class Xpp3DomTest {
         assertEquals("child", item[2].getInputLocation());
     }
 
-    /**
-     * <p>testShouldNotChangeUponMergeWithItselfWhenFirstOrLastSubItemIsEmpty.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void shouldNotChangeUponMergeWithItselfWhenFirstOrLastSubItemIsEmpty() throws Exception {
         String configStr = "<configuration><items><item/><item>test</item><item/></items></configuration>";
@@ -327,11 +283,6 @@ class Xpp3DomTest {
         assertNull(items.getChild(2).getValue());
     }
 
-    /**
-     * <p>testShouldCopyRecessiveChildrenNotPresentInTarget.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void shouldCopyRecessiveChildrenNotPresentInTarget() throws Exception {
         String dominantStr = "<configuration><foo>x</foo></configuration>";
@@ -348,12 +299,6 @@ class Xpp3DomTest {
         assertNotSame(result.getChild("bar"), recessiveConfig.getChild("bar"));
     }
 
-    /**
-     * <p>testDupeChildren.</p>
-     *
-     * @throws java.io.IOException if any.
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     */
     @Test
     void dupeChildren() throws IOException, XmlPullParserException {
         String dupes = "<configuration><foo>x</foo><foo>y</foo></configuration>";
@@ -362,11 +307,6 @@ class Xpp3DomTest {
         assertEquals("y", dom.getChild("foo").getValue());
     }
 
-    /**
-     * <p>testShouldRemoveEntireElementWithAttributesAndChildren.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void shouldRemoveEntireElementWithAttributesAndChildren() throws Exception {
         String dominantStr = "<config><service combine.self=\"remove\"/></config>";
@@ -380,11 +320,6 @@ class Xpp3DomTest {
         assertEquals("config", result.getName());
     }
 
-    /**
-     * <p>testShouldRemoveDoNotRemoveTagWhenSwappedInputDOMs.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void shouldRemoveDoNotRemoveTagWhenSwappedInputDOMs() throws Exception {
         String dominantStr = "<config><service combine.self=\"remove\"/></config>";

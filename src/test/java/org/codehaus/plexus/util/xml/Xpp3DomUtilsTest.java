@@ -29,15 +29,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>Xpp3DomUtilsTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class Xpp3DomUtilsTest {
-    /**
-     * <p>testCombineId.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
+
     @Test
     void combineId() throws Exception {
         String lhs = "<props>" + "<property combine.id='LHS-ONLY'><name>LHS-ONLY</name><value>LHS</value></property>"
@@ -79,11 +74,6 @@ class Xpp3DomUtilsTest {
         assertEquals("right", p2.getChild("value").getInputLocation());
     }
 
-    /**
-     * <p>testCombineKeys.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void combineKeys() throws Exception {
         String lhs = "<props combine.keys='key'>"

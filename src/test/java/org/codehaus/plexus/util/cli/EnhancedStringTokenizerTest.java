@@ -1,22 +1,35 @@
 package org.codehaus.plexus.util.cli;
 
+/*
+ * Copyright The Codehaus Foundation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * <p>EnhancedStringTokenizerTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class EnhancedStringTokenizerTest {
-    /**
-     * <p>test1.</p>
-     */
+
     @Test
     void test1() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("this is a test string");
@@ -28,9 +41,6 @@ class EnhancedStringTokenizerTest {
         assertEquals("this is a test string ", sb.toString());
     }
 
-    /**
-     * <p>test2.</p>
-     */
     @Test
     void test2() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1,,,3,,4", ",");
@@ -42,9 +52,6 @@ class EnhancedStringTokenizerTest {
         assertEquals("4", est.nextToken(), "Token 6");
     }
 
-    /**
-     * <p>test3.</p>
-     */
     @Test
     void test3() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1,,,3,,4", ",", true);
@@ -61,9 +68,6 @@ class EnhancedStringTokenizerTest {
         assertEquals("4", est.nextToken(), "Token 11");
     }
 
-    /**
-     * <p>testMultipleDelim.</p>
-     */
     @Test
     void multipleDelim() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("1 2|3|4", " |", true);
@@ -77,23 +81,13 @@ class EnhancedStringTokenizerTest {
         assertFalse(est.hasMoreTokens(), "est.hasMoreTokens()");
     }
 
-    /**
-     * <p>testEmptyString.</p>
-     */
     @Test
     void emptyString() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("");
         assertFalse(est.hasMoreTokens(), "est.hasMoreTokens()");
-        try {
-            est.nextToken();
-            fail();
-        } catch (Exception e) {
-        }
+        assertThrows(NoSuchElementException.class, est::nextToken);
     }
 
-    /**
-     * <p>testSimpleString.</p>
-     */
     @Test
     void simpleString() {
         EnhancedStringTokenizer est = new EnhancedStringTokenizer("a ");

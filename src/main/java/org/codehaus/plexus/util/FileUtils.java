@@ -1921,7 +1921,9 @@ public class FileUtils extends BaseFileUtils {
                 fileReader.close();
                 fileReader = null;
             } finally {
+                //noinspection deprecation
                 IOUtil.close(fileReader);
+                //noinspection deprecation
                 IOUtil.close(fileWriter);
             }
         } else {

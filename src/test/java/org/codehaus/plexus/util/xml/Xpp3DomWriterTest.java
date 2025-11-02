@@ -26,15 +26,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>Xpp3DomWriterTest class.</p>
  *
  * @author Edwin Punzalan
- * @version $Id: $Id
  * @since 3.4.0
  */
 class Xpp3DomWriterTest {
     private static final String LS = System.lineSeparator();
 
-    /**
-     * <p>testWriter.</p>
-     */
     @Test
     void writer() {
         StringWriter writer = new StringWriter();
@@ -44,9 +40,6 @@ class Xpp3DomWriterTest {
         assertEquals(createExpectedXML(true), writer.toString(), "Check if output matches");
     }
 
-    /**
-     * <p>testWriterNoEscape.</p>
-     */
     @Test
     void writerNoEscape() {
         StringWriter writer = new StringWriter();

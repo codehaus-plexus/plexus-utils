@@ -30,7 +30,6 @@ import java.util.Set;
 /**
  * Encapsulates use of java7 features, exposing mostly backward compatible types
  */
-@SuppressWarnings("Since15")
 public class NioFiles {
     public static boolean isSymbolicLink(File file) {
         return Files.isSymbolicLink(file.toPath());

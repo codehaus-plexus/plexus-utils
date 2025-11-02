@@ -28,21 +28,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test Case for Os
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class OsTest {
-    /**
-     * <p>testUndefinedFamily.</p>
-     */
+
     @Test
     void undefinedFamily() {
         assertFalse(Os.isFamily("bogus family"));
     }
 
-    /**
-     * <p>testOs.</p>
-     */
     @Test
     void os() {
         Iterator<String> iter = Os.getValidFamilies().iterator();
@@ -82,9 +76,6 @@ class OsTest {
         assertFalse(Os.isOs(currentFamily, Os.OS_NAME, Os.OS_ARCH, "myversion"));
     }
 
-    /**
-     * <p>testValidList.</p>
-     */
     @Test
     void validList() {
         assertTrue(Os.isValidFamily("dos"));

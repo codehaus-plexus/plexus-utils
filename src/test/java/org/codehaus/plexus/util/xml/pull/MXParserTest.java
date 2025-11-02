@@ -39,15 +39,10 @@ import static org.junit.jupiter.api.Assertions.fail;
  * <p>MXParserTest class.</p>
  *
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class MXParserTest {
-    /**
-     * <p>testHexadecimalEntities.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
+
     @Test
     void hexadecimalEntities() throws Exception {
         MXParser parser = new MXParser();
@@ -67,11 +62,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.next());
     }
 
-    /**
-     * <p>testDecimalEntities.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void decimalEntities() throws Exception {
         MXParser parser = new MXParser();
@@ -91,11 +81,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.next());
     }
 
-    /**
-     * <p>testPredefinedEntities.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void predefinedEntities() throws Exception {
         MXParser parser = new MXParser();
@@ -115,12 +100,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.next());
     }
 
-    /**
-     * <p>testEntityReplacementMap.</p>
-     *
-     * @throws org.codehaus.plexus.util.xml.pull.XmlPullParserException if any.
-     * @throws java.io.IOException if any.
-     */
     @Test
     void entityReplacementMap() throws XmlPullParserException, IOException {
         EntityReplacementMap erm = new EntityReplacementMap(new String[][] {{"abc", "CDE"}, {"EFG", "HIJ"}});
@@ -135,11 +114,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.next());
     }
 
-    /**
-     * <p>testCustomEntities.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void customEntities() throws Exception {
         MXParser parser = new MXParser();
@@ -163,11 +137,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.next());
     }
 
-    /**
-     * <p>testUnicodeEntities.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void unicodeEntities() throws Exception {
         MXParser parser = new MXParser();
@@ -189,11 +158,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.nextToken());
     }
 
-    /**
-     * <p>testInvalidCharacterReferenceHexa.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void invalidCharacterReferenceHexa() throws Exception {
         MXParser parser = new MXParser();
@@ -209,11 +173,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testValidCharacterReferenceHexa.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void validCharacterReferenceHexa() throws Exception {
         MXParser parser = new MXParser();
@@ -253,11 +212,6 @@ class MXParserTest {
                 "Should success since the input represents all legal character references");
     }
 
-    /**
-     * <p>testInvalidCharacterReferenceDecimal.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void invalidCharacterReferenceDecimal() throws Exception {
         MXParser parser = new MXParser();
@@ -273,11 +227,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testValidCharacterReferenceDecimal.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void validCharacterReferenceDecimal() throws Exception {
         MXParser parser = new MXParser();
@@ -317,11 +266,6 @@ class MXParserTest {
                 "Should success since the input represents all legal character references");
     }
 
-    /**
-     * <p>testProcessingInstruction.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void parserPosition() throws Exception {
         String input =
@@ -363,11 +307,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.nextToken());
     }
 
-    /**
-     * <p>testProcessingInstructionsContainingXml.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void processingInstructionsContainingXml() throws Exception {
         String sb = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<project>\n"
@@ -388,11 +327,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.nextToken());
     }
 
-    /**
-     * <p>testSubsequentProcessingInstructionShort.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedProcessingInstructionsContainingXmlNoClosingQuestionMark() throws Exception {
         String sb = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<project />\n"
@@ -436,11 +370,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.nextToken());
     }
 
-    /**
-     * <p>testSubsequentProcessingInstructionMoreThan8k.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void subsequentProcessingInstructionMoreThan8k() throws Exception {
         StringBuilder sb = new StringBuilder();
@@ -480,11 +409,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.nextToken());
     }
 
-    /**
-     * <p>testLargeText_NoOverflow.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void largeTextNoOverflow() throws Exception {
         String sb = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<largetextblock>"
@@ -504,11 +428,6 @@ class MXParserTest {
         assertEquals(XmlPullParser.END_TAG, parser.nextToken());
     }
 
-    /**
-     * <p>testMalformedProcessingInstructionAfterTag.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedProcessingInstructionAfterTag() throws Exception {
         MXParser parser = new MXParser();
@@ -530,11 +449,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedProcessingInstructionBeforeTag.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedProcessingInstructionBeforeTag() throws Exception {
         MXParser parser = new MXParser();
@@ -556,11 +470,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedProcessingInstructionSpaceBeforeName.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedProcessingInstructionSpaceBeforeName() throws Exception {
         MXParser parser = new MXParser();
@@ -584,11 +493,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedProcessingInstructionNoClosingQuestionMark.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedProcessingInstructionNoClosingQuestionMark() throws Exception {
         MXParser parser = new MXParser();
@@ -611,11 +515,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testSubsequentMalformedProcessingInstructionNoClosingQuestionMark.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void subsequentMalformedProcessingInstructionNoClosingQuestionMark() throws Exception {
         MXParser parser = new MXParser();
@@ -638,11 +537,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedXMLRootElement.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void subsequentAbortedProcessingInstruction() throws Exception {
         MXParser parser = new MXParser();
@@ -698,11 +592,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedXMLRootElement2.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedXMLRootElement2() throws Exception {
         String input = "<hello";
@@ -719,11 +608,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedXMLRootElement3.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedXMLRootElement3() throws Exception {
         String input = "<hello><how";
@@ -741,11 +625,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedXMLRootElement4.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedXMLRootElement4() throws Exception {
         String input = "<hello>some text<how";
@@ -765,11 +644,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testMalformedXMLRootElement5.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void malformedXMLRootElement5() throws Exception {
         String input = "<hello>some text</hello";
@@ -790,11 +664,6 @@ class MXParserTest {
         }
     }
 
-    /**
-     * <p>testXMLDeclVersionOnly.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void xmlDeclVersionOnly() throws Exception {
         String input = "<?xml version='1.0'?><hello/>";
@@ -811,11 +680,6 @@ class MXParserTest {
                 "Should not throw Exception");
     }
 
-    /**
-     * <p>testXMLDeclVersionEncodingStandaloneNoSpace.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void xmlDeclVersionEncodingStandaloneNoSpace() throws Exception {
         String input = "<?xml version='1.0' encoding='ASCII'standalone='yes'?><hello/>";
@@ -832,8 +696,6 @@ class MXParserTest {
 
     /**
      * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
-     *
-     * @throws IOException if IO error.
      *
      * @since 3.4.1
      */
@@ -853,8 +715,6 @@ class MXParserTest {
 
     /**
      * Issue 163: https://github.com/codehaus-plexus/plexus-utils/issues/163
-     *
-     * @throws IOException if IO error.
      *
      * @since 3.4.1
      */
@@ -882,8 +742,6 @@ class MXParserTest {
      *
      * Another case of bug #163: File encoding information is lost after the input file is copied to a String.
      *
-     * @throws IOException if IO error.
-     *
      * @since 3.4.2
      */
     @Test
@@ -907,9 +765,6 @@ class MXParserTest {
      * </p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws java.lang.Exception if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -940,9 +795,6 @@ class MXParserTest {
      * </p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws java.lang.Exception if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -968,9 +820,6 @@ class MXParserTest {
      * </p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws java.lang.Exception if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1000,10 +849,6 @@ class MXParserTest {
      * </p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     * @throws XmlPullParserException
-     *
-     * @throws Exception if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1034,14 +879,11 @@ class MXParserTest {
      * <p>test DOCDECL text with myCustomEntity that cannot be resolved, Unix line separator.</p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
     void docdeclTextWithEntitiesUnix() throws IOException {
-        testDocdeclTextWithEntities("test-entities-UNIX.xml");
+        checkDocdeclTextWithEntities("test-entities-UNIX.xml");
     }
 
     /**
@@ -1049,18 +891,14 @@ class MXParserTest {
      *
      * <p>test DOCDECL text with myCustomEntity that cannot be resolved, DOS line separator.</p>
      *
-     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
     void docdeclTextWithEntitiesDOS() throws IOException {
-        testDocdeclTextWithEntities("test-entities-DOS.xml");
+        checkDocdeclTextWithEntities("test-entities-DOS.xml");
     }
 
-    private void testDocdeclTextWithEntities(String filename) throws IOException {
+    private void checkDocdeclTextWithEntities(String filename) throws IOException {
         try (Reader reader = ReaderFactory.newXmlReader(new File("src/test/resources/xml", filename))) {
             MXParser parser = new MXParser();
             parser.setInput(reader);
@@ -1086,10 +924,6 @@ class MXParserTest {
      *
      * <p>test DOCDECL text with entities appearing in attributes, Unix line separator.</p>
      *
-     * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1103,9 +937,6 @@ class MXParserTest {
      * <p>test DOCDECL text with entities appearing in attributes, DOS line separator.</p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1158,9 +989,6 @@ class MXParserTest {
      * <p>test entity ref with entities appearing in tags, Unix line separator.</p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1172,9 +1000,6 @@ class MXParserTest {
      * <p>test entity ref with entities appearing in tags, DOS line separator.</p>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1237,9 +1062,6 @@ class MXParserTest {
      * <b>Ensures that entity ref getText() and getName() return the correct value.</b>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1280,9 +1102,6 @@ class MXParserTest {
      * previous ones.</b>
      *
      * Regression test: assure same behavior of MXParser from plexus-utils 3.3.0.
-     *
-     * @throws IOException if any.
-     *
      * @since 3.4.2
      */
     @Test
@@ -1329,22 +1148,17 @@ class MXParserTest {
      * Ensures emoji can be parsed correctly
      */
     @Test
-    void unicode() throws IOException {
+    void unicode() throws IOException, XmlPullParserException {
         String input = "<project><!--ALL TEH BOMS!  \uD83D\uDCA3  --></project>";
 
-        try {
-            MXParser parser = new MXParser();
-            parser.setInput(new StringReader(input));
+        MXParser parser = new MXParser();
+        parser.setInput(new StringReader(input));
 
-            assertEquals(XmlPullParser.START_TAG, parser.nextToken());
-            assertEquals("project", parser.getName());
-            assertEquals(XmlPullParser.COMMENT, parser.nextToken());
-            assertEquals("ALL TEH BOMS!  \uD83D\uDCA3  ", parser.getText());
-            assertEquals(XmlPullParser.END_TAG, parser.nextToken());
-            assertEquals("project", parser.getName());
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-            fail("should not raise exception: " + e);
-        }
+        assertEquals(XmlPullParser.START_TAG, parser.nextToken());
+        assertEquals("project", parser.getName());
+        assertEquals(XmlPullParser.COMMENT, parser.nextToken());
+        assertEquals("ALL TEH BOMS!  \uD83D\uDCA3  ", parser.getText());
+        assertEquals(XmlPullParser.END_TAG, parser.nextToken());
+        assertEquals("project", parser.getName());
     }
 }

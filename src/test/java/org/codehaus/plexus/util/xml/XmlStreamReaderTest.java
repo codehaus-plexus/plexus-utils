@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.fail;
  * <p>XmlStreamReaderTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class XmlStreamReaderTest {
@@ -108,11 +107,6 @@ class XmlStreamReaderTest {
         checkXmlContent(xml, effectiveEncoding, bom);
     }
 
-    /**
-     * <p>testNoXmlHeader.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void noXmlHeader() throws IOException {
         String xml = "<text>text with no XML header</text>";
@@ -120,33 +114,18 @@ class XmlStreamReaderTest {
         checkXmlContent(xml, "UTF-8", BOM_UTF8);
     }
 
-    /**
-     * <p>testDefaultEncoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void defaultEncoding() throws IOException {
         checkXmlStreamReader(TEXT_UNICODE, null, "UTF-8");
         checkXmlStreamReader(TEXT_UNICODE, null, "UTF-8", BOM_UTF8);
     }
 
-    /**
-     * <p>testUTF8Encoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void utf8Encoding() throws IOException {
         checkXmlStreamReader(TEXT_UNICODE, "UTF-8");
         checkXmlStreamReader(TEXT_UNICODE, "UTF-8", BOM_UTF8);
     }
 
-    /**
-     * <p>testUTF16Encoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void utf16Encoding() throws IOException {
         checkXmlStreamReader(TEXT_UNICODE, "UTF-16", "UTF-16BE", null);
@@ -154,81 +133,41 @@ class XmlStreamReaderTest {
         checkXmlStreamReader(TEXT_UNICODE, "UTF-16", "UTF-16BE", BOM_UTF16BE);
     }
 
-    /**
-     * <p>testUTF16BEEncoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void utf16beEncoding() throws IOException {
         checkXmlStreamReader(TEXT_UNICODE, "UTF-16BE");
     }
 
-    /**
-     * <p>testUTF16LEEncoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void utf16leEncoding() throws IOException {
         checkXmlStreamReader(TEXT_UNICODE, "UTF-16LE");
     }
 
-    /**
-     * <p>testLatin1Encoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void latin1Encoding() throws IOException {
         checkXmlStreamReader(TEXT_LATIN1, "ISO-8859-1");
     }
 
-    /**
-     * <p>testLatin7Encoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void latin7Encoding() throws IOException {
         checkXmlStreamReader(TEXT_LATIN7, "ISO-8859-7");
     }
 
-    /**
-     * <p>testLatin15Encoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void latin15Encoding() throws IOException {
         checkXmlStreamReader(TEXT_LATIN15, "ISO-8859-15");
     }
 
-    /**
-     * <p>testEUC_JPEncoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void euc_jpEncoding() throws IOException {
         checkXmlStreamReader(TEXT_EUC_JP, "EUC-JP");
     }
 
-    /**
-     * <p>testEBCDICEncoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void ebcdicEncoding() throws IOException {
         checkXmlStreamReader("simple text in EBCDIC", "CP1047");
     }
 
-    /**
-     * <p>testInappropriateEncoding.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void inappropriateEncoding() throws IOException {
         try {
@@ -239,11 +178,6 @@ class XmlStreamReaderTest {
         }
     }
 
-    /**
-     * <p>testEncodingAttribute.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
     @Test
     void encodingAttribute() throws IOException {
         String xml = "<?xml version='1.0' encoding='US-ASCII'?><element encoding='attribute value'/>";

@@ -32,13 +32,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * <p>CollectionUtilsTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class CollectionUtilsTest {
-    /**
-     * <p>testMergeMaps.</p>
-     */
+
     @Test
     void mergeMaps() {
         Map<String, String> dominantMap = new HashMap<>();
@@ -74,9 +71,6 @@ class CollectionUtilsTest {
         assertEquals("z", result.get("z"));
     }
 
-    /**
-     * <p>testMergeMapArray.</p>
-     */
     @SuppressWarnings("unchecked")
     @Test
     void mergeMapArray() {
@@ -129,9 +123,6 @@ class CollectionUtilsTest {
         assertEquals("ccc", result5.get("c"));
     }
 
-    /**
-     * <p>testMavenPropertiesLoading.</p>
-     */
     @Test
     void mavenPropertiesLoading() {
         // Mimic MavenSession properties loading. Properties listed
@@ -189,9 +180,6 @@ class CollectionUtilsTest {
         assertEquals(mavenRepoRemote, result.get("maven.repo.remote"));
     }
 
-    /**
-     * <p>testIteratorToListWithAPopulatedList.</p>
-     */
     @Test
     void iteratorToListWithAPopulatedList() {
         List<String> original = new ArrayList<>();
@@ -211,9 +199,6 @@ class CollectionUtilsTest {
         assertEquals("tre", copy.get(2));
     }
 
-    /**
-     * <p>testIteratorToListWithAEmptyList.</p>
-     */
     @Test
     void iteratorToListWithAEmptyList() {
         List<String> original = new ArrayList<>();

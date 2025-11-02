@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
  * <p>PerfTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class PerfTest {
@@ -14,9 +13,6 @@ class PerfTest {
 
     private final int oops = 100;
 
-    /**
-     * <p>testSubString.</p>
-     */
     @Test
     void subString() {
         StringBuilder res = new StringBuilder();
@@ -30,9 +26,6 @@ class PerfTest {
         System.out.println("i = " + i);
     }
 
-    /**
-     * <p>testResDir.</p>
-     */
     @Test
     void resDir() {
         StringBuilder res = new StringBuilder();

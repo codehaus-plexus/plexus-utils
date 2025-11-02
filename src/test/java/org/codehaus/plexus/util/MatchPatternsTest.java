@@ -29,13 +29,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>MatchPatternsTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class MatchPatternsTest {
-    /**
-     * <p>testGetSource</p>
-     */
+
     @Test
     void getSources() {
         List<String> expected = Arrays.asList("ABC**", "some/ABC*", "[ABC].*");
@@ -44,13 +41,8 @@ class MatchPatternsTest {
         assertEquals(expected, actual);
     }
 
-    /**
-     * <p>testMatches.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
-    void matches() throws Exception {
+    void matches() {
         MatchPatterns from = MatchPatterns.from("ABC**", "CDE**");
         assertTrue(from.matches("ABCDE", true));
         assertTrue(from.matches("CDEF", true));

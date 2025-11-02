@@ -21,10 +21,9 @@ import static org.junit.jupiter.api.Assertions.fail;
  * XML test files base folder: <pre>xmlconf/eduni/misc/</pre>
  *
  * @author <a href="mailto:belingueres@gmail.com">Gabriel Belingueres</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
-public class eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
+public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
 
     static final File testResourcesDir = new File("src/test/resources/", "xmlconf/eduni/misc/");
 

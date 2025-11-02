@@ -60,7 +60,7 @@ class CachingOutputStreamTest {
     }
 
     @Test
-    void writeNoExistingFile() throws IOException, InterruptedException {
+    void writeNoExistingFile() throws Exception {
         byte[] data = "Hello world!".getBytes(StandardCharsets.UTF_8);
         Path path = tempDir.resolve("file.txt");
         assertFalse(Files.exists(path));

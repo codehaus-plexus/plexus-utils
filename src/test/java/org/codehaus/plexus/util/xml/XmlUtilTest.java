@@ -38,17 +38,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Test the {@link org.codehaus.plexus.util.xml.XmlUtil} class.
  *
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 public class XmlUtilTest {
     private String basedir;
 
-    /**
-     * <p>Getter for the field <code>basedir</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     public final String getBasedir() {
         if (null == basedir) {
             basedir = System.getProperty("basedir", new File("").getAbsolutePath());
@@ -65,11 +59,6 @@ public class XmlUtilTest {
         return file;
     }
 
-    /**
-     * <p>testPrettyFormatInputStreamOutputStream.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void prettyFormatInputStreamOutputStream() throws Exception {
         File testDocument = new File(getBasedir(), "src/test/resources/testDocument.xhtml");
@@ -92,11 +81,6 @@ public class XmlUtilTest {
         }
     }
 
-    /**
-     * <p>testPrettyFormatReaderWriter.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void prettyFormatReaderWriter() throws Exception {
         File testDocument = new File(getBasedir(), "src/test/resources/testDocument.xhtml");
@@ -118,11 +102,6 @@ public class XmlUtilTest {
         }
     }
 
-    /**
-     * <p>testPrettyFormatString.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void prettyFormatString() throws Exception {
         File testDocument = new File(getBasedir(), "src/test/resources/testDocument.xhtml");
@@ -149,11 +128,6 @@ public class XmlUtilTest {
         assertTrue(countEOL < StringUtils.countMatches(writer.toString(), XmlUtil.DEFAULT_LINE_SEPARATOR));
     }
 
-    /**
-     * <p>testPrettyFormatReaderWriter2.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void prettyFormatReaderWriter2() throws Exception {
         File testDocument = new File(getBasedir(), "src/test/resources/test.xdoc.xhtml");

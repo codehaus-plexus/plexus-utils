@@ -40,13 +40,13 @@ import org.openjdk.jmh.runner.options.TimeValue;
  * <p>Xpp3DomPerfTest class.</p>
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 3, time = 3, timeUnit = TimeUnit.SECONDS)
 public class Xpp3DomPerfTest {
+
     @State(Scope.Benchmark)
     public static class AdditionState {
         Xpp3Dom dom1;
@@ -61,12 +61,6 @@ public class Xpp3DomPerfTest {
         }
     }
 
-    /**
-     * <p>benchmarkClone.</p>
-     *
-     * @param state a {@link org.codehaus.plexus.util.xml.Xpp3DomPerfTest.AdditionState} object.
-     * @return a {@link org.codehaus.plexus.util.xml.Xpp3Dom} object.
-     */
     @Benchmark
     public Xpp3Dom benchmarkClone(AdditionState state) {
         return new Xpp3Dom(state.dom1);
@@ -82,12 +76,6 @@ public class Xpp3DomPerfTest {
         Xpp3Dom.mergeXpp3Dom(state.dom1, state.dom2);
     }
 
-    /**
-     * <p>main.</p>
-     *
-     * @param args a {@link java.lang.String} object.
-     * @throws org.openjdk.jmh.runner.RunnerException if any.
-     */
     public static void main(String... args) throws RunnerException {
         Options opts = new OptionsBuilder()
                 .measurementIterations(3)
