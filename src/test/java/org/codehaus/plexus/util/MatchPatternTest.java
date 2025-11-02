@@ -27,14 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>MatchPatternTest class.</p>
  *
  * @author Kristian Rosenvold
- * @version $Id: $Id
  * @since 3.4.0
  */
 class MatchPatternTest {
 
-    /**
-     * <p>testGetSource</p>
-     */
     @Test
     void getSource() {
         MatchPattern mp = MatchPattern.fromString("ABC*");
@@ -45,20 +41,13 @@ class MatchPatternTest {
         assertEquals("[ABC].*", mp.getSource());
     }
 
-    /**
-     * <p>testMatchPath.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
-    void matchPath() throws Exception {
+    void matchPath() {
         MatchPattern mp = MatchPattern.fromString("ABC*");
         assertTrue(mp.matchPath("ABCD", true));
     }
 
     /**
-     * <p>testMatchPatternStart.</p>
-     *
      * @see <a href="https://github.com/codehaus-plexus/plexus-utils/issues/63">Issue #63</a>
      */
     @Test
@@ -75,9 +64,6 @@ class MatchPatternTest {
         assertFalse(mp.matchPatternStart("XXXX", false));
     }
 
-    /**
-     * <p>testTokenizePathToString.</p>
-     */
     @Test
     void tokenizePathToString() {
         String[] expected = {"hello", "world"};

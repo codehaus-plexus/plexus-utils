@@ -24,13 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>VertexTest class.</p>
  *
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class VertexTest {
-    /**
-     * <p>testVertex.</p>
-     */
+
     @Test
     void vertex() {
 

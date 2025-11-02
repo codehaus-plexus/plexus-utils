@@ -24,14 +24,12 @@ package org.codehaus.plexus.util;
  * </p>
  *
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 public abstract class AbstractTestThread implements Runnable {
-    // ~ Instance fields ----------------------------------------------------------------------------
+
     private String name;
 
-    /** Constant <code>DEBUG=true</code> */
     public static final boolean DEBUG = true;
 
     private boolean isRunning = false;
@@ -56,8 +54,6 @@ public abstract class AbstractTestThread implements Runnable {
      */
     private boolean passed = false;
 
-    // ~ Constructors -------------------------------------------------------------------------------
-
     /**
      * Constructor
      * <p>
@@ -77,13 +73,6 @@ public abstract class AbstractTestThread implements Runnable {
         setThreadRegistry(registry);
     }
 
-    // ~ Methods ------------------------------------------------------------------------------------
-
-    /**
-     * <p>Getter for the field <code>error</code>.</p>
-     *
-     * @return a {@link java.lang.Throwable} object.
-     */
     public Throwable getError() {
         return error;
     }
@@ -98,8 +87,7 @@ public abstract class AbstractTestThread implements Runnable {
             while (isRunning) {
                 try {
                     wait();
-                } catch (InterruptedException e) {
-
+                } catch (InterruptedException ignored) {
                 }
             }
             errorMsg = null;
@@ -115,7 +103,7 @@ public abstract class AbstractTestThread implements Runnable {
     public final void start() {
         // shouldn't have multiple threads running this test at the same time
         synchronized (this) {
-            if (isRunning == false) {
+            if (!isRunning) {
                 isRunning = true;
                 Thread t = new Thread(this);
                 t.start();
@@ -123,29 +111,14 @@ public abstract class AbstractTestThread implements Runnable {
         }
     }
 
-    /**
-     * <p>Getter for the field <code>errorMsg</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     public String getErrorMsg() {
         return errorMsg;
     }
 
-    /**
-     * <p>hasFailed.</p>
-     *
-     * @return a boolean.
-     */
     public boolean hasFailed() {
         return !passed;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
     public boolean hasPassed() {
         return passed;
     }
@@ -177,11 +150,6 @@ public abstract class AbstractTestThread implements Runnable {
         }
     }
 
-    /**
-     * Override this to run your custom test
-     *
-     * @throws java.lang.Throwable
-     */
     public abstract void doRun() throws Throwable;
 
     /**
@@ -190,7 +158,6 @@ public abstract class AbstractTestThread implements Runnable {
      * @param registry a {@link org.codehaus.plexus.util.TestThreadManager} object.
      */
     public void setThreadRegistry(TestThreadManager registry) {
-
         this.registry = registry;
     }
 
@@ -203,52 +170,27 @@ public abstract class AbstractTestThread implements Runnable {
         return hasRun;
     }
 
-    /**
-     * <p>Setter for the field <code>error</code>.</p>
-     *
-     * @param throwable a {@link java.lang.Throwable} object.
-     */
     public void setError(Throwable throwable) {
         error = throwable;
     }
 
-    /**
-     * <p>Setter for the field <code>errorMsg</code>.</p>
-     *
-     * @param string a {@link java.lang.String} object.
-     */
     public void setErrorMsg(String string) {
         errorMsg = string;
     }
 
-    /**
-     * <p>Setter for the field <code>passed</code>.</p>
-     *
-     * @param b a boolean.
-     */
     public void setPassed(boolean b) {
         passed = b;
     }
 
-    /**
-     * <p>Getter for the field <code>name</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * <p>Setter for the field <code>name</code>.</p>
-     *
-     * @param string a {@link java.lang.String} object.
-     */
     public void setName(String string) {
         name = string;
     }
 
-    private final void debug(String msg) {
+    private void debug(String msg) {
         if (DEBUG) {
             System.out.println(this + ":" + msg);
         }

@@ -28,6 +28,7 @@ package org.codehaus.plexus.util;
  * @since 1.0-dev
  *
  */
+@Deprecated
 public class Base64 {
 
     //
@@ -283,9 +284,6 @@ public class Base64 {
             byte val3 = ((b3 & SIGN) == 0) ? (byte) (b3 >> 6) : (byte) ((b3) >> 6 ^ 0xfc);
 
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
-            // log.debug( "val2 = " + val2 );
-            // log.debug( "k4 = " + (k<<4) );
-            // log.debug( "vak = " + (val2 | (k<<4)) );
             encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 | (k << 4)];
             encodedData[encodedIndex + 2] = lookUpBase64Alphabet[(l << 2) | val3];
             encodedData[encodedIndex + 3] = lookUpBase64Alphabet[b3 & 0x3f];
@@ -310,8 +308,6 @@ public class Base64 {
         if (fewerThan24bits == EIGHTBIT) {
             b1 = binaryData[dataIndex];
             k = (byte) (b1 & 0x03);
-            // log.debug("b1=" + b1);
-            // log.debug("b1<<2 = " + (b1>>2) );
             byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
             encodedData[encodedIndex + 1] = lookUpBase64Alphabet[k << 4];

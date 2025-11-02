@@ -4,24 +4,24 @@
  * 651 W Washington Ave. Suite 500
  * Chicago, IL 60661 USA
  * All rights reserved.
- *
+ * <p>
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- *
+ * <p>
  *     + Redistributions of source code must retain the above copyright
  *       notice, this list of conditions and the following disclaimer.
- *
+ * <p>
  *     + Redistributions in binary form must reproduce the above
  *       copyright notice, this list of conditions and the following
  *       disclaimer in the documentation and/or other materials provided
  *       with the distribution.
- *
+ * <p>
  *     + Neither the name of ThoughtWorks, Inc., CruiseControl, nor the
  *       names of its contributors may be used to endorse or promote
  *       products derived from this software without specific prior
  *       written permission.
- *
+ * <p>
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -53,7 +53,6 @@ package org.codehaus.plexus.util.cli;
  */
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -70,15 +69,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>StreamPumperTest class.</p>
  *
  * @author <a href="mailto:pj@thoughtworks.com">Paul Julius</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class StreamPumperTest {
     private final String lineSeparator = System.lineSeparator();
 
-    /**
-     * <p>testPumping.</p>
-     */
     @Test
     void pumping() {
         String line1 = "line1";
@@ -95,9 +90,6 @@ class StreamPumperTest {
         assertTrue(consumer.wasLineConsumed(line2, 1000));
     }
 
-    /**
-     * <p>testPumpingWithPrintWriter.</p>
-     */
     @Test
     void pumpingWithPrintWriter() {
         String inputString = "This a test string";
@@ -112,9 +104,6 @@ class StreamPumperTest {
         pumper.close();
     }
 
-    /**
-     * <p>testPumperReadsInputStreamUntilEndEvenIfConsumerFails.</p>
-     */
     @Test
     void pumperReadsInputStreamUntilEndEvenIfConsumerFails() {
         // the number of bytes generated should surely exceed the read buffer used by the pumper
@@ -138,7 +127,7 @@ class StreamPumperTest {
             this.size = size;
         }
 
-        public int read() throws IOException {
+        public int read() {
             if (read < size) {
                 read++;
                 return '\n';
@@ -147,7 +136,7 @@ class StreamPumperTest {
             }
         }
 
-        public void close() throws IOException {
+        public void close() {
             closed = true;
         }
     }

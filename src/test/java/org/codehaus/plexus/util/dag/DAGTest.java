@@ -30,17 +30,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>DAGTest class.</p>
  *
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class DAGTest {
-    /**
-     * <p>testDAG.</p>
-     *
-     * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
-     */
+
     @Test
-    void dag() throws CycleDetectedException {
+    void dag() throws Exception {
         final DAG dag = new DAG();
 
         dag.addVertex("a");
@@ -140,13 +135,8 @@ class DAGTest {
         assertTrue(d.getParentLabels().contains("c"));
     }
 
-    /**
-     * <p>testGetPredecessors.</p>
-     *
-     * @throws org.codehaus.plexus.util.dag.CycleDetectedException if any.
-     */
     @Test
-    void getPredecessors() throws CycleDetectedException {
+    void getPredecessors() throws Exception {
         final DAG dag = new DAG();
 
         dag.addEdge("a", "b");

@@ -17,7 +17,6 @@ package org.codehaus.plexus.util;
  */
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collections;
@@ -33,20 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * and www.objectfab.de for informations about the tool, the licence and the authors.
  *
  * @author herve
- * @version $Id: $Id
  * @since 3.4.0
  */
 class LineOrientedInterpolatingReaderTest {
-    /*
-     * Added and commented by jdcasey@03-Feb-2005 because it is a bug in the InterpolationFilterReader.
-     */
-    /**
-     * <p>testShouldInterpolateExpressionAtEndOfDataWithInvalidEndToken.</p>
-     *
-     * @throws java.io.IOException if any.
-     */
+
     @Test
-    void shouldInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws IOException {
+    void shouldInterpolateExpressionAtEndOfDataWithInvalidEndToken() throws Exception {
         String testStr = "This is a ${test";
         LineOrientedInterpolatingReader iReader = new LineOrientedInterpolatingReader(
                 new StringReader(testStr), Collections.singletonMap("test", "TestValue"));
@@ -57,11 +48,6 @@ class LineOrientedInterpolatingReaderTest {
         assertEquals("This is a ${test", result);
     }
 
-    /**
-     * <p>testDefaultInterpolationWithNonInterpolatedValueAtEnd.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void defaultInterpolationWithNonInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();
@@ -84,11 +70,6 @@ class LineOrientedInterpolatingReaderTest {
         return m;
     }
 
-    /**
-     * <p>testDefaultInterpolationWithEscapedExpression.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void defaultInterpolationWithEscapedExpression() throws Exception {
         Map<String, String> m = getStandardMap();
@@ -104,11 +85,6 @@ class LineOrientedInterpolatingReaderTest {
         assertEquals("jason is an asshole. ${noun} value", bar);
     }
 
-    /**
-     * <p>testDefaultInterpolationWithInterpolatedValueAtEnd.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void defaultInterpolationWithInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();
@@ -124,11 +100,6 @@ class LineOrientedInterpolatingReaderTest {
         assertEquals("jason is an asshole", bar);
     }
 
-    /**
-     * <p>testInterpolationWithSpecifiedBoundaryTokens.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void interpolationWithSpecifiedBoundaryTokens() throws Exception {
         Map<String, String> m = getStandardMap();
@@ -145,11 +116,6 @@ class LineOrientedInterpolatingReaderTest {
         assertEquals("jason is an asshole. @not.interpolated@ baby @foo@. @bar@", bar);
     }
 
-    /**
-     * <p>testInterpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void interpolationWithSpecifiedBoundaryTokensWithNonInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();
@@ -166,11 +132,6 @@ class LineOrientedInterpolatingReaderTest {
         assertEquals("jason is an @foobarred@", bar);
     }
 
-    /**
-     * <p>testInterpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void interpolationWithSpecifiedBoundaryTokensWithInterpolatedValueAtEnd() throws Exception {
         Map<String, String> m = getStandardMap();

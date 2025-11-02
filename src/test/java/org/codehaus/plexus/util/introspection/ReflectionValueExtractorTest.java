@@ -24,27 +24,19 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * <p>ReflectionValueExtractorTest class.</p>
  *
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class ReflectionValueExtractorTest {
     private Project project;
 
-    /**
-     * <p>setUp.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         Dependency dependency1 = new Dependency();
         dependency1.setArtifactId("dep1");
         Dependency dependency2 = new Dependency();
@@ -68,11 +60,6 @@ class ReflectionValueExtractorTest {
         project.addArtifact(new Artifact("g2", "a2", "v2", "e2", "c2"));
     }
 
-    /**
-     * <p>testValueExtraction.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void valueExtraction() throws Exception {
         // ----------------------------------------------------------------------
@@ -153,11 +140,6 @@ class ReflectionValueExtractorTest {
         assertNotNull(build);
     }
 
-    /**
-     * <p>testValueExtractorWithAInvalidExpression.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void valueExtractorWithAInvalidExpression() throws Exception {
         assertNull(ReflectionValueExtractor.evaluate("project.foo", project));
@@ -165,11 +147,6 @@ class ReflectionValueExtractorTest {
         assertNull(ReflectionValueExtractor.evaluate("project.dependencies[0].foo", project));
     }
 
-    /**
-     * <p>testMappedDottedKey.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void mappedDottedKey() throws Exception {
         Map<String, String> map = new HashMap<>();
@@ -178,11 +155,6 @@ class ReflectionValueExtractorTest {
         assertEquals("a.b-value", ReflectionValueExtractor.evaluate("h.value(a.b)", new ValueHolder(map)));
     }
 
-    /**
-     * <p>testIndexedMapped.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void indexedMapped() throws Exception {
         Map<Object, Object> map = new HashMap<>();
@@ -193,11 +165,6 @@ class ReflectionValueExtractorTest {
         assertEquals("a-value", ReflectionValueExtractor.evaluate("h.value[0](a)", new ValueHolder(list)));
     }
 
-    /**
-     * <p>testMappedIndexed.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void mappedIndexed() throws Exception {
         List<Object> list = new ArrayList<>();
@@ -207,11 +174,6 @@ class ReflectionValueExtractorTest {
         assertEquals("a-value", ReflectionValueExtractor.evaluate("h.value(a)[0]", new ValueHolder(map)));
     }
 
-    /**
-     * <p>testMappedMissingDot.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void mappedMissingDot() throws Exception {
         Map<Object, Object> map = new HashMap<>();
@@ -219,11 +181,6 @@ class ReflectionValueExtractorTest {
         assertNull(ReflectionValueExtractor.evaluate("h.value(a)value", new ValueHolder(map)));
     }
 
-    /**
-     * <p>testIndexedMissingDot.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void indexedMissingDot() throws Exception {
         List<Object> list = new ArrayList<>();
@@ -231,21 +188,11 @@ class ReflectionValueExtractorTest {
         assertNull(ReflectionValueExtractor.evaluate("h.value[0]value", new ValueHolder(list)));
     }
 
-    /**
-     * <p>testDotDot.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void dotDot() throws Exception {
         assertNull(ReflectionValueExtractor.evaluate("h..value", new ValueHolder("value")));
     }
 
-    /**
-     * <p>testBadIndexedSyntax.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void badIndexedSyntax() throws Exception {
         List<Object> list = new ArrayList<>();
@@ -260,11 +207,6 @@ class ReflectionValueExtractorTest {
         assertNull(ReflectionValueExtractor.evaluate("h.value[-1]", value));
     }
 
-    /**
-     * <p>testBadMappedSyntax.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void badMappedSyntax() throws Exception {
         Map<Object, Object> map = new HashMap<>();
@@ -277,49 +219,24 @@ class ReflectionValueExtractorTest {
         assertNull(ReflectionValueExtractor.evaluate("h.value(a]", value));
     }
 
-    /**
-     * <p>testIllegalIndexedType.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
-    void illegalIndexedType() throws Exception {
-        try {
-            ReflectionValueExtractor.evaluate("h.value[1]", new ValueHolder("string"));
-        } catch (Exception e) {
-            // TODO assert exception message
-        }
+    void illegalIndexedType() {
+        // TODO assert exception message
+        assertThrows(Exception.class, () -> ReflectionValueExtractor.evaluate("h.value[1]", new ValueHolder("string")));
     }
 
-    /**
-     * <p>testIllegalMappedType.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
-    void illegalMappedType() throws Exception {
-        try {
-            ReflectionValueExtractor.evaluate("h.value(key)", new ValueHolder("string"));
-        } catch (Exception e) {
-            // TODO assert exception message
-        }
+    void illegalMappedType() {
+        // TODO assert exception message
+        assertThrows(
+                Exception.class, () -> ReflectionValueExtractor.evaluate("h.value(key)", new ValueHolder("string")));
     }
 
-    /**
-     * <p>testTrimRootToken.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void trimRootToken() throws Exception {
         assertNull(ReflectionValueExtractor.evaluate("project", project, true));
     }
 
-    /**
-     * <p>testArtifactMap.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void artifactMap() throws Exception {
         assertEquals(
@@ -547,11 +464,6 @@ class ReflectionValueExtractorTest {
         }
     }
 
-    /**
-     * <p>testRootPropertyRegression.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void rootPropertyRegression() throws Exception {
         Project project = new Project();

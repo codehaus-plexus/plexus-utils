@@ -49,9 +49,9 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Due to interdependencies in IOUtils and IOUtilsTestlet, one bug may cause multiple tests to fail.
  *
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
+@SuppressWarnings("deprecation")
 public final class IOUtilTest {
     /*
      * Note: this is not particularly beautiful code. A better way to check for flush and close status would be to
@@ -65,9 +65,6 @@ public final class IOUtilTest {
 
     private File testFile;
 
-    /**
-     * <p>setUp.</p>
-     */
     @BeforeEach
     void setUp() {
         try {
@@ -78,75 +75,59 @@ public final class IOUtilTest {
 
             testFile = new File(testDirectory, "file2-test.txt");
 
-            createFile(testFile, FILE_SIZE);
+            createFile(testFile);
         } catch (IOException ioe) {
             throw new RuntimeException("Can't run this test because environment could not be built");
         }
     }
 
-    /**
-     * <p>tearDown.</p>
-     */
     public void tearDown() {
         testFile.delete();
         testDirectory.delete();
     }
 
-    private void createFile(File file, long size) throws IOException {
+    private void createFile(File file) throws IOException {
         BufferedOutputStream output = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < FILE_SIZE; i++) {
             output.write((byte) (i % 128)); // nice varied byte pattern compatible with Readers and Writers
         }
 
         output.close();
     }
 
-    /** Assert that the contents of two byte arrays are the same. */
     private void assertEqualContent(byte[] b0, byte[] b1) {
         assertArrayEquals(b0, b1, "Content not equal according to java.util.Arrays#equals()");
     }
 
-    /** Assert that the content of two files is the same. */
     private void assertEqualContent(File f0, File f1) throws IOException {
         byte[] buf0 = Files.readAllBytes(f0.toPath());
         byte[] buf1 = Files.readAllBytes(f1.toPath());
         assertArrayEquals(buf0, buf1, "The files " + f0 + " and " + f1 + " have different content");
     }
 
-    /** Assert that the content of a file is equal to that in a byte[]. */
     private void assertEqualContent(byte[] b0, File file) throws IOException {
         byte[] b1 = Files.readAllBytes(file.toPath());
         assertArrayEquals(b0, b1, "Content differs");
     }
 
-    /**
-     * <p>testInputStreamToOutputStream.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void inputStreamToOutputStream() throws Exception {
         File destination = newFile("copy1.txt");
-        InputStream fin = Files.newInputStream(testFile.toPath());
-        OutputStream fout = Files.newOutputStream(destination.toPath());
+        try (InputStream fin = Files.newInputStream(testFile.toPath());
+                OutputStream fout = Files.newOutputStream(destination.toPath())) {
 
-        IOUtil.copy(fin, fout);
-        assertEquals(0, fin.available(), "Not all bytes were read");
-        fout.flush();
+            IOUtil.copy(fin, fout);
 
-        checkFile(destination);
-        checkWrite(fout);
-        fout.close();
-        fin.close();
+            assertEquals(0, fin.available(), "Not all bytes were read");
+            fout.flush();
+
+            checkFile(destination);
+            checkWrite(fout);
+        }
         deleteFile(destination);
     }
 
-    /**
-     * <p>testInputStreamToWriter.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void inputStreamToWriter() throws Exception {
         File destination = newFile("copy2.txt");
@@ -165,11 +146,6 @@ public final class IOUtilTest {
         deleteFile(destination);
     }
 
-    /**
-     * <p>testInputStreamToString.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void inputStreamToString() throws Exception {
         InputStream fin = Files.newInputStream(testFile.toPath());
@@ -180,11 +156,6 @@ public final class IOUtilTest {
         fin.close();
     }
 
-    /**
-     * <p>testReaderToOutputStream.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void readerToOutputStream() throws Exception {
         File destination = newFile("copy3.txt");
@@ -205,11 +176,6 @@ public final class IOUtilTest {
         deleteFile(destination);
     }
 
-    /**
-     * <p>testReaderToWriter.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void readerToWriter() throws Exception {
         File destination = newFile("copy4.txt");
@@ -225,11 +191,6 @@ public final class IOUtilTest {
         deleteFile(destination);
     }
 
-    /**
-     * <p>testReaderToString.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void readerToString() throws Exception {
         Reader fin = Files.newBufferedReader(testFile.toPath());
@@ -239,11 +200,6 @@ public final class IOUtilTest {
         fin.close();
     }
 
-    /**
-     * <p>testStringToOutputStream.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void stringToOutputStream() throws Exception {
         File destination = newFile("copy5.txt");
@@ -266,11 +222,6 @@ public final class IOUtilTest {
         deleteFile(destination);
     }
 
-    /**
-     * <p>testStringToWriter.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void stringToWriter() throws Exception {
         File destination = newFile("copy6.txt");
@@ -289,11 +240,6 @@ public final class IOUtilTest {
         deleteFile(destination);
     }
 
-    /**
-     * <p>testInputStreamToByteArray.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void inputStreamToByteArray() throws Exception {
         InputStream fin = Files.newInputStream(testFile.toPath());
@@ -305,11 +251,6 @@ public final class IOUtilTest {
         fin.close();
     }
 
-    /**
-     * <p>testStringToByteArray.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void stringToByteArray() throws Exception {
         Reader fin = Files.newBufferedReader(testFile.toPath());
@@ -322,11 +263,6 @@ public final class IOUtilTest {
         fin.close();
     }
 
-    /**
-     * <p>testByteArrayToWriter.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void byteArrayToWriter() throws Exception {
         File destination = newFile("copy7.txt");
@@ -344,11 +280,6 @@ public final class IOUtilTest {
         deleteFile(destination);
     }
 
-    /**
-     * <p>testByteArrayToString.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void byteArrayToString() throws Exception {
         InputStream fin = Files.newInputStream(testFile.toPath());
@@ -359,11 +290,6 @@ public final class IOUtilTest {
         fin.close();
     }
 
-    /**
-     * <p>testByteArrayToOutputStream.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void byteArrayToOutputStream() throws Exception {
         File destination = newFile("copy8.txt");
@@ -384,14 +310,6 @@ public final class IOUtilTest {
         deleteFile(destination);
     }
 
-    // ----------------------------------------------------------------------
-    // Test closeXXX()
-    // ----------------------------------------------------------------------
-
-    /**
-     * <p>testCloseInputStream.</p>
-     *
-     */
     @Test
     void closeInputStream() {
         IOUtil.close((InputStream) null);
@@ -403,11 +321,6 @@ public final class IOUtilTest {
         assertTrue(inputStream.closed);
     }
 
-    /**
-     * <p>testCloseOutputStream.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void closeOutputStream() throws Exception {
         IOUtil.close((OutputStream) null);
@@ -419,11 +332,6 @@ public final class IOUtilTest {
         assertTrue(outputStream.closed);
     }
 
-    /**
-     * <p>testCloseReader.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void closeReader() throws Exception {
         IOUtil.close((Reader) null);
@@ -435,11 +343,6 @@ public final class IOUtilTest {
         assertTrue(reader.closed);
     }
 
-    /**
-     * <p>testCloseWriter.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
     @Test
     void closeWriter() throws Exception {
         IOUtil.close((Writer) null);
@@ -451,7 +354,7 @@ public final class IOUtilTest {
         assertTrue(writer.closed);
     }
 
-    private class TestInputStream extends InputStream {
+    private static class TestInputStream extends InputStream {
         boolean closed;
 
         public void close() {
@@ -465,7 +368,7 @@ public final class IOUtilTest {
         }
     }
 
-    private class TestOutputStream extends OutputStream {
+    private static class TestOutputStream extends OutputStream {
         boolean closed;
 
         public void close() {
@@ -477,7 +380,7 @@ public final class IOUtilTest {
         }
     }
 
-    private class TestReader extends Reader {
+    private static class TestReader extends Reader {
         boolean closed;
 
         public void close() {
@@ -506,10 +409,6 @@ public final class IOUtilTest {
             fail("This method shouldn't be called");
         }
     }
-
-    // ----------------------------------------------------------------------
-    // Utility methods
-    // ----------------------------------------------------------------------
 
     private File newFile(String filename) throws Exception {
         File destination = new File(testDirectory, filename);

@@ -18,9 +18,9 @@ package org.codehaus.plexus.util.dag;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,21 +31,17 @@ import static org.junit.jupiter.api.Assertions.fail;
  * <p>CycleDetectorTest class.</p>
  *
  * @author <a href="michal.maczka@dimatics.com">Michal Maczka</a>
- * @version $Id: $Id
  * @since 3.4.0
  */
 class CycleDetectorTest {
 
-    /**
-     * <p>testCycyleDetection.</p>
-     */
     @Test
     void cycyleDetection() {
         // No cycle
         //
         // a --> b --->c
         //
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> {
                     final DAG dag1 = new DAG();
 
@@ -89,7 +85,7 @@ class CycleDetectorTest {
         // a --> b
         // | | --> d
         // --------->
-        Assertions.assertDoesNotThrow(
+        assertDoesNotThrow(
                 () -> {
                     final DAG dag3 = new DAG();
 
