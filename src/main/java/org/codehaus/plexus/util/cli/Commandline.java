@@ -581,9 +581,7 @@ public class Commandline implements Cloneable {
         File workingDir = shell.getWorkingDirectory();
 
         try {
-            if (workingDir == null) {
-                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);
-            } else {
+            if (workingDir != null) {
                 if (!workingDir.exists()) {
                     throw new CommandLineException(
                             "Working directory \"" + workingDir.getPath() + "\" does not exist!");
@@ -591,9 +589,31 @@ public class Commandline implements Cloneable {
                     throw new CommandLineException(
                             "Path \"" + workingDir.getPath() + "\" does not specify a directory.");
                 }
-
-                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);
             }
+
+            // Use ProcessBuilder instead of Runtime.exec() to avoid shell interpretation
+            // This prevents shell metacharacter expansion (e.g., *, ?, wildcards)
+            String[] commandline = getRawCommandline();
+            ProcessBuilder processBuilder = new ProcessBuilder(commandline);
+
+            if (workingDir != null) {
+                processBuilder.directory(workingDir);
+            }
+
+            // Set environment variables
+            if (environment != null && environment.length > 0) {
+                Map<String, String> env = processBuilder.environment();
+                for (String envVar : environment) {
+                    int idx = envVar.indexOf('=');
+                    if (idx > 0) {
+                        String key = envVar.substring(0, idx);
+                        String value = envVar.substring(idx + 1);
+                        env.put(key, value);
+                    }
+                }
+            }
+
+            process = processBuilder.start();
         } catch (IOException ex) {
             throw new CommandLineException("Error while executing process.", ex);
         }

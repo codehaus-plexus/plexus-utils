@@ -484,6 +484,43 @@ class CommandlineTest {
     }
 
     /**
+     * Test that asterisk and other special characters are NOT expanded by shell.
+     * This test verifies the fix for SCM-763 where passwords with asterisks were being expanded.
+     */
+    @Test
+    void executeWithAsteriskInArgument() throws Exception {
+        Commandline cmd = new Commandline();
+        cmd.setWorkingDirectory(baseDir);
+        cmd.setExecutable("echo");
+        // Add an argument with asterisk that should NOT be expanded
+        cmd.createArg().setValue("S8p3r*S3cr3t");
+
+        Process process = cmd.execute();
+        String output = IOUtil.toString(process.getInputStream()).trim();
+
+        // The output should contain the literal asterisk, not expanded files
+        assertEquals("S8p3r*S3cr3t", output);
+    }
+
+    /**
+     * Test that question mark is NOT expanded by shell.
+     */
+    @Test
+    void executeWithQuestionMarkInArgument() throws Exception {
+        Commandline cmd = new Commandline();
+        cmd.setWorkingDirectory(baseDir);
+        cmd.setExecutable("echo");
+        // Add an argument with question mark that should NOT be expanded
+        cmd.createArg().setValue("test?value");
+
+        Process process = cmd.execute();
+        String output = IOUtil.toString(process.getInputStream()).trim();
+
+        // The output should contain the literal question mark, not expanded files
+        assertEquals("test?value", output);
+    }
+
+    /**
      * Execute the command line
      *
      * @param cmd not null
