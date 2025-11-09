@@ -22,6 +22,9 @@ import java.io.OutputStream;
 
 /**
  * Poll InputStream for available data and write the output to an OutputStream.
+ * <p>
+ * This class is designed to avoid blocking when reading from streams like System.in.
+ * It polls the input stream for available data instead of blocking on read operations.
  *
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
  */
