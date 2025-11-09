@@ -146,13 +146,13 @@ public abstract class CommandLineUtils {
 
             @Override
             public Integer call() throws CommandLineException {
-                StreamFeeder inputFeeder = null;
+                StreamPollFeeder inputFeeder = null;
                 StreamPumper outputPumper = null;
                 StreamPumper errorPumper = null;
                 boolean success = false;
                 try {
                     if (systemIn != null) {
-                        inputFeeder = new StreamFeeder(systemIn, p.getOutputStream());
+                        inputFeeder = new StreamPollFeeder(systemIn, p.getOutputStream());
                         inputFeeder.start();
                     }
 
@@ -288,11 +288,11 @@ public abstract class CommandLineUtils {
         }
     }
 
-    private static void handleException(final StreamFeeder streamFeeder, final String streamName)
+    private static void handleException(final StreamPollFeeder streamPollFeeder, final String streamName)
             throws CommandLineException {
-        if (streamFeeder.getException() != null) {
+        if (streamPollFeeder.getException() != null) {
             throw new CommandLineException(
-                    String.format("Failure processing %s.", streamName), streamFeeder.getException());
+                    String.format("Failure processing %s.", streamName), streamPollFeeder.getException());
         }
     }
 
