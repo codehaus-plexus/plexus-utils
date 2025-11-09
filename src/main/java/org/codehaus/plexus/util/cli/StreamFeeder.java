@@ -24,8 +24,9 @@ import java.io.OutputStream;
  * Read from an InputStream and write the output to an OutputStream.
  *
  * @author <a href="mailto:trygvis@inamo.no">Trygve Laugst&oslash;l</a>
- *
+ * @deprecated Use {@link StreamPollFeeder} instead. This class can block when used with System.in
  */
+@Deprecated
 public class StreamFeeder extends AbstractStreamHandler {
 
     private InputStream input;
