@@ -71,8 +71,10 @@ import java.util.zip.ZipInputStream;
  * @author <a href="mailto:stefan.bodewig@epost.de">Stefan Bodewig</a>
  * @author <a href="mailto:umagesh@codehaus.org">Magesh Umasankar</a>
  * @since Ant 1.1 @ant.task category="packaging" name="unzip" name="unjar" name="unwar"
+ * @deprecated Use {@link org.codehaus.plexus.archiver.zip.ZipUnArchiver} instead.
  *
  */
+@Deprecated
 public class Expand {
 
     private File dest; // req
@@ -111,19 +113,20 @@ public class Expand {
             throws Exception {
         File f = FileUtils.resolveFile(dir, entryName);
 
+        String canonicalDirPath;
+        String canonicalFilePath;
         try {
-            String canonicalDirPath = dir.getCanonicalPath();
-            String canonicalFilePath = f.getCanonicalPath();
-
-            // Ensure the file is within the target directory
-            // We need to check that the canonical file path starts with the canonical directory path
-            // followed by a file separator to prevent path traversal attacks
-            if (!canonicalFilePath.startsWith(canonicalDirPath + File.separator)
-                    && !canonicalFilePath.equals(canonicalDirPath)) {
-                throw new IOException("Entry '" + entryName + "' outside the target directory.");
-            }
+            canonicalDirPath = dir.getCanonicalPath();
+            canonicalFilePath = f.getCanonicalPath();
         } catch (IOException e) {
             throw new IOException("Failed to verify entry path for '" + entryName + "'", e);
+        }
+        // Ensure the file is within the target directory
+        // We need to check that the canonical file path starts with the canonical directory path
+        // followed by a file separator to prevent path traversal attacks
+        if (!canonicalFilePath.startsWith(canonicalDirPath + File.separator)
+                && !canonicalFilePath.equals(canonicalDirPath)) {
+            throw new IOException("Entry '" + entryName + "' outside the target directory.");
         }
 
         try {
@@ -138,13 +141,8 @@ public class Expand {
             if (isDirectory) {
                 f.mkdirs();
             } else {
-                byte[] buffer = new byte[65536];
-
                 try (OutputStream fos = Files.newOutputStream(f.toPath())) {
-                    for (int length = compressedInputStream.read(buffer);
-                            length >= 0;
-                            fos.write(buffer, 0, length), length = compressedInputStream.read(buffer))
-                        ;
+                    IOUtil.copy(compressedInputStream, fos);
                 }
             }
 

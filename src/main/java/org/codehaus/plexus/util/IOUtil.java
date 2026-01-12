@@ -123,13 +123,28 @@ import java.nio.channels.Channel;
  */
 
 /*
- * Behold, intrepid explorers; a map of this class: Method Input Output Dependency ------ ----- ------ ------- 1 copy
- * InputStream OutputStream (primitive) 2 copy Reader Writer (primitive) 3 copy InputStream Writer 2 4 toString
- * InputStream String 3 5 toByteArray InputStream byte[] 1 6 copy Reader OutputStream 2 7 toString Reader String 2 8
- * toByteArray Reader byte[] 6 9 copy String OutputStream 2 10 copy String Writer (trivial) 11 toByteArray String byte[]
- * 9 12 copy byte[] Writer 3 13 toString byte[] String 12 14 copy byte[] OutputStream (trivial) Note that only the first
- * two methods shuffle bytes; the rest use these two, or (if possible) copy using native Java copy methods. As there are
- * method variants to specify buffer size and encoding, each row may correspond to up to 4 methods.
+ * Behold, intrepid explorers; a map of this class:
+ *
+ *     Method               Input            Output           Dependency
+ *     ------               -----            ------           ----------
+ * 1.  copy                 InputStream      OutputStream     (primitive)
+ * 2.  copy                 Reader           Writer           (primitive)
+ * 3.  copy                 InputStream      Writer           2
+ * 4.  toString             InputStream      String           3
+ * 5.  toByteArray          InputStream      byte[]           1
+ * 6.  copy                 Reader           OutputStream     2
+ * 7.  toString             Reader           String           2
+ * 8.  toByteArray          Reader           byte[]           6
+ * 9.  copy                 String           OutputStream     2
+ * 10. copy                 String           Writer           (trivial)
+ * 11. toByteArray          String           byte[]           9
+ * 12. copy                 byte[]           Writer           3
+ * 13. toString             byte[]           String           12
+ * 14. copy                 byte[]           OutputStream     (trivial)
+ *
+ * Note that only the first two methods shuffle bytes; the rest use these two, or
+ * (if possible) copy using native Java copy methods. As there are method variants
+ * to specify buffer size and encoding, each row may correspond to up to 4 methods.
  */
 
 public final class IOUtil extends BaseIOUtil {
