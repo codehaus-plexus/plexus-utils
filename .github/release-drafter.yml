@@ -1,6 +1,7 @@
 name-template: $NEXT_PATCH_VERSION
 tag-template: plexus-utils-$NEXT_PATCH_VERSION
 version-template: $MAJOR.$MINOR.$PATCH
+filter-by-commitish: true
 
 categories:
   - title: ":boom: Breaking changes"

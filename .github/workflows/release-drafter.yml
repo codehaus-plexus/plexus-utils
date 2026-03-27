@@ -10,6 +10,6 @@ jobs:
       - uses: release-drafter/release-drafter@v7
         with:
           commitish: plexus-utils-3.x
-          filter-by-range: true
+          filter-by-range: "3.x.x"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
