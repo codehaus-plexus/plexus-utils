@@ -2,11 +2,14 @@ name: Release Drafter
 on:
   push:
     branches:
-      - master
+      - plexus-utils-3.x
 jobs:
   update_release_draft:
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v6
+      - uses: release-drafter/release-drafter@v7
+        with:
+          commitish: plexus-utils-3.x
+          filter-by-commitish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
