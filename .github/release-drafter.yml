@@ -45,7 +45,7 @@ categories:
       - test
       - tests
   - title: 📦 Dependency updates
-    label:
+    labels:
       - dependencies
       - dependency
       - dependency-upgrade
