@@ -1,0 +1,3 @@
+_extends: .github
+name-template: $NEXT_PATCH_VERSION
+tag-template: plexus-utils-$NEXT_PATCH_VERSION
