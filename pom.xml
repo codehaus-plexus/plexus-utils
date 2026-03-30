@@ -111,6 +111,7 @@ limitations under the License.
           <archive>
             <manifestEntries>
               <Multi-Release>true</Multi-Release>
+              <Automatic-Module-Name>org.codehaus.plexus.util</Automatic-Module-Name>
             </manifestEntries>
           </archive>
         </configuration>
