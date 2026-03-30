@@ -38,7 +38,7 @@ limitations under the License.
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
+
   <scm>
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-utils.git</connection>
     <developerConnection>${project.scm.connection}</developerConnection>
