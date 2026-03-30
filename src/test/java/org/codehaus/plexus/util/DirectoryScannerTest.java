@@ -536,6 +536,20 @@ class DirectoryScannerTest extends FileBasedTestCase {
                 ds.isParentSymbolicLink(new File(directory, "symLinkToDirOnTheOutside"), "FileInDirOnTheOutside.txt"));
     }
 
+    @Test
+    void defaultExcludes() throws Exception {
+        DirectoryScanner ds = new DirectoryScanner();
+        // work in src directory as target has filtering already applied with outdated default excludes
+        // (https://maven.apache.org/plugins/maven-resources-plugin/resources-mojo.html#addDefaultExcludes)
+        ds.setBasedir(new File("src/test/resources/directory-scanner-default-excludes").getCanonicalFile());
+
+        ds.addDefaultExcludes();
+        ds.scan();
+
+        assertInclusionsAndExclusions(
+                ds.getIncludedFiles(), new String[] {}, ".gitignore", ".gitattributes", ".cvsignore");
+    }
+
     private void printTestHeader() {
         StackTraceElement ste = new Throwable().getStackTrace()[1];
         System.out.println("Test: " + ste.getMethodName());
