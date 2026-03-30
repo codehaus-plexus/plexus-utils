@@ -31,6 +31,14 @@ limitations under the License.
     more.</description>
   <url>https://codehaus-plexus.github.io/plexus-utils/</url>
 
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <scm>
     <connection>scm:git:https://github.com/codehaus-plexus/plexus-utils.git</connection>
     <developerConnection>${project.scm.connection}</developerConnection>
