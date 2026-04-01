@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>FileUtils xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
@@ -1929,73 +1929,75 @@
 <a class="jxr_linenumber" name="L1921" href="#L1921">1921</a>                 fileReader.close();
 <a class="jxr_linenumber" name="L1922" href="#L1922">1922</a>                 fileReader = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L1923" href="#L1923">1923</a>             } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L1924" href="#L1924">1924</a>                 IOUtil.close(fileReader);
-<a class="jxr_linenumber" name="L1925" href="#L1925">1925</a>                 IOUtil.close(fileWriter);
-<a class="jxr_linenumber" name="L1926" href="#L1926">1926</a>             }
-<a class="jxr_linenumber" name="L1927" href="#L1927">1927</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L1928" href="#L1928">1928</a>             <strong class="jxr_keyword">if</strong> (isSourceNewerThanDestination(from, to) || overwrite) {
-<a class="jxr_linenumber" name="L1929" href="#L1929">1929</a>                 copyFile(from, to);
-<a class="jxr_linenumber" name="L1930" href="#L1930">1930</a>             }
-<a class="jxr_linenumber" name="L1931" href="#L1931">1931</a>         }
-<a class="jxr_linenumber" name="L1932" href="#L1932">1932</a>     }
-<a class="jxr_linenumber" name="L1933" href="#L1933">1933</a> 
-<a class="jxr_linenumber" name="L1934" href="#L1934">1934</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isSourceNewerThanDestination(File source, File destination) {
-<a class="jxr_linenumber" name="L1935" href="#L1935">1935</a>         <strong class="jxr_keyword">return</strong> (destination.lastModified() == 0L &amp;&amp; source.lastModified() == 0L)
-<a class="jxr_linenumber" name="L1936" href="#L1936">1936</a>                 || destination.lastModified() &lt; source.lastModified();
-<a class="jxr_linenumber" name="L1937" href="#L1937">1937</a>     }
-<a class="jxr_linenumber" name="L1938" href="#L1938">1938</a> 
-<a class="jxr_linenumber" name="L1939" href="#L1939">1939</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L1940" href="#L1940">1940</a> <em class="jxr_javadoccomment">     * Note: the file content is read with platform encoding</em>
-<a class="jxr_linenumber" name="L1941" href="#L1941">1941</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L1942" href="#L1942">1942</a> <em class="jxr_javadoccomment">     * @param file the file</em>
-<a class="jxr_linenumber" name="L1943" href="#L1943">1943</a> <em class="jxr_javadoccomment">     * @return a List containing every every line not starting with # and not empty</em>
-<a class="jxr_linenumber" name="L1944" href="#L1944">1944</a> <em class="jxr_javadoccomment">     * @throws IOException if any</em>
-<a class="jxr_linenumber" name="L1945" href="#L1945">1945</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L1946" href="#L1946">1946</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> List&lt;String&gt; loadFile(File file) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L1947" href="#L1947">1947</a>         <strong class="jxr_keyword">final</strong> List&lt;String&gt; lines = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="L1948" href="#L1948">1948</a> 
-<a class="jxr_linenumber" name="L1949" href="#L1949">1949</a>         <strong class="jxr_keyword">if</strong> (file.exists()) {
-<a class="jxr_linenumber" name="L1950" href="#L1950">1950</a>             <strong class="jxr_keyword">try</strong> (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
-<a class="jxr_linenumber" name="L1951" href="#L1951">1951</a>                 <strong class="jxr_keyword">for</strong> (String line = reader.readLine(); line != <strong class="jxr_keyword">null</strong>; line = reader.readLine()) {
-<a class="jxr_linenumber" name="L1952" href="#L1952">1952</a>                     line = line.trim();
-<a class="jxr_linenumber" name="L1953" href="#L1953">1953</a> 
-<a class="jxr_linenumber" name="L1954" href="#L1954">1954</a>                     <strong class="jxr_keyword">if</strong> (!line.startsWith(<span class="jxr_string">"#"</span>) &amp;&amp; line.length() != 0) {
-<a class="jxr_linenumber" name="L1955" href="#L1955">1955</a>                         lines.add(line);
-<a class="jxr_linenumber" name="L1956" href="#L1956">1956</a>                     }
-<a class="jxr_linenumber" name="L1957" href="#L1957">1957</a>                 }
-<a class="jxr_linenumber" name="L1958" href="#L1958">1958</a>             }
-<a class="jxr_linenumber" name="L1959" href="#L1959">1959</a>         }
-<a class="jxr_linenumber" name="L1960" href="#L1960">1960</a> 
-<a class="jxr_linenumber" name="L1961" href="#L1961">1961</a>         <strong class="jxr_keyword">return</strong> lines;
-<a class="jxr_linenumber" name="L1962" href="#L1962">1962</a>     }
-<a class="jxr_linenumber" name="L1963" href="#L1963">1963</a> 
-<a class="jxr_linenumber" name="L1964" href="#L1964">1964</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L1965" href="#L1965">1965</a> <em class="jxr_javadoccomment">     * For Windows OS, check if the file name contains any of the following characters:</em>
-<a class="jxr_linenumber" name="L1966" href="#L1966">1966</a> <em class="jxr_javadoccomment">     * &lt;code&gt;":", "*", "?", "\&quot;", "&amp;lt;", "&amp;gt;", "|"&lt;/code&gt;</em>
-<a class="jxr_linenumber" name="L1967" href="#L1967">1967</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L1968" href="#L1968">1968</a> <em class="jxr_javadoccomment">     * @param f not null file</em>
-<a class="jxr_linenumber" name="L1969" href="#L1969">1969</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;false&lt;/code&gt; if the file path contains any of forbidden Windows characters, &lt;code&gt;true&lt;/code&gt; if</em>
-<a class="jxr_linenumber" name="L1970" href="#L1970">1970</a> <em class="jxr_javadoccomment">     *         the Os is not Windows or if the file path respect the Windows constraints.</em>
-<a class="jxr_linenumber" name="L1971" href="#L1971">1971</a> <em class="jxr_javadoccomment">     * @see #INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME</em>
-<a class="jxr_linenumber" name="L1972" href="#L1972">1972</a> <em class="jxr_javadoccomment">     * @since 1.5.2</em>
-<a class="jxr_linenumber" name="L1973" href="#L1973">1973</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L1974" href="#L1974">1974</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isValidWindowsFileName(File f) {
-<a class="jxr_linenumber" name="L1975" href="#L1975">1975</a>         <strong class="jxr_keyword">if</strong> (Os.isFamily(Os.FAMILY_WINDOWS)) {
-<a class="jxr_linenumber" name="L1976" href="#L1976">1976</a>             <strong class="jxr_keyword">if</strong> (StringUtils.indexOfAny(f.getName(), INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME) != -1) {
-<a class="jxr_linenumber" name="L1977" href="#L1977">1977</a>                 <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="L1978" href="#L1978">1978</a>             }
-<a class="jxr_linenumber" name="L1979" href="#L1979">1979</a> 
-<a class="jxr_linenumber" name="L1980" href="#L1980">1980</a>             File parentFile = f.getParentFile();
-<a class="jxr_linenumber" name="L1981" href="#L1981">1981</a>             <strong class="jxr_keyword">if</strong> (parentFile != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L1982" href="#L1982">1982</a>                 <strong class="jxr_keyword">return</strong> isValidWindowsFileName(parentFile);
-<a class="jxr_linenumber" name="L1983" href="#L1983">1983</a>             }
-<a class="jxr_linenumber" name="L1984" href="#L1984">1984</a>         }
-<a class="jxr_linenumber" name="L1985" href="#L1985">1985</a> 
-<a class="jxr_linenumber" name="L1986" href="#L1986">1986</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L1987" href="#L1987">1987</a>     }
-<a class="jxr_linenumber" name="L1988" href="#L1988">1988</a> }
+<a class="jxr_linenumber" name="L1924" href="#L1924">1924</a>                 <em class="jxr_comment">//noinspection deprecation</em>
+<a class="jxr_linenumber" name="L1925" href="#L1925">1925</a>                 IOUtil.close(fileReader);
+<a class="jxr_linenumber" name="L1926" href="#L1926">1926</a>                 <em class="jxr_comment">//noinspection deprecation</em>
+<a class="jxr_linenumber" name="L1927" href="#L1927">1927</a>                 IOUtil.close(fileWriter);
+<a class="jxr_linenumber" name="L1928" href="#L1928">1928</a>             }
+<a class="jxr_linenumber" name="L1929" href="#L1929">1929</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L1930" href="#L1930">1930</a>             <strong class="jxr_keyword">if</strong> (isSourceNewerThanDestination(from, to) || overwrite) {
+<a class="jxr_linenumber" name="L1931" href="#L1931">1931</a>                 copyFile(from, to);
+<a class="jxr_linenumber" name="L1932" href="#L1932">1932</a>             }
+<a class="jxr_linenumber" name="L1933" href="#L1933">1933</a>         }
+<a class="jxr_linenumber" name="L1934" href="#L1934">1934</a>     }
+<a class="jxr_linenumber" name="L1935" href="#L1935">1935</a> 
+<a class="jxr_linenumber" name="L1936" href="#L1936">1936</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isSourceNewerThanDestination(File source, File destination) {
+<a class="jxr_linenumber" name="L1937" href="#L1937">1937</a>         <strong class="jxr_keyword">return</strong> (destination.lastModified() == 0L &amp;&amp; source.lastModified() == 0L)
+<a class="jxr_linenumber" name="L1938" href="#L1938">1938</a>                 || destination.lastModified() &lt; source.lastModified();
+<a class="jxr_linenumber" name="L1939" href="#L1939">1939</a>     }
+<a class="jxr_linenumber" name="L1940" href="#L1940">1940</a> 
+<a class="jxr_linenumber" name="L1941" href="#L1941">1941</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L1942" href="#L1942">1942</a> <em class="jxr_javadoccomment">     * Note: the file content is read with platform encoding</em>
+<a class="jxr_linenumber" name="L1943" href="#L1943">1943</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L1944" href="#L1944">1944</a> <em class="jxr_javadoccomment">     * @param file the file</em>
+<a class="jxr_linenumber" name="L1945" href="#L1945">1945</a> <em class="jxr_javadoccomment">     * @return a List containing every every line not starting with # and not empty</em>
+<a class="jxr_linenumber" name="L1946" href="#L1946">1946</a> <em class="jxr_javadoccomment">     * @throws IOException if any</em>
+<a class="jxr_linenumber" name="L1947" href="#L1947">1947</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L1948" href="#L1948">1948</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> List&lt;String&gt; loadFile(File file) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L1949" href="#L1949">1949</a>         <strong class="jxr_keyword">final</strong> List&lt;String&gt; lines = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L1950" href="#L1950">1950</a> 
+<a class="jxr_linenumber" name="L1951" href="#L1951">1951</a>         <strong class="jxr_keyword">if</strong> (file.exists()) {
+<a class="jxr_linenumber" name="L1952" href="#L1952">1952</a>             <strong class="jxr_keyword">try</strong> (BufferedReader reader = Files.newBufferedReader(file.toPath())) {
+<a class="jxr_linenumber" name="L1953" href="#L1953">1953</a>                 <strong class="jxr_keyword">for</strong> (String line = reader.readLine(); line != <strong class="jxr_keyword">null</strong>; line = reader.readLine()) {
+<a class="jxr_linenumber" name="L1954" href="#L1954">1954</a>                     line = line.trim();
+<a class="jxr_linenumber" name="L1955" href="#L1955">1955</a> 
+<a class="jxr_linenumber" name="L1956" href="#L1956">1956</a>                     <strong class="jxr_keyword">if</strong> (!line.startsWith(<span class="jxr_string">"#"</span>) &amp;&amp; line.length() != 0) {
+<a class="jxr_linenumber" name="L1957" href="#L1957">1957</a>                         lines.add(line);
+<a class="jxr_linenumber" name="L1958" href="#L1958">1958</a>                     }
+<a class="jxr_linenumber" name="L1959" href="#L1959">1959</a>                 }
+<a class="jxr_linenumber" name="L1960" href="#L1960">1960</a>             }
+<a class="jxr_linenumber" name="L1961" href="#L1961">1961</a>         }
+<a class="jxr_linenumber" name="L1962" href="#L1962">1962</a> 
+<a class="jxr_linenumber" name="L1963" href="#L1963">1963</a>         <strong class="jxr_keyword">return</strong> lines;
+<a class="jxr_linenumber" name="L1964" href="#L1964">1964</a>     }
+<a class="jxr_linenumber" name="L1965" href="#L1965">1965</a> 
+<a class="jxr_linenumber" name="L1966" href="#L1966">1966</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L1967" href="#L1967">1967</a> <em class="jxr_javadoccomment">     * For Windows OS, check if the file name contains any of the following characters:</em>
+<a class="jxr_linenumber" name="L1968" href="#L1968">1968</a> <em class="jxr_javadoccomment">     * &lt;code&gt;":", "*", "?", "\&quot;", "&amp;lt;", "&amp;gt;", "|"&lt;/code&gt;</em>
+<a class="jxr_linenumber" name="L1969" href="#L1969">1969</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L1970" href="#L1970">1970</a> <em class="jxr_javadoccomment">     * @param f not null file</em>
+<a class="jxr_linenumber" name="L1971" href="#L1971">1971</a> <em class="jxr_javadoccomment">     * @return &lt;code&gt;false&lt;/code&gt; if the file path contains any of forbidden Windows characters, &lt;code&gt;true&lt;/code&gt; if</em>
+<a class="jxr_linenumber" name="L1972" href="#L1972">1972</a> <em class="jxr_javadoccomment">     *         the Os is not Windows or if the file path respect the Windows constraints.</em>
+<a class="jxr_linenumber" name="L1973" href="#L1973">1973</a> <em class="jxr_javadoccomment">     * @see #INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME</em>
+<a class="jxr_linenumber" name="L1974" href="#L1974">1974</a> <em class="jxr_javadoccomment">     * @since 1.5.2</em>
+<a class="jxr_linenumber" name="L1975" href="#L1975">1975</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L1976" href="#L1976">1976</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isValidWindowsFileName(File f) {
+<a class="jxr_linenumber" name="L1977" href="#L1977">1977</a>         <strong class="jxr_keyword">if</strong> (Os.isFamily(Os.FAMILY_WINDOWS)) {
+<a class="jxr_linenumber" name="L1978" href="#L1978">1978</a>             <strong class="jxr_keyword">if</strong> (StringUtils.indexOfAny(f.getName(), INVALID_CHARACTERS_FOR_WINDOWS_FILE_NAME) != -1) {
+<a class="jxr_linenumber" name="L1979" href="#L1979">1979</a>                 <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="L1980" href="#L1980">1980</a>             }
+<a class="jxr_linenumber" name="L1981" href="#L1981">1981</a> 
+<a class="jxr_linenumber" name="L1982" href="#L1982">1982</a>             File parentFile = f.getParentFile();
+<a class="jxr_linenumber" name="L1983" href="#L1983">1983</a>             <strong class="jxr_keyword">if</strong> (parentFile != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L1984" href="#L1984">1984</a>                 <strong class="jxr_keyword">return</strong> isValidWindowsFileName(parentFile);
+<a class="jxr_linenumber" name="L1985" href="#L1985">1985</a>             }
+<a class="jxr_linenumber" name="L1986" href="#L1986">1986</a>         }
+<a class="jxr_linenumber" name="L1987" href="#L1987">1987</a> 
+<a class="jxr_linenumber" name="L1988" href="#L1988">1988</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L1989" href="#L1989">1989</a>     }
+<a class="jxr_linenumber" name="L1990" href="#L1990">1990</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2001&#x2013;2024 <a href="https://codehaus-plexus.github.io/">Codehaus Plexus</a>. All rights reserved.</div>
+<div id="footer">© 2001–2026 <a href="https://codehaus-plexus.github.io/">Codehaus Plexus</a></div>
 </body>
 </html>
