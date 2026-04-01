@@ -29,7 +29,7 @@ public abstract class AbstractScanner implements Scanner {
      * Patterns which should be excluded by default, like SCM files
      * <ul>
      * <li>Misc: &#42;&#42;/&#42;~, &#42;&#42;/#&#42;#, &#42;&#42;/.#&#42;, &#42;&#42;/%&#42;%, &#42;&#42;/._&#42;</li>
-     * <li>CVS: &#42;&#42;/CVS, &#42;&#42;/CVS/&#42;&#42;, &#42;&#42;/.cvsignore</li>
+     * <li>CVS: &#42;&#42;/CVS, &#42;&#42;/CVS/&#42;&#42;</li>
      * <li>RCS: &#42;&#42;/RCS, &#42;&#42;/RCS/&#42;&#42;</li>
      * <li>SCCS: &#42;&#42;/SCCS, &#42;&#42;/SCCS/&#42;&#42;</li>
      * <li>VSSercer: &#42;&#42;/vssver.scc</li>
@@ -61,7 +61,6 @@ public abstract class AbstractScanner implements Scanner {
         // CVS
         "**/CVS",
         "**/CVS/**",
-        "**/.cvsignore",
 
         // RCS
         "**/RCS",
