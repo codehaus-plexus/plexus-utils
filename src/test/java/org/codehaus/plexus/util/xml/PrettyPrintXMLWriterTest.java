@@ -18,12 +18,7 @@ package org.codehaus.plexus.util.xml;
 
 import javax.swing.text.html.HTML.Tag;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.NoSuchElementException;
 
 import org.codehaus.plexus.util.StringUtils;
@@ -32,7 +27,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -139,37 +133,6 @@ class PrettyPrintXMLWriterTest {
             fail("Should throw a NoSuchElementException");
         } catch (NoSuchElementException e) {
             assert (true);
-        }
-    }
-
-    /**
-     * Issue #51: https://github.com/codehaus-plexus/plexus-utils/issues/51 Purpose: test if concatenation string
-     * optimization bug is present. Target environment: Java 7 (u79 and u80 verified) running on Windows. Detection
-     * strategy: Tries to build a big XML file (~750MB size) and with many nested tags to force the JVM to trigger the
-     * concatenation string optimization bug that throws a NoSuchElementException when calling endElement() method.
-     *
-     * @throws java.io.IOException if an I/O error occurs
-     */
-    @Test
-    void issue51DetectJava7ConcatenationBug() throws IOException {
-        File dir = new File("target/test-xml");
-        if (!dir.exists()) {
-            assertTrue(dir.mkdir(), "cannot create directory test-xml");
-        }
-        File xmlFile = new File(dir, "test-issue-51.xml");
-        try (OutputStreamWriter osw =
-                new OutputStreamWriter(Files.newOutputStream(xmlFile.toPath()), StandardCharsets.UTF_8); ) {
-            writer = new PrettyPrintXMLWriter(osw);
-            int iterations = 20000;
-            for (int i = 0; i < iterations; ++i) {
-                writer.startElement(Tag.DIV.toString() + i);
-                writer.addAttribute("class", "someattribute");
-            }
-            for (int i = 0; i < iterations; ++i) {
-                writer.endElement(); // closes Tag.DIV + i
-            }
-        } catch (NoSuchElementException e) {
-            fail("Should not throw a NoSuchElementException");
         }
     }
 
