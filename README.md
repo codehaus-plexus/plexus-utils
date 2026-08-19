@@ -32,7 +32,7 @@ If you hit `NoClassDefFoundError` on any of those after upgrading, add:
 </dependency>
 ```
 
-Check the badge above for the current version.
+Take the version from [plexus-xml on Central](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-xml) — the `3.x` line, for the reason below.
 
 **Pick the `plexus-xml` line carefully:**
 
