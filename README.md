@@ -46,7 +46,7 @@ If you hit `NoClassDefFoundError` on any of those after upgrading, add:
 <dependency>
   <groupId>org.codehaus.plexus</groupId>
   <artifactId>plexus-utils</artifactId>
-  <version>4.0.3</version>
+  <version>4.1.0</version>
 </dependency>
 ```
 
