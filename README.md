@@ -29,9 +29,10 @@ If you hit `NoClassDefFoundError` on any of those after upgrading, add:
 <dependency>
   <groupId>org.codehaus.plexus</groupId>
   <artifactId>plexus-xml</artifactId>
-  <version>3.0.2</version>
 </dependency>
 ```
+
+Check the badge above for the current version.
 
 **Pick the `plexus-xml` line carefully:**
 
@@ -46,7 +47,6 @@ If you hit `NoClassDefFoundError` on any of those after upgrading, add:
 <dependency>
   <groupId>org.codehaus.plexus</groupId>
   <artifactId>plexus-utils</artifactId>
-  <version>4.1.0</version>
 </dependency>
 ```
 
