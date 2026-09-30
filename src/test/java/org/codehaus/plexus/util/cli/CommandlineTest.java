@@ -78,10 +78,14 @@ class CommandlineTest {
     @Test
     void executeBinaryOnPath() throws Exception {
         // Maven startup script on PATH is required for this test
+        String binary = "mvn";
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            binary += ".cmd";
+        }
         Commandline cmd = new Commandline();
         cmd.setWorkingDirectory(baseDir);
-        cmd.setExecutable("mvn");
-        assertEquals("mvn", cmd.getShell().getOriginalExecutable());
+        cmd.setExecutable(binary);
+        assertEquals(binary, cmd.getShell().getOriginalExecutable());
         cmd.createArg().setValue("-version");
         Process process = cmd.execute();
         String out = IOUtil.toString(process.getInputStream());
@@ -94,11 +98,19 @@ class CommandlineTest {
     @Test
     void execute() throws Exception {
         // allow it to detect the proper shell here.
+        String executable = "echo";
         Commandline cmd = new Commandline();
         cmd.setWorkingDirectory(baseDir);
-        cmd.setExecutable("echo");
-        assertEquals("echo", cmd.getShell().getOriginalExecutable());
-        cmd.createArgument().setValue("Hello");
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            cmd.createArg().setValue("Hello");
+            executable = "cmd";
+            cmd.createArg().setValue("/X");
+            cmd.createArg().setValue("/C");
+            cmd.createArg().setValue("echo");
+        }
+        cmd.setExecutable(executable);
+        assertEquals(executable, cmd.getShell().getOriginalExecutable());
+        cmd.createArg().setValue("Hello");
 
         Process process = cmd.execute();
         assertEquals("Hello", IOUtil.toString(process.getInputStream()).trim());
@@ -385,7 +397,10 @@ class CommandlineTest {
         cmd.getShell().setQuotedArgumentsEnabled(true);
         cmd.setExecutable("cat");
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            cmd.setExecutable("dir");
+            cmd.setExecutable("cmd");
+            cmd.createArg().setLine("/X");
+            cmd.createArg().setLine("/C");
+            cmd.createArg().setLine("dir");
         }
         cmd.setWorkingDirectory(dir);
         cmd.createArg().setLine("test$1.txt");
