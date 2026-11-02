@@ -29,13 +29,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
@@ -1221,6 +1224,66 @@ public final class FileUtilsTest extends FileBasedTestCase {
             symlink.delete();
         }
         assertFalse(getTestDirectory().exists(), "Failed to delete test directory");
+    }
+
+    @Test
+    @DisabledOnOs(OS.WINDOWS)
+    void deleteDirectoryDoesNotFollowDirSymlink() throws Exception {
+        File outside = new File(getTestDirectory(), "outside");
+        outside.mkdir();
+        File outsideFile = new File(outside, "keep.txt");
+        createFile(outsideFile, 1);
+
+        File directory = new File(getTestDirectory(), "directory");
+        File readOnly = new File(directory, "readOnly");
+        readOnly.mkdirs();
+        File symlink = new File(readOnly, "dirSymlink");
+        createSymlink(symlink, outside);
+        // the symlink cannot be unlinked from a read-only directory
+        readOnly.setWritable(false);
+        try {
+            assumeFalse(Files.isWritable(readOnly.toPath()), "directory permissions are not enforced");
+            assertThrows(IOException.class, () -> FileUtils.deleteDirectory(directory));
+        } finally {
+            readOnly.setWritable(true);
+            symlink.delete();
+        }
+        assertTrue(outsideFile.exists(), "deleteDirectory followed a symlink out of the directory");
+    }
+
+    @Test
+    @DisabledOnOs(OS.WINDOWS)
+    void forceDeleteOnExitDoesNotFollowDirSymlink() throws Exception {
+        File outside = new File(getTestDirectory(), "outside");
+        outside.mkdir();
+        File outsideFile = new File(outside, "keep.txt");
+        createFile(outsideFile, 1);
+
+        File directory = new File(getTestDirectory(), "directory");
+        directory.mkdir();
+        createSymlink(new File(directory, "dirSymlink"), outside);
+
+        // deleteOnExit only runs when the JVM exits, so run it in a separate one
+        String java = new File(System.getProperty("java.home"), "bin/java").getPath();
+        Process process = new ProcessBuilder(
+                        java,
+                        "-cp",
+                        System.getProperty("java.class.path"),
+                        ForceDeleteOnExit.class.getName(),
+                        directory.getAbsolutePath())
+                .inheritIO()
+                .start();
+        assertTrue(process.waitFor(1, TimeUnit.MINUTES), "JVM did not exit");
+        assertEquals(0, process.exitValue());
+
+        assertFalse(directory.exists(), "Failed to delete directory on exit");
+        assertTrue(outsideFile.exists(), "forceDeleteOnExit followed a symlink out of the directory");
+    }
+
+    public static final class ForceDeleteOnExit {
+        public static void main(String[] args) throws IOException {
+            FileUtils.forceDeleteOnExit(new File(args[0]));
+        }
     }
 
     @Test
