@@ -98,6 +98,23 @@ class CommandLineUtilsTest {
         assertCmdLineArgs(new String[] {"foo", " ' ", "bar"}, "foo \" ' \" bar");
     }
 
+    @Test
+    void translateCommandlineSplitsAtTabsAndLineBreaks() throws Exception {
+        assertCmdLineArgs(new String[] {"foo", "bar"}, "foo\tbar");
+        assertCmdLineArgs(new String[] {"foo", "bar"}, "foo\nbar");
+        assertCmdLineArgs(new String[] {"foo", "bar"}, "foo\rbar");
+        assertCmdLineArgs(new String[] {"foo", "bar"}, "foo\r\nbar");
+        assertCmdLineArgs(new String[] {"foo", "bar", "baz"}, " \t foo \t\n bar\r\n\tbaz \n");
+        assertCmdLineArgs(new String[] {}, " \t\r\n ");
+    }
+
+    @Test
+    void translateCommandlineKeepsWhitespaceInsideQuotes() throws Exception {
+        assertCmdLineArgs(new String[] {"foo", "a\tb\nc\r", "bar"}, "foo \"a\tb\nc\r\" bar");
+        assertCmdLineArgs(new String[] {"foo", "a\tb\nc\r", "bar"}, "foo 'a\tb\nc\r' bar");
+        assertCmdLineArgs(new String[] {"a\tb", "c"}, "'a\tb'\tc");
+    }
+
     private void assertCmdLineArgs(String[] expected, String cmdLine) throws Exception {
         String[] actual = CommandLineUtils.translateCommandline(cmdLine);
         assertNotNull(actual);
