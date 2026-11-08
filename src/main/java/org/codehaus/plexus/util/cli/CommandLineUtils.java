@@ -82,7 +82,8 @@ public abstract class CommandLineUtils {
 
     /**
      * @param cl The command line to execute
-     * @param systemIn The input to read from, must be thread safe
+     * @param systemIn The input to read from, must be thread safe. {@link System#in} is polled for available data, so
+     *            the call does not wait for it once the process has ended
      * @param systemOut A consumer that receives output, must be thread safe
      * @param systemErr A consumer that receives system error stream output, must be thread safe
      * @param timeoutInSeconds Positive integer to specify timeout, zero and negative integers for no timeout.
@@ -105,7 +106,8 @@ public abstract class CommandLineUtils {
      * Immediately forks a process, returns a callable that will block until process is complete.
      *
      * @param cl The command line to execute
-     * @param systemIn The input to read from, must be thread safe
+     * @param systemIn The input to read from, must be thread safe. {@link System#in} is polled for available data, so
+     *            the call does not wait for it once the process has ended
      * @param systemOut A consumer that receives output, must be thread safe
      * @param systemErr A consumer that receives system error stream output, must be thread safe
      * @param timeoutInSeconds Positive integer to specify timeout, zero and negative integers for no timeout.
@@ -152,7 +154,12 @@ public abstract class CommandLineUtils {
                 boolean success = false;
                 try {
                     if (systemIn != null) {
-                        inputFeeder = new StreamFeeder(systemIn, p.getOutputStream());
+                        if (systemIn == System.in) {
+                            // may never deliver data nor end, so poll it instead of blocking in a read
+                            inputFeeder = new StreamPollFeeder(systemIn, p.getOutputStream());
+                        } else {
+                            inputFeeder = new StreamFeeder(systemIn, p.getOutputStream());
+                        }
                         inputFeeder.start();
                     }
 
