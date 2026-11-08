@@ -439,8 +439,10 @@ public final class FileUtilsTest extends FileBasedTestCase {
         final File symlink = new File(getTestDirectory(), "dangling-link");
         createFile(target, 1);
         createSymlink(symlink, target);
+        assumeTrue(Files.isSymbolicLink(symlink.toPath()), "the platform created a real symlink");
         assertTrue(target.delete());
-        assertTrue(Files.isSymbolicLink(symlink.toPath()), "Link should be left dangling");
+        // Windows stops reporting a file link as a symlink once its target is gone
+        assumeTrue(Files.isSymbolicLink(symlink.toPath()), "the platform keeps a dangling symlink");
         FileUtils.forceDelete(symlink);
         assertFalse(Files.isSymbolicLink(symlink.toPath()), "Dangling symlink should be removed");
     }
