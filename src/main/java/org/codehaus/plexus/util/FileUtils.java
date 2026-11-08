@@ -1270,6 +1270,9 @@ public class FileUtils extends BaseFileUtils {
         IOException exception = null;
 
         final File[] files = directory.listFiles();
+        if (files == null) {
+            throw new IOException("Could not list directory " + directory.getAbsolutePath());
+        }
         for (final File file : files) {
             try {
                 forceDeleteOnExit(file);
@@ -1762,6 +1765,9 @@ public class FileUtils extends BaseFileUtils {
         }
 
         File[] files = sourceDirectory.listFiles();
+        if (files == null) {
+            throw new IOException("Could not list directory " + sourceDirectory.getAbsolutePath());
+        }
 
         String sourcePath = sourceDirectory.getAbsolutePath();
 
