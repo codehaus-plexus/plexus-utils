@@ -36,6 +36,7 @@ import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * This is used to test FileUtils for correctness.
@@ -676,6 +677,21 @@ public final class FileUtilsTest extends FileBasedTestCase {
         for (String[] testsWithPath : testsWithPaths) {
             assertEquals(testsWithPath[1], FileUtils.removeExtension(testsWithPath[0]));
             // assertEquals(testsWithPaths[i][1], FileUtils.basename(testsWithPaths[i][0]));
+        }
+    }
+
+    @Test
+    void copyDirectoryStructureFailsWhenSourceCannotBeListed() throws Exception {
+        File from = new File(getTestDirectory(), "unlistable");
+        from.mkdirs();
+        File to = new File(getTestDirectory(), "unlistable-copy");
+        assumeTrue(from.setReadable(false) && from.setExecutable(false) && from.listFiles() == null);
+        try {
+            IOException e = assertThrows(IOException.class, () -> FileUtils.copyDirectoryStructure(from, to));
+            assertTrue(e.getMessage().contains(from.getAbsolutePath()));
+        } finally {
+            from.setExecutable(true);
+            from.setReadable(true);
         }
     }
 
