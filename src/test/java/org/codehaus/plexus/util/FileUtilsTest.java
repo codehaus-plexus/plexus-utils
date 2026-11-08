@@ -426,6 +426,26 @@ public final class FileUtilsTest extends FileBasedTestCase {
     }
 
     @Test
+    void forceDeleteNonExistingFile() throws Exception {
+        final File missing = new File(getTestDirectory(), "does-not-exist.txt");
+        assertFalse(missing.exists());
+        FileUtils.forceDelete(missing);
+        assertFalse(missing.exists());
+    }
+
+    @Test
+    void forceDeleteDanglingSymlink() throws Exception {
+        final File target = new File(getTestDirectory(), "dangling-target.txt");
+        final File symlink = new File(getTestDirectory(), "dangling-link");
+        createFile(target, 1);
+        createSymlink(symlink, target);
+        assertTrue(target.delete());
+        assertTrue(Files.isSymbolicLink(symlink.toPath()), "Link should be left dangling");
+        FileUtils.forceDelete(symlink);
+        assertFalse(Files.isSymbolicLink(symlink.toPath()), "Dangling symlink should be removed");
+    }
+
+    @Test
     void copyFile1ToDir() throws Exception {
         final File directory = new File(getTestDirectory(), "subdir");
         if (!directory.exists()) {

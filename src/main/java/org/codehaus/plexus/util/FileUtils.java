@@ -66,6 +66,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -1176,23 +1177,20 @@ public class FileUtils extends BaseFileUtils {
         if (file.isDirectory()) {
             deleteDirectory(file);
         } else {
-            /*
-             * NOTE: Always try to delete the file even if it appears to be non-existent. This will ensure that a
-             * symlink whose target does not exist is deleted, too.
-             */
-            boolean filePresent = file.getCanonicalFile().exists();
-            if (!deleteFile(file) && filePresent) {
-                final String message = "File " + file + " unable to be deleted.";
-                throw new IOException(message);
+            if (!deleteFile(file)) {
+                throw new IOException("File " + file + " unable to be deleted.");
             }
         }
     }
 
     /**
-     * Accommodate Windows bug encountered in both Sun and IBM JDKs. Others possible. If the delete does not work, call
+     * Deletes a file, or a symlink without following it. A file that does not exist (including a dangling symlink,
+     * which {@link Files#deleteIfExists} removes) counts as deleted and returns immediately. Only if the file still
+     * exists after a failed attempt, accommodate the Windows bug encountered in both Sun and IBM JDKs: call
      * System.gc(), wait a little and try again.
      *
      * @param file a file
+     * @return {@code true} if the file no longer exists
      * @throws IOException if any
      */
     private static boolean deleteFile(File file) throws IOException {
@@ -1200,21 +1198,32 @@ public class FileUtils extends BaseFileUtils {
             throw new IOException("File " + file + " isn't a file.");
         }
 
-        if (!file.delete()) {
-            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                file = file.getCanonicalFile();
-                System.gc();
-            }
-
-            try {
-                Thread.sleep(10);
-                return file.delete();
-            } catch (InterruptedException ignore) {
-                return file.delete();
+        final Path path = file.toPath();
+        try {
+            Files.deleteIfExists(path);
+            return true;
+        } catch (IOException e) {
+            if (!Files.exists(path, LinkOption.NOFOLLOW_LINKS)) {
+                return true;
             }
         }
 
-        return true;
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            System.gc();
+        }
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ignore) {
+            Thread.currentThread().interrupt();
+        }
+
+        try {
+            Files.deleteIfExists(path);
+            return true;
+        } catch (IOException e) {
+            return !Files.exists(path, LinkOption.NOFOLLOW_LINKS);
+        }
     }
 
     /**
