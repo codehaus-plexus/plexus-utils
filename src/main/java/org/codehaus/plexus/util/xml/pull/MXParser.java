@@ -2449,6 +2449,7 @@ public class MXParser implements XmlPullParser {
                             if (pcEnd >= pc.length) ensurePC(pcEnd);
                             pc[pcEnd++] = cch;
                             if (cch2 != 0) {
+                                if (pcEnd >= pc.length) ensurePC(pcEnd);
                                 pc[pcEnd++] = cch2;
                             }
                         }

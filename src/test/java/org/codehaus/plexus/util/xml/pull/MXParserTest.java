@@ -44,6 +44,29 @@ import static org.junit.jupiter.api.Assertions.fail;
 class MXParserTest {
 
     @Test
+    void commentSurrogatePairAtBufferBoundary() throws Exception {
+        MXParser parser = new MXParser();
+        java.lang.reflect.Field pcField = MXParser.class.getDeclaredField("pc");
+        pcField.setAccessible(true);
+        int pcLength = ((char[]) pcField.get(parser)).length;
+
+        // The leading CR switches the parser to its parsed-content buffer, which then holds the
+        // normalised LF plus pcLength - 2 characters; the surrogate pair needs the last two slots.
+        StringBuilder comment = new StringBuilder("\r");
+        for (int i = 0; i < pcLength - 2; i++) {
+            comment.append('a');
+        }
+        comment.append("\uD83D\uDE00");
+
+        parser.setInput(new StringReader("<root><!--" + comment + "--></root>"));
+
+        assertEquals(XmlPullParser.START_TAG, parser.nextToken());
+        assertEquals(XmlPullParser.COMMENT, parser.nextToken());
+        assertEquals("\n" + comment.substring(1), parser.getText());
+        assertEquals(XmlPullParser.END_TAG, parser.nextToken());
+    }
+
+    @Test
     void hexadecimalEntities() throws Exception {
         MXParser parser = new MXParser();
 
