@@ -363,7 +363,7 @@ public abstract class CommandLineUtils {
         final int inQuote = 1;
         final int inDoubleQuote = 2;
         int state = normal;
-        StringTokenizer tok = new StringTokenizer(toProcess, "\"\' ", true);
+        StringTokenizer tok = new StringTokenizer(toProcess, "\"\' \t\n\r", true);
         Vector<String> v = new Vector<String>();
         StringBuilder current = new StringBuilder();
 
@@ -389,7 +389,10 @@ public abstract class CommandLineUtils {
                         state = inQuote;
                     } else if ("\"".equals(nextTok)) {
                         state = inDoubleQuote;
-                    } else if (" ".equals(nextTok)) {
+                    } else if (" ".equals(nextTok)
+                            || "\t".equals(nextTok)
+                            || "\n".equals(nextTok)
+                            || "\r".equals(nextTok)) {
                         if (current.length() != 0) {
                             v.addElement(current.toString());
                             current.setLength(0);
