@@ -428,19 +428,18 @@ public class Commandline implements Cloneable {
     }
 
     /**
+     * Warning: For built-in commands like 'echo' on {@link Os#FAMILY_WINDOWS}, use <code>cmd /X /C echo</code>
+     * @deprecated Use {@link org.codehaus.plexus.util.cli.Commandline#getRawCommandline()} method instead.
      * @return Returns the executable and all defined arguments.
-     *      For Windows Family, {@link Commandline#getShellCommandline()} is returned
      */
+    @Deprecated
     public String[] getCommandline() {
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            return getShellCommandline();
-        }
-
         return getRawCommandline();
     }
 
     /**
-     * Returns the executable and all defined arguments.
+     * Returns the executable and all defined arguments.<br>
+     * Warning: For built-in commands like 'echo' on {@link Os#FAMILY_WINDOWS}, use <code>cmd /X /C echo</code>
      * @return the command line as array not escaped neither quoted
      */
     public String[] getRawCommandline() {
@@ -494,7 +493,7 @@ public class Commandline implements Cloneable {
     }
 
     public int size() {
-        return getCommandline().length;
+        return getRawCommandline().length;
     }
 
     @Override
@@ -582,7 +581,7 @@ public class Commandline implements Cloneable {
 
         try {
             if (workingDir == null) {
-                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);
+                process = Runtime.getRuntime().exec(getRawCommandline(), environment, workingDir);
             } else {
                 if (!workingDir.exists()) {
                     throw new CommandLineException(
