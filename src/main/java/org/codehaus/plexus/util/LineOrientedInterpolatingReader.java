@@ -260,7 +260,7 @@ public class LineOrientedInterpolatingReader extends FilterReader {
     }
 
     private Map<String, Object> evaluateExpressions(Set<String> expressions) {
-        Map<String, Object> evaluated = new TreeMap<String, Object>();
+        Map<String, Object> evaluated = new TreeMap<>();
 
         for (Object expression : expressions) {
             String rawExpression = (String) expression;
@@ -297,7 +297,7 @@ public class LineOrientedInterpolatingReader extends FilterReader {
     }
 
     private Set<String> parseForExpressions(String rawLine) {
-        Set<String> expressions = new HashSet<String>();
+        Set<String> expressions = new HashSet<>();
 
         if (rawLine != null) {
             int placeholder = -1;

@@ -32,10 +32,10 @@ public abstract class AbstractTestThread implements Runnable {
 
     public static final boolean DEBUG = true;
 
-    private boolean isRunning = false;
+    private boolean isRunning;
 
     /** Error msg provided by implementing class (of why the test failed) */
-    private String errorMsg = null;
+    private String errorMsg;
 
     /** The registry to notify on completion */
     private TestThreadManager registry;
@@ -46,13 +46,13 @@ public abstract class AbstractTestThread implements Runnable {
     private Throwable error;
 
     /** If the thread has been run */
-    private boolean hasRun = false;
+    private boolean hasRun;
 
     /**
      * Flag indicating if the test has passed. Some test might require an exception so using the error to determine if
      * the test has passed is not sufficient.
      */
-    private boolean passed = false;
+    private boolean passed;
 
     /**
      * Constructor

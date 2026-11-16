@@ -80,7 +80,7 @@ import java.util.Map;
  */
 public class InterpolationFilterReader extends FilterReader {
     /** replacement text from a token */
-    private String replaceData = null;
+    private String replaceData;
 
     /** Index into replacement data */
     private int replaceIndex = -1;
@@ -172,7 +172,7 @@ public class InterpolationFilterReader extends FilterReader {
      * @exception IOException If an I/O error occurs
      */
     @Override
-    public int read(char cbuf[], int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len) throws IOException {
         for (int i = 0; i < len; i++) {
             int ch = read();
             if (ch == -1) {

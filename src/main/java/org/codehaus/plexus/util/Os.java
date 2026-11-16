@@ -132,7 +132,7 @@ public class Os {
      * Initializes the set of valid families.
      */
     private static Set<String> setValidFamilies() {
-        Set<String> valid = new HashSet<String>();
+        Set<String> valid = new HashSet<>();
         valid.add(FAMILY_DOS);
         valid.add(FAMILY_MAC);
         valid.add(FAMILY_NETWARE);
@@ -274,50 +274,50 @@ public class Os {
             boolean isVersion = true;
 
             if (family != null) {
-                if (family.equalsIgnoreCase(FAMILY_WINDOWS)) {
+                if (FAMILY_WINDOWS.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains(FAMILY_WINDOWS);
-                } else if (family.equalsIgnoreCase(FAMILY_OS2)) {
+                } else if (FAMILY_OS2.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains(FAMILY_OS2);
-                } else if (family.equalsIgnoreCase(FAMILY_NETWARE)) {
+                } else if (FAMILY_NETWARE.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains(FAMILY_NETWARE);
-                } else if (family.equalsIgnoreCase(FAMILY_DOS)) {
-                    isFamily = PATH_SEP.equals(";")
+                } else if (FAMILY_DOS.equalsIgnoreCase(family)) {
+                    isFamily = ";".equals(PATH_SEP)
                             && !isFamily(FAMILY_NETWARE)
                             && !isFamily(FAMILY_WINDOWS)
                             && !isFamily(FAMILY_WIN9X);
 
-                } else if (family.equalsIgnoreCase(FAMILY_MAC)) {
+                } else if (FAMILY_MAC.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains(FAMILY_MAC);
-                } else if (family.equalsIgnoreCase(FAMILY_TANDEM)) {
+                } else if (FAMILY_TANDEM.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains("nonstop_kernel");
-                } else if (family.equalsIgnoreCase(FAMILY_UNIX)) {
-                    isFamily = PATH_SEP.equals(":")
+                } else if (FAMILY_UNIX.equalsIgnoreCase(family)) {
+                    isFamily = ":".equals(PATH_SEP)
                             && !isFamily(FAMILY_OPENVMS)
                             && (!isFamily(FAMILY_MAC) || OS_NAME.endsWith("x"));
-                } else if (family.equalsIgnoreCase(FAMILY_WIN9X)) {
+                } else if (FAMILY_WIN9X.equalsIgnoreCase(family)) {
                     isFamily = isFamily(FAMILY_WINDOWS)
                             && (OS_NAME.contains("95")
                                     || OS_NAME.contains("98")
                                     || OS_NAME.contains("me")
                                     || OS_NAME.contains("ce"));
-                } else if (family.equalsIgnoreCase(FAMILY_ZOS)) {
+                } else if (FAMILY_ZOS.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains(FAMILY_ZOS) || OS_NAME.contains("os/390");
-                } else if (family.equalsIgnoreCase(FAMILY_OS400)) {
+                } else if (FAMILY_OS400.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains(FAMILY_OS400);
-                } else if (family.equalsIgnoreCase(FAMILY_OPENVMS)) {
+                } else if (FAMILY_OPENVMS.equalsIgnoreCase(family)) {
                     isFamily = OS_NAME.contains(FAMILY_OPENVMS);
                 } else {
                     isFamily = OS_NAME.contains(family.toLowerCase(Locale.US));
                 }
             }
             if (name != null) {
-                isName = name.toLowerCase(Locale.US).equals(OS_NAME);
+                isName = OS_NAME.equals(name.toLowerCase(Locale.US));
             }
             if (arch != null) {
-                isArch = arch.toLowerCase(Locale.US).equals(OS_ARCH);
+                isArch = OS_ARCH.equals(arch.toLowerCase(Locale.US));
             }
             if (version != null) {
-                isVersion = version.toLowerCase(Locale.US).equals(OS_VERSION);
+                isVersion = OS_VERSION.equals(version.toLowerCase(Locale.US));
             }
             retValue = isFamily && isName && isArch && isVersion;
         }
@@ -369,7 +369,7 @@ public class Os {
      * @since 1.4.2
      */
     public static boolean isValidFamily(String theFamily) {
-        return (validFamilies.contains(theFamily));
+        return validFamilies.contains(theFamily);
     }
 
     /**
@@ -377,6 +377,6 @@ public class Os {
      * @since 1.4.2
      */
     public static Set<String> getValidFamilies() {
-        return new HashSet<String>(validFamilies);
+        return new HashSet<>(validFamilies);
     }
 }

@@ -45,7 +45,7 @@ public class TopologicalSorter {
         // we need to use addFirst method so we will use LinkedList explicitly
         final List<String> retValue = new LinkedList<>();
 
-        dfsVisit(vertex, new HashMap<Vertex, Integer>(), retValue);
+        dfsVisit(vertex, new HashMap<>(), retValue);
 
         return retValue;
     }

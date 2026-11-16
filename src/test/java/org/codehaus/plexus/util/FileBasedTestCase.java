@@ -43,7 +43,7 @@ public abstract class FileBasedTestCase {
 
     public static File getTestDirectory() {
         if (testDir == null) {
-            testDir = (new File("target/test/io/")).getAbsoluteFile();
+            testDir = new File("target/test/io/").getAbsoluteFile();
         }
         return testDir;
     }

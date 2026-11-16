@@ -113,7 +113,7 @@ public class ExceptionUtils {
      */
     public static void addCauseMethodName(String methodName) {
         if (methodName != null && methodName.length() > 0) {
-            List<String> list = new ArrayList<String>(Arrays.asList(CAUSE_METHOD_NAMES));
+            List<String> list = new ArrayList<>(Arrays.asList(CAUSE_METHOD_NAMES));
             list.add(methodName);
             CAUSE_METHOD_NAMES = list.toArray(new String[0]);
         }
@@ -365,7 +365,7 @@ public class ExceptionUtils {
      * @param stream the stream
      */
     public static void printRootCauseStackTrace(Throwable t, PrintStream stream) {
-        String trace[] = getRootCauseStackTrace(t);
+        String[] trace = getRootCauseStackTrace(t);
         for (String aTrace : trace) {
             stream.println(aTrace);
         }
@@ -386,7 +386,7 @@ public class ExceptionUtils {
      * @param writer the writer
      */
     public static void printRootCauseStackTrace(Throwable t, PrintWriter writer) {
-        String trace[] = getRootCauseStackTrace(t);
+        String[] trace = getRootCauseStackTrace(t);
         for (String aTrace : trace) {
             writer.println(aTrace);
         }
@@ -533,7 +533,7 @@ public class ExceptionUtils {
     static String[] getStackFrames(String stackTrace) {
         String linebreak = System.getProperty("line.separator");
         StringTokenizer frames = new StringTokenizer(stackTrace, linebreak);
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
         while (frames.hasMoreTokens()) {
             list.add(frames.nextToken());
         }
@@ -551,7 +551,7 @@ public class ExceptionUtils {
         String stackTrace = getStackTrace(t);
         String linebreak = System.getProperty("line.separator");
         StringTokenizer frames = new StringTokenizer(stackTrace, linebreak);
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
         boolean traceStarted = false;
         while (frames.hasMoreTokens()) {
             String token = frames.nextToken();

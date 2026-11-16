@@ -110,7 +110,7 @@ public class FastMap<K, V> implements Map<K, V>, Cloneable, Serializable {
      * @param map the map whose mappings are to be placed in this map.
      */
     public FastMap(Map map) {
-        int capacity = (map instanceof FastMap) ? ((FastMap) map).capacity() : map.size();
+        int capacity = map instanceof FastMap ? ((FastMap) map).capacity() : map.size();
         initialize(capacity);
         putAll(map);
     }
@@ -575,7 +575,7 @@ public class FastMap<K, V> implements Map<K, V>, Cloneable, Serializable {
             if (obj instanceof Map.Entry) {
                 Map.Entry entry = (Map.Entry) obj;
                 EntryImpl mapEntry = (EntryImpl) getEntry(entry.getKey());
-                if ((mapEntry != null) && (entry.getValue()).equals(mapEntry._value)) {
+                if ((mapEntry != null) && entry.getValue().equals(mapEntry._value)) {
                     removeEntry(mapEntry);
                     return true;
                 }
@@ -682,9 +682,9 @@ public class FastMap<K, V> implements Map<K, V>, Cloneable, Serializable {
         // From HashMap.hash(Object) function.
         int hashCode = key.hashCode();
         hashCode += ~(hashCode << 9);
-        hashCode ^= (hashCode >>> 14);
-        hashCode += (hashCode << 4);
-        hashCode ^= (hashCode >>> 10);
+        hashCode ^= hashCode >>> 14;
+        hashCode += hashCode << 4;
+        hashCode ^= hashCode >>> 10;
         return hashCode;
     }
 
@@ -937,7 +937,7 @@ public class FastMap<K, V> implements Map<K, V>, Cloneable, Serializable {
             if (that instanceof Map.Entry) {
                 Map.Entry entry = (Map.Entry) that;
                 return (_key.equals(entry.getKey()))
-                        && ((_value != null) ? _value.equals(entry.getValue()) : (entry.getValue() == null));
+                        && (_value != null ? _value.equals(entry.getValue()) : (entry.getValue() == null));
             } else {
                 return false;
             }
@@ -950,7 +950,7 @@ public class FastMap<K, V> implements Map<K, V>, Cloneable, Serializable {
          */
         @Override
         public int hashCode() {
-            return _key.hashCode() ^ ((_value != null) ? _value.hashCode() : 0);
+            return _key.hashCode() ^ (_value != null ? _value.hashCode() : 0);
         }
 
         /**

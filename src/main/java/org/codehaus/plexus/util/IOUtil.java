@@ -673,11 +673,7 @@ public final class IOUtil extends BaseIOUtil {
         }
 
         final int ch2 = bufferedInput2.read();
-        if (0 <= ch2) {
-            return false;
-        } else {
-            return true;
-        }
+        return ch2 < 0;
     }
 
     // ----------------------------------------------------------------------

@@ -184,7 +184,7 @@ public class CollectionUtils {
             throw new NullPointerException("it cannot be null.");
         }
 
-        List<E> list = new ArrayList<E>();
+        List<E> list = new ArrayList<>();
 
         while (it.hasNext()) {
             list.add(it.next());

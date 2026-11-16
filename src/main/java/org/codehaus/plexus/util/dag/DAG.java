@@ -152,9 +152,7 @@ public class DAG implements Cloneable, Serializable {
     }
 
     public Vertex getVertex(final String label) {
-        final Vertex retValue = vertexMap.get(label);
-
-        return retValue;
+        return vertexMap.get(label);
     }
 
     public boolean hasEdge(final String label1, final String label2) {
@@ -162,9 +160,7 @@ public class DAG implements Cloneable, Serializable {
 
         final Vertex v2 = getVertex(label2);
 
-        final boolean retValue = v1.getChildren().contains(v2);
-
-        return retValue;
+        return v1.getChildren().contains(v2);
     }
 
     /**
@@ -193,9 +189,7 @@ public class DAG implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         // this is what's failing..
-        final Object retValue = super.clone();
-
-        return retValue;
+        return super.clone();
     }
 
     /**
@@ -206,9 +200,7 @@ public class DAG implements Cloneable, Serializable {
     public boolean isConnected(final String label) {
         final Vertex vertex = getVertex(label);
 
-        final boolean retValue = vertex.isConnected();
-
-        return retValue;
+        return vertex.isConnected();
     }
 
     /**

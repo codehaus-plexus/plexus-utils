@@ -68,7 +68,7 @@ public final class IOUtilTest {
     @BeforeEach
     void setUp() {
         try {
-            testDirectory = (new File("target/test/io/")).getAbsoluteFile();
+            testDirectory = new File("target/test/io/").getAbsoluteFile();
             if (!testDirectory.exists()) {
                 testDirectory.mkdirs();
             }
@@ -444,6 +444,6 @@ public final class IOUtilTest {
                 FILE_SIZE + 1,
                 "Wrong output size: file.length()=" + file.length() + "!=" + FILE_SIZE + 1);
 
-        assertTrue((file.delete() || (!file.exists())), "File would not delete");
+        assertTrue(file.delete() || (!file.exists()), "File would not delete");
     }
 }

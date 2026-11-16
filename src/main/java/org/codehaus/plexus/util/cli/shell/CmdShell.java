@@ -80,6 +80,6 @@ public class CmdShell extends Shell {
         sb.append(super.getCommandLine(executable, arguments).get(0));
         sb.append("\"");
 
-        return Arrays.asList(new String[] {sb.toString()});
+        return Arrays.asList(sb.toString());
     }
 }

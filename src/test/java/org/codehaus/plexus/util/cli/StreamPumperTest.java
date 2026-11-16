@@ -119,9 +119,9 @@ class StreamPumperTest {
 
         final int size;
 
-        int read = 0;
+        int read;
 
-        boolean closed = false;
+        boolean closed;
 
         public GeneratorInputStream(int size) {
             this.size = size;
