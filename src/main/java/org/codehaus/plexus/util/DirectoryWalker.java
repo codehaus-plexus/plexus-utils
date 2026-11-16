@@ -83,7 +83,7 @@ public class DirectoryWalker {
          * @return the value for the next percentage size.
          */
         public double getNextPercentageSize() {
-            return (percentageSize / count);
+            return percentageSize / count;
         }
 
         /**
@@ -119,12 +119,12 @@ public class DirectoryWalker {
 
     private List<DirectoryWalkListener> listeners;
 
-    private boolean debugEnabled = false;
+    private boolean debugEnabled;
 
     public DirectoryWalker() {
-        includes = new ArrayList<String>();
-        excludes = new ArrayList<String>();
-        listeners = new ArrayList<DirectoryWalkListener>();
+        includes = new ArrayList<>();
+        excludes = new ArrayList<>();
+        listeners = new ArrayList<>();
     }
 
     public void addDirectoryWalkListener(DirectoryWalkListener listener) {
@@ -143,7 +143,7 @@ public class DirectoryWalker {
      * Add's to the Exclude List the default list of SCM excludes.
      */
     public void addSCMExcludes() {
-        String scmexcludes[] = AbstractScanner.DEFAULTEXCLUDES;
+        String[] scmexcludes = AbstractScanner.DEFAULTEXCLUDES;
         for (String scmexclude : scmexcludes) {
             addExclude(scmexclude);
         }
@@ -288,7 +288,7 @@ public class DirectoryWalker {
         }
 
         fireWalkStarting();
-        dirStack = new Stack<DirStackEntry>();
+        dirStack = new Stack<>();
         scanDir(baseDir);
         fireWalkFinished();
     }

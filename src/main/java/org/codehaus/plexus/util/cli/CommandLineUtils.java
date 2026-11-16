@@ -364,7 +364,7 @@ public abstract class CommandLineUtils {
         final int inDoubleQuote = 2;
         int state = normal;
         StringTokenizer tok = new StringTokenizer(toProcess, "\"\' \t\n\r", true);
-        Vector<String> v = new Vector<String>();
+        Vector<String> v = new Vector<>();
         StringBuilder current = new StringBuilder();
 
         while (tok.hasMoreTokens()) {

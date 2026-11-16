@@ -269,10 +269,11 @@ public final class FileUtilsTest extends FileBasedTestCase {
     void sizeOfDirectory() throws Exception {
         final File file = new File(getTestDirectory(), getTestMethodName());
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            // Non-existent file
-            FileUtils.sizeOfDirectory(file);
-        });
+        assertThrows(
+                IllegalArgumentException.class,
+                () ->
+                        // Non-existent file
+                        FileUtils.sizeOfDirectory(file));
 
         // Creates file
         file.createNewFile();

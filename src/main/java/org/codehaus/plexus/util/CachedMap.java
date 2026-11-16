@@ -145,7 +145,7 @@ public final class CachedMap implements Map {
      * @see #flush
      */
     public Map getBackingMap() {
-        return (_backingFastMap != null) ? _backingFastMap : _backingMap;
+        return _backingFastMap != null ? _backingFastMap : _backingMap;
     }
 
     /**

@@ -47,7 +47,7 @@ public class SweeperPool {
     private ArrayList<Object> pooledObjects;
 
     /** Flag indicating this pool is shuting down */
-    private boolean shuttingDown = false;
+    private boolean shuttingDown;
 
     // private Vector used;
 
@@ -88,7 +88,7 @@ public class SweeperPool {
      * @return first available object from the pool
      */
     public synchronized Object get() {
-        if ((pooledObjects.size() == 0) || shuttingDown) {
+        if ((pooledObjects.isEmpty()) || shuttingDown) {
             return null;
         } else {
             Object obj = pooledObjects.remove(0);
@@ -108,7 +108,7 @@ public class SweeperPool {
     public synchronized boolean put(Object obj) {
         objectAdded(obj);
 
-        if ((obj != null) && (pooledObjects.size() < maxSize) && (shuttingDown == false)) {
+        if ((obj != null) && (pooledObjects.size() < maxSize) && (!shuttingDown)) {
             pooledObjects.add(obj);
 
             return true;
@@ -219,11 +219,11 @@ public class SweeperPool {
     private static class Sweeper implements Runnable {
         private final transient SweeperPool pool;
 
-        private transient boolean service = false;
+        private transient boolean service;
 
         private final transient int sweepInterval;
 
-        private transient Thread t = null;
+        private transient Thread t;
 
         /**
          *

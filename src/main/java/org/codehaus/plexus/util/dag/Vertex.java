@@ -28,7 +28,7 @@ public class Vertex implements Cloneable, Serializable {
     // ------------------------------------------------------------
     // Fields
     // ------------------------------------------------------------
-    private String label = null;
+    private String label;
 
     List<Vertex> children = new ArrayList<>();
 
@@ -113,7 +113,7 @@ public class Vertex implements Cloneable, Serializable {
      * @return <code>true</code> if this vertex has no child, <code>false</code> otherwise
      */
     public boolean isLeaf() {
-        return children.size() == 0;
+        return children.isEmpty();
     }
 
     /**
@@ -122,7 +122,7 @@ public class Vertex implements Cloneable, Serializable {
      * @return <code>true</code> if this vertex has no parent, <code>false</code> otherwise
      */
     public boolean isRoot() {
-        return parents.size() == 0;
+        return parents.isEmpty();
     }
 
     /**
@@ -137,9 +137,7 @@ public class Vertex implements Cloneable, Serializable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         // this is what's failing..
-        final Object retValue = super.clone();
-
-        return retValue;
+        return super.clone();
     }
 
     @Override

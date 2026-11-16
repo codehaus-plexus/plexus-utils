@@ -32,7 +32,7 @@ public class StreamFeeder extends AbstractStreamHandler {
 
     private OutputStream output;
 
-    private volatile Throwable exception = null;
+    private volatile Throwable exception;
 
     /**
      * Create a new StreamFeeder

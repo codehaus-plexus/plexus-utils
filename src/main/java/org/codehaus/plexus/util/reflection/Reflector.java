@@ -34,8 +34,7 @@ public final class Reflector {
 
     private static final String GET_INSTANCE_METHOD_NAME = "getInstance";
 
-    private Map<String, Map<String, Map<String, Method>>> classMaps =
-            new HashMap<String, Map<String, Map<String, Method>>>();
+    private Map<String, Map<String, Map<String, Method>>> classMaps = new HashMap<>();
 
     /** Ensure no instances of Reflector are created...this is a utility. */
     public Reflector() {}
@@ -201,7 +200,9 @@ public final class Reflector {
             } catch (SecurityException e) {
                 throw new ReflectorException(e);
             } catch (NoSuchFieldException e) {
-                if (targetClass == Object.class) throw new ReflectorException(e);
+                if (targetClass == Object.class) {
+                    throw new ReflectorException(e);
+                }
                 targetClass = targetClass.getSuperclass();
             } catch (IllegalAccessException e) {
                 throw new ReflectorException(e);

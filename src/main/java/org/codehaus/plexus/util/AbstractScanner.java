@@ -247,7 +247,7 @@ public abstract class AbstractScanner implements Scanner {
         if (includes == null) {
             this.includes = null;
         } else {
-            final List<String> list = new ArrayList<String>(includes.length);
+            final List<String> list = new ArrayList<>(includes.length);
             for (String include : includes) {
                 if (include != null) {
                     list.add(normalizePattern(include));
@@ -271,7 +271,7 @@ public abstract class AbstractScanner implements Scanner {
         if (excludes == null) {
             this.excludes = null;
         } else {
-            final List<String> list = new ArrayList<String>(excludes.length);
+            final List<String> list = new ArrayList<>(excludes.length);
             for (String exclude : excludes) {
                 if (exclude != null) {
                     list.add(normalizePattern(exclude));

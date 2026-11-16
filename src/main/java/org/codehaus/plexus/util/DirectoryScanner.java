@@ -183,7 +183,7 @@ public class DirectoryScanner extends AbstractScanner {
     /**
      * Whether or not our results were built by a slow scan.
      */
-    protected boolean haveSlowResults = false;
+    protected boolean haveSlowResults;
 
     /**
      * Whether or not symbolic links should be followed.
@@ -274,14 +274,14 @@ public class DirectoryScanner extends AbstractScanner {
         setupDefaultFilters();
         setupMatchPatterns();
 
-        filesIncluded = new ArrayList<String>();
-        filesNotIncluded = new ArrayList<String>();
-        filesExcluded = new ArrayList<String>();
-        filesDeselected = new ArrayList<String>();
-        dirsIncluded = new ArrayList<String>();
-        dirsNotIncluded = new ArrayList<String>();
-        dirsExcluded = new ArrayList<String>();
-        dirsDeselected = new ArrayList<String>();
+        filesIncluded = new ArrayList<>();
+        filesNotIncluded = new ArrayList<>();
+        filesExcluded = new ArrayList<>();
+        filesDeselected = new ArrayList<>();
+        dirsIncluded = new ArrayList<>();
+        dirsNotIncluded = new ArrayList<>();
+        dirsExcluded = new ArrayList<>();
+        dirsDeselected = new ArrayList<>();
 
         if (isIncluded("", tokenizedEmpty)) {
 

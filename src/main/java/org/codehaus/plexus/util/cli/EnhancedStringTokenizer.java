@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
  *
  */
 public final class EnhancedStringTokenizer {
-    private StringTokenizer cst = null;
+    private StringTokenizer cst;
 
     String cdelim;
 
@@ -35,7 +35,7 @@ public final class EnhancedStringTokenizer {
 
     boolean creturnDelims;
 
-    String lastToken = null;
+    String lastToken;
 
     boolean delimLast = true;
 
@@ -51,7 +51,7 @@ public final class EnhancedStringTokenizer {
         cst = new StringTokenizer(str, delim, true);
         cdelim = delim;
         creturnDelims = returnDelims;
-        cdelimSingleChar = (delim.length() == 1);
+        cdelimSingleChar = delim.length() == 1;
         cdelimChar = delim.charAt(0);
     }
 

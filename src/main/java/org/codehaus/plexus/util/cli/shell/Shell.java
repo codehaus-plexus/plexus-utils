@@ -39,11 +39,11 @@ public class Shell implements Cloneable {
 
     private String shellCommand;
 
-    private List<String> shellArgs = new ArrayList<String>();
+    private List<String> shellArgs = new ArrayList<>();
 
     private boolean quotedArgumentsEnabled = true;
 
-    private boolean unconditionallyQuote = false;
+    private boolean unconditionallyQuote;
 
     private String executable;
 
@@ -51,13 +51,13 @@ public class Shell implements Cloneable {
 
     private boolean quotedExecutableEnabled = true;
 
-    private boolean doubleQuotedArgumentEscaped = false;
+    private boolean doubleQuotedArgumentEscaped;
 
-    private boolean singleQuotedArgumentEscaped = false;
+    private boolean singleQuotedArgumentEscaped;
 
-    private boolean doubleQuotedExecutableEscaped = false;
+    private boolean doubleQuotedExecutableEscaped;
 
-    private boolean singleQuotedExecutableEscaped = false;
+    private boolean singleQuotedExecutableEscaped;
 
     private char argQuoteDelimiter = '\"';
 
@@ -136,7 +136,7 @@ public class Shell implements Cloneable {
     }
 
     protected List<String> getRawCommandLine(String executable, String[] arguments) {
-        List<String> commandLine = new ArrayList<String>();
+        List<String> commandLine = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
         if (executable != null) {
@@ -242,7 +242,7 @@ public class Shell implements Cloneable {
      */
     public List<String> getShellCommandLine(String[] arguments) {
 
-        List<String> commandLine = new ArrayList<String>();
+        List<String> commandLine = new ArrayList<>();
 
         if (getShellCommand() != null) {
             commandLine.add(getShellCommand());

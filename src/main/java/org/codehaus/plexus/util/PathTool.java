@@ -52,7 +52,7 @@ public class PathTool {
      *         slash. A zero-length string is returned if: the filename is not relative to the base directory,
      *         <code>basedir</code> is null or zero-length, or <code>filename</code> is null or zero-length.
      */
-    public static final String getRelativePath(String basedir, String filename) {
+    public static String getRelativePath(String basedir, String filename) {
         basedir = uppercaseDrive(basedir);
         filename = uppercaseDrive(filename);
 
@@ -98,7 +98,7 @@ public class PathTool {
      *         string is returned if: <code>filename</code> is null or zero-length.
      * @see #getRelativeFilePath(String, String)
      */
-    public static final String getRelativePath(String filename) {
+    public static String getRelativePath(String filename) {
         filename = uppercaseDrive(filename);
 
         if (filename == null || filename.length() == 0) {
@@ -137,7 +137,7 @@ public class PathTool {
      * @return The directory portion of the <code>filename</code>. If the filename does not contain a directory
      *         component, "." is returned.
      */
-    public static final String getDirectoryComponent(String filename) {
+    public static String getDirectoryComponent(String filename) {
         if (filename == null || filename.length() == 0) {
             return "";
         }
@@ -167,7 +167,7 @@ public class PathTool {
      * @param relativePath relative
      * @return String
      */
-    public static final String calculateLink(String link, String relativePath) {
+    public static String calculateLink(String link, String relativePath) {
         if (link == null) {
             link = "";
         }
@@ -227,7 +227,7 @@ public class PathTool {
      * @param newPath second path
      * @return a relative web path from <code>oldPath</code>.
      */
-    public static final String getRelativeWebPath(final String oldPath, final String newPath) {
+    public static String getRelativeWebPath(final String oldPath, final String newPath) {
         if (StringUtils.isEmpty(oldPath) || StringUtils.isEmpty(newPath)) {
             return "";
         }
@@ -263,7 +263,7 @@ public class PathTool {
      * @param newPath second path
      * @return a relative file path from <code>oldPath</code>.
      */
-    public static final String getRelativeFilePath(final String oldPath, final String newPath) {
+    public static String getRelativeFilePath(final String oldPath, final String newPath) {
         if (StringUtils.isEmpty(oldPath) || StringUtils.isEmpty(newPath)) {
             return "";
         }
@@ -326,7 +326,7 @@ public class PathTool {
      * @return The relative path of the filename. This value is not terminated with a forward slash. A zero-length
      *         string is returned if: the filename is zero-length.
      */
-    private static final String determineRelativePath(String filename, String separator) {
+    private static String determineRelativePath(String filename, String separator) {
         if (filename.length() == 0) {
             return "";
         }
@@ -362,7 +362,7 @@ public class PathTool {
      * @param filename The filename parsed to determine the file separator.
      * @return The file separator used within <code>filename</code>. This value is either a forward or backward slash.
      */
-    private static final String determineSeparator(String filename) {
+    private static String determineSeparator(String filename) {
         int forwardCount = StringUtils.countMatches(filename, "/");
         int backwardCount = StringUtils.countMatches(filename, "\\");
 
@@ -375,7 +375,7 @@ public class PathTool {
      * @param path
      * @return String
      */
-    static final String uppercaseDrive(String path) {
+    static String uppercaseDrive(String path) {
         if (path == null) {
             return null;
         }
@@ -385,7 +385,7 @@ public class PathTool {
         return path;
     }
 
-    private static final String buildRelativePath(String toPath, String fromPath, final char separatorChar) {
+    private static String buildRelativePath(String toPath, String fromPath, final char separatorChar) {
         // use tokeniser to traverse paths and for lazy checking
         StringTokenizer toTokeniser = new StringTokenizer(toPath, String.valueOf(separatorChar));
         StringTokenizer fromTokeniser = new StringTokenizer(fromPath, String.valueOf(separatorChar));

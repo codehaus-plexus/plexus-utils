@@ -91,7 +91,7 @@ public class StreamPumper extends AbstractStreamHandler {
 
     private final PrintWriter out;
 
-    private volatile Exception exception = null;
+    private volatile Exception exception;
 
     private static final int SIZE = 1024;
 

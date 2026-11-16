@@ -143,8 +143,7 @@ public class Expand {
                 try (OutputStream fos = Files.newOutputStream(f.toPath())) {
                     for (int length = compressedInputStream.read(buffer);
                             length >= 0;
-                            fos.write(buffer, 0, length), length = compressedInputStream.read(buffer))
-                        ;
+                            fos.write(buffer, 0, length), length = compressedInputStream.read(buffer)) {}
                 }
             }
 

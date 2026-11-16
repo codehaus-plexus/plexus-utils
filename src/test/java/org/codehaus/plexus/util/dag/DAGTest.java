@@ -172,7 +172,7 @@ class DAGTest {
 
         final List<String> actual = dag.getSuccessorLabels("b");
 
-        final List<String> expected = new ArrayList<String>();
+        final List<String> expected = new ArrayList<>();
 
         expected.add("d");
 
