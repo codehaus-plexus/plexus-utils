@@ -83,7 +83,7 @@ public class DirectoryWalker {
          * @return the value for the next percentage size.
          */
         public double getNextPercentageSize() {
-            return (percentageSize / count);
+            return percentageSize / count;
         }
 
         /**
@@ -122,9 +122,9 @@ public class DirectoryWalker {
     private boolean debugEnabled = false;
 
     public DirectoryWalker() {
-        includes = new ArrayList<String>();
-        excludes = new ArrayList<String>();
-        listeners = new ArrayList<DirectoryWalkListener>();
+        includes = new ArrayList<>();
+        excludes = new ArrayList<>();
+        listeners = new ArrayList<>();
     }
 
     public void addDirectoryWalkListener(DirectoryWalkListener listener) {
@@ -288,7 +288,7 @@ public class DirectoryWalker {
         }
 
         fireWalkStarting();
-        dirStack = new Stack<DirStackEntry>();
+        dirStack = new Stack<>();
         scanDir(baseDir);
         fireWalkFinished();
     }

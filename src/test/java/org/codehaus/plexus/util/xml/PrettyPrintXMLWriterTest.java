@@ -132,7 +132,7 @@ class PrettyPrintXMLWriterTest {
             writer.endElement(); // Tag.DIV already closed, and there is no other outer tag!
             fail("Should throw a NoSuchElementException");
         } catch (NoSuchElementException e) {
-            assert (true);
+            assert true;
         }
     }
 

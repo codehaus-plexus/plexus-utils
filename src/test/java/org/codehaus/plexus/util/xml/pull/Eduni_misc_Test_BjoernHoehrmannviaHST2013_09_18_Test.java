@@ -50,8 +50,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
     void testhst_bh_001() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "001.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("decimal charref > 10FFFF, indeed > max 32 bit integer, checking for recovery from possible overflow");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("character reference (with hex value FF000000F6) is invalid"));
@@ -71,8 +70,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
     void testhst_bh_002() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "002.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("hex charref > 10FFFF, indeed > max 32 bit integer, checking for recovery from possible overflow");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("character reference (with decimal value 4294967542) is invalid"));
@@ -92,8 +90,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
     void testhst_bh_003() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "003.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("decimal charref > 10FFFF, indeed > max 64 bit integer, checking for recovery from possible overflow");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("character reference (with hex value FFFFFFFF000000F6) is invalid"));
@@ -113,8 +110,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
     void testhst_bh_004() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "004.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("hex charref > 10FFFF, indeed > max 64 bit integer, checking for recovery from possible overflow");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage()
@@ -138,8 +134,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
     public void testhst_bh_005() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "005.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("xmlns:xml is an attribute as far as validation is concerned and must be declared");
         } catch (XmlPullParserException e) {
             assertTrue(true);
@@ -161,8 +156,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
     public void testhst_bh_006() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "006.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("xmlns:foo is an attribute as far as validation is concerned and must be declared");
         } catch (XmlPullParserException e) {
             assertTrue(true);
@@ -183,8 +177,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
         try (FileInputStream is = new FileInputStream(new File(testResourcesDir, "007.xml"));
                 InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("UTF-8 BOM plus xml decl of iso-8859-1 incompatible");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("UTF-8 BOM plus xml decl of iso-8859-1 is incompatible"));
@@ -205,8 +198,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
         try (FileInputStream is = new FileInputStream(new File(testResourcesDir, "008.xml"));
                 InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_16)) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("UTF-16 BOM plus xml decl of utf-8 (using UTF-16 coding) incompatible");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("UTF-16 BOM plus xml decl of utf-8 is incompatible"));
@@ -227,8 +219,7 @@ public class Eduni_misc_Test_BjoernHoehrmannviaHST2013_09_18_Test {
         try (FileInputStream is = new FileInputStream(new File(testResourcesDir, "009.xml"));
                 InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("UTF-16 BOM plus xml decl of utf-8 (using UTF-8 coding) incompatible");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("UTF-16 BOM in a UTF-8 encoded file is incompatible"));

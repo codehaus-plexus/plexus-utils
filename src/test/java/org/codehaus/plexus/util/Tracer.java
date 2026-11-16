@@ -28,7 +28,7 @@ import java.io.StringWriter;
  * @author <a href="mailto:bert@tuaworks.co.nz">Bert van Brakel</a>
  * @since 3.4.0
  */
-public class Tracer {
+public final class Tracer {
 
     /**
      * Constructor

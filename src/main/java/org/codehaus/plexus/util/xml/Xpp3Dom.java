@@ -118,7 +118,7 @@ public class Xpp3Dom implements Serializable {
 
         int childCount = src.getChildCount();
 
-        childList = new ArrayList<Xpp3Dom>(childCount);
+        childList = new ArrayList<>(childCount);
 
         setValue(src.getValue());
 
@@ -165,7 +165,7 @@ public class Xpp3Dom implements Serializable {
     }
 
     public String getAttribute(String name) {
-        return (null != attributes) ? attributes.get(name) : null;
+        return null != attributes ? attributes.get(name) : null;
     }
 
     /**
@@ -192,7 +192,7 @@ public class Xpp3Dom implements Serializable {
             throw new NullPointerException("Attribute name can not be null");
         }
         if (null == attributes) {
-            attributes = new HashMap<String, String>();
+            attributes = new HashMap<>();
         }
 
         attributes.put(name, value);
@@ -245,7 +245,7 @@ public class Xpp3Dom implements Serializable {
             for (Xpp3Dom configuration : childList) {
                 if (name.equals(configuration.getName())) {
                     if (children == null) {
-                        children = new ArrayList<Xpp3Dom>();
+                        children = new ArrayList<>();
                     }
                     children.add(configuration);
                 }
@@ -321,7 +321,7 @@ public class Xpp3Dom implements Serializable {
         // document - not the desired behaviour!
         SerializerXMLWriter xmlWriter = new SerializerXMLWriter(namespace, serializer);
         Xpp3DomWriter.write(xmlWriter, this);
-        if (xmlWriter.getExceptions().size() > 0) {
+        if (!xmlWriter.getExceptions().isEmpty()) {
             throw (IOException) xmlWriter.getExceptions().get(0);
         }
     }
@@ -419,14 +419,14 @@ public class Xpp3Dom implements Serializable {
                         dominant.addChild(aDominantChildren);
                     }
                 } else {
-                    Map<String, Iterator<Xpp3Dom>> commonChildren = new HashMap<String, Iterator<Xpp3Dom>>();
+                    Map<String, Iterator<Xpp3Dom>> commonChildren = new HashMap<>();
 
                     for (Xpp3Dom recChild : recessive.childList) {
                         if (commonChildren.containsKey(recChild.name)) {
                             continue;
                         }
                         List<Xpp3Dom> dominantChildren = dominant.getChildrenAsList(recChild.name);
-                        if (dominantChildren.size() > 0) {
+                        if (!dominantChildren.isEmpty()) {
                             commonChildren.put(recChild.name, dominantChildren.iterator());
                         }
                     }
@@ -525,8 +525,7 @@ public class Xpp3Dom implements Serializable {
         result = 37 * result + (name != null ? name.hashCode() : 0);
         result = 37 * result + (value != null ? value.hashCode() : 0);
         result = 37 * result + (attributes != null ? attributes.hashCode() : 0);
-        result = 37 * result + (childList != null ? childList.hashCode() : 0);
-        return result;
+        return 37 * result + (childList != null ? childList.hashCode() : 0);
     }
 
     @Override
@@ -549,10 +548,10 @@ public class Xpp3Dom implements Serializable {
     }
 
     public static boolean isNotEmpty(String str) {
-        return ((str != null) && (str.length() > 0));
+        return (str != null) && (str.length() > 0);
     }
 
     public static boolean isEmpty(String str) {
-        return ((str == null) || (str.trim().length() == 0));
+        return (str == null) || (str.trim().length() == 0);
     }
 }

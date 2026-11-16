@@ -354,8 +354,8 @@ public final class SelectorUtils {
             }
             // Find the pattern between padIdxStart & padIdxTmp in str between
             // strIdxStart & strIdxEnd
-            int patLength = (patIdxTmp - patIdxStart - 1);
-            int strLength = (strIdxEnd - strIdxStart + 1);
+            int patLength = patIdxTmp - patIdxStart - 1;
+            int strLength = strIdxEnd - strIdxStart + 1;
             int foundIdx = -1;
             strLoop:
             for (int i = 0; i <= strLength - patLength; i++) {
@@ -458,8 +458,8 @@ public final class SelectorUtils {
             }
             // Find the pattern between padIdxStart & padIdxTmp in str between
             // strIdxStart & strIdxEnd
-            int patLength = (patIdxTmp - patIdxStart - 1);
-            int strLength = (strIdxEnd - strIdxStart + 1);
+            int patLength = patIdxTmp - patIdxStart - 1;
+            int strLength = strIdxEnd - strIdxStart + 1;
             int foundIdx = -1;
             strLoop:
             for (int i = 0; i <= strLength - patLength; i++) {
@@ -613,8 +613,8 @@ public final class SelectorUtils {
             }
             // Find the pattern between padIdxStart & padIdxTmp in str between
             // strIdxStart & strIdxEnd
-            int patLength = (patIdxTmp - patIdxStart - 1);
-            int strLength = (strIdxEnd - strIdxStart + 1);
+            int patLength = patIdxTmp - patIdxStart - 1;
+            int strLength = strIdxEnd - strIdxStart + 1;
             int foundIdx = -1;
             strLoop:
             for (int i = 0; i <= strLength - patLength; i++) {
@@ -665,7 +665,7 @@ public final class SelectorUtils {
     }
 
     private static String[] tokenizePathToString(String path, String separator) {
-        List<String> ret = new ArrayList<String>();
+        List<String> ret = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(path, separator);
         while (st.hasMoreTokens()) {
             ret.add(st.nextToken());

@@ -51,7 +51,7 @@ public final class EnhancedStringTokenizer {
         cst = new StringTokenizer(str, delim, true);
         cdelim = delim;
         creturnDelims = returnDelims;
-        cdelimSingleChar = (delim.length() == 1);
+        cdelimSingleChar = delim.length() == 1;
         cdelimChar = delim.charAt(0);
     }
 

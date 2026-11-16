@@ -132,7 +132,7 @@ public class Os {
      * Initializes the set of valid families.
      */
     private static Set<String> setValidFamilies() {
-        Set<String> valid = new HashSet<String>();
+        Set<String> valid = new HashSet<>();
         valid.add(FAMILY_DOS);
         valid.add(FAMILY_MAC);
         valid.add(FAMILY_NETWARE);
@@ -369,7 +369,7 @@ public class Os {
      * @since 1.4.2
      */
     public static boolean isValidFamily(String theFamily) {
-        return (validFamilies.contains(theFamily));
+        return validFamilies.contains(theFamily);
     }
 
     /**
@@ -377,6 +377,6 @@ public class Os {
      * @since 1.4.2
      */
     public static Set<String> getValidFamilies() {
-        return new HashSet<String>(validFamilies);
+        return new HashSet<>(validFamilies);
     }
 }

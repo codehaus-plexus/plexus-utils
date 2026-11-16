@@ -35,7 +35,7 @@ public class SerializerXMLWriter implements XMLWriter {
 
     private final String namespace;
 
-    private final Stack<String> elements = new Stack<String>();
+    private final Stack<String> elements = new Stack<>();
 
     private List<Exception> exceptions;
 
@@ -95,7 +95,7 @@ public class SerializerXMLWriter implements XMLWriter {
      */
     private void storeException(IOException e) {
         if (exceptions == null) {
-            exceptions = new ArrayList<Exception>();
+            exceptions = new ArrayList<>();
         }
         exceptions.add(e);
     }

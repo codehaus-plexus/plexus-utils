@@ -70,7 +70,7 @@ public class Xpp3DomUtils {
         // document - not the desired behaviour!
         SerializerXMLWriter xmlWriter = new SerializerXMLWriter(namespace, serializer);
         Xpp3DomWriter.write(xmlWriter, dom);
-        if (xmlWriter.getExceptions().size() > 0) {
+        if (!xmlWriter.getExceptions().isEmpty()) {
             throw (IOException) xmlWriter.getExceptions().get(0);
         }
     }
@@ -238,7 +238,7 @@ public class Xpp3DomUtils {
      */
     @Deprecated
     public static boolean isNotEmpty(String str) {
-        return (str != null && str.length() > 0);
+        return str != null && str.length() > 0;
     }
 
     /**
@@ -246,6 +246,6 @@ public class Xpp3DomUtils {
      */
     @Deprecated
     public static boolean isEmpty(String str) {
-        return (str == null || str.length() == 0);
+        return str == null || str.length() == 0;
     }
 }

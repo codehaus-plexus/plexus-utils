@@ -88,7 +88,7 @@ public class SweeperPool {
      * @return first available object from the pool
      */
     public synchronized Object get() {
-        if ((pooledObjects.size() == 0) || shuttingDown) {
+        if ((pooledObjects.isEmpty()) || shuttingDown) {
             return null;
         } else {
             Object obj = pooledObjects.remove(0);
@@ -108,7 +108,7 @@ public class SweeperPool {
     public synchronized boolean put(Object obj) {
         objectAdded(obj);
 
-        if ((obj != null) && (pooledObjects.size() < maxSize) && (shuttingDown == false)) {
+        if ((obj != null) && (pooledObjects.size() < maxSize) && (!shuttingDown)) {
             pooledObjects.add(obj);
 
             return true;

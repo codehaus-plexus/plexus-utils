@@ -121,12 +121,12 @@ public final class TypeFormat {
      */
     public static short parseShort(CharSequence chars, int radix) {
         try {
-            boolean isNegative = (chars.charAt(0) == '-') ? true : false;
+            boolean isNegative = chars.charAt(0) == '-' ? true : false;
             int result = 0;
-            int limit = (isNegative) ? Short.MIN_VALUE : -Short.MAX_VALUE;
+            int limit = isNegative ? Short.MIN_VALUE : -Short.MAX_VALUE;
             int multmin = limit / radix;
             int length = chars.length();
-            int i = (isNegative || (chars.charAt(0) == '+')) ? 1 : 0;
+            int i = isNegative || (chars.charAt(0) == '+') ? 1 : 0;
             while (true) {
                 int digit = Character.digit(chars.charAt(i), radix);
                 int tmp = result * radix;
@@ -169,12 +169,12 @@ public final class TypeFormat {
      */
     public static int parseInt(CharSequence chars, int radix) {
         try {
-            boolean isNegative = (chars.charAt(0) == '-') ? true : false;
+            boolean isNegative = chars.charAt(0) == '-' ? true : false;
             int result = 0;
-            int limit = (isNegative) ? Integer.MIN_VALUE : -Integer.MAX_VALUE;
+            int limit = isNegative ? Integer.MIN_VALUE : -Integer.MAX_VALUE;
             int multmin = limit / radix;
             int length = chars.length();
-            int i = (isNegative || (chars.charAt(0) == '+')) ? 1 : 0;
+            int i = isNegative || (chars.charAt(0) == '+') ? 1 : 0;
             while (true) {
                 int digit = Character.digit(chars.charAt(i), radix);
                 int tmp = result * radix;
@@ -217,12 +217,12 @@ public final class TypeFormat {
      */
     public static long parseLong(CharSequence chars, int radix) {
         try {
-            boolean isNegative = (chars.charAt(0) == '-') ? true : false;
+            boolean isNegative = chars.charAt(0) == '-' ? true : false;
             long result = 0;
-            long limit = (isNegative) ? Long.MIN_VALUE : -Long.MAX_VALUE;
+            long limit = isNegative ? Long.MIN_VALUE : -Long.MAX_VALUE;
             long multmin = limit / radix;
             int length = chars.length();
-            int i = (isNegative || (chars.charAt(0) == '+')) ? 1 : 0;
+            int i = isNegative || (chars.charAt(0) == '+') ? 1 : 0;
             while (true) {
                 int digit = Character.digit(chars.charAt(i), radix);
                 long tmp = result * radix;
@@ -270,8 +270,8 @@ public final class TypeFormat {
             double result = 0.0;
             int exp = 0;
 
-            boolean isNegative = (chars.charAt(0) == '-') ? true : false;
-            int i = (isNegative || (chars.charAt(0) == '+')) ? 1 : 0;
+            boolean isNegative = chars.charAt(0) == '-' ? true : false;
+            int i = isNegative || (chars.charAt(0) == '+') ? 1 : 0;
 
             // Checks special cases NaN or Infinity.
             if ((chars.charAt(i) == 'N') || (chars.charAt(i) == 'I')) {
@@ -307,8 +307,8 @@ public final class TypeFormat {
             // Reads exponent (if any).
             if (i < length) {
                 i++;
-                boolean negE = (chars.charAt(i) == '-') ? true : false;
-                i = (negE || (chars.charAt(i) == '+')) ? i + 1 : i;
+                boolean negE = chars.charAt(i) == '-' ? true : false;
+                i = negE || (chars.charAt(i) == '+') ? i + 1 : i;
                 int valE = 0;
                 while (true) {
                     char c = chars.charAt(i);
@@ -680,7 +680,7 @@ public final class TypeFormat {
         if (Double.isNaN(d)) {
             return sb.append("NaN");
         } else if (Double.isInfinite(d)) {
-            return (d >= 0) ? sb.append("Infinity") : sb.append("-Infinity");
+            return d >= 0 ? sb.append("Infinity") : sb.append("-Infinity");
         }
         if (d < 0) {
             d = -d;
@@ -754,7 +754,7 @@ public final class TypeFormat {
      * @param E the exponent.
      * @return <code>value * 10^E</code>
      */
-    private static final double multE(double value, int E) {
+    private static double multE(double value, int E) {
         if (E >= 0) {
             if (E <= 308) {
                 // Max: 1.7976931348623157E+308

@@ -46,8 +46,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P80_ibm80n01xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P80/ibm80n01.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests EncodingDecl with a required field missing. The leading white      space is missing in the EncodingDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -68,8 +67,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P80_ibm80n02xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P80/ibm80n02.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests EncodingDecl with a required field missing. The \"=\" sign is      missing in the EncodingDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -90,8 +88,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P80_ibm80n03xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P80/ibm80n03.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests EncodingDecl with a required field missing. The double quoted      EncName are missing in the EncodingDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -113,8 +110,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P80_ibm80n04xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P80/ibm80n04.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests EncodingDecl with wrong field ordering. The string \"encoding=\"    occurs after the double quoted EncName in the EncodingDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -135,8 +131,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P80_ibm80n05xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P80/ibm80n05.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests EncodingDecl with wrong field ordering. The \"encoding\" occurs     after the double quoted EncName in the EncodingDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -157,8 +152,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P80_ibm80n06xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P80/ibm80n06.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests EncodingDecl with wrong key word. The string \"Encoding\" is      used as the key word in the EncodingDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {

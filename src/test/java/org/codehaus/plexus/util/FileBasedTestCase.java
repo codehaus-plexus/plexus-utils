@@ -37,7 +37,7 @@ public abstract class FileBasedTestCase {
 
     public static File getTestDirectory() {
         if (testDir == null) {
-            testDir = (new File("target/test/io/")).getAbsoluteFile();
+            testDir = new File("target/test/io/").getAbsoluteFile();
         }
         return testDir;
     }
@@ -119,7 +119,7 @@ public abstract class FileBasedTestCase {
                     n0 = is0.read(buf0);
                     n1 = is1.read(buf1);
                     assertTrue(
-                            (n0 == n1),
+                            n0 == n1,
                             "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0
                                     + " vs " + n1 + ")");
 
@@ -143,8 +143,7 @@ public abstract class FileBasedTestCase {
             assertTrue(numRead == b0.length && is.available() == 0, "Different number of bytes");
             for (int i = 0;
                     i < numRead;
-                    assertEquals(b0[i], b1[i], "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")"), i++)
-                ;
+                    assertEquals(b0[i], b1[i], "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")"), i++) {}
         }
     }
 
