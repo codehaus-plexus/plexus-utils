@@ -50,8 +50,7 @@ class XmlStreamWriterTest {
         if (encoding != null) {
             xmlDecl = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>";
         }
-        String xml = xmlDecl + "\n<text>" + text + "</text>";
-        return xml;
+        return xmlDecl + "\n<text>" + text + "</text>";
     }
 
     private static void checkXmlContent(String xml, String encoding) throws IOException {
@@ -66,7 +65,7 @@ class XmlStreamWriterTest {
 
     private static void checkXmlWriter(String text, String encoding) throws IOException {
         String xml = createXmlContent(text, encoding);
-        String effectiveEncoding = (encoding == null) ? "UTF-8" : encoding;
+        String effectiveEncoding = encoding == null ? "UTF-8" : encoding;
         checkXmlContent(xml, effectiveEncoding);
     }
 

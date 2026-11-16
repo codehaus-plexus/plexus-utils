@@ -35,7 +35,7 @@ public class PrettyPrintXMLWriter implements XMLWriter {
 
     private PrintWriter writer;
 
-    private LinkedList<String> elementStack = new LinkedList<String>();
+    private LinkedList<String> elementStack = new LinkedList<>();
 
     private boolean tagInProgress;
 

@@ -108,7 +108,7 @@ public class StringUtils {
      * @return the trimmed text (never <code>null</code>)
      */
     public static String clean(String str) {
-        return (str == null ? "" : str.trim());
+        return str == null ? "" : str.trim();
     }
 
     /**
@@ -122,7 +122,7 @@ public class StringUtils {
      * @return the trimmed text (or <code>null</code>)
      */
     public static String trim(String str) {
-        return (str == null ? null : str.trim());
+        return str == null ? null : str.trim();
     }
 
     /**
@@ -154,7 +154,7 @@ public class StringUtils {
      * @return true if the String is non-null, and not length zero
      */
     public static boolean isNotEmpty(String str) {
-        return ((str != null) && (!str.isEmpty()));
+        return (str != null) && (!str.isEmpty());
     }
 
     /**
@@ -168,7 +168,7 @@ public class StringUtils {
      * @return <code>true</code> if the String is <code>null</code>, or length zero
      */
     public static boolean isEmpty(String str) {
-        return ((str == null) || (str.isEmpty()));
+        return (str == null) || (str.isEmpty());
     }
 
     /**
@@ -260,7 +260,7 @@ public class StringUtils {
      * @return <code>true</code> if the Strings are equal, case insensitive, or both <code>null</code>
      */
     public static boolean equalsIgnoreCase(String str1, String str2) {
-        return (str1 == null ? str2 == null : str1.equalsIgnoreCase(str2));
+        return str1 == null ? str2 == null : str1.equalsIgnoreCase(str2);
     }
 
     /**
@@ -280,7 +280,6 @@ public class StringUtils {
         if ((str == null) || (searchStrs == null)) {
             return -1;
         }
-        int sz = searchStrs.length;
 
         // String's can't have a MAX_VALUEth index.
         int ret = Integer.MAX_VALUE;
@@ -297,7 +296,7 @@ public class StringUtils {
             }
         }
 
-        return (ret == Integer.MAX_VALUE) ? -1 : ret;
+        return ret == Integer.MAX_VALUE ? -1 : ret;
     }
 
     /**
@@ -613,7 +612,7 @@ public class StringUtils {
             separator = "";
         }
         int arraySize = array.length;
-        int bufSize = (arraySize == 0 ? 0 : (array[0].toString().length() + separator.length()) * arraySize);
+        int bufSize = arraySize == 0 ? 0 : (array[0].toString().length() + separator.length()) * arraySize;
         StringBuilder buf = new StringBuilder(bufSize);
 
         for (int i = 0; i < arraySize; i++) {
@@ -766,7 +765,8 @@ public class StringUtils {
         }
 
         StringBuilder buf = new StringBuilder(text.length());
-        int start = 0, end;
+        int start = 0;
+        int end;
         while ((end = text.indexOf(repl, start)) != -1) {
             buf.append(text, start, end).append(with);
             start = end + repl.length();
@@ -841,8 +841,7 @@ public class StringUtils {
             return str;
         }
         str = leftPad(str, sz + p / 2, delim);
-        str = rightPad(str, size, delim);
-        return str;
+        return rightPad(str, size, delim);
     }
 
     // Chomping
@@ -1056,11 +1055,11 @@ public class StringUtils {
 
             // handle unicode
             if (ch > 0xfff) {
-                buffer.append("\\u" + Integer.toHexString(ch));
+                buffer.append("\\u").append(Integer.toHexString(ch));
             } else if (ch > 0xff) {
-                buffer.append("\\u0" + Integer.toHexString(ch));
+                buffer.append("\\u0").append(Integer.toHexString(ch));
             } else if (ch > 0x7f) {
-                buffer.append("\\u00" + Integer.toHexString(ch));
+                buffer.append("\\u00").append(Integer.toHexString(ch));
             } else if (ch < 32) {
                 switch (ch) {
                     case '\b':
@@ -1085,9 +1084,9 @@ public class StringUtils {
                         break;
                     default:
                         if (ch > 0xf) {
-                            buffer.append("\\u00" + Integer.toHexString(ch));
+                            buffer.append("\\u00").append(Integer.toHexString(ch));
                         } else {
-                            buffer.append("\\u000" + Integer.toHexString(ch));
+                            buffer.append("\\u000").append(Integer.toHexString(ch));
                         }
                         break;
                 }
@@ -1632,7 +1631,7 @@ public class StringUtils {
         }
         int sz = str.length();
         for (int i = 0; i < sz; i++) {
-            if (Character.isLetter(str.charAt(i)) == false) {
+            if (!Character.isLetter(str.charAt(i))) {
                 return false;
             }
         }
@@ -1656,7 +1655,7 @@ public class StringUtils {
         }
         int sz = str.length();
         for (int i = 0; i < sz; i++) {
-            if ((Character.isWhitespace(str.charAt(i)) == false)) {
+            if (!Character.isWhitespace(str.charAt(i))) {
                 return false;
             }
         }
@@ -1680,7 +1679,7 @@ public class StringUtils {
         }
         int sz = str.length();
         for (int i = 0; i < sz; i++) {
-            if ((Character.isLetter(str.charAt(i)) == false) && (str.charAt(i) != ' ')) {
+            if ((!Character.isLetter(str.charAt(i))) && (str.charAt(i) != ' ')) {
                 return false;
             }
         }
@@ -1704,7 +1703,7 @@ public class StringUtils {
         }
         int sz = str.length();
         for (int i = 0; i < sz; i++) {
-            if (Character.isLetterOrDigit(str.charAt(i)) == false) {
+            if (!Character.isLetterOrDigit(str.charAt(i))) {
                 return false;
             }
         }
@@ -1728,7 +1727,7 @@ public class StringUtils {
         }
         int sz = str.length();
         for (int i = 0; i < sz; i++) {
-            if ((Character.isLetterOrDigit(str.charAt(i)) == false) && (str.charAt(i) != ' ')) {
+            if ((!Character.isLetterOrDigit(str.charAt(i))) && (str.charAt(i) != ' ')) {
                 return false;
             }
         }
@@ -1752,7 +1751,7 @@ public class StringUtils {
         }
         int sz = str.length();
         for (int i = 0; i < sz; i++) {
-            if (Character.isDigit(str.charAt(i)) == false) {
+            if (!Character.isDigit(str.charAt(i))) {
                 return false;
             }
         }
@@ -1776,7 +1775,7 @@ public class StringUtils {
         }
         int sz = str.length();
         for (int i = 0; i < sz; i++) {
-            if ((Character.isDigit(str.charAt(i)) == false) && (str.charAt(i) != ' ')) {
+            if ((!Character.isDigit(str.charAt(i))) && (str.charAt(i) != ' ')) {
                 return false;
             }
         }

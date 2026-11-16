@@ -52,7 +52,7 @@ class ExpandTest extends FileBasedTestCase {
         expand.setDest(targetDir);
 
         // This should throw an exception, not extract the file
-        assertThrows(Exception.class, () -> expand.execute());
+        assertThrows(Exception.class, expand::execute);
 
         // Verify the file was not created outside the target directory
         File evilFile = new File(tempDir, "evil.txt");
@@ -80,7 +80,7 @@ class ExpandTest extends FileBasedTestCase {
         expand.setDest(targetDir);
 
         // This should throw an exception, not extract the file
-        assertThrows(Exception.class, () -> expand.execute());
+        assertThrows(Exception.class, expand::execute);
 
         // Verify the file was not created at the absolute path
         assertFalse(evilTarget.exists(), "File should not be extracted to absolute path");
@@ -112,7 +112,7 @@ class ExpandTest extends FileBasedTestCase {
         expand.setDest(targetDir);
 
         // This should throw an exception, not extract the file
-        assertThrows(Exception.class, () -> expand.execute());
+        assertThrows(Exception.class, expand::execute);
 
         // Verify the file was not created in the similar directory
         File evilFile = new File(similarDir, "evil.txt");

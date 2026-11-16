@@ -32,13 +32,13 @@ import java.util.Vector;
 public class TestThreadManager {
 
     /** Test threads which have completed running */
-    private Collection<AbstractTestThread> runThreads = new Vector<AbstractTestThread>();
+    private Collection<AbstractTestThread> runThreads = new Vector<>();
 
     /** Test threads still needing to be run, or are currently running */
-    private Collection<AbstractTestThread> toRunThreads = new Vector<AbstractTestThread>();
+    private Collection<AbstractTestThread> toRunThreads = new Vector<>();
 
     /** Any test threads which failed */
-    private Vector<AbstractTestThread> failedThreads = new Vector<AbstractTestThread>();
+    private Vector<AbstractTestThread> failedThreads = new Vector<>();
 
     /**
      * The object to notify when all the test threads have completed. Clients use this to lock on (wait) while waiting
@@ -121,7 +121,7 @@ public class TestThreadManager {
 
     public final void registerThread(AbstractTestThread thread) {
         thread.setThreadRegistry(this);
-        if (toRunThreads.contains(thread) == false) {
+        if (!toRunThreads.contains(thread)) {
             toRunThreads.add(thread);
             doRegisterThread(thread);
         }

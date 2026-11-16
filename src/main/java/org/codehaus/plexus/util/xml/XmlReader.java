@@ -282,7 +282,7 @@ public class XmlReader extends Reader {
      */
     public XmlReader(InputStream is, String httpContentType, boolean lenient, String defaultEncoding)
             throws IOException, XmlStreamReaderException {
-        _defaultEncoding = (defaultEncoding == null) ? _staticDefaultEncoding : defaultEncoding;
+        _defaultEncoding = defaultEncoding == null ? _staticDefaultEncoding : defaultEncoding;
         try {
             doHttpStream(is, httpContentType, lenient);
         } catch (XmlStreamReaderException ex) {
@@ -346,7 +346,7 @@ public class XmlReader extends Reader {
                 encoding = ex.getContentTypeEncoding();
             }
             if (encoding == null) {
-                encoding = (_defaultEncoding == null) ? UTF_8 : _defaultEncoding;
+                encoding = _defaultEncoding == null ? UTF_8 : _defaultEncoding;
             }
             prepareReader(ex.getInputStream(), encoding);
         }
@@ -409,7 +409,7 @@ public class XmlReader extends Reader {
         String encoding;
         if (bomEnc == null) {
             if (xmlGuessEnc == null || xmlEnc == null) {
-                encoding = (_defaultEncoding == null) ? UTF_8 : _defaultEncoding;
+                encoding = _defaultEncoding == null ? UTF_8 : _defaultEncoding;
             } else if (xmlEnc.equals(UTF_16) && (xmlGuessEnc.equals(UTF_16BE) || xmlGuessEnc.equals(UTF_16LE))) {
                 encoding = xmlGuessEnc;
             } else {
@@ -462,7 +462,7 @@ public class XmlReader extends Reader {
                     if (appXml) {
                         encoding = calculateRawEncoding(bomEnc, xmlGuessEnc, xmlEnc, is);
                     } else {
-                        encoding = (_defaultEncoding == null) ? US_ASCII : _defaultEncoding;
+                        encoding = _defaultEncoding == null ? US_ASCII : _defaultEncoding;
                     }
                 } else if (bomEnc != null && (cTEnc.equals(UTF_16BE) || cTEnc.equals(UTF_16LE))) {
                     throw new XmlStreamReaderException(
@@ -508,7 +508,7 @@ public class XmlReader extends Reader {
         String mime = null;
         if (httpContentType != null) {
             int i = httpContentType.indexOf(";");
-            mime = ((i == -1) ? httpContentType : httpContentType.substring(0, i)).trim();
+            mime = (i == -1 ? httpContentType : httpContentType.substring(0, i)).trim();
         }
         return mime;
     }
@@ -523,8 +523,8 @@ public class XmlReader extends Reader {
             if (i > -1) {
                 String postMime = httpContentType.substring(i + 1);
                 Matcher m = CHARSET_PATTERN.matcher(postMime);
-                encoding = (m.find()) ? m.group(1) : null;
-                encoding = (encoding != null) ? encoding.toUpperCase(Locale.ENGLISH) : null;
+                encoding = m.find() ? m.group(1) : null;
+                encoding = encoding != null ? encoding.toUpperCase(Locale.ENGLISH) : null;
             }
         }
         return encoding;

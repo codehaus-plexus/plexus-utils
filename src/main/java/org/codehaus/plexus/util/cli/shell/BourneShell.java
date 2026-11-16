@@ -58,7 +58,7 @@ public class BourneShell extends Shell {
 
     @Override
     public List<String> getShellArgsList() {
-        List<String> shellArgs = new ArrayList<String>();
+        List<String> shellArgs = new ArrayList<>();
         List<String> existingShellArgs = super.getShellArgsList();
 
         if ((existingShellArgs != null) && !existingShellArgs.isEmpty()) {

@@ -179,13 +179,13 @@ public class FileUtils extends BaseFileUtils {
         String displaySize;
 
         if (size / ONE_GB > 0) {
-            displaySize = String.valueOf(size / ONE_GB) + " GB";
+            displaySize = size / ONE_GB + " GB";
         } else if (size / ONE_MB > 0) {
-            displaySize = String.valueOf(size / ONE_MB) + " MB";
+            displaySize = size / ONE_MB + " MB";
         } else if (size / ONE_KB > 0) {
-            displaySize = String.valueOf(size / ONE_KB) + " KB";
+            displaySize = size / ONE_KB + " KB";
         } else {
-            displaySize = String.valueOf(size) + " bytes";
+            displaySize = size + " bytes";
         }
 
         return displaySize;
@@ -199,7 +199,7 @@ public class FileUtils extends BaseFileUtils {
      */
     public static String dirname(String filename) {
         int i = filename.lastIndexOf(File.separator);
-        return (i >= 0 ? filename.substring(0, i) : "");
+        return i >= 0 ? filename.substring(0, i) : "";
     }
 
     /**
@@ -210,7 +210,7 @@ public class FileUtils extends BaseFileUtils {
      */
     public static String filename(String filename) {
         int i = filename.lastIndexOf(File.separator);
-        return (i >= 0 ? filename.substring(i + 1) : filename);
+        return i >= 0 ? filename.substring(i + 1) : filename;
     }
 
     /**
@@ -232,7 +232,7 @@ public class FileUtils extends BaseFileUtils {
      */
     public static String basename(String filename, String suffix) {
         int i = filename.lastIndexOf(File.separator) + 1;
-        int lastDot = ((suffix != null) && (suffix.length() > 0)) ? filename.lastIndexOf(suffix) : -1;
+        int lastDot = (suffix != null) && (suffix.length() > 0) ? filename.lastIndexOf(suffix) : -1;
 
         if (lastDot >= 0) {
             return filename.substring(i, lastDot);
@@ -376,7 +376,7 @@ public class FileUtils extends BaseFileUtils {
      * @throws IOException if any
      */
     public static void fileWrite(String fileName, String encoding, String data) throws IOException {
-        Path file = (fileName == null) ? null : Paths.get(fileName);
+        Path file = fileName == null ? null : Paths.get(fileName);
         fileWrite(file, encoding, data);
     }
 
@@ -479,7 +479,7 @@ public class FileUtils extends BaseFileUtils {
      * @return An array of files for the wanted extensions.
      */
     public static String[] getFilesFromExtension(String directory, String[] extensions) {
-        List<String> files = new ArrayList<String>();
+        List<String> files = new ArrayList<>();
 
         File currentDir = new File(directory);
 
@@ -1110,7 +1110,7 @@ public class FileUtils extends BaseFileUtils {
         }
 
         // deal with absolute files
-        if (filenm.startsWith(File.separator) || (Os.isFamily(Os.FAMILY_WINDOWS) && filenm.indexOf(":") > 0)) {
+        if (filenm.startsWith(File.separator) || (Os.isFamily(Os.FAMILY_WINDOWS) && filenm.indexOf(":") >= 1)) {
             File file = new File(filenm);
 
             try {
@@ -1146,7 +1146,7 @@ public class FileUtils extends BaseFileUtils {
         filenm = sb.toString();
 
         // must be relative
-        File file = (new File(baseFile, filenm)).getAbsoluteFile();
+        File file = new File(baseFile, filenm).getAbsoluteFile();
 
         try {
             file = file.getCanonicalFile();
@@ -1321,7 +1321,7 @@ public class FileUtils extends BaseFileUtils {
                 throw new IOException(message);
             }
         } else {
-            if (false == file.mkdirs()) {
+            if (!file.mkdirs()) {
                 final String message = "Unable to create directory " + file;
                 throw new IOException(message);
             }
@@ -1485,7 +1485,7 @@ public class FileUtils extends BaseFileUtils {
             throws IOException {
         List<String> fileNames = getFileNames(directory, includes, excludes, includeBasedir);
 
-        List<File> files = new ArrayList<File>();
+        List<File> files = new ArrayList<>();
 
         for (String filename : fileNames) {
             files.add(new File(filename));
@@ -1596,7 +1596,7 @@ public class FileUtils extends BaseFileUtils {
 
         scanner.scan();
 
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         if (getFiles) {
             String[] files = scanner.getIncludedFiles();
@@ -1965,7 +1965,7 @@ public class FileUtils extends BaseFileUtils {
      * @throws IOException if any
      */
     public static List<String> loadFile(File file) throws IOException {
-        final List<String> lines = new ArrayList<String>();
+        final List<String> lines = new ArrayList<>();
 
         if (file.exists()) {
             try (BufferedReader reader = Files.newBufferedReader(file.toPath())) {

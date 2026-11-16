@@ -113,7 +113,7 @@ public class ExceptionUtils {
      */
     public static void addCauseMethodName(String methodName) {
         if (methodName != null && methodName.length() > 0) {
-            List<String> list = new ArrayList<String>(Arrays.asList(CAUSE_METHOD_NAMES));
+            List<String> list = new ArrayList<>(Arrays.asList(CAUSE_METHOD_NAMES));
             list.add(methodName);
             CAUSE_METHOD_NAMES = list.toArray(new String[0]);
         }
@@ -533,7 +533,7 @@ public class ExceptionUtils {
     static String[] getStackFrames(String stackTrace) {
         String linebreak = System.getProperty("line.separator");
         StringTokenizer frames = new StringTokenizer(stackTrace, linebreak);
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
         while (frames.hasMoreTokens()) {
             list.add(frames.nextToken());
         }
@@ -551,7 +551,7 @@ public class ExceptionUtils {
         String stackTrace = getStackTrace(t);
         String linebreak = System.getProperty("line.separator");
         StringTokenizer frames = new StringTokenizer(stackTrace, linebreak);
-        List<String> list = new LinkedList<String>();
+        List<String> list = new LinkedList<>();
         boolean traceStarted = false;
         while (frames.hasMoreTokens()) {
             String token = frames.nextToken();

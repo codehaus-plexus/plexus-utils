@@ -48,8 +48,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P32_ibm32n01xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n01.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests SDDecl with a required field missing. The leading white space     is missing with the SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -70,8 +69,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P32_ibm32n02xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n02.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests SDDecl with a required field missing. The \"=\" sign is missing     in the SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -92,8 +90,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P32_ibm32n03xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n03.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("Tests SDDecl with wrong key word. The word \"Standalone\" occurs in      the SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("unexpected character S"));
@@ -113,8 +110,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P32_ibm32n04xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n04.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("Tests SDDecl with wrong key word. The word \"Yes\" occurs in the     SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("expected 'yes' or 'no' after standalone and not Y"));
@@ -135,8 +131,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
 
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n05.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("Tests SDDecl with wrong key word. The word \"YES\" occurs in the     SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("expected 'yes' or 'no' after standalone and not Y"));
@@ -156,8 +151,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P32_ibm32n06xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n06.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("Tests SDDecl with wrong key word. The word \"No\" occurs in the     SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("expected 'yes' or 'no' after standalone and not N"));
@@ -177,8 +171,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P32_ibm32n07xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n07.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail("Tests SDDecl with wrong key word. The word \"NO\" occurs in the     SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
             assertTrue(e.getMessage().contains("expected 'yes' or 'no' after standalone and not N"));
@@ -198,8 +191,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     void testibm_not_wf_P32_ibm32n08xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n08.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "Tests SDDecl with wrong field ordering. The \"=\" sign occurs      after the key word \"yes\" in the SDDecl in the XMLDecl.");
         } catch (XmlPullParserException e) {
@@ -223,8 +215,7 @@ class IBMXML10Tests_Test_IBMXMLConformanceTestSuite_not_wftests_Test_IBMXMLConfo
     public void testibm_not_wf_P32_ibm32n09xml() throws IOException {
         try (Reader reader = new FileReader(new File(testResourcesDir, "not-wf/P32/ibm32n09.xml"))) {
             parser.setInput(reader);
-            while (parser.nextToken() != XmlPullParser.END_DOCUMENT)
-                ;
+            while (parser.nextToken() != XmlPullParser.END_DOCUMENT) {}
             fail(
                     "This is test violates WFC: Entity Declared in P68.     The standalone document declaration has the value yes, BUT there is an      external markup declaration of an entity (other than amp, lt, gt, apos,     quot), and references to this entity appear in the document.");
         } catch (XmlPullParserException e) {

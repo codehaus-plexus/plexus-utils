@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Kristian Rosenvold
  */
-public class MatchPatterns {
+public final class MatchPatterns {
     private final MatchPattern[] patterns;
 
     private MatchPatterns(MatchPattern[] patterns) {
@@ -83,7 +83,7 @@ public class MatchPatterns {
     }
 
     private static MatchPattern[] getMatchPatterns(Iterable<String> items) {
-        List<MatchPattern> result = new ArrayList<MatchPattern>();
+        List<MatchPattern> result = new ArrayList<>();
         for (String string : items) {
             result.add(MatchPattern.fromString(string));
         }

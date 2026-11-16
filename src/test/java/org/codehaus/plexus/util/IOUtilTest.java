@@ -63,7 +63,7 @@ public final class IOUtilTest {
     @BeforeEach
     void setUp() {
         try {
-            testDirectory = (new File("target/test/io/")).getAbsoluteFile();
+            testDirectory = new File("target/test/io/").getAbsoluteFile();
             if (!testDirectory.exists()) {
                 testDirectory.mkdirs();
             }
@@ -107,7 +107,7 @@ public final class IOUtilTest {
                 n0 = is0.read(buf0);
                 n1 = is1.read(buf1);
                 assertTrue(
-                        (n0 == n1),
+                        n0 == n1,
                         "The files " + f0 + " and " + f1 + " have differing number of bytes available (" + n0 + " vs "
                                 + n1 + ")");
 
@@ -123,8 +123,7 @@ public final class IOUtilTest {
         assertTrue(numRead == b0.length && is.available() == 0, "Different number of bytes");
         for (int i = 0;
                 i < numRead;
-                assertEquals(b0[i], b1[i], "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")"), i++)
-            ;
+                assertEquals(b0[i], b1[i], "Byte " + i + " differs (" + b0[i] + " != " + b1[i] + ")"), i++) {}
         is.close();
     }
 
@@ -461,6 +460,6 @@ public final class IOUtilTest {
                 FILE_SIZE + 1,
                 "Wrong output size: file.length()=" + file.length() + "!=" + FILE_SIZE + 1);
 
-        assertTrue((file.delete() || (!file.exists())), "File would not delete");
+        assertTrue(file.delete() || (!file.exists()), "File would not delete");
     }
 }
