@@ -531,7 +531,7 @@ public class ExceptionUtils {
      * Functionality shared between the <code>getStackFrames(Throwable)</code> methods of this and the classes.
      */
     static String[] getStackFrames(String stackTrace) {
-        String linebreak = System.getProperty("line.separator");
+        String linebreak = System.lineSeparator();
         StringTokenizer frames = new StringTokenizer(stackTrace, linebreak);
         List<String> list = new LinkedList<>();
         while (frames.hasMoreTokens()) {
@@ -549,7 +549,7 @@ public class ExceptionUtils {
      */
     static List<String> getStackFrameList(Throwable t) {
         String stackTrace = getStackTrace(t);
-        String linebreak = System.getProperty("line.separator");
+        String linebreak = System.lineSeparator();
         StringTokenizer frames = new StringTokenizer(stackTrace, linebreak);
         List<String> list = new LinkedList<>();
         boolean traceStarted = false;

@@ -140,6 +140,7 @@ class SweeperPoolTest {
             disposedObjects.clear();
         }
 
+        @Override
         public void objectDisposed(Object obj) {
             disposedObjects.add(obj);
         }

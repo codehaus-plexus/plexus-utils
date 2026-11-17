@@ -916,6 +916,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         // test ${token}
         FileUtils.FilterWrapper[] wrappers1 = new FileUtils.FilterWrapper[] {
             new FileUtils.FilterWrapper() {
+                @Override
                 public Reader getReader(Reader reader) {
                     return new InterpolationFilterReader(reader, filterProperties, "${", "}");
                 }

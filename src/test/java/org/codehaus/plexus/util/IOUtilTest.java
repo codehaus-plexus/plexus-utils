@@ -357,10 +357,12 @@ public final class IOUtilTest {
     private static class TestInputStream extends InputStream {
         boolean closed;
 
+        @Override
         public void close() {
             closed = true;
         }
 
+        @Override
         public int read() {
             fail("This method shouldn't be called");
 
@@ -371,10 +373,12 @@ public final class IOUtilTest {
     private static class TestOutputStream extends OutputStream {
         boolean closed;
 
+        @Override
         public void close() {
             closed = true;
         }
 
+        @Override
         public void write(int value) {
             fail("This method shouldn't be called");
         }
@@ -383,10 +387,12 @@ public final class IOUtilTest {
     private static class TestReader extends Reader {
         boolean closed;
 
+        @Override
         public void close() {
             closed = true;
         }
 
+        @Override
         public int read(char[] cbuf, int off, int len) {
             fail("This method shouldn't be called");
 
@@ -397,14 +403,17 @@ public final class IOUtilTest {
     private static class TestWriter extends Writer {
         boolean closed;
 
+        @Override
         public void close() {
             closed = true;
         }
 
+        @Override
         public void write(char[] cbuf, int off, int len) {
             fail("This method shouldn't be called");
         }
 
+        @Override
         public void flush() {
             fail("This method shouldn't be called");
         }

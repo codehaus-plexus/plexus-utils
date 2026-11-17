@@ -41,12 +41,14 @@ class WalkCollector implements DirectoryWalkListener {
         percentageHigh = 0;
     }
 
+    @Override
     public void directoryWalkStarting(File basedir) {
         debug("Walk Starting: " + basedir);
         startCount++;
         startingDir = basedir;
     }
 
+    @Override
     public void directoryWalkStep(int percentage, File file) {
         percentageLow = Math.min(percentageLow, percentage);
         percentageHigh = Math.max(percentageHigh, percentage);
@@ -54,11 +56,13 @@ class WalkCollector implements DirectoryWalkListener {
         steps.add(file);
     }
 
+    @Override
     public void directoryWalkFinished() {
         debug("Walk Finished.");
         finishCount++;
     }
 
+    @Override
     public void debug(String message) {
         System.out.println(message);
     }

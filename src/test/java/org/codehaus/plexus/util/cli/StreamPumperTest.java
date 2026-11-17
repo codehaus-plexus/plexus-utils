@@ -127,6 +127,7 @@ class StreamPumperTest {
             this.size = size;
         }
 
+        @Override
         public int read() {
             if (read < size) {
                 read++;
@@ -136,6 +137,7 @@ class StreamPumperTest {
             }
         }
 
+        @Override
         public void close() {
             closed = true;
         }
@@ -143,6 +145,7 @@ class StreamPumperTest {
 
     static class FailingConsumer implements StreamConsumer {
 
+        @Override
         public void consumeLine(String line) {
             throw new NullPointerException("too bad, the consumer is badly implemented...");
         }
@@ -189,6 +192,7 @@ class StreamPumperTest {
             return false;
         }
 
+        @Override
         public void consumeLine(String line) {
             lines.add(line);
         }

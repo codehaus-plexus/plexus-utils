@@ -2246,7 +2246,7 @@ public class StringUtils {
      * @since 1.5.7
      */
     public static String unifyLineSeparators(String s) {
-        return unifyLineSeparators(s, System.getProperty("line.separator"));
+        return unifyLineSeparators(s, System.lineSeparator());
     }
 
     /**
@@ -2264,7 +2264,7 @@ public class StringUtils {
         }
 
         if (ls == null) {
-            ls = System.getProperty("line.separator");
+            ls = System.lineSeparator();
         }
 
         if (!("\n".equals(ls) || "\r".equals(ls) || "\r\n".equals(ls))) {
