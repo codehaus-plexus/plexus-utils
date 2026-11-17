@@ -282,11 +282,13 @@ public class FileUtils extends BaseFileUtils {
     }
 
     /**
-     * Note: the file content is read with platform encoding.
+     * Note: the file content is read as UTF-8 on Java 11 and later, and with the platform encoding on earlier Java
+     * versions.
      *
      * @param file the file path
-     * @return the file content using the platform encoding.
-     * @throws IOException if any
+     * @return the file content
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the content is not valid in the encoding (earlier Java versions replace such bytes with U+FFFD)
      */
     public static String fileRead(String file) throws IOException {
         return fileRead(file, null);
@@ -296,18 +298,21 @@ public class FileUtils extends BaseFileUtils {
      * @param file the file path
      * @param encoding the wanted encoding
      * @return the file content using the specified encoding.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the content is not valid in the encoding (earlier Java versions replace such bytes with U+FFFD)
      */
     public static String fileRead(String file, String encoding) throws IOException {
         return fileRead(Paths.get(file), encoding);
     }
 
     /**
-     * Note: the file content is read with platform encoding
+     * Note: the file content is read as UTF-8 on Java 11 and later, and with the platform encoding on earlier Java
+     * versions.
      *
      * @param file the file path
-     * @return the file content using the platform encoding.
-     * @throws IOException if any
+     * @return the file content
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the content is not valid in the encoding (earlier Java versions replace such bytes with U+FFFD)
      */
     public static String fileRead(File file) throws IOException {
         return fileRead(file, null);
@@ -317,19 +322,21 @@ public class FileUtils extends BaseFileUtils {
      * @param file the file path
      * @param encoding the wanted encoding
      * @return the file content using the specified encoding.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the content is not valid in the encoding (earlier Java versions replace such bytes with U+FFFD)
      */
     public static String fileRead(File file, String encoding) throws IOException {
         return fileRead(file.toPath(), encoding);
     }
 
     /**
-     * Appends data to a file. The file will be created if it does not exist. Note: the data is written with platform
-     * encoding
+     * Appends data to a file. The file will be created if it does not exist. Note: the data is written as
+     * UTF-8 on Java 11 and later, and with the platform encoding on earlier Java versions.
      *
      * @param fileName The path of the file to write.
      * @param data The content to write to the file.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the data has characters the encoding cannot represent (earlier Java versions write {@code ?} instead)
      * @deprecated use {@code java.nio.files.Files.write(filename, data.getBytes(encoding),
      *     StandardOpenOption.APPEND, StandardOpenOption.CREATE)}
      */
@@ -343,7 +350,8 @@ public class FileUtils extends BaseFileUtils {
      * @param fileName The path of the file to write.
      * @param encoding The encoding of the file.
      * @param data The content to write to the file.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the data has characters the encoding cannot represent (earlier Java versions write {@code ?} instead)
      * @deprecated use {@code java.nio.files.Files.write(filename, data.getBytes(encoding),
      *     StandardOpenOption.APPEND, StandardOpenOption.CREATE)}
      */
@@ -356,12 +364,13 @@ public class FileUtils extends BaseFileUtils {
     }
 
     /**
-     * Writes data to a file. The file will be created if it does not exist. Note: the data is written with platform
-     * encoding
+     * Writes data to a file. The file will be created if it does not exist. Note: the data is written as
+     * UTF-8 on Java 11 and later, and with the platform encoding on earlier Java versions.
      *
      * @param fileName The path of the file to write.
      * @param data The content to write to the file.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the data has characters the encoding cannot represent (earlier Java versions write {@code ?} instead)
      */
     public static void fileWrite(String fileName, String data) throws IOException {
         fileWrite(fileName, null, data);
@@ -373,7 +382,8 @@ public class FileUtils extends BaseFileUtils {
      * @param fileName The path of the file to write.
      * @param encoding The encoding of the file.
      * @param data The content to write to the file.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the data has characters the encoding cannot represent (earlier Java versions write {@code ?} instead)
      */
     public static void fileWrite(String fileName, String encoding, String data) throws IOException {
         Path file = fileName == null ? null : Paths.get(fileName);
@@ -381,12 +391,13 @@ public class FileUtils extends BaseFileUtils {
     }
 
     /**
-     * Writes data to a file. The file will be created if it does not exist. Note: the data is written with platform
-     * encoding
+     * Writes data to a file. The file will be created if it does not exist. Note: the data is written as
+     * UTF-8 on Java 11 and later, and with the platform encoding on earlier Java versions.
      *
      * @param file The file to write.
      * @param data The content to write to the file.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the data has characters the encoding cannot represent (earlier Java versions write {@code ?} instead)
      * @since 2.0.6
      */
     public static void fileWrite(File file, String data) throws IOException {
@@ -399,7 +410,8 @@ public class FileUtils extends BaseFileUtils {
      * @param file The file to write.
      * @param encoding The encoding of the file.
      * @param data The content to write to the file.
-     * @throws IOException if any
+     * @throws IOException if any, including a {@link java.nio.charset.CharacterCodingException} on Java 11 and later
+     *     when the data has characters the encoding cannot represent (earlier Java versions write {@code ?} instead)
      * @since 2.0.6
      */
     public static void fileWrite(File file, String encoding, String data) throws IOException {
