@@ -170,7 +170,7 @@ public final class ReflectionValueExtractor {
         // MavenProject instance.
         // ----------------------------------------------------------------------
 
-        if (StringUtils.isEmpty(expression) || !Character.isJavaIdentifierStart(expression.charAt(0))) {
+        if ((expression == null || expression.isEmpty()) || !Character.isJavaIdentifierStart(expression.charAt(0))) {
             return null;
         }
 
