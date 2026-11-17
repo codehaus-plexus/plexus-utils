@@ -228,7 +228,7 @@ public class PathTool {
      * @return a relative web path from <code>oldPath</code>.
      */
     public static String getRelativeWebPath(final String oldPath, final String newPath) {
-        if (StringUtils.isEmpty(oldPath) || StringUtils.isEmpty(newPath)) {
+        if ((oldPath == null || oldPath.isEmpty()) || (newPath == null || newPath.isEmpty())) {
             return "";
         }
 
@@ -264,7 +264,7 @@ public class PathTool {
      * @return a relative file path from <code>oldPath</code>.
      */
     public static String getRelativeFilePath(final String oldPath, final String newPath) {
-        if (StringUtils.isEmpty(oldPath) || StringUtils.isEmpty(newPath)) {
+        if ((oldPath == null || oldPath.isEmpty()) || (newPath == null || newPath.isEmpty())) {
             return "";
         }
 

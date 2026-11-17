@@ -2313,7 +2313,7 @@ public class StringUtils {
      * @since 1.5.7
      */
     public static boolean contains(String str, char searchChar) {
-        if (isEmpty(str)) {
+        if (str == null || str.isEmpty()) {
             return false;
         }
         return str.indexOf(searchChar) >= 0;
