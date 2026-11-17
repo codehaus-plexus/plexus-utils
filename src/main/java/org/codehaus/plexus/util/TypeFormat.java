@@ -275,9 +275,9 @@ public final class TypeFormat {
 
             // Checks special cases NaN or Infinity.
             if ((chars.charAt(i) == 'N') || (chars.charAt(i) == 'I')) {
-                if ("NaN".equals(chars.toString())) {
+                if ("NaN".contentEquals(chars)) {
                     return Double.NaN;
-                } else if ("Infinity".equals(chars.subSequence(i, length).toString())) {
+                } else if ("Infinity".contentEquals(chars.subSequence(i, length))) {
                     return isNegative ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY;
                 }
             }
