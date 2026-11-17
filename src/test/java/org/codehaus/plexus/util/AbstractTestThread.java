@@ -128,6 +128,7 @@ public abstract class AbstractTestThread implements Runnable {
      *
      * @see java.lang.Runnable#run()
      */
+    @Override
     public final void run() {
         if (registry == null) {
             throw new IllegalArgumentException(

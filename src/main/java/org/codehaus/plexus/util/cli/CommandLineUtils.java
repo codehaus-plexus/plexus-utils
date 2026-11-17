@@ -41,7 +41,7 @@ public abstract class CommandLineUtils {
 
         private StringBuffer string = new StringBuffer();
 
-        private String ls = System.getProperty("line.separator");
+        private String ls = System.lineSeparator();
 
         @Override
         public void consumeLine(String line) {
