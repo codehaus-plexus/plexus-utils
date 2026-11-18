@@ -94,18 +94,16 @@ public class CollectionUtils {
      * @return Map The result Map produced after the merging process.
      */
     public static <K, V> Map<K, V> mergeMaps(Map<K, V>[] maps) {
-        Map<K, V> result;
-
         if (maps.length == 0) {
-            result = null;
+            return null;
         } else if (maps.length == 1) {
-            result = maps[0];
-        } else {
-            result = mergeMaps(maps[0], maps[1]);
+            return maps[0];
+        }
 
-            for (int i = 2; i < maps.length; i++) {
-                result = mergeMaps(result, maps[i]);
-            }
+        Map<K, V> result = mergeMaps(maps[0], maps[1]);
+
+        for (int i = 2; i < maps.length; i++) {
+            result = mergeMaps(result, maps[i]);
         }
 
         return result;
