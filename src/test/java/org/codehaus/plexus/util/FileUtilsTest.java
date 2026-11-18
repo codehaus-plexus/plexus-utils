@@ -558,7 +558,12 @@ public final class FileUtilsTest extends FileBasedTestCase {
             "/foo/.././bar/",
             "//foo//./bar",
             "/../",
-            "/foo/../../"
+            "/foo/../../",
+            "/foo/.",
+            "/foo/..",
+            "/foo/bar/..",
+            "/..",
+            "/foo/../.."
         };
 
         final String[] dest = {
@@ -577,6 +582,11 @@ public final class FileUtilsTest extends FileBasedTestCase {
             "/bar",
             "/bar/",
             "/foo/bar",
+            null,
+            null,
+            "/foo",
+            "/",
+            "/foo",
             null,
             null
         };

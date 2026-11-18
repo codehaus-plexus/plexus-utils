@@ -1021,6 +1021,7 @@ public class FileUtils extends BaseFileUtils {
      * /foo/../bar/         --&gt;     /bar/
      * /foo/../bar/../baz   --&gt;     /baz
      * //foo//./bar         --&gt;     /foo/bar
+     * /foo/bar/..          --&gt;     /foo
      * /../                 --&gt;     null
      * </pre>
      *
@@ -1029,6 +1030,13 @@ public class FileUtils extends BaseFileUtils {
      */
     public static String normalize(final String path) {
         String normalized = path;
+        // A trailing "/." or "/.." is a segment too: add the slash the loops below look for, and drop it again after
+        boolean addedTrailingSlash = false;
+        if (normalized.startsWith("/") && (normalized.endsWith("/.") || normalized.endsWith("/.."))) {
+            normalized = normalized + "/";
+            addedTrailingSlash = true;
+        }
+
         // Resolve occurrences of "//" in the normalized path
         while (true) {
             int index = normalized.indexOf("//");
@@ -1058,6 +1066,10 @@ public class FileUtils extends BaseFileUtils {
             }
             int index2 = normalized.lastIndexOf('/', index - 1);
             normalized = normalized.substring(0, index2) + normalized.substring(index + 3);
+        }
+
+        if (addedTrailingSlash && normalized.length() > 1) {
+            normalized = normalized.substring(0, normalized.length() - 1);
         }
 
         // Return the normalized path that we have completed
