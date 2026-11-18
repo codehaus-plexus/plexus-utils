@@ -14,7 +14,7 @@ Maintained, conservatively. This artifact is on the classpath of very nearly eve
 
 | Line  | Latest |                                      Use when                                       |
 |-------|--------|-------------------------------------------------------------------------------------|
-| `4.x` | 4.0.x  | Default for new work                                                                |
+| `4.x` | 4.2.x  | Default for new work                                                                |
 | `3.x` | 3.6.x  | You need the XML classes bundled in this artifact rather than split out (see below) |
 
 The `3.x` line lives on the [`plexus-utils-3.x`](https://github.com/codehaus-plexus/plexus-utils/tree/plexus-utils-3.x) branch and still receives releases.
