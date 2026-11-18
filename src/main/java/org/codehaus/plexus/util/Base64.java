@@ -271,14 +271,11 @@ public class Base64 {
         int nextSeparatorIndex = CHUNK_SIZE;
         int chunksSoFar = 0;
 
-        // log.debug("number of triplets = " + numberTriplets);
         for (i = 0; i < numberTriplets; i++) {
             dataIndex = i * 3;
             b1 = binaryData[dataIndex];
             b2 = binaryData[dataIndex + 1];
             b3 = binaryData[dataIndex + 2];
-
-            // log.debug("b1= " + b1 +", b2= " + b2 + ", b3= " + b3);
 
             l = (byte) (b2 & 0x0f);
             k = (byte) (b1 & 0x03);
