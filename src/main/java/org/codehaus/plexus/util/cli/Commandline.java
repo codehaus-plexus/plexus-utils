@@ -59,11 +59,13 @@ package org.codehaus.plexus.util.cli;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
+import java.util.function.Predicate;
 
 import org.codehaus.plexus.util.Os;
 import org.codehaus.plexus.util.StringUtils;
@@ -96,6 +98,18 @@ import org.codehaus.plexus.util.cli.shell.Shell;
  */
 public class Commandline implements Cloneable {
     /**
+     * System property that controls how a command line with the default shell is started on Windows. With
+     * <code>false</code>, every command is wrapped in <code>cmd.exe /X /D /C "..."</code>, as in plexus-utils 3.1.0 to
+     * 4.1.x. With any other value or none, an executable that resolves to an <code>.exe</code> or <code>.com</code>
+     * file is started directly. The property is read each time a command line is built.
+     *
+     * @see #getCommandline()
+     * @since 4.2.0
+     */
+    public static final String WINDOWS_DIRECT_EXECUTION_PROPERTY =
+            "org.codehaus.plexus.util.cli.windowsDirectExecution";
+
+    /**
      * @deprecated Use {@link org.codehaus.plexus.util.Os} class instead.
      */
     @Deprecated
@@ -116,6 +130,11 @@ public class Commandline implements Cloneable {
     private long pid = -1;
 
     private Shell shell;
+
+    /**
+     * Whether the caller chose the shell, as opposed to the one detected from the operating system.
+     */
+    private boolean shellChosenByCaller;
 
     /**
      * @deprecated Use {@link Commandline#setExecutable(String)} instead.
@@ -139,6 +158,7 @@ public class Commandline implements Cloneable {
      */
     public Commandline(String toProcess, Shell shell) {
         this.shell = shell;
+        this.shellChosenByCaller = true;
 
         String[] tmp = new String[0];
         try {
@@ -161,6 +181,7 @@ public class Commandline implements Cloneable {
      */
     public Commandline(Shell shell) {
         this.shell = shell;
+        this.shellChosenByCaller = true;
     }
 
     /**
@@ -245,13 +266,21 @@ public class Commandline implements Cloneable {
         // If this is windows set the shell to command.com or cmd.exe with correct arguments.
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             if (Os.isFamily(Os.FAMILY_WIN9X)) {
-                setShell(new CommandShell());
+                setDefaultShell(new CommandShell());
             } else {
-                setShell(new CmdShell());
+                setDefaultShell(new CmdShell());
             }
         } else {
-            setShell(new BourneShell());
+            setDefaultShell(new BourneShell());
         }
+    }
+
+    /**
+     * Sets a shell that counts as detected, not as chosen by the caller.
+     */
+    void setDefaultShell(Shell shell) {
+        this.shell = shell;
+        this.shellChosenByCaller = false;
     }
 
     /**
@@ -428,15 +457,134 @@ public class Commandline implements Cloneable {
     }
 
     /**
-     * @return Returns the executable and all defined arguments.
-     *      For Windows Family, {@link Commandline#getShellCommandline()} is returned
+     * Returns the command line that {@link #execute()} starts.
+     * <p>
+     * On Windows, the executable is looked up the way <code>cmd.exe</code> would: in the working directory and then
+     * on the <code>PATH</code> of the process to start, with the <code>PATHEXT</code> extensions. If that yields an
+     * <code>.exe</code> or <code>.com</code> file, the result is the path of that file followed by the arguments as
+     * given, as {@link #getRawCommandline()} returns them, and no shell is involved. In every other case the result
+     * is {@link #getShellCommandline()}: for <code>.bat</code> and <code>.cmd</code> scripts, for commands built into
+     * <code>cmd.exe</code>, for names that cannot be resolved, when a shell was set with {@link #setShell(Shell)} or
+     * a constructor, when the detected shell was reconfigured through {@link #getShell()}, and when the system
+     * property {@link #WINDOWS_DIRECT_EXECUTION_PROPERTY} is <code>false</code>. {@link #execute()} also falls back
+     * to the shell form when the direct start fails.
+     * </p>
+     * <p>
+     * An argument for a directly started executable is not interpreted by <code>cmd.exe</code>:
+     * <code>&amp;</code>, <code>|</code>, <code>&lt;</code>, <code>&gt;</code>, <code>^</code> and
+     * <code>%NAME%</code> reach the program as they are. A caller that needs redirection, chaining or variable
+     * expansion has to ask for a shell, for example with <code>setShell(new CmdShell())</code>.
+     * </p>
+     *
+     * @return the executable and all defined arguments; on other platforms than Windows, the same as
+     *         {@link #getRawCommandline()}
      */
     public String[] getCommandline() {
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            return getShellCommandline();
+            File workDir = getWorkingDirectory();
+            String cwd = workDir != null ? workDir.getAbsolutePath() : System.getProperty("user.dir");
+            return getWindowsCommandline(windowsChildEnvironment(), cwd, WINDOWS_IS_FILE);
         }
 
         return getRawCommandline();
+    }
+
+    private static final Predicate<String> WINDOWS_IS_FILE = new Predicate<String>() {
+        @Override
+        public boolean test(String path) {
+            return new File(path).isFile();
+        }
+    };
+
+    /**
+     * The Windows branch of {@link #getCommandline()}, with everything it reads from the platform passed in.
+     *
+     * @param environment the environment of the process to start
+     * @param workingDirectory the absolute working directory of the process to start
+     * @param isFile tells whether an absolute path denotes an existing regular file
+     * @return the command line to start
+     */
+    String[] getWindowsCommandline(Map<String, String> environment, String workingDirectory, Predicate<String> isFile) {
+        verifyShellState();
+
+        if (isWindowsDirectExecutionAllowed()) {
+            WindowsExecutableResolver.Resolution resolution;
+            try {
+                resolution = WindowsExecutableResolver.resolve(
+                        getLiteralExecutable(), environment, workingDirectory, isFile);
+            } catch (RuntimeException e) {
+                // for example a SecurityException from the file check: let cmd.exe decide
+                resolution = null;
+            }
+            if (resolution != null && resolution.getKind() == WindowsExecutableResolver.Kind.NATIVE) {
+                String[] result = getRawCommandline();
+                result[0] = resolution.getPath();
+                return result;
+            }
+        }
+
+        return getShellCommandline();
+    }
+
+    /**
+     * Direct execution applies to the shell this class picks on Windows and to nothing else: a shell that the caller
+     * set, or the detected one after the caller changed how it quotes or how it is invoked, is a request to go
+     * through that shell.
+     */
+    private boolean isWindowsDirectExecutionAllowed() {
+        if (shellChosenByCaller || shell == null || shell.getClass() != CmdShell.class) {
+            return false;
+        }
+        if ("false".equalsIgnoreCase(System.getProperty(WINDOWS_DIRECT_EXECUTION_PROPERTY))) {
+            return false;
+        }
+        if (!sameExecutable(getLiteralExecutable(), shell.getOriginalExecutable())) {
+            // set on the shell behind our back: the shell form is the only one that honours it
+            return false;
+        }
+        CmdShell pristine = new CmdShell();
+        return pristine.getShellCommand().equals(shell.getShellCommand())
+                && pristine.getShellArgsList().equals(shell.getShellArgsList())
+                && shell.isQuotedArgumentsEnabled()
+                && shell.isQuotedExecutableEnabled()
+                && !shell.isUnconditionalQuoting();
+    }
+
+    private static boolean sameExecutable(String literal, String inShell) {
+        if (literal == null || inShell == null) {
+            return literal == null && inShell == null;
+        }
+        // Shell.setExecutable() rewrites the separators
+        return literal.replace('/', '\\').equals(inShell.replace('/', '\\'));
+    }
+
+    /**
+     * @return what {@link #getEnvironmentVariables()} hands to the process, without adding the system environment to
+     *         this command line as that method does
+     */
+    Map<String, String> windowsChildEnvironment() {
+        Map<String, String> environment = new LinkedHashMap<>();
+        Properties systemEnvVars = CommandLineUtils.getSystemEnvVars();
+        for (String name : systemEnvVars.stringPropertyNames()) {
+            environment.put(name, systemEnvVars.getProperty(name));
+        }
+        synchronized (envVars) {
+            for (Map.Entry<String, String> entry : envVars.entrySet()) {
+                // Windows keeps one variable per case-insensitive name
+                String existing = null;
+                for (String name : environment.keySet()) {
+                    if (name.equalsIgnoreCase(entry.getKey())) {
+                        existing = name;
+                        break;
+                    }
+                }
+                if (existing != null) {
+                    environment.remove(existing);
+                }
+                environment.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return environment;
     }
 
     /**
@@ -488,6 +636,10 @@ public class Commandline implements Cloneable {
         return res;
     }
 
+    /**
+     * @return the {@linkplain #getShellCommandline() shell form} of this command line on every platform, which is a
+     *         readable rendering and not necessarily what {@link #execute()} starts; see {@link #getCommandline()}
+     */
     @Override
     public String toString() {
         return StringUtils.join(getShellCommandline(), " ");
@@ -500,6 +652,7 @@ public class Commandline implements Cloneable {
     @Override
     public Object clone() {
         Commandline c = new Commandline((Shell) shell.clone());
+        c.shellChosenByCaller = shellChosenByCaller;
         c.executable = executable;
         c.workingDir = workingDir;
         c.addArguments(getArguments());
@@ -564,7 +717,7 @@ public class Commandline implements Cloneable {
     }
 
     /**
-     * Executes the command.
+     * Executes the command line that {@link #getCommandline()} returns.
      * @return the Process
      * @throws CommandLineException if error
      */
@@ -581,9 +734,7 @@ public class Commandline implements Cloneable {
         File workingDir = shell.getWorkingDirectory();
 
         try {
-            if (workingDir == null) {
-                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);
-            } else {
+            if (workingDir != null) {
                 if (!workingDir.exists()) {
                     throw new CommandLineException(
                             "Working directory \"" + workingDir.getPath() + "\" does not exist!");
@@ -591,8 +742,19 @@ public class Commandline implements Cloneable {
                     throw new CommandLineException(
                             "Path \"" + workingDir.getPath() + "\" does not specify a directory.");
                 }
+            }
 
-                process = Runtime.getRuntime().exec(getCommandline(), environment, workingDir);
+            String[] commandline = getCommandline();
+            try {
+                process = Runtime.getRuntime().exec(commandline, environment, workingDir);
+            } catch (IOException e) {
+                String[] shellCommandline = Os.isFamily(Os.FAMILY_WINDOWS) ? getShellCommandline() : commandline;
+                if (Arrays.equals(commandline, shellCommandline)) {
+                    throw e;
+                }
+                // No process was created. Whatever stopped the direct start (an image that needs elevation or is
+                // not a valid one, an argument the JDK refuses), cmd.exe gets to deal with it as it did before.
+                process = Runtime.getRuntime().exec(shellCommandline, environment, workingDir);
             }
         } catch (IOException ex) {
             throw new CommandLineException("Error while executing process.", ex);
@@ -628,6 +790,7 @@ public class Commandline implements Cloneable {
      */
     public void setShell(Shell shell) {
         this.shell = shell;
+        this.shellChosenByCaller = true;
     }
 
     /**

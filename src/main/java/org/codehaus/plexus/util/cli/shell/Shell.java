@@ -75,6 +75,15 @@ public class Shell implements Cloneable {
     }
 
     /**
+     * @return whether arguments and executable are quoted even when they contain nothing that requires it
+     * @see #setUnconditionalQuoting(boolean)
+     * @since 4.2.0
+     */
+    public boolean isUnconditionalQuoting() {
+        return unconditionallyQuote;
+    }
+
+    /**
      * Set the command to execute the shell (eg. COMMAND.COM, /bin/bash,...)
      *
      * @param shellCommand see name
