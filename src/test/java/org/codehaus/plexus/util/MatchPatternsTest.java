@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -47,5 +48,42 @@ class MatchPatternsTest {
         assertTrue(from.matches("ABCDE", true));
         assertTrue(from.matches("CDEF", true));
         assertFalse(from.matches("XYZ", true));
+    }
+
+    @Test
+    void withSeparatorMatchesNamesUsingThatSeparator() {
+        MatchPatterns patterns = MatchPatterns.withSeparator(";", "**;target;**", "%regex[.*\\.log]");
+        assertTrue(patterns.matches("module;target;classes", true));
+        assertTrue(patterns.matches("build.log", true));
+        assertFalse(patterns.matches("module;src;classes", true));
+    }
+
+    @Test
+    void withSeparatorIterable() {
+        MatchPatterns patterns = MatchPatterns.withSeparator(";", Arrays.asList("a;*", "b;*"));
+        assertTrue(patterns.matches("b;c", true));
+        assertFalse(patterns.matches("c;b", true));
+    }
+
+    @Test
+    void withSeparatorWithoutSourcesMatchesNothing() {
+        MatchPatterns patterns = MatchPatterns.withSeparator("/");
+        assertTrue(patterns.getPatterns().isEmpty());
+        assertFalse(patterns.matches("anything", true));
+    }
+
+    @Test
+    void getPatterns() {
+        MatchPatterns patterns = MatchPatterns.from("ABC**", "%ant[some/ABC*]", "%regex[[ABC].*]");
+        List<MatchPattern> actual = patterns.getPatterns();
+        assertEquals(3, actual.size());
+        assertEquals("%ant[some/ABC*]", actual.get(1).toString());
+        assertThrows(UnsupportedOperationException.class, () -> actual.add(MatchPattern.fromString("x")));
+    }
+
+    @Test
+    void toStringListsPatternsAsSupplied() {
+        MatchPatterns patterns = MatchPatterns.from("ABC**", "%ant[some/ABC*]", "%regex[[ABC].*]");
+        assertEquals("[ABC**, %ant[some/ABC*], %regex[[ABC].*]]", patterns.toString());
     }
 }
