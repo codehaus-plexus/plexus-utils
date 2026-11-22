@@ -1,10 +1,10 @@
 # Plexus Utils
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.codehaus.plexus/plexus-utils.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/org.codehaus.plexus/plexus-utils)
-[![GitHub CI](https://github.com/codehaus-plexus/plexus-utils/actions/workflows/maven.yml/badge.svg)](https://github.com/codehaus-plexus/plexus-utils/actions)
+[![GitHub CI](https://github.com/codehaus-plexus/plexus-utils/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/codehaus-plexus/plexus-utils/actions/workflows/maven.yml?query=branch%3Amaster)
 [![Reproducible Builds](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/jvm-repo-rebuild/reproducible-central/master/content/org/codehaus/plexus/plexus-utils/badge.json)](https://github.com/jvm-repo-rebuild/reproducible-central/blob/master/content/org/codehaus/plexus/plexus-utils/README.md)
 
-A collection of utility classes for strings, files, command lines and process execution. Historically developed alongside Apache Maven, and maintained by the same people.
+A collection of utility classes for strings, files, command lines and process execution, such as `FileUtils`, `StringUtils`, `DirectoryScanner` and `CommandLineUtils`. Historically developed alongside Apache Maven, and maintained by the same people.
 
 ## Status
 
@@ -54,7 +54,7 @@ Check the badge above for the current version.
 
 ## Requirements
 
-Java 8 or later. Both the `4.x` and `3.x` lines currently target Java 8.
+Java 8 or later. Both the `4.x` and `3.x` lines currently target Java 8. Building the project needs Maven 3.9.0 or later.
 
 ## Documentation
 
@@ -64,6 +64,6 @@ Java 8 or later. Both the `4.x` and `3.x` lines currently target Java 8.
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/codehaus-plexus/.github/blob/master/CONTRIBUTING.md). In short: `mvn verify` builds, and run `mvn spotless:apply` before pushing or CI will fail on formatting.
+Conventions for contributors and agents are in [AGENTS.md](AGENTS.md); see also [CONTRIBUTING.md](https://github.com/codehaus-plexus/.github/blob/master/CONTRIBUTING.md). In short: `mvn verify` builds, and run `mvn spotless:apply` before pushing or CI will fail on formatting.
 
 Please report security vulnerabilities privately — see [SECURITY.md](https://github.com/codehaus-plexus/.github/blob/master/SECURITY.md), not a public issue.
