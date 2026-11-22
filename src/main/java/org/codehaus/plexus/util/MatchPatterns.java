@@ -2,6 +2,8 @@ package org.codehaus.plexus.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,8 +14,21 @@ import java.util.List;
 public final class MatchPatterns {
     private final MatchPattern[] patterns;
 
-    private MatchPatterns(MatchPattern[] patterns) {
+    private final String separator;
+
+    private MatchPatterns(MatchPattern[] patterns, String separator) {
         this.patterns = patterns;
+        this.separator = separator;
+    }
+
+    /**
+     * Gets the enclosed patterns.
+     *
+     * @return an unmodifiable list of the enclosed patterns, in the order they were supplied
+     * @since 4.2.1
+     */
+    public List<MatchPattern> getPatterns() {
+        return Collections.unmodifiableList(Arrays.asList(patterns.clone()));
     }
 
     /**
@@ -33,12 +48,16 @@ public final class MatchPatterns {
      *
      * <p>Uses far less string tokenization than any of the alternatives.</p>
      *
+     * <p>The name is split with the separator these patterns were created with:
+     * {@link File#separator} for {@link #from(String...)} and {@link #from(Iterable)}, or the one passed
+     * to {@link #withSeparator(String, String...)} and {@link #withSeparator(String, Iterable)}.</p>
+     *
      * @param name The name to look for
      * @param isCaseSensitive If the comparison is case sensitive
      * @return true if any of the supplied patterns match
      */
     public boolean matches(String name, boolean isCaseSensitive) {
-        String[] tokenized = MatchPattern.tokenizePathToString(name, File.separator);
+        String[] tokenized = MatchPattern.tokenizePathToString(name, separator);
         return matches(name, tokenized, isCaseSensitive);
     }
 
@@ -69,23 +88,50 @@ public final class MatchPatterns {
     }
 
     public static MatchPatterns from(String... sources) {
-        final int length = sources.length;
-        MatchPattern[] result = new MatchPattern[length];
-        for (int i = 0; i < length; i++) {
-            result[i] = MatchPattern.fromString(sources[i]);
-        }
-        return new MatchPatterns(result);
+        return withSeparator(File.separator, sources);
     }
 
     public static MatchPatterns from(Iterable<String> strings) {
-        return new MatchPatterns(getMatchPatterns(strings));
+        return withSeparator(File.separator, strings);
     }
 
-    private static MatchPattern[] getMatchPatterns(Iterable<String> items) {
+    /**
+     * Creates patterns whose path segments are separated by {@code separator} instead of
+     * {@link File#separator}.
+     *
+     * @param separator the separator used by the patterns and by the names they are matched against
+     * @param sources the patterns, each optionally wrapped in {@code %ant[...]} or {@code %regex[...]}
+     * @return the patterns; with no sources, nothing matches
+     * @since 4.2.1
+     */
+    public static MatchPatterns withSeparator(String separator, String... sources) {
+        return withSeparator(separator, Arrays.asList(sources));
+    }
+
+    /**
+     * Creates patterns whose path segments are separated by {@code separator} instead of
+     * {@link File#separator}.
+     *
+     * @param separator the separator used by the patterns and by the names they are matched against
+     * @param sources the patterns, each optionally wrapped in {@code %ant[...]} or {@code %regex[...]}
+     * @return the patterns; with no sources, nothing matches
+     * @since 4.2.1
+     */
+    public static MatchPatterns withSeparator(String separator, Iterable<String> sources) {
         List<MatchPattern> result = new ArrayList<>();
-        for (String string : items) {
-            result.add(MatchPattern.fromString(string));
+        for (String source : sources) {
+            result.add(MatchPattern.fromString(source, separator));
         }
-        return result.toArray(new MatchPattern[0]);
+        return new MatchPatterns(result.toArray(new MatchPattern[0]), separator);
+    }
+
+    /**
+     * Returns the patterns as they were supplied, in list form.
+     *
+     * @return the patterns as supplied
+     */
+    @Override
+    public String toString() {
+        return Arrays.toString(patterns);
     }
 }

@@ -76,4 +76,28 @@ class MatchPatternTest {
         actual = MatchPattern.tokenizePathToString("/hello/world/", "/");
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    void fromStringWithSeparator() {
+        MatchPattern mp = MatchPattern.fromString("a;b;*", ";");
+        assertArrayEquals(new String[] {"a", "b", "*"}, mp.getTokenizedPathString());
+        assertTrue(mp.matchPath("a;b;c", true));
+        assertFalse(mp.matchPath("a;c;c", true));
+    }
+
+    @Test
+    void matchPatternStartUsesPatternSeparator() {
+        MatchPattern mp = MatchPattern.fromString("a;b;**", ";");
+        assertTrue(mp.matchPatternStart("a;b", true));
+        assertFalse(mp.matchPatternStart("a;c", true));
+    }
+
+    @Test
+    void toStringReturnsPatternAsSupplied() {
+        assertEquals("ABC*", MatchPattern.fromString("ABC*").toString());
+        assertEquals(
+                "%ant[some/ABC*]", MatchPattern.fromString("%ant[some/ABC*]").toString());
+        assertEquals(
+                "%regex[[ABC].*]", MatchPattern.fromString("%regex[[ABC].*]").toString());
+    }
 }
