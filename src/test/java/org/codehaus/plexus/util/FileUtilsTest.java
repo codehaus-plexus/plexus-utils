@@ -368,9 +368,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         // Place destination
         File destination = new File(getTestDirectory() + "/temp/copy1.txt");
         FileUtils.copyFile(testFile1, destination);
-
-        // Make sure source is newer
-        reallySleep(1000);
+        destination.setLastModified(System.currentTimeMillis() - 10_000L);
 
         // Place source
         File source = new File(getTestDirectory(), "copy1.txt");
@@ -390,9 +388,7 @@ public final class FileUtilsTest extends FileBasedTestCase {
         // Place source
         File source = new File(getTestDirectory() + "copy1.txt");
         FileUtils.copyFile(testFile1, source);
-
-        // Make sure destination is newer
-        reallySleep(1000);
+        source.setLastModified(System.currentTimeMillis() - 10_000L);
 
         // Place destination
         File destination = new File(getTestDirectory(), "/temp/copy1.txt");
@@ -1336,20 +1332,6 @@ public final class FileUtilsTest extends FileBasedTestCase {
             File current = FileUtils.createTempFile("unique", ".tmp", null);
             assertNotEquals(current.getName(), last.getName(), "No unique name: " + current.getName());
             last = current;
-        }
-    }
-
-    /**
-     * Because windows(tm) quite frequently sleeps less than the advertised time
-     *
-     * @param time The amount of time to sleep
-     */
-    private void reallySleep(int time) throws InterruptedException {
-        long until = System.currentTimeMillis() + time;
-        Thread.sleep(time);
-        while (System.currentTimeMillis() < until) {
-            Thread.sleep(time / 10);
-            Thread.yield();
         }
     }
 }
