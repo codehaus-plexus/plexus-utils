@@ -345,6 +345,15 @@ public abstract class CommandLineUtils {
         }
     }
 
+    /**
+     * Splits a command line into arguments. Outside quotes, spaces, tabs and line breaks separate arguments; text
+     * within single or double quotes stays one argument and the quote characters are dropped. There are no escape
+     * sequences.
+     *
+     * @param toProcess the command line, may be {@code null}
+     * @return the arguments, empty for a {@code null} or empty command line
+     * @throws CommandLineException if the quotes are unbalanced
+     */
     public static String[] translateCommandline(String toProcess) throws Exception {
         if ((toProcess == null) || (toProcess.length() == 0)) {
             return new String[0];

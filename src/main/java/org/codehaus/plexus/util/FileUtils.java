@@ -1180,7 +1180,9 @@ public class FileUtils extends BaseFileUtils {
     }
 
     /**
-     * Delete a file. If file is directory delete it and all sub-directories.
+     * Delete a file. If file is directory delete it and all sub-directories. A symbolic link is removed without
+     * following it, so the files it points to stay, and a file that does not exist, including a dangling symbolic
+     * link, counts as deleted.
      *
      * @param file a file
      * @throws IOException if any
@@ -1239,7 +1241,8 @@ public class FileUtils extends BaseFileUtils {
     }
 
     /**
-     * Schedule a file to be deleted when JVM exits. If file is directory delete it and all sub-directories.
+     * Schedule a file to be deleted when JVM exits. If file is directory delete it and all sub-directories. A symbolic
+     * link to a directory is scheduled itself, but the files it points to are not.
      *
      * @param file a file
      * @throws IOException if any
@@ -1351,7 +1354,8 @@ public class FileUtils extends BaseFileUtils {
     }
 
     /**
-     * Recursively delete a directory.
+     * Recursively delete a directory. A symbolic link to a directory is removed without deleting the files it points
+     * to, and a directory that does not exist is ignored.
      *
      * @param directory a directory
      * @throws IOException if any
@@ -1746,7 +1750,7 @@ public class FileUtils extends BaseFileUtils {
      *
      * @param sourceDirectory the source dir
      * @param destinationDirectory the target dir
-     * @throws IOException if any
+     * @throws IOException if any, including when a directory of the source cannot be listed
      */
     public static void copyDirectoryStructure(File sourceDirectory, File destinationDirectory) throws IOException {
         copyDirectoryStructure(sourceDirectory, destinationDirectory, destinationDirectory, false);
