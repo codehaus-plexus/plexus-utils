@@ -29,6 +29,8 @@ import java.util.StringTokenizer;
  * @author Kristian Rosenvold
  */
 public final class MatchPattern {
+    private final String original;
+
     private final String source;
 
     private final String regexPattern;
@@ -40,6 +42,7 @@ public final class MatchPattern {
     private final char[][] tokenizedChar;
 
     private MatchPattern(String source, String separator) {
+        this.original = source;
         regexPattern = SelectorUtils.isRegexPrefixedPattern(source)
                 ? source.substring(
                         SelectorUtils.REGEX_HANDLER_PREFIX.length(),
@@ -91,7 +94,7 @@ public final class MatchPattern {
         } else {
             String altStr = str.replace('\\', '/');
 
-            return SelectorUtils.matchAntPathPatternStart(this, str, File.separator, isCaseSensitive)
+            return SelectorUtils.matchAntPathPatternStart(this, str, separator, isCaseSensitive)
                     || SelectorUtils.matchAntPathPatternStart(this, altStr, "/", isCaseSensitive);
         }
     }
@@ -131,5 +134,29 @@ public final class MatchPattern {
 
     public static MatchPattern fromString(String source) {
         return new MatchPattern(source, File.separator);
+    }
+
+    /**
+     * Creates a pattern whose path segments are separated by {@code separator} instead of
+     * {@link File#separator}. Use it to match paths that do not follow the conventions of the
+     * running platform, such as {@code /}-separated names on Windows.
+     *
+     * @param source the pattern, optionally wrapped in {@code %ant[...]} or {@code %regex[...]}
+     * @param separator the separator used by the pattern and by the paths it is matched against
+     * @return the pattern
+     * @since 3.6.5
+     */
+    public static MatchPattern fromString(String source, String separator) {
+        return new MatchPattern(source, separator);
+    }
+
+    /**
+     * Returns the pattern as it was supplied, including any {@code %ant[...]} or {@code %regex[...]} wrapper.
+     *
+     * @return the pattern as supplied
+     */
+    @Override
+    public String toString() {
+        return original;
     }
 }
