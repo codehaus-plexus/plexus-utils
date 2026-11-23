@@ -240,7 +240,7 @@ public abstract class AbstractScanner implements Scanner {
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
-     * base directory are ignored.</p>
+     * base directory are ignored. Support for absolute patterns has been added in 4.3.0.</p>
      *
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
      *            included. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
@@ -267,7 +267,7 @@ public abstract class AbstractScanner implements Scanner {
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
-     * base directory are ignored.</p>
+     * base directory are ignored. Support for absolute patterns has been added in 4.3.0.</p>
      *
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
      *            excluded. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
