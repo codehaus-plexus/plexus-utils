@@ -239,6 +239,9 @@ public abstract class AbstractScanner implements Scanner {
      *
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
+     * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
+     * base directory are ignored.</p>
+     *
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
      *            included. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
      */
@@ -262,6 +265,9 @@ public abstract class AbstractScanner implements Scanner {
      * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.</p>
      *
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
+     *
+     * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
+     * base directory are ignored.</p>
      *
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
      *            excluded. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
@@ -385,8 +391,35 @@ public abstract class AbstractScanner implements Scanner {
     }
 
     protected void setupMatchPatterns() {
-        includesPatterns = MatchPatterns.from(includes);
-        excludesPatterns = MatchPatterns.from(excludes);
+        includesPatterns = MatchPatterns.from(relativizePatterns(includes));
+        excludesPatterns = MatchPatterns.from(relativizePatterns(excludes));
+    }
+
+    /**
+     * Converts absolute patterns below the base directory to relative ones and drops absolute patterns which are
+     * not below the base directory. Relative and regex/ant-prefixed patterns are kept as is.
+     */
+    private String[] relativizePatterns(String[] patterns) {
+        File basedir = getBasedir();
+        if (basedir == null) {
+            return patterns;
+        }
+        String root = basedir.getAbsolutePath();
+        if (!root.endsWith(File.separator)) {
+            root += File.separator;
+        }
+        List<String> result = new ArrayList<>(patterns.length);
+        for (String pattern : patterns) {
+            if (pattern.startsWith(SelectorUtils.REGEX_HANDLER_PREFIX)
+                    || pattern.startsWith(SelectorUtils.ANT_HANDLER_PREFIX)
+                    || !new File(pattern).isAbsolute()) {
+                result.add(pattern);
+            } else if (pattern.length() > root.length()
+                    && pattern.regionMatches(!isCaseSensitive, 0, root, 0, root.length())) {
+                result.add(pattern.substring(root.length()));
+            }
+        }
+        return result.toArray(new String[0]);
     }
 
     @Override

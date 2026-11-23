@@ -97,6 +97,25 @@ class DirectoryScannerTest extends FileBasedTestCase {
         assertEquals(0, files.length);
     }
 
+    @Test
+    void absolutePatterns() throws Exception {
+        File basedir = new File(getTestResourcesDir() + File.separator + "directory-scanner").getCanonicalFile();
+        String outside = new File(basedir.getParentFile(), "other").getAbsolutePath();
+
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir(basedir);
+        ds.setIncludes(new String[] {basedir.getAbsolutePath() + File.separator + "foo" + File.separator, outside});
+        ds.scan();
+        assertEquals(1, ds.getIncludedFiles().length);
+
+        ds = new DirectoryScanner();
+        ds.setBasedir(basedir);
+        ds.setIncludes(new String[] {"**"});
+        ds.setExcludes(new String[] {basedir.getAbsolutePath() + File.separator + "foo" + File.separator, outside});
+        ds.scan();
+        assertEquals(0, ds.getIncludedFiles().length);
+    }
+
     private String getTestResourcesDir() throws URISyntaxException {
         ClassLoader cloader = Thread.currentThread().getContextClassLoader();
         URL resource = cloader.getResource("test.txt");
