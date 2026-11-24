@@ -60,6 +60,7 @@ package org.codehaus.plexus.util.cli;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -388,7 +389,18 @@ public class Commandline implements Cloneable {
      */
     public void addEnvironment(String name, String value) {
         // envVars.add( name + "=" + value );
-        envVars.put(name, value);
+        synchronized (envVars) {
+            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                // Windows keeps one variable per case-insensitive name: the last spelling added wins
+                for (Iterator<String> names = envVars.keySet().iterator(); names.hasNext(); ) {
+                    String existing = names.next();
+                    if (existing != null && !existing.equals(name) && existing.equalsIgnoreCase(name)) {
+                        names.remove();
+                    }
+                }
+            }
+            envVars.put(name, value);
+        }
     }
 
     /**
@@ -398,12 +410,34 @@ public class Commandline implements Cloneable {
     public void addSystemEnvironment() throws Exception {
         Properties systemEnvVars = CommandLineUtils.getSystemEnvVars();
 
-        for (Object o : systemEnvVars.keySet()) {
-            String key = (String) o;
-            if (!envVars.containsKey(key)) {
-                addEnvironment(key, systemEnvVars.getProperty(key));
+        synchronized (envVars) {
+            for (Object o : systemEnvVars.keySet()) {
+                String key = (String) o;
+                if (!hasEnvironment(key)) {
+                    addEnvironment(key, systemEnvVars.getProperty(key));
+                }
             }
         }
+    }
+
+    /**
+     * Windows keeps one variable per case-insensitive name, so there an added <code>Path</code> stands for the
+     * inherited <code>PATH</code> as well.
+     */
+    private boolean hasEnvironment(String name) {
+        if (envVars.containsKey(name)) {
+            return true;
+        }
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            synchronized (envVars) {
+                for (String own : envVars.keySet()) {
+                    if (name.equalsIgnoreCase(own)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
