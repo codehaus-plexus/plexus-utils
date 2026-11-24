@@ -116,6 +116,49 @@ class DirectoryScannerTest extends FileBasedTestCase {
         assertEquals(0, ds.getIncludedFiles().length);
     }
 
+    @Test
+    void absolutePatternsWithDotSegments() throws Exception {
+        File basedir = new File(getTestResourcesDir(), "directory-scanner").getCanonicalFile();
+        File dottedBasedir = new File(basedir, "foo/..");
+        String pattern = new File(basedir, "./foo/../foo").getAbsolutePath() + File.separator + "b?r/**";
+
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir(dottedBasedir);
+        ds.setIncludes(new String[] {basedir + File.separator + "foo" + File.separator + "**"});
+        ds.scan();
+        assertEquals(1, ds.getIncludedFiles().length);
+
+        ds = new DirectoryScanner();
+        ds.setBasedir(new File(basedir, "."));
+        ds.setExcludes(new String[] {pattern});
+        ds.scan();
+        assertEquals(0, ds.getIncludedFiles().length);
+
+        ds = new DirectoryScanner();
+        ds.setBasedir(new File(basedir, "."));
+        ds.setIncludes(new String[] {new File(basedir, "foo/../foo/bar/munchy.txt").getAbsolutePath()});
+        ds.scan();
+        assertEquals(1, ds.getIncludedFiles().length);
+    }
+
+    @Test
+    void absolutePatternNormalizationPreservesWildcardsAndPrefixes() throws Exception {
+        File basedir = new File(getTestResourcesDir(), "directory-scanner").getCanonicalFile();
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir(new File(basedir, "."));
+        ds.setIncludes(new String[] {basedir + File.separator + "*" + File.separator + ".." + File.separator + "**"});
+        ds.scan();
+        assertEquals(0, ds.getIncludedFiles().length);
+
+        for (String pattern : new String[] {"%ant[foo/**]", "%regex[foo.*]"}) {
+            ds = new DirectoryScanner();
+            ds.setBasedir(new File(basedir, "."));
+            ds.setIncludes(new String[] {pattern});
+            ds.scan();
+            assertEquals(1, ds.getIncludedFiles().length);
+        }
+    }
+
     private String getTestResourcesDir() throws URISyntaxException {
         ClassLoader cloader = Thread.currentThread().getContextClassLoader();
         URL resource = cloader.getResource("test.txt");

@@ -240,7 +240,9 @@ public abstract class AbstractScanner implements Scanner {
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
-     * base directory are ignored. Support for absolute patterns has been added in 4.3.0.</p>
+     * base directory are ignored. Dot segments in the base directory and in the literal prefix of an absolute pattern
+     * are normalized without resolving symbolic links. Regex- and ant-prefixed patterns are unchanged.
+     * Support for absolute patterns has been added in 4.3.0.</p>
      *
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
      *            included. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
@@ -267,7 +269,9 @@ public abstract class AbstractScanner implements Scanner {
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
      * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
-     * base directory are ignored. Support for absolute patterns has been added in 4.3.0.</p>
+     * base directory are ignored. Dot segments in the base directory and in the literal prefix of an absolute pattern
+     * are normalized without resolving symbolic links. Regex- and ant-prefixed patterns are unchanged.
+     * Support for absolute patterns has been added in 4.3.0.</p>
      *
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
      *            excluded. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
@@ -404,7 +408,7 @@ public abstract class AbstractScanner implements Scanner {
         if (basedir == null) {
             return patterns;
         }
-        String root = basedir.getAbsolutePath();
+        String root = basedir.getAbsoluteFile().toPath().normalize().toString();
         if (!root.endsWith(File.separator)) {
             root += File.separator;
         }
@@ -414,12 +418,37 @@ public abstract class AbstractScanner implements Scanner {
                     || pattern.startsWith(SelectorUtils.ANT_HANDLER_PREFIX)
                     || !new File(pattern).isAbsolute()) {
                 result.add(pattern);
-            } else if (pattern.length() > root.length()
-                    && pattern.regionMatches(!isCaseSensitive, 0, root, 0, root.length())) {
-                result.add(pattern.substring(root.length()));
+            } else {
+                String normalized = normalizeAbsolutePattern(pattern);
+                if (normalized.length() > root.length()
+                        && normalized.regionMatches(!isCaseSensitive, 0, root, 0, root.length())) {
+                    result.add(normalized.substring(root.length()));
+                }
             }
         }
         return result.toArray(new String[0]);
+    }
+
+    private String normalizeAbsolutePattern(String pattern) {
+        int wildcard = pattern.length();
+        int star = pattern.indexOf('*');
+        int question = pattern.indexOf('?');
+        if (star >= 0) {
+            wildcard = Math.min(wildcard, star);
+        }
+        if (question >= 0) {
+            wildcard = Math.min(wildcard, question);
+        }
+        if (wildcard == pattern.length()) {
+            return new File(pattern).toPath().normalize().toString();
+        }
+        int prefixEnd = pattern.lastIndexOf(File.separatorChar, wildcard) + 1;
+        String prefix =
+                new File(pattern.substring(0, prefixEnd)).toPath().normalize().toString();
+        if (!prefix.endsWith(File.separator)) {
+            prefix += File.separator;
+        }
+        return prefix + pattern.substring(prefixEnd);
     }
 
     @Override
