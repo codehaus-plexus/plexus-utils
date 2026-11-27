@@ -239,6 +239,11 @@ public abstract class AbstractScanner implements Scanner {
      *
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
      *
+     * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
+     * base directory are ignored. Dot segments in the base directory and in the literal prefix of an absolute pattern
+     * are normalized without resolving symbolic links. Regex- and ant-prefixed patterns are unchanged.
+     * Support for absolute patterns has been added in 4.3.0.</p>
+     *
      * @param includes A list of include patterns. May be <code>null</code>, indicating that all files should be
      *            included. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
      */
@@ -262,6 +267,11 @@ public abstract class AbstractScanner implements Scanner {
      * <code>File.separatorChar</code>, so the separator used need not match <code>File.separatorChar</code>.</p>
      *
      * <p>When a pattern ends with a '/' or '\', "**" is appended.</p>
+     *
+     * <p>Absolute patterns below the base directory are treated as relative to it; absolute patterns outside of the
+     * base directory are ignored. Dot segments in the base directory and in the literal prefix of an absolute pattern
+     * are normalized without resolving symbolic links. Regex- and ant-prefixed patterns are unchanged.
+     * Support for absolute patterns has been added in 4.3.0.</p>
      *
      * @param excludes A list of exclude patterns. May be <code>null</code>, indicating that no files should be
      *            excluded. If a non-<code>null</code> list is given, all elements must be non-<code>null</code>.
@@ -385,8 +395,60 @@ public abstract class AbstractScanner implements Scanner {
     }
 
     protected void setupMatchPatterns() {
-        includesPatterns = MatchPatterns.from(includes);
-        excludesPatterns = MatchPatterns.from(excludes);
+        includesPatterns = MatchPatterns.from(relativizePatterns(includes));
+        excludesPatterns = MatchPatterns.from(relativizePatterns(excludes));
+    }
+
+    /**
+     * Converts absolute patterns below the base directory to relative ones and drops absolute patterns which are
+     * not below the base directory. Relative and regex/ant-prefixed patterns are kept as is.
+     */
+    private String[] relativizePatterns(String[] patterns) {
+        File basedir = getBasedir();
+        if (basedir == null) {
+            return patterns;
+        }
+        String root = basedir.getAbsoluteFile().toPath().normalize().toString();
+        if (!root.endsWith(File.separator)) {
+            root += File.separator;
+        }
+        List<String> result = new ArrayList<>(patterns.length);
+        for (String pattern : patterns) {
+            if (pattern.startsWith(SelectorUtils.REGEX_HANDLER_PREFIX)
+                    || pattern.startsWith(SelectorUtils.ANT_HANDLER_PREFIX)
+                    || !new File(pattern).isAbsolute()) {
+                result.add(pattern);
+            } else {
+                String normalized = normalizeAbsolutePattern(pattern);
+                if (normalized.length() > root.length()
+                        && normalized.regionMatches(!isCaseSensitive, 0, root, 0, root.length())) {
+                    result.add(normalized.substring(root.length()));
+                }
+            }
+        }
+        return result.toArray(new String[0]);
+    }
+
+    private String normalizeAbsolutePattern(String pattern) {
+        int wildcard = pattern.length();
+        int star = pattern.indexOf('*');
+        int question = pattern.indexOf('?');
+        if (star >= 0) {
+            wildcard = Math.min(wildcard, star);
+        }
+        if (question >= 0) {
+            wildcard = Math.min(wildcard, question);
+        }
+        if (wildcard == pattern.length()) {
+            return new File(pattern).toPath().normalize().toString();
+        }
+        int prefixEnd = pattern.lastIndexOf(File.separatorChar, wildcard) + 1;
+        String prefix =
+                new File(pattern.substring(0, prefixEnd)).toPath().normalize().toString();
+        if (!prefix.endsWith(File.separator)) {
+            prefix += File.separator;
+        }
+        return prefix + pattern.substring(prefixEnd);
     }
 
     @Override
