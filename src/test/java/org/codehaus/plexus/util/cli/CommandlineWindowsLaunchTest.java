@@ -141,6 +141,15 @@ class CommandlineWindowsLaunchTest {
     }
 
     @Test
+    void subclassOfCmdShellIsKept() {
+        Commandline cl = new Commandline();
+        cl.setDefaultShell(new CmdShell() {});
+        cl.setExecutable("git");
+        cl.addArguments(new String[] {"status"});
+        assertShell("\"git status\"", launch(cl));
+    }
+
+    @Test
     void reconfiguredDefaultShellIsKept() {
         Commandline cl = windowsCommandline("git", "status");
         cl.getShell().setQuotedArgumentsEnabled(false);

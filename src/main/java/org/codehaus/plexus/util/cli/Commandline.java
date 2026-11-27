@@ -751,7 +751,9 @@ public class Commandline implements Cloneable {
     }
 
     /**
-     * Executes the command line that {@link #getCommandline()} returns.
+     * Executes the command line that {@link #getCommandline()} returns. On Windows, if starting a command directly
+     * fails with an {@link IOException} (for example a missing file, a permission problem, an image that needs
+     * elevation or is not a valid one), the command is started once more through the shell.
      * @return the Process
      * @throws CommandLineException if error
      */
